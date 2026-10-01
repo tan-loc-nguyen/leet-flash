@@ -1,0 +1,127 @@
+{
+  "schemaVersion": 1,
+  "problemSlug": "longest-strictly-increasing-or-strictly-decreasing-subarray",
+  "summary": "Return the length of the longest contiguous strictly increasing or strictly decreasing run.",
+  "patterns": [
+    "Array / Hashing"
+  ],
+  "mainInsight": "Scan once keeping the length of the current increasing run and of the current decreasing run: extend one and reset the other (equal neighbours reset both). Track the maximum seen.",
+  "canonicalApproach": "Single pass with run starts or lengths",
+  "approaches": [
+    {
+      "name": "Brute force",
+      "summary": "Check every subarray.",
+      "timeComplexity": "O(n^2)",
+      "spaceComplexity": "O(1)"
+    },
+    {
+      "name": "Single pass with run starts or lengths",
+      "summary": "Reset on direction change.",
+      "timeComplexity": "O(n)",
+      "spaceComplexity": "O(1)",
+      "strengths": [
+        "Linear"
+      ],
+      "interviewRelevance": "Your approach; the expected answer."
+    }
+  ],
+  "personalSolution": {
+    "approach": "Single pass with run starts",
+    "timeComplexity": "O(n)",
+    "spaceComplexity": "O(1)",
+    "isOptimal": true,
+    "notes": "Optimal."
+  },
+  "commonMistakes": [],
+  "edgeCases": [],
+  "cards": [
+    {
+      "id": "lm2-pattern-01",
+      "category": "pattern",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "Which pattern tracks monotone runs?",
+        "What happens to the opposite run when the direction changes?"
+      ],
+      "options": [
+        "Single pass: extend the matching run and reset the other",
+        "Sort the array",
+        "Sliding window with a heap",
+        "Binary search"
+      ],
+      "answer": "Single pass: extend the matching run and reset the other",
+      "explanation": "A comparison with the previous element either extends or breaks each run.",
+      "incorrectOptionExplanations": {
+        "Sort the array": "Destroys adjacency.",
+        "Sliding window with a heap": "Overkill.",
+        "Binary search": "Irrelevant."
+      }
+    },
+    {
+      "id": "lm2-insight-01",
+      "category": "main_insight",
+      "type": "free_recall",
+      "promptVariants": [
+        "What happens on equal neighbours?",
+        "Why are both runs reset?"
+      ],
+      "answer": "Equal elements are neither strictly increasing nor decreasing, so any run through the equal pair is broken: both the increasing and decreasing runs restart at the current element.",
+      "keyPoints": [
+        "Equal breaks both runs",
+        "Reset both starts"
+      ],
+      "explanation": "A run of length 1 is always valid."
+    },
+    {
+      "id": "lm2-time-01",
+      "category": "time_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Time complexity: ___",
+        "Complete the statement: Time complexity: ___"
+      ],
+      "answer": "O(n)",
+      "explanation": "One pass.",
+      "acceptedAnswers": [
+        "linear"
+      ]
+    },
+    {
+      "id": "lm2-space-01",
+      "category": "space_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Space complexity: ___",
+        "Complete the statement: Space complexity: ___"
+      ],
+      "answer": "O(1)",
+      "explanation": "A few counters.",
+      "acceptedAnswers": [
+        "constant"
+      ]
+    },
+    {
+      "id": "lm2-edge-01",
+      "category": "edge_case",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "What is the answer for [3,3,3,3]?",
+        "And for [1,4,3,3,2]?"
+      ],
+      "options": [
+        "1, and 2",
+        "4, and 3",
+        "1, and 3",
+        "2, and 2"
+      ],
+      "answer": "1, and 2",
+      "explanation": "Equal elements break every run; in the second array the longest run is [4,3] (decreasing) of length 2.",
+      "incorrectOptionExplanations": {
+        "4, and 3": "Equal elements are not strictly monotone.",
+        "1, and 3": "[1,4,3] is not monotone; best is 2.",
+        "2, and 2": "The first array has runs of length 1."
+      }
+    }
+  ],
+  "generatedAt": "2026-10-01T14:43:49Z"
+}

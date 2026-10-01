@@ -1,0 +1,152 @@
+{
+  "schemaVersion": 1,
+  "problemSlug": "verifying-an-alien-dictionary",
+  "summary": "Are the words sorted lexicographically according to a custom alphabet order?",
+  "patterns": [
+    "Array / Hashing"
+  ],
+  "mainInsight": "Map each letter to its rank, then compare each adjacent pair of words: find the first differing letter and check its rank order; if one word is a prefix of the other, the shorter must come first.",
+  "canonicalApproach": "Compare adjacent words using a rank map",
+  "approaches": [
+    {
+      "name": "Compare adjacent words using a rank map",
+      "summary": "Rank lookup per letter; early exit.",
+      "timeComplexity": "O(total characters)",
+      "spaceComplexity": "O(1) (26-letter map)",
+      "strengths": [
+        "Linear, simple"
+      ],
+      "interviewRelevance": "Your approach; the expected answer."
+    },
+    {
+      "name": "Transform words and use sorted()",
+      "summary": "Map each word to rank tuples and compare with the sorted list.",
+      "timeComplexity": "O(total chars + n log n)",
+      "spaceComplexity": "O(total chars)",
+      "strengths": [
+        "Short"
+      ],
+      "weaknesses": [
+        "Extra work and memory"
+      ]
+    }
+  ],
+  "personalSolution": {
+    "approach": "Compare adjacent words using a rank map",
+    "timeComplexity": "O(total characters)",
+    "spaceComplexity": "O(1)",
+    "isOptimal": true,
+    "notes": "Optimal."
+  },
+  "commonMistakes": [],
+  "edgeCases": [],
+  "cards": [
+    {
+      "id": "ad-pattern-01",
+      "category": "pattern",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "How do you compare words in a custom alphabet?",
+        "What do you precompute?"
+      ],
+      "options": [
+        "A map from each letter to its rank, compared at the first differing position",
+        "Sort the letters of each word",
+        "Reverse each word",
+        "Count the vowels"
+      ],
+      "answer": "A map from each letter to its rank, compared at the first differing position",
+      "explanation": "Lexicographic order is decided by the first differing character according to the given rank.",
+      "incorrectOptionExplanations": {
+        "Sort the letters of each word": "Changes the words.",
+        "Reverse each word": "Not lexicographic order.",
+        "Count the vowels": "Irrelevant."
+      }
+    },
+    {
+      "id": "ad-insight-01",
+      "category": "main_insight",
+      "type": "free_recall",
+      "promptVariants": [
+        "Why is it enough to compare only adjacent words?",
+        "What special case handles prefixes?"
+      ],
+      "answer": "Sortedness is a chain: if every adjacent pair is in order then the whole list is (transitivity). For a pair where one word is a prefix of the other (e.g. 'apple' vs 'app') the longer word must come second; if the longer comes first the list is not sorted.",
+      "keyPoints": [
+        "Adjacent pairs suffice (transitivity)",
+        "Prefix case: shorter first"
+      ],
+      "explanation": "Common bug: forgetting the prefix case."
+    },
+    {
+      "id": "ad-time-01",
+      "category": "time_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Time complexity (total characters C): ___",
+        "Complete the statement: Time complexity (total characters C): ___"
+      ],
+      "answer": "O(C)",
+      "explanation": "Each character pair is compared at most once.",
+      "acceptedAnswers": [
+        "O(total chars)",
+        "linear"
+      ]
+    },
+    {
+      "id": "ad-space-01",
+      "category": "space_complexity",
+      "type": "free_recall",
+      "promptVariants": [
+        "What is the extra space and why is it constant?",
+        "Why is the memory of the alien-order check constant?"
+      ],
+      "answer": "O(1): the rank map has at most 26 entries regardless of input size.",
+      "keyPoints": [
+        "26 entries",
+        "Constant"
+      ],
+      "explanation": "The input itself is not counted."
+    },
+    {
+      "id": "ad-code-01",
+      "category": "code_reasoning",
+      "type": "code_question",
+      "promptVariants": [
+        "Why is the prefix check placed in an `elif j == n - 1 and len(words[i]) > len(words[i+1])` branch?",
+        "When does the inner loop break?"
+      ],
+      "code": "for j in range(n):\n    if orderMap[words[i][j]] > orderMap[words[i + 1][j]]:\n        return False\n    elif orderMap[words[i][j]] < orderMap[words[i + 1][j]]:\n        break\n    elif j == n - 1 and len(words[i]) > len(words[i + 1]):\n        return False",
+      "answer": "The loop compares up to the shorter length n. If all n characters are equal, the shorter word is a prefix; then the first word must not be longer. This is checked at j == n - 1 in the equal branch. A strictly smaller character at the first difference means the pair is in order, so we break and move to the next pair; a greater one means unsorted.",
+      "keyPoints": [
+        "Equal up to the shorter length => prefix",
+        "Longer first => unsorted",
+        "First difference decides"
+      ],
+      "explanation": "Checking len after the loop (without the j condition) is the usual alternative."
+    },
+    {
+      "id": "ad-edge-01",
+      "category": "edge_case",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "Are ['apple','app'] sorted under the standard alphabet?",
+        "Why not?"
+      ],
+      "options": [
+        "No: 'app' is a prefix of 'apple' and must come first",
+        "Yes",
+        "Only if the alphabet is reversed",
+        "It depends on the letters"
+      ],
+      "answer": "No: 'app' is a prefix of 'apple' and must come first",
+      "explanation": "A prefix sorts before any longer word that starts with it.",
+      "incorrectOptionExplanations": {
+        "Yes": "The longer word comes first.",
+        "Only if the alphabet is reversed": "The prefix rule holds for any alphabet.",
+        "It depends on the letters": "The rule is independent of the order."
+      }
+    }
+  ],
+  "generatedAt": "2026-10-01T14:43:49Z"
+}

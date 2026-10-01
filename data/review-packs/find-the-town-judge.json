@@ -1,0 +1,139 @@
+{
+  "schemaVersion": 1,
+  "problemSlug": "find-the-town-judge",
+  "summary": "Find the person who trusts nobody and is trusted by everybody else (or -1).",
+  "patterns": [
+    "Graph",
+    "Array / Hashing"
+  ],
+  "mainInsight": "In graph terms the judge has outdegree 0 and indegree n - 1. A single net-trust score (in - out) per person is enough: the judge is the only person with score n - 1.",
+  "canonicalApproach": "Single net-trust array",
+  "approaches": [
+    {
+      "name": "Separate in/out degree counts",
+      "summary": "Two maps or arrays; find out == 0 and in == n - 1.",
+      "timeComplexity": "O(n + E)",
+      "spaceComplexity": "O(n)",
+      "strengths": [
+        "Clear"
+      ],
+      "weaknesses": [
+        "Two structures"
+      ],
+      "interviewRelevance": "Your approach."
+    },
+    {
+      "name": "Single net-trust array",
+      "summary": "trust[b] += 1, trust[a] -= 1; judge has n - 1.",
+      "timeComplexity": "O(n + E)",
+      "spaceComplexity": "O(n)",
+      "strengths": [
+        "One array"
+      ],
+      "interviewRelevance": "The usual optimal answer."
+    }
+  ],
+  "personalSolution": {
+    "approach": "Separate in/out degree counts",
+    "timeComplexity": "O(n + E)",
+    "spaceComplexity": "O(n)",
+    "isOptimal": true,
+    "notes": "Optimal; a single net-trust array is more compact."
+  },
+  "commonMistakes": [],
+  "edgeCases": [],
+  "cards": [
+    {
+      "id": "tj-pattern-01",
+      "category": "pattern",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "What degrees define the town judge in a directed graph?",
+        "Which quantity identifies the judge with one array?"
+      ],
+      "options": [
+        "Outdegree 0 and indegree n - 1; net score in - out = n - 1",
+        "Indegree 0 and outdegree n - 1",
+        "Highest outdegree",
+        "Equal in and out degree"
+      ],
+      "answer": "Outdegree 0 and indegree n - 1; net score in - out = n - 1",
+      "explanation": "The judge trusts nobody and everyone else trusts the judge.",
+      "incorrectOptionExplanations": {
+        "Indegree 0 and outdegree n - 1": "That describes the opposite (a person who trusts everyone).",
+        "Highest outdegree": "The judge has outdegree 0.",
+        "Equal in and out degree": "Not the definition."
+      }
+    },
+    {
+      "id": "tj-insight-01",
+      "category": "main_insight",
+      "type": "free_recall",
+      "promptVariants": [
+        "Why is the net-trust score n - 1 unique to the judge?",
+        "Why can't two people be judges?"
+      ],
+      "answer": "Any non-judge who trusts at least one person has out >= 1, so in - out <= (n - 1) - 1 = n - 2 even if everyone else trusted them. Only a person with out = 0 and in = n - 1 reaches n - 1, and two such people would have to trust each other (a contradiction with out = 0).",
+      "keyPoints": [
+        "Score in - out",
+        "Non-judges have out >= 1 or in < n - 1",
+        "At most one judge"
+      ],
+      "explanation": "That is why one array of scores suffices."
+    },
+    {
+      "id": "tj-time-01",
+      "category": "time_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Time complexity (n people, E trust pairs): ___",
+        "Complete the statement: Time complexity (n people, E trust pairs): ___"
+      ],
+      "answer": "O(n+E)",
+      "explanation": "One pass over the edges and one over the people.",
+      "acceptedAnswers": [
+        "O(n + E)",
+        "O(E + n)"
+      ]
+    },
+    {
+      "id": "tj-space-01",
+      "category": "space_complexity",
+      "type": "free_recall",
+      "promptVariants": [
+        "What is the space and what is unusual about reading `incoming[i + 1]` on a defaultdict?",
+        "How could the arrays be simplified?"
+      ],
+      "answer": "O(n) for the counts. Reading a missing key on a defaultdict inserts it (a small side effect); pre-sizing arrays of length n + 1 avoids this and is faster.",
+      "keyPoints": [
+        "O(n)",
+        "defaultdict inserts on read",
+        "Use arrays of size n + 1"
+      ],
+      "explanation": "Not a correctness problem."
+    },
+    {
+      "id": "tj-edge-01",
+      "category": "edge_case",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "What is returned for n = 1 and trust = []?",
+        "Who is the judge when there is one person?"
+      ],
+      "options": [
+        "1 (the lone person trusts nobody and everyone else, i.e. nobody, trusts them)",
+        "-1",
+        "0",
+        "2"
+      ],
+      "answer": "1 (the lone person trusts nobody and everyone else, i.e. nobody, trusts them)",
+      "explanation": "outdegree 0 and indegree n - 1 = 0 hold for the only person.",
+      "incorrectOptionExplanations": {
+        "-1": "The conditions are satisfied.",
+        "0": "People are numbered from 1.",
+        "2": "Out of range."
+      }
+    }
+  ],
+  "generatedAt": "2026-10-01T14:43:49Z"
+}

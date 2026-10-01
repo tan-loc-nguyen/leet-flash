@@ -1,0 +1,128 @@
+{
+  "schemaVersion": 1,
+  "problemSlug": "longest-subsequence-with-non-zero-bitwise-xor",
+  "summary": "Return the length of the longest subsequence of nums whose XOR is non-zero (0 if none).",
+  "patterns": [
+    "Bit Manipulation"
+  ],
+  "mainInsight": "Take the whole array if its XOR is non-zero. If the total XOR is 0, drop one non-zero element: the XOR of the rest equals that element (non-zero), giving length n - 1. If every element is 0 every subsequence XORs to 0, so the answer is 0.",
+  "canonicalApproach": "Case analysis on the total XOR",
+  "approaches": [
+    {
+      "name": "Brute force over subsequences",
+      "summary": "Try subsets.",
+      "timeComplexity": "O(2^n)",
+      "spaceComplexity": "O(n)"
+    },
+    {
+      "name": "Case analysis on the total XOR",
+      "summary": "Total XOR != 0 -> n; else n - 1 if a non-zero exists else 0.",
+      "timeComplexity": "O(n)",
+      "spaceComplexity": "O(1)",
+      "strengths": [
+        "Constant space"
+      ],
+      "interviewRelevance": "Your approach; the expected answer."
+    }
+  ],
+  "personalSolution": {
+    "approach": "Case analysis on the total XOR",
+    "timeComplexity": "O(n)",
+    "spaceComplexity": "O(1)",
+    "isOptimal": true,
+    "notes": "Optimal."
+  },
+  "commonMistakes": [],
+  "edgeCases": [],
+  "cards": [
+    {
+      "id": "lx-pattern-01",
+      "category": "pattern",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "What XOR property makes the case analysis work?",
+        "Why does removing one non-zero element fix a zero total XOR?"
+      ],
+      "options": [
+        "total ^ x = XOR of the rest, so removing a non-zero x leaves x (non-zero)",
+        "XOR is not associative",
+        "XOR of equal numbers is non-zero",
+        "XOR ignores order only for sorted arrays"
+      ],
+      "answer": "total ^ x = XOR of the rest, so removing a non-zero x leaves x (non-zero)",
+      "explanation": "If the total XOR is 0, the XOR of the other elements equals the removed element.",
+      "incorrectOptionExplanations": {
+        "XOR is not associative": "It is associative and commutative.",
+        "XOR of equal numbers is non-zero": "x ^ x = 0.",
+        "XOR ignores order only for sorted arrays": "XOR ignores order always."
+      }
+    },
+    {
+      "id": "lx-insight-01",
+      "category": "main_insight",
+      "type": "free_recall",
+      "promptVariants": [
+        "Why can the answer never be less than n - 1 unless all elements are zero?",
+        "What is the answer for all zeros?"
+      ],
+      "answer": "If the total XOR is non-zero take everything (n). Otherwise removing any single non-zero element x leaves a subsequence with XOR x != 0, so n - 1 is always achievable when a non-zero element exists. Only if every element is 0 is every subsequence XOR 0, giving 0.",
+      "keyPoints": [
+        "Total XOR != 0 => n",
+        "Zero total: drop one non-zero => n - 1",
+        "All zeros => 0"
+      ],
+      "explanation": "Subsequence order does not matter for XOR."
+    },
+    {
+      "id": "lx-time-01",
+      "category": "time_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Time complexity: ___",
+        "Complete the statement: Time complexity: ___"
+      ],
+      "answer": "O(n)",
+      "explanation": "One pass computing the XOR and checking for non-zero.",
+      "acceptedAnswers": [
+        "linear"
+      ]
+    },
+    {
+      "id": "lx-space-01",
+      "category": "space_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Extra space: ___",
+        "Complete the statement: Extra space: ___"
+      ],
+      "answer": "O(1)",
+      "explanation": "Two variables.",
+      "acceptedAnswers": [
+        "constant"
+      ]
+    },
+    {
+      "id": "lx-edge-01",
+      "category": "edge_case",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "What is the answer for [1,2,3] and for [0,0]?",
+        "Why is the first 2?"
+      ],
+      "options": [
+        "2 and 0",
+        "3 and 0",
+        "2 and 1",
+        "3 and 2"
+      ],
+      "answer": "2 and 0",
+      "explanation": "1 ^ 2 ^ 3 = 0, so drop one element (length 2); [0,0] has XOR 0 for every subsequence.",
+      "incorrectOptionExplanations": {
+        "3 and 0": "The whole array XORs to 0.",
+        "2 and 1": "[0] also XORs to 0.",
+        "3 and 2": "Both wrong."
+      }
+    }
+  ],
+  "generatedAt": "2026-10-01T14:43:49Z"
+}

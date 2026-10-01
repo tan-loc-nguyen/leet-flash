@@ -1,0 +1,131 @@
+{
+  "schemaVersion": 1,
+  "problemSlug": "maximum-number-of-balloons",
+  "summary": "How many times can the word 'balloon' be formed from the letters of the text?",
+  "patterns": [
+    "Array / Hashing"
+  ],
+  "mainInsight": "Count the letters b, a, l, o, n; each 'balloon' needs b, a, n once and l, o twice. The answer is the minimum of the available counts divided by the requirement.",
+  "canonicalApproach": "Count five letters and take the min of count / needed",
+  "approaches": [
+    {
+      "name": "Count five letters and take the min of count / needed",
+      "summary": "min(b, a, l // 2, o // 2, n).",
+      "timeComplexity": "O(n)",
+      "spaceComplexity": "O(1)",
+      "strengths": [
+        "Linear, constant space"
+      ],
+      "interviewRelevance": "Your approach; the expected answer."
+    },
+    {
+      "name": "Counter of text vs Counter of 'balloon'",
+      "summary": "min(text[c] // need[c] for c in need).",
+      "timeComplexity": "O(n)",
+      "spaceComplexity": "O(1)",
+      "strengths": [
+        "Concise"
+      ]
+    }
+  ],
+  "personalSolution": {
+    "approach": "Count five letters and take the min of count / needed",
+    "timeComplexity": "O(n)",
+    "spaceComplexity": "O(1)",
+    "isOptimal": true,
+    "notes": "Optimal."
+  },
+  "commonMistakes": [],
+  "edgeCases": [],
+  "cards": [
+    {
+      "id": "mb-pattern-01",
+      "category": "pattern",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "What is the answer in terms of letter counts?",
+        "Why are l and o halved?"
+      ],
+      "options": [
+        "The minimum over letters of available / required (l and o are required twice)",
+        "The sum of all counts",
+        "The count of 'b'",
+        "The length of the text"
+      ],
+      "answer": "The minimum over letters of available / required (l and o are required twice)",
+      "explanation": "The scarcest letter (relative to its requirement) limits how many words can be built.",
+      "incorrectOptionExplanations": {
+        "The sum of all counts": "Letters are not interchangeable.",
+        "The count of 'b'": "Another letter may be scarcer.",
+        "The length of the text": "Irrelevant."
+      }
+    },
+    {
+      "id": "mb-insight-01",
+      "category": "main_insight",
+      "type": "free_recall",
+      "promptVariants": [
+        "Why is the limiting resource the minimum ratio?",
+        "Which letters need special handling in 'balloon'?"
+      ],
+      "answer": "Each copy of the word consumes a fixed multiset of letters, so the number of copies is bounded by the scarcest letter measured in copies: floor(count / required). In 'balloon' the letters l and o are required twice, so their counts are halved.",
+      "keyPoints": [
+        "Resource bottleneck",
+        "min over letters",
+        "l and o twice"
+      ],
+      "explanation": "Same idea as 'how many sandwiches can you make'."
+    },
+    {
+      "id": "mb-time-01",
+      "category": "time_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Time complexity: ___",
+        "Complete the statement: Time complexity: ___"
+      ],
+      "answer": "O(n)",
+      "explanation": "One pass over the text.",
+      "acceptedAnswers": [
+        "linear"
+      ]
+    },
+    {
+      "id": "mb-space-01",
+      "category": "space_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Extra space: ___",
+        "Complete the statement: Extra space: ___"
+      ],
+      "answer": "O(1)",
+      "explanation": "Five counters.",
+      "acceptedAnswers": [
+        "constant"
+      ]
+    },
+    {
+      "id": "mb-edge-01",
+      "category": "edge_case",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "How many 'balloon' can be made from 'loonbalxballpoon'?",
+        "Which letters limit it?"
+      ],
+      "options": [
+        "2",
+        "1",
+        "3",
+        "0"
+      ],
+      "answer": "2",
+      "explanation": "b=2, a=2, l=4 -> 2, o=4 -> 2, n=2: min is 2.",
+      "incorrectOptionExplanations": {
+        "1": "There are enough letters for two.",
+        "3": "b is only 2.",
+        "0": "All letters are present."
+      }
+    }
+  ],
+  "generatedAt": "2026-10-01T14:43:49Z"
+}

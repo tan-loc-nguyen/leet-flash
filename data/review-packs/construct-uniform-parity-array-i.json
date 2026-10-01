@@ -1,0 +1,123 @@
+{
+  "schemaVersion": 1,
+  "problemSlug": "construct-uniform-parity-array-i",
+  "summary": "Given distinct integers, can you build an array (nums2[i] = nums1[i] or nums1[i] - nums1[j], j != i) whose elements all have the same parity?",
+  "patterns": [
+    "Math"
+  ],
+  "mainInsight": "The answer is always true for n >= 1: if any element is odd, turn every even element into odd by subtracting an odd element (even - odd = odd) and keep odd elements as they are; if all elements are even, keep them all.",
+  "canonicalApproach": "Constructive proof",
+  "approaches": [
+    {
+      "name": "Constructive proof",
+      "summary": "Case split on whether an odd element exists.",
+      "timeComplexity": "O(1) after the proof",
+      "spaceComplexity": "O(1)",
+      "strengths": [
+        "Immediate answer"
+      ],
+      "weaknesses": [
+        "Needs the argument"
+      ],
+      "interviewRelevance": "Your approach (return True)."
+    },
+    {
+      "name": "Simulate the construction",
+      "summary": "Actually build nums2.",
+      "timeComplexity": "O(n)",
+      "spaceComplexity": "O(n)",
+      "strengths": [
+        "Verifies the argument"
+      ],
+      "weaknesses": [
+        "Unnecessary"
+      ]
+    }
+  ],
+  "personalSolution": {
+    "approach": "Return True (constructive proof)",
+    "timeComplexity": "O(1)",
+    "spaceComplexity": "O(1)",
+    "isOptimal": true,
+    "notes": "Correct: be ready to explain the construction."
+  },
+  "commonMistakes": [],
+  "edgeCases": [],
+  "cards": [
+    {
+      "id": "cu-pattern-01",
+      "category": "pattern",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "How do you make all elements odd when at least one element is odd?",
+        "What parity does even - odd have?"
+      ],
+      "options": [
+        "Subtract an odd element from each even element (even - odd = odd)",
+        "Add 1 to every element",
+        "Multiply by 3",
+        "It cannot be done"
+      ],
+      "answer": "Subtract an odd element from each even element (even - odd = odd)",
+      "explanation": "Odd elements stay as they are; each even element becomes odd after subtracting any odd element.",
+      "incorrectOptionExplanations": {
+        "Add 1 to every element": "Only the two allowed operations exist.",
+        "Multiply by 3": "Not allowed.",
+        "It cannot be done": "It always can."
+      }
+    },
+    {
+      "id": "cu-insight-01",
+      "category": "main_insight",
+      "type": "free_recall",
+      "promptVariants": [
+        "Why is the answer always True?",
+        "Handle the all-even and the mixed cases."
+      ],
+      "answer": "If all elements are even, keep nums2 = nums1 (all even). If some element is odd, keep the odd elements and replace each even element e with e - o for an odd o (j != i holds because e is even and o is odd, so they are different indices), giving all odd.",
+      "keyPoints": [
+        "All even => keep",
+        "Some odd => fix the evens",
+        "Distinct indices"
+      ],
+      "explanation": "Constructive proofs avoid case-heavy code."
+    },
+    {
+      "id": "cu-time-01",
+      "category": "time_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Time complexity of `return True`: ___",
+        "Complete the statement: Time complexity of `return True`: ___"
+      ],
+      "answer": "O(1)",
+      "explanation": "No computation.",
+      "acceptedAnswers": [
+        "constant"
+      ]
+    },
+    {
+      "id": "cu-edge-01",
+      "category": "edge_case",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "What does the answer look like for a single element [5]?",
+        "Is a single element trivially uniform?"
+      ],
+      "options": [
+        "True: one element always has one parity",
+        "False",
+        "It depends on the value",
+        "An error"
+      ],
+      "answer": "True: one element always has one parity",
+      "explanation": "A one-element array is uniform without any operation.",
+      "incorrectOptionExplanations": {
+        "False": "Uniform trivially holds.",
+        "It depends on the value": "Parity does not matter for a single element.",
+        "An error": "No error."
+      }
+    }
+  ],
+  "generatedAt": "2026-10-01T14:43:49Z"
+}

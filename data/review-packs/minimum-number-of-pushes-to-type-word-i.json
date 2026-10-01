@@ -1,0 +1,135 @@
+{
+  "schemaVersion": 1,
+  "problemSlug": "minimum-number-of-pushes-to-type-word-i",
+  "summary": "Remap the 8 telephone keys freely to minimise the total key pushes to type a word of distinct letters.",
+  "patterns": [
+    "Math",
+    "Greedy"
+  ],
+  "mainInsight": "With 8 keys, the first 8 letters take 1 push, the next 8 take 2 pushes, and so on; assign the most frequent letters to the cheapest positions (here all letters are distinct, so order does not matter). The total follows an arithmetic pattern.",
+  "canonicalApproach": "Closed form",
+  "approaches": [
+    {
+      "name": "Simulate placement by position",
+      "summary": "The i-th letter costs i // 8 + 1 pushes.",
+      "timeComplexity": "O(n)",
+      "spaceComplexity": "O(1)",
+      "strengths": [
+        "Obvious"
+      ]
+    },
+    {
+      "name": "Closed form",
+      "summary": "Full groups of 8 contribute 8 * (1 + 2 + ... + g); the remainder costs (g + 1) each.",
+      "timeComplexity": "O(1)",
+      "spaceComplexity": "O(1)",
+      "strengths": [
+        "Constant time"
+      ],
+      "interviewRelevance": "Your approach."
+    }
+  ],
+  "personalSolution": {
+    "approach": "Closed form (arithmetic series)",
+    "timeComplexity": "O(1)",
+    "spaceComplexity": "O(1)",
+    "isOptimal": true,
+    "notes": "Optimal. Remove the leftover debug print."
+  },
+  "commonMistakes": [],
+  "edgeCases": [],
+  "cards": [
+    {
+      "id": "mn2-pattern-01",
+      "category": "pattern",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "How many pushes does the i-th distinct letter need when 8 keys can be remapped?",
+        "What is the cost structure?"
+      ],
+      "options": [
+        "i // 8 + 1 pushes (0-indexed): groups of 8 per push level",
+        "Always 1",
+        "i pushes",
+        "2 pushes"
+      ],
+      "answer": "i // 8 + 1 pushes (0-indexed): groups of 8 per push level",
+      "explanation": "Eight letters share the first press position, eight the second, and so on.",
+      "incorrectOptionExplanations": {
+        "Always 1": "Only the first 8 letters.",
+        "i pushes": "Too many.",
+        "2 pushes": "Only the second group."
+      }
+    },
+    {
+      "id": "mn2-insight-01",
+      "category": "main_insight",
+      "type": "free_recall",
+      "promptVariants": [
+        "Derive the closed form from the group structure.",
+        "What do `factor` and `remaining` represent?"
+      ],
+      "answer": "Let g = n // 8 full groups and r = n % 8 remaining letters. Full groups cost 8*1 + 8*2 + ... + 8*g = 8 * g(g+1)/2 and the remaining r letters each need g + 1 pushes: total 8*g*(g+1)/2 + r*(g+1).",
+      "keyPoints": [
+        "g = n // 8, r = n % 8",
+        "Sum of an arithmetic series",
+        "Remainder at level g + 1"
+      ],
+      "explanation": "With repeated letters you would assign the most frequent ones to the cheapest slots (Version II)."
+    },
+    {
+      "id": "mn2-time-01",
+      "category": "time_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Time complexity of the closed form: ___",
+        "Complete the statement: Time complexity of the closed form: ___"
+      ],
+      "answer": "O(1)",
+      "explanation": "A few arithmetic operations after len(word).",
+      "acceptedAnswers": [
+        "constant"
+      ]
+    },
+    {
+      "id": "mn2-code-01",
+      "category": "code_reasoning",
+      "type": "code_question",
+      "promptVariants": [
+        "Your code prints `factor, remaining` before returning. Why remove it, and verify the formula for n = 10.",
+        "What does the return expression compute?"
+      ],
+      "code": "factor = n // 8\nremaining = n % 8\nprint(factor, remaining)\nreturn 8*factor*(factor + 1)//2 + remaining*(factor + 1)",
+      "answer": "Leftover debugging output should be removed before submitting. For n = 10: factor = 1, remaining = 2 -> 8*1*2//2 + 2*2 = 8 + 4 = 12 (eight letters at 1 push, two at 2 pushes = 8 + 4). The expression is the sum of full groups plus the partial last group.",
+      "keyPoints": [
+        "Remove debug prints",
+        "n = 10 -> 12",
+        "Arithmetic series + remainder"
+      ],
+      "explanation": "Check small cases against the formula."
+    },
+    {
+      "id": "mn2-edge-01",
+      "category": "edge_case",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "What is the answer for a word with 8 distinct letters? And with 9?",
+        "How does the 9th letter change the total?"
+      ],
+      "options": [
+        "8, and 10",
+        "8, and 9",
+        "16, and 18",
+        "9, and 10"
+      ],
+      "answer": "8, and 10",
+      "explanation": "Eight letters cost 8 pushes; the 9th needs a second press: 8 + 2 = 10.",
+      "incorrectOptionExplanations": {
+        "8, and 9": "The 9th letter costs 2.",
+        "16, and 18": "Too high.",
+        "9, and 10": "Eight letters cost 8."
+      }
+    }
+  ],
+  "generatedAt": "2026-10-01T14:43:49Z"
+}

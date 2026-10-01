@@ -1,0 +1,121 @@
+{
+  "schemaVersion": 1,
+  "problemSlug": "capitalize-the-title",
+  "summary": "Capitalise each word of a title: words of length <= 2 become lowercase, others have only the first letter uppercase.",
+  "patterns": [
+    "Array / Hashing"
+  ],
+  "mainInsight": "Split into words, transform each according to its length, and join with single spaces. str.capitalize() already lowercases the remaining letters.",
+  "canonicalApproach": "split + per-word rule + join",
+  "approaches": [
+    {
+      "name": "split + per-word rule + join",
+      "summary": "Use capitalize() for len > 2 else lower().",
+      "timeComplexity": "O(n)",
+      "spaceComplexity": "O(n)",
+      "strengths": [
+        "Concise"
+      ],
+      "interviewRelevance": "Your approach; the expected answer."
+    }
+  ],
+  "personalSolution": {
+    "approach": "split + per-word rule + join",
+    "timeComplexity": "O(n)",
+    "spaceComplexity": "O(n)",
+    "isOptimal": true,
+    "notes": "Optimal."
+  },
+  "commonMistakes": [],
+  "edgeCases": [],
+  "cards": [
+    {
+      "id": "ct-pattern-01",
+      "category": "pattern",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "Which string method uppercases the first letter and lowercases the rest?",
+        "How do you rebuild the title?"
+      ],
+      "options": [
+        "str.capitalize() and ' '.join(...)",
+        "str.upper()",
+        "str.title()",
+        "str.swapcase()"
+      ],
+      "answer": "str.capitalize() and ' '.join(...)",
+      "explanation": "capitalize() transforms one word as required by the problem.",
+      "incorrectOptionExplanations": {
+        "str.upper()": "Uppercases everything.",
+        "str.title()": "Title-cases words regardless of the length rule and treats apostrophes oddly.",
+        "str.swapcase()": "Swaps cases."
+      }
+    },
+    {
+      "id": "ct-insight-01",
+      "category": "main_insight",
+      "type": "free_recall",
+      "promptVariants": [
+        "Why is capitalize() safe here even for mixed-case input?",
+        "What is the length rule?"
+      ],
+      "answer": "capitalize() makes the first character uppercase and all remaining characters lowercase, which is exactly what is needed for words longer than 2; for shorter words the whole word is lowercased.",
+      "keyPoints": [
+        "capitalize lowercases the rest",
+        "len <= 2 => lower()"
+      ],
+      "explanation": "Split on a single space to keep the spacing."
+    },
+    {
+      "id": "ct-time-01",
+      "category": "time_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Time complexity: ___",
+        "Complete the statement: Time complexity: ___"
+      ],
+      "answer": "O(n)",
+      "explanation": "Each character is processed a constant number of times.",
+      "acceptedAnswers": [
+        "linear"
+      ]
+    },
+    {
+      "id": "ct-space-01",
+      "category": "space_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Space complexity: ___",
+        "Complete the statement: Space complexity: ___"
+      ],
+      "answer": "O(n)",
+      "explanation": "The word list and the output string.",
+      "acceptedAnswers": [
+        "linear"
+      ]
+    },
+    {
+      "id": "ct-edge-01",
+      "category": "edge_case",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "What does 'capiTalIze tHe titLe' become?",
+        "How are 2-letter words treated?"
+      ],
+      "options": [
+        "'Capitalize The Title'",
+        "'capitalize the title'",
+        "'Capitalize the Title'",
+        "'CAPITALIZE THE TITLE'"
+      ],
+      "answer": "'Capitalize The Title'",
+      "explanation": "All three words have more than two letters.",
+      "incorrectOptionExplanations": {
+        "'capitalize the title'": "Words longer than 2 are capitalised.",
+        "'Capitalize the Title'": "'the' has 3 letters, so it is capitalised.",
+        "'CAPITALIZE THE TITLE'": "Only the first letter is uppercase."
+      }
+    }
+  ],
+  "generatedAt": "2026-10-01T14:43:49Z"
+}

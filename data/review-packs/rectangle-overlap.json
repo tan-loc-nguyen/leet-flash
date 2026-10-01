@@ -1,0 +1,117 @@
+{
+  "schemaVersion": 1,
+  "problemSlug": "rectangle-overlap",
+  "summary": "Do two axis-aligned rectangles overlap with positive area?",
+  "patterns": [
+    "Math"
+  ],
+  "mainInsight": "Two rectangles overlap iff their projections overlap on BOTH axes with positive length: left1 < right2 and left2 < right1 and bottom1 < top2 and bottom2 < top1. Strict inequalities exclude touching edges or corners.",
+  "canonicalApproach": "Four strict comparisons",
+  "approaches": [
+    {
+      "name": "Four strict comparisons",
+      "summary": "Check projection overlap on x and y.",
+      "timeComplexity": "O(1)",
+      "spaceComplexity": "O(1)",
+      "strengths": [
+        "Simple, optimal"
+      ],
+      "interviewRelevance": "Your approach; the expected answer."
+    },
+    {
+      "name": "Check the four 'no overlap' cases and negate",
+      "summary": "Overlap = not (left of, right of, above or below).",
+      "timeComplexity": "O(1)",
+      "spaceComplexity": "O(1)",
+      "strengths": [
+        "Equivalent"
+      ]
+    }
+  ],
+  "personalSolution": {
+    "approach": "Four strict comparisons",
+    "timeComplexity": "O(1)",
+    "spaceComplexity": "O(1)",
+    "isOptimal": true,
+    "notes": "Optimal."
+  },
+  "commonMistakes": [],
+  "edgeCases": [],
+  "cards": [
+    {
+      "id": "ro3-pattern-01",
+      "category": "pattern",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "What is the condition for 1D intervals [a1, b1] and [a2, b2] to overlap with positive length?",
+        "How do you extend it to rectangles?"
+      ],
+      "options": [
+        "a1 < b2 and a2 < b1, checked on both axes",
+        "a1 == a2",
+        "b1 > b2",
+        "Only the x axis matters"
+      ],
+      "answer": "a1 < b2 and a2 < b1, checked on both axes",
+      "explanation": "Each axis projection must overlap; both conditions are required.",
+      "incorrectOptionExplanations": {
+        "a1 == a2": "Equal starts is not required.",
+        "b1 > b2": "Only one ordering.",
+        "Only the x axis matters": "Both axes matter."
+      }
+    },
+    {
+      "id": "ro3-insight-01",
+      "category": "main_insight",
+      "type": "free_recall",
+      "promptVariants": [
+        "Why must the inequalities be strict?",
+        "What does a shared edge or corner mean for the answer?"
+      ],
+      "answer": "The problem requires an overlap of positive area. Rectangles that only touch along an edge or at a corner share zero area, so they must return False; strict < comparisons exclude those equality cases.",
+      "keyPoints": [
+        "Positive area required",
+        "Touching => False",
+        "Use < not <="
+      ],
+      "explanation": "Changing the problem to 'touching counts' would use <=."
+    },
+    {
+      "id": "ro3-time-01",
+      "category": "time_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Time complexity: ___",
+        "Complete the statement: Time complexity: ___"
+      ],
+      "answer": "O(1)",
+      "explanation": "Four comparisons.",
+      "acceptedAnswers": [
+        "constant"
+      ]
+    },
+    {
+      "id": "ro3-edge-01",
+      "category": "edge_case",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "Do [0,0,1,1] and [1,0,2,1] (sharing the edge x = 1) overlap?",
+        "What about [0,0,2,2] and [1,1,3,3]?"
+      ],
+      "options": [
+        "No, and yes",
+        "Yes, and yes",
+        "No, and no",
+        "Yes, and no"
+      ],
+      "answer": "No, and yes",
+      "explanation": "Shared edges have zero area; the second pair overlaps in [1,2]x[1,2].",
+      "incorrectOptionExplanations": {
+        "Yes, and yes": "Touching is not overlapping.",
+        "No, and no": "The second pair overlaps.",
+        "Yes, and no": "Reversed."
+      }
+    }
+  ],
+  "generatedAt": "2026-10-01T14:43:49Z"
+}

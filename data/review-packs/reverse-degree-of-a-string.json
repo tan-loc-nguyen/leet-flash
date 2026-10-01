@@ -1,0 +1,101 @@
+{
+  "schemaVersion": 1,
+  "problemSlug": "reverse-degree-of-a-string",
+  "summary": "Compute the sum over positions i (1-indexed) of i times the letter's position in the reversed alphabet (a = 26, ..., z = 1).",
+  "patterns": [
+    "Math"
+  ],
+  "mainInsight": "Each letter's reversed-alphabet value is 26 - (c - 'a'); multiply by its 1-based position and sum - one pass with arithmetic on character codes.",
+  "canonicalApproach": "One pass with ASCII arithmetic",
+  "approaches": [
+    {
+      "name": "One pass with ASCII arithmetic",
+      "summary": "ans += (i + 1) * (26 - (ord(c) - ord('a'))).",
+      "timeComplexity": "O(n)",
+      "spaceComplexity": "O(1)",
+      "strengths": [
+        "Simple"
+      ],
+      "interviewRelevance": "Your approach; the expected answer."
+    }
+  ],
+  "personalSolution": {
+    "approach": "One pass with ASCII arithmetic",
+    "timeComplexity": "O(n)",
+    "spaceComplexity": "O(1)",
+    "isOptimal": true,
+    "notes": "Optimal."
+  },
+  "commonMistakes": [],
+  "edgeCases": [],
+  "cards": [
+    {
+      "id": "rd2-pattern-01",
+      "category": "pattern",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "How do you get the reversed-alphabet value of a letter?",
+        "What is the value of 'a' and 'z'?"
+      ],
+      "options": [
+        "26 - (ord(c) - ord('a')); a = 26 and z = 1",
+        "ord(c)",
+        "ord(c) - ord('a')",
+        "27 - ord(c)"
+      ],
+      "answer": "26 - (ord(c) - ord('a')); a = 26 and z = 1",
+      "explanation": "The alphabet is reversed, so the first letter has the highest value.",
+      "incorrectOptionExplanations": {
+        "ord(c)": "Raw code point.",
+        "ord(c) - ord('a')": "That is the normal 0-indexed position.",
+        "27 - ord(c)": "Missing the offset to 'a'."
+      }
+    },
+    {
+      "id": "rd2-time-01",
+      "category": "time_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Time complexity: ___",
+        "Complete the statement: Time complexity: ___"
+      ],
+      "answer": "O(n)",
+      "explanation": "One pass over the string.",
+      "acceptedAnswers": [
+        "linear"
+      ]
+    },
+    {
+      "id": "rd2-space-01",
+      "category": "space_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Extra space: ___",
+        "Complete the statement: Extra space: ___"
+      ],
+      "answer": "O(1)",
+      "explanation": "One accumulator.",
+      "acceptedAnswers": [
+        "constant"
+      ]
+    },
+    {
+      "id": "rd2-code-01",
+      "category": "code_reasoning",
+      "type": "code_question",
+      "promptVariants": [
+        "Why is the multiplier `(i + 1)` and the letter value `26 - ord(c) + ord('a')`?",
+        "Compute the value for 'abc'."
+      ],
+      "code": "ans = 0\nfor i, c in enumerate(s):\n    ans += (i + 1) * (26 - ord(c) + ord('a'))",
+      "answer": "enumerate is 0-based but the problem uses 1-based positions, so multiply by i + 1. ord(c) - ord('a') is the 0-based alphabet position; subtracting it from 26 reverses the order (a -> 26, b -> 25, ...). For 'abc': 1*26 + 2*25 + 3*24 = 26 + 50 + 72 = 148.",
+      "keyPoints": [
+        "Position is 1-based",
+        "26 - index reverses the alphabet",
+        "'abc' -> 148"
+      ],
+      "explanation": "Check with a tiny example."
+    }
+  ],
+  "generatedAt": "2026-10-01T14:43:49Z"
+}

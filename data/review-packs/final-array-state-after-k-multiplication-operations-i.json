@@ -1,0 +1,136 @@
+{
+  "schemaVersion": 1,
+  "problemSlug": "final-array-state-after-k-multiplication-operations-i",
+  "summary": "Apply k times: multiply the (leftmost) minimum element by a multiplier; return the final array.",
+  "patterns": [
+    "Heap / Priority Queue"
+  ],
+  "mainInsight": "Each operation needs the current minimum (leftmost on ties). A min-heap of (value, index) pairs supplies it in O(log n), ties resolved by index automatically.",
+  "canonicalApproach": "Min-heap of (value, index)",
+  "approaches": [
+    {
+      "name": "Scan for the minimum each time",
+      "summary": "min(range(n), key=nums.__getitem__).",
+      "timeComplexity": "O(n * k)",
+      "spaceComplexity": "O(1)",
+      "strengths": [
+        "Simple, fine for small constraints"
+      ],
+      "weaknesses": [
+        "Quadratic"
+      ]
+    },
+    {
+      "name": "Min-heap of (value, index)",
+      "summary": "Pop the minimum, multiply, push back.",
+      "timeComplexity": "O(n + k log n)",
+      "spaceComplexity": "O(n)",
+      "strengths": [
+        "Scales"
+      ],
+      "interviewRelevance": "Your approach."
+    }
+  ],
+  "personalSolution": {
+    "approach": "Min-heap of (value, index)",
+    "timeComplexity": "O(n + k log n)",
+    "spaceComplexity": "O(n)",
+    "isOptimal": true,
+    "notes": "Optimal."
+  },
+  "commonMistakes": [],
+  "edgeCases": [],
+  "cards": [
+    {
+      "id": "fa2-pattern-01",
+      "category": "pattern",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "Which structure gives the repeated minimum efficiently?",
+        "How are ties on the minimum resolved?"
+      ],
+      "options": [
+        "Min-heap of (value, index) tuples; the smaller index wins ties",
+        "Sorted list re-sorted every time",
+        "Max-heap",
+        "Stack"
+      ],
+      "answer": "Min-heap of (value, index) tuples; the smaller index wins ties",
+      "explanation": "Python compares tuples lexicographically, so equal values are ordered by index.",
+      "incorrectOptionExplanations": {
+        "Sorted list re-sorted every time": "O(n log n) per operation.",
+        "Max-heap": "You need the minimum.",
+        "Stack": "No ordering."
+      }
+    },
+    {
+      "id": "fa2-insight-01",
+      "category": "main_insight",
+      "type": "free_recall",
+      "promptVariants": [
+        "Why store (value, index) in the heap?",
+        "What does the index provide?"
+      ],
+      "answer": "The value orders the heap; the index breaks ties in favour of the leftmost element (as the problem requires) and tells you which array position to update.",
+      "keyPoints": [
+        "Value orders",
+        "Index breaks ties",
+        "Index identifies the slot"
+      ],
+      "explanation": "A plain value heap could not update the array."
+    },
+    {
+      "id": "fa2-time-01",
+      "category": "time_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Time complexity: ___ (n elements, k operations)",
+        "Complete the statement: Time complexity: ___ (n elements, k operations)"
+      ],
+      "answer": "O(n + k log n)",
+      "explanation": "Heapify O(n) plus k pop/push pairs of O(log n).",
+      "acceptedAnswers": [
+        "O(n + k log(n))",
+        "O(n + klogn)"
+      ]
+    },
+    {
+      "id": "fa2-space-01",
+      "category": "space_complexity",
+      "type": "free_recall",
+      "promptVariants": [
+        "What is the extra space and what is mutated?",
+        "What does the heap-based multiplication simulation allocate, and what does it mutate?"
+      ],
+      "answer": "O(n) for the heap of pairs; the input array is also updated in place and returned.",
+      "keyPoints": [
+        "O(n) heap",
+        "Input mutated"
+      ],
+      "explanation": "Copy first if the input must be preserved."
+    },
+    {
+      "id": "fa2-edge-01",
+      "category": "edge_case",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "What if k = 0?",
+        "What is the output for nums = [2,1,3,5,6], k = 5, multiplier = 2?"
+      ],
+      "options": [
+        "The array unchanged; [8,4,6,5,6]",
+        "[]; [8,4,6,5,6]",
+        "The array unchanged; [4,2,3,5,6]",
+        "Error; [8,4,6,5,6]"
+      ],
+      "answer": "The array unchanged; [8,4,6,5,6]",
+      "explanation": "No operations means no change; simulating the five operations gives [8,4,6,5,6].",
+      "incorrectOptionExplanations": {
+        "[]; [8,4,6,5,6]": "k = 0 does not clear the array.",
+        "The array unchanged; [4,2,3,5,6]": "Only two operations are reflected there.",
+        "Error; [8,4,6,5,6]": "k = 0 is valid."
+      }
+    }
+  ],
+  "generatedAt": "2026-10-01T14:43:49Z"
+}

@@ -1,0 +1,132 @@
+{
+  "schemaVersion": 1,
+  "problemSlug": "count-commas-in-range",
+  "summary": "Count the commas used when writing 1..n in standard thousands formatting (n <= 10^5).",
+  "patterns": [
+    "Math"
+  ],
+  "mainInsight": "A number has one comma per full group of three digits beyond the first: values from 1,000 to 999,999 have 1 comma, from 1,000,000 have 2, and so on. For n < 10^6 the total is simply the count of numbers >= 1000.",
+  "canonicalApproach": "Count numbers >= 1000",
+  "approaches": [
+    {
+      "name": "Format every number",
+      "summary": "Count commas in f'{i:,}' for each i.",
+      "timeComplexity": "O(n)",
+      "spaceComplexity": "O(1)",
+      "strengths": [
+        "Obviously correct"
+      ],
+      "weaknesses": [
+        "Linear, wasteful"
+      ]
+    },
+    {
+      "name": "Count numbers >= 1000",
+      "summary": "n - 999 when n >= 1000 (for n < 10^6).",
+      "timeComplexity": "O(1)",
+      "spaceComplexity": "O(1)",
+      "strengths": [
+        "Constant time"
+      ],
+      "weaknesses": [
+        "Needs the constraint n < 10^6"
+      ],
+      "interviewRelevance": "Your approach."
+    },
+    {
+      "name": "Sum over thresholds 10^3, 10^6, ...",
+      "summary": "For each power 10^(3j): add max(0, n - 10^(3j) + 1).",
+      "timeComplexity": "O(log n)",
+      "spaceComplexity": "O(1)",
+      "strengths": [
+        "General solution"
+      ]
+    }
+  ],
+  "personalSolution": {
+    "approach": "Count numbers >= 1000",
+    "timeComplexity": "O(1)",
+    "spaceComplexity": "O(1)",
+    "isOptimal": true,
+    "notes": "Exact for n <= 10^5; add thresholds for larger n."
+  },
+  "commonMistakes": [],
+  "edgeCases": [],
+  "cards": [
+    {
+      "id": "cr-pattern-01",
+      "category": "pattern",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "How many commas does a number between 1,000 and 999,999 have?",
+        "When do numbers get a second comma?"
+      ],
+      "options": [
+        "One; two commas start at 1,000,000",
+        "Two; three commas start at 10,000",
+        "None; commas start at 10^6",
+        "One; two start at 10^5"
+      ],
+      "answer": "One; two commas start at 1,000,000",
+      "explanation": "Each additional group of three digits adds one comma.",
+      "incorrectOptionExplanations": {
+        "Two; three commas start at 10,000": "Wrong thresholds.",
+        "None; commas start at 10^6": "Commas start at 1,000.",
+        "One; two start at 10^5": "Two commas start at 10^6."
+      }
+    },
+    {
+      "id": "cr-insight-01",
+      "category": "main_insight",
+      "type": "free_recall",
+      "promptVariants": [
+        "Why is the answer n - 999 for 1000 <= n < 10^6?",
+        "What would change for n >= 10^6?"
+      ],
+      "answer": "Every number from 1000 to n has exactly one comma and smaller numbers have none, so the total is n - 1000 + 1 = n - 999. For n >= 10^6 numbers from 10^6 also have a second comma, so add max(0, n - 10^6 + 1) (and similarly for 10^9, ...).",
+      "keyPoints": [
+        "Numbers >= 1000 have a comma",
+        "Count = n - 999",
+        "Add per extra threshold"
+      ],
+      "explanation": "The constraint n <= 10^5 makes your formula exact."
+    },
+    {
+      "id": "cr-time-01",
+      "category": "time_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Time complexity of the closed form: ___",
+        "Complete the statement: Time complexity of the closed form: ___"
+      ],
+      "answer": "O(1)",
+      "explanation": "A comparison and a subtraction.",
+      "acceptedAnswers": [
+        "constant"
+      ]
+    },
+    {
+      "id": "cr-edge-01",
+      "category": "edge_case",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "What is the answer for n = 999, 1000 and 1002?",
+        "Which input is the first with a comma?"
+      ],
+      "options": [
+        "0, 1 and 3",
+        "0, 0 and 2",
+        "1, 1 and 3",
+        "0, 1 and 2"
+      ],
+      "answer": "0, 1 and 3",
+      "explanation": "Only 1000 and above have a comma: 1,000 -> 1 and 1,000..1,002 -> 3.",
+      "incorrectOptionExplanations": {
+        "0, 0 and 2": "1,000 has a comma.",
+        "1, 1 and 3": "999 has no comma.",
+        "0, 1 and 2": "1,000, 1,001 and 1,002 are three numbers."
+      }
+    }
+  ],
+  "generatedAt": "2026-10-01T14:43:49Z"
+}

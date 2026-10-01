@@ -1,0 +1,131 @@
+{
+  "schemaVersion": 1,
+  "problemSlug": "maximum-manhattan-distance-after-all-moves",
+  "summary": "With moves U, D, L, R and wildcards '_' (free direction), return the maximum Manhattan distance from the origin.",
+  "patterns": [
+    "Math"
+  ],
+  "mainInsight": "Wildcards are best spent all in the direction that already increases the distance the most, so the maximum is |x| + |y| + number of wildcards, where x and y come from the fixed moves.",
+  "canonicalApproach": "Net displacement + wildcards",
+  "approaches": [
+    {
+      "name": "Try all assignments of wildcards",
+      "summary": "4^w possibilities.",
+      "timeComplexity": "O(4^w)",
+      "spaceComplexity": "O(1)",
+      "weaknesses": [
+        "Exponential"
+      ]
+    },
+    {
+      "name": "Net displacement + wildcards",
+      "summary": "Compute x, y from fixed moves; add the wildcard count.",
+      "timeComplexity": "O(n)",
+      "spaceComplexity": "O(1)",
+      "strengths": [
+        "Linear, constant space"
+      ],
+      "interviewRelevance": "Your approach; the expected answer."
+    }
+  ],
+  "personalSolution": {
+    "approach": "Net displacement + wildcards",
+    "timeComplexity": "O(n)",
+    "spaceComplexity": "O(1)",
+    "isOptimal": true,
+    "notes": "Optimal."
+  },
+  "commonMistakes": [],
+  "edgeCases": [],
+  "cards": [
+    {
+      "id": "mm2-pattern-01",
+      "category": "pattern",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "How should wildcards be assigned to maximise the distance?",
+        "What is the final formula?"
+      ],
+      "options": [
+        "All in the direction that increases the distance: |x| + |y| + wildcards",
+        "Randomly",
+        "Half in x and half in y",
+        "Always 'U'"
+      ],
+      "answer": "All in the direction that increases the distance: |x| + |y| + wildcards",
+      "explanation": "Each wildcard can add exactly 1 to |x| or |y| in an increasing direction (choose the sign matching the current displacement).",
+      "incorrectOptionExplanations": {
+        "Randomly": "Not optimal.",
+        "Half in x and half in y": "Not needed.",
+        "Always 'U'": "May reduce the distance."
+      }
+    },
+    {
+      "id": "mm2-insight-01",
+      "category": "main_insight",
+      "type": "free_recall",
+      "promptVariants": [
+        "Why does each wildcard add exactly 1 to the distance?",
+        "What if the current position is the origin?"
+      ],
+      "answer": "A wildcard moving away from the origin along the axis with the larger (or any non-zero) displacement increases |x| or |y| by one. At the origin any direction increases the distance by 1 as well. So the total is the fixed-move distance plus the wildcard count.",
+      "keyPoints": [
+        "Move away from the origin",
+        "Origin: any direction works",
+        "+1 per wildcard"
+      ],
+      "explanation": "Manhattan distance is |x| + |y|."
+    },
+    {
+      "id": "mm2-time-01",
+      "category": "time_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Time complexity: ___",
+        "Complete the statement: Time complexity: ___"
+      ],
+      "answer": "O(n)",
+      "explanation": "One pass over the moves.",
+      "acceptedAnswers": [
+        "linear"
+      ]
+    },
+    {
+      "id": "mm2-space-01",
+      "category": "space_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Extra space: ___",
+        "Complete the statement: Extra space: ___"
+      ],
+      "answer": "O(1)",
+      "explanation": "Three counters.",
+      "acceptedAnswers": [
+        "constant"
+      ]
+    },
+    {
+      "id": "mm2-edge-01",
+      "category": "edge_case",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "What is the answer for 'L_D_'?",
+        "And for 'U_R'?"
+      ],
+      "options": [
+        "4, and 3",
+        "2, and 2",
+        "4, and 2",
+        "3, and 3"
+      ],
+      "answer": "4, and 3",
+      "explanation": "'L_D_': fixed (-1,-1) distance 2 plus 2 wildcards = 4; 'U_R': (1,1) plus 1 wildcard = 3.",
+      "incorrectOptionExplanations": {
+        "2, and 2": "Wildcards add distance.",
+        "4, and 2": "The second is 3.",
+        "3, and 3": "The first is 4."
+      }
+    }
+  ],
+  "generatedAt": "2026-10-01T14:43:49Z"
+}

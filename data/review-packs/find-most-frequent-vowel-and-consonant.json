@@ -1,0 +1,133 @@
+{
+  "schemaVersion": 1,
+  "problemSlug": "find-most-frequent-vowel-and-consonant",
+  "summary": "Return (max frequency of any vowel) + (max frequency of any consonant) in a lowercase string.",
+  "patterns": [
+    "Array / Hashing"
+  ],
+  "mainInsight": "Count letters; keep the running maximum separately for vowels and consonants (counts only increase, so a running max is exact). Sum the two maxima.",
+  "canonicalApproach": "Running maxima during one pass",
+  "approaches": [
+    {
+      "name": "Count then take two maxima",
+      "summary": "Counter, then max over vowels and over consonants.",
+      "timeComplexity": "O(n)",
+      "spaceComplexity": "O(1)",
+      "strengths": [
+        "Clear"
+      ],
+      "weaknesses": [
+        "Second pass"
+      ]
+    },
+    {
+      "name": "Running maxima during one pass",
+      "summary": "Update max_v or max_c as counts grow.",
+      "timeComplexity": "O(n)",
+      "spaceComplexity": "O(1)",
+      "strengths": [
+        "Single pass"
+      ],
+      "interviewRelevance": "Your approach."
+    }
+  ],
+  "personalSolution": {
+    "approach": "Running maxima during one pass",
+    "timeComplexity": "O(n)",
+    "spaceComplexity": "O(1)",
+    "isOptimal": true,
+    "notes": "Optimal."
+  },
+  "commonMistakes": [],
+  "edgeCases": [],
+  "cards": [
+    {
+      "id": "mv-pattern-01",
+      "category": "pattern",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "What do you maintain per category?",
+        "Why is a running maximum valid?"
+      ],
+      "options": [
+        "The maximum frequency of a vowel and of a consonant, since counts only increase",
+        "The first vowel",
+        "The sorted letters",
+        "The number of distinct letters"
+      ],
+      "answer": "The maximum frequency of a vowel and of a consonant, since counts only increase",
+      "explanation": "Counts never decrease, so the maximum after each increment is the true maximum so far.",
+      "incorrectOptionExplanations": {
+        "The first vowel": "Irrelevant.",
+        "The sorted letters": "Unneeded.",
+        "The number of distinct letters": "Not the quantity asked."
+      }
+    },
+    {
+      "id": "mv-insight-01",
+      "category": "main_insight",
+      "type": "free_recall",
+      "promptVariants": [
+        "Why can both maxima be computed in the same pass as the counting?",
+        "What if there is no vowel or no consonant?"
+      ],
+      "answer": "Only the letter whose count just increased can become the new maximum of its category, so comparing that count with the running maximum is enough. If a category is absent its maximum stays 0, contributing nothing to the sum.",
+      "keyPoints": [
+        "Update only the changed letter",
+        "Absent category => 0"
+      ],
+      "explanation": "No second pass required."
+    },
+    {
+      "id": "mv-time-01",
+      "category": "time_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Time complexity: ___",
+        "Complete the statement: Time complexity: ___"
+      ],
+      "answer": "O(n)",
+      "explanation": "One pass.",
+      "acceptedAnswers": [
+        "linear"
+      ]
+    },
+    {
+      "id": "mv-space-01",
+      "category": "space_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Space complexity (26 letters): ___",
+        "Complete the statement: Space complexity (26 letters): ___"
+      ],
+      "answer": "O(1)",
+      "explanation": "At most 26 counters.",
+      "acceptedAnswers": [
+        "constant"
+      ]
+    },
+    {
+      "id": "mv-edge-01",
+      "category": "edge_case",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "What is the answer for 'aeiaeia'?",
+        "What about 'bbb'?"
+      ],
+      "options": [
+        "3 (a appears 3 times, no consonant), and 3",
+        "7 and 3",
+        "3 and 0",
+        "1 and 3"
+      ],
+      "answer": "3 (a appears 3 times, no consonant), and 3",
+      "explanation": "Vowels: a = 3 is the maximum; there is no consonant so the sum is 3. 'bbb' has consonant maximum 3 and no vowels.",
+      "incorrectOptionExplanations": {
+        "7 and 3": "Not the sum of frequencies of all vowels.",
+        "3 and 0": "'bbb' has consonants.",
+        "1 and 3": "The first has a maximum vowel frequency of 3."
+      }
+    }
+  ],
+  "generatedAt": "2026-10-01T14:43:49Z"
+}

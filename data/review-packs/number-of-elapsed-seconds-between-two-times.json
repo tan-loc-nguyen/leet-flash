@@ -1,0 +1,120 @@
+{
+  "schemaVersion": 1,
+  "problemSlug": "number-of-elapsed-seconds-between-two-times",
+  "summary": "Return the number of seconds between two HH:MM:SS times on the same day.",
+  "patterns": [
+    "Math"
+  ],
+  "mainInsight": "Convert each time to seconds since midnight (h * 3600 + m * 60 + s) and subtract.",
+  "canonicalApproach": "Seconds since midnight, then subtract",
+  "approaches": [
+    {
+      "name": "Seconds since midnight, then subtract",
+      "summary": "Parse the three parts.",
+      "timeComplexity": "O(1)",
+      "spaceComplexity": "O(1)",
+      "strengths": [
+        "Simple"
+      ],
+      "interviewRelevance": "Your approach; the expected answer."
+    },
+    {
+      "name": "datetime",
+      "summary": "Parse with datetime.strptime and subtract.",
+      "timeComplexity": "O(1)",
+      "spaceComplexity": "O(1)",
+      "strengths": [
+        "Handles formats"
+      ],
+      "weaknesses": [
+        "Heavier"
+      ]
+    }
+  ],
+  "personalSolution": {
+    "approach": "Seconds since midnight, then subtract",
+    "timeComplexity": "O(1)",
+    "spaceComplexity": "O(1)",
+    "isOptimal": true,
+    "notes": "Optimal."
+  },
+  "commonMistakes": [],
+  "edgeCases": [],
+  "cards": [
+    {
+      "id": "ne-pattern-01",
+      "category": "pattern",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "How do you compare two clock times arithmetically?",
+        "What is 01:02:03 in seconds?"
+      ],
+      "options": [
+        "Convert to seconds since midnight; 3723",
+        "Compare strings only",
+        "Subtract the hour parts",
+        "86400"
+      ],
+      "answer": "Convert to seconds since midnight; 3723",
+      "explanation": "1 * 3600 + 2 * 60 + 3 = 3723.",
+      "incorrectOptionExplanations": {
+        "Compare strings only": "Subtraction needs numbers.",
+        "Subtract the hour parts": "Ignores minutes and seconds.",
+        "86400": "That is one day."
+      }
+    },
+    {
+      "id": "ne-time-01",
+      "category": "time_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Time complexity: ___",
+        "Complete the statement: Time complexity: ___"
+      ],
+      "answer": "O(1)",
+      "explanation": "A fixed number of operations.",
+      "acceptedAnswers": [
+        "constant"
+      ]
+    },
+    {
+      "id": "ne-insight-01",
+      "category": "main_insight",
+      "type": "free_recall",
+      "promptVariants": [
+        "Why does the end - start subtraction need no borrow handling?",
+        "What assumption does the problem make?"
+      ],
+      "answer": "After converting both times to a single unit (seconds since midnight) the difference is an ordinary integer subtraction; there is no borrowing across minutes or hours. The problem guarantees the end time is not earlier than the start (same day).",
+      "keyPoints": [
+        "Single unit",
+        "Plain subtraction",
+        "End >= start"
+      ],
+      "explanation": "Overnight spans would need + 86400."
+    },
+    {
+      "id": "ne-edge-01",
+      "category": "edge_case",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "What is the result for '00:00:00' to '23:59:59'?",
+        "Which is the largest possible answer?"
+      ],
+      "options": [
+        "86399",
+        "86400",
+        "0",
+        "1439"
+      ],
+      "answer": "86399",
+      "explanation": "23*3600 + 59*60 + 59 = 86399 seconds after midnight.",
+      "incorrectOptionExplanations": {
+        "86400": "That would be a full day.",
+        "0": "The times differ.",
+        "1439": "That is minutes."
+      }
+    }
+  ],
+  "generatedAt": "2026-10-01T14:43:49Z"
+}

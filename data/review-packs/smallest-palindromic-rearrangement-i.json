@@ -1,0 +1,153 @@
+{
+  "schemaVersion": 1,
+  "problemSlug": "smallest-palindromic-rearrangement-i",
+  "summary": "Rearrange a palindromic string into the lexicographically smallest palindrome.",
+  "patterns": [
+    "Array / Hashing",
+    "Sorting"
+  ],
+  "mainInsight": "A palindrome is determined by its first half (the second half is its mirror). The lexicographically smallest palindrome puts the smallest letters first: take half of each letter's count in alphabetical order for the left half, add the single odd letter (if any) in the middle, and mirror.",
+  "canonicalApproach": "Count letters, build the half in alphabetical order",
+  "approaches": [
+    {
+      "name": "Count letters, build the half in alphabetical order",
+      "summary": "left = letters sorted, count // 2 each; mid = odd letter; answer = left + mid + reverse(left).",
+      "timeComplexity": "O(n)",
+      "spaceComplexity": "O(n)",
+      "strengths": [
+        "Counting sort, linear"
+      ],
+      "interviewRelevance": "Your approach; the expected answer."
+    },
+    {
+      "name": "Sort the string and take every other letter",
+      "summary": "Sort and use the first half after pairing.",
+      "timeComplexity": "O(n log n)",
+      "spaceComplexity": "O(n)",
+      "strengths": [
+        "Short"
+      ],
+      "weaknesses": [
+        "Sorting cost"
+      ]
+    }
+  ],
+  "personalSolution": {
+    "approach": "Count letters, build the half in alphabetical order",
+    "timeComplexity": "O(n)",
+    "spaceComplexity": "O(n)",
+    "isOptimal": true,
+    "notes": "Optimal."
+  },
+  "commonMistakes": [],
+  "edgeCases": [],
+  "cards": [
+    {
+      "id": "sp2-pattern-01",
+      "category": "pattern",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "What determines a palindrome?",
+        "How do you minimise it lexicographically?"
+      ],
+      "options": [
+        "Its first half; make the first half as small as possible (alphabetical)",
+        "Its last letter only",
+        "Its length",
+        "Its middle letter"
+      ],
+      "answer": "Its first half; make the first half as small as possible (alphabetical)",
+      "explanation": "The second half mirrors the first, so lexicographic order is decided by the first half.",
+      "incorrectOptionExplanations": {
+        "Its last letter only": "The last letter mirrors the first.",
+        "Its length": "Length is fixed.",
+        "Its middle letter": "The middle is a single character (and forced by the counts)."
+      }
+    },
+    {
+      "id": "sp2-insight-01",
+      "category": "main_insight",
+      "type": "free_recall",
+      "promptVariants": [
+        "Why is the odd-count letter placed in the middle?",
+        "How many letters can have an odd count in a palindrome?"
+      ],
+      "answer": "A palindrome has at most one letter with an odd count (it occupies the centre; the rest pair up symmetrically). The input is already a palindrome, so this letter exists only for odd length and must be the middle.",
+      "keyPoints": [
+        "At most one odd count",
+        "Odd letter in the middle",
+        "Pairs go to both halves"
+      ],
+      "explanation": "Counts determine everything."
+    },
+    {
+      "id": "sp2-time-01",
+      "category": "time_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Time complexity (26 letters): ___",
+        "Complete the statement: Time complexity (26 letters): ___"
+      ],
+      "answer": "O(n)",
+      "explanation": "Counting O(n) plus building the output O(n).",
+      "acceptedAnswers": [
+        "linear"
+      ]
+    },
+    {
+      "id": "sp2-space-01",
+      "category": "space_complexity",
+      "type": "free_recall",
+      "promptVariants": [
+        "What is the space and why is a counting sort used instead of a comparison sort?",
+        "Why does the palindrome construction use counting rather than sorting, and what does it cost in memory?"
+      ],
+      "answer": "O(n) for the output; counting letters over a fixed alphabet (26) avoids the O(n log n) comparison sort.",
+      "keyPoints": [
+        "O(n) output",
+        "Fixed alphabet => counting sort"
+      ],
+      "explanation": "The count array itself is O(1)."
+    },
+    {
+      "id": "sp2-code-01",
+      "category": "code_reasoning",
+      "type": "code_question",
+      "promptVariants": [
+        "Why `c * (cnt[i] // 2)` and why `left[::-1]` at the end?",
+        "What does `mid` hold?"
+      ],
+      "code": "half.append(c * (cnt[i] // 2))\nif cnt[i] % 2 == 1:\n    mid = c\nleft = ''.join(half)\nreturn left + mid + left[::-1]",
+      "answer": "Each letter contributes half its count to the left half, in alphabetical order, which minimises the string. The right half is the mirror image (left reversed). mid is the (at most one) letter with an odd count, placed in the centre; for even-length palindromes it stays empty.",
+      "keyPoints": [
+        "Half of each count in order",
+        "Mirror for the right half",
+        "Odd letter in the middle"
+      ],
+      "explanation": "Both halves together use all letters."
+    },
+    {
+      "id": "sp2-edge-01",
+      "category": "edge_case",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "What is the result for 'z'?",
+        "And for 'babab'?"
+      ],
+      "options": [
+        "'z' and 'abbba'",
+        "'z' and 'babab'",
+        "'' and 'aabbb'",
+        "'z' and 'ababa'"
+      ],
+      "answer": "'z' and 'abbba'",
+      "explanation": "Counts: a = 2, b = 3 -> left = 'ab', mid = 'b', right = 'ba' -> 'abbba'.",
+      "incorrectOptionExplanations": {
+        "'z' and 'babab'": "The second is not minimal.",
+        "'' and 'aabbb'": "Not a palindrome.",
+        "'z' and 'ababa'": "'ababa' uses three a's and two b's, which is not a rearrangement of the input's letters (two a's and three b's)."
+      }
+    }
+  ],
+  "generatedAt": "2026-10-01T14:43:49Z"
+}

@@ -1,0 +1,156 @@
+{
+  "schemaVersion": 1,
+  "problemSlug": "minimum-total-cost-to-process-all-elements",
+  "summary": "Process elements left to right with k starting resources; each time resources are insufficient you may add k at an increasing cost (1, 2, 3, ...). Return the minimum total cost mod 1e9+7.",
+  "patterns": [
+    "Math",
+    "Greedy"
+  ],
+  "mainInsight": "You only add resources when forced, so the number of operations m is the smallest number with k * (m + 1) >= total sum: m = ceil(total / k) - 1. The operations cost 1 + 2 + ... + m = m(m + 1)/2.",
+  "canonicalApproach": "Closed form",
+  "approaches": [
+    {
+      "name": "Simulate element by element",
+      "summary": "Add resources whenever the next element does not fit.",
+      "timeComplexity": "O(n + m)",
+      "spaceComplexity": "O(1)",
+      "strengths": [
+        "Direct"
+      ],
+      "weaknesses": [
+        "Loops over operations"
+      ]
+    },
+    {
+      "name": "Closed form",
+      "summary": "m = ceil(sum / k) - 1; cost = m(m + 1)/2 mod p.",
+      "timeComplexity": "O(n)",
+      "spaceComplexity": "O(1)",
+      "strengths": [
+        "Constant after summing"
+      ],
+      "weaknesses": [
+        "Needs the argument"
+      ],
+      "interviewRelevance": "Your approach."
+    }
+  ],
+  "personalSolution": {
+    "approach": "Closed form (ceil(total / k) - 1 operations, triangular cost)",
+    "timeComplexity": "O(n)",
+    "spaceComplexity": "O(1)",
+    "isOptimal": true,
+    "notes": "Optimal."
+  },
+  "commonMistakes": [],
+  "edgeCases": [],
+  "cards": [
+    {
+      "id": "mt2-pattern-01",
+      "category": "pattern",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "What determines the number of operations?",
+        "Why does the order of elements not matter for the count?"
+      ],
+      "options": [
+        "Only the total sum: m = ceil(total / k) - 1",
+        "The largest element",
+        "The number of elements",
+        "The first element"
+      ],
+      "answer": "Only the total sum: m = ceil(total / k) - 1",
+      "explanation": "Resources are added only when needed, so the final shortage equals total - k, covered by ceil((total - k) / k) operations.",
+      "incorrectOptionExplanations": {
+        "The largest element": "Elements are consumed over time, not at once.",
+        "The number of elements": "Magnitudes matter.",
+        "The first element": "Irrelevant."
+      }
+    },
+    {
+      "id": "mt2-insight-01",
+      "category": "main_insight",
+      "type": "free_recall",
+      "promptVariants": [
+        "Why is m = ceil(total / k) - 1 and not computed per element?",
+        "Why are the costs 1 + 2 + ... + m?"
+      ],
+      "answer": "Resources are consumed monotonically and an operation adds a fixed k whenever the next element does not fit, so after processing everything the total available must cover the total sum: k * (m + 1) >= total with m minimal. The cost of the j-th operation is j, so the total is the triangular number m(m + 1)/2.",
+      "keyPoints": [
+        "k * (m + 1) >= total",
+        "Minimal m",
+        "Costs 1..m sum to m(m+1)/2"
+      ],
+      "explanation": "The prefix sums are dominated by the total."
+    },
+    {
+      "id": "mt2-time-01",
+      "category": "time_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Time complexity: ___",
+        "Complete the statement: Time complexity: ___"
+      ],
+      "answer": "O(n)",
+      "explanation": "One pass to sum the array; the rest is O(1).",
+      "acceptedAnswers": [
+        "linear"
+      ]
+    },
+    {
+      "id": "mt2-space-01",
+      "category": "space_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Extra space: ___",
+        "Complete the statement: Extra space: ___"
+      ],
+      "answer": "O(1)",
+      "explanation": "A few integers.",
+      "acceptedAnswers": [
+        "constant"
+      ]
+    },
+    {
+      "id": "mt2-code-01",
+      "category": "code_reasoning",
+      "type": "code_question",
+      "promptVariants": [
+        "Explain `ops = total // k + (total % k != 0) - 1` in your code and the final formula, including the modulus.",
+        "What happens when total = 0?"
+      ],
+      "code": "if total % k == 0:\n    ops += total // k\nelse:\n    ops += total // k + 1\nops -= 1\nreturn ops*(ops + 1) // 2 % (10**9 + 7)",
+      "answer": "The first part computes ceil(total / k); subtracting 1 removes the free initial k, giving the number of operations. The cost is the triangular number ops*(ops+1)//2, reduced modulo 1e9+7 at the end (Python integers are unbounded, so no earlier reduction is needed). If total = 0, ops becomes -1 and -1 * 0 // 2 = 0, which happens to be correct; clamping ops with max(0, ops) is clearer.",
+      "keyPoints": [
+        "ceil(total / k) - 1 operations",
+        "Triangular cost",
+        "Mod at the end",
+        "Clamp for total = 0"
+      ],
+      "explanation": "Use integer arithmetic only."
+    },
+    {
+      "id": "mt2-edge-01",
+      "category": "edge_case",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "What is the answer for nums = [1,2,3,4] and k = 4?",
+        "How many operations are needed?"
+      ],
+      "options": [
+        "3 (two operations costing 1 + 2)",
+        "6",
+        "1",
+        "0"
+      ],
+      "answer": "3 (two operations costing 1 + 2)",
+      "explanation": "total = 10, ceil(10/4) - 1 = 2 operations costing 1 + 2 = 3.",
+      "incorrectOptionExplanations": {
+        "6": "That would be three operations.",
+        "1": "One operation is not enough.",
+        "0": "Initial resources 4 do not cover the total of 10."
+      }
+    }
+  ],
+  "generatedAt": "2026-10-01T14:43:49Z"
+}

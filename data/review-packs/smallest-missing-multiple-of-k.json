@@ -1,0 +1,135 @@
+{
+  "schemaVersion": 1,
+  "problemSlug": "smallest-missing-multiple-of-k",
+  "summary": "Return the smallest positive multiple of k that is not present in nums.",
+  "patterns": [
+    "Array / Hashing"
+  ],
+  "mainInsight": "Put the numbers in a set, then test k, 2k, 3k, ... until a multiple is missing; at most n + 1 tests are needed.",
+  "canonicalApproach": "Set + iterate multiples",
+  "approaches": [
+    {
+      "name": "Set + iterate multiples",
+      "summary": "m = k; while m in seen: m += k.",
+      "timeComplexity": "O(n)",
+      "spaceComplexity": "O(n)",
+      "strengths": [
+        "Simple, no magic sizes"
+      ],
+      "interviewRelevance": "The expected answer."
+    },
+    {
+      "name": "Count array over num // k",
+      "summary": "Index by quotient (bounded constraints).",
+      "timeComplexity": "O(n + range)",
+      "spaceComplexity": "O(range)",
+      "strengths": [
+        "Fast for small ranges"
+      ],
+      "weaknesses": [
+        "Hard-coded bounds"
+      ],
+      "interviewRelevance": "Your approach."
+    }
+  ],
+  "personalSolution": {
+    "approach": "Count array over num // k",
+    "timeComplexity": "O(n + R)",
+    "spaceComplexity": "O(R)",
+    "isOptimal": true,
+    "notes": "Valid under the small constraints; a set avoids the magic array size."
+  },
+  "commonMistakes": [],
+  "edgeCases": [],
+  "cards": [
+    {
+      "id": "sm4-pattern-01",
+      "category": "pattern",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "How do you find the first absent multiple?",
+        "Which structure gives O(1) membership?"
+      ],
+      "options": [
+        "A set of the values, testing k, 2k, 3k in turn",
+        "Sorting and binary search for each multiple",
+        "A stack",
+        "A heap"
+      ],
+      "answer": "A set of the values, testing k, 2k, 3k in turn",
+      "explanation": "The first multiple not in the set is the answer; at most n + 1 are tested.",
+      "incorrectOptionExplanations": {
+        "Sorting and binary search for each multiple": "Works but is slower.",
+        "A stack": "Irrelevant.",
+        "A heap": "Irrelevant."
+      }
+    },
+    {
+      "id": "sm4-insight-01",
+      "category": "main_insight",
+      "type": "free_recall",
+      "promptVariants": [
+        "Why are at most n + 1 multiples ever checked?",
+        "What does the hard-coded array size 102 assume?"
+      ],
+      "answer": "There are n numbers, so at most n multiples can be present; among k, 2k, ..., (n + 1)k at least one is missing. Your array of 102 entries assumes values and quotients are bounded by about 100 (the constraints), which a set-based loop does not need.",
+      "keyPoints": [
+        "Pigeonhole: n + 1 candidates",
+        "Array size relies on constraints"
+      ],
+      "explanation": "Prefer the set version for robustness."
+    },
+    {
+      "id": "sm4-time-01",
+      "category": "time_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Time complexity: ___",
+        "Complete the statement: Time complexity: ___"
+      ],
+      "answer": "O(n)",
+      "explanation": "Building the set plus at most n + 1 membership checks.",
+      "acceptedAnswers": [
+        "linear"
+      ]
+    },
+    {
+      "id": "sm4-space-01",
+      "category": "space_complexity",
+      "type": "free_recall",
+      "promptVariants": [
+        "Compare the space of the set solution and your count array.",
+        "How do the memory costs of the set approach and the count-array approach compare?"
+      ],
+      "answer": "Set: O(n). Count array: O(R) for the quotient range R (constant 102 under the constraints).",
+      "keyPoints": [
+        "Set O(n)",
+        "Array O(R)"
+      ],
+      "explanation": "Both small here."
+    },
+    {
+      "id": "sm4-edge-01",
+      "category": "edge_case",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "What is returned for nums = [8,2,3,4,6] and k = 2?",
+        "Which multiple is missing?"
+      ],
+      "options": [
+        "10",
+        "2",
+        "5",
+        "12"
+      ],
+      "answer": "10",
+      "explanation": "2, 4, 6, 8 are present, 10 is the first missing multiple of 2.",
+      "incorrectOptionExplanations": {
+        "2": "2 is present.",
+        "5": "Not a multiple of 2.",
+        "12": "10 is smaller."
+      }
+    }
+  ],
+  "generatedAt": "2026-10-01T14:43:49Z"
+}

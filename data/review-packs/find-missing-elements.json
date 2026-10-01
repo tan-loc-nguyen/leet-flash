@@ -1,0 +1,121 @@
+{
+  "schemaVersion": 1,
+  "problemSlug": "find-missing-elements",
+  "summary": "Return all integers between min(nums) and max(nums) that are not in nums.",
+  "patterns": [
+    "Array / Hashing"
+  ],
+  "mainInsight": "Put the values in a set and walk every integer from the minimum to the maximum, collecting those not in the set (they come out already sorted).",
+  "canonicalApproach": "Set + scan the range",
+  "approaches": [
+    {
+      "name": "Sort and compare neighbours",
+      "summary": "Fill the gaps between consecutive sorted values.",
+      "timeComplexity": "O(n log n + R)",
+      "spaceComplexity": "O(1) extra",
+      "strengths": [
+        "No set"
+      ],
+      "weaknesses": [
+        "Sorting"
+      ]
+    },
+    {
+      "name": "Set + scan the range",
+      "summary": "Test every integer in [min, max].",
+      "timeComplexity": "O(n + R)",
+      "spaceComplexity": "O(n)",
+      "strengths": [
+        "Linear, simple"
+      ],
+      "interviewRelevance": "Your approach; the expected answer."
+    }
+  ],
+  "personalSolution": {
+    "approach": "Set + scan the range",
+    "timeComplexity": "O(n + R)",
+    "spaceComplexity": "O(n)",
+    "isOptimal": true,
+    "notes": "Optimal."
+  },
+  "commonMistakes": [],
+  "edgeCases": [],
+  "cards": [
+    {
+      "id": "fm3-pattern-01",
+      "category": "pattern",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "Which structure gives O(1) membership for the scan?",
+        "In which order are the missing values produced?"
+      ],
+      "options": [
+        "A hash set; ascending order from scanning the range",
+        "A heap; arbitrary order",
+        "A stack; descending order",
+        "Binary search; unsorted order"
+      ],
+      "answer": "A hash set; ascending order from scanning the range",
+      "explanation": "Walking from min to max produces ascending output.",
+      "incorrectOptionExplanations": {
+        "A heap; arbitrary order": "Not needed.",
+        "A stack; descending order": "Irrelevant.",
+        "Binary search; unsorted order": "Irrelevant."
+      }
+    },
+    {
+      "id": "fm3-time-01",
+      "category": "time_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Time complexity (n values, range R = max - min + 1): ___",
+        "Complete the statement: Time complexity (n values, range R = max - min + 1): ___"
+      ],
+      "answer": "O(n+R)",
+      "explanation": "Build the set in O(n) and scan the range in O(R).",
+      "acceptedAnswers": [
+        "O(n + R)",
+        "O(R)"
+      ]
+    },
+    {
+      "id": "fm3-space-01",
+      "category": "space_complexity",
+      "type": "free_recall",
+      "promptVariants": [
+        "What do the set and the answer cost?",
+        "How could you avoid the set?"
+      ],
+      "answer": "The set uses O(n); the answer up to O(R). Sorting the input (O(n log n)) lets you find gaps between consecutive values with O(1) extra space.",
+      "keyPoints": [
+        "Set O(n)",
+        "Answer O(R)",
+        "Sort alternative"
+      ],
+      "explanation": "R can be much larger than n."
+    },
+    {
+      "id": "fm3-edge-01",
+      "category": "edge_case",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "What is returned for [1,4,2,5]?",
+        "What if there are no gaps?"
+      ],
+      "options": [
+        "[3]; and []",
+        "[3,4]; and [1]",
+        "[]; and []",
+        "[1,3]; and [2]"
+      ],
+      "answer": "[3]; and []",
+      "explanation": "3 is missing between 1 and 5; with consecutive values the result is empty.",
+      "incorrectOptionExplanations": {
+        "[3,4]; and [1]": "4 is present.",
+        "[]; and []": "3 is missing in the first.",
+        "[1,3]; and [2]": "1 is present."
+      }
+    }
+  ],
+  "generatedAt": "2026-10-01T14:43:49Z"
+}

@@ -1,0 +1,112 @@
+{
+  "schemaVersion": 1,
+  "problemSlug": "concatenation-of-array",
+  "summary": "Return an array that is nums repeated twice (nums followed by nums).",
+  "patterns": [
+    "Array / Hashing"
+  ],
+  "mainInsight": "The answer is nums + nums; the in-place intuition is ans[i] = ans[i + n] = nums[i].",
+  "canonicalApproach": "nums + nums",
+  "approaches": [
+    {
+      "name": "nums + nums",
+      "summary": "List concatenation.",
+      "timeComplexity": "O(n)",
+      "spaceComplexity": "O(n)",
+      "strengths": [
+        "One line"
+      ],
+      "interviewRelevance": "The idiomatic answer."
+    },
+    {
+      "name": "Allocate 2n and copy",
+      "summary": "Pre-size the result and copy each element.",
+      "timeComplexity": "O(n)",
+      "spaceComplexity": "O(n)",
+      "strengths": [
+        "Shows the index relation"
+      ],
+      "interviewRelevance": "Your approach."
+    }
+  ],
+  "personalSolution": {
+    "approach": "Pre-size to 2n and copy",
+    "timeComplexity": "O(n)",
+    "spaceComplexity": "O(n)",
+    "isOptimal": true,
+    "notes": "Correct; `nums + nums` is the idiomatic answer."
+  },
+  "commonMistakes": [],
+  "edgeCases": [],
+  "cards": [
+    {
+      "id": "ca-pattern-01",
+      "category": "pattern",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "What is the index relation of the concatenated array?",
+        "How is ans[i + n] defined?"
+      ],
+      "options": [
+        "ans[i + n] = ans[i] = nums[i]",
+        "ans[i + n] = nums[n - i]",
+        "ans[i + n] = 2 * nums[i]",
+        "ans[i + n] = i"
+      ],
+      "answer": "ans[i + n] = ans[i] = nums[i]",
+      "explanation": "The second half repeats the first half in order.",
+      "incorrectOptionExplanations": {
+        "ans[i + n] = nums[n - i]": "That would reverse the second half.",
+        "ans[i + n] = 2 * nums[i]": "Values are not doubled.",
+        "ans[i + n] = i": "Unrelated."
+      }
+    },
+    {
+      "id": "ca-time-01",
+      "category": "time_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Time complexity: ___",
+        "Complete the statement: Time complexity: ___"
+      ],
+      "answer": "O(n)",
+      "explanation": "2n elements are written.",
+      "acceptedAnswers": [
+        "linear"
+      ]
+    },
+    {
+      "id": "ca-space-01",
+      "category": "space_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Output space: ___",
+        "Complete the statement: Output space: ___"
+      ],
+      "answer": "O(n)",
+      "explanation": "The answer has 2n elements.",
+      "acceptedAnswers": [
+        "linear",
+        "O(2n)"
+      ]
+    },
+    {
+      "id": "ca-code-01",
+      "category": "code_reasoning",
+      "type": "code_question",
+      "promptVariants": [
+        "Why does the solution first extend with zeros and then copy?",
+        "What is the one-line equivalent?"
+      ],
+      "code": "ans = nums + [0] * len(nums)\nfor i in range(len(nums)):\n    ans[i + len(nums)] = ans[i]",
+      "answer": "It allocates a 2n list (first half = nums, second half zeros) and then fills the second half from the first. The one-line equivalent is `nums + nums` (or `nums * 2`).",
+      "keyPoints": [
+        "Pre-size to 2n",
+        "Copy first half to second half",
+        "nums + nums"
+      ],
+      "explanation": "All O(n)."
+    }
+  ],
+  "generatedAt": "2026-10-01T14:43:49Z"
+}

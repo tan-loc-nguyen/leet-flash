@@ -1,0 +1,149 @@
+{
+  "schemaVersion": 1,
+  "problemSlug": "to-lower-case",
+  "summary": "Convert every uppercase ASCII letter in a string to lowercase.",
+  "patterns": [
+    "Array / Hashing"
+  ],
+  "mainInsight": "In ASCII an uppercase letter and its lowercase form differ by 32 (a single bit): c + 32 (or c | 32) for 'A'..'Z'; everything else stays unchanged. Build the result with a list and join once.",
+  "canonicalApproach": "Manual ASCII shift",
+  "approaches": [
+    {
+      "name": "Built-in str.lower()",
+      "summary": "s.lower().",
+      "timeComplexity": "O(n)",
+      "spaceComplexity": "O(n)",
+      "strengths": [
+        "One line"
+      ],
+      "weaknesses": [
+        "Not the point of the exercise"
+      ]
+    },
+    {
+      "name": "Manual ASCII shift",
+      "summary": "If 'A' <= c <= 'Z' map to chr(ord(c) + 32).",
+      "timeComplexity": "O(n)",
+      "spaceComplexity": "O(n)",
+      "strengths": [
+        "Shows the ASCII relation"
+      ],
+      "weaknesses": [
+        "Repeated `+=` on strings is wasteful; prefer a list + join"
+      ],
+      "interviewRelevance": "Your approach."
+    },
+    {
+      "name": "Bit trick",
+      "summary": "c | 0x20 sets the lowercase bit for letters.",
+      "timeComplexity": "O(n)",
+      "spaceComplexity": "O(n)",
+      "strengths": [
+        "Branch-free for letters"
+      ],
+      "weaknesses": [
+        "Must still check the letter range"
+      ]
+    }
+  ],
+  "personalSolution": {
+    "approach": "Manual ASCII shift with string concatenation",
+    "timeComplexity": "O(n)",
+    "spaceComplexity": "O(n)",
+    "isOptimal": true,
+    "notes": "Correct. Build with a list and join; s.lower() is the idiomatic answer."
+  },
+  "commonMistakes": [],
+  "edgeCases": [],
+  "cards": [
+    {
+      "id": "tl-pattern-01",
+      "category": "pattern",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "How do ASCII uppercase and lowercase letters relate?",
+        "Which constant converts 'A'..'Z' to lowercase?"
+      ],
+      "options": [
+        "They differ by 32 (the 0x20 bit)",
+        "They differ by 26",
+        "They differ by 10",
+        "They are the same code point"
+      ],
+      "answer": "They differ by 32 (the 0x20 bit)",
+      "explanation": "'A' is 65 and 'a' is 97; every pair differs by 32.",
+      "incorrectOptionExplanations": {
+        "They differ by 26": "26 is the alphabet length, not the case offset.",
+        "They differ by 10": "No such relation.",
+        "They are the same code point": "Case is encoded in different code points."
+      }
+    },
+    {
+      "id": "tl-insight-01",
+      "category": "main_insight",
+      "type": "free_recall",
+      "promptVariants": [
+        "Why must you test the range 'A'..'Z' before shifting?",
+        "What happens to non-letters?"
+      ],
+      "answer": "Only uppercase letters should change; digits, punctuation or already lowercase letters must stay as they are. Adding 32 blindly would corrupt other characters (e.g. '1' + 32 is 'Q').",
+      "keyPoints": [
+        "Range check first",
+        "Other characters unchanged"
+      ],
+      "explanation": "The bit trick c | 32 also needs the check."
+    },
+    {
+      "id": "tl-time-01",
+      "category": "time_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Time complexity: ___",
+        "Complete the statement: Time complexity: ___"
+      ],
+      "answer": "O(n)",
+      "explanation": "One pass over the string.",
+      "acceptedAnswers": [
+        "linear"
+      ]
+    },
+    {
+      "id": "tl-space-01",
+      "category": "space_complexity",
+      "type": "free_recall",
+      "promptVariants": [
+        "Why is the space O(n) and how should the result be built in Python?",
+        "What is wasteful about `ans += c` in a loop?"
+      ],
+      "answer": "Strings are immutable so the result is a new O(n) string. Appending characters to a list and joining once avoids repeatedly creating intermediate strings (CPython often optimises += but it is not guaranteed).",
+      "keyPoints": [
+        "Immutable strings => O(n) output",
+        "list + join"
+      ],
+      "explanation": "Same advice as other string-building problems."
+    },
+    {
+      "id": "tl-edge-01",
+      "category": "edge_case",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "What does the code produce for 'Hello, World 1'?",
+        "Which characters change?"
+      ],
+      "options": [
+        "'hello, world 1' (only A-Z change)",
+        "'HELLO, WORLD 1'",
+        "'hello, world !'",
+        "An error"
+      ],
+      "answer": "'hello, world 1' (only A-Z change)",
+      "explanation": "Letters become lowercase; comma, space and digit are unchanged.",
+      "incorrectOptionExplanations": {
+        "'HELLO, WORLD 1'": "That is upper-casing.",
+        "'hello, world !'": "The digit must not change.",
+        "An error": "No exception occurs."
+      }
+    }
+  ],
+  "generatedAt": "2026-10-01T14:43:49Z"
+}

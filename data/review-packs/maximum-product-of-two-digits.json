@@ -1,0 +1,135 @@
+{
+  "schemaVersion": 1,
+  "problemSlug": "maximum-product-of-two-digits",
+  "summary": "Return the largest product of any two digits of a number.",
+  "patterns": [
+    "Math",
+    "Sorting"
+  ],
+  "mainInsight": "The best product uses the two largest digits. Scan the digits keeping the largest and second largest (equal digits count twice).",
+  "canonicalApproach": "Track the two largest digits while peeling with % 10",
+  "approaches": [
+    {
+      "name": "Convert to a sorted list of digits",
+      "summary": "Take the last two.",
+      "timeComplexity": "O(d log d)",
+      "spaceComplexity": "O(d)",
+      "strengths": [
+        "Simple"
+      ],
+      "weaknesses": [
+        "Sorting"
+      ]
+    },
+    {
+      "name": "Track the two largest digits while peeling with % 10",
+      "summary": "Update a and b per digit.",
+      "timeComplexity": "O(d)",
+      "spaceComplexity": "O(1)",
+      "strengths": [
+        "No conversion or sorting"
+      ],
+      "interviewRelevance": "Your approach; the expected answer."
+    }
+  ],
+  "personalSolution": {
+    "approach": "Track the two largest digits while peeling with % 10",
+    "timeComplexity": "O(d)",
+    "spaceComplexity": "O(1)",
+    "isOptimal": true,
+    "notes": "Optimal."
+  },
+  "commonMistakes": [],
+  "edgeCases": [],
+  "cards": [
+    {
+      "id": "mp2-pattern-01",
+      "category": "pattern",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "Which digits maximise the product of two digits?",
+        "What do you track while scanning?"
+      ],
+      "options": [
+        "The two largest digits (including duplicates)",
+        "The largest and smallest",
+        "The first two digits",
+        "The last two digits"
+      ],
+      "answer": "The two largest digits (including duplicates)",
+      "explanation": "All digits are non-negative so a larger factor never decreases the product.",
+      "incorrectOptionExplanations": {
+        "The largest and smallest": "The smallest digit minimises the product.",
+        "The first two digits": "Order is irrelevant.",
+        "The last two digits": "Order is irrelevant."
+      }
+    },
+    {
+      "id": "mp2-insight-01",
+      "category": "main_insight",
+      "type": "free_recall",
+      "promptVariants": [
+        "How do duplicate digits (e.g. 99) work in your if/elif update?",
+        "Why is `elif digit > b` correct?"
+      ],
+      "answer": "For the first 9, a becomes 9. For the second 9, `digit > a` is false but `digit > b` (b = 0) is true, so b becomes 9: duplicates fill both slots. The elif prevents a digit from updating both variables in one step.",
+      "keyPoints": [
+        "Equal to a goes to b",
+        "elif avoids double update"
+      ],
+      "explanation": "Digit extraction via % 10 and // 10."
+    },
+    {
+      "id": "mp2-time-01",
+      "category": "time_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Time complexity (d = number of digits): ___",
+        "Complete the statement: Time complexity (d = number of digits): ___"
+      ],
+      "answer": "O(d)",
+      "explanation": "One pass over the digits.",
+      "acceptedAnswers": [
+        "O(log n)",
+        "linear in digits"
+      ]
+    },
+    {
+      "id": "mp2-space-01",
+      "category": "space_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Extra space: ___",
+        "Complete the statement: Extra space: ___"
+      ],
+      "answer": "O(1)",
+      "explanation": "Two variables.",
+      "acceptedAnswers": [
+        "constant"
+      ]
+    },
+    {
+      "id": "mp2-edge-01",
+      "category": "edge_case",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "What is the answer for 31 and for 99?",
+        "What if the number has only two digits?"
+      ],
+      "options": [
+        "3 and 81",
+        "31 and 99",
+        "4 and 18",
+        "1 and 9"
+      ],
+      "answer": "3 and 81",
+      "explanation": "3 * 1 = 3 and 9 * 9 = 81; with two digits the product is simply their product.",
+      "incorrectOptionExplanations": {
+        "31 and 99": "Not products.",
+        "4 and 18": "Sums/other values.",
+        "1 and 9": "Single digits."
+      }
+    }
+  ],
+  "generatedAt": "2026-10-01T14:43:49Z"
+}

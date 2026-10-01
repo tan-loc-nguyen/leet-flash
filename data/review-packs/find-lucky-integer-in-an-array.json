@@ -1,0 +1,132 @@
+{
+  "schemaVersion": 1,
+  "problemSlug": "find-lucky-integer-in-an-array",
+  "summary": "Return the largest value whose frequency equals the value itself (or -1).",
+  "patterns": [
+    "Array / Hashing"
+  ],
+  "mainInsight": "Count frequencies and take the maximum key k with count[k] == k. A heap is unnecessary: track the maximum lucky value while scanning the counts.",
+  "canonicalApproach": "Counter + max over lucky values",
+  "approaches": [
+    {
+      "name": "Counter + max over lucky values",
+      "summary": "max((k for k, v in cnt.items() if k == v), default=-1).",
+      "timeComplexity": "O(n)",
+      "spaceComplexity": "O(n)",
+      "strengths": [
+        "Simple"
+      ],
+      "interviewRelevance": "The expected answer."
+    },
+    {
+      "name": "Counter + size-1 heap",
+      "summary": "Keep the best (v, k) in a heap of size 1.",
+      "timeComplexity": "O(n)",
+      "spaceComplexity": "O(n)",
+      "weaknesses": [
+        "Heap adds nothing here"
+      ],
+      "interviewRelevance": "Your approach."
+    }
+  ],
+  "personalSolution": {
+    "approach": "Counter + size-1 heap",
+    "timeComplexity": "O(n)",
+    "spaceComplexity": "O(n)",
+    "isOptimal": true,
+    "notes": "Correct but the heap is unnecessary; use a running maximum."
+  },
+  "commonMistakes": [],
+  "edgeCases": [],
+  "cards": [
+    {
+      "id": "fl2-pattern-01",
+      "category": "pattern",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "Which structure gives frequencies in O(n)?",
+        "What condition defines a lucky integer?"
+      ],
+      "options": [
+        "A frequency map; value == frequency",
+        "A sorted array only",
+        "A stack",
+        "Binary search"
+      ],
+      "answer": "A frequency map; value == frequency",
+      "explanation": "Count each value, then test value == count.",
+      "incorrectOptionExplanations": {
+        "A sorted array only": "Works with extra passes but a map is simpler.",
+        "A stack": "Irrelevant.",
+        "Binary search": "Irrelevant."
+      }
+    },
+    {
+      "id": "fl2-insight-01",
+      "category": "main_insight",
+      "type": "free_recall",
+      "promptVariants": [
+        "Why is a heap unnecessary for choosing the largest lucky integer?",
+        "What does your size-1 heap do?"
+      ],
+      "answer": "Only the largest lucky value matters, which is a simple running maximum; a heap of size 1 that pops the smaller item just emulates max(). Using `max(..., default=-1)` over lucky keys is clearer.",
+      "keyPoints": [
+        "Running max suffices",
+        "Heap of size 1 = max",
+        "Default -1"
+      ],
+      "explanation": "Remove the heap to simplify."
+    },
+    {
+      "id": "fl2-time-01",
+      "category": "time_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Time complexity: ___",
+        "Complete the statement: Time complexity: ___"
+      ],
+      "answer": "O(n)",
+      "explanation": "Counting plus one pass over distinct values.",
+      "acceptedAnswers": [
+        "linear"
+      ]
+    },
+    {
+      "id": "fl2-space-01",
+      "category": "space_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Space complexity of the counter: ___",
+        "Complete the statement: Space complexity of the counter: ___"
+      ],
+      "answer": "O(n)",
+      "explanation": "At most n distinct values.",
+      "acceptedAnswers": [
+        "linear"
+      ]
+    },
+    {
+      "id": "fl2-edge-01",
+      "category": "edge_case",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "What is returned for [2,2,3,4]?",
+        "And for [1,2,2,3,3,3]?"
+      ],
+      "options": [
+        "2, and 3",
+        "-1, and 3",
+        "2, and 2",
+        "4, and 1"
+      ],
+      "answer": "2, and 3",
+      "explanation": "2 appears twice; in the second array 1 (once), 2 (twice) and 3 (thrice) are all lucky and the largest is 3.",
+      "incorrectOptionExplanations": {
+        "-1, and 3": "2 is lucky in the first array.",
+        "2, and 2": "3 is lucky and larger in the second.",
+        "4, and 1": "Neither."
+      }
+    }
+  ],
+  "generatedAt": "2026-10-01T14:43:49Z"
+}

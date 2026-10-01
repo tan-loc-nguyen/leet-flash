@@ -1,0 +1,155 @@
+{
+  "schemaVersion": 1,
+  "problemSlug": "shortest-path-with-at-most-k-consecutive-identical-characters",
+  "summary": "Find the minimum-weight path from node 0 to n - 1 in a directed weighted graph such that node labels along the path never have more than k consecutive identical characters.",
+  "patterns": [
+    "Graph",
+    "Heap / Priority Queue"
+  ],
+  "mainInsight": "A shortest path with a constraint on a local property needs an expanded state: (node, current run length of identical labels). Run Dijkstra on this state graph, only allowing transitions whose run length stays <= k.",
+  "canonicalApproach": "Dijkstra on (node, run length)",
+  "approaches": [
+    {
+      "name": "Dijkstra on (node, run length)",
+      "summary": "State = (node, count); a min-heap by distance; skip visited states.",
+      "timeComplexity": "O((V*k + E*k) log(V*k))",
+      "spaceComplexity": "O(V*k)",
+      "strengths": [
+        "Correct for non-negative weights"
+      ],
+      "weaknesses": [
+        "State space multiplied by k"
+      ],
+      "interviewRelevance": "Your approach; the expected answer."
+    },
+    {
+      "name": "BFS (if weights were unit)",
+      "summary": "Only valid for unweighted graphs.",
+      "timeComplexity": "O(V*k + E*k)",
+      "spaceComplexity": "O(V*k)",
+      "weaknesses": [
+        "Does not handle weights"
+      ]
+    }
+  ],
+  "personalSolution": {
+    "approach": "Dijkstra on (node, run length)",
+    "timeComplexity": "O((V + E) k log(V k))",
+    "spaceComplexity": "O(V k)",
+    "isOptimal": true,
+    "notes": "Optimal approach. Rename the variable `next`."
+  },
+  "commonMistakes": [],
+  "edgeCases": [],
+  "cards": [
+    {
+      "id": "sk-pattern-01",
+      "category": "pattern",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "What technique handles 'shortest path with a constraint'?",
+        "What is the search state?"
+      ],
+      "options": [
+        "Dijkstra over an expanded state (node, current run length)",
+        "Plain Dijkstra on nodes",
+        "DFS over all paths",
+        "Topological sort"
+      ],
+      "answer": "Dijkstra over an expanded state (node, current run length)",
+      "explanation": "The constraint depends on the recent history (run length), so the history must be part of the state.",
+      "incorrectOptionExplanations": {
+        "Plain Dijkstra on nodes": "It cannot know the current run length.",
+        "DFS over all paths": "Exponential.",
+        "Topological sort": "The graph may have cycles."
+      }
+    },
+    {
+      "id": "sk-insight-01",
+      "category": "main_insight",
+      "type": "free_recall",
+      "promptVariants": [
+        "Why must the run length be part of the state?",
+        "How does it change when moving to a neighbour?"
+      ],
+      "answer": "Two visits to the same node with different run lengths have different futures: a long run may forbid extending with the same label. So (node, count) are distinct states. Moving to a neighbour with the same label as the current node gives count + 1 (rejected if > k); a different label resets the count to 1.",
+      "keyPoints": [
+        "History matters => expand the state",
+        "Same label: count + 1",
+        "Different label: reset to 1"
+      ],
+      "explanation": "Dijkstra stays correct because weights are non-negative."
+    },
+    {
+      "id": "sk-time-01",
+      "category": "time_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Time complexity (V nodes, E edges, run limit k): ___",
+        "Complete the statement: Time complexity (V nodes, E edges, run limit k): ___"
+      ],
+      "answer": "O((V+E)*k*log(V*k))",
+      "explanation": "There are V*k states and E*k transitions, each heap operation costs log of the state count.",
+      "acceptedAnswers": [
+        "O((V + E) k log(Vk))",
+        "O(E k log(V k))"
+      ]
+    },
+    {
+      "id": "sk-space-01",
+      "category": "space_complexity",
+      "type": "free_recall",
+      "promptVariants": [
+        "What does the visited set and the heap hold?",
+        "What can the visited set and the heap grow to in the constrained shortest-path search?"
+      ],
+      "answer": "Up to O(V*k) states in the visited set and O(E*k) entries in the heap in the worst case.",
+      "keyPoints": [
+        "Visited O(Vk)",
+        "Heap O(Ek)"
+      ],
+      "explanation": "k multiplies the state space."
+    },
+    {
+      "id": "sk-code-01",
+      "category": "code_reasoning",
+      "type": "code_question",
+      "promptVariants": [
+        "Why return when popping the target rather than when pushing it, and why is the `visited` check done after the pop?",
+        "What is the initial state?"
+      ],
+      "code": "heap = [(0, 0, 1)]\nwhile heap:\n    cost, node, count = heapq.heappop(heap)\n    if node == n - 1:\n        return cost\n    if (node, count) in visited:\n        continue\n    visited.add((node, count))\n    for next, w in graph.get(node, []):\n        newCount = 1\n        if labels[next] == labels[node]:\n            newCount += count\n        if newCount <= k and (next, newCount) not in visited:\n            heapq.heappush(heap, (cost + w, next, newCount))",
+      "answer": "Dijkstra's invariant: the first time a state is popped its distance is final, so the target must be returned on pop (a cheaper path may still be in the heap when it is first pushed). Stale duplicates are skipped by the visited check after popping. The initial state is node 0 with a run length of 1 (its own label). `next` shadows the Python built-in and should be renamed.",
+      "keyPoints": [
+        "Final distance on pop",
+        "Skip stale heap entries",
+        "Start (0, 0, 1)",
+        "Avoid shadowing next()"
+      ],
+      "explanation": "Equal labels extend the run, others reset it."
+    },
+    {
+      "id": "sk-edge-01",
+      "category": "edge_case",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "What is returned when the target cannot be reached under the constraint?",
+        "What happens with k = 1 and two adjacent equal labels?"
+      ],
+      "options": [
+        "-1; the edge between equal labels is not allowed",
+        "0",
+        "The unconstrained distance",
+        "Infinity"
+      ],
+      "answer": "-1; the edge between equal labels is not allowed",
+      "explanation": "With k = 1 a run of two equal characters is forbidden, so such a transition is skipped; if no valid path exists the answer is -1.",
+      "incorrectOptionExplanations": {
+        "0": "Only for n = 1.",
+        "The unconstrained distance": "The constraint must hold.",
+        "Infinity": "The problem specifies -1."
+      }
+    }
+  ],
+  "generatedAt": "2026-10-01T14:43:49Z"
+}
