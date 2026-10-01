@@ -1,0 +1,153 @@
+{
+  "schemaVersion": 1,
+  "problemSlug": "valid-subarrays-with-matching-sum-digits-i",
+  "summary": "Count subarrays whose sum's first and last digit both equal the digit x.",
+  "patterns": [
+    "Array / Hashing",
+    "Prefix Sum"
+  ],
+  "mainInsight": "With small constraints enumerate every start index and extend the end while keeping a running sum, testing the digit condition on the string form of each sum.",
+  "canonicalApproach": "Brute force with running sum",
+  "approaches": [
+    {
+      "name": "Brute force with running sum",
+      "summary": "Two nested loops; maintain the sum incrementally and test its digits.",
+      "timeComplexity": "O(n^2 * d)",
+      "spaceComplexity": "O(1)",
+      "strengths": [
+        "Simple, fine for small n"
+      ],
+      "weaknesses": [
+        "Quadratic"
+      ],
+      "interviewRelevance": "Your approach."
+    },
+    {
+      "name": "Prefix sums",
+      "summary": "Precompute prefix sums so each subarray sum is O(1).",
+      "timeComplexity": "O(n^2)",
+      "spaceComplexity": "O(n)",
+      "weaknesses": [
+        "No better asymptotically here"
+      ]
+    }
+  ],
+  "personalSolution": {
+    "approach": "Brute force with running sum",
+    "timeComplexity": "O(n^2)",
+    "spaceComplexity": "O(1)",
+    "isOptimal": true,
+    "notes": "Appropriate for the small constraints; rename the variable `sum`."
+  },
+  "commonMistakes": [],
+  "edgeCases": [],
+  "cards": [
+    {
+      "id": "vs-pattern-01",
+      "category": "pattern",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "How can the subarray sum be maintained as the end index grows?",
+        "Which technique avoids recomputing sums from scratch?"
+      ],
+      "options": [
+        "Running sum extended by one element (or prefix sums)",
+        "Sorting",
+        "Binary search",
+        "A heap"
+      ],
+      "answer": "Running sum extended by one element (or prefix sums)",
+      "explanation": "Extending the end by one adds a single element to the previous sum.",
+      "incorrectOptionExplanations": {
+        "Sorting": "Subarrays must stay contiguous.",
+        "Binary search": "The sums are not monotone (values may be negative or zero).",
+        "A heap": "Not relevant."
+      }
+    },
+    {
+      "id": "vs-insight-01",
+      "category": "main_insight",
+      "type": "free_recall",
+      "promptVariants": [
+        "Why is brute force acceptable here?",
+        "What in the constraints permits an O(n^2) solution?"
+      ],
+      "answer": "The input size is small (hundreds), so n^2 is a few tens of thousands of operations. The condition depends on the digits of the full sum (not monotone), which makes a sliding window invalid and leaves enumeration as the straightforward choice.",
+      "keyPoints": [
+        "Small n",
+        "Non-monotone digit condition",
+        "Window not applicable"
+      ],
+      "explanation": "Always check the constraints before optimising."
+    },
+    {
+      "id": "vs-time-01",
+      "category": "time_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Time complexity (digit conversion treated as O(1)): ___",
+        "Complete the statement: Time complexity (digit conversion treated as O(1)): ___"
+      ],
+      "answer": "O(n^2)",
+      "explanation": "All O(n^2) subarrays are visited once.",
+      "acceptedAnswers": [
+        "O(n²)",
+        "quadratic"
+      ]
+    },
+    {
+      "id": "vs-space-01",
+      "category": "space_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Extra space: ___",
+        "Complete the statement: Extra space: ___"
+      ],
+      "answer": "O(1)",
+      "explanation": "Only the running sum and counters (plus temporary strings).",
+      "acceptedAnswers": [
+        "constant"
+      ]
+    },
+    {
+      "id": "vs-code-01",
+      "category": "code_reasoning",
+      "type": "code_question",
+      "promptVariants": [
+        "Why does `isValid` compare `sumStr[0] == targetStr`, and what could go wrong with negative sums?",
+        "How is the digit test performed?"
+      ],
+      "code": "def isValid(sum, target):\n    sumStr = str(sum)\n    targetStr = str(target)\n    return sumStr[0] == targetStr and sumStr[-1] == targetStr",
+      "answer": "It converts both numbers to strings and checks that the first and last characters equal the digit x. For a negative sum the first character would be '-', so the condition fails automatically; whether that is the intended behaviour depends on the problem's constraints (check them). Naming a variable `sum` also shadows the built-in.",
+      "keyPoints": [
+        "String first/last character",
+        "Negative sums start with '-'",
+        "Avoid shadowing sum()"
+      ],
+      "explanation": "Arithmetic alternative: last digit = abs(s) % 10, first digit via repeated //10."
+    },
+    {
+      "id": "vs-edge-01",
+      "category": "edge_case",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "Which sum values can satisfy the condition for x = 3?",
+        "Which sum is valid?"
+      ],
+      "options": [
+        "3, 33, 303",
+        "13",
+        "30",
+        "-3"
+      ],
+      "answer": "3, 33, 303",
+      "explanation": "First and last digit must both be 3: 3, 33, 303, 3003...",
+      "incorrectOptionExplanations": {
+        "13": "Starts with 1.",
+        "30": "Ends with 0.",
+        "-3": "Starts with '-'."
+      }
+    }
+  ],
+  "generatedAt": "2026-10-01T14:13:38Z"
+}

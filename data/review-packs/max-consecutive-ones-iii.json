@@ -1,0 +1,145 @@
+{
+  "schemaVersion": 1,
+  "problemSlug": "max-consecutive-ones-iii",
+  "summary": "Find the longest subarray of 1s after flipping at most k zeros.",
+  "patterns": [
+    "Sliding Window"
+  ],
+  "mainInsight": "A window is valid when it contains at most k zeros (those can be flipped). Expand right; whenever zeros exceed k, shrink from the left until one zero leaves.",
+  "canonicalApproach": "Sliding window (count zeros)",
+  "approaches": [
+    {
+      "name": "Brute force",
+      "summary": "Check all subarrays for their zero count.",
+      "timeComplexity": "O(n^2)",
+      "spaceComplexity": "O(1)"
+    },
+    {
+      "name": "Sliding window (count zeros)",
+      "summary": "Maintain the zero count; shrink while > k.",
+      "timeComplexity": "O(n)",
+      "spaceComplexity": "O(1)",
+      "strengths": [
+        "Optimal"
+      ],
+      "interviewRelevance": "The expected answer."
+    }
+  ],
+  "personalSolution": {
+    "approach": "Sliding window (count zeros)",
+    "timeComplexity": "O(n)",
+    "spaceComplexity": "O(1)",
+    "isOptimal": true,
+    "notes": "Optimal."
+  },
+  "commonMistakes": [],
+  "edgeCases": [],
+  "cards": [
+    {
+      "id": "mo-pattern-01",
+      "category": "pattern",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "Which pattern solves Max Consecutive Ones III?",
+        "How is 'flip at most k zeros' modelled?"
+      ],
+      "options": [
+        "Sliding window with at most k zeros",
+        "Prefix sums only",
+        "Greedy flipping the first k zeros",
+        "Binary search"
+      ],
+      "answer": "Sliding window with at most k zeros",
+      "explanation": "Flipping k zeros is equivalent to allowing k zeros inside the window.",
+      "incorrectOptionExplanations": {
+        "Prefix sums only": "Binary search over prefix sums can work but sliding window is simpler.",
+        "Greedy flipping the first k zeros": "The best flips depend on the window position.",
+        "Binary search": "Possible on window length but O(n log n)."
+      }
+    },
+    {
+      "id": "mo-insight-01",
+      "category": "main_insight",
+      "type": "free_recall",
+      "promptVariants": [
+        "Why does counting zeros in the window fully capture the problem?",
+        "What does the window validity condition say?"
+      ],
+      "answer": "Any zero inside the window can be flipped; so a window is achievable iff its zero count <= k. The longest such window is the answer.",
+      "keyPoints": [
+        "Zeros inside window are flippable",
+        "Valid iff zeros <= k",
+        "Maximise window length"
+      ],
+      "explanation": "Same template as 'at most k distinct'."
+    },
+    {
+      "id": "mo-time-01",
+      "category": "time_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Time complexity: ___",
+        "Complete the statement: Time complexity: ___"
+      ],
+      "answer": "O(n)",
+      "explanation": "Each index is added and removed once.",
+      "acceptedAnswers": [
+        "linear"
+      ]
+    },
+    {
+      "id": "mo-space-01",
+      "category": "space_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Extra space: ___",
+        "Complete the statement: Extra space: ___"
+      ],
+      "answer": "O(1)",
+      "explanation": "A zero counter and two pointers.",
+      "acceptedAnswers": [
+        "constant"
+      ]
+    },
+    {
+      "id": "mo-code-01",
+      "category": "code_reasoning",
+      "type": "code_question",
+      "promptVariants": [
+        "Why does the inner `while numOfZeros > k` decrement only when nums[l] == 0, and why must the loop shrink repeatedly?",
+        "What does the window contain after the while loop?"
+      ],
+      "code": "for r in range(len(nums)):\n    if nums[r] == 0:\n        numOfZeros += 1\n    while numOfZeros > k:\n        if nums[l] == 0:\n            numOfZeros -= 1\n        l += 1\n    ans = max(ans, r - l + 1)",
+      "answer": "Only removing a zero changes the zero count; ones can be dropped without effect, so we move l until one zero leaves. After the loop the window [l, r] contains at most k zeros and is the longest valid window ending at r.",
+      "keyPoints": [
+        "Only zeros change the count",
+        "Shrink until count <= k",
+        "Window valid after the loop"
+      ],
+      "explanation": "k = 0 gives the plain longest run of ones."
+    },
+    {
+      "id": "mo-edge-01",
+      "category": "edge_case",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "What is the answer when k = 0?",
+        "How does the algorithm degrade for k = 0?"
+      ],
+      "options": [
+        "The longest run of consecutive 1s",
+        "0",
+        "The array length",
+        "k"
+      ],
+      "answer": "The longest run of consecutive 1s",
+      "explanation": "No flips are allowed, so the window can contain no zeros.",
+      "incorrectOptionExplanations": {
+        "0": "Only if there are no 1s.",
+        "The array length": "Only if there are no zeros.",
+        "k": "Unrelated to the run length."
+      }
+    }
+  ],
+  "generatedAt": "2026-10-01T14:10:50Z"
+}

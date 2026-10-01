@@ -1,0 +1,25 @@
+{
+  "leetcodeId": "525",
+  "title": "Contiguous Array",
+  "slug": "contiguous-array",
+  "url": "https://leetcode.com/problems/contiguous-array/",
+  "difficulty": "Medium",
+  "status": "unsolved",
+  "premium": false,
+  "tags": [
+    "Array",
+    "Hash Table",
+    "Prefix Sum"
+  ],
+  "problemStatement": "Given a binary array nums, return the maximum length of a contiguous subarray with an equal number of 0 and 1.\n\nExample 1:\n\nInput: nums = [0,1]\nOutput: 2\nExplanation: [0, 1] is the longest contiguous subarray with an equal number of 0 and 1.\n\nExample 2:\n\nInput: nums = [0,1,0]\nOutput: 2\nExplanation: [0, 1] (or [1, 0]) is a longest contiguous subarray with equal number of 0 and 1.\n\nExample 3:\n\nInput: nums = [0,1,1,1,1,1,0,0,0]\nOutput: 6\nExplanation: [1,1,1,0,0,0] is the longest contiguous subarray with equal number of 0 and 1.\n\nConstraints:\n\n- 1 <= nums.length <= 10^5\n\n- nums[i] is either 0 or 1.",
+  "constraints": [
+    "1 <= nums.length <= 10^5",
+    "nums[i] is either 0 or 1."
+  ],
+  "hints": [],
+  "acRate": 52.48,
+  "notes": [],
+  "source": "manual",
+  "importedAt": "2026-10-01T14:11:48Z",
+  "lastSyncedAt": "2026-10-01T14:11:48Z"
+}

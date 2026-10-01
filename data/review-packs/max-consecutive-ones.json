@@ -1,0 +1,134 @@
+{
+  "schemaVersion": 1,
+  "problemSlug": "max-consecutive-ones",
+  "summary": "Return the length of the longest run of consecutive 1s in a binary array.",
+  "patterns": [
+    "Array / Hashing"
+  ],
+  "mainInsight": "A single pass with a running counter: increment on 1, reset to 0 on 0, and track the maximum.",
+  "canonicalApproach": "Single pass counter",
+  "approaches": [
+    {
+      "name": "Single pass counter",
+      "summary": "curr resets at zeros; best = max(best, curr).",
+      "timeComplexity": "O(n)",
+      "spaceComplexity": "O(1)",
+      "strengths": [
+        "Optimal"
+      ],
+      "interviewRelevance": "The expected answer."
+    },
+    {
+      "name": "Split on zeros",
+      "summary": "''.join(...).split('0') and take max length.",
+      "timeComplexity": "O(n)",
+      "spaceComplexity": "O(n)",
+      "strengths": [
+        "One-liner"
+      ],
+      "weaknesses": [
+        "Extra memory"
+      ]
+    }
+  ],
+  "personalSolution": {
+    "approach": "Single pass counter",
+    "timeComplexity": "O(n)",
+    "spaceComplexity": "O(1)",
+    "isOptimal": true,
+    "notes": "Optimal."
+  },
+  "commonMistakes": [],
+  "edgeCases": [],
+  "cards": [
+    {
+      "id": "mo1-pattern-01",
+      "category": "pattern",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "What approach finds the longest run of ones?",
+        "Which technique does this problem need?"
+      ],
+      "options": [
+        "One pass with a running counter that resets on 0",
+        "Binary search",
+        "Sorting",
+        "Hash map"
+      ],
+      "answer": "One pass with a running counter that resets on 0",
+      "explanation": "Runs are contiguous, so a streak counter is enough.",
+      "incorrectOptionExplanations": {
+        "Binary search": "Not sorted.",
+        "Sorting": "Destroys contiguity.",
+        "Hash map": "No lookups needed."
+      }
+    },
+    {
+      "id": "mo1-insight-01",
+      "category": "main_insight",
+      "type": "free_recall",
+      "promptVariants": [
+        "Why must the counter be reset on every zero but the best kept?",
+        "How do curr and best differ?"
+      ],
+      "answer": "curr is the length of the run ending at the current index; a zero ends the run so it resets. best is the largest curr ever seen. Updating best on each 1 (or each step) ensures a run ending at the array's end is counted.",
+      "keyPoints": [
+        "curr = current streak",
+        "best = historical max",
+        "Update best before/at the end of runs"
+      ],
+      "explanation": "Forgetting to update at the end is the classic bug when updating only on zeros."
+    },
+    {
+      "id": "mo1-time-01",
+      "category": "time_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Time complexity: ___",
+        "Complete the statement: Time complexity: ___"
+      ],
+      "answer": "O(n)",
+      "explanation": "One pass.",
+      "acceptedAnswers": [
+        "linear"
+      ]
+    },
+    {
+      "id": "mo1-space-01",
+      "category": "space_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Extra space: ___",
+        "Complete the statement: Extra space: ___"
+      ],
+      "answer": "O(1)",
+      "explanation": "Two counters.",
+      "acceptedAnswers": [
+        "constant"
+      ]
+    },
+    {
+      "id": "mo1-edge-01",
+      "category": "edge_case",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "Why should best be updated while counting rather than only when a zero is seen?",
+        "Which input exposes updating only on zeros?"
+      ],
+      "options": [
+        "[1,1,1] - a run that ends at the array's end",
+        "[0,0,0]",
+        "[]",
+        "[0,1,0]"
+      ],
+      "answer": "[1,1,1] - a run that ends at the array's end",
+      "explanation": "No trailing zero ever triggers the update, so the run would be missed.",
+      "incorrectOptionExplanations": {
+        "[0,0,0]": "Answer 0 either way.",
+        "[]": "Not allowed / trivial.",
+        "[0,1,0]": "A zero follows the run, so it would be caught."
+      }
+    }
+  ],
+  "generatedAt": "2026-10-01T14:13:38Z"
+}

@@ -1,0 +1,157 @@
+{
+  "schemaVersion": 1,
+  "problemSlug": "subarray-product-less-than-k",
+  "summary": "Count the contiguous subarrays whose product is strictly less than k (positive integers).",
+  "patterns": [
+    "Sliding Window"
+  ],
+  "mainInsight": "With positive numbers the product grows when extending right and shrinks when removing from the left, so for each right end shrink l until the product is < k; every start between l and r then gives a valid subarray, adding r - l + 1.",
+  "canonicalApproach": "Sliding window",
+  "approaches": [
+    {
+      "name": "Brute force",
+      "summary": "Multiply every subarray.",
+      "timeComplexity": "O(n^2)",
+      "spaceComplexity": "O(1)"
+    },
+    {
+      "name": "Prefix logs + binary search",
+      "summary": "Take logs, use prefix sums and binary search.",
+      "timeComplexity": "O(n log n)",
+      "spaceComplexity": "O(n)",
+      "weaknesses": [
+        "Floating-point precision"
+      ]
+    },
+    {
+      "name": "Sliding window",
+      "summary": "Maintain the product; shrink while >= k; add the window size.",
+      "timeComplexity": "O(n)",
+      "spaceComplexity": "O(1)",
+      "strengths": [
+        "Optimal"
+      ],
+      "weaknesses": [
+        "Needs positivity"
+      ],
+      "interviewRelevance": "The expected answer."
+    }
+  ],
+  "personalSolution": {
+    "approach": "Sliding window",
+    "timeComplexity": "O(n)",
+    "spaceComplexity": "O(1)",
+    "isOptimal": true,
+    "notes": "Right approach. Replace `product /= nums[l]` with `//=` to avoid float precision problems."
+  },
+  "commonMistakes": [],
+  "edgeCases": [],
+  "cards": [
+    {
+      "id": "sp-pattern-01",
+      "category": "pattern",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "Which technique counts subarrays with product < k in O(n)?",
+        "Why does a sliding window apply?"
+      ],
+      "options": [
+        "Sliding window (all numbers positive => monotone product)",
+        "Binary search on the array",
+        "Monotonic stack",
+        "Hash map of prefix products"
+      ],
+      "answer": "Sliding window (all numbers positive => monotone product)",
+      "explanation": "Positivity makes the product monotone in both window ends.",
+      "incorrectOptionExplanations": {
+        "Binary search on the array": "Subarray products are not searched in a sorted array.",
+        "Monotonic stack": "No nearest-greater relation.",
+        "Hash map of prefix products": "Used for exact products, not thresholds."
+      }
+    },
+    {
+      "id": "sp-insight-01",
+      "category": "main_insight",
+      "type": "free_recall",
+      "promptVariants": [
+        "Why do we add r - l + 1 for each right end?",
+        "Explain how counting works per right endpoint."
+      ],
+      "answer": "If the window [l, r] has product < k then every subarray ending at r that starts at any index in [l, r] also has product < k (products of fewer positive numbers are not larger). There are r - l + 1 of them, and each subarray is counted exactly once at its right end.",
+      "keyPoints": [
+        "All suffixes of the window qualify",
+        "r - l + 1 subarrays per right end",
+        "Each subarray counted once"
+      ],
+      "explanation": "The classic 'count subarrays ending at r' trick."
+    },
+    {
+      "id": "sp-time-01",
+      "category": "time_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Time complexity: ___",
+        "Subarray Product Less Than K runs in ___ time."
+      ],
+      "answer": "O(n)",
+      "explanation": "Each pointer moves forward once.",
+      "acceptedAnswers": [
+        "linear"
+      ]
+    },
+    {
+      "id": "sp-space-01",
+      "category": "space_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Extra space: ___",
+        "Complete the statement: Extra space: ___"
+      ],
+      "answer": "O(1)",
+      "explanation": "Two pointers and a product variable.",
+      "acceptedAnswers": [
+        "constant"
+      ]
+    },
+    {
+      "id": "sp-code-01",
+      "category": "code_reasoning",
+      "type": "code_question",
+      "promptVariants": [
+        "Your code uses `product /= nums[l]`. What is the issue with `/` here and what should you use?",
+        "Why is the `l <= r` guard needed when k <= 1?"
+      ],
+      "code": "product = 1\nfor r in range(n):\n    product *= nums[r]\n    while product >= k and l <= r:\n        product /= nums[l]\n        l += 1\n    ans += r - l + 1",
+      "answer": "`/` is true division and produces a float, so for large products precision is lost and the comparison with k can be wrong. Use integer floor division `//=` (exact, because nums[l] divides the product). The `l <= r` guard prevents l passing r when even a single element is >= k (e.g. k <= 1), leaving an empty window with product 1.",
+      "keyPoints": [
+        "Use // not /",
+        "Float precision for large products",
+        "Guard handles an empty window (k <= 1)"
+      ],
+      "explanation": "With k <= 1 return 0 up front to avoid the edge case."
+    },
+    {
+      "id": "sp-edge-01",
+      "category": "edge_case",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "What is the answer when k <= 1 (all numbers >= 1)?",
+        "Why is that case special?"
+      ],
+      "options": [
+        "0, since no non-empty product is < 1",
+        "n",
+        "The array length squared",
+        "1"
+      ],
+      "answer": "0, since no non-empty product is < 1",
+      "explanation": "Every product is at least 1, so none is strictly below k <= 1; the window empties and r - l + 1 is 0 each time.",
+      "incorrectOptionExplanations": {
+        "n": "Single elements are not < 1.",
+        "The array length squared": "Not applicable.",
+        "1": "Not generally true."
+      }
+    }
+  ],
+  "generatedAt": "2026-10-01T14:10:50Z"
+}

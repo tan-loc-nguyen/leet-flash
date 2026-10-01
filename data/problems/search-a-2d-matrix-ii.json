@@ -1,0 +1,31 @@
+{
+  "leetcodeId": "240",
+  "title": "Search a 2D Matrix II",
+  "slug": "search-a-2d-matrix-ii",
+  "url": "https://leetcode.com/problems/search-a-2d-matrix-ii/",
+  "difficulty": "Medium",
+  "status": "unsolved",
+  "premium": false,
+  "tags": [
+    "Array",
+    "Binary Search",
+    "Divide and Conquer",
+    "Matrix"
+  ],
+  "problemStatement": "Write an efficient algorithm that searches for a value target in an m x n integer matrix matrix. This matrix has the following properties:\n\n- Integers in each row are sorted in ascending from left to right.\n\n- Integers in each column are sorted in ascending from top to bottom.\n\nExample 1:\n\nInput: matrix = [[1,4,7,11,15],[2,5,8,12,19],[3,6,9,16,22],[10,13,14,17,24],[18,21,23,26,30]], target = 5\nOutput: true\n\nExample 2:\n\nInput: matrix = [[1,4,7,11,15],[2,5,8,12,19],[3,6,9,16,22],[10,13,14,17,24],[18,21,23,26,30]], target = 20\nOutput: false\n\nConstraints:\n\n- m == matrix.length\n\n- n == matrix[i].length\n\n- 1 <= n, m <= 300\n\n- -10^9 <= matrix[i][j] <= 10^9\n\n- All the integers in each row are sorted in ascending order.\n\n- All the integers in each column are sorted in ascending order.\n\n- -10^9 <= target <= 10^9",
+  "constraints": [
+    "m == matrix.length",
+    "n == matrix[i].length",
+    "1 <= n, m <= 300",
+    "-10^9 <= matrix[i][j] <= 10^9",
+    "All the integers in each row are sorted in ascending order.",
+    "All the integers in each column are sorted in ascending order.",
+    "-10^9 <= target <= 10^9"
+  ],
+  "hints": [],
+  "acRate": 58.18,
+  "notes": [],
+  "source": "manual",
+  "importedAt": "2026-10-01T14:11:42Z",
+  "lastSyncedAt": "2026-10-01T14:11:42Z"
+}

@@ -1,0 +1,155 @@
+{
+  "schemaVersion": 1,
+  "problemSlug": "number-of-substrings-containing-all-three-characters",
+  "summary": "Count substrings of a string over {a,b,c} that contain at least one of each character.",
+  "patterns": [
+    "Sliding Window"
+  ],
+  "mainInsight": "Once a window [l, r] contains all three characters, every extension to the right (r..n-1) also does, so add n - r and then shrink from the left. Equivalent: for each right end the number of valid starts is min(last a, last b, last c) + 1.",
+  "canonicalApproach": "Sliding window",
+  "approaches": [
+    {
+      "name": "Brute force",
+      "summary": "Check every substring.",
+      "timeComplexity": "O(n^3)",
+      "spaceComplexity": "O(1)"
+    },
+    {
+      "name": "Sliding window",
+      "summary": "When valid, add n - r; shrink from the left.",
+      "timeComplexity": "O(n)",
+      "spaceComplexity": "O(1)",
+      "strengths": [
+        "Optimal"
+      ],
+      "interviewRelevance": "Your approach."
+    },
+    {
+      "name": "Last-seen indices",
+      "summary": "ans += min(last[a], last[b], last[c]) + 1 for each r.",
+      "timeComplexity": "O(n)",
+      "spaceComplexity": "O(1)",
+      "strengths": [
+        "No inner loop"
+      ],
+      "interviewRelevance": "The shortest code."
+    }
+  ],
+  "personalSolution": {
+    "approach": "Sliding window (count extensions)",
+    "timeComplexity": "O(n)",
+    "spaceComplexity": "O(1)",
+    "isOptimal": true,
+    "notes": "Optimal; the last-seen-index version is a one-line alternative."
+  },
+  "commonMistakes": [],
+  "edgeCases": [],
+  "cards": [
+    {
+      "id": "ns-pattern-01",
+      "category": "pattern",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "Which pattern counts substrings containing all of a set of characters?",
+        "What is the key idea for counting (not maximising) with a window?"
+      ],
+      "options": [
+        "Sliding window counting extensions to the right",
+        "Dynamic programming over all substrings",
+        "Trie",
+        "Binary search on the substring length"
+      ],
+      "answer": "Sliding window counting extensions to the right",
+      "explanation": "Each minimal valid left boundary contributes n - r substrings.",
+      "incorrectOptionExplanations": {
+        "Dynamic programming over all substrings": "O(n^2) states.",
+        "Trie": "Not about prefixes.",
+        "Binary search on the substring length": "Counting needs every valid substring, not just a length."
+      }
+    },
+    {
+      "id": "ns-insight-01",
+      "category": "main_insight",
+      "type": "free_recall",
+      "promptVariants": [
+        "Why add `len(s) - r` when the window [l, r] is valid?",
+        "How does shrinking from the left then count the other substrings?"
+      ],
+      "answer": "If [l, r] contains a, b and c, every substring [l, r'] with r' >= r also does: n - r of them. Then removing s[l] and moving l forward counts the valid substrings starting at later left positions on subsequent steps while the window remains valid.",
+      "keyPoints": [
+        "Extensions to the right stay valid",
+        "n - r substrings per valid left",
+        "Shrink to count the next left"
+      ],
+      "explanation": "Counting by left boundary avoids double counting."
+    },
+    {
+      "id": "ns-time-01",
+      "category": "time_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Time complexity: ___",
+        "Complete the statement: Time complexity: ___"
+      ],
+      "answer": "O(n)",
+      "explanation": "Each pointer moves forward once.",
+      "acceptedAnswers": [
+        "linear"
+      ]
+    },
+    {
+      "id": "ns-space-01",
+      "category": "space_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Extra space (three counters): ___",
+        "Complete the statement: Extra space (three counters): ___"
+      ],
+      "answer": "O(1)",
+      "explanation": "A fixed-size frequency dict.",
+      "acceptedAnswers": [
+        "constant"
+      ]
+    },
+    {
+      "id": "ns-code-01",
+      "category": "code_reasoning",
+      "type": "code_question",
+      "promptVariants": [
+        "Why is the answer incremented inside the while loop and what does `freq[s[l]] -= 1` do to the next iteration?",
+        "What is the invariant after the while loop ends?"
+      ],
+      "code": "for r in range(len(s)):\n    freq[s[r]] += 1\n    while freq['a'] > 0 and freq['b'] > 0 and freq['c'] > 0:\n        ans += len(s) - r\n        freq[s[l]] -= 1\n        l += 1",
+      "answer": "Each iteration of the while loop corresponds to a distinct valid left boundary l (with right end r): it adds n - r substrings, then removes s[l] and checks the next left boundary. After the loop the window [l, r] no longer contains all three, so no further left boundary is valid for this r.",
+      "keyPoints": [
+        "One iteration per valid left boundary",
+        "Add n - r each time",
+        "After loop: window invalid"
+      ],
+      "explanation": "Equivalent to counting min(last_a, last_b, last_c) + 1 per r."
+    },
+    {
+      "id": "ns-edge-01",
+      "category": "edge_case",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "What is the answer for 'abc'?",
+        "How many substrings contain a, b and c?"
+      ],
+      "options": [
+        "1",
+        "3",
+        "0",
+        "6"
+      ],
+      "answer": "1",
+      "explanation": "Only the whole string 'abc' contains all three characters.",
+      "incorrectOptionExplanations": {
+        "3": "Shorter substrings lack a character.",
+        "0": "The full string qualifies.",
+        "6": "Only one substring qualifies."
+      }
+    }
+  ],
+  "generatedAt": "2026-10-01T14:10:50Z"
+}

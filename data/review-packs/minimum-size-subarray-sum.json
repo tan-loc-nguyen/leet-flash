@@ -1,0 +1,161 @@
+{
+  "schemaVersion": 1,
+  "problemSlug": "minimum-size-subarray-sum",
+  "summary": "Find the minimal length of a contiguous subarray (of positives) whose sum is at least the target.",
+  "patterns": [
+    "Sliding Window",
+    "Prefix Sum"
+  ],
+  "mainInsight": "All numbers are positive, so adding on the right only increases the sum and removing from the left only decreases it. Expand until sum >= target, then shrink from the left as long as it stays >= target.",
+  "canonicalApproach": "Sliding window",
+  "approaches": [
+    {
+      "name": "Brute force",
+      "summary": "Try all subarrays.",
+      "timeComplexity": "O(n^2)",
+      "spaceComplexity": "O(1)"
+    },
+    {
+      "name": "Prefix sums + binary search",
+      "summary": "For each start find the first end with prefix >= target + prefix[start].",
+      "timeComplexity": "O(n log n)",
+      "spaceComplexity": "O(n)",
+      "strengths": [
+        "Works even if positivity is used only for monotonicity"
+      ],
+      "weaknesses": [
+        "Slower, extra memory"
+      ]
+    },
+    {
+      "name": "Sliding window",
+      "summary": "Two pointers with a running sum.",
+      "timeComplexity": "O(n)",
+      "spaceComplexity": "O(1)",
+      "strengths": [
+        "Optimal"
+      ],
+      "weaknesses": [
+        "Requires positive numbers"
+      ],
+      "interviewRelevance": "The expected answer."
+    }
+  ],
+  "personalSolution": {
+    "approach": "Sliding window",
+    "timeComplexity": "O(n)",
+    "spaceComplexity": "O(1)",
+    "isOptimal": true,
+    "notes": "Optimal."
+  },
+  "commonMistakes": [],
+  "edgeCases": [],
+  "cards": [
+    {
+      "id": "ms2-pattern-01",
+      "category": "pattern",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "Which technique solves Minimum Size Subarray Sum in O(n)?",
+        "Why does a sliding window work here?"
+      ],
+      "options": [
+        "Variable-size sliding window because all values are positive",
+        "Binary search over indices of the original array",
+        "Dynamic programming",
+        "Hash map of prefix sums"
+      ],
+      "answer": "Variable-size sliding window because all values are positive",
+      "explanation": "Positivity makes the sum monotone in both ends, so shrinking never skips a better window.",
+      "incorrectOptionExplanations": {
+        "Binary search over indices of the original array": "Possible on prefix sums only, giving O(n log n).",
+        "Dynamic programming": "Not needed.",
+        "Hash map of prefix sums": "Used for exact-sum subarrays with negatives, not for minimum length with >= target."
+      }
+    },
+    {
+      "id": "ms2-insight-01",
+      "category": "main_insight",
+      "type": "free_recall",
+      "promptVariants": [
+        "Why is the positivity of nums essential to the two-pointer approach?",
+        "What breaks the sliding window if negative numbers are allowed?"
+      ],
+      "answer": "With positives the window sum increases when extending right and decreases when shrinking left, so once the sum >= target we can shrink and never need to move left backwards. With negatives the sum is no longer monotone, so shrinking could miss valid longer-then-shorter combinations; you would need prefix sums + a monotonic deque.",
+      "keyPoints": [
+        "Monotone sums",
+        "Left pointer never goes back",
+        "Negatives need prefix sums + deque"
+      ],
+      "explanation": "A typical follow-up question."
+    },
+    {
+      "id": "ms2-time-01",
+      "category": "time_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Time complexity of the sliding window: ___",
+        "Complete the statement: Time complexity of the sliding window: ___"
+      ],
+      "answer": "O(n)",
+      "explanation": "Each index enters and leaves the window once.",
+      "acceptedAnswers": [
+        "linear"
+      ]
+    },
+    {
+      "id": "ms2-space-01",
+      "category": "space_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Extra space: ___",
+        "The running-sum window needs ___ extra space."
+      ],
+      "answer": "O(1)",
+      "explanation": "A few integers.",
+      "acceptedAnswers": [
+        "constant"
+      ]
+    },
+    {
+      "id": "ms2-code-01",
+      "category": "code_reasoning",
+      "type": "code_question",
+      "promptVariants": [
+        "Why do you record the answer inside the `while curSum >= target` loop, and why return 0 if ans is still infinity?",
+        "What does each shrink step do to curSum and ans?"
+      ],
+      "code": "for r in range(len(nums)):\n    curSum += nums[r]\n    while curSum >= target:\n        ans = min(ans, r - l + 1)\n        curSum -= nums[l]\n        l += 1\nreturn ans if ans != float('inf') else 0",
+      "answer": "Each iteration of the inner loop is a valid window ending at r, so its length is a candidate; shrinking continues until the sum drops below target. If no window ever reached the target, ans is still infinity and the problem asks for 0.",
+      "keyPoints": [
+        "Record every valid window",
+        "Shrink until invalid",
+        "inf => return 0"
+      ],
+      "explanation": "Recording after the shrink would miss the minimal window."
+    },
+    {
+      "id": "ms2-edge-01",
+      "category": "edge_case",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "What is returned when the total of all numbers is less than target?",
+        "Which case needs the final `else 0`?"
+      ],
+      "options": [
+        "0",
+        "-1",
+        "The array length",
+        "None"
+      ],
+      "answer": "0",
+      "explanation": "No subarray can reach the target, so ans stays infinity and the sentinel converts it to 0.",
+      "incorrectOptionExplanations": {
+        "-1": "The problem specifies 0.",
+        "The array length": "That would claim a valid window.",
+        "None": "The function returns an int."
+      }
+    }
+  ],
+  "generatedAt": "2026-10-01T14:10:50Z"
+}

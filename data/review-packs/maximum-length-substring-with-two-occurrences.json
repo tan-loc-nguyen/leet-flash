@@ -1,0 +1,144 @@
+{
+  "schemaVersion": 1,
+  "problemSlug": "maximum-length-substring-with-two-occurrences",
+  "summary": "Find the longest substring in which every character occurs at most twice.",
+  "patterns": [
+    "Sliding Window"
+  ],
+  "mainInsight": "The same window as 'at most k occurrences' with k = 2: after adding s[r], shrink from the left while its count exceeds 2.",
+  "canonicalApproach": "Sliding window with counts",
+  "approaches": [
+    {
+      "name": "Brute force",
+      "summary": "Check every substring.",
+      "timeComplexity": "O(n^2)",
+      "spaceComplexity": "O(1)"
+    },
+    {
+      "name": "Sliding window with counts",
+      "summary": "Count characters in the window and shrink when one exceeds 2.",
+      "timeComplexity": "O(n)",
+      "spaceComplexity": "O(1)",
+      "strengths": [
+        "Optimal"
+      ],
+      "interviewRelevance": "The expected answer."
+    }
+  ],
+  "personalSolution": {
+    "approach": "Sliding window with counts",
+    "timeComplexity": "O(n)",
+    "spaceComplexity": "O(1)",
+    "isOptimal": true,
+    "notes": "Optimal."
+  },
+  "commonMistakes": [],
+  "edgeCases": [],
+  "cards": [
+    {
+      "id": "mt-pattern-01",
+      "category": "pattern",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "Which technique solves this in O(n)?",
+        "What kind of window problem is this?"
+      ],
+      "options": [
+        "Variable sliding window with counts (at most 2 occurrences)",
+        "Binary search",
+        "DP over prefixes",
+        "Trie"
+      ],
+      "answer": "Variable sliding window with counts (at most 2 occurrences)",
+      "explanation": "Validity is local to the newly added character.",
+      "incorrectOptionExplanations": {
+        "Binary search": "Not needed.",
+        "DP over prefixes": "No overlapping states.",
+        "Trie": "Not about prefixes."
+      }
+    },
+    {
+      "id": "mt-insight-01",
+      "category": "main_insight",
+      "type": "free_recall",
+      "promptVariants": [
+        "Why do you only need to fix the count of s[r]?",
+        "How is this problem related to the 'at most k frequency' subarray problem?"
+      ],
+      "answer": "The window was valid before adding s[r], so only s[r] can have exceeded 2 occurrences. It is exactly the 'at most k frequency' problem with k = 2 on characters.",
+      "keyPoints": [
+        "Only the new character can violate",
+        "Special case k = 2"
+      ],
+      "explanation": "Generalises directly."
+    },
+    {
+      "id": "mt-time-01",
+      "category": "time_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Time complexity: ___",
+        "Complete the statement: Time complexity: ___"
+      ],
+      "answer": "O(n)",
+      "explanation": "Each index enters and leaves the window once.",
+      "acceptedAnswers": [
+        "linear"
+      ]
+    },
+    {
+      "id": "mt-space-01",
+      "category": "space_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Space complexity with a bounded alphabet: ___",
+        "Complete the statement: Space complexity with a bounded alphabet: ___"
+      ],
+      "answer": "O(1)",
+      "explanation": "The count map has at most one key per distinct character (alphabet size).",
+      "acceptedAnswers": [
+        "constant",
+        "O(26)"
+      ]
+    },
+    {
+      "id": "mt-code-01",
+      "category": "code_reasoning",
+      "type": "code_question",
+      "promptVariants": [
+        "Why does the while loop condition check `cnt[s[r]] > 2` and not the left character?",
+        "What does the left pointer remove while shrinking?"
+      ],
+      "code": "cnt[s[r]] += 1\nwhile cnt[s[r]] > 2:\n    cnt[s[l]] -= 1\n    if cnt[s[l]] <= 0:\n        cnt.pop(s[l])\n    l += 1",
+      "answer": "The violation is caused by the character just added, so the loop continues until one of its earlier copies has been removed - which happens when l passes the first of its three copies. Characters removed on the way are decremented accordingly.",
+      "keyPoints": [
+        "Violation is cnt[s[r]] > 2",
+        "Shrink until the earliest copy leaves"
+      ],
+      "explanation": "Same loop as the k-frequency version."
+    },
+    {
+      "id": "mt-edge-01",
+      "category": "edge_case",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "What is the answer for 'aaaa'?",
+        "How long can the window be?"
+      ],
+      "options": [
+        "2",
+        "4",
+        "1",
+        "3"
+      ],
+      "answer": "2",
+      "explanation": "Any window of 'a' contains more than two copies once its length exceeds 2.",
+      "incorrectOptionExplanations": {
+        "4": "The entire string has four copies.",
+        "1": "Two copies are allowed.",
+        "3": "Three copies violate the limit."
+      }
+    }
+  ],
+  "generatedAt": "2026-10-01T14:13:38Z"
+}

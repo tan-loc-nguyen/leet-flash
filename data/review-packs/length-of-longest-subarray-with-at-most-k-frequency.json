@@ -1,0 +1,147 @@
+{
+  "schemaVersion": 1,
+  "problemSlug": "length-of-longest-subarray-with-at-most-k-frequency",
+  "summary": "Find the longest subarray in which no value appears more than k times.",
+  "patterns": [
+    "Sliding Window",
+    "Array / Hashing"
+  ],
+  "mainInsight": "Expand right; only the newly added value can break the condition, so while its count exceeds k move the left edge forward (decrementing counts) until it is back to k.",
+  "canonicalApproach": "Sliding window with counts",
+  "approaches": [
+    {
+      "name": "Brute force",
+      "summary": "Check every subarray.",
+      "timeComplexity": "O(n^2)",
+      "spaceComplexity": "O(n)"
+    },
+    {
+      "name": "Sliding window with counts",
+      "summary": "Count each value in the window; shrink while cnt[nums[r]] > k.",
+      "timeComplexity": "O(n)",
+      "spaceComplexity": "O(n)",
+      "strengths": [
+        "Optimal"
+      ],
+      "interviewRelevance": "The expected answer."
+    }
+  ],
+  "personalSolution": {
+    "approach": "Sliding window with counts",
+    "timeComplexity": "O(n)",
+    "spaceComplexity": "O(n)",
+    "isOptimal": true,
+    "notes": "Optimal."
+  },
+  "commonMistakes": [],
+  "edgeCases": [],
+  "cards": [
+    {
+      "id": "lk-pattern-01",
+      "category": "pattern",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "Which pattern solves 'longest subarray where every count <= k'?",
+        "What validity check does the window need?"
+      ],
+      "options": [
+        "Sliding window with a frequency map",
+        "Sorting + binary search",
+        "Monotonic stack",
+        "Prefix sums"
+      ],
+      "answer": "Sliding window with a frequency map",
+      "explanation": "Counts only change by one element per step, so validity is easy to maintain.",
+      "incorrectOptionExplanations": {
+        "Sorting + binary search": "Destroys the contiguity of subarrays.",
+        "Monotonic stack": "No nearest-greater structure.",
+        "Prefix sums": "Sums are not the constraint."
+      }
+    },
+    {
+      "id": "lk-insight-01",
+      "category": "main_insight",
+      "type": "free_recall",
+      "promptVariants": [
+        "Why is it enough to check only cnt[nums[r]] after adding nums[r]?",
+        "Why can't any other value be the violator?"
+      ],
+      "answer": "Before adding nums[r] the window was valid (all counts <= k). Adding one element only increases that element's count, so only nums[r] can exceed k. Shrinking until its count is <= k restores validity.",
+      "keyPoints": [
+        "Window was valid before",
+        "Only the new value's count changes",
+        "Shrink until it is <= k"
+      ],
+      "explanation": "That makes validity an O(1) check."
+    },
+    {
+      "id": "lk-time-01",
+      "category": "time_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Time complexity: ___",
+        "Complete the statement: Time complexity: ___"
+      ],
+      "answer": "O(n)",
+      "explanation": "Each index is added and removed once.",
+      "acceptedAnswers": [
+        "linear"
+      ]
+    },
+    {
+      "id": "lk-space-01",
+      "category": "space_complexity",
+      "type": "free_recall",
+      "promptVariants": [
+        "What is the space complexity of the count map?",
+        "Why can the count map grow to O(n) in this problem while it stayed constant in Fruit Into Baskets?"
+      ],
+      "answer": "O(n) in the worst case (all values distinct), or O(min(n, number of distinct values)).",
+      "keyPoints": [
+        "One key per distinct value in the window",
+        "O(n) worst case"
+      ],
+      "explanation": "Unlike Fruit Into Baskets, the number of keys is not bounded by a constant."
+    },
+    {
+      "id": "lk-code-01",
+      "category": "code_reasoning",
+      "type": "code_question",
+      "promptVariants": [
+        "Why is the shrink condition `cnt[nums[r]] > k` instead of checking all counts?",
+        "What does popping zero-count keys accomplish here?"
+      ],
+      "code": "cnt[nums[r]] += 1\nwhile cnt[nums[r]] > k:\n    cnt[nums[l]] -= 1\n    if cnt[nums[l]] <= 0:\n        cnt.pop(nums[l])\n    l += 1\nbest = max(best, r - l + 1)",
+      "answer": "Only the value just added can violate the limit, so a single comparison suffices; the loop removes elements from the left (possibly other values) until one copy of nums[r] has left. Popping zero-count keys is optional here (they are never inspected via len), it only keeps the map small.",
+      "keyPoints": [
+        "Only the new value can violate",
+        "Shrink until its count <= k",
+        "Zero-key pop is cosmetic"
+      ],
+      "explanation": "In 'at most k distinct' the pop is mandatory because len(map) is the metric."
+    },
+    {
+      "id": "lk-edge-01",
+      "category": "edge_case",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "What is the answer for [1,2,3,1,2,3,1,2], k = 2?",
+        "How long is the longest valid window?"
+      ],
+      "options": [
+        "6",
+        "8",
+        "5",
+        "4"
+      ],
+      "answer": "6",
+      "explanation": "The window [2,3,1,2,3,1] holds each value at most twice; adding a further element would make a count 3.",
+      "incorrectOptionExplanations": {
+        "8": "The whole array has three 1s... count of 1 is 3 > 2.",
+        "5": "A longer valid window (6) exists.",
+        "4": "Too short."
+      }
+    }
+  ],
+  "generatedAt": "2026-10-01T14:13:38Z"
+}

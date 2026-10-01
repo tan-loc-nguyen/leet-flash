@@ -1,0 +1,160 @@
+{
+  "schemaVersion": 1,
+  "problemSlug": "shortest-and-lexicographically-smallest-beautiful-string",
+  "summary": "Return the shortest, then lexicographically smallest, substring of a binary string that contains exactly k ones.",
+  "patterns": [
+    "Sliding Window"
+  ],
+  "mainInsight": "Slide a window that contains exactly k ones; for each right end shrink from the left while the count stays k, so each recorded window is minimal on its left. Compare candidates by (length, string).",
+  "canonicalApproach": "Sliding window tracking the best",
+  "approaches": [
+    {
+      "name": "Brute force",
+      "summary": "Check all substrings.",
+      "timeComplexity": "O(n^3)",
+      "spaceComplexity": "O(n)"
+    },
+    {
+      "name": "Sliding window collecting all minimal windows",
+      "summary": "Record every window with exactly k ones, filter shortest, take the smallest.",
+      "timeComplexity": "O(n^2)",
+      "spaceComplexity": "O(n^2)",
+      "strengths": [
+        "Easy"
+      ],
+      "weaknesses": [
+        "Stores many substrings"
+      ],
+      "interviewRelevance": "Your approach (fine for n <= 100)."
+    },
+    {
+      "name": "Sliding window tracking the best",
+      "summary": "Keep the best (length, string) and replace when shorter or equal-length and smaller.",
+      "timeComplexity": "O(n^2) (string comparisons)",
+      "spaceComplexity": "O(n)",
+      "strengths": [
+        "No list of candidates"
+      ],
+      "interviewRelevance": "Slightly cleaner."
+    }
+  ],
+  "personalSolution": {
+    "approach": "Sliding window collecting all minimal windows",
+    "timeComplexity": "O(n^2)",
+    "spaceComplexity": "O(n^2)",
+    "isOptimal": false,
+    "notes": "Fine under the constraints. Track the best (length, string) instead of storing every window."
+  },
+  "commonMistakes": [],
+  "edgeCases": [],
+  "cards": [
+    {
+      "id": "sb-pattern-01",
+      "category": "pattern",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "Which pattern finds substrings with exactly k ones?",
+        "What technique do you use for a fixed count of ones?"
+      ],
+      "options": [
+        "Sliding window on the number of ones",
+        "Binary search",
+        "Stack",
+        "Union find"
+      ],
+      "answer": "Sliding window on the number of ones",
+      "explanation": "Adding a one increases the count; shrinking from the left reduces it.",
+      "incorrectOptionExplanations": {
+        "Binary search": "No sorted structure.",
+        "Stack": "No nesting.",
+        "Union find": "No merging."
+      }
+    },
+    {
+      "id": "sb-insight-01",
+      "category": "main_insight",
+      "type": "free_recall",
+      "promptVariants": [
+        "Why shrink from the left while the count is still exactly k?",
+        "What does shrinking produce for each right end?"
+      ],
+      "answer": "Dropping leading zeros keeps exactly k ones but shortens the substring, so the minimal-length window ending at r (that still has k ones) is found when the next removal would drop a one. Collecting those windows covers all minimal candidates.",
+      "keyPoints": [
+        "Leading zeros are removable",
+        "Minimal window for each right end",
+        "Stop when ones < k"
+      ],
+      "explanation": "Each recorded window starts and ends with a '1' at its minimal form."
+    },
+    {
+      "id": "sb-time-01",
+      "category": "time_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Time complexity with string slicing and comparisons (n <= 100): ___",
+        "Complete the statement: Time complexity with string slicing and comparisons (n <= 100): ___"
+      ],
+      "answer": "O(n^2)",
+      "explanation": "O(n) windows, each slice/compare costs O(n).",
+      "acceptedAnswers": [
+        "O(n²)",
+        "quadratic"
+      ]
+    },
+    {
+      "id": "sb-space-01",
+      "category": "space_complexity",
+      "type": "free_recall",
+      "promptVariants": [
+        "What is the space cost of keeping all valid windows, and how can it be reduced?",
+        "How would you avoid storing every valid window in the beautiful-substring solution?"
+      ],
+      "answer": "Storing every valid window can take O(n^2) characters. Keeping only the current best (compare by length, then lexicographically) reduces it to O(n).",
+      "keyPoints": [
+        "All windows => O(n^2)",
+        "Track best only => O(n)"
+      ],
+      "explanation": "Fine for n <= 100 but wasteful in general."
+    },
+    {
+      "id": "sb-code-01",
+      "category": "code_reasoning",
+      "type": "code_question",
+      "promptVariants": [
+        "Why does `while num_of_ones == k` both record and shrink, and what does the final filter/sort do?",
+        "What does returning '' signal?"
+      ],
+      "code": "while num_of_ones == k:\n    min_len = min(min_len, r - l + 1)\n    valid.append(s[l:r + 1])\n    if s[l] == '1':\n        num_of_ones -= 1\n    l += 1\nans = sorted(list(filter(lambda x: len(x) == min_len, valid)))\nif not ans:\n    return ''\nreturn ans[0]",
+      "answer": "Each loop iteration records the current window (exactly k ones) then drops the leftmost character; the loop ends once a '1' is dropped. Afterwards only the shortest windows are kept and the smallest is the lexicographic minimum. An empty result means no window has exactly k ones, so the answer is the empty string.",
+      "keyPoints": [
+        "Record then shrink",
+        "Filter shortest, then min()",
+        "Empty => no valid substring"
+      ],
+      "explanation": "min(valid, key=lambda x: (len(x), x)) does it in one line."
+    },
+    {
+      "id": "sb-edge-01",
+      "category": "edge_case",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "What is returned when the string has fewer than k ones?",
+        "What about k = 0 constraints?"
+      ],
+      "options": [
+        "The empty string",
+        "The whole string",
+        "'0'",
+        "An error"
+      ],
+      "answer": "The empty string",
+      "explanation": "No substring can contain k ones, so the answer is ''.",
+      "incorrectOptionExplanations": {
+        "The whole string": "It lacks enough ones.",
+        "'0'": "Not meaningful.",
+        "An error": "The function returns '' gracefully."
+      }
+    }
+  ],
+  "generatedAt": "2026-10-01T14:13:38Z"
+}

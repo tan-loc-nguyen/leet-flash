@@ -1,0 +1,165 @@
+{
+  "schemaVersion": 1,
+  "problemSlug": "maximum-coins-from-k-consecutive-bags",
+  "summary": "Given disjoint segments [l, r] each with c coins per position, pick k consecutive positions to maximise total coins.",
+  "patterns": [
+    "Sliding Window",
+    "Greedy",
+    "Binary Search"
+  ],
+  "mainInsight": "An optimal window can be assumed to start at the left end of some segment or end at the right end of some segment (otherwise slide it to gain or break even). Sort the segments and sweep twice, keeping the sum of fully covered segments plus a partial edge segment.",
+  "canonicalApproach": "Sort + two sliding-window sweeps",
+  "approaches": [
+    {
+      "name": "Brute force over start positions",
+      "summary": "Try every start position (huge ranges).",
+      "timeComplexity": "O(range)",
+      "spaceComplexity": "O(1)",
+      "weaknesses": [
+        "Positions can be up to 10^9"
+      ]
+    },
+    {
+      "name": "Sort + prefix sums + binary search",
+      "summary": "For each aligned window, binary-search the edge segment using prefix sums of full-segment totals.",
+      "timeComplexity": "O(n log n)",
+      "spaceComplexity": "O(n)",
+      "weaknesses": [
+        "More code"
+      ]
+    },
+    {
+      "name": "Sort + two sliding-window sweeps",
+      "summary": "Sweep with the window starting at each segment's left end, then mirror with windows ending at each right end; keep full-segment sum + partial edge.",
+      "timeComplexity": "O(n log n)",
+      "spaceComplexity": "O(1)",
+      "strengths": [
+        "No binary search or prefix array"
+      ],
+      "weaknesses": [
+        "Careful edge handling"
+      ],
+      "interviewRelevance": "Your approach."
+    }
+  ],
+  "personalSolution": {
+    "approach": "Sort + two sliding-window sweeps (start-aligned and end-aligned)",
+    "timeComplexity": "O(n log n)",
+    "spaceComplexity": "O(1)",
+    "isOptimal": true,
+    "notes": "Optimal. Your comments show the bug you fixed by adding the second sweep - a good thing to remember."
+  },
+  "commonMistakes": [],
+  "edgeCases": [],
+  "cards": [
+    {
+      "id": "mc-pattern-01",
+      "category": "pattern",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "What is the key observation that reduces the candidate windows?",
+        "Which windows need to be considered?"
+      ],
+      "options": [
+        "Windows that start at a segment's left end or end at a segment's right end",
+        "Every integer start position",
+        "Only windows centred on the largest segment",
+        "Windows starting at index 0"
+      ],
+      "answer": "Windows that start at a segment's left end or end at a segment's right end",
+      "explanation": "If neither end is aligned with a segment boundary, sliding the window one step either way changes the total linearly, so one direction is never worse until an end aligns.",
+      "incorrectOptionExplanations": {
+        "Every integer start position": "Far too many (up to 10^9 positions).",
+        "Only windows centred on the largest segment": "Not necessarily optimal.",
+        "Windows starting at index 0": "Ignores where the coins are."
+      }
+    },
+    {
+      "id": "mc-insight-01",
+      "category": "main_insight",
+      "type": "free_recall",
+      "promptVariants": [
+        "Why can the optimal window be assumed aligned with a segment boundary?",
+        "Give the exchange argument."
+      ],
+      "answer": "Between boundaries the window's coin total changes linearly as it slides (each step adds the density at one end and removes the density at the other). A linear function on an interval is maximised at an endpoint, i.e. when an end of the window hits a segment boundary. So only boundary-aligned windows need checking.",
+      "keyPoints": [
+        "Total is piecewise linear while sliding",
+        "Maximum at a breakpoint",
+        "Breakpoint = a segment boundary"
+      ],
+      "explanation": "This is why two sweeps (start-aligned, end-aligned) suffice."
+    },
+    {
+      "id": "mc-time-01",
+      "category": "time_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Time complexity (n segments): ___",
+        "Sorting dominates, so the algorithm runs in ___ time."
+      ],
+      "answer": "O(n log n)",
+      "explanation": "Sort O(n log n); each sweep is linear.",
+      "acceptedAnswers": [
+        "O(nlogn)",
+        "O(n log(n))"
+      ]
+    },
+    {
+      "id": "mc-space-01",
+      "category": "space_complexity",
+      "type": "free_recall",
+      "promptVariants": [
+        "What is the extra space and what trade-off does it show against the prefix-sum solution?",
+        "Compare the extra memory of the two-sweep solution with a prefix-sum + binary-search solution."
+      ],
+      "answer": "O(1) extra besides sorting; the prefix-sum + binary-search solution uses O(n) space and an extra log factor.",
+      "keyPoints": [
+        "O(1) extra",
+        "Prefix array O(n)"
+      ],
+      "explanation": "Sorting may use O(n) internally."
+    },
+    {
+      "id": "mc-code-01",
+      "category": "code_reasoning",
+      "type": "code_question",
+      "promptVariants": [
+        "In the left-to-right sweep what are `fullSum`, `rightBound` and `edge`, and why is the full-bag sum reduced at the end of each iteration?",
+        "How does the sweep handle a partially covered last segment?"
+      ],
+      "code": "rightBound = coins[i][0] + k\nwhile j + 1 < n and coins[j + 1][0] < rightBound:\n    lj, rj, cj = coins[j]\n    fullSum += (rj - lj + 1) * cj\n    j += 1\nedge = 0\nif j < n and coins[j][0] < rightBound:\n    lj, rj, cj = coins[j]\n    edge += min(rj - lj + 1, rightBound - lj) * cj\nbest = max(best, fullSum + edge)\nfullSum -= (coins[i][1] - coins[i][0] + 1) * coins[i][2]",
+      "answer": "The window starts at coins[i][0] and covers [start, start + k). fullSum accumulates segments entirely inside the window before the last one; the last overlapping segment is the edge, contributing only min(its length, covered part) * c. After evaluating, segment i is removed from fullSum because the next window starts at segment i + 1.",
+      "keyPoints": [
+        "Window = [left_i, left_i + k)",
+        "Full segments summed incrementally",
+        "Edge segment partially counted",
+        "Drop segment i when advancing"
+      ],
+      "explanation": "The mirrored sweep handles windows ending at a right boundary."
+    },
+    {
+      "id": "mc-edge-01",
+      "category": "edge_case",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "Why are two sweeps (left-to-right and right-to-left) needed?",
+        "Which window shape does the second sweep cover?"
+      ],
+      "options": [
+        "The optimum may start at a left boundary or end at a right boundary",
+        "The array may not be sorted",
+        "To handle overlapping segments",
+        "To avoid integer overflow"
+      ],
+      "answer": "The optimum may start at a left boundary or end at a right boundary",
+      "explanation": "A window ending at a right boundary is not necessarily starting at any left boundary, so both orientations must be tried.",
+      "incorrectOptionExplanations": {
+        "The array may not be sorted": "Sorting is done up front.",
+        "To handle overlapping segments": "Segments are guaranteed non-overlapping.",
+        "To avoid integer overflow": "Python ints do not overflow."
+      }
+    }
+  ],
+  "generatedAt": "2026-10-01T14:13:38Z"
+}

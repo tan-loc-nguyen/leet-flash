@@ -1,0 +1,24 @@
+{
+  "leetcodeId": "58",
+  "title": "Length of Last Word",
+  "slug": "length-of-last-word",
+  "url": "https://leetcode.com/problems/length-of-last-word/",
+  "difficulty": "Easy",
+  "status": "unsolved",
+  "premium": false,
+  "tags": [
+    "String"
+  ],
+  "problemStatement": "Given a string s consisting of words and spaces, return the length of the last word in the string.\n\nA word is a maximal substring consisting of non-space characters only.\n\nExample 1:\n\nInput: s = \"Hello World\"\nOutput: 5\nExplanation: The last word is \"World\" with length 5.\n\nExample 2:\n\nInput: s = \"   fly me   to   the moon  \"\nOutput: 4\nExplanation: The last word is \"moon\" with length 4.\n\nExample 3:\n\nInput: s = \"luffy is still joyboy\"\nOutput: 6\nExplanation: The last word is \"joyboy\" with length 6.\n\nConstraints:\n\n- 1 <= s.length <= 10^4\n\n- s consists of only English letters and spaces ' '.\n\n- There will be at least one word in s.",
+  "constraints": [
+    "1 <= s.length <= 10^4",
+    "s consists of only English letters and spaces ' '.",
+    "There will be at least one word in s."
+  ],
+  "hints": [],
+  "acRate": 59.81,
+  "notes": [],
+  "source": "manual",
+  "importedAt": "2026-10-01T14:11:50Z",
+  "lastSyncedAt": "2026-10-01T14:11:50Z"
+}

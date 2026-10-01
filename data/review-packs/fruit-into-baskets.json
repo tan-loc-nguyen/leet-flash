@@ -1,0 +1,158 @@
+{
+  "schemaVersion": 1,
+  "problemSlug": "fruit-into-baskets",
+  "summary": "Pick the longest contiguous run of trees containing at most two distinct fruit types.",
+  "patterns": [
+    "Sliding Window"
+  ],
+  "mainInsight": "It is 'longest subarray with at most 2 distinct values': a sliding window with a count map; when a third type arrives, shrink from the left until one type disappears.",
+  "canonicalApproach": "Sliding window with counts",
+  "approaches": [
+    {
+      "name": "Brute force",
+      "summary": "Check every subarray.",
+      "timeComplexity": "O(n^2)",
+      "spaceComplexity": "O(1)"
+    },
+    {
+      "name": "Sliding window with counts",
+      "summary": "Add the new fruit; while more than 2 types, remove from the left.",
+      "timeComplexity": "O(n)",
+      "spaceComplexity": "O(1)",
+      "strengths": [
+        "Optimal"
+      ],
+      "interviewRelevance": "The expected answer."
+    },
+    {
+      "name": "Last-occurrence tracking",
+      "summary": "Track the two types and where the latest run of the previous type started to jump the window start.",
+      "timeComplexity": "O(n)",
+      "spaceComplexity": "O(1)",
+      "strengths": [
+        "No inner loop"
+      ],
+      "weaknesses": [
+        "Trickier"
+      ],
+      "interviewRelevance": "Optional optimisation."
+    }
+  ],
+  "personalSolution": {
+    "approach": "Sliding window with counts",
+    "timeComplexity": "O(n)",
+    "spaceComplexity": "O(1)",
+    "isOptimal": true,
+    "notes": "Optimal."
+  },
+  "commonMistakes": [],
+  "edgeCases": [],
+  "cards": [
+    {
+      "id": "fb-pattern-01",
+      "category": "pattern",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "What problem is Fruit Into Baskets in disguise?",
+        "Which known pattern does it reduce to?"
+      ],
+      "options": [
+        "Longest subarray with at most 2 distinct values (sliding window)",
+        "Knapsack",
+        "Interval scheduling",
+        "Topological sort"
+      ],
+      "answer": "Longest subarray with at most 2 distinct values (sliding window)",
+      "explanation": "Two baskets = two distinct types; contiguous picking = subarray.",
+      "incorrectOptionExplanations": {
+        "Knapsack": "No weights or capacities.",
+        "Interval scheduling": "No intervals.",
+        "Topological sort": "No dependencies."
+      }
+    },
+    {
+      "id": "fb-insight-01",
+      "category": "main_insight",
+      "type": "free_recall",
+      "promptVariants": [
+        "Restate the problem in standard form and name the window validity condition.",
+        "What condition defines a valid window?"
+      ],
+      "answer": "Find the longest subarray containing at most two distinct values; the window is valid iff the count map has <= 2 keys.",
+      "keyPoints": [
+        "Longest subarray",
+        "At most 2 distinct values",
+        "len(count) <= 2"
+      ],
+      "explanation": "Generalises to k distinct characters."
+    },
+    {
+      "id": "fb-time-01",
+      "category": "time_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Time complexity: ___",
+        "Complete the statement: Time complexity: ___"
+      ],
+      "answer": "O(n)",
+      "explanation": "Each index enters and leaves the window once.",
+      "acceptedAnswers": [
+        "linear"
+      ]
+    },
+    {
+      "id": "fb-space-01",
+      "category": "space_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Space complexity of the count map (at most 3 keys): ___",
+        "The map holds a constant number of keys, so space is ___."
+      ],
+      "answer": "O(1)",
+      "explanation": "At most two types (plus the incoming one).",
+      "acceptedAnswers": [
+        "constant"
+      ]
+    },
+    {
+      "id": "fb-code-01",
+      "category": "code_reasoning",
+      "type": "code_question",
+      "promptVariants": [
+        "Your loop shrinks BEFORE adding the new fruit with `len(count) == 2 and fruits[r] not in count`. Why is that equivalent to adding first and then shrinking?",
+        "What does the while condition detect?"
+      ],
+      "code": "while len(count) == 2 and fruits[r] not in count:\n    count[fruits[l]] -= 1\n    if count[fruits[l]] <= 0:\n        count.pop(fruits[l])\n    l += 1\ncount[fruits[r]] += 1\nans = max(ans, r - l + 1)",
+      "answer": "The condition means the window already has two types and the new fruit would be a third, so we shrink until one type disappears and only then insert it. Adding first and shrinking while len > 2 reaches the same state.",
+      "keyPoints": [
+        "Two types + a new third type => invalid",
+        "Shrink before insert",
+        "Equivalent to insert-then-shrink"
+      ],
+      "explanation": "Pre-checking avoids temporarily holding three keys."
+    },
+    {
+      "id": "fb-edge-01",
+      "category": "edge_case",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "What is the answer for [1,2,3,2,2]?",
+        "Which window is the best?"
+      ],
+      "options": [
+        "4 ([2,3,2,2])",
+        "3",
+        "5",
+        "2"
+      ],
+      "answer": "4 ([2,3,2,2])",
+      "explanation": "[1,2] has 2 types, but the longest valid window is [2,3,2,2] (types 2 and 3).",
+      "incorrectOptionExplanations": {
+        "3": "Shorter than [2,3,2,2].",
+        "5": "The whole array has 3 types.",
+        "2": "Much shorter than achievable."
+      }
+    }
+  ],
+  "generatedAt": "2026-10-01T14:10:50Z"
+}

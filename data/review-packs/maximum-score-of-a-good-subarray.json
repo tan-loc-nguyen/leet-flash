@@ -1,0 +1,180 @@
+{
+  "schemaVersion": 1,
+  "problemSlug": "maximum-score-of-a-good-subarray",
+  "summary": "Among subarrays containing index k, maximise min(nums[i..j]) * (j - i + 1).",
+  "patterns": [
+    "Monotonic Stack",
+    "Two Pointers"
+  ],
+  "mainInsight": "This is Largest Rectangle in Histogram with an extra constraint that the rectangle must cover index k. For every element treated as the minimum, find how far it extends (nearest smaller on each side) and keep the candidates whose range includes k.",
+  "canonicalApproach": "Greedy two pointers expanding from k",
+  "approaches": [
+    {
+      "name": "Brute force",
+      "summary": "Try every subarray around k.",
+      "timeComplexity": "O(n^2)",
+      "spaceComplexity": "O(1)"
+    },
+    {
+      "name": "Monotonic stack (nearest smaller on both sides)",
+      "summary": "For each i compute left/right smaller boundaries; if the range covers k, score = nums[i] * width.",
+      "timeComplexity": "O(n)",
+      "spaceComplexity": "O(n)",
+      "strengths": [
+        "Direct reuse of the histogram technique"
+      ],
+      "weaknesses": [
+        "Two passes and extra arrays"
+      ],
+      "interviewRelevance": "Your approach."
+    },
+    {
+      "name": "Greedy two pointers expanding from k",
+      "summary": "Start at [k, k] and always expand towards the larger neighbour, tracking the running min.",
+      "timeComplexity": "O(n)",
+      "spaceComplexity": "O(1)",
+      "strengths": [
+        "Constant space"
+      ],
+      "weaknesses": [
+        "Greedy correctness argument needed"
+      ],
+      "interviewRelevance": "Optimal space; elegant."
+    }
+  ],
+  "personalSolution": {
+    "approach": "Monotonic stack (nearest smaller on both sides)",
+    "timeComplexity": "O(n)",
+    "spaceComplexity": "O(n)",
+    "isOptimal": false,
+    "notes": "Correct and optimal in time. The greedy expansion from k achieves O(1) extra space."
+  },
+  "commonMistakes": [],
+  "edgeCases": [],
+  "cards": [
+    {
+      "id": "mg-pattern-01",
+      "category": "pattern",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "Which problem is this a variant of?",
+        "What known technique computes the best 'min x width' rectangle?"
+      ],
+      "options": [
+        "Largest Rectangle in Histogram (monotonic stack)",
+        "Kadane's maximum subarray",
+        "Sliding window maximum",
+        "Longest increasing subsequence"
+      ],
+      "answer": "Largest Rectangle in Histogram (monotonic stack)",
+      "explanation": "min(subarray) * length is the rectangle area when the minimum bar determines the height; k must lie inside it.",
+      "incorrectOptionExplanations": {
+        "Kadane's maximum subarray": "That maximises a sum, not min x length.",
+        "Sliding window maximum": "Fixed-size windows; unrelated objective.",
+        "Longest increasing subsequence": "Unrelated."
+      }
+    },
+    {
+      "id": "mg-insight-01",
+      "category": "main_insight",
+      "type": "free_recall",
+      "promptVariants": [
+        "Why is it enough to consider each element as the minimum with its maximal extent?",
+        "Why can you ignore all subarrays whose minimum is not at the extent boundaries?"
+      ],
+      "answer": "For a fixed minimum value, extending the subarray as far as possible (until a smaller element) only increases the width and keeps the minimum, so the best subarray with that minimum is the maximal one. Checking every element as the minimum therefore covers the optimum.",
+      "keyPoints": [
+        "Fix the minimum element",
+        "Extend until a smaller element",
+        "Wider is always better for a fixed min"
+      ],
+      "explanation": "The k-constraint just filters ranges that contain k."
+    },
+    {
+      "id": "mg-invariant-01",
+      "category": "invariant",
+      "type": "free_recall",
+      "promptVariants": [
+        "What do left[i] and right[i] mean in your solution and how does the stack maintain them?",
+        "Define left[i] and right[i] and explain how the monotonic stack computes them."
+      ],
+      "answer": "left[i] is the index of the nearest element to the left strictly smaller than nums[i] (or -1); right[i] is the nearest strictly smaller to the right (or n). The stack keeps indices of increasing values, popping elements >= the current one so what remains on top is the nearest smaller.",
+      "keyPoints": [
+        "Nearest strictly smaller on each side",
+        "Stack of increasing values",
+        "Pop while >= current"
+      ],
+      "explanation": "The range where nums[i] is the minimum is (left[i], right[i])."
+    },
+    {
+      "id": "mg-time-01",
+      "category": "time_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Time complexity: ___",
+        "Two monotonic-stack passes plus a scan cost ___."
+      ],
+      "answer": "O(n)",
+      "explanation": "Each index is pushed and popped once per pass.",
+      "acceptedAnswers": [
+        "linear"
+      ]
+    },
+    {
+      "id": "mg-space-01",
+      "category": "space_complexity",
+      "type": "free_recall",
+      "promptVariants": [
+        "What is your solution's space and how could the greedy two-pointer version improve it?",
+        "How could the greedy two-pointer expansion from k reduce the extra space of this problem?"
+      ],
+      "answer": "Yours uses two arrays and stacks: O(n). Starting with l = r = k and always expanding toward the larger neighbour while tracking the running min needs only O(1) extra space and O(n) time.",
+      "keyPoints": [
+        "O(n) for left/right/stacks",
+        "Greedy expansion O(1)",
+        "Expand toward the larger neighbour"
+      ],
+      "explanation": "Both are optimal in time."
+    },
+    {
+      "id": "mg-code-01",
+      "category": "code_reasoning",
+      "type": "code_question",
+      "promptVariants": [
+        "What does the test `left[i] < k < right[i]` check and why do the boundaries exclude the smaller elements?",
+        "How is the score for a valid i computed?"
+      ],
+      "code": "for i in range(n):\n    if left[i] < k < right[i]:\n        length = right[i] - left[i] - 1\n        score = nums[i] * length\n        ans = max(ans, score)",
+      "answer": "The maximal subarray where nums[i] is the minimum is [left[i]+1, right[i]-1]; it contains k iff left[i] < k < right[i]. Its width is right[i] - left[i] - 1 and its score is nums[i] times that width.",
+      "keyPoints": [
+        "Range = (left[i], right[i])",
+        "Contains k iff left < k < right",
+        "Width = right - left - 1"
+      ],
+      "explanation": "Only subarrays containing k are 'good'."
+    },
+    {
+      "id": "mg-edge-01",
+      "category": "edge_case",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "What is the answer for nums = [1,4,3,7,4,5], k = 3?",
+        "Which subarray achieves it?"
+      ],
+      "options": [
+        "15 (nums[1..5] = [4,3,7,4,5], min 3 x 5)",
+        "14",
+        "20",
+        "7"
+      ],
+      "answer": "15 (nums[1..5] = [4,3,7,4,5], min 3 x 5)",
+      "explanation": "Min 3 with width 5 gives 15; narrower windows with a larger min score less.",
+      "incorrectOptionExplanations": {
+        "14": "Not achievable.",
+        "20": "Would require a larger min and width.",
+        "7": "Only the element 7 alone, but the subarray must contain index 3 = value 7: score 7, a lower candidate."
+      }
+    }
+  ],
+  "generatedAt": "2026-10-01T14:13:38Z"
+}

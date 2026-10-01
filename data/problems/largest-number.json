@@ -1,0 +1,26 @@
+{
+  "leetcodeId": "179",
+  "title": "Largest Number",
+  "slug": "largest-number",
+  "url": "https://leetcode.com/problems/largest-number/",
+  "difficulty": "Medium",
+  "status": "unsolved",
+  "premium": false,
+  "tags": [
+    "Array",
+    "String",
+    "Greedy",
+    "Sorting"
+  ],
+  "problemStatement": "Given a list of non-negative integers nums, arrange them such that they form the largest number and return it.\n\nSince the result may be very large, so you need to return a string instead of an integer.\n\nExample 1:\n\nInput: nums = [10,2]\nOutput: \"210\"\n\nExample 2:\n\nInput: nums = [3,30,34,5,9]\nOutput: \"9534330\"\n\nConstraints:\n\n- 1 <= nums.length <= 100\n\n- 0 <= nums[i] <= 10^9",
+  "constraints": [
+    "1 <= nums.length <= 100",
+    "0 <= nums[i] <= 10^9"
+  ],
+  "hints": [],
+  "acRate": 43.89,
+  "notes": [],
+  "source": "manual",
+  "importedAt": "2026-10-01T14:11:24Z",
+  "lastSyncedAt": "2026-10-01T14:11:24Z"
+}

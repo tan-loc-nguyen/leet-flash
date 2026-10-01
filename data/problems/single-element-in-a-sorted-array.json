@@ -1,0 +1,24 @@
+{
+  "leetcodeId": "540",
+  "title": "Single Element in a Sorted Array",
+  "slug": "single-element-in-a-sorted-array",
+  "url": "https://leetcode.com/problems/single-element-in-a-sorted-array/",
+  "difficulty": "Medium",
+  "status": "unsolved",
+  "premium": false,
+  "tags": [
+    "Array",
+    "Binary Search"
+  ],
+  "problemStatement": "You are given a sorted array consisting of only integers where every element appears exactly twice, except for one element which appears exactly once.\n\nReturn the single element that appears only once.\n\nYour solution must run in O(log n) time and O(1) space.\n\nExample 1:\n\nInput: nums = [1,1,2,3,3,4,4,8,8]\nOutput: 2\n\nExample 2:\n\nInput: nums = [3,3,7,7,10,11,11]\nOutput: 10\n\nConstraints:\n\n- 1 <= nums.length <= 10^5\n\n- 0 <= nums[i] <= 10^5",
+  "constraints": [
+    "1 <= nums.length <= 10^5",
+    "0 <= nums[i] <= 10^5"
+  ],
+  "hints": [],
+  "acRate": 59.44,
+  "notes": [],
+  "source": "manual",
+  "importedAt": "2026-10-01T14:11:35Z",
+  "lastSyncedAt": "2026-10-01T14:11:35Z"
+}

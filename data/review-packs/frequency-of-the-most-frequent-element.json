@@ -1,0 +1,163 @@
+{
+  "schemaVersion": 1,
+  "problemSlug": "frequency-of-the-most-frequent-element",
+  "summary": "With at most k increments (+1 to any element), maximise the frequency of some value.",
+  "patterns": [
+    "Sliding Window",
+    "Greedy"
+  ],
+  "mainInsight": "After sorting, the best target for a group of elements is the largest one in the group. A window is feasible when raising every element to the window's maximum costs at most k; the cost is max*len - sum and can be maintained incrementally while sliding.",
+  "canonicalApproach": "Sort + sliding window",
+  "approaches": [
+    {
+      "name": "Brute force",
+      "summary": "For each target, count how many elements can be raised.",
+      "timeComplexity": "O(n^2)",
+      "spaceComplexity": "O(1)"
+    },
+    {
+      "name": "Sort + binary search + prefix sums",
+      "summary": "For each right end binary-search the smallest left with cost <= k.",
+      "timeComplexity": "O(n log n)",
+      "spaceComplexity": "O(n)",
+      "strengths": [
+        "Easy to reason about"
+      ],
+      "weaknesses": [
+        "Prefix array"
+      ]
+    },
+    {
+      "name": "Sort + sliding window",
+      "summary": "Maintain the window cost; shrink while cost > k.",
+      "timeComplexity": "O(n log n)",
+      "spaceComplexity": "O(1)",
+      "strengths": [
+        "Single pass after sorting"
+      ],
+      "weaknesses": [
+        "Sorting dominates"
+      ],
+      "interviewRelevance": "The expected answer."
+    }
+  ],
+  "personalSolution": {
+    "approach": "Sort (descending) + sliding window with budget tracking",
+    "timeComplexity": "O(n log n)",
+    "spaceComplexity": "O(1)",
+    "isOptimal": true,
+    "notes": "Correct. The ascending form (cost = max*len - sum) is easier to explain; remove the unused `anchor` variable."
+  },
+  "commonMistakes": [],
+  "edgeCases": [],
+  "cards": [
+    {
+      "id": "fm-pattern-01",
+      "category": "pattern",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "What pattern solves Frequency of the Most Frequent Element?",
+        "Which combination gives O(n log n)?"
+      ],
+      "options": [
+        "Sort + sliding window with cost tracking",
+        "Heap of frequencies",
+        "Dynamic programming over values",
+        "Two stacks"
+      ],
+      "answer": "Sort + sliding window with cost tracking",
+      "explanation": "Sorted order makes the cost of a window monotone: adding a larger element or removing a smaller one changes it predictably.",
+      "incorrectOptionExplanations": {
+        "Heap of frequencies": "Counts are not the issue; increments are.",
+        "Dynamic programming over values": "No overlapping subproblems.",
+        "Two stacks": "No LIFO structure."
+      }
+    },
+    {
+      "id": "fm-insight-01",
+      "category": "main_insight",
+      "type": "free_recall",
+      "promptVariants": [
+        "Why should the target of a window be its largest element, and what is the cost of the window?",
+        "Define the cost of making a window all equal."
+      ],
+      "answer": "Incrementing can only raise values, so the cheapest common value is the window's maximum. The cost is sum over the window of (max - x) = max * length - sum. The window is feasible iff cost <= k.",
+      "keyPoints": [
+        "Raise to the maximum",
+        "cost = max*len - sum",
+        "Feasible iff cost <= k"
+      ],
+      "explanation": "In your descending sort the anchor is nums[l]."
+    },
+    {
+      "id": "fm-time-01",
+      "category": "time_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Time complexity (dominated by sorting): ___",
+        "Sort + sliding window costs ___."
+      ],
+      "answer": "O(n log n)",
+      "explanation": "Sorting is O(n log n); the window pass is O(n).",
+      "acceptedAnswers": [
+        "O(nlogn)"
+      ]
+    },
+    {
+      "id": "fm-space-01",
+      "category": "space_complexity",
+      "type": "free_recall",
+      "promptVariants": [
+        "What is the extra space and what does Python's sort add?",
+        "What auxiliary space does the sort + sliding window solution use, and what side effect does sorting have?"
+      ],
+      "answer": "O(1) extra for the window variables; Python's sort uses O(n) worst-case auxiliary space, and sorting in place mutates the input.",
+      "keyPoints": [
+        "O(1) window",
+        "Sort may use O(n)",
+        "Mutates the input"
+      ],
+      "explanation": "Prefix-sum variants use O(n)."
+    },
+    {
+      "id": "fm-code-01",
+      "category": "code_reasoning",
+      "type": "code_question",
+      "promptVariants": [
+        "In your descending-sort solution, what do `ops`, `gap` and the `ops += (r - l) * (nums[l] - nums[l + 1])` line represent?",
+        "How does removing the largest element change the remaining cost?"
+      ],
+      "code": "nums.sort(reverse=True)\nops = k\nfor r in range(len(nums)):\n    gap = nums[l] - nums[r]\n    ops -= gap\n    while ops < 0:\n        ops += (r - l) * (nums[l] - nums[l + 1])\n        l += 1",
+      "answer": "ops is the remaining budget: each new element r costs nums[l] - nums[r] to raise to the anchor nums[l]. When the budget goes negative the anchor l is dropped and the new anchor is nums[l+1]; every one of the r - l remaining elements needs (nums[l] - nums[l+1]) less, so that amount is refunded. (The unused `anchor` variable can be deleted.)",
+      "keyPoints": [
+        "ops = remaining budget",
+        "New element costs anchor - value",
+        "Dropping the anchor refunds (r-l) * gap"
+      ],
+      "explanation": "Ascending order with cost = max*len - sum is the more common formulation."
+    },
+    {
+      "id": "fm-edge-01",
+      "category": "edge_case",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "What is the answer for nums = [1,4,8,13], k = 5?",
+        "How many elements can be made equal?"
+      ],
+      "options": [
+        "2",
+        "3",
+        "1",
+        "4"
+      ],
+      "answer": "2",
+      "explanation": "4 and 8 cost 4 to equalise (<= 5); adding 1 or 13 would exceed the budget; so frequency 2.",
+      "incorrectOptionExplanations": {
+        "3": "[1,4,8] needs 3+4 = 7 increments... more than 5.",
+        "1": "Two elements can be equalised within 5.",
+        "4": "The whole array needs far more than 5."
+      }
+    }
+  ],
+  "generatedAt": "2026-10-01T14:13:38Z"
+}

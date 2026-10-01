@@ -1,0 +1,177 @@
+{
+  "schemaVersion": 1,
+  "problemSlug": "longest-continuous-subarray-with-absolute-diff-less-than-or-equal-to-limit",
+  "summary": "Find the longest contiguous subarray in which the absolute difference between any two elements is at most limit.",
+  "patterns": [
+    "Sliding Window",
+    "Monotonic Stack"
+  ],
+  "mainInsight": "The largest pairwise difference in a window is simply max - min, so a window is valid iff max - min <= limit. Track the window's max and min in O(1) with two monotonic deques while sliding.",
+  "canonicalApproach": "Window + two monotonic deques",
+  "approaches": [
+    {
+      "name": "Brute force",
+      "summary": "Check every subarray's max and min.",
+      "timeComplexity": "O(n^2)",
+      "spaceComplexity": "O(1)"
+    },
+    {
+      "name": "Window + two heaps (lazy deletion)",
+      "summary": "Max-heap and min-heap with stale-index removal.",
+      "timeComplexity": "O(n log n)",
+      "spaceComplexity": "O(n)",
+      "strengths": [
+        "Easy to recall"
+      ],
+      "weaknesses": [
+        "log factor and extra memory"
+      ]
+    },
+    {
+      "name": "Window + two monotonic deques",
+      "summary": "A decreasing deque gives the max, an increasing deque the min; shrink while max - min > limit.",
+      "timeComplexity": "O(n)",
+      "spaceComplexity": "O(n)",
+      "strengths": [
+        "Optimal"
+      ],
+      "weaknesses": [
+        "Two structures to keep in sync"
+      ],
+      "interviewRelevance": "Your approach."
+    }
+  ],
+  "personalSolution": {
+    "approach": "Window + two monotonic deques",
+    "timeComplexity": "O(n)",
+    "spaceComplexity": "O(n)",
+    "isOptimal": true,
+    "notes": "Optimal; the inline reasoning about max - min is exactly the key insight."
+  },
+  "commonMistakes": [],
+  "edgeCases": [],
+  "cards": [
+    {
+      "id": "lc-pattern-01",
+      "category": "pattern",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "Which structure gives the window max and min in O(1) amortised?",
+        "What combination solves this problem in O(n)?"
+      ],
+      "options": [
+        "Sliding window with two monotonic deques",
+        "A single stack",
+        "Prefix sums",
+        "Binary search on the limit"
+      ],
+      "answer": "Sliding window with two monotonic deques",
+      "explanation": "One deque tracks the maximum, the other the minimum of the current window.",
+      "incorrectOptionExplanations": {
+        "A single stack": "A stack cannot expire the oldest element.",
+        "Prefix sums": "No sums are involved.",
+        "Binary search on the limit": "The limit is given."
+      }
+    },
+    {
+      "id": "lc-insight-01",
+      "category": "main_insight",
+      "type": "free_recall",
+      "promptVariants": [
+        "Why is checking only max - min enough to validate the window?",
+        "Explain why every pair is within limit iff max - min <= limit."
+      ],
+      "answer": "The largest absolute difference between any two elements of a set is always between its maximum and minimum. So if that difference is <= limit, all pairs are; if it is greater, the pair (max, min) already violates it.",
+      "keyPoints": [
+        "Largest pairwise difference = max - min",
+        "Valid iff max - min <= limit"
+      ],
+      "explanation": "That reduces a pairwise condition to two aggregates."
+    },
+    {
+      "id": "lc-invariant-01",
+      "category": "invariant",
+      "type": "free_recall",
+      "promptVariants": [
+        "What do the two deques hold and how do you expire elements?",
+        "State the invariant of max_queue and min_queue."
+      ],
+      "answer": "They hold indices within the window: max_queue with decreasing values (front = window max), min_queue with increasing values (front = window min). When l advances, indices < l are popped from the fronts.",
+      "keyPoints": [
+        "Indices in window",
+        "max_queue decreasing, min_queue increasing",
+        "Expire by index from the front"
+      ],
+      "explanation": "Same idea as Sliding Window Maximum, done twice."
+    },
+    {
+      "id": "lc-time-01",
+      "category": "time_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Time complexity of the two-deque solution: ___",
+        "Each index enters and leaves each deque once, so the time is ___."
+      ],
+      "answer": "O(n)",
+      "explanation": "Amortised O(1) per element.",
+      "acceptedAnswers": [
+        "linear"
+      ]
+    },
+    {
+      "id": "lc-space-01",
+      "category": "space_complexity",
+      "type": "free_recall",
+      "promptVariants": [
+        "What is the space cost and when is it the worst?",
+        "How large can the deques get?"
+      ],
+      "answer": "O(n) in the worst case: a strictly decreasing array fills max_queue with the whole window, a strictly increasing one fills min_queue.",
+      "keyPoints": [
+        "O(n) worst case",
+        "Strictly monotone input"
+      ],
+      "explanation": "Bounded by the window size."
+    },
+    {
+      "id": "lc-code-01",
+      "category": "code_reasoning",
+      "type": "code_question",
+      "promptVariants": [
+        "Why does the shrink loop set `l = min(max_queue[0], min_queue[0]) + 1` and then purge both deques?",
+        "How does the shrink step restore validity?"
+      ],
+      "code": "while nums[max_queue[0]] - nums[min_queue[0]] > limit:\n    l = min(max_queue[0], min_queue[0]) + 1\n    while max_queue[0] < l:\n        max_queue.popleft()\n    while min_queue[0] < l:\n        min_queue.popleft()",
+      "answer": "The violation involves the current max and min; to fix it one of them must leave the window. The earlier of their indices must go first, so l jumps just past min(front indices); then expired indices are popped from both deques. Repeat until max - min <= limit.",
+      "keyPoints": [
+        "Drop the earlier of the two extremes",
+        "Jump l past it",
+        "Purge expired indices from both deques"
+      ],
+      "explanation": "Moving l one step at a time would also work."
+    },
+    {
+      "id": "lc-edge-01",
+      "category": "edge_case",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "What is the answer for nums = [10,1,2,4,7,2], limit = 5?",
+        "Which window is best?"
+      ],
+      "options": [
+        "4 ([2,4,7,2])",
+        "3",
+        "5",
+        "6"
+      ],
+      "answer": "4 ([2,4,7,2])",
+      "explanation": "[2,4,7,2] has max 7 and min 2 (difference 5 <= 5); extending left to 1 makes the difference 6.",
+      "incorrectOptionExplanations": {
+        "3": "Shorter than [2,4,7,2].",
+        "5": "Adding the 1 breaks the limit (7 - 1 = 6).",
+        "6": "The whole array has difference 9."
+      }
+    }
+  ],
+  "generatedAt": "2026-10-01T14:13:38Z"
+}

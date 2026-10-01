@@ -1,0 +1,26 @@
+{
+  "leetcodeId": "18",
+  "title": "4Sum",
+  "slug": "4sum",
+  "url": "https://leetcode.com/problems/4sum/",
+  "difficulty": "Medium",
+  "status": "unsolved",
+  "premium": false,
+  "tags": [
+    "Array",
+    "Two Pointers",
+    "Sorting"
+  ],
+  "problemStatement": "Given an array nums of n integers, return an array of all the unique quadruplets [nums[a], nums[b], nums[c], nums[d]] such that:\n\n- 0 <= a, b, c, d < n\n\n- a, b, c, and d are distinct.\n\n- nums[a] + nums[b] + nums[c] + nums[d] == target\n\nYou may return the answer in any order.\n\nExample 1:\n\nInput: nums = [1,0,-1,0,-2,2], target = 0\nOutput: [[-2,-1,1,2],[-2,0,0,2],[-1,0,0,1]]\n\nExample 2:\n\nInput: nums = [2,2,2,2,2], target = 8\nOutput: [[2,2,2,2]]\n\nConstraints:\n\n- 1 <= nums.length <= 200\n\n- -10^9 <= nums[i] <= 10^9\n\n- -10^9 <= target <= 10^9",
+  "constraints": [
+    "1 <= nums.length <= 200",
+    "-10^9 <= nums[i] <= 10^9",
+    "-10^9 <= target <= 10^9"
+  ],
+  "hints": [],
+  "acRate": 41.81,
+  "notes": [],
+  "source": "manual",
+  "importedAt": "2026-10-01T14:11:39Z",
+  "lastSyncedAt": "2026-10-01T14:11:39Z"
+}

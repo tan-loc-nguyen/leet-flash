@@ -1,0 +1,26 @@
+{
+  "leetcodeId": "907",
+  "title": "Sum of Subarray Minimums",
+  "slug": "sum-of-subarray-minimums",
+  "url": "https://leetcode.com/problems/sum-of-subarray-minimums/",
+  "difficulty": "Medium",
+  "status": "unsolved",
+  "premium": false,
+  "tags": [
+    "Array",
+    "Dynamic Programming",
+    "Stack",
+    "Monotonic Stack"
+  ],
+  "problemStatement": "Given an array of integers arr, find the sum of min(b), where b ranges over every (contiguous) subarray of arr. Since the answer may be large, return the answer modulo 10^9 + 7.\n\nExample 1:\n\nInput: arr = [3,1,2,4]\nOutput: 17\nExplanation:\nSubarrays are [3], [1], [2], [4], [3,1], [1,2], [2,4], [3,1,2], [1,2,4], [3,1,2,4].\nMinimums are 3, 1, 2, 4, 1, 1, 2, 1, 1, 1.\nSum is 17.\n\nExample 2:\n\nInput: arr = [11,81,94,43,3]\nOutput: 444\n\nConstraints:\n\n- 1 <= arr.length <= 3 * 10^4\n\n- 1 <= arr[i] <= 3 * 10^4",
+  "constraints": [
+    "1 <= arr.length <= 3 * 10^4",
+    "1 <= arr[i] <= 3 * 10^4"
+  ],
+  "hints": [],
+  "acRate": 39.03,
+  "notes": [],
+  "source": "manual",
+  "importedAt": "2026-10-01T14:12:13Z",
+  "lastSyncedAt": "2026-10-01T14:12:13Z"
+}

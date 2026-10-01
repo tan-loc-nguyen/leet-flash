@@ -1,0 +1,25 @@
+{
+  "leetcodeId": "470",
+  "title": "Implement Rand10() Using Rand7()",
+  "slug": "implement-rand10-using-rand7",
+  "url": "https://leetcode.com/problems/implement-rand10-using-rand7/",
+  "difficulty": "Medium",
+  "status": "unsolved",
+  "premium": false,
+  "tags": [
+    "Math",
+    "Rejection Sampling",
+    "Randomized",
+    "Probability and Statistics"
+  ],
+  "problemStatement": "Given the API rand7() that generates a uniform random integer in the range [1, 7], write a function rand10() that generates a uniform random integer in the range [1, 10]. You can only call the API rand7(), and you shouldn't call any other API. Please do not use a language's built-in random API.\n\nEach test case will have one internal argument n, the number of times that your implemented function rand10() will be called while testing. Note that this is not an argument passed to rand10().\n\nExample 1:\n\nInput: n = 1\nOutput: [2]\n\nExample 2:\n\nInput: n = 2\nOutput: [2,8]\n\nExample 3:\n\nInput: n = 3\nOutput: [3,8,10]\n\nConstraints:\n\n- 1 <= n <= 10^5\n\nFollow up:\n\n- What is the expected value for the number of calls to rand7() function?\n\n- Could you minimize the number of calls to rand7()?",
+  "constraints": [
+    "1 <= n <= 10^5"
+  ],
+  "hints": [],
+  "acRate": 46.77,
+  "notes": [],
+  "source": "manual",
+  "importedAt": "2026-10-01T14:11:59Z",
+  "lastSyncedAt": "2026-10-01T14:11:59Z"
+}

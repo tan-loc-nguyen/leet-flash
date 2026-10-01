@@ -1,0 +1,179 @@
+{
+  "schemaVersion": 1,
+  "problemSlug": "sliding-window-maximum",
+  "summary": "Return the maximum of every window of size k as it slides across the array.",
+  "patterns": [
+    "Sliding Window",
+    "Monotonic Stack"
+  ],
+  "mainInsight": "Keep a deque of indices whose values are in decreasing order: smaller earlier values can never become the maximum once a larger value arrives, so they are dropped from the back; expired indices are dropped from the front. The front is always the window max.",
+  "canonicalApproach": "Monotonic decreasing deque",
+  "approaches": [
+    {
+      "name": "Brute force",
+      "summary": "Scan each window for its max.",
+      "timeComplexity": "O(n*k)",
+      "spaceComplexity": "O(1)"
+    },
+    {
+      "name": "Max-heap with lazy deletion",
+      "summary": "Push (-value, index); pop stale tops outside the window.",
+      "timeComplexity": "O(n log n)",
+      "spaceComplexity": "O(n)",
+      "strengths": [
+        "Easy to recall"
+      ],
+      "weaknesses": [
+        "log factor and extra memory"
+      ]
+    },
+    {
+      "name": "Monotonic decreasing deque",
+      "summary": "Pop smaller values from the back, expire from the front, read the front.",
+      "timeComplexity": "O(n)",
+      "spaceComplexity": "O(k)",
+      "strengths": [
+        "Optimal"
+      ],
+      "weaknesses": [
+        "Needs the monotonic-queue idea"
+      ],
+      "interviewRelevance": "The expected answer."
+    }
+  ],
+  "personalSolution": {
+    "approach": "Monotonic decreasing deque of indices",
+    "timeComplexity": "O(n)",
+    "spaceComplexity": "O(k)",
+    "isOptimal": true,
+    "notes": "Optimal. The variable `l` is unused; use `r >= k - 1`."
+  },
+  "commonMistakes": [],
+  "edgeCases": [],
+  "cards": [
+    {
+      "id": "sm-pattern-01",
+      "category": "pattern",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "Which structure gives O(n) sliding-window maximum?",
+        "What pattern is the key to Sliding Window Maximum?"
+      ],
+      "options": [
+        "Monotonic decreasing deque",
+        "Max-heap of all elements",
+        "Two stacks",
+        "Binary indexed tree"
+      ],
+      "answer": "Monotonic decreasing deque",
+      "explanation": "It keeps only candidates that can still become a maximum, in decreasing order.",
+      "incorrectOptionExplanations": {
+        "Max-heap of all elements": "Works in O(n log n) but not O(n).",
+        "Two stacks": "Used for sliding window aggregation but not the standard answer here.",
+        "Binary indexed tree": "Overkill and O(n log n)."
+      }
+    },
+    {
+      "id": "sm-insight-01",
+      "category": "main_insight",
+      "type": "free_recall",
+      "promptVariants": [
+        "Why can smaller earlier elements be discarded when a larger element arrives?",
+        "Explain why the deque stays decreasing."
+      ],
+      "answer": "A smaller element that is also older will leave the window before the newer, larger one, so it can never be the maximum of any future window. Removing it keeps only potentially useful indices, in decreasing value order.",
+      "keyPoints": [
+        "Older and smaller => dominated",
+        "Never the max of future windows",
+        "Deque values decrease from front to back"
+      ],
+      "explanation": "The front is the max of the current window."
+    },
+    {
+      "id": "sm-invariant-01",
+      "category": "invariant",
+      "type": "free_recall",
+      "promptVariants": [
+        "What does the deque contain at each step, and how do you expire elements?",
+        "State the invariant after processing index r."
+      ],
+      "answer": "It stores indices within the current window in order of increasing index and strictly decreasing value, so deque[0] is the index of the window maximum. Indices < r - k + 1 are removed from the front.",
+      "keyPoints": [
+        "Indices in window",
+        "Values decreasing",
+        "Front = max",
+        "Expire by index from the front"
+      ],
+      "explanation": "Store indices (not values) so expiry is possible."
+    },
+    {
+      "id": "sm-time-01",
+      "category": "time_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Time complexity of the monotonic-deque solution: ___",
+        "Sliding Window Maximum with a deque runs in ___ time."
+      ],
+      "answer": "O(n)",
+      "explanation": "Each index is appended once and removed at most once (amortised).",
+      "acceptedAnswers": [
+        "linear"
+      ]
+    },
+    {
+      "id": "sm-space-01",
+      "category": "space_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Space used by the deque (window size k): ___",
+        "The deque holds at most ___ indices."
+      ],
+      "answer": "O(k)",
+      "explanation": "At most k indices are in the window at once.",
+      "acceptedAnswers": [
+        "O(k) extra",
+        "k"
+      ]
+    },
+    {
+      "id": "sm-code-01",
+      "category": "code_reasoning",
+      "type": "code_question",
+      "promptVariants": [
+        "Why `nums[queue[-1]] < nums[r]` (strict) and why check `queue[0] < r - k + 1`? Is the variable `l` needed?",
+        "What do the two while loops do and in what order?"
+      ],
+      "code": "for r in range(n):\n    while queue and nums[queue[-1]] < nums[r]:\n        queue.pop()\n    queue.append(r)\n    while queue[0] < r - k + 1:\n        queue.popleft()\n    if r - l + 1 >= k:\n        ans.append(nums[queue[0]])",
+      "answer": "The first loop removes dominated (smaller) values from the back; with a strict < equal values are kept, which is harmless. The second removes the front index once it falls out of the window [r-k+1, r]. `l` is never advanced, so `r - l + 1 >= k` is just `r + 1 >= k` - use `r >= k - 1` and drop `l`.",
+      "keyPoints": [
+        "Pop smaller from the back",
+        "Expire the front by index",
+        "l is redundant"
+      ],
+      "explanation": "Pushing before expiring is safe because the window always contains r."
+    },
+    {
+      "id": "sm-edge-01",
+      "category": "edge_case",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "What happens for k = 1?",
+        "Which input shows why equal values may be kept in the deque?"
+      ],
+      "options": [
+        "The answer is the array itself",
+        "The answer is empty",
+        "Only the first element",
+        "It requires a heap"
+      ],
+      "answer": "The answer is the array itself",
+      "explanation": "Each window contains one element and the deque holds that single index.",
+      "incorrectOptionExplanations": {
+        "The answer is empty": "There are n windows of size 1.",
+        "Only the first element": "Every window needs a result.",
+        "It requires a heap": "The deque handles it."
+      }
+    }
+  ],
+  "generatedAt": "2026-10-01T14:10:50Z"
+}

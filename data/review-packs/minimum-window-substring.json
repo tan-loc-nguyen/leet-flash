@@ -1,0 +1,181 @@
+{
+  "schemaVersion": 1,
+  "problemSlug": "minimum-window-substring",
+  "summary": "Find the smallest substring of s that contains every character of t (with multiplicity).",
+  "patterns": [
+    "Sliding Window",
+    "Array / Hashing"
+  ],
+  "mainInsight": "Expand right until the window covers t, then shrink left as far as it still covers t, recording the smallest valid window. Tracking 'how many required characters are satisfied' makes each validity check O(1).",
+  "canonicalApproach": "Sliding window with a satisfied-counter",
+  "approaches": [
+    {
+      "name": "Brute force",
+      "summary": "Check every substring.",
+      "timeComplexity": "O(n^2 * m)",
+      "spaceComplexity": "O(m)"
+    },
+    {
+      "name": "Sliding window with full count comparison",
+      "summary": "After each step compare the window counts with t's counts across all required characters.",
+      "timeComplexity": "O(n * k)",
+      "spaceComplexity": "O(k)",
+      "strengths": [
+        "Simple"
+      ],
+      "weaknesses": [
+        "Validity check costs O(distinct chars in t) per step"
+      ],
+      "interviewRelevance": "Your approach."
+    },
+    {
+      "name": "Sliding window with a satisfied-counter",
+      "summary": "Maintain `have` = number of required characters whose window count >= needed; valid iff have == need.",
+      "timeComplexity": "O(n + m)",
+      "spaceComplexity": "O(k)",
+      "strengths": [
+        "Each validity check is O(1)"
+      ],
+      "weaknesses": [
+        "Slightly trickier bookkeeping"
+      ],
+      "interviewRelevance": "The optimal answer."
+    }
+  ],
+  "personalSolution": {
+    "approach": "Sliding window with per-step count comparison",
+    "timeComplexity": "O(n * k)",
+    "spaceComplexity": "O(k)",
+    "isOptimal": false,
+    "notes": "Correct. Replace compare() with a `have/need` counter for true O(n + m)."
+  },
+  "commonMistakes": [],
+  "edgeCases": [],
+  "cards": [
+    {
+      "id": "mw-pattern-01",
+      "category": "pattern",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "Which technique solves Minimum Window Substring in linear time?",
+        "What pattern fits 'shortest contiguous range that satisfies a coverage condition'?"
+      ],
+      "options": [
+        "Variable-size sliding window with counters",
+        "Binary search on the answer length",
+        "Dynamic programming",
+        "Trie"
+      ],
+      "answer": "Variable-size sliding window with counters",
+      "explanation": "Expand to reach validity, shrink to minimise: both pointers only move forward.",
+      "incorrectOptionExplanations": {
+        "Binary search on the answer length": "Feasibility is monotone so it works, but it costs O(n log n).",
+        "Dynamic programming": "No overlapping-subproblem structure.",
+        "Trie": "Not about prefixes."
+      }
+    },
+    {
+      "id": "mw-insight-01",
+      "category": "main_insight",
+      "type": "free_recall",
+      "promptVariants": [
+        "Why shrink the window while it is still valid, and why does that find the minimum?",
+        "Explain the expand/shrink loop of Minimum Window Substring."
+      ],
+      "answer": "For each right end r, the best window ending at r starts at the largest left that still covers t. Shrinking while valid finds exactly that left; recording each such window and moving r on covers all candidate ends. Both pointers move forward, so it is O(n).",
+      "keyPoints": [
+        "Expand until valid",
+        "Shrink while still valid and record",
+        "Each pointer moves forward only"
+      ],
+      "explanation": "Shrinking stops at the first invalid state, which is the moment the window stops being a candidate."
+    },
+    {
+      "id": "mw-invariant-01",
+      "category": "invariant",
+      "type": "free_recall",
+      "promptVariants": [
+        "What invariant makes the validity check O(1) in the optimal version?",
+        "How do the `have` and `need` counters work?"
+      ],
+      "answer": "`need` = number of distinct characters in t; `have` = number of those whose window count currently meets or exceeds the required count. The window is valid exactly when have == need; update `have` only when a count crosses its requirement while adding or removing a character.",
+      "keyPoints": [
+        "need = distinct chars in t",
+        "have counts satisfied chars",
+        "Update only on threshold crossing"
+      ],
+      "explanation": "That removes the inner compare loop."
+    },
+    {
+      "id": "mw-time-01",
+      "category": "time_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Time complexity of the optimal solution (n = len(s), m = len(t)): ___",
+        "Minimum Window Substring with a satisfied-counter runs in ___."
+      ],
+      "answer": "O(n+m)",
+      "explanation": "Each pointer visits each index once; building t's counter is O(m).",
+      "acceptedAnswers": [
+        "O(n + m)",
+        "O(m+n)"
+      ]
+    },
+    {
+      "id": "mw-space-01",
+      "category": "space_complexity",
+      "type": "free_recall",
+      "promptVariants": [
+        "What bounds the space, and what does your `compare` cost per step?",
+        "How does your compare-based validity check change the time complexity?"
+      ],
+      "answer": "Space is O(k), the number of distinct characters (bounded by the alphabet). Your compare loops over all distinct characters of t each time the window is checked, so total time is O(n * k) - effectively linear for a 52-letter alphabet but not for large alphabets.",
+      "keyPoints": [
+        "O(k) distinct characters",
+        "compare() is O(k) per check",
+        "O(n * k) overall"
+      ],
+      "explanation": "The satisfied-counter version makes it O(n + m)."
+    },
+    {
+      "id": "mw-code-01",
+      "category": "code_reasoning",
+      "type": "code_question",
+      "promptVariants": [
+        "Why is `ans` assigned inside the inner `while` and what does the `s[l] in freq` guard do?",
+        "Walk through why the while loop (not an if) is required."
+      ],
+      "code": "for r in range(len(s)):\n    if s[r] in freq:\n        freq[s[r]] += 1\n    while self.compare(freq, bar):\n        currSize = r - l + 1\n        if best > currSize:\n            best = currSize\n            ans = s[l:r+1]\n        if s[l] in freq:\n            freq[s[l]] -= 1\n        l += 1",
+      "answer": "Several shrink steps may keep the window valid (e.g. removing irrelevant characters), each producing a smaller candidate, so a while loop is needed and each valid state is recorded. The `in freq` guard ensures only characters of t are counted/uncounted so irrelevant characters do not corrupt the counts.",
+      "keyPoints": [
+        "Multiple valid shrinks => while",
+        "Record candidates inside the loop",
+        "Only count characters of t"
+      ],
+      "explanation": "Slicing s[l:r+1] only on improvement keeps allocation low."
+    },
+    {
+      "id": "mw-edge-01",
+      "category": "edge_case",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "What should be returned when no window covers t?",
+        "Which inputs expose duplicate-handling mistakes?"
+      ],
+      "options": [
+        "The empty string; and t with repeated letters needs counts, not just presence",
+        "None",
+        "The whole string",
+        "-1"
+      ],
+      "answer": "The empty string; and t with repeated letters needs counts, not just presence",
+      "explanation": "e.g. s = 'a', t = 'aa' has no valid window; checking only 'is the character present' would wrongly accept it.",
+      "incorrectOptionExplanations": {
+        "None": "The function returns a string.",
+        "The whole string": "Only if it actually covers t.",
+        "-1": "Not an integer result."
+      }
+    }
+  ],
+  "generatedAt": "2026-10-01T14:10:50Z"
+}

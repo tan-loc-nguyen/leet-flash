@@ -1,0 +1,25 @@
+{
+  "leetcodeId": "680",
+  "title": "Valid Palindrome II",
+  "slug": "valid-palindrome-ii",
+  "url": "https://leetcode.com/problems/valid-palindrome-ii/",
+  "difficulty": "Easy",
+  "status": "unsolved",
+  "premium": false,
+  "tags": [
+    "Two Pointers",
+    "String",
+    "Greedy"
+  ],
+  "problemStatement": "Given a string s, return true if the s can be palindrome after deleting at most one character from it.\n\nExample 1:\n\nInput: s = \"aba\"\nOutput: true\n\nExample 2:\n\nInput: s = \"abca\"\nOutput: true\nExplanation: You could delete the character 'c'.\n\nExample 3:\n\nInput: s = \"abc\"\nOutput: false\n\nConstraints:\n\n- 1 <= s.length <= 10^5\n\n- s consists of lowercase English letters.",
+  "constraints": [
+    "1 <= s.length <= 10^5",
+    "s consists of lowercase English letters."
+  ],
+  "hints": [],
+  "acRate": 44.83,
+  "notes": [],
+  "source": "manual",
+  "importedAt": "2026-10-01T14:11:43Z",
+  "lastSyncedAt": "2026-10-01T14:11:43Z"
+}

@@ -1,0 +1,30 @@
+{
+  "leetcodeId": "767",
+  "title": "Reorganize String",
+  "slug": "reorganize-string",
+  "url": "https://leetcode.com/problems/reorganize-string/",
+  "difficulty": "Medium",
+  "status": "unsolved",
+  "premium": false,
+  "tags": [
+    "Hash Table",
+    "String",
+    "Greedy",
+    "Sorting",
+    "Heap (Priority Queue)",
+    "Counting"
+  ],
+  "problemStatement": "Given a string s, rearrange the characters of s so that any two adjacent characters are not the same.\n\nReturn any possible rearrangement of s or return \"\" if not possible.\n\nExample 1:\n\nInput: s = \"aab\"\nOutput: \"aba\"\n\nExample 2:\n\nInput: s = \"aaab\"\nOutput: \"\"\n\nConstraints:\n\n- 1 <= s.length <= 500\n\n- s consists of lowercase English letters.",
+  "constraints": [
+    "1 <= s.length <= 500",
+    "s consists of lowercase English letters."
+  ],
+  "hints": [
+    "Alternate placing the most common letters."
+  ],
+  "acRate": 57.63,
+  "notes": [],
+  "source": "manual",
+  "importedAt": "2026-10-01T14:11:21Z",
+  "lastSyncedAt": "2026-10-01T14:11:21Z"
+}

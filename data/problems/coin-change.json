@@ -1,0 +1,28 @@
+{
+  "leetcodeId": "322",
+  "title": "Coin Change",
+  "slug": "coin-change",
+  "url": "https://leetcode.com/problems/coin-change/",
+  "difficulty": "Medium",
+  "status": "unsolved",
+  "premium": false,
+  "tags": [
+    "Array",
+    "Dynamic Programming",
+    "Breadth-First Search",
+    "Knapsack Problem",
+    "Complete Knapsack"
+  ],
+  "problemStatement": "You are given an integer array coins representing coins of different denominations and an integer amount representing a total amount of money.\n\nReturn the fewest number of coins that you need to make up that amount. If that amount of money cannot be made up by any combination of the coins, return -1.\n\nYou may assume that you have an infinite number of each kind of coin.\n\nExample 1:\n\nInput: coins = [1,2,5], amount = 11\nOutput: 3\nExplanation: 11 = 5 + 5 + 1\n\nExample 2:\n\nInput: coins = [2], amount = 3\nOutput: -1\n\nExample 3:\n\nInput: coins = [1], amount = 0\nOutput: 0\n\nConstraints:\n\n- 1 <= coins.length <= 12\n\n- 1 <= coins[i] <= 2^31 - 1\n\n- 0 <= amount <= 10^4",
+  "constraints": [
+    "1 <= coins.length <= 12",
+    "1 <= coins[i] <= 2^31 - 1",
+    "0 <= amount <= 10^4"
+  ],
+  "hints": [],
+  "acRate": 49.22,
+  "notes": [],
+  "source": "manual",
+  "importedAt": "2026-10-01T14:11:30Z",
+  "lastSyncedAt": "2026-10-01T14:11:30Z"
+}

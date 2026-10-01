@@ -1,0 +1,146 @@
+{
+  "schemaVersion": 1,
+  "problemSlug": "longest-substring-with-at-most-k-distinct-characters",
+  "summary": "Find the longest substring that contains at most k distinct characters.",
+  "patterns": [
+    "Sliding Window"
+  ],
+  "mainInsight": "The window is valid while it has at most k distinct characters; track counts in a map and shrink from the left whenever distinct count exceeds k. This is the general template behind many 'at most K' window problems.",
+  "canonicalApproach": "Sliding window with a counter",
+  "approaches": [
+    {
+      "name": "Brute force",
+      "summary": "Check every substring.",
+      "timeComplexity": "O(n^2)",
+      "spaceComplexity": "O(k)"
+    },
+    {
+      "name": "Sliding window with a counter",
+      "summary": "Add s[r]; while len(counter) > k, remove s[l].",
+      "timeComplexity": "O(n)",
+      "spaceComplexity": "O(k)",
+      "strengths": [
+        "General template"
+      ],
+      "interviewRelevance": "The expected answer."
+    }
+  ],
+  "personalSolution": {
+    "approach": "Sliding window with a counter",
+    "timeComplexity": "O(n)",
+    "spaceComplexity": "O(k)",
+    "isOptimal": true,
+    "notes": "Optimal."
+  },
+  "commonMistakes": [],
+  "edgeCases": [],
+  "cards": [
+    {
+      "id": "kd-pattern-01",
+      "category": "pattern",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "Which pattern solves 'longest substring with at most k distinct characters'?",
+        "What structure tracks the validity condition?"
+      ],
+      "options": [
+        "Sliding window with a character-count map",
+        "Dynamic programming over prefixes",
+        "Binary search on k",
+        "Trie"
+      ],
+      "answer": "Sliding window with a character-count map",
+      "explanation": "Distinct count = number of keys in the map; shrink until it is <= k.",
+      "incorrectOptionExplanations": {
+        "Dynamic programming over prefixes": "Unnecessary state.",
+        "Binary search on k": "k is given.",
+        "Trie": "Not about prefixes."
+      }
+    },
+    {
+      "id": "kd-insight-01",
+      "category": "main_insight",
+      "type": "free_recall",
+      "promptVariants": [
+        "Why can you shrink the window only as far as validity requires?",
+        "Why is it correct to record the window length after restoring validity?"
+      ],
+      "answer": "For each right end r, the longest valid window ending at r starts at the smallest l such that distinct <= k; shrinking just until the condition holds finds that l. Recording the length after the shrink then covers every right end.",
+      "keyPoints": [
+        "Longest per right end",
+        "Shrink minimally",
+        "Record after restoring validity"
+      ],
+      "explanation": "Same loop shape as Fruit Into Baskets (k = 2)."
+    },
+    {
+      "id": "kd-time-01",
+      "category": "time_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Time complexity: ___",
+        "Longest substring with at most k distinct characters runs in ___ time."
+      ],
+      "answer": "O(n)",
+      "explanation": "Each index is added once and removed at most once.",
+      "acceptedAnswers": [
+        "linear"
+      ]
+    },
+    {
+      "id": "kd-space-01",
+      "category": "space_complexity",
+      "type": "free_recall",
+      "promptVariants": [
+        "What is the space complexity and what is the extreme case k = 0?",
+        "How much memory does the k-distinct window need, and what does k = 0 do to the answer?"
+      ],
+      "answer": "O(k) for the map (at most k + 1 keys at a time). For k = 0 the window is always emptied and the answer is 0.",
+      "keyPoints": [
+        "O(k) keys",
+        "k = 0 => 0"
+      ],
+      "explanation": "Bounded by the alphabet as well."
+    },
+    {
+      "id": "kd-code-01",
+      "category": "code_reasoning",
+      "type": "code_question",
+      "promptVariants": [
+        "Why delete the key when its count reaches 0, and is the `l <= r` guard needed?",
+        "What would break if zero-count keys stayed in the dict?"
+      ],
+      "code": "while len(counter) > k and l <= r:\n    counter[s[l]] -= 1\n    if counter[s[l]] <= 0:\n        del counter[s[l]]\n    l += 1",
+      "answer": "len(counter) is used as the distinct count, so a character with count 0 must be removed or the window would look invalid when it is not. The `l <= r` guard is redundant (with k >= 0 the loop ends before the window empties), though harmless.",
+      "keyPoints": [
+        "len(dict) = distinct count",
+        "Delete zero-count keys",
+        "Guard redundant"
+      ],
+      "explanation": "Use a separate distinct counter if you prefer to keep zeros."
+    },
+    {
+      "id": "kd-edge-01",
+      "category": "edge_case",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "What is the answer for s = 'eceba', k = 2?",
+        "How long is the best window?"
+      ],
+      "options": [
+        "3 ('ece')",
+        "4",
+        "2",
+        "5"
+      ],
+      "answer": "3 ('ece')",
+      "explanation": "Windows with <= 2 distinct characters: 'ece' (3) is the longest; 'eceb' has 3 distinct.",
+      "incorrectOptionExplanations": {
+        "4": "'eceb' has e, c, b = 3 distinct.",
+        "2": "Shorter than achievable.",
+        "5": "Whole string has 4 distinct characters."
+      }
+    }
+  ],
+  "generatedAt": "2026-10-01T14:10:50Z"
+}

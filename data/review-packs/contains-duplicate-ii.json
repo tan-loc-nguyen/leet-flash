@@ -1,0 +1,158 @@
+{
+  "schemaVersion": 1,
+  "problemSlug": "contains-duplicate-ii",
+  "summary": "Return true if two equal values lie within distance k of each other.",
+  "patterns": [
+    "Sliding Window",
+    "Array / Hashing"
+  ],
+  "mainInsight": "Two equal values at distance <= k lie inside some window of k + 1 consecutive elements, so slide a window of recent elements (a set) and check membership; or keep the last index of each value in a dict.",
+  "canonicalApproach": "Sliding window set",
+  "approaches": [
+    {
+      "name": "Brute force",
+      "summary": "Compare every pair within distance k.",
+      "timeComplexity": "O(n*k)",
+      "spaceComplexity": "O(1)"
+    },
+    {
+      "name": "Hash map of last indices",
+      "summary": "If nums[i] was seen at j and i - j <= k return true; store i.",
+      "timeComplexity": "O(n)",
+      "spaceComplexity": "O(n)",
+      "strengths": [
+        "Simple"
+      ],
+      "weaknesses": [
+        "Stores all distinct values"
+      ]
+    },
+    {
+      "name": "Sliding window set",
+      "summary": "Keep a set of the last k elements; remove the element leaving the window.",
+      "timeComplexity": "O(n)",
+      "spaceComplexity": "O(min(n, k))",
+      "strengths": [
+        "Bounded memory"
+      ],
+      "interviewRelevance": "Your approach."
+    }
+  ],
+  "personalSolution": {
+    "approach": "Sliding window set",
+    "timeComplexity": "O(n)",
+    "spaceComplexity": "O(min(n, k))",
+    "isOptimal": true,
+    "notes": "Optimal; a dict of last indices is the simpler alternative."
+  },
+  "commonMistakes": [],
+  "edgeCases": [],
+  "cards": [
+    {
+      "id": "cd2-pattern-01",
+      "category": "pattern",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "Which structure detects a repeat within a distance k?",
+        "What pattern bounds memory for 'duplicate within k positions'?"
+      ],
+      "options": [
+        "Sliding window set of the last k elements",
+        "Sorting the array",
+        "Two stacks",
+        "Binary search"
+      ],
+      "answer": "Sliding window set of the last k elements",
+      "explanation": "Only elements within distance k matter, so older ones are evicted.",
+      "incorrectOptionExplanations": {
+        "Sorting the array": "Loses original positions.",
+        "Two stacks": "Not relevant.",
+        "Binary search": "No sorted structure by index."
+      }
+    },
+    {
+      "id": "cd2-insight-01",
+      "category": "main_insight",
+      "type": "free_recall",
+      "promptVariants": [
+        "Why is a window of the last k elements enough?",
+        "Why can older elements be forgotten?"
+      ],
+      "answer": "A pair at distance <= k means the earlier element is among the last k elements before the current one. Anything older than k positions can never form a valid pair with the current or any later element, so it can be removed.",
+      "keyPoints": [
+        "Window = previous k elements",
+        "Older elements never qualify again"
+      ],
+      "explanation": "That bounds memory to O(min(n, k))."
+    },
+    {
+      "id": "cd2-time-01",
+      "category": "time_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Time complexity: ___",
+        "Complete the statement: Time complexity: ___"
+      ],
+      "answer": "O(n)",
+      "explanation": "Each element is added and removed from the set once (O(1) average each).",
+      "acceptedAnswers": [
+        "linear"
+      ]
+    },
+    {
+      "id": "cd2-space-01",
+      "category": "space_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Space complexity of the window-set approach: ___",
+        "Memory use in terms of n and k: ___"
+      ],
+      "answer": "O(min(n, k))",
+      "explanation": "The set never holds more than k elements.",
+      "acceptedAnswers": [
+        "O(k)",
+        "O(min(k, n))"
+      ]
+    },
+    {
+      "id": "cd2-code-01",
+      "category": "code_reasoning",
+      "type": "code_question",
+      "promptVariants": [
+        "Why is the eviction `if r - l > k` placed before the membership check, and what does the window contain at the check?",
+        "How many elements are in the set when `nums[r] in sett` is evaluated?"
+      ],
+      "code": "for r in range(len(nums)):\n    if r - l > k:\n        sett.remove(nums[l])\n        l += 1\n    if nums[r] in sett:\n        return True\n    sett.add(nums[r])",
+      "answer": "Evicting first guarantees the set only contains indices l..r-1 with r - l <= k, i.e. exactly the previous k elements. Then any hit is a duplicate within distance k.",
+      "keyPoints": [
+        "Evict before checking",
+        "Set = previous <= k elements",
+        "Hit => distance <= k"
+      ],
+      "explanation": "Checking before evicting could match a value at distance k + 1."
+    },
+    {
+      "id": "cd2-edge-01",
+      "category": "edge_case",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "For nums = [1,2,3,1], k = 2 what is the result?",
+        "Which distance shows the `<= k` boundary?"
+      ],
+      "options": [
+        "False (the 1s are 3 apart)",
+        "True",
+        "Only if k = 3",
+        "It depends on sorting"
+      ],
+      "answer": "False (the 1s are 3 apart)",
+      "explanation": "Indices 0 and 3 differ by 3 > 2, so no pair qualifies; with k = 3 it would be True.",
+      "incorrectOptionExplanations": {
+        "True": "The distance 3 exceeds k = 2.",
+        "Only if k = 3": "True for k >= 3, but the question has k = 2.",
+        "It depends on sorting": "Sorting is irrelevant."
+      }
+    }
+  ],
+  "generatedAt": "2026-10-01T14:10:50Z"
+}

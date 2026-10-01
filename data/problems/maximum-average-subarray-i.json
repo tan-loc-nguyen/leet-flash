@@ -1,0 +1,25 @@
+{
+  "leetcodeId": "643",
+  "title": "Maximum Average Subarray I",
+  "slug": "maximum-average-subarray-i",
+  "url": "https://leetcode.com/problems/maximum-average-subarray-i/",
+  "difficulty": "Easy",
+  "status": "unsolved",
+  "premium": false,
+  "tags": [
+    "Array",
+    "Sliding Window"
+  ],
+  "problemStatement": "You are given an integer array nums consisting of n elements, and an integer k.\n\nFind a contiguous subarray whose length is equal to k that has the maximum average value and return this value. Any answer with a calculation error less than 10^-5 will be accepted.\n\nExample 1:\n\nInput: nums = [1,12,-5,-6,50,3], k = 4\nOutput: 12.75000\nExplanation: Maximum average is (12 - 5 - 6 + 50) / 4 = 51 / 4 = 12.75\n\nExample 2:\n\nInput: nums = [5], k = 1\nOutput: 5.00000\n\nConstraints:\n\n- n == nums.length\n\n- 1 <= k <= n <= 10^5\n\n- -10^4 <= nums[i] <= 10^4",
+  "constraints": [
+    "n == nums.length",
+    "1 <= k <= n <= 10^5",
+    "-10^4 <= nums[i] <= 10^4"
+  ],
+  "hints": [],
+  "acRate": 49.3,
+  "notes": [],
+  "source": "manual",
+  "importedAt": "2026-10-01T14:11:37Z",
+  "lastSyncedAt": "2026-10-01T14:11:37Z"
+}

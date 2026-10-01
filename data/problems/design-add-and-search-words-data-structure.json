@@ -1,0 +1,31 @@
+{
+  "leetcodeId": "211",
+  "title": "Design Add and Search Words Data Structure",
+  "slug": "design-add-and-search-words-data-structure",
+  "url": "https://leetcode.com/problems/design-add-and-search-words-data-structure/",
+  "difficulty": "Medium",
+  "status": "unsolved",
+  "premium": false,
+  "tags": [
+    "String",
+    "Depth-First Search",
+    "Design",
+    "Trie"
+  ],
+  "problemStatement": "Design a data structure that supports adding new words and finding if a string matches any previously added string.\n\nImplement the WordDictionary class:\n\n- WordDictionary() Initializes the object.\n\n- void addWord(word) Adds word to the data structure, it can be matched later.\n\n- bool search(word) Returns true if there is any string in the data structure that matches word or false otherwise. word may contain dots '.' where dots can be matched with any letter.\n\nExample:\n\nInput\n[\"WordDictionary\",\"addWord\",\"addWord\",\"addWord\",\"search\",\"search\",\"search\",\"search\"]\n[[],[\"bad\"],[\"dad\"],[\"mad\"],[\"pad\"],[\"bad\"],[\".ad\"],[\"b..\"]]\nOutput\n[null,null,null,null,false,true,true,true]\n\nExplanation\nWordDictionary wordDictionary = new WordDictionary();\nwordDictionary.addWord(\"bad\");\nwordDictionary.addWord(\"dad\");\nwordDictionary.addWord(\"mad\");\nwordDictionary.search(\"pad\"); // return False\nwordDictionary.search(\"bad\"); // return True\nwordDictionary.search(\".ad\"); // return True\nwordDictionary.search(\"b..\"); // return True\n\nConstraints:\n\n- 1 <= word.length <= 25\n\n- word in addWord consists of lowercase English letters.\n\n- word in search consist of '.' or lowercase English letters.\n\n- There will be at most 2 dots in word for search queries.\n\n- At most 10^4 calls will be made to addWord and search.",
+  "constraints": [
+    "1 <= word.length <= 25",
+    "word in addWord consists of lowercase English letters.",
+    "word in search consist of '.' or lowercase English letters.",
+    "There will be at most 2 dots in word for search queries.",
+    "At most 10^4 calls will be made to addWord and search."
+  ],
+  "hints": [
+    "You should be familiar with how a Trie works. If not, please work on this problem: Implement Trie (Prefix Tree) first."
+  ],
+  "acRate": 49.09,
+  "notes": [],
+  "source": "manual",
+  "importedAt": "2026-10-01T14:12:00Z",
+  "lastSyncedAt": "2026-10-01T14:12:00Z"
+}

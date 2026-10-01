@@ -1,0 +1,177 @@
+{
+  "schemaVersion": 1,
+  "problemSlug": "longest-repeating-character-replacement",
+  "summary": "Find the longest substring that can be turned into one repeated character with at most k replacements.",
+  "patterns": [
+    "Sliding Window"
+  ],
+  "mainInsight": "A window is valid when (window length - count of its most frequent character) <= k. The answer only grows when a new window has a larger max frequency, so the window never has to shrink below its best size - a stale maxFreq is fine.",
+  "canonicalApproach": "Non-shrinking window with stale maxFreq",
+  "approaches": [
+    {
+      "name": "Brute force",
+      "summary": "Test every substring.",
+      "timeComplexity": "O(n^2)",
+      "spaceComplexity": "O(1)"
+    },
+    {
+      "name": "Sliding window with recomputed max",
+      "summary": "Shrink while len - max(count.values()) > k.",
+      "timeComplexity": "O(26 n)",
+      "spaceComplexity": "O(26)",
+      "strengths": [
+        "Obviously correct"
+      ],
+      "weaknesses": [
+        "Recomputes the max"
+      ]
+    },
+    {
+      "name": "Non-shrinking window with stale maxFreq",
+      "summary": "Keep maxFreq as the historical max; shift the window by one instead of shrinking when invalid.",
+      "timeComplexity": "O(n)",
+      "spaceComplexity": "O(26)",
+      "strengths": [
+        "O(1) update"
+      ],
+      "weaknesses": [
+        "The stale-max argument is subtle"
+      ],
+      "interviewRelevance": "Your approach; the standard optimal answer."
+    }
+  ],
+  "personalSolution": {
+    "approach": "Non-shrinking window with stale maxFreq",
+    "timeComplexity": "O(n)",
+    "spaceComplexity": "O(1)",
+    "isOptimal": true,
+    "notes": "Optimal; the shrink-by-one `if` is the subtle trick."
+  },
+  "commonMistakes": [],
+  "edgeCases": [],
+  "cards": [
+    {
+      "id": "lr-pattern-01",
+      "category": "pattern",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "Which pattern solves 'longest substring with at most k changes'?",
+        "What technique handles the validity rule len - maxFreq <= k?"
+      ],
+      "options": [
+        "Sliding window with a frequency map",
+        "Binary search on the string",
+        "Stack",
+        "Union find"
+      ],
+      "answer": "Sliding window with a frequency map",
+      "explanation": "The window condition depends only on length and the most frequent character count.",
+      "incorrectOptionExplanations": {
+        "Binary search on the string": "Possible on the answer length but needless.",
+        "Stack": "No nesting.",
+        "Union find": "No connectivity."
+      }
+    },
+    {
+      "id": "lr-insight-01",
+      "category": "main_insight",
+      "type": "free_recall",
+      "promptVariants": [
+        "What condition makes a window valid, and why?",
+        "Why does (window length - max frequency) count the replacements needed?"
+      ],
+      "answer": "Convert everything to the most frequent character in the window; the characters that are not that one must be replaced, which is length - maxFreq. Valid iff length - maxFreq <= k, i.e. maxFreq + k >= length.",
+      "keyPoints": [
+        "Replace all non-majority characters",
+        "needed = len - maxFreq",
+        "Valid iff needed <= k"
+      ],
+      "explanation": "Your code states it as `maxFreq + k < window` meaning invalid."
+    },
+    {
+      "id": "lr-invariant-01",
+      "category": "invariant",
+      "type": "free_recall",
+      "promptVariants": [
+        "Why is it safe that maxFreq is never decreased when the left pointer moves?",
+        "Explain the stale-maxFreq trick."
+      ],
+      "answer": "The answer can only improve if some window reaches a larger frequency of a character. A stale (too large) maxFreq can only make the validity test pass more easily for windows that are not larger than the best found, so the window size never exceeds the best valid length; it only grows when a truly higher maxFreq occurs.",
+      "keyPoints": [
+        "Answer only grows with a higher maxFreq",
+        "Window slides at the best size",
+        "Stale value never inflates the answer"
+      ],
+      "explanation": "That is why `if` (not `while`) is enough."
+    },
+    {
+      "id": "lr-time-01",
+      "category": "time_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Time complexity of the sliding window: ___",
+        "Longest Repeating Character Replacement runs in ___ time."
+      ],
+      "answer": "O(n)",
+      "explanation": "Each pointer moves forward once and each step is O(1).",
+      "acceptedAnswers": [
+        "linear"
+      ]
+    },
+    {
+      "id": "lr-space-01",
+      "category": "space_complexity",
+      "type": "free_recall",
+      "promptVariants": [
+        "What is the space complexity, and what is its bound?",
+        "Why is the extra space of the character-replacement window bounded by a constant?"
+      ],
+      "answer": "O(1) in practice: the count map holds at most 26 uppercase letters (O(min(n, 26))).",
+      "keyPoints": [
+        "At most 26 keys",
+        "O(1)"
+      ],
+      "explanation": "Alphabet-bounded."
+    },
+    {
+      "id": "lr-code-01",
+      "category": "code_reasoning",
+      "type": "code_question",
+      "promptVariants": [
+        "Why does your loop use `if` instead of `while` to shrink, and what does ans = max(ans, r - l + 1) rely on?",
+        "What happens to the window size after an invalid step?"
+      ],
+      "code": "for r in range(len(s)):\n    count[s[r]] += 1\n    maxFreq = max(maxFreq, count[s[r]])\n    if maxFreq + k < r - l + 1:\n        count[s[l]] -= 1\n        if count[s[l]] <= 0:\n            count.pop(s[l])\n        l += 1\n    ans = max(ans, r - l + 1)",
+      "answer": "When the window becomes invalid by one, moving l once restores the window size to its previous best (the window slides, not shrinks). Since we only care about strictly larger windows, no further shrinking is needed, so `if` suffices and ans stays correct.",
+      "keyPoints": [
+        "Invalid by at most one character",
+        "Slide instead of shrink",
+        "Only larger windows matter"
+      ],
+      "explanation": "The size never decreases."
+    },
+    {
+      "id": "lr-edge-01",
+      "category": "edge_case",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "For s = 'AABABBA' and k = 1 what is the answer?",
+        "Which result shows the window logic?"
+      ],
+      "options": [
+        "4",
+        "3",
+        "5",
+        "7"
+      ],
+      "answer": "4",
+      "explanation": "E.g. 'AABA' -> replace the B (or 'ABBB' via one change) gives length 4; no length-5 window has len - maxFreq <= 1.",
+      "incorrectOptionExplanations": {
+        "3": "Smaller than achievable.",
+        "5": "Would need 2 replacements.",
+        "7": "Would need 3 replacements."
+      }
+    }
+  ],
+  "generatedAt": "2026-10-01T14:10:50Z"
+}

@@ -1,0 +1,25 @@
+{
+  "leetcodeId": "53",
+  "title": "Maximum Subarray",
+  "slug": "maximum-subarray",
+  "url": "https://leetcode.com/problems/maximum-subarray/",
+  "difficulty": "Medium",
+  "status": "unsolved",
+  "premium": false,
+  "tags": [
+    "Array",
+    "Divide and Conquer",
+    "Dynamic Programming"
+  ],
+  "problemStatement": "Given an integer array nums, find the subarray with the largest sum, and return its sum.\n\nExample 1:\n\nInput: nums = [-2,1,-3,4,-1,2,1,-5,4]\nOutput: 6\nExplanation: The subarray [4,-1,2,1] has the largest sum 6.\n\nExample 2:\n\nInput: nums = [1]\nOutput: 1\nExplanation: The subarray [1] has the largest sum 1.\n\nExample 3:\n\nInput: nums = [5,4,-1,7,8]\nOutput: 23\nExplanation: The subarray [5,4,-1,7,8] has the largest sum 23.\n\nConstraints:\n\n- 1 <= nums.length <= 10^5\n\n- -10^4 <= nums[i] <= 10^4\n\nFollow up: If you have figured out the O(n) solution, try coding another solution using the divide and conquer approach, which is more subtle.",
+  "constraints": [
+    "1 <= nums.length <= 10^5",
+    "-10^4 <= nums[i] <= 10^4"
+  ],
+  "hints": [],
+  "acRate": 53.93,
+  "notes": [],
+  "source": "manual",
+  "importedAt": "2026-10-01T14:11:22Z",
+  "lastSyncedAt": "2026-10-01T14:11:22Z"
+}

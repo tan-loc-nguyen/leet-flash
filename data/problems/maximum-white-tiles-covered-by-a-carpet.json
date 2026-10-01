@@ -1,0 +1,34 @@
+{
+  "leetcodeId": "2271",
+  "title": "Maximum White Tiles Covered by a Carpet",
+  "slug": "maximum-white-tiles-covered-by-a-carpet",
+  "url": "https://leetcode.com/problems/maximum-white-tiles-covered-by-a-carpet/",
+  "difficulty": "Medium",
+  "status": "unsolved",
+  "premium": false,
+  "tags": [
+    "Array",
+    "Binary Search",
+    "Greedy",
+    "Sliding Window",
+    "Sorting",
+    "Prefix Sum"
+  ],
+  "problemStatement": "You are given a 2D integer array tiles where tiles[i] = [li, ri] represents that every tile j in the range li <= j <= ri is colored white.\n\nYou are also given an integer carpetLen, the length of a single carpet that can be placed anywhere.\n\nReturn the maximum number of white tiles that can be covered by the carpet.\n\nExample 1:\n\nInput: tiles = [[1,5],[10,11],[12,18],[20,25],[30,32]], carpetLen = 10\nOutput: 9\nExplanation: Place the carpet starting on tile 10.\nIt covers 9 white tiles, so we return 9.\nNote that there may be other places where the carpet covers 9 white tiles.\nIt can be shown that the carpet cannot cover more than 9 white tiles.\n\nExample 2:\n\nInput: tiles = [[10,11],[1,1]], carpetLen = 2\nOutput: 2\nExplanation: Place the carpet starting on tile 10.\nIt covers 2 white tiles, so we return 2.\n\nConstraints:\n\n- 1 <= tiles.length <= 5 * 10^4\n\n- tiles[i].length == 2\n\n- 1 <= li <= ri <= 10^9\n\n- 1 <= carpetLen <= 10^9\n\n- The tiles are non-overlapping.",
+  "constraints": [
+    "1 <= tiles.length <= 5 * 10^4",
+    "tiles[i].length == 2",
+    "1 <= li <= ri <= 10^9",
+    "1 <= carpetLen <= 10^9",
+    "The tiles are non-overlapping."
+  ],
+  "hints": [
+    "Think about the potential placements of the carpet in an optimal solution.",
+    "Can we use Prefix Sum and Binary Search to determine how many tiles are covered for a given placement?"
+  ],
+  "acRate": 36.59,
+  "notes": [],
+  "source": "manual",
+  "importedAt": "2026-10-01T14:11:47Z",
+  "lastSyncedAt": "2026-10-01T14:11:47Z"
+}
