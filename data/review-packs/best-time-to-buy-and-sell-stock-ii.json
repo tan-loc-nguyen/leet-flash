@@ -1,0 +1,135 @@
+{
+  "schemaVersion": 1,
+  "problemSlug": "best-time-to-buy-and-sell-stock-ii",
+  "summary": "Maximise profit with unlimited buy/sell transactions (holding at most one share).",
+  "patterns": [
+    "Greedy",
+    "Dynamic Programming"
+  ],
+  "mainInsight": "Any profit over a period equals the sum of its daily increases, so collect every positive day-to-day difference: capture each upswing, skip each downswing.",
+  "canonicalApproach": "Greedy: sum of positive differences",
+  "approaches": [
+    {
+      "name": "DP with hold/sold states",
+      "summary": "Track best profit when holding vs not holding.",
+      "timeComplexity": "O(n)",
+      "spaceComplexity": "O(1)",
+      "strengths": [
+        "Extends to cooldown/fee variants"
+      ],
+      "weaknesses": [
+        "More state"
+      ]
+    },
+    {
+      "name": "Greedy: sum of positive differences",
+      "summary": "Add prices[i] - prices[i-1] when positive.",
+      "timeComplexity": "O(n)",
+      "spaceComplexity": "O(1)",
+      "strengths": [
+        "Shortest"
+      ],
+      "interviewRelevance": "Your approach; the expected answer."
+    }
+  ],
+  "personalSolution": {
+    "approach": "Greedy: sum of positive differences",
+    "timeComplexity": "O(n)",
+    "spaceComplexity": "O(1)",
+    "isOptimal": true,
+    "notes": "Optimal."
+  },
+  "commonMistakes": [],
+  "edgeCases": [],
+  "cards": [
+    {
+      "id": "b2-pattern-01",
+      "category": "pattern",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "What simple rule gives the maximum profit with unlimited transactions?",
+        "How do you capture all upswings?"
+      ],
+      "options": [
+        "Sum all positive day-to-day price increases",
+        "Buy at the global minimum and sell at the global maximum",
+        "Sell every day",
+        "Buy only on the first day"
+      ],
+      "answer": "Sum all positive day-to-day price increases",
+      "explanation": "A rise from a to c through b equals (b - a) + (c - b), so adding each positive step captures the whole rise.",
+      "incorrectOptionExplanations": {
+        "Buy at the global minimum and sell at the global maximum": "The maximum may come before the minimum and multiple swings are possible.",
+        "Sell every day": "Not valid without buying.",
+        "Buy only on the first day": "Misses later opportunities."
+      }
+    },
+    {
+      "id": "b2-insight-01",
+      "category": "main_insight",
+      "type": "free_recall",
+      "promptVariants": [
+        "Why is the sum of positive differences achievable with real transactions?",
+        "Is it allowed to buy and sell on the same day?"
+      ],
+      "answer": "A consecutive run of increases p0 < p1 < ... < pk can be realised as one buy at p0 and one sell at pk, profit pk - p0 = sum of the daily differences. Each positive step can also be viewed as its own buy/sell pair; same-day buy and sell is allowed and yields the same total.",
+      "keyPoints": [
+        "Telescoping sum",
+        "Run of increases = one transaction",
+        "Daily pairs equal the same profit"
+      ],
+      "explanation": "The sum equals the maximum because skipping any positive step loses profit."
+    },
+    {
+      "id": "b2-time-01",
+      "category": "time_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Time complexity: ___",
+        "Complete the statement: Time complexity: ___"
+      ],
+      "answer": "O(n)",
+      "explanation": "One pass.",
+      "acceptedAnswers": [
+        "linear"
+      ]
+    },
+    {
+      "id": "b2-space-01",
+      "category": "space_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Space complexity: ___",
+        "Complete the statement: Space complexity: ___"
+      ],
+      "answer": "O(1)",
+      "explanation": "One accumulator.",
+      "acceptedAnswers": [
+        "constant"
+      ]
+    },
+    {
+      "id": "b2-edge-01",
+      "category": "edge_case",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "What is the answer for [1,2,3,4,5]?",
+        "And for [7,6,4,3,1]?"
+      ],
+      "options": [
+        "4, and 0",
+        "4, and 6",
+        "5, and 0",
+        "0, and 0"
+      ],
+      "answer": "4, and 0",
+      "explanation": "Buy at 1 and sell at 5 (profit 4 = four daily gains of 1); a falling series has no gains.",
+      "incorrectOptionExplanations": {
+        "4, and 6": "No profit in a falling series.",
+        "5, and 0": "The first profit is 5 - 1 = 4.",
+        "0, and 0": "The first series is increasing."
+      }
+    }
+  ],
+  "generatedAt": "2026-10-01T14:39:54Z"
+}

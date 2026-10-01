@@ -1,0 +1,145 @@
+{
+  "schemaVersion": 1,
+  "problemSlug": "maximum-product-of-three-numbers",
+  "summary": "Return the maximum product of any three numbers in the array (which may contain negatives).",
+  "patterns": [
+    "Sorting",
+    "Math"
+  ],
+  "mainInsight": "The best product is either the three largest numbers, or the two smallest (most negative) times the largest, because two negatives multiply to a positive. Compare those two candidates.",
+  "canonicalApproach": "Single pass tracking 3 largest and 2 smallest",
+  "approaches": [
+    {
+      "name": "Brute force",
+      "summary": "Try all triples.",
+      "timeComplexity": "O(n^3)",
+      "spaceComplexity": "O(1)"
+    },
+    {
+      "name": "Sort and compare two candidates",
+      "summary": "max(a[-1]*a[-2]*a[-3], a[0]*a[1]*a[-1]).",
+      "timeComplexity": "O(n log n)",
+      "spaceComplexity": "O(1) extra",
+      "strengths": [
+        "Short"
+      ],
+      "weaknesses": [
+        "Sorting cost"
+      ],
+      "interviewRelevance": "Your approach."
+    },
+    {
+      "name": "Single pass tracking 3 largest and 2 smallest",
+      "summary": "Maintain five values.",
+      "timeComplexity": "O(n)",
+      "spaceComplexity": "O(1)",
+      "strengths": [
+        "Linear"
+      ],
+      "weaknesses": [
+        "Fiddly bookkeeping"
+      ],
+      "interviewRelevance": "The optimal-time answer."
+    }
+  ],
+  "personalSolution": {
+    "approach": "Sort and compare two candidates",
+    "timeComplexity": "O(n log n)",
+    "spaceComplexity": "O(1)",
+    "isOptimal": false,
+    "notes": "Correct and concise. A single pass tracking five values gives O(n)."
+  },
+  "commonMistakes": [],
+  "edgeCases": [],
+  "cards": [
+    {
+      "id": "mp3-pattern-01",
+      "category": "pattern",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "Which two candidate products must be compared?",
+        "Why can't you just multiply the three largest?"
+      ],
+      "options": [
+        "Three largest, and two smallest times the largest",
+        "Three smallest",
+        "Largest times two middle values",
+        "Sum of the three largest"
+      ],
+      "answer": "Three largest, and two smallest times the largest",
+      "explanation": "Two large negatives multiply to a large positive.",
+      "incorrectOptionExplanations": {
+        "Three smallest": "Three negatives give a negative product.",
+        "Largest times two middle values": "Not a candidate.",
+        "Sum of the three largest": "Sums are not products."
+      }
+    },
+    {
+      "id": "mp3-insight-01",
+      "category": "main_insight",
+      "type": "free_recall",
+      "promptVariants": [
+        "Why does sorting reduce the problem to two candidates?",
+        "What role do negative numbers play?"
+      ],
+      "answer": "After sorting, the three largest are at the end and the most negative values at the start. With negatives, the product of the two smallest (both negative) is positive and may exceed the product of the 2nd and 3rd largest; combining it with the largest number gives the second candidate. No other triple can beat these two.",
+      "keyPoints": [
+        "Largest three vs smallest two + largest",
+        "Negatives flip sign"
+      ],
+      "explanation": "If all numbers are negative the three largest are the answer."
+    },
+    {
+      "id": "mp3-time-01",
+      "category": "time_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Time complexity of the sort-based solution: ___",
+        "Complete the statement: Time complexity of the sort-based solution: ___"
+      ],
+      "answer": "O(n log n)",
+      "explanation": "Sorting dominates.",
+      "acceptedAnswers": [
+        "O(nlogn)"
+      ]
+    },
+    {
+      "id": "mp3-space-01",
+      "category": "space_complexity",
+      "type": "free_recall",
+      "promptVariants": [
+        "What is the extra space, and how can time be reduced to O(n)?",
+        "How much extra space does the sort-based solution need and how do you get O(n) time?"
+      ],
+      "answer": "O(1) extra (in-place sort; Python's sort may use up to O(n)). Track the three largest and two smallest values in one pass for O(n) time.",
+      "keyPoints": [
+        "O(1) extra",
+        "One pass with 5 values"
+      ],
+      "explanation": "Sorting mutates the input."
+    },
+    {
+      "id": "mp3-edge-01",
+      "category": "edge_case",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "What is the answer for [-10,-10,5,2]?",
+        "Why not 5*2*(-10)?"
+      ],
+      "options": [
+        "500 (-10 * -10 * 5)",
+        "100",
+        "-100",
+        "50"
+      ],
+      "answer": "500 (-10 * -10 * 5)",
+      "explanation": "Two negatives give +100 and times 5 gives 500, larger than 5 * 2 * (-10).",
+      "incorrectOptionExplanations": {
+        "100": "Missing the factor 5.",
+        "-100": "Negative product.",
+        "50": "Not achievable."
+      }
+    }
+  ],
+  "generatedAt": "2026-10-01T14:39:54Z"
+}

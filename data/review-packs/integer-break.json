@@ -1,0 +1,157 @@
+{
+  "schemaVersion": 1,
+  "problemSlug": "integer-break",
+  "summary": "Break a positive integer n into at least two positive integers to maximise their product.",
+  "patterns": [
+    "Math",
+    "Dynamic Programming"
+  ],
+  "mainInsight": "Maximising the product means using as many 3s as possible: any part >= 5 is better split (5 -> 2 * 3 = 6 > 5), a 1 wastes sum, and 3 * 3 beats 2 * 2 * 2. So break n into 3s, leaving a remainder of 2 or 4 (4 is kept as 2 * 2).",
+  "canonicalApproach": "Greedy math with 3s",
+  "approaches": [
+    {
+      "name": "Dynamic programming",
+      "summary": "dp[i] = max over j of max(j, dp[j]) * max(i - j, dp[i - j]).",
+      "timeComplexity": "O(n^2)",
+      "spaceComplexity": "O(n)",
+      "strengths": [
+        "Systematic"
+      ],
+      "weaknesses": [
+        "Quadratic"
+      ]
+    },
+    {
+      "name": "Greedy math with 3s",
+      "summary": "Use as many 3s as possible; adjust for remainders (n <= 3, n = 4 special).",
+      "timeComplexity": "O(log n) (big-int pow)",
+      "spaceComplexity": "O(1)",
+      "strengths": [
+        "Closed form"
+      ],
+      "weaknesses": [
+        "Requires the proof"
+      ],
+      "interviewRelevance": "Your approach; the expected optimal answer."
+    }
+  ],
+  "personalSolution": {
+    "approach": "Greedy math with 3s (closed form)",
+    "timeComplexity": "O(log n)",
+    "spaceComplexity": "O(1)",
+    "isOptimal": true,
+    "notes": "Optimal; know the DP solution as the safe fallback."
+  },
+  "commonMistakes": [],
+  "edgeCases": [],
+  "cards": [
+    {
+      "id": "ib-pattern-01",
+      "category": "pattern",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "Which number should the product mostly be made of?",
+        "Why not use many 2s or 4s?"
+      ],
+      "options": [
+        "3s, because 3^k beats alternatives of the same sum",
+        "5s",
+        "1s",
+        "Equal halves only"
+      ],
+      "answer": "3s, because 3^k beats alternatives of the same sum",
+      "explanation": "For a fixed sum, splitting into 3s maximises the product (6 = 3 + 3 gives 9 vs 2+2+2 = 8).",
+      "incorrectOptionExplanations": {
+        "5s": "5 splits into 2 + 3 = 6 > 5.",
+        "1s": "A factor of 1 wastes sum.",
+        "Equal halves only": "Not generally optimal."
+      }
+    },
+    {
+      "id": "ib-insight-01",
+      "category": "main_insight",
+      "type": "free_recall",
+      "promptVariants": [
+        "Why is any part >= 5 never optimal and why is 1 never used?",
+        "How do the remainders 1, 2 and 0 mod 3 behave?"
+      ],
+      "answer": "A part x >= 5 can be split into 2 and x - 2 with 2(x - 2) > x, so it is never optimal; a 1 contributes nothing to the product but uses up sum. So parts are 2, 3 or 4 (4 = 2 + 2 is equivalent), and 3s dominate. Remainder 1 mod 3 -> replace 3 + 1 with 2 + 2 (a 4); remainder 2 -> keep a 2; remainder 0 -> all 3s.",
+      "keyPoints": [
+        "Split parts >= 5",
+        "No 1s",
+        "Use 3s; 4 is allowed as a remainder"
+      ],
+      "explanation": "Your code encodes this with factor and remain."
+    },
+    {
+      "id": "ib-time-01",
+      "category": "time_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Time complexity of the math solution (ignoring big-integer cost): ___",
+        "Complete the statement: Time complexity of the math solution (ignoring big-integer cost): ___"
+      ],
+      "answer": "O(1)",
+      "explanation": "A fixed number of arithmetic operations (the power is O(log n) multiplications).",
+      "acceptedAnswers": [
+        "O(log n)",
+        "constant"
+      ]
+    },
+    {
+      "id": "ib-space-01",
+      "category": "space_complexity",
+      "type": "free_recall",
+      "promptVariants": [
+        "Compare the space of the DP solution and the math solution.",
+        "How much memory do the DP and the closed-form solutions to Integer Break need?"
+      ],
+      "answer": "DP uses an O(n) table (and O(n^2) time); the math solution uses O(1) extra space.",
+      "keyPoints": [
+        "DP O(n)",
+        "Math O(1)"
+      ],
+      "explanation": "The math solution needs the proof above."
+    },
+    {
+      "id": "ib-code-01",
+      "category": "code_reasoning",
+      "type": "code_question",
+      "promptVariants": [
+        "Walk through n = 10 in your code.",
+        "Why are n <= 3 and n = 4 special cases?"
+      ],
+      "code": "if n <= 3:\n    return n - 1\nif n == 4:\n    return n\nfactor = (n - 2) // 3\nremain = n - 3 * factor\nreturn 3**factor * remain",
+      "answer": "For n = 10: factor = 8 // 3 = 2, remain = 10 - 6 = 4, result 3^2 * 4 = 36. For n <= 3 you must split into at least two parts, so the best is (n - 1) * 1 (e.g. 3 = 2 + 1 gives 2), which is smaller than keeping n whole; for n = 4 splitting into 2 + 2 gives 4 (same as the formula). The formula's remainder is 2, 3 or 4, matching the optimal structure.",
+      "keyPoints": [
+        "10 -> 3 * 3 * 4 = 36",
+        "n <= 3: forced split",
+        "Remainder in {2, 3, 4}"
+      ],
+      "explanation": "Using (n-2)//3 leaves a remainder of at least 2."
+    },
+    {
+      "id": "ib-edge-01",
+      "category": "edge_case",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "What is integerBreak(2) and integerBreak(3)?",
+        "Why not 2 and 3?"
+      ],
+      "options": [
+        "1 and 2 (at least two parts are required)",
+        "2 and 3",
+        "1 and 3",
+        "2 and 2"
+      ],
+      "answer": "1 and 2 (at least two parts are required)",
+      "explanation": "2 = 1 + 1 gives 1; 3 = 1 + 2 gives 2.",
+      "incorrectOptionExplanations": {
+        "2 and 3": "Keeping n whole is not allowed.",
+        "1 and 3": "3 must be split.",
+        "2 and 2": "2 = 1 + 1 gives 1."
+      }
+    }
+  ],
+  "generatedAt": "2026-10-01T14:39:54Z"
+}

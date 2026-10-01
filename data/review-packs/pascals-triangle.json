@@ -1,0 +1,154 @@
+{
+  "schemaVersion": 1,
+  "problemSlug": "pascals-triangle",
+  "summary": "Generate the first numRows rows of Pascal's triangle.",
+  "patterns": [
+    "Dynamic Programming",
+    "Array / Hashing"
+  ],
+  "mainInsight": "Each interior entry is the sum of the two entries above it; the first and last entries of every row are 1. Build each row from the previous one.",
+  "canonicalApproach": "Row-by-row from the previous row",
+  "approaches": [
+    {
+      "name": "Row-by-row from the previous row",
+      "summary": "row[j] = prev[j-1] + prev[j].",
+      "timeComplexity": "O(n^2)",
+      "spaceComplexity": "O(n^2) output",
+      "strengths": [
+        "Simple, optimal"
+      ],
+      "interviewRelevance": "Your approach; the expected answer."
+    },
+    {
+      "name": "Binomial coefficients",
+      "summary": "C(i, j) via a running product.",
+      "timeComplexity": "O(n^2)",
+      "spaceComplexity": "O(n^2) output",
+      "strengths": [
+        "No previous row needed"
+      ],
+      "weaknesses": [
+        "Division/precision care"
+      ]
+    }
+  ],
+  "personalSolution": {
+    "approach": "Row-by-row from the previous row",
+    "timeComplexity": "O(n^2)",
+    "spaceComplexity": "O(n^2)",
+    "isOptimal": true,
+    "notes": "Optimal (the output itself is O(n^2))."
+  },
+  "commonMistakes": [],
+  "edgeCases": [],
+  "cards": [
+    {
+      "id": "pt-pattern-01",
+      "category": "pattern",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "How is an interior entry of Pascal's triangle computed?",
+        "What are the first and last entries of every row?"
+      ],
+      "options": [
+        "The sum of the two entries above it; both ends are 1",
+        "The product of the two entries above",
+        "The average of the row above",
+        "The row index"
+      ],
+      "answer": "The sum of the two entries above it; both ends are 1",
+      "explanation": "That is the defining recurrence C(n, k) = C(n-1, k-1) + C(n-1, k).",
+      "incorrectOptionExplanations": {
+        "The product of the two entries above": "Sums, not products.",
+        "The average of the row above": "Not the rule.",
+        "The row index": "Only the second entry equals the row index."
+      }
+    },
+    {
+      "id": "pt-insight-01",
+      "category": "main_insight",
+      "type": "free_recall",
+      "promptVariants": [
+        "Why is this a dynamic programming problem?",
+        "What does each row depend on?"
+      ],
+      "answer": "Each row depends only on the previous row, so computing rows in order and reusing the previous row avoids recomputation: a simple bottom-up DP whose total work is the number of entries, O(n^2).",
+      "keyPoints": [
+        "Row depends on previous row",
+        "Bottom-up",
+        "O(entries)"
+      ],
+      "explanation": "Calling it 'brute-force' in your comment is modest - it is already optimal."
+    },
+    {
+      "id": "pt-time-01",
+      "category": "time_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Time complexity for numRows = n: ___",
+        "Complete the statement: Time complexity for numRows = n: ___"
+      ],
+      "answer": "O(n^2)",
+      "explanation": "n(n+1)/2 entries, each computed in O(1).",
+      "acceptedAnswers": [
+        "O(n²)",
+        "quadratic"
+      ]
+    },
+    {
+      "id": "pt-space-01",
+      "category": "space_complexity",
+      "type": "free_recall",
+      "promptVariants": [
+        "What is the space complexity and what dominates it?",
+        "What dominates the memory of Pascal's Triangle and what extra space does each row need?"
+      ],
+      "answer": "O(n^2) for the output triangle itself; extra space beyond the output is O(1) per row.",
+      "keyPoints": [
+        "Output O(n^2)",
+        "No extra beyond output"
+      ],
+      "explanation": "Returning a single row (Pascal's Triangle II) can be done in O(n)."
+    },
+    {
+      "id": "pt-code-01",
+      "category": "code_reasoning",
+      "type": "code_question",
+      "promptVariants": [
+        "Why does `range(1, i - 1)` fill only the interior and how are the ends set?",
+        "What is row for i = 1 and i = 2?"
+      ],
+      "code": "for i in range(1, numRows + 1):\n    row = [0] * i\n    row[0] = 1\n    row[-1] = 1\n    for j in range(1, i - 1):\n        row[j] = ans[-1][j - 1] + ans[-1][j]\n    ans.append(row)",
+      "answer": "A row of length i has interior indices 1..i-2, hence range(1, i - 1); the ends are set to 1 explicitly. For i = 1 the single element is both first and last (set to 1); for i = 2 both elements are 1 and the inner loop is empty. Interior entries add the two neighbours from the previous row.",
+      "keyPoints": [
+        "Interior = 1..i-2",
+        "Ends set to 1",
+        "i = 1 -> [1], i = 2 -> [1, 1]"
+      ],
+      "explanation": "ans[-1] is the previous row."
+    },
+    {
+      "id": "pt-edge-01",
+      "category": "edge_case",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "What is the 5th row (numRows = 5, last row)?",
+        "What does numRows = 1 return?"
+      ],
+      "options": [
+        "[1,4,6,4,1]; and [[1]]",
+        "[1,5,10,5,1]; and [[1]]",
+        "[1,3,3,1]; and [[1,1]]",
+        "[1,4,4,1]; and []"
+      ],
+      "answer": "[1,4,6,4,1]; and [[1]]",
+      "explanation": "Row 5 holds C(4, k) = 1, 4, 6, 4, 1.",
+      "incorrectOptionExplanations": {
+        "[1,5,10,5,1]; and [[1]]": "That is the 6th row.",
+        "[1,3,3,1]; and [[1,1]]": "That is the 4th row.",
+        "[1,4,4,1]; and []": "Wrong values."
+      }
+    }
+  ],
+  "generatedAt": "2026-10-01T14:39:54Z"
+}

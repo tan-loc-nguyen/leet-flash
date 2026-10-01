@@ -1,0 +1,138 @@
+{
+  "schemaVersion": 1,
+  "problemSlug": "lemonade-change",
+  "summary": "Can you give correct change to every customer paying with 5, 10 or 20 bills (each lemonade costs 5)?",
+  "patterns": [
+    "Greedy"
+  ],
+  "mainInsight": "Track the number of 5s and 10s. For a 10 you must give a 5; for a 20 prefer giving 10 + 5 (keeping scarce 5s) and otherwise three 5s. Fail if the required bills are not available.",
+  "canonicalApproach": "Greedy with bill counts",
+  "approaches": [
+    {
+      "name": "Greedy with bill counts",
+      "summary": "Maintain counts of 5 and 10; prefer 10 + 5 for a 20.",
+      "timeComplexity": "O(n)",
+      "spaceComplexity": "O(1)",
+      "strengths": [
+        "Simple, optimal"
+      ],
+      "interviewRelevance": "Your approach; the expected answer."
+    }
+  ],
+  "personalSolution": {
+    "approach": "Greedy with bill counts",
+    "timeComplexity": "O(n)",
+    "spaceComplexity": "O(1)",
+    "isOptimal": true,
+    "notes": "Optimal."
+  },
+  "commonMistakes": [],
+  "edgeCases": [],
+  "cards": [
+    {
+      "id": "lm-pattern-01",
+      "category": "pattern",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "How should change for a $20 bill be given?",
+        "Why prefer 10 + 5 over 5 + 5 + 5?"
+      ],
+      "options": [
+        "Give a 10 and a 5 if possible because 5s are more versatile",
+        "Always give three 5s",
+        "Always give two 10s",
+        "Give a 20"
+      ],
+      "answer": "Give a 10 and a 5 if possible because 5s are more versatile",
+      "explanation": "A 5 can serve both 10 and 20 customers; a 10 can only help a 20, so spend 10s first.",
+      "incorrectOptionExplanations": {
+        "Always give three 5s": "That wastes the scarce 5s.",
+        "Always give two 10s": "That equals $20 which is more than $15.",
+        "Give a 20": "The customer gave a 20."
+      }
+    },
+    {
+      "id": "lm-insight-01",
+      "category": "main_insight",
+      "type": "free_recall",
+      "promptVariants": [
+        "Why is the greedy choice of spending 10s first safe?",
+        "What makes 5-dollar bills more valuable than 10s?"
+      ],
+      "answer": "Fives are useful for every later customer (10s need one 5; 20s can use one or three 5s), whereas tens are useful only for 20s. So using a ten whenever possible never leaves you worse off.",
+      "keyPoints": [
+        "5s serve more future customers",
+        "Spend the ten first"
+      ],
+      "explanation": "An exchange argument shows no alternative is better."
+    },
+    {
+      "id": "lm-time-01",
+      "category": "time_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Time complexity: ___",
+        "Complete the statement: Time complexity: ___"
+      ],
+      "answer": "O(n)",
+      "explanation": "One pass over the bills.",
+      "acceptedAnswers": [
+        "linear"
+      ]
+    },
+    {
+      "id": "lm-space-01",
+      "category": "space_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Space complexity: ___",
+        "Complete the statement: Space complexity: ___"
+      ],
+      "answer": "O(1)",
+      "explanation": "Two counters.",
+      "acceptedAnswers": [
+        "constant"
+      ]
+    },
+    {
+      "id": "lm-code-01",
+      "category": "code_reasoning",
+      "type": "code_question",
+      "promptVariants": [
+        "Why are the negative-count checks at the end of each iteration enough to detect failure?",
+        "What do `changes[5] -= 3` and `changes[5] -= 1; changes[10] -= 1` represent?"
+      ],
+      "code": "else:\n    if changes[10] > 0:\n        changes[5] -= 1\n        changes[10] -= 1\n    else:\n        changes[5] -= 3\nif changes[5] < 0:\n    return False\nelif changes[10] < 0:\n    return False",
+      "answer": "The code spends the required bills even if they do not exist and then fails when a count goes negative - equivalent to failing when a needed bill was missing. For a 20, either one 10 and one 5 (preferred) or three 5s are handed out as change.",
+      "keyPoints": [
+        "Negative count = missing bill",
+        "Prefer 10 + 5 for a 20",
+        "Otherwise three 5s"
+      ],
+      "explanation": "Checking before subtracting is arguably clearer."
+    },
+    {
+      "id": "lm-edge-01",
+      "category": "edge_case",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "Can you serve [5,5,10,10,20]?",
+        "Why does it fail?"
+      ],
+      "options": [
+        "No: by the last 20 no 5-dollar bill is left, so $15 of change cannot be made",
+        "Yes",
+        "Yes with two 10s",
+        "Only if the first bill is 20"
+      ],
+      "answer": "No: by the last 20 no 5-dollar bill is left, so $15 of change cannot be made",
+      "explanation": "Trace the counts: after 5,5 you hold two 5s; the first 10 leaves one 5 and one 10; the second 10 needs a 5 and leaves zero 5s and two 10s. The 20 then needs change of 15 = one 10 + one 5 (or three 5s), but no 5 remains, so it fails.",
+      "incorrectOptionExplanations": {
+        "Yes": "The required 5 is missing.",
+        "Yes with two 10s": "Two 10s give $20, not $15.",
+        "Only if the first bill is 20": "A first 20 can never be served."
+      }
+    }
+  ],
+  "generatedAt": "2026-10-01T14:39:54Z"
+}

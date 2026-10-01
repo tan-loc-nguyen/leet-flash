@@ -1,0 +1,166 @@
+{
+  "schemaVersion": 1,
+  "problemSlug": "maximum-product-of-two-elements-in-an-array",
+  "summary": "Maximise (nums[i] - 1) * (nums[j] - 1) over distinct indices.",
+  "patterns": [
+    "Heap / Priority Queue",
+    "Sorting"
+  ],
+  "mainInsight": "Values are positive, so (a - 1)(b - 1) is maximised by the two largest numbers: find the top two (a min-heap of size 2, sorting, or two variables).",
+  "canonicalApproach": "Track the two largest in a pass",
+  "approaches": [
+    {
+      "name": "Brute force",
+      "summary": "All pairs.",
+      "timeComplexity": "O(n^2)",
+      "spaceComplexity": "O(1)"
+    },
+    {
+      "name": "Sort descending",
+      "summary": "Use the first two.",
+      "timeComplexity": "O(n log n)",
+      "spaceComplexity": "O(1)",
+      "strengths": [
+        "Simple"
+      ],
+      "weaknesses": [
+        "Sorting cost"
+      ]
+    },
+    {
+      "name": "Min-heap of size 2",
+      "summary": "Keep the two largest.",
+      "timeComplexity": "O(n)",
+      "spaceComplexity": "O(1)",
+      "strengths": [
+        "Linear, constant space"
+      ],
+      "interviewRelevance": "Your approach."
+    },
+    {
+      "name": "Track the two largest in a pass",
+      "summary": "Maintain max1 and max2.",
+      "timeComplexity": "O(n)",
+      "spaceComplexity": "O(1)",
+      "strengths": [
+        "No heap"
+      ]
+    }
+  ],
+  "personalSolution": {
+    "approach": "Min-heap of size 2",
+    "timeComplexity": "O(n)",
+    "spaceComplexity": "O(1)",
+    "isOptimal": true,
+    "notes": "Optimal; two variables are simpler than a heap."
+  },
+  "commonMistakes": [],
+  "edgeCases": [],
+  "cards": [
+    {
+      "id": "mq-pattern-01",
+      "category": "pattern",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "Which two elements maximise the product for positive numbers?",
+        "What does a size-2 min-heap hold?"
+      ],
+      "options": [
+        "The two largest values",
+        "The two smallest values",
+        "The median values",
+        "The first two elements"
+      ],
+      "answer": "The two largest values",
+      "explanation": "For positive values the product (a-1)(b-1) is increasing in both a and b.",
+      "incorrectOptionExplanations": {
+        "The two smallest values": "That minimises the product.",
+        "The median values": "Not optimal.",
+        "The first two elements": "Order is arbitrary."
+      }
+    },
+    {
+      "id": "mq-insight-01",
+      "category": "main_insight",
+      "type": "free_recall",
+      "promptVariants": [
+        "Why is the answer determined by the two largest values only?",
+        "Why does the -1 not change the choice?"
+      ],
+      "answer": "Subtracting 1 from each factor is a monotone shift: for positive integers (a-1)(b-1) increases with a and with b, so the two largest values give the maximum.",
+      "keyPoints": [
+        "Monotone in each factor",
+        "-1 shift keeps order"
+      ],
+      "explanation": "Negative values would change this (see Maximum Product of Three Numbers)."
+    },
+    {
+      "id": "mq-time-01",
+      "category": "time_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Time complexity of the size-2 heap solution: ___",
+        "Complete the statement: Time complexity of the size-2 heap solution: ___"
+      ],
+      "answer": "O(n)",
+      "explanation": "n pushes/pops on a heap bounded by 2 (constant cost each).",
+      "acceptedAnswers": [
+        "linear"
+      ]
+    },
+    {
+      "id": "mq-space-01",
+      "category": "space_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Extra space: ___",
+        "Complete the statement: Extra space: ___"
+      ],
+      "answer": "O(1)",
+      "explanation": "The heap never holds more than 3 items.",
+      "acceptedAnswers": [
+        "constant"
+      ]
+    },
+    {
+      "id": "mq-code-01",
+      "category": "code_reasoning",
+      "type": "code_question",
+      "promptVariants": [
+        "Why is the answer `(heap[0]-1)*(heap[1]-1)` after the loop?",
+        "What do heap[0] and heap[1] contain?"
+      ],
+      "code": "heap = []\nfor num in nums:\n    heapq.heappush(heap, num)\n    if len(heap) > 2:\n        heapq.heappop(heap)\nreturn (heap[0]-1)*(heap[1]-1)",
+      "answer": "After processing all numbers the heap holds the two largest values (the smallest of the three is popped each time). heap[0] is the smaller of the two and heap[1] the larger (for a size-2 heap the order is irrelevant for the product). The product is symmetric.",
+      "keyPoints": [
+        "Heap keeps the 2 largest",
+        "Product is symmetric",
+        "Pop the smallest of three"
+      ],
+      "explanation": "Two variables avoid the heap entirely."
+    },
+    {
+      "id": "mq-edge-01",
+      "category": "edge_case",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "What is the answer for [3,4,5,2]?",
+        "Which pair is used?"
+      ],
+      "options": [
+        "12 ((5-1)*(4-1))",
+        "20",
+        "8",
+        "6"
+      ],
+      "answer": "12 ((5-1)*(4-1))",
+      "explanation": "The two largest are 5 and 4, so (5-1) * (4-1) = 12.",
+      "incorrectOptionExplanations": {
+        "20": "That is 5 * 4 without subtracting.",
+        "8": "Wrong pair.",
+        "6": "Wrong pair."
+      }
+    }
+  ],
+  "generatedAt": "2026-10-01T14:39:54Z"
+}

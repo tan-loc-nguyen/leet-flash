@@ -1,0 +1,139 @@
+{
+  "schemaVersion": 1,
+  "problemSlug": "removing-minimum-and-maximum-from-array",
+  "summary": "Find the minimum number of deletions (from either end) to remove both the minimum and the maximum element.",
+  "patterns": [
+    "Greedy"
+  ],
+  "mainInsight": "Only the positions of the min and max matter. You can remove from the front, the back, or from both ends; compute the cost of each strategy and take the smallest.",
+  "canonicalApproach": "Compare three strategies on the two indices",
+  "approaches": [
+    {
+      "name": "Compare three strategies on the two indices",
+      "summary": "front only, back only, or one from each end.",
+      "timeComplexity": "O(n)",
+      "spaceComplexity": "O(1)",
+      "strengths": [
+        "Closed form after one scan"
+      ],
+      "interviewRelevance": "Your approach; the expected answer."
+    }
+  ],
+  "personalSolution": {
+    "approach": "Compare three strategies on the two indices",
+    "timeComplexity": "O(n)",
+    "spaceComplexity": "O(1)",
+    "isOptimal": true,
+    "notes": "Optimal."
+  },
+  "commonMistakes": [],
+  "edgeCases": [],
+  "cards": [
+    {
+      "id": "rm2-pattern-01",
+      "category": "pattern",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "Which three deletion strategies are possible?",
+        "What do you need to compute them?"
+      ],
+      "options": [
+        "All from the front, all from the back, or front for one and back for the other, using the two indices",
+        "Sort the array first",
+        "Delete the middle",
+        "Use a heap"
+      ],
+      "answer": "All from the front, all from the back, or front for one and back for the other, using the two indices",
+      "explanation": "Deletions only happen at the ends, so the set of removed elements is a prefix plus a suffix.",
+      "incorrectOptionExplanations": {
+        "Sort the array first": "Positions matter, sorting destroys them.",
+        "Delete the middle": "Not allowed.",
+        "Use a heap": "Unnecessary."
+      }
+    },
+    {
+      "id": "rm2-insight-01",
+      "category": "main_insight",
+      "type": "free_recall",
+      "promptVariants": [
+        "Why does the answer depend only on min_idx and max_idx?",
+        "State the three costs."
+      ],
+      "answer": "Removing the min and max means the removed prefix and suffix must cover both indices. With lo = min(i, j) and hi = max(i, j): front-only cost = hi + 1, back-only cost = n - lo, both-ends cost = (lo + 1) + (n - hi). Take the minimum.",
+      "keyPoints": [
+        "front = hi + 1",
+        "back = n - lo",
+        "both = lo + 1 + n - hi"
+      ],
+      "explanation": "Ties for min or max can use any occurrence."
+    },
+    {
+      "id": "rm2-time-01",
+      "category": "time_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Time complexity: ___",
+        "Complete the statement: Time complexity: ___"
+      ],
+      "answer": "O(n)",
+      "explanation": "One scan to find the extremes' indices.",
+      "acceptedAnswers": [
+        "linear"
+      ]
+    },
+    {
+      "id": "rm2-space-01",
+      "category": "space_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Extra space: ___",
+        "Complete the statement: Extra space: ___"
+      ],
+      "answer": "O(1)",
+      "explanation": "A few indices.",
+      "acceptedAnswers": [
+        "constant"
+      ]
+    },
+    {
+      "id": "rm2-code-01",
+      "category": "code_reasoning",
+      "type": "code_question",
+      "promptVariants": [
+        "Explain the formulas `front_only`, `back_only` and `both_ends`.",
+        "Why is `min(...)` of the three correct?"
+      ],
+      "code": "front_only = max(min_idx, max_idx) + 1\nback_only = n - min(min_idx, max_idx)\nboth_ends = min(min_idx, max_idx) + 1 + n - max(min_idx, max_idx)\nreturn min(front_only, back_only, both_ends)",
+      "answer": "front_only deletes everything up to and including the farther index (hi + 1 elements). back_only deletes from the closer index to the end (n - lo). both_ends deletes the prefix through the earlier index and the suffix from the later index. These are the only ways to cover both indices with a prefix plus a suffix, so the minimum is optimal.",
+      "keyPoints": [
+        "Prefix up to the later index",
+        "Suffix from the earlier index",
+        "Prefix + suffix"
+      ],
+      "explanation": "Considering all three covers every possibility."
+    },
+    {
+      "id": "rm2-edge-01",
+      "category": "edge_case",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "What is the answer for [1]?",
+        "How many deletions are needed when min and max are the same element?"
+      ],
+      "options": [
+        "1 (one deletion removes the only element)",
+        "0",
+        "2",
+        "-1"
+      ],
+      "answer": "1 (one deletion removes the only element)",
+      "explanation": "The single element is both the minimum and the maximum, and deleting it takes one operation.",
+      "incorrectOptionExplanations": {
+        "0": "It must still be deleted.",
+        "2": "Only one element exists.",
+        "-1": "Not a valid count."
+      }
+    }
+  ],
+  "generatedAt": "2026-10-01T14:39:54Z"
+}

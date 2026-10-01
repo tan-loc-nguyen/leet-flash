@@ -1,0 +1,144 @@
+{
+  "schemaVersion": 1,
+  "problemSlug": "range-sum-query-immutable",
+  "summary": "Support many sumRange(left, right) queries on a fixed array in O(1) each.",
+  "patterns": [
+    "Prefix Sum",
+    "Design"
+  ],
+  "mainInsight": "Precompute prefix sums once: prefix[i] = sum of the first i elements. Then sum(left..right) = prefix[right + 1] - prefix[left]. A leading 0 sentinel removes the left = 0 special case.",
+  "canonicalApproach": "Prefix sums",
+  "approaches": [
+    {
+      "name": "Sum on every query",
+      "summary": "Loop from left to right.",
+      "timeComplexity": "O(n) per query",
+      "spaceComplexity": "O(1)",
+      "weaknesses": [
+        "Slow for many queries"
+      ]
+    },
+    {
+      "name": "Prefix sums",
+      "summary": "Precompute cumulative sums.",
+      "timeComplexity": "O(n) build, O(1) query",
+      "spaceComplexity": "O(n)",
+      "strengths": [
+        "Optimal for immutable arrays"
+      ],
+      "interviewRelevance": "Your approach; the expected answer."
+    },
+    {
+      "name": "Segment tree / Fenwick tree",
+      "summary": "Support updates as well.",
+      "timeComplexity": "O(log n) per query/update",
+      "spaceComplexity": "O(n)",
+      "strengths": [
+        "Handles mutation"
+      ],
+      "weaknesses": [
+        "Overkill when immutable"
+      ]
+    }
+  ],
+  "personalSolution": {
+    "approach": "Prefix sums with a 0 sentinel",
+    "timeComplexity": "O(n) build, O(1) query",
+    "spaceComplexity": "O(n)",
+    "isOptimal": true,
+    "notes": "Optimal."
+  },
+  "commonMistakes": [],
+  "edgeCases": [],
+  "cards": [
+    {
+      "id": "rq-pattern-01",
+      "category": "pattern",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "Which technique answers range-sum queries in O(1)?",
+        "What do you precompute?"
+      ],
+      "options": [
+        "Prefix sums",
+        "Sorting",
+        "A hash set",
+        "A heap"
+      ],
+      "answer": "Prefix sums",
+      "explanation": "Range sum = difference of two prefix values.",
+      "incorrectOptionExplanations": {
+        "Sorting": "Order of elements matters.",
+        "A hash set": "No lookups of values.",
+        "A heap": "Not a range structure."
+      }
+    },
+    {
+      "id": "rq-insight-01",
+      "category": "main_insight",
+      "type": "free_recall",
+      "promptVariants": [
+        "Why does subtracting two prefix sums give a range sum?",
+        "Why start prefix with a 0?"
+      ],
+      "answer": "prefix[r + 1] - prefix[l] cancels the shared first l elements and leaves exactly nums[l..r]. The leading 0 (prefix[0]) represents the empty prefix so that l = 0 needs no special case.",
+      "keyPoints": [
+        "Cancel the common prefix",
+        "0 sentinel for the empty prefix"
+      ],
+      "explanation": "Same idea as Contiguous Array and Subarray Sum Equals K."
+    },
+    {
+      "id": "rq-time-01",
+      "category": "time_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Time of each sumRange after preprocessing: ___",
+        "Complete the statement: Time of each sumRange after preprocessing: ___"
+      ],
+      "answer": "O(1)",
+      "explanation": "Two array lookups and a subtraction.",
+      "acceptedAnswers": [
+        "constant"
+      ]
+    },
+    {
+      "id": "rq-space-01",
+      "category": "space_complexity",
+      "type": "free_recall",
+      "promptVariants": [
+        "What is the preprocessing cost and the stored size?",
+        "What are the build cost and storage of the prefix-sum array for range queries?"
+      ],
+      "answer": "O(n) time to build and O(n) extra space for the prefix array (n + 1 entries).",
+      "keyPoints": [
+        "O(n) build",
+        "O(n) space"
+      ],
+      "explanation": "A mutable array would need a Fenwick tree."
+    },
+    {
+      "id": "rq-edge-01",
+      "category": "edge_case",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "For nums = [-2,0,3,-5,2,-1] what is sumRange(0, 2)?",
+        "Which prefix indices are used?"
+      ],
+      "options": [
+        "1 (prefix[3] - prefix[0] = 1 - 0)",
+        "-2",
+        "3",
+        "0"
+      ],
+      "answer": "1 (prefix[3] - prefix[0] = 1 - 0)",
+      "explanation": "-2 + 0 + 3 = 1.",
+      "incorrectOptionExplanations": {
+        "-2": "That is only the first element.",
+        "3": "That is the third element.",
+        "0": "Arithmetic slip."
+      }
+    }
+  ],
+  "generatedAt": "2026-10-01T14:39:54Z"
+}

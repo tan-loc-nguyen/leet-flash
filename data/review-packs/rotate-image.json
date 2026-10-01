@@ -1,0 +1,167 @@
+{
+  "schemaVersion": 1,
+  "problemSlug": "rotate-image",
+  "summary": "Rotate an n x n matrix 90 degrees clockwise in place.",
+  "patterns": [
+    "Matrix"
+  ],
+  "mainInsight": "A 90-degree clockwise rotation can be done ring by ring: rotate four cells at a time (top -> right -> bottom -> left -> top). The equivalent two-step trick is transpose then reverse each row.",
+  "canonicalApproach": "Transpose then reverse each row",
+  "approaches": [
+    {
+      "name": "Copy into a new matrix",
+      "summary": "new[j][n-1-i] = old[i][j].",
+      "timeComplexity": "O(n^2)",
+      "spaceComplexity": "O(n^2)",
+      "strengths": [
+        "Easy"
+      ],
+      "weaknesses": [
+        "Not in place"
+      ]
+    },
+    {
+      "name": "Transpose then reverse each row",
+      "summary": "Swap across the diagonal, then reverse rows.",
+      "timeComplexity": "O(n^2)",
+      "spaceComplexity": "O(1)",
+      "strengths": [
+        "Easy to remember"
+      ],
+      "weaknesses": [
+        "Two passes"
+      ]
+    },
+    {
+      "name": "Rotate four cells per step by rings",
+      "summary": "Layer by layer 4-way swap.",
+      "timeComplexity": "O(n^2)",
+      "spaceComplexity": "O(1)",
+      "strengths": [
+        "Single pass in place"
+      ],
+      "weaknesses": [
+        "Index arithmetic"
+      ],
+      "interviewRelevance": "Your approach."
+    }
+  ],
+  "personalSolution": {
+    "approach": "Rotate four cells per step by rings",
+    "timeComplexity": "O(n^2)",
+    "spaceComplexity": "O(1)",
+    "isOptimal": true,
+    "notes": "Optimal; transpose + reverse is easier to remember."
+  },
+  "commonMistakes": [],
+  "edgeCases": [],
+  "cards": [
+    {
+      "id": "ri2-pattern-01",
+      "category": "pattern",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "Which two-step operation rotates a matrix 90 degrees clockwise?",
+        "What does transposing then reversing rows do?"
+      ],
+      "options": [
+        "Transpose, then reverse each row",
+        "Reverse each row, then reverse each column",
+        "Sort the rows",
+        "Transpose twice"
+      ],
+      "answer": "Transpose, then reverse each row",
+      "explanation": "Transpose turns rows into columns; reversing each row then mirrors horizontally, giving a clockwise rotation.",
+      "incorrectOptionExplanations": {
+        "Reverse each row, then reverse each column": "That is a 180-degree rotation.",
+        "Sort the rows": "Unrelated.",
+        "Transpose twice": "That returns the original."
+      }
+    },
+    {
+      "id": "ri2-insight-01",
+      "category": "main_insight",
+      "type": "free_recall",
+      "promptVariants": [
+        "What is the index mapping of a clockwise rotation?",
+        "Why can four cells be rotated together?"
+      ],
+      "answer": "Cell (r, c) moves to (c, n - 1 - r). Applying this mapping four times returns to the start, so the cells form cycles of length 4; rotating each 4-cycle in place (top -> right -> bottom -> left) rotates the whole matrix without extra space.",
+      "keyPoints": [
+        "(r, c) -> (c, n-1-r)",
+        "Cycles of length 4",
+        "In-place 4-way swap"
+      ],
+      "explanation": "Layers: i from 0 to n//2, j from i to n-i-2."
+    },
+    {
+      "id": "ri2-time-01",
+      "category": "time_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Time complexity: ___",
+        "Complete the statement: Time complexity: ___"
+      ],
+      "answer": "O(n^2)",
+      "explanation": "Each of the n^2 cells is moved once.",
+      "acceptedAnswers": [
+        "O(n²)",
+        "quadratic"
+      ]
+    },
+    {
+      "id": "ri2-space-01",
+      "category": "space_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Extra space: ___",
+        "Complete the statement: Extra space: ___"
+      ],
+      "answer": "O(1)",
+      "explanation": "In-place swaps with a few temporaries.",
+      "acceptedAnswers": [
+        "constant"
+      ]
+    },
+    {
+      "id": "ri2-code-01",
+      "category": "code_reasoning",
+      "type": "code_question",
+      "promptVariants": [
+        "Why does the outer loop run `n // 2` times and the inner loop from i to n - i - 1?",
+        "What happens to the centre cell when n is odd?"
+      ],
+      "code": "for i in range(n // 2):\n    for j in range(i, n - i - 1):\n        matrix[i][j], matrix[j][n-1-i], matrix[n-1-i][n-1-j], matrix[n-1-j][i] = matrix[n-1-j][i], matrix[i][j], matrix[j][n-1-i], matrix[n-1-i][n-1-j]",
+      "answer": "There are n // 2 concentric layers; layer i has n - 2i cells per side, and rotating a layer needs only the first n - 2i - 1 cells of each side (the last cell of each side is the first cell of the next side, so it is moved as part of another 4-cycle). For odd n the centre cell stays in place and needs no move.",
+      "keyPoints": [
+        "n // 2 layers",
+        "Side length minus one per layer",
+        "Centre cell fixed"
+      ],
+      "explanation": "A transpose + reverse solution avoids this arithmetic."
+    },
+    {
+      "id": "ri2-edge-01",
+      "category": "edge_case",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "What does the algorithm do for a 1x1 matrix?",
+        "How many layers does a 3x3 matrix have?"
+      ],
+      "options": [
+        "Nothing (no layers); one layer plus a fixed centre",
+        "It swaps the element with itself",
+        "It raises an error",
+        "Two layers"
+      ],
+      "answer": "Nothing (no layers); one layer plus a fixed centre",
+      "explanation": "n // 2 = 0 layers for 1x1 and 1 layer for 3x3 (the centre stays).",
+      "incorrectOptionExplanations": {
+        "It swaps the element with itself": "The loop never runs.",
+        "It raises an error": "No indexing occurs.",
+        "Two layers": "n // 2 = 1."
+      }
+    }
+  ],
+  "generatedAt": "2026-10-01T14:39:54Z"
+}

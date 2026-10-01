@@ -1,0 +1,176 @@
+{
+  "schemaVersion": 1,
+  "problemSlug": "fibonacci-number",
+  "summary": "Compute the n-th Fibonacci number.",
+  "patterns": [
+    "Dynamic Programming"
+  ],
+  "mainInsight": "F(n) = F(n-1) + F(n-2) with F(0) = 0 and F(1) = 1. Plain recursion recomputes subproblems exponentially; caching (memoisation) or a bottom-up loop reduces it to O(n).",
+  "canonicalApproach": "Bottom-up with two variables",
+  "approaches": [
+    {
+      "name": "Plain recursion",
+      "summary": "Return fib(n-1) + fib(n-2).",
+      "timeComplexity": "O(2^n)",
+      "spaceComplexity": "O(n)",
+      "weaknesses": [
+        "Exponential"
+      ]
+    },
+    {
+      "name": "Top-down memoisation",
+      "summary": "Recursion + cache (functools.lru_cache).",
+      "timeComplexity": "O(n)",
+      "spaceComplexity": "O(n)",
+      "strengths": [
+        "Minimal change from the recurrence"
+      ],
+      "weaknesses": [
+        "Recursion depth",
+        "Stack/cache memory"
+      ],
+      "interviewRelevance": "Your approach."
+    },
+    {
+      "name": "Bottom-up with two variables",
+      "summary": "Iterate and keep the last two values.",
+      "timeComplexity": "O(n)",
+      "spaceComplexity": "O(1)",
+      "strengths": [
+        "Constant space, no recursion"
+      ],
+      "interviewRelevance": "The expected answer."
+    },
+    {
+      "name": "Matrix exponentiation / fast doubling",
+      "summary": "O(log n) multiplications.",
+      "timeComplexity": "O(log n)",
+      "spaceComplexity": "O(1)",
+      "strengths": [
+        "Fastest"
+      ],
+      "weaknesses": [
+        "More math"
+      ]
+    }
+  ],
+  "personalSolution": {
+    "approach": "Top-down memoisation with functools.lru_cache on the method",
+    "timeComplexity": "O(n)",
+    "spaceComplexity": "O(n)",
+    "isOptimal": false,
+    "notes": "Correct. The two-variable loop uses O(1) space and no recursion; caching a method keeps `self` in the key."
+  },
+  "commonMistakes": [],
+  "edgeCases": [],
+  "cards": [
+    {
+      "id": "fi-pattern-01",
+      "category": "pattern",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "What problem does memoisation fix in naive Fibonacci?",
+        "Why is the plain recursion exponential?"
+      ],
+      "options": [
+        "Overlapping subproblems are recomputed many times",
+        "Integer overflow",
+        "Stack usage only",
+        "Sorting"
+      ],
+      "answer": "Overlapping subproblems are recomputed many times",
+      "explanation": "fib(n-2) is computed again inside fib(n-1), and so on, giving about 2^n calls.",
+      "incorrectOptionExplanations": {
+        "Integer overflow": "Not the issue (Python integers are unbounded).",
+        "Stack usage only": "Stack depth is only n.",
+        "Sorting": "Unrelated."
+      }
+    },
+    {
+      "id": "fi-insight-01",
+      "category": "main_insight",
+      "type": "free_recall",
+      "promptVariants": [
+        "How does caching change the number of distinct calls?",
+        "What is the complexity after memoisation?"
+      ],
+      "answer": "There are only n + 1 distinct arguments (0..n), so with caching each is computed once: O(n) time and O(n) space for the cache and recursion.",
+      "keyPoints": [
+        "n + 1 distinct subproblems",
+        "Each computed once",
+        "O(n)"
+      ],
+      "explanation": "Bottom-up avoids even the recursion stack."
+    },
+    {
+      "id": "fi-time-01",
+      "category": "time_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Time complexity with memoisation: ___",
+        "Complete the statement: Time complexity with memoisation: ___"
+      ],
+      "answer": "O(n)",
+      "explanation": "Each value is computed once.",
+      "acceptedAnswers": [
+        "linear"
+      ]
+    },
+    {
+      "id": "fi-space-01",
+      "category": "space_complexity",
+      "type": "free_recall",
+      "promptVariants": [
+        "Compare the space of memoised recursion and the two-variable loop.",
+        "What bounds the recursion depth?"
+      ],
+      "answer": "Memoised recursion uses O(n) for the cache plus O(n) recursion depth. The iterative two-variable loop uses O(1).",
+      "keyPoints": [
+        "Cache O(n)",
+        "Depth O(n)",
+        "Loop O(1)"
+      ],
+      "explanation": "Deep recursion can hit Python's limit for large n."
+    },
+    {
+      "id": "fi-code-01",
+      "category": "code_reasoning",
+      "type": "code_question",
+      "promptVariants": [
+        "You applied `@lru_cache(None)` to the method `fib(self, n)`. What gets cached and what is the subtle issue?",
+        "How would you restructure it?"
+      ],
+      "code": "class Solution:\n    @lru_cache(None)\n    def fib(self, n):\n        if n < 2:\n            return n\n        return self.fib(n - 1) + self.fib(n - 2)",
+      "answer": "The cache key includes `self`, so results are cached per instance (the cache also keeps the instance alive, a small memory leak). It works because LeetCode reuses one Solution object, but it is cleaner to cache an inner function of n or use a loop. Large n also risks Python's recursion limit.",
+      "keyPoints": [
+        "Key includes self",
+        "Instance kept alive by the cache",
+        "Prefer an inner function or a loop"
+      ],
+      "explanation": "A bottom-up loop avoids all of this."
+    },
+    {
+      "id": "fi-edge-01",
+      "category": "edge_case",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "What are fib(0) and fib(1)?",
+        "What is fib(10)?"
+      ],
+      "options": [
+        "0 and 1; fib(10) = 55",
+        "1 and 1; fib(10) = 89",
+        "0 and 0; fib(10) = 34",
+        "1 and 2; fib(10) = 144"
+      ],
+      "answer": "0 and 1; fib(10) = 55",
+      "explanation": "The sequence is 0, 1, 1, 2, 3, 5, 8, 13, 21, 34, 55.",
+      "incorrectOptionExplanations": {
+        "1 and 1; fib(10) = 89": "That is the Climbing Stairs indexing.",
+        "0 and 0; fib(10) = 34": "Wrong base cases.",
+        "1 and 2; fib(10) = 144": "Wrong base cases."
+      }
+    }
+  ],
+  "generatedAt": "2026-10-01T14:39:54Z"
+}

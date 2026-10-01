@@ -1,0 +1,146 @@
+{
+  "schemaVersion": 1,
+  "problemSlug": "best-time-to-buy-and-sell-stock",
+  "summary": "Maximise profit from one buy followed by one sell (0 if no profit is possible).",
+  "patterns": [
+    "Dynamic Programming",
+    "Greedy"
+  ],
+  "mainInsight": "Scan once while tracking the lowest price seen so far (the best buy day up to now); selling today yields price - min_price, so keep the maximum of that over all days.",
+  "canonicalApproach": "Single pass with a running minimum",
+  "approaches": [
+    {
+      "name": "Brute force",
+      "summary": "Try every buy/sell pair.",
+      "timeComplexity": "O(n^2)",
+      "spaceComplexity": "O(1)"
+    },
+    {
+      "name": "Single pass with a running minimum",
+      "summary": "min_buy = min(min_buy, p); best = max(best, p - min_buy).",
+      "timeComplexity": "O(n)",
+      "spaceComplexity": "O(1)",
+      "strengths": [
+        "Optimal"
+      ],
+      "interviewRelevance": "Your approach; the expected answer."
+    }
+  ],
+  "personalSolution": {
+    "approach": "Single pass with a running minimum",
+    "timeComplexity": "O(n)",
+    "spaceComplexity": "O(1)",
+    "isOptimal": true,
+    "notes": "Optimal."
+  },
+  "commonMistakes": [],
+  "edgeCases": [],
+  "cards": [
+    {
+      "id": "bs-pattern-01",
+      "category": "pattern",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "What state do you carry through the array?",
+        "What is the best buy day for a given sell day?"
+      ],
+      "options": [
+        "The minimum price seen so far",
+        "The maximum price seen so far",
+        "The average price",
+        "The previous day's price only"
+      ],
+      "answer": "The minimum price seen so far",
+      "explanation": "For any sell day the best earlier buy is the cheapest earlier price.",
+      "incorrectOptionExplanations": {
+        "The maximum price seen so far": "That would be the worst buy.",
+        "The average price": "Irrelevant.",
+        "The previous day's price only": "Ignores earlier cheaper days."
+      }
+    },
+    {
+      "id": "bs-insight-01",
+      "category": "main_insight",
+      "type": "free_recall",
+      "promptVariants": [
+        "Why is one pass with a running minimum enough?",
+        "How does this relate to Kadane's algorithm?"
+      ],
+      "answer": "Profit for selling on day i is price[i] - min(price[0..i-1]); the minimum prefix is easy to maintain. Equivalently it is the maximum subarray of daily differences (Kadane) - both are O(n) single-pass DP over prefixes.",
+      "keyPoints": [
+        "Best buy = prefix minimum",
+        "Answer = max over days",
+        "Equivalent to Kadane on differences"
+      ],
+      "explanation": "You cannot sell before you buy, which the prefix minimum enforces."
+    },
+    {
+      "id": "bs-time-01",
+      "category": "time_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Time complexity: ___",
+        "Complete the statement: Time complexity: ___"
+      ],
+      "answer": "O(n)",
+      "explanation": "One pass.",
+      "acceptedAnswers": [
+        "linear"
+      ]
+    },
+    {
+      "id": "bs-space-01",
+      "category": "space_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Space complexity: ___",
+        "Complete the statement: Space complexity: ___"
+      ],
+      "answer": "O(1)",
+      "explanation": "Two variables.",
+      "acceptedAnswers": [
+        "constant"
+      ]
+    },
+    {
+      "id": "bs-code-01",
+      "category": "code_reasoning",
+      "type": "code_question",
+      "promptVariants": [
+        "Why update min_buy before computing the profit in the same iteration?",
+        "What is the profit on a falling price series?"
+      ],
+      "code": "min_buy = prices[0]\nmax_profit = 0\nfor i in range(len(prices)):\n    min_buy = min(min_buy, prices[i])\n    max_profit = max(max_profit, prices[i] - min_buy)",
+      "answer": "If today is the new minimum then prices[i] - min_buy = 0, which is harmless (buy and sell on the same day gives zero profit). The order guarantees min_buy is never greater than today's price. For a strictly falling series every profit is 0, so the answer is 0 (max_profit starts at 0).",
+      "keyPoints": [
+        "Update min first: profit 0 at a new low",
+        "max_profit starts at 0",
+        "Falling prices => 0"
+      ],
+      "explanation": "Starting the loop at index 1 would be equivalent."
+    },
+    {
+      "id": "bs-edge-01",
+      "category": "edge_case",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "What is the answer for [7,6,4,3,1]?",
+        "And for [7,1,5,3,6,4]?"
+      ],
+      "options": [
+        "0, and 5",
+        "-6, and 5",
+        "0, and 6",
+        "1, and 5"
+      ],
+      "answer": "0, and 5",
+      "explanation": "Falling prices give no profit; buying at 1 and selling at 6 gives 5.",
+      "incorrectOptionExplanations": {
+        "-6, and 5": "Profit is never negative here.",
+        "0, and 6": "5 is the maximum for the second.",
+        "1, and 5": "The first has no profit."
+      }
+    }
+  ],
+  "generatedAt": "2026-10-01T14:39:54Z"
+}

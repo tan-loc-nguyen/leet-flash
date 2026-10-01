@@ -1,0 +1,157 @@
+{
+  "schemaVersion": 1,
+  "problemSlug": "maximum-ice-cream-bars",
+  "summary": "Buy as many ice cream bars as possible with a given number of coins.",
+  "patterns": [
+    "Greedy",
+    "Sorting"
+  ],
+  "mainInsight": "To maximise the count, always buy the cheapest bars first. Sort the costs (or counting-sort over the cost range) and buy while the next bar is affordable.",
+  "canonicalApproach": "Sort and take cheapest first",
+  "approaches": [
+    {
+      "name": "Sort and take cheapest first",
+      "summary": "Sort ascending; subtract costs until coins run out.",
+      "timeComplexity": "O(n log n)",
+      "spaceComplexity": "O(1)",
+      "strengths": [
+        "Simple"
+      ],
+      "weaknesses": [
+        "Sorting cost"
+      ]
+    },
+    {
+      "name": "Counting sort over the cost range",
+      "summary": "Count bars per price and buy in price order.",
+      "timeComplexity": "O(n + maxCost)",
+      "spaceComplexity": "O(maxCost)",
+      "strengths": [
+        "Linear when the range is small"
+      ],
+      "weaknesses": [
+        "Memory proportional to the max cost"
+      ],
+      "interviewRelevance": "Your approach."
+    }
+  ],
+  "personalSolution": {
+    "approach": "Counting sort over the cost range, buying cheapest first",
+    "timeComplexity": "O(n + maxCost)",
+    "spaceComplexity": "O(maxCost)",
+    "isOptimal": true,
+    "notes": "Optimal for small cost ranges. Remove the leftover print(count) and buy in bulk."
+  },
+  "commonMistakes": [],
+  "edgeCases": [],
+  "cards": [
+    {
+      "id": "mi2-pattern-01",
+      "category": "pattern",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "What greedy rule maximises the number of bars?",
+        "Which bars are bought first?"
+      ],
+      "options": [
+        "Buy the cheapest bars first",
+        "Buy the most expensive affordable bar",
+        "Buy randomly",
+        "Buy equal amounts of each price"
+      ],
+      "answer": "Buy the cheapest bars first",
+      "explanation": "Cheaper bars leave more coins for further purchases, so they can never reduce the final count.",
+      "incorrectOptionExplanations": {
+        "Buy the most expensive affordable bar": "That wastes coins.",
+        "Buy randomly": "Not optimal.",
+        "Buy equal amounts of each price": "Not optimal."
+      }
+    },
+    {
+      "id": "mi2-insight-01",
+      "category": "main_insight",
+      "type": "free_recall",
+      "promptVariants": [
+        "Why does buying the cheapest first maximise the count?",
+        "Give the exchange argument."
+      ],
+      "answer": "Suppose an optimal solution buys some bar of cost c while skipping a cheaper bar of cost c' < c. Swapping the purchase for the cheaper bar keeps the total affordable (it costs less) and the count unchanged, so an optimal solution exists that buys a prefix of the sorted costs.",
+      "keyPoints": [
+        "Swap in a cheaper bar",
+        "Count unchanged, cost lower",
+        "Optimal = prefix of sorted costs"
+      ],
+      "explanation": "That is the standard greedy-by-sorting proof."
+    },
+    {
+      "id": "mi2-time-01",
+      "category": "time_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Time complexity of counting sort (n bars, max cost C): ___",
+        "Complete the statement: Time complexity of counting sort (n bars, max cost C): ___"
+      ],
+      "answer": "O(n+C)",
+      "explanation": "Counting O(n) and a pass over the count array O(C).",
+      "acceptedAnswers": [
+        "O(n + maxCost)",
+        "O(n+maxCost)"
+      ]
+    },
+    {
+      "id": "mi2-space-01",
+      "category": "space_complexity",
+      "type": "free_recall",
+      "promptVariants": [
+        "What does the count array cost and when is sorting better?",
+        "What does the counting array cost in memory and when would sorting be preferable?"
+      ],
+      "answer": "O(C) for the count array where C is the maximum cost; if C is huge compared with n, sorting (O(n log n), O(1) extra) is better.",
+      "keyPoints": [
+        "O(maxCost)",
+        "Sort when range is large"
+      ],
+      "explanation": "Pick by the constraints."
+    },
+    {
+      "id": "mi2-code-01",
+      "category": "code_reasoning",
+      "type": "code_question",
+      "promptVariants": [
+        "The solution still contains `print(count)`. Why remove it, and how could the inner `while` be replaced by arithmetic?",
+        "What does the loop over `i` represent?"
+      ],
+      "code": "for i in range(len(count)):\n    if coins <= 0:\n        break\n    if count[i] <= 0:\n        continue\n    while count[i] > 0 and coins >= i:\n        coins -= i\n        ans += 1\n        count[i] -= 1",
+      "answer": "The stray print is debug output that should not ship (and costs time for big arrays). Index i is the price; for each price you can buy min(count[i], coins // i) bars at once instead of one at a time: `k = min(count[i], coins // i); coins -= k * i; ans += k`. (Cost 0 is not possible because costs are >= 1.)",
+      "keyPoints": [
+        "Remove debugging output",
+        "Buy min(count, coins // price) at once",
+        "Loop goes by price ascending"
+      ],
+      "explanation": "Break when coins cannot buy even one bar of the current price."
+    },
+    {
+      "id": "mi2-edge-01",
+      "category": "edge_case",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "What if no bar is affordable?",
+        "What is returned when coins is smaller than every cost?"
+      ],
+      "options": [
+        "0",
+        "-1",
+        "1",
+        "The number of bars"
+      ],
+      "answer": "0",
+      "explanation": "No bar can be bought, so the answer is 0.",
+      "incorrectOptionExplanations": {
+        "-1": "The count is never negative.",
+        "1": "Not affordable.",
+        "The number of bars": "Only affordable bars count."
+      }
+    }
+  ],
+  "generatedAt": "2026-10-01T14:39:54Z"
+}

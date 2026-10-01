@@ -1,0 +1,174 @@
+{
+  "schemaVersion": 1,
+  "problemSlug": "climbing-stairs",
+  "summary": "Count the distinct ways to climb n stairs taking 1 or 2 steps at a time.",
+  "patterns": [
+    "Dynamic Programming"
+  ],
+  "mainInsight": "The ways to reach step n are the ways to reach n - 1 (then a 1-step) plus the ways to reach n - 2 (then a 2-step): ways(n) = ways(n-1) + ways(n-2), the Fibonacci recurrence. Only the last two values are needed.",
+  "canonicalApproach": "Two rolling variables",
+  "approaches": [
+    {
+      "name": "Plain recursion",
+      "summary": "ways(n) = ways(n-1) + ways(n-2).",
+      "timeComplexity": "O(2^n)",
+      "spaceComplexity": "O(n)",
+      "strengths": [
+        "Direct from the recurrence"
+      ],
+      "weaknesses": [
+        "Exponential: recomputes subproblems"
+      ]
+    },
+    {
+      "name": "Memoisation / DP array",
+      "summary": "Cache or tabulate ways(i).",
+      "timeComplexity": "O(n)",
+      "spaceComplexity": "O(n)",
+      "strengths": [
+        "Clear"
+      ],
+      "weaknesses": [
+        "O(n) memory"
+      ]
+    },
+    {
+      "name": "Two rolling variables",
+      "summary": "Keep only the previous two values.",
+      "timeComplexity": "O(n)",
+      "spaceComplexity": "O(1)",
+      "strengths": [
+        "Optimal"
+      ],
+      "interviewRelevance": "Your approach; the expected answer."
+    },
+    {
+      "name": "Matrix exponentiation / closed form",
+      "summary": "Fast Fibonacci in O(log n).",
+      "timeComplexity": "O(log n)",
+      "spaceComplexity": "O(1)",
+      "strengths": [
+        "Fastest"
+      ],
+      "weaknesses": [
+        "Overkill here"
+      ]
+    }
+  ],
+  "personalSolution": {
+    "approach": "Two rolling variables",
+    "timeComplexity": "O(n)",
+    "spaceComplexity": "O(1)",
+    "isOptimal": true,
+    "notes": "Optimal."
+  },
+  "commonMistakes": [],
+  "edgeCases": [],
+  "cards": [
+    {
+      "id": "cl-pattern-01",
+      "category": "pattern",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "Which recurrence counts the ways to climb stairs?",
+        "What sequence does it produce?"
+      ],
+      "options": [
+        "ways(n) = ways(n-1) + ways(n-2): Fibonacci",
+        "ways(n) = 2 * ways(n-1)",
+        "ways(n) = ways(n-1) * ways(n-2)",
+        "ways(n) = n!"
+      ],
+      "answer": "ways(n) = ways(n-1) + ways(n-2): Fibonacci",
+      "explanation": "The last move is either 1 step (from n-1) or 2 steps (from n-2).",
+      "incorrectOptionExplanations": {
+        "ways(n) = 2 * ways(n-1)": "That would allow arbitrary step choices at each stair independent of position.",
+        "ways(n) = ways(n-1) * ways(n-2)": "Counts add, they do not multiply.",
+        "ways(n) = n!": "Not related."
+      }
+    },
+    {
+      "id": "cl-insight-01",
+      "category": "main_insight",
+      "type": "free_recall",
+      "promptVariants": [
+        "Why do only the last two values matter?",
+        "How do you reduce the space to O(1)?"
+      ],
+      "answer": "The recurrence for step i depends only on steps i-1 and i-2, so older values can be discarded: keep two variables and update them (a, b = b, a + b) in a single loop.",
+      "keyPoints": [
+        "Recurrence depends on two previous states",
+        "Rolling variables"
+      ],
+      "explanation": "This 'only keep the last k states' trick appears in many 1D DP problems."
+    },
+    {
+      "id": "cl-time-01",
+      "category": "time_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Time complexity of the rolling-variable solution: ___",
+        "Complete the statement: Time complexity of the rolling-variable solution: ___"
+      ],
+      "answer": "O(n)",
+      "explanation": "One loop of n steps.",
+      "acceptedAnswers": [
+        "linear"
+      ]
+    },
+    {
+      "id": "cl-space-01",
+      "category": "space_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Space of the rolling-variable solution: ___",
+        "Complete the statement: Space of the rolling-variable solution: ___"
+      ],
+      "answer": "O(1)",
+      "explanation": "Two integers.",
+      "acceptedAnswers": [
+        "constant"
+      ]
+    },
+    {
+      "id": "cl-code-01",
+      "category": "code_reasoning",
+      "type": "code_question",
+      "promptVariants": [
+        "Why is the loop `range(2, n + 1)` with a, b = 1, 1, and what does b hold at the end?",
+        "What is returned for n = 1?"
+      ],
+      "code": "a, b = 1, 1\nfor _ in range(2, n + 1):\n    a, b = b, a + b\nreturn b",
+      "answer": "a and b start as ways(0) = 1 and ways(1) = 1 (one way to stand at the start, one way to reach step 1). After processing i, b equals ways(i). For n = 1 the loop does not run and b = 1 is returned, which is correct.",
+      "keyPoints": [
+        "a = ways(i-1), b = ways(i)",
+        "Base ways(0) = ways(1) = 1",
+        "Loop computes up to n"
+      ],
+      "explanation": "The tuple assignment updates both values at once."
+    },
+    {
+      "id": "cl-edge-01",
+      "category": "edge_case",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "How many ways for n = 5?",
+        "Which Fibonacci index does n correspond to?"
+      ],
+      "options": [
+        "8",
+        "5",
+        "10",
+        "13"
+      ],
+      "answer": "8",
+      "explanation": "ways: 1, 1, 2, 3, 5, 8 for n = 0..5.",
+      "incorrectOptionExplanations": {
+        "5": "That is ways(4).",
+        "10": "Not Fibonacci.",
+        "13": "That is ways(6)."
+      }
+    }
+  ],
+  "generatedAt": "2026-10-01T14:39:54Z"
+}

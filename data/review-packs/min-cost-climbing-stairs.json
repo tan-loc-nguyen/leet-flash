@@ -1,0 +1,162 @@
+{
+  "schemaVersion": 1,
+  "problemSlug": "min-cost-climbing-stairs",
+  "summary": "Find the minimum cost to reach the top, paying cost[i] when you step on stair i and climbing 1 or 2 steps at a time (start at index 0 or 1).",
+  "patterns": [
+    "Dynamic Programming"
+  ],
+  "mainInsight": "The cheapest way to stand on step i is cost[i] plus the cheaper of the two ways to arrive (from i - 1 or i - 2). Define the cost of finishing from step i as cost[i] + min(finish(i+1), finish(i+2)) with finish = 0 beyond the top.",
+  "canonicalApproach": "Bottom-up with two variables",
+  "approaches": [
+    {
+      "name": "Plain recursion",
+      "summary": "finish(i) = cost[i] + min(finish(i+1), finish(i+2)).",
+      "timeComplexity": "O(2^n)",
+      "spaceComplexity": "O(n)",
+      "weaknesses": [
+        "Exponential"
+      ]
+    },
+    {
+      "name": "Top-down memoisation",
+      "summary": "Cache finish(i).",
+      "timeComplexity": "O(n)",
+      "spaceComplexity": "O(n)",
+      "strengths": [
+        "Direct"
+      ],
+      "weaknesses": [
+        "Recursion depth"
+      ],
+      "interviewRelevance": "Your approach."
+    },
+    {
+      "name": "Bottom-up with two variables",
+      "summary": "Iterate from the end (or start) keeping the last two values.",
+      "timeComplexity": "O(n)",
+      "spaceComplexity": "O(1)",
+      "strengths": [
+        "Constant space"
+      ],
+      "interviewRelevance": "The expected answer."
+    }
+  ],
+  "personalSolution": {
+    "approach": "Top-down memoisation (lru_cache)",
+    "timeComplexity": "O(n)",
+    "spaceComplexity": "O(n)",
+    "isOptimal": false,
+    "notes": "Correct. A bottom-up loop with two variables gives O(1) space."
+  },
+  "commonMistakes": [],
+  "edgeCases": [],
+  "cards": [
+    {
+      "id": "mc4-pattern-01",
+      "category": "pattern",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "Which DP recurrence solves Min Cost Climbing Stairs?",
+        "What is the choice at each stair?"
+      ],
+      "options": [
+        "finish(i) = cost[i] + min(finish(i+1), finish(i+2))",
+        "finish(i) = cost[i] * 2",
+        "finish(i) = max(...)",
+        "finish(i) = cost[i] + cost[i+1]"
+      ],
+      "answer": "finish(i) = cost[i] + min(finish(i+1), finish(i+2))",
+      "explanation": "From stair i you pay cost[i] and move to i+1 or i+2; choose the cheaper continuation.",
+      "incorrectOptionExplanations": {
+        "finish(i) = cost[i] * 2": "Unrelated.",
+        "finish(i) = max(...)": "You minimise the cost.",
+        "finish(i) = cost[i] + cost[i+1]": "Ignores the choice."
+      }
+    },
+    {
+      "id": "mc4-insight-01",
+      "category": "main_insight",
+      "type": "free_recall",
+      "promptVariants": [
+        "Why is the answer min(step(0), step(1)) and not step(0)?",
+        "What counts as 'the top'?"
+      ],
+      "answer": "You may start on stair 0 or stair 1 for free (before paying its cost), so the answer is the cheaper of the two starting options. The top is any index >= n (beyond the last stair), which costs 0.",
+      "keyPoints": [
+        "Free choice of start 0 or 1",
+        "Top = index >= n",
+        "Base case 0"
+      ],
+      "explanation": "That is why the base case is i >= n."
+    },
+    {
+      "id": "mc4-time-01",
+      "category": "time_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Time complexity with memoisation: ___",
+        "Complete the statement: Time complexity with memoisation: ___"
+      ],
+      "answer": "O(n)",
+      "explanation": "n distinct states, O(1) work each.",
+      "acceptedAnswers": [
+        "linear"
+      ]
+    },
+    {
+      "id": "mc4-space-01",
+      "category": "space_complexity",
+      "type": "free_recall",
+      "promptVariants": [
+        "How can memory be reduced from O(n)?",
+        "What do you actually need from earlier states?"
+      ],
+      "answer": "Each state depends only on the next two, so iterating backwards (or forwards with dp[i] = cost[i] + min(dp[i-1], dp[i-2])) with two variables gives O(1) space.",
+      "keyPoints": [
+        "Depends on two neighbours",
+        "Rolling variables"
+      ],
+      "explanation": "Same trick as Climbing Stairs."
+    },
+    {
+      "id": "mc4-code-01",
+      "category": "code_reasoning",
+      "type": "code_question",
+      "promptVariants": [
+        "Why does `step(i)` return 0 for i >= n, and why is `lru_cache` safe here?",
+        "What would break without the cache?"
+      ],
+      "code": "@lru_cache\ndef step(i):\n    if i >= n:\n        return 0\n    return cost[i] + min(step(i + 1), step(i + 2))\nreturn min(step(0), step(1))",
+      "answer": "Reaching or passing index n means you are at the top; no more cost is paid. step depends only on i (n and cost are fixed), so memoising by i is valid. Without the cache the recursion branches twice per call and takes exponential time because step(i+2) is recomputed inside step(i+1).",
+      "keyPoints": [
+        "Beyond n = top = 0",
+        "State depends only on i",
+        "Without cache O(2^n)"
+      ],
+      "explanation": "Bottom-up avoids recursion limits."
+    },
+    {
+      "id": "mc4-edge-01",
+      "category": "edge_case",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "What is the answer for cost = [10, 15, 20]?",
+        "Which stairs are used?"
+      ],
+      "options": [
+        "15 (start at index 1, jump to the top)",
+        "25",
+        "30",
+        "10"
+      ],
+      "answer": "15 (start at index 1, jump to the top)",
+      "explanation": "Starting on stair 1 you pay 15 and can climb 2 to reach the top.",
+      "incorrectOptionExplanations": {
+        "25": "10 + 15 is not needed.",
+        "30": "Not minimal.",
+        "10": "Starting at index 0 then stepping to 2 costs 30."
+      }
+    }
+  ],
+  "generatedAt": "2026-10-01T14:39:54Z"
+}
