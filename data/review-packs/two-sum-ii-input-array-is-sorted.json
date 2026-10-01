@@ -1,0 +1,161 @@
+{
+  "schemaVersion": 1,
+  "problemSlug": "two-sum-ii-input-array-is-sorted",
+  "summary": "Given a sorted array and a target, return the 1-based indices of the two numbers that sum to the target using O(1) extra space.",
+  "patterns": [
+    "Two Pointers",
+    "Binary Search"
+  ],
+  "mainInsight": "Because the array is sorted, the sum of the two ends is monotone: if it is too big the right end can never be part of an answer, if too small the left end can never be. Move the offending pointer and discard that element for good.",
+  "canonicalApproach": "Two pointers from both ends",
+  "approaches": [
+    {
+      "name": "Hash map",
+      "summary": "Same as Two Sum with a dict.",
+      "timeComplexity": "O(n)",
+      "spaceComplexity": "O(n)",
+      "weaknesses": [
+        "Ignores sortedness and uses extra space"
+      ]
+    },
+    {
+      "name": "Binary search for the complement",
+      "summary": "For each i binary-search target - numbers[i].",
+      "timeComplexity": "O(n log n)",
+      "spaceComplexity": "O(1)",
+      "strengths": [
+        "O(1) space"
+      ],
+      "weaknesses": [
+        "Slower than two pointers"
+      ]
+    },
+    {
+      "name": "Two pointers from both ends",
+      "summary": "l=0, r=n-1; move l up if the sum is too small, r down if too large.",
+      "timeComplexity": "O(n)",
+      "spaceComplexity": "O(1)",
+      "strengths": [
+        "Optimal in both"
+      ],
+      "interviewRelevance": "The expected answer."
+    }
+  ],
+  "personalSolution": {
+    "approach": "Two pointers from both ends",
+    "timeComplexity": "O(n)",
+    "spaceComplexity": "O(1)",
+    "isOptimal": true,
+    "notes": "Optimal. Prefer `while l < r`."
+  },
+  "commonMistakes": [],
+  "edgeCases": [],
+  "cards": [
+    {
+      "id": "ts2-pattern-01",
+      "category": "pattern",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "Which technique exploits the sorted order in Two Sum II?",
+        "What pattern gives O(n) time and O(1) space on a sorted array pair-sum?"
+      ],
+      "options": [
+        "Two pointers from both ends",
+        "Hash map of complements",
+        "Sliding window",
+        "Monotonic stack"
+      ],
+      "answer": "Two pointers from both ends",
+      "explanation": "Sorted order makes the pair sum monotone in each pointer.",
+      "incorrectOptionExplanations": {
+        "Hash map of complements": "Works, but O(n) space - the problem asks for O(1).",
+        "Sliding window": "A window assumes contiguity.",
+        "Monotonic stack": "No nearest-greater relation."
+      }
+    },
+    {
+      "id": "ts2-invariant-01",
+      "category": "invariant",
+      "type": "free_recall",
+      "promptVariants": [
+        "Why is it safe to discard numbers[r] when numbers[l] + numbers[r] > target?",
+        "State why moving a pointer never skips the answer."
+      ],
+      "answer": "numbers[r] is paired with the smallest still-possible partner numbers[l]; if even that sum is too big, every other partner (all >= numbers[l]) is also too big. So numbers[r] cannot be in any answer and can be dropped. The symmetric argument holds for l.",
+      "keyPoints": [
+        "Smallest partner already too big",
+        "Every other partner is larger",
+        "Symmetric for l"
+      ],
+      "explanation": "This is the correctness proof of every converging two-pointer search."
+    },
+    {
+      "id": "ts2-time-01",
+      "category": "time_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Time complexity of the two-pointer solution: ___",
+        "Two Sum II runs in ___ time."
+      ],
+      "answer": "O(n)",
+      "explanation": "Each iteration moves one pointer inward; at most n-1 moves.",
+      "acceptedAnswers": [
+        "linear"
+      ]
+    },
+    {
+      "id": "ts2-space-01",
+      "category": "space_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Extra space of the two-pointer solution: ___",
+        "Two Sum II needs ___ auxiliary space."
+      ],
+      "answer": "O(1)",
+      "explanation": "Just two indices.",
+      "acceptedAnswers": [
+        "constant"
+      ]
+    },
+    {
+      "id": "ts2-code-01",
+      "category": "code_reasoning",
+      "type": "code_question",
+      "promptVariants": [
+        "Your loop uses `while l <= r`. Is that or `l < r` more precise, and why does the answer still come out right?",
+        "What does `l == r` mean in the two-pointer search?"
+      ],
+      "code": "l, r = 0, len(numbers) - 1\nwhile l <= r:\n    total = numbers[l] + numbers[r]\n    if total == target:\n        return [l + 1, r + 1]\n    elif total > target:\n        r -= 1\n    else:\n        l += 1\nreturn []",
+      "answer": "`l < r` is the precise condition: l == r would use one element twice. Since the problem guarantees exactly one valid pair of distinct indices, the l == r state is never reached with total == target for the true answer, so it is harmless but looser than needed.",
+      "keyPoints": [
+        "l == r reuses an element",
+        "Exactly one answer guaranteed",
+        "Prefer l < r"
+      ],
+      "explanation": "Use the tight condition in interviews."
+    },
+    {
+      "id": "ts2-edge-01",
+      "category": "edge_case",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "Why must the result be 1-indexed?",
+        "What is easy to forget when returning the answer?"
+      ],
+      "options": [
+        "The problem asks for 1-based indices, so add 1 to each",
+        "Indices must be sorted descending",
+        "Duplicates must be removed",
+        "The pair must be adjacent"
+      ],
+      "answer": "The problem asks for 1-based indices, so add 1 to each",
+      "explanation": "Returning [l, r] is a classic off-by-one.",
+      "incorrectOptionExplanations": {
+        "Indices must be sorted descending": "Ascending order l < r already holds.",
+        "Duplicates must be removed": "Duplicate values are fine.",
+        "The pair must be adjacent": "Any two indices may be used."
+      }
+    }
+  ],
+  "generatedAt": "2026-10-01T14:08:18Z"
+}

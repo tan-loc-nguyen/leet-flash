@@ -1,0 +1,157 @@
+{
+  "schemaVersion": 1,
+  "problemSlug": "max-number-of-k-sum-pairs",
+  "summary": "Repeatedly remove two numbers summing to k; return the maximum number of such operations.",
+  "patterns": [
+    "Array / Hashing",
+    "Two Pointers"
+  ],
+  "mainInsight": "Each number can only pair with k - x. Track unmatched numbers in a hash map: when the complement is waiting, form a pair; otherwise record the number for later.",
+  "canonicalApproach": "Hash map of counts (one pass)",
+  "approaches": [
+    {
+      "name": "Sort + two pointers",
+      "summary": "Sort; pair ends when the sum equals k, move the side that is too big/small.",
+      "timeComplexity": "O(n log n)",
+      "spaceComplexity": "O(1)",
+      "strengths": [
+        "No extra memory"
+      ],
+      "weaknesses": [
+        "Sorting cost"
+      ]
+    },
+    {
+      "name": "Hash map of counts (one pass)",
+      "summary": "Look up the complement; consume it if present, else store the current number.",
+      "timeComplexity": "O(n)",
+      "spaceComplexity": "O(n)",
+      "strengths": [
+        "Linear time"
+      ],
+      "weaknesses": [
+        "Extra memory"
+      ],
+      "interviewRelevance": "Your approach; the usual optimal-time answer."
+    }
+  ],
+  "personalSolution": {
+    "approach": "Hash map of counts (one pass)",
+    "timeComplexity": "O(n)",
+    "spaceComplexity": "O(n)",
+    "isOptimal": true,
+    "notes": "Optimal time. Sorting + two pointers trades time for O(1) space."
+  },
+  "commonMistakes": [],
+  "edgeCases": [],
+  "cards": [
+    {
+      "id": "mk-pattern-01",
+      "category": "pattern",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "Which patterns solve Max Number of K-Sum Pairs?",
+        "Which technique gives O(n) time?"
+      ],
+      "options": [
+        "Hash map of unmatched values (Two Sum style)",
+        "Sliding window",
+        "Binary search on the answer",
+        "Monotonic stack"
+      ],
+      "answer": "Hash map of unmatched values (Two Sum style)",
+      "explanation": "Each element needs its complement; a counter map consumes matches greedily.",
+      "incorrectOptionExplanations": {
+        "Sliding window": "Elements need not be contiguous.",
+        "Binary search on the answer": "Not needed.",
+        "Monotonic stack": "No nearest-greater relation."
+      }
+    },
+    {
+      "id": "mk-insight-01",
+      "category": "main_insight",
+      "type": "free_recall",
+      "promptVariants": [
+        "Why is greedily pairing whenever the complement is available optimal?",
+        "Why is the greedy hash-map pairing optimal for Max Number of K-Sum Pairs?"
+      ],
+      "answer": "Each number x can only ever pair with k - x, so every x-(k-x) pairing is independent of other values; matching whenever possible cannot reduce the total because the number of pairs for a value pair is min(count(x), count(k-x)).",
+      "keyPoints": [
+        "Only one possible partner value",
+        "Pairs = min of the two counts",
+        "Greedy matching achieves it"
+      ],
+      "explanation": "That is why one pass suffices."
+    },
+    {
+      "id": "mk-time-01",
+      "category": "time_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Time complexity of the hash-map solution: ___",
+        "The one-pass hash-map solution to K-Sum Pairs runs in ___ time."
+      ],
+      "answer": "O(n)",
+      "explanation": "One pass with O(1) average map operations.",
+      "acceptedAnswers": [
+        "linear"
+      ]
+    },
+    {
+      "id": "mk-space-01",
+      "category": "space_complexity",
+      "type": "free_recall",
+      "promptVariants": [
+        "Compare the space of the hash-map and sort + two pointers solutions.",
+        "What do you trade when choosing the hash map over sort + two pointers for K-Sum Pairs?"
+      ],
+      "answer": "Hash map: O(n) extra space, O(n) time. Sort + two pointers: O(1) extra (besides the sort), O(n log n) time. Choose by what matters more.",
+      "keyPoints": [
+        "Map O(n) space",
+        "Sort O(n log n) time",
+        "Trade-off"
+      ],
+      "explanation": "Typical time-space trade-off."
+    },
+    {
+      "id": "mk-code-01",
+      "category": "code_reasoning",
+      "type": "code_question",
+      "promptVariants": [
+        "Why decrement the stored count and pop at zero, and what changes when nums[i] == complement (e.g. k = 4, value 2)?",
+        "How does the counter map handle a value that is its own complement, and why pop at zero?"
+      ],
+      "code": "hmap = defaultdict(int)\ncount = 0\nfor i in range(len(nums)):\n    complement = k - nums[i]\n    if complement in hmap:\n        hmap[complement] -= 1\n        count += 1\n        if hmap[complement] <= 0:\n            hmap.pop(complement)\n    else:\n        hmap[nums[i]] += 1",
+      "answer": "A matched number is consumed so it cannot be reused: decrement, and pop at zero so `in hmap` stays accurate. When a value equals its own complement the first 2 is stored and the second 2 finds it, forming a pair (the current element is never inserted when it pairs).",
+      "keyPoints": [
+        "Consume matched value",
+        "Pop at zero keeps membership correct",
+        "Self-complement works: need two copies"
+      ],
+      "explanation": "defaultdict makes absent keys read as 0 but `in` checks real keys."
+    },
+    {
+      "id": "mk-edge-01",
+      "category": "edge_case",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "What is the answer for [3,1,3,4,3], k = 6?",
+        "How are repeated equal values paired?"
+      ],
+      "options": [
+        "1",
+        "2",
+        "0",
+        "3"
+      ],
+      "answer": "1",
+      "explanation": "Only 3+3 sums to 6 and a single pair of 3s can be formed from the first two available 3s; the third 3 has no partner (1+4 = 5).",
+      "incorrectOptionExplanations": {
+        "2": "There are three 3s, enough for one pair only.",
+        "0": "3 + 3 = 6 is possible.",
+        "3": "Each operation uses two numbers."
+      }
+    }
+  ],
+  "generatedAt": "2026-10-01T14:08:18Z"
+}

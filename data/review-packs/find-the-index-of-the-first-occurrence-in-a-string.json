@@ -1,0 +1,169 @@
+{
+  "schemaVersion": 1,
+  "problemSlug": "find-the-index-of-the-first-occurrence-in-a-string",
+  "summary": "Return the index of the first occurrence of needle in haystack, or -1.",
+  "patterns": [
+    "Two Pointers"
+  ],
+  "mainInsight": "Naive matching re-compares characters; a rolling hash lets you test each window in O(1) before a real comparison, and KMP guarantees O(n + m) by never moving backwards in the haystack.",
+  "canonicalApproach": "KMP",
+  "approaches": [
+    {
+      "name": "Naive window compare",
+      "summary": "Compare needle with every window.",
+      "timeComplexity": "O(n*m)",
+      "spaceComplexity": "O(1)",
+      "strengths": [
+        "Simple"
+      ],
+      "weaknesses": [
+        "Slow in the worst case"
+      ]
+    },
+    {
+      "name": "Rolling hash (Rabin-Karp)",
+      "summary": "Hash each window incrementally; verify on equality.",
+      "timeComplexity": "O(n + m) expected, O(n*m) worst",
+      "spaceComplexity": "O(1)",
+      "strengths": [
+        "Fast on average"
+      ],
+      "weaknesses": [
+        "Collisions"
+      ],
+      "interviewRelevance": "Your approach with a weak hash (sum of characters)."
+    },
+    {
+      "name": "KMP",
+      "summary": "Precompute the longest-prefix-suffix table; never re-scan haystack characters.",
+      "timeComplexity": "O(n + m)",
+      "spaceComplexity": "O(m)",
+      "strengths": [
+        "Worst-case linear"
+      ],
+      "weaknesses": [
+        "More code to remember"
+      ],
+      "interviewRelevance": "The strongest answer."
+    }
+  ],
+  "personalSolution": {
+    "approach": "Rolling hash (sum of character codes) with verification",
+    "timeComplexity": "O(n*m) worst case",
+    "spaceComplexity": "O(1)",
+    "isOptimal": false,
+    "notes": "Correct because of the verification step. A polynomial rolling hash or KMP gives better guarantees; in practice use str.find."
+  },
+  "commonMistakes": [],
+  "edgeCases": [],
+  "cards": [
+    {
+      "id": "fs-pattern-01",
+      "category": "pattern",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "Which algorithm guarantees O(n + m) substring search?",
+        "Which technique avoids re-comparing matched characters?"
+      ],
+      "options": [
+        "KMP (failure/prefix table)",
+        "Sliding window maximum",
+        "Binary search",
+        "Union find"
+      ],
+      "answer": "KMP (failure/prefix table)",
+      "explanation": "The prefix function tells how far to fall back after a mismatch without moving the haystack pointer backwards.",
+      "incorrectOptionExplanations": {
+        "Sliding window maximum": "Unrelated.",
+        "Binary search": "Strings are not sorted.",
+        "Union find": "Not applicable."
+      }
+    },
+    {
+      "id": "fs-insight-01",
+      "category": "main_insight",
+      "type": "free_recall",
+      "promptVariants": [
+        "Why must a rolling hash match be verified with a real comparison, and why is a sum of ord() values a weak hash?",
+        "Why is a plain sum of character codes a poor rolling hash and why must matches still be verified?"
+      ],
+      "answer": "Different windows can share the same hash (collisions); equality of hashes only suggests a match. Sum of character codes ignores order, so every anagram of the needle collides, making verification (and the worst case) frequent. A polynomial hash (Rabin-Karp) is far less collision-prone.",
+      "keyPoints": [
+        "Hash equality != string equality",
+        "Sum ignores order: anagrams collide",
+        "Use polynomial rolling hash"
+      ],
+      "explanation": "Verification keeps the result correct even with collisions."
+    },
+    {
+      "id": "fs-time-01",
+      "category": "time_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Worst-case time of KMP: ___ (n = haystack, m = needle)",
+        "KMP substring search runs in ___ time."
+      ],
+      "answer": "O(n+m)",
+      "explanation": "Preprocessing O(m) plus a single O(n) scan.",
+      "acceptedAnswers": [
+        "O(n + m)",
+        "O(m+n)"
+      ]
+    },
+    {
+      "id": "fs-space-01",
+      "category": "space_complexity",
+      "type": "free_recall",
+      "promptVariants": [
+        "Compare the space of naive search, rolling hash and KMP.",
+        "What does KMP cost in memory compared with the naive and rolling-hash methods?"
+      ],
+      "answer": "Naive and rolling hash: O(1). KMP: O(m) for the prefix table. KMP buys worst-case time with that memory.",
+      "keyPoints": [
+        "Naive/Rabin-Karp O(1)",
+        "KMP O(m)"
+      ],
+      "explanation": "Time-space trade-off."
+    },
+    {
+      "id": "fs-code-01",
+      "category": "code_reasoning",
+      "type": "code_question",
+      "promptVariants": [
+        "Why is the window hash updated with `- ord(haystack[i]) + ord(haystack[i + m])` and why is the update guarded by `i < n - m`?",
+        "Explain how the window hash is updated in O(1) and why the last update is skipped."
+      ],
+      "code": "for i in range(n - m + 1):\n    if hayHash == needleHash and needle == haystack[i:i+m]:\n        return i\n    if i < n - m:\n        hayHash = hayHash - ord(haystack[i]) + ord(haystack[i + m])",
+      "answer": "Sliding by one removes the character leaving the window and adds the one entering, so each hash costs O(1). The guard stops the update after the last window, where haystack[i + m] would be out of range.",
+      "keyPoints": [
+        "Rolling update O(1)",
+        "Remove outgoing, add incoming",
+        "Guard avoids index out of range"
+      ],
+      "explanation": "Worst case O(n*m) because the hash collides on anagrams of the needle."
+    },
+    {
+      "id": "fs-edge-01",
+      "category": "edge_case",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "What should be returned for needle longer than haystack?",
+        "How does your code handle `n < m`?"
+      ],
+      "options": [
+        "-1 immediately",
+        "0",
+        "The length difference",
+        "It raises an error"
+      ],
+      "answer": "-1 immediately",
+      "explanation": "The needle cannot fit; the early return also prevents indexing past the haystack when building the initial hash.",
+      "incorrectOptionExplanations": {
+        "0": "0 is returned only if the needle is a prefix (or empty).",
+        "The length difference": "Not meaningful.",
+        "It raises an error": "The early check prevents it."
+      }
+    }
+  ],
+  "generatedAt": "2026-10-01T14:08:18Z"
+}

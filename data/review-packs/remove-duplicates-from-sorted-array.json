@@ -1,0 +1,146 @@
+{
+  "schemaVersion": 1,
+  "problemSlug": "remove-duplicates-from-sorted-array",
+  "summary": "Remove duplicates in place from a sorted array and return the number of unique elements.",
+  "patterns": [
+    "Two Pointers"
+  ],
+  "mainInsight": "In a sorted array duplicates are adjacent, so keep a write pointer j for the last unique element and copy any element different from nums[j] to j + 1.",
+  "canonicalApproach": "Read/write pointers",
+  "approaches": [
+    {
+      "name": "Set + rebuild",
+      "summary": "Collect unique values and write them back.",
+      "timeComplexity": "O(n)",
+      "spaceComplexity": "O(n)",
+      "weaknesses": [
+        "Not in place"
+      ]
+    },
+    {
+      "name": "Read/write pointers",
+      "summary": "i scans; when nums[i] != nums[j], write it at j + 1.",
+      "timeComplexity": "O(n)",
+      "spaceComplexity": "O(1)",
+      "strengths": [
+        "In place"
+      ],
+      "interviewRelevance": "The expected answer."
+    }
+  ],
+  "personalSolution": {
+    "approach": "Read/write pointers",
+    "timeComplexity": "O(n)",
+    "spaceComplexity": "O(1)",
+    "isOptimal": true,
+    "notes": "Optimal. Starting i at 1 would skip the self-comparison."
+  },
+  "commonMistakes": [],
+  "edgeCases": [],
+  "cards": [
+    {
+      "id": "rd-pattern-01",
+      "category": "pattern",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "Which pattern performs in-place deduplication of a sorted array?",
+        "What technique uses one pointer to read and another to write?"
+      ],
+      "options": [
+        "Read/write two pointers (fast/slow)",
+        "Binary search",
+        "Sliding window maximum",
+        "Hash set"
+      ],
+      "answer": "Read/write two pointers (fast/slow)",
+      "explanation": "The write index trails the read index and only advances on new values.",
+      "incorrectOptionExplanations": {
+        "Binary search": "No searching.",
+        "Sliding window maximum": "Unrelated.",
+        "Hash set": "Not needed because duplicates are adjacent (and sets use extra space)."
+      }
+    },
+    {
+      "id": "rd-invariant-01",
+      "category": "invariant",
+      "type": "free_recall",
+      "promptVariants": [
+        "What is true about nums[0..j] at every step?",
+        "State the invariant for the write pointer j."
+      ],
+      "answer": "nums[0..j] holds the distinct values seen so far in sorted order, and nums[j] is the most recent unique value (the one to compare against).",
+      "keyPoints": [
+        "Prefix is the deduplicated result",
+        "nums[j] = latest unique value"
+      ],
+      "explanation": "The answer length is j + 1."
+    },
+    {
+      "id": "rd-time-01",
+      "category": "time_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Time complexity: ___",
+        "Removing duplicates from a sorted array in place takes ___ time."
+      ],
+      "answer": "O(n)",
+      "explanation": "A single pass.",
+      "acceptedAnswers": [
+        "linear"
+      ]
+    },
+    {
+      "id": "rd-space-01",
+      "category": "space_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Extra space: ___",
+        "The read/write-pointer deduplication uses ___ extra space."
+      ],
+      "answer": "O(1)",
+      "explanation": "Two indices; modifications are in place.",
+      "acceptedAnswers": [
+        "constant"
+      ]
+    },
+    {
+      "id": "rd-code-01",
+      "category": "code_reasoning",
+      "type": "code_question",
+      "promptVariants": [
+        "Why compare against nums[j] rather than nums[i - 1], and why is the return j + 1?",
+        "What does j represent when the loop ends?"
+      ],
+      "code": "j = 0\nfor i in range(len(nums)):\n    if nums[j] != nums[i]:\n        nums[j + 1] = nums[i]\n        j += 1\nreturn j + 1",
+      "answer": "nums[j] is the last unique value already placed; a different nums[i] is new. Comparing with nums[i - 1] also works for sorted input, but nums[j] is the more direct invariant. j is the index of the last unique element, so the count is j + 1.",
+      "keyPoints": [
+        "Compare with last written unique value",
+        "Count = j + 1 (index to length)"
+      ],
+      "explanation": "Elements past j + 1 are irrelevant."
+    },
+    {
+      "id": "rd-edge-01",
+      "category": "edge_case",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "Which input checks the loop start and trivial case?",
+        "What does the function return for [1]?"
+      ],
+      "options": [
+        "1 (j stays 0, return j + 1)",
+        "0",
+        "2",
+        "It errors on a single element"
+      ],
+      "answer": "1 (j stays 0, return j + 1)",
+      "explanation": "With one element nothing is written and the count is 1.",
+      "incorrectOptionExplanations": {
+        "0": "The array is non-empty so at least one element remains.",
+        "2": "Too many.",
+        "It errors on a single element": "The index j + 1 is only touched when a new value is found."
+      }
+    }
+  ],
+  "generatedAt": "2026-10-01T14:08:18Z"
+}

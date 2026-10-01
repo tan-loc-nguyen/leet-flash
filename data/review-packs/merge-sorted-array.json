@@ -1,0 +1,156 @@
+{
+  "schemaVersion": 1,
+  "problemSlug": "merge-sorted-array",
+  "summary": "Merge sorted nums2 into sorted nums1 in place (nums1 has trailing space for it).",
+  "patterns": [
+    "Two Pointers"
+  ],
+  "mainInsight": "Fill nums1 from the back: the largest remaining element goes to the last free slot, so no element of nums1 is overwritten before it is read.",
+  "canonicalApproach": "Merge from the back",
+  "approaches": [
+    {
+      "name": "Copy then sort",
+      "summary": "Append nums2 to nums1 and sort.",
+      "timeComplexity": "O((m+n) log(m+n))",
+      "spaceComplexity": "O(1)",
+      "weaknesses": [
+        "Ignores that both inputs are sorted"
+      ]
+    },
+    {
+      "name": "Merge into a new array",
+      "summary": "Standard two-pointer merge into a buffer.",
+      "timeComplexity": "O(m+n)",
+      "spaceComplexity": "O(m+n)",
+      "weaknesses": [
+        "Extra memory"
+      ]
+    },
+    {
+      "name": "Merge from the back",
+      "summary": "Three pointers i, j, k from the ends; write the larger element to k.",
+      "timeComplexity": "O(m+n)",
+      "spaceComplexity": "O(1)",
+      "strengths": [
+        "In place, linear"
+      ],
+      "interviewRelevance": "The expected answer."
+    }
+  ],
+  "personalSolution": {
+    "approach": "Merge from the back",
+    "timeComplexity": "O(m+n)",
+    "spaceComplexity": "O(1)",
+    "isOptimal": true,
+    "notes": "Optimal."
+  },
+  "commonMistakes": [],
+  "edgeCases": [],
+  "cards": [
+    {
+      "id": "ms-pattern-01",
+      "category": "pattern",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "How do you merge in place without overwriting unread values?",
+        "Which direction do you fill nums1?"
+      ],
+      "options": [
+        "From the back (largest first)",
+        "From the front (smallest first)",
+        "From the middle",
+        "Randomly"
+      ],
+      "answer": "From the back (largest first)",
+      "explanation": "The free space is at the end of nums1, so writing there never clobbers unread elements.",
+      "incorrectOptionExplanations": {
+        "From the front (smallest first)": "Would overwrite unread elements of nums1.",
+        "From the middle": "No structure supports this.",
+        "Randomly": "Not an algorithm."
+      }
+    },
+    {
+      "id": "ms-invariant-01",
+      "category": "invariant",
+      "type": "free_recall",
+      "promptVariants": [
+        "Why is writing at k never going to overwrite an unread element of nums1?",
+        "Why can't filling nums1 from the back clobber elements that have not been merged yet?"
+      ],
+      "answer": "k = i + j + 1 always points at or beyond i (the next unread element of nums1) because j >= 0 slots of nums2 remain; so the slot being written is free or already consumed.",
+      "keyPoints": [
+        "k >= i always",
+        "Written slots are free"
+      ],
+      "explanation": "That is the key correctness claim of the backward merge."
+    },
+    {
+      "id": "ms-time-01",
+      "category": "time_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Time complexity of the backward merge: ___",
+        "Merge Sorted Array runs in ___ time."
+      ],
+      "answer": "O(m+n)",
+      "explanation": "Each pointer moves in one direction once.",
+      "acceptedAnswers": [
+        "O(m + n)",
+        "O(n+m)"
+      ]
+    },
+    {
+      "id": "ms-space-01",
+      "category": "space_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Extra space of the backward merge: ___",
+        "Merging from the back needs ___ extra space."
+      ],
+      "answer": "O(1)",
+      "explanation": "Three indices.",
+      "acceptedAnswers": [
+        "constant"
+      ]
+    },
+    {
+      "id": "ms-code-01",
+      "category": "code_reasoning",
+      "type": "code_question",
+      "promptVariants": [
+        "Why does the loop run only while j >= 0, and why can the remaining nums1 elements be left alone?",
+        "What happens when i < 0 early?"
+      ],
+      "code": "i, j, k = m - 1, n - 1, m + n - 1\nwhile j >= 0:\n    if i >= 0 and nums1[i] > nums2[j]:\n        nums1[k] = nums1[i]\n        i -= 1\n    else:\n        nums1[k] = nums2[j]\n        j -= 1\n    k -= 1",
+      "answer": "Once nums2 is exhausted the remaining nums1[0..i] elements are already in their final positions (the front of the array), so nothing more is needed. If nums1 is exhausted first (i < 0) the else branch copies the rest of nums2.",
+      "keyPoints": [
+        "Leftover nums1 prefix is in place",
+        "i < 0 => copy nums2"
+      ],
+      "explanation": "Do not loop until k < 0."
+    },
+    {
+      "id": "ms-edge-01",
+      "category": "edge_case",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "What does merging look like when m = 0?",
+        "Which edge case makes `i >= 0` guard necessary?"
+      ],
+      "options": [
+        "nums2 is copied wholesale into nums1; i is -1 immediately",
+        "Nothing to do",
+        "It raises IndexError",
+        "nums1 is cleared"
+      ],
+      "answer": "nums2 is copied wholesale into nums1; i is -1 immediately",
+      "explanation": "With m = 0 the guard `i >= 0` fails so every iteration takes the nums2 branch.",
+      "incorrectOptionExplanations": {
+        "Nothing to do": "nums2 values must still be written.",
+        "It raises IndexError": "The guard prevents indexing nums1[-1].",
+        "nums1 is cleared": "It is filled."
+      }
+    }
+  ],
+  "generatedAt": "2026-10-01T14:08:18Z"
+}

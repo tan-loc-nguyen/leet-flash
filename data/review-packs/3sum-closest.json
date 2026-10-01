@@ -1,0 +1,146 @@
+{
+  "schemaVersion": 1,
+  "problemSlug": "3sum-closest",
+  "summary": "Find the sum of three numbers in the array that is closest to the target.",
+  "patterns": [
+    "Two Pointers"
+  ],
+  "mainInsight": "Sort, fix one number, then use two pointers on the rest: the pair sum is monotone in each pointer, so move l when the total is below the target and r when above, tracking the closest total seen.",
+  "canonicalApproach": "Sort + fix one + two pointers",
+  "approaches": [
+    {
+      "name": "Brute force",
+      "summary": "All triples.",
+      "timeComplexity": "O(n^3)",
+      "spaceComplexity": "O(1)"
+    },
+    {
+      "name": "Sort + fix one + two pointers",
+      "summary": "For each i sweep l/r over the suffix, updating the closest sum.",
+      "timeComplexity": "O(n^2)",
+      "spaceComplexity": "O(1) (plus sort)",
+      "strengths": [
+        "Optimal for this problem"
+      ],
+      "interviewRelevance": "The expected answer."
+    }
+  ],
+  "personalSolution": {
+    "approach": "Sort + fix one + two pointers",
+    "timeComplexity": "O(n^2)",
+    "spaceComplexity": "O(1)",
+    "isOptimal": true,
+    "notes": "Optimal. You could skip duplicate i values as a micro-optimisation."
+  },
+  "commonMistakes": [],
+  "edgeCases": [],
+  "cards": [
+    {
+      "id": "3c-pattern-01",
+      "category": "pattern",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "Which approach gives O(n^2) for 3Sum Closest?",
+        "What pattern does 3Sum Closest reuse?"
+      ],
+      "options": [
+        "Sort + two pointers",
+        "Hash set lookup per pair",
+        "Sliding window",
+        "BFS"
+      ],
+      "answer": "Sort + two pointers",
+      "explanation": "Same skeleton as 3Sum, but compare |target - total| instead of testing equality.",
+      "incorrectOptionExplanations": {
+        "Hash set lookup per pair": "A set finds exact matches; closeness needs ordering.",
+        "Sliding window": "Triples are not contiguous.",
+        "BFS": "No graph."
+      }
+    },
+    {
+      "id": "3c-insight-01",
+      "category": "main_insight",
+      "type": "free_recall",
+      "promptVariants": [
+        "Why can't a hash set be used here but two pointers can?",
+        "What does sorting give you for 'closest' queries?"
+      ],
+      "answer": "Closest requires order: with sorted numbers the pair sum increases when l moves right and decreases when r moves left, steering the sum toward the target. A hash set only answers exact equality.",
+      "keyPoints": [
+        "Closeness needs order",
+        "Monotone sum in l and r",
+        "Set tests equality only"
+      ],
+      "explanation": "Same reason Two Sum II uses two pointers."
+    },
+    {
+      "id": "3c-time-01",
+      "category": "time_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Time complexity including the sort: ___",
+        "3Sum Closest takes ___ time."
+      ],
+      "answer": "O(n^2)",
+      "explanation": "n two-pointer sweeps of O(n) each; the sort is O(n log n).",
+      "acceptedAnswers": [
+        "O(n²)",
+        "quadratic"
+      ]
+    },
+    {
+      "id": "3c-space-01",
+      "category": "space_complexity",
+      "type": "free_recall",
+      "promptVariants": [
+        "What is the extra space, and what can inflate it?",
+        "What auxiliary memory does 3Sum Closest need, and what hidden cost does sorting add?"
+      ],
+      "answer": "O(1) besides the sort (Python's sort can use O(n)). No hash structures are needed.",
+      "keyPoints": [
+        "O(1) extra",
+        "Sort may use O(n)"
+      ],
+      "explanation": "Same as 3Sum."
+    },
+    {
+      "id": "3c-code-01",
+      "category": "code_reasoning",
+      "type": "code_question",
+      "promptVariants": [
+        "Why is the closest-sum update placed after the pointer move yet still uses `total`?",
+        "Why can the loop return immediately when total == target?"
+      ],
+      "code": "for i in range(n - 2):\n    l, r = i + 1, n - 1\n    while l < r:\n        total = nums[i] + nums[l] + nums[r]\n        if total == target:\n            return total\n        elif total < target:\n            l += 1\n        else:\n            r -= 1\n        if abs(target - total) < abs(target - best):\n            best = total",
+      "answer": "`total` was computed before the pointer moved and is the sum actually evaluated, so comparing it against best is correct regardless of where the update sits. An exact hit has distance 0, which nothing can beat, so returning early is safe.",
+      "keyPoints": [
+        "total is the evaluated sum",
+        "Distance 0 is optimal"
+      ],
+      "explanation": "Updating before moving the pointers reads more naturally."
+    },
+    {
+      "id": "3c-edge-01",
+      "category": "edge_case",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "Why initialise best = float('inf') instead of a number from the array?",
+        "What happens with exactly three elements?"
+      ],
+      "options": [
+        "Any real sum has a smaller distance than infinity, so the first sum replaces it",
+        "Infinity is required for sorting",
+        "It avoids integer overflow",
+        "It makes the loop run once"
+      ],
+      "answer": "Any real sum has a smaller distance than infinity, so the first sum replaces it",
+      "explanation": "abs(target - inf) is infinite, so the first evaluated total always becomes best. (With 3 elements the only triple is evaluated and returned.)",
+      "incorrectOptionExplanations": {
+        "Infinity is required for sorting": "Unrelated.",
+        "It avoids integer overflow": "Python has no overflow.",
+        "It makes the loop run once": "No effect on iteration count."
+      }
+    }
+  ],
+  "generatedAt": "2026-10-01T14:08:18Z"
+}

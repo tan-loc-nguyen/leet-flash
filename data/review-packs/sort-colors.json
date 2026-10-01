@@ -1,0 +1,157 @@
+{
+  "schemaVersion": 1,
+  "problemSlug": "sort-colors",
+  "summary": "Sort an array containing only 0, 1 and 2 in place (the Dutch national flag problem).",
+  "patterns": [
+    "Two Pointers"
+  ],
+  "mainInsight": "With only three distinct values you do not need a comparison sort: either count each value and rewrite (two passes) or maintain three regions with low/mid/high pointers and place each element once (one pass).",
+  "canonicalApproach": "Dutch national flag (one pass)",
+  "approaches": [
+    {
+      "name": "Comparison sort",
+      "summary": "Call sort().",
+      "timeComplexity": "O(n log n)",
+      "spaceComplexity": "O(1)",
+      "weaknesses": [
+        "Ignores the constraint on values"
+      ]
+    },
+    {
+      "name": "Counting sort (two passes)",
+      "summary": "Count 0s, 1s, 2s and overwrite the array.",
+      "timeComplexity": "O(n)",
+      "spaceComplexity": "O(1)",
+      "strengths": [
+        "Simple"
+      ],
+      "weaknesses": [
+        "Two passes"
+      ],
+      "interviewRelevance": "Your approach."
+    },
+    {
+      "name": "Dutch national flag (one pass)",
+      "summary": "low/mid/high pointers; swap 0s to the front, 2s to the back, leave 1s.",
+      "timeComplexity": "O(n)",
+      "spaceComplexity": "O(1)",
+      "strengths": [
+        "Single pass",
+        "In place"
+      ],
+      "weaknesses": [
+        "Easy to botch pointer updates"
+      ],
+      "interviewRelevance": "The expected follow-up answer."
+    }
+  ],
+  "personalSolution": {
+    "approach": "Counting sort (two passes)",
+    "timeComplexity": "O(n)",
+    "spaceComplexity": "O(1)",
+    "isOptimal": false,
+    "notes": "Correct and O(n). The follow-up asks for a single pass: the Dutch national flag partition."
+  },
+  "commonMistakes": [],
+  "edgeCases": [],
+  "cards": [
+    {
+      "id": "sc-pattern-01",
+      "category": "pattern",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "Which technique sorts a 3-valued array in one pass?",
+        "What is the name of the three-pointer partition used for Sort Colors?"
+      ],
+      "options": [
+        "Dutch national flag (three-way partition)",
+        "Binary search",
+        "Merge sort",
+        "Heap sort"
+      ],
+      "answer": "Dutch national flag (three-way partition)",
+      "explanation": "Three regions (0s, 1s, 2s) are grown in place by low/mid/high.",
+      "incorrectOptionExplanations": {
+        "Binary search": "No searching.",
+        "Merge sort": "O(n log n) and extra space.",
+        "Heap sort": "O(n log n)."
+      }
+    },
+    {
+      "id": "sc-invariant-01",
+      "category": "invariant",
+      "type": "free_recall",
+      "promptVariants": [
+        "State the invariant of the one-pass three-pointer solution.",
+        "What do the regions [0, low), [low, mid), (high, n-1] hold?"
+      ],
+      "answer": "[0, low) are all 0s, [low, mid) are all 1s, (high, n-1] are all 2s, and [mid, high] is unprocessed. Each step shrinks the unprocessed region.",
+      "keyPoints": [
+        "0s | 1s | unknown | 2s",
+        "Unprocessed middle shrinks every step"
+      ],
+      "explanation": "After swapping with high, do not advance mid (the swapped-in value is unseen)."
+    },
+    {
+      "id": "sc-time-01",
+      "category": "time_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Time complexity of counting sort here: ___",
+        "Sort Colors via counting or three pointers is ___ time."
+      ],
+      "answer": "O(n)",
+      "explanation": "Two linear passes (counting) or one pass (partition).",
+      "acceptedAnswers": [
+        "linear"
+      ]
+    },
+    {
+      "id": "sc-space-01",
+      "category": "space_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Extra space of your counting solution: ___",
+        "Counting sort for three colours needs ___ extra space."
+      ],
+      "answer": "O(1)",
+      "explanation": "A fixed 3-element counter array.",
+      "acceptedAnswers": [
+        "constant"
+      ]
+    },
+    {
+      "id": "sc-alt-01",
+      "category": "alternative_approach",
+      "type": "free_recall",
+      "promptVariants": [
+        "How can the two-pass counting solution be turned into a one-pass in-place solution?",
+        "Explain the one-pass Dutch national flag update rules for 0, 1 and 2."
+      ],
+      "answer": "Use low/mid/high pointers: on 0 swap with low and advance low and mid; on 1 advance mid; on 2 swap with high and decrement high (without advancing mid). This is the Dutch national flag partition.",
+      "keyPoints": [
+        "low / mid / high",
+        "Swap 0 to the front, 2 to the back",
+        "Do not advance mid after swapping with high"
+      ],
+      "explanation": "The follow-up in the problem statement."
+    },
+    {
+      "id": "sc-code-01",
+      "category": "code_reasoning",
+      "type": "code_question",
+      "promptVariants": [
+        "Why does counting sort work here even though the problem says 'sort in place'?",
+        "Why is the two-pass counting solution legitimate for Sort Colors, and when would it not be?"
+      ],
+      "code": "cnt = [0] * 3\nfor num in nums:\n    cnt[num] += 1\nj = 0\nfor num in range(3):\n    for _ in range(cnt[num]):\n        nums[j] = num\n        j += 1",
+      "answer": "Only three distinct values exist, so the counts completely describe the sorted result; overwriting nums with the right number of 0s, 1s and 2s reproduces it. The counter array has constant size, so extra space is O(1).",
+      "keyPoints": [
+        "Counts determine the sorted array",
+        "Counter size is constant"
+      ],
+      "explanation": "It is not a general-purpose sort; it relies on the tiny key range."
+    }
+  ],
+  "generatedAt": "2026-10-01T14:08:18Z"
+}

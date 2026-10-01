@@ -1,0 +1,152 @@
+{
+  "schemaVersion": 1,
+  "problemSlug": "remove-element",
+  "summary": "Remove all occurrences of val in place and return the count of remaining elements.",
+  "patterns": [
+    "Two Pointers"
+  ],
+  "mainInsight": "Copy every element that is not val forward to a write index; order of the kept elements is preserved and nothing is allocated.",
+  "canonicalApproach": "Read/write pointers",
+  "approaches": [
+    {
+      "name": "Extra array",
+      "summary": "Collect non-val elements and copy back.",
+      "timeComplexity": "O(n)",
+      "spaceComplexity": "O(n)",
+      "weaknesses": [
+        "Extra memory"
+      ]
+    },
+    {
+      "name": "Read/write pointers",
+      "summary": "Write nums[j] to nums[i] when it is not val.",
+      "timeComplexity": "O(n)",
+      "spaceComplexity": "O(1)",
+      "strengths": [
+        "Stable, in place"
+      ],
+      "interviewRelevance": "The expected answer."
+    },
+    {
+      "name": "Swap with the end",
+      "summary": "When nums[i] == val, replace it with the last element and shrink n.",
+      "timeComplexity": "O(n)",
+      "spaceComplexity": "O(1)",
+      "strengths": [
+        "Fewest writes when val is rare"
+      ],
+      "weaknesses": [
+        "Does not preserve order"
+      ],
+      "interviewRelevance": "Good variant when val is rare."
+    }
+  ],
+  "personalSolution": {
+    "approach": "Read/write pointers",
+    "timeComplexity": "O(n)",
+    "spaceComplexity": "O(1)",
+    "isOptimal": true,
+    "notes": "Optimal; your comments also explain the extra-array brute force."
+  },
+  "commonMistakes": [],
+  "edgeCases": [],
+  "cards": [
+    {
+      "id": "re-pattern-01",
+      "category": "pattern",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "What technique removes elements in place with O(1) space?",
+        "Which two-pointer variant do you use for in-place filtering?"
+      ],
+      "options": [
+        "Read/write (fast/slow) pointers",
+        "Converging pointers from both ends",
+        "Binary search",
+        "Prefix sum"
+      ],
+      "answer": "Read/write (fast/slow) pointers",
+      "explanation": "A trailing write index records where the next kept element goes.",
+      "incorrectOptionExplanations": {
+        "Converging pointers from both ends": "That is the swap-with-end variant, less common.",
+        "Binary search": "Nothing is sorted.",
+        "Prefix sum": "Not a range-sum problem."
+      }
+    },
+    {
+      "id": "re-invariant-01",
+      "category": "invariant",
+      "type": "free_recall",
+      "promptVariants": [
+        "What do nums[0..i-1] contain while the loop runs?",
+        "After processing nums[0..j], what is stored in nums[0..i-1]?"
+      ],
+      "answer": "Exactly the elements seen so far that are not equal to val, in their original order; i is the next write position and the eventual answer.",
+      "keyPoints": [
+        "Kept elements in original order",
+        "i = count so far"
+      ],
+      "explanation": "The tail beyond i is garbage and ignored by the judge."
+    },
+    {
+      "id": "re-time-01",
+      "category": "time_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Time complexity: ___",
+        "Remove Element with read/write pointers is ___ time."
+      ],
+      "answer": "O(n)",
+      "explanation": "One pass.",
+      "acceptedAnswers": [
+        "linear"
+      ]
+    },
+    {
+      "id": "re-space-01",
+      "category": "space_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Extra space of the read/write approach: ___",
+        "Remove Element in place needs ___ auxiliary space."
+      ],
+      "answer": "O(1)",
+      "explanation": "Two indices.",
+      "acceptedAnswers": [
+        "constant"
+      ]
+    },
+    {
+      "id": "re-alt-01",
+      "category": "alternative_approach",
+      "type": "free_recall",
+      "promptVariants": [
+        "When would swapping with the last element be better than read/write pointers?",
+        "Which Remove Element variant minimises writes when val is rare, and what does it sacrifice?"
+      ],
+      "answer": "When val is rare: the swap version does at most one write per occurrence of val instead of copying every kept element, but it does not preserve the relative order of the remaining elements.",
+      "keyPoints": [
+        "Fewer writes if val is rare",
+        "Does not preserve order"
+      ],
+      "explanation": "Mention the trade-off when the interviewer allows reordering."
+    },
+    {
+      "id": "re-code-01",
+      "category": "code_reasoning",
+      "type": "code_question",
+      "promptVariants": [
+        "Why is it fine to overwrite nums[i] with nums[j] without saving nums[i] first?",
+        "What guarantees that overwriting nums[i] with nums[j] never destroys unread data?"
+      ],
+      "code": "i = 0\nfor j in range(len(nums)):\n    if nums[j] != val:\n        nums[i] = nums[j]\n        i += 1\nreturn i",
+      "answer": "Because i <= j always, nums[i] has already been read (it is at or behind the read pointer), so overwriting it cannot lose unread data.",
+      "keyPoints": [
+        "i <= j always",
+        "Overwritten slot is already processed"
+      ],
+      "explanation": "The same argument underlies most in-place compaction."
+    }
+  ],
+  "generatedAt": "2026-10-01T14:08:18Z"
+}

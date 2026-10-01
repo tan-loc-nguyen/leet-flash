@@ -1,0 +1,171 @@
+{
+  "schemaVersion": 1,
+  "problemSlug": "sum-of-square-numbers",
+  "summary": "Decide whether a non-negative integer c can be written as a^2 + b^2.",
+  "patterns": [
+    "Two Pointers",
+    "Math"
+  ],
+  "mainInsight": "Treat it as Two Sum II over the sorted sequence 0, 1, 2, ..., floor(sqrt(c)) of candidate roots: two pointers from both ends converge on a pair whose squares sum to c.",
+  "canonicalApproach": "Two pointers",
+  "approaches": [
+    {
+      "name": "Brute force",
+      "summary": "Try all a, b up to sqrt(c).",
+      "timeComplexity": "O(c)",
+      "spaceComplexity": "O(1)"
+    },
+    {
+      "name": "Loop a, check b with sqrt",
+      "summary": "For each a test whether c - a^2 is a perfect square.",
+      "timeComplexity": "O(sqrt(c) log c)",
+      "spaceComplexity": "O(1)",
+      "strengths": [
+        "Simple"
+      ],
+      "weaknesses": [
+        "Floating-point sqrt risks"
+      ]
+    },
+    {
+      "name": "Two pointers",
+      "summary": "low=0, high=isqrt(c); move by the sum of squares.",
+      "timeComplexity": "O(sqrt(c))",
+      "spaceComplexity": "O(1)",
+      "strengths": [
+        "Optimal for the direct approach"
+      ],
+      "interviewRelevance": "Your approach."
+    },
+    {
+      "name": "Fermat's theorem",
+      "summary": "c is a sum of two squares iff every prime = 3 (mod 4) has an even exponent in its factorisation.",
+      "timeComplexity": "O(sqrt(c))",
+      "spaceComplexity": "O(1)",
+      "strengths": [
+        "Math-flavoured"
+      ],
+      "weaknesses": [
+        "Hard to recall under pressure"
+      ],
+      "interviewRelevance": "Mention as a bonus."
+    }
+  ],
+  "personalSolution": {
+    "approach": "Two pointers",
+    "timeComplexity": "O(sqrt(c))",
+    "spaceComplexity": "O(1)",
+    "isOptimal": true,
+    "notes": "Optimal for the direct approach; use math.isqrt for an exact bound."
+  },
+  "commonMistakes": [],
+  "edgeCases": [],
+  "cards": [
+    {
+      "id": "sq-pattern-01",
+      "category": "pattern",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "What pattern solves Sum of Square Numbers?",
+        "Which known problem does this reduce to?"
+      ],
+      "options": [
+        "Two pointers over 0..sqrt(c) (Two Sum II on squares)",
+        "Sliding window",
+        "Dynamic programming",
+        "Union find"
+      ],
+      "answer": "Two pointers over 0..sqrt(c) (Two Sum II on squares)",
+      "explanation": "The candidate values a and b range over a sorted list and a^2 + b^2 is monotone in each.",
+      "incorrectOptionExplanations": {
+        "Sliding window": "Not contiguous subarrays.",
+        "Dynamic programming": "Overkill.",
+        "Union find": "No connectivity."
+      }
+    },
+    {
+      "id": "sq-insight-01",
+      "category": "main_insight",
+      "type": "free_recall",
+      "promptVariants": [
+        "Why do the pointers only need to span 0..sqrt(c)?",
+        "Why can both candidate roots be limited to 0..sqrt(c)?"
+      ],
+      "answer": "If a > sqrt(c) then a^2 > c so it cannot be part of any sum. The squares increase monotonically, so a converging pair search works exactly as in Two Sum II.",
+      "keyPoints": [
+        "a, b <= sqrt(c)",
+        "Squares increase monotonically"
+      ],
+      "explanation": "low <= high keeps a == b allowed (e.g. 2 = 1 + 1)."
+    },
+    {
+      "id": "sq-time-01",
+      "category": "time_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Time complexity of two pointers over 0..sqrt(c): ___",
+        "The converging-pointer Sum of Square Numbers search is ___ time."
+      ],
+      "answer": "O(sqrt(c))",
+      "explanation": "The pointers together move at most sqrt(c) steps.",
+      "acceptedAnswers": [
+        "O(√c)",
+        "O(sqrt c)"
+      ]
+    },
+    {
+      "id": "sq-space-01",
+      "category": "space_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Extra space: ___",
+        "Sum of Square Numbers with two pointers uses ___ extra space."
+      ],
+      "answer": "O(1)",
+      "explanation": "Two integers.",
+      "acceptedAnswers": [
+        "constant"
+      ]
+    },
+    {
+      "id": "sq-code-01",
+      "category": "code_reasoning",
+      "type": "code_question",
+      "promptVariants": [
+        "Why `low <= high` (not `<`), and what is a risk of `int(c**0.5)`?",
+        "What input needs `low == high` to succeed?"
+      ],
+      "code": "low, high = 0, int(c**0.5)\nwhile low <= high:\n    total = low**2 + high**2\n    if total == c:\n        return True\n    elif total > c:\n        high -= 1\n    else:\n        low += 1\nreturn False",
+      "answer": "low == high allows a == b, e.g. c = 2 (1^2 + 1^2) or c = 8 (2^2 + 2^2). `c**0.5` uses floating point, which may be off by one for very large c; math.isqrt(c) is exact.",
+      "keyPoints": [
+        "Equality allows a == b",
+        "Float sqrt can be inexact",
+        "Use math.isqrt"
+      ],
+      "explanation": "Also c = 0 works with 0^2 + 0^2."
+    },
+    {
+      "id": "sq-edge-01",
+      "category": "edge_case",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "What is the answer for c = 3?",
+        "Which of these cannot be written as a sum of two squares?"
+      ],
+      "options": [
+        "3 (no)",
+        "5 (1 + 4)",
+        "4 (0 + 4)",
+        "2 (1 + 1)"
+      ],
+      "answer": "3 (no)",
+      "explanation": "Squares available are 0 and 1; 0+1, 1+1 give 1 and 2, never 3.",
+      "incorrectOptionExplanations": {
+        "5 (1 + 4)": "5 = 1^2 + 2^2 is representable.",
+        "4 (0 + 4)": "4 = 0^2 + 2^2.",
+        "2 (1 + 1)": "2 = 1^2 + 1^2."
+      }
+    }
+  ],
+  "generatedAt": "2026-10-01T14:08:18Z"
+}

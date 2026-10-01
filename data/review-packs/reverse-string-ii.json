@@ -1,0 +1,153 @@
+{
+  "schemaVersion": 1,
+  "problemSlug": "reverse-string-ii",
+  "summary": "Reverse the first k characters of every 2k-sized block of the string.",
+  "patterns": [
+    "Two Pointers",
+    "Array / Hashing"
+  ],
+  "mainInsight": "Step through the string in strides of 2k and reverse only the first k characters of each stride (a slice reverse), clipping at the string end.",
+  "canonicalApproach": "Stride + slice reverse",
+  "approaches": [
+    {
+      "name": "Chunk and rebuild",
+      "summary": "Split into 2k chunks, reverse the first k of each, concatenate.",
+      "timeComplexity": "O(n)",
+      "spaceComplexity": "O(n)",
+      "strengths": [
+        "Straightforward"
+      ],
+      "weaknesses": [
+        "Repeated string concatenation can be slow"
+      ]
+    },
+    {
+      "name": "Stride + slice reverse",
+      "summary": "For i in range(0, n, 2k): s[i:i+k] = reversed(s[i:i+k]) on a list, then join.",
+      "timeComplexity": "O(n)",
+      "spaceComplexity": "O(n)",
+      "strengths": [
+        "Short"
+      ],
+      "interviewRelevance": "The expected answer."
+    }
+  ],
+  "personalSolution": {
+    "approach": "Chunk the string by 2k, reverse the first k of each chunk, concatenate",
+    "timeComplexity": "O(n)",
+    "spaceComplexity": "O(n)",
+    "isOptimal": false,
+    "notes": "Correct. A single stride loop on a list (and one join) is shorter and avoids repeated string concatenation."
+  },
+  "commonMistakes": [],
+  "edgeCases": [],
+  "cards": [
+    {
+      "id": "r2-pattern-01",
+      "category": "pattern",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "How do you visit every 2k-block of a string?",
+        "Which loop shape drives Reverse String II?"
+      ],
+      "options": [
+        "range(0, n, 2*k) stride loop",
+        "Binary search",
+        "Sliding window of size k with shrinking",
+        "Recursion on halves"
+      ],
+      "answer": "range(0, n, 2*k) stride loop",
+      "explanation": "Each block starts at a multiple of 2k, and its first k characters are reversed.",
+      "incorrectOptionExplanations": {
+        "Binary search": "No monotonic search.",
+        "Sliding window of size k with shrinking": "The windows are disjoint blocks, not sliding.",
+        "Recursion on halves": "Unnecessary."
+      }
+    },
+    {
+      "id": "r2-insight-01",
+      "category": "main_insight",
+      "type": "free_recall",
+      "promptVariants": [
+        "What happens in the last block when fewer than k characters remain, and when between k and 2k remain?",
+        "How do the final partial blocks behave in Reverse String II, and how do slices handle them?"
+      ],
+      "answer": "If fewer than k remain, reverse all of them; if between k and 2k remain, reverse only the first k and leave the rest. Using s[i:i+k] slices handles both automatically because slicing clips at the end.",
+      "keyPoints": [
+        "< k left: reverse all",
+        "k..2k left: reverse first k",
+        "Slicing clips naturally"
+      ],
+      "explanation": "That is why no special casing is needed with slices."
+    },
+    {
+      "id": "r2-time-01",
+      "category": "time_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Time complexity: ___",
+        "Reverse String II is ___ time."
+      ],
+      "answer": "O(n)",
+      "explanation": "Each character is touched a constant number of times.",
+      "acceptedAnswers": [
+        "linear"
+      ]
+    },
+    {
+      "id": "r2-space-01",
+      "category": "space_complexity",
+      "type": "free_recall",
+      "promptVariants": [
+        "Strings are immutable in Python. How does that affect the space complexity, and what is a pitfall of `ans += chunk`?",
+        "Why does Reverse String II need O(n) space in Python, and how should the result be assembled?"
+      ],
+      "answer": "Building the result needs O(n) extra space (a list of characters or chunks). Repeated `ans += chunk` on a string can create many intermediate strings; collect pieces in a list and ''.join them once.",
+      "keyPoints": [
+        "Immutable strings => O(n) space",
+        "Join instead of repeated +="
+      ],
+      "explanation": "CPython often optimises += but you should not rely on it."
+    },
+    {
+      "id": "r2-code-01",
+      "category": "code_reasoning",
+      "type": "code_question",
+      "promptVariants": [
+        "Why does your helper clamp `j` to len(s) - 1 and what does the 2k chunking guarantee?",
+        "Explain how the 2k chunking and the clamp in the reverse helper handle the last chunk."
+      ],
+      "code": "chunks = []\nfor i in range(0, len(s), 2 * k):\n    chunks.append(s[i:i + 2*k])\nfor i in range(len(chunks)):\n    chunks[i] = self.reverse(chunks[i], k)\nans = \"\"\nfor chunk in chunks:\n    ans += chunk",
+      "answer": "Each chunk has at most 2k characters, and the helper reverses its first min(k, len(chunk)) characters; clamping j prevents an index error in the final short chunk. Concatenating the chunks in order restores the string.",
+      "keyPoints": [
+        "Chunks of 2k",
+        "Clamp for the short last chunk",
+        "Concatenate in order"
+      ],
+      "explanation": "A single list-based loop would be simpler."
+    },
+    {
+      "id": "r2-edge-01",
+      "category": "edge_case",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "What is the result for s = 'abcd', k = 5?",
+        "How does a k larger than the string behave?"
+      ],
+      "options": [
+        "'dcba' (the whole string is reversed)",
+        "'abcd'",
+        "'bcda'",
+        "An error"
+      ],
+      "answer": "'dcba' (the whole string is reversed)",
+      "explanation": "Fewer than k characters remain, so the entire (only) block is reversed.",
+      "incorrectOptionExplanations": {
+        "'abcd'": "Nothing would be reversed.",
+        "'bcda'": "That is a rotation.",
+        "An error": "Slicing clips safely."
+      }
+    }
+  ],
+  "generatedAt": "2026-10-01T14:08:18Z"
+}

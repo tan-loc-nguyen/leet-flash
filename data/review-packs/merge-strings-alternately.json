@@ -1,0 +1,133 @@
+{
+  "schemaVersion": 1,
+  "problemSlug": "merge-strings-alternately",
+  "summary": "Merge two strings by alternating their letters, appending the leftover tail of the longer one.",
+  "patterns": [
+    "Two Pointers"
+  ],
+  "mainInsight": "Walk both strings with one index up to the shorter length, adding one letter from each; then append whatever remains of the longer string.",
+  "canonicalApproach": "List + join / zip_longest",
+  "approaches": [
+    {
+      "name": "Index loop with +=",
+      "summary": "Interleave until the shorter ends, then add the rest.",
+      "timeComplexity": "O(n+m)",
+      "spaceComplexity": "O(n+m)",
+      "weaknesses": [
+        "Repeated += on strings"
+      ]
+    },
+    {
+      "name": "List + join / zip_longest",
+      "summary": "Collect characters in a list and join once.",
+      "timeComplexity": "O(n+m)",
+      "spaceComplexity": "O(n+m)",
+      "strengths": [
+        "Idiomatic"
+      ],
+      "interviewRelevance": "The expected answer."
+    }
+  ],
+  "personalSolution": {
+    "approach": "Index loop with string +=",
+    "timeComplexity": "O(n+m)",
+    "spaceComplexity": "O(n+m)",
+    "isOptimal": true,
+    "notes": "Correct. Prefer collecting into a list and joining."
+  },
+  "commonMistakes": [],
+  "edgeCases": [],
+  "cards": [
+    {
+      "id": "mm-pattern-01",
+      "category": "pattern",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "What technique merges two sequences alternately?",
+        "Which loop shape handles unequal lengths?"
+      ],
+      "options": [
+        "One loop up to min length, then append the remaining tail",
+        "Binary search",
+        "Recursion on halves",
+        "Stack"
+      ],
+      "answer": "One loop up to min length, then append the remaining tail",
+      "explanation": "The common prefix of positions is interleaved; only one string can have a tail.",
+      "incorrectOptionExplanations": {
+        "Binary search": "Not applicable.",
+        "Recursion on halves": "No divide-and-conquer needed.",
+        "Stack": "No LIFO behaviour."
+      }
+    },
+    {
+      "id": "mm-time-01",
+      "category": "time_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "With lengths n and m: ___",
+        "Merge Strings Alternately runs in ___ time."
+      ],
+      "answer": "O(n+m)",
+      "explanation": "Each character is appended once.",
+      "acceptedAnswers": [
+        "O(n + m)",
+        "O(m+n)"
+      ]
+    },
+    {
+      "id": "mm-space-01",
+      "category": "space_complexity",
+      "type": "free_recall",
+      "promptVariants": [
+        "Why is the space O(n + m), and how should you build the result in Python?",
+        "How should you build the merged string in Python and what is its space complexity?"
+      ],
+      "answer": "The output has n + m characters. Build it with a list and ''.join(...) instead of repeated string +=, which can copy repeatedly.",
+      "keyPoints": [
+        "Output size n + m",
+        "list + join"
+      ],
+      "explanation": "Inherent to the output."
+    },
+    {
+      "id": "mm-code-01",
+      "category": "code_reasoning",
+      "type": "code_question",
+      "promptVariants": [
+        "Why are the two `if` checks after the loop safe, and why can at most one of them run?",
+        "After the main loop in Merge Strings Alternately, which tail can remain and why is it appended with a slice?"
+      ],
+      "code": "i = 0\nans = \"\"\nwhile i < len(word1) and i < len(word2):\n    ans += word1[i]\n    ans += word2[i]\n    i += 1\nif i < len(word1):\n    ans += word1[i:]\nif i < len(word2):\n    ans += word2[i:]",
+      "answer": "The loop stops at the shorter length, so i equals that length. Only the longer string can still have characters (i < its length); if lengths are equal neither runs. Slicing from i appends the tail.",
+      "keyPoints": [
+        "Loop ends at min length",
+        "Only the longer string has a tail"
+      ],
+      "explanation": "Equal lengths leave both ifs false."
+    },
+    {
+      "id": "mm-edge-01",
+      "category": "edge_case",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "What is the result for word1 = 'ab', word2 = 'pqrs'?",
+        "How is the longer tail handled?"
+      ],
+      "options": [
+        "'apbqrs'",
+        "'abpqrs'",
+        "'apbq'",
+        "'apbqsr'"
+      ],
+      "answer": "'apbqrs'",
+      "explanation": "Interleave a,p,b,q then append the remaining 'rs'.",
+      "incorrectOptionExplanations": {
+        "'abpqrs'": "That is plain concatenation.",
+        "'apbq'": "The tail 'rs' is dropped.",
+        "'apbqsr'": "The tail order is wrong."
+      }
+    }
+  ],
+  "generatedAt": "2026-10-01T14:08:18Z"
+}

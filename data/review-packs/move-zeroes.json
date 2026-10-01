@@ -1,0 +1,163 @@
+{
+  "schemaVersion": 1,
+  "problemSlug": "move-zeroes",
+  "summary": "Move all zeros to the end of the array in place while keeping the order of non-zero elements.",
+  "patterns": [
+    "Two Pointers"
+  ],
+  "mainInsight": "Maintain a write index j for the next non-zero position; every non-zero element is moved (swapped) there, which pushes zeros toward the end automatically while preserving order.",
+  "canonicalApproach": "Write pointer + swap",
+  "approaches": [
+    {
+      "name": "Extra array",
+      "summary": "Copy non-zeros then pad zeros.",
+      "timeComplexity": "O(n)",
+      "spaceComplexity": "O(n)",
+      "weaknesses": [
+        "Not in place"
+      ]
+    },
+    {
+      "name": "Write pointer + swap",
+      "summary": "For each non-zero nums[i] swap with nums[j] and j += 1.",
+      "timeComplexity": "O(n)",
+      "spaceComplexity": "O(1)",
+      "strengths": [
+        "Single pass",
+        "Stable"
+      ],
+      "weaknesses": [
+        "Redundant self-swaps"
+      ],
+      "interviewRelevance": "The expected answer."
+    },
+    {
+      "name": "Write pointer + fill zeros",
+      "summary": "Copy non-zeros forward, then fill the remainder with 0.",
+      "timeComplexity": "O(n)",
+      "spaceComplexity": "O(1)",
+      "strengths": [
+        "Fewer writes when few zeros"
+      ],
+      "weaknesses": [
+        "Two loops"
+      ],
+      "interviewRelevance": "Alternative."
+    }
+  ],
+  "personalSolution": {
+    "approach": "Write pointer + swap",
+    "timeComplexity": "O(n)",
+    "spaceComplexity": "O(1)",
+    "isOptimal": true,
+    "notes": "Optimal. Skip the swap when i == j to avoid redundant writes."
+  },
+  "commonMistakes": [],
+  "edgeCases": [],
+  "cards": [
+    {
+      "id": "mz-pattern-01",
+      "category": "pattern",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "Which pattern solves Move Zeroes in place?",
+        "What is the same technique as Remove Element?"
+      ],
+      "options": [
+        "Read/write two pointers",
+        "Binary search",
+        "Sliding window",
+        "Stack"
+      ],
+      "answer": "Read/write two pointers",
+      "explanation": "A write index tracks the boundary between the non-zero prefix and the zeros.",
+      "incorrectOptionExplanations": {
+        "Binary search": "Unsorted input.",
+        "Sliding window": "No window property.",
+        "Stack": "No LIFO structure needed."
+      }
+    },
+    {
+      "id": "mz-invariant-01",
+      "category": "invariant",
+      "type": "free_recall",
+      "promptVariants": [
+        "What does nums[0..j-1] and nums[j..i-1] look like during the loop?",
+        "Describe the regions of the array while the Move Zeroes loop is running."
+      ],
+      "answer": "nums[0..j-1] are the non-zero elements seen so far in original order; nums[j..i-1] are all zeros. Swapping a new non-zero with nums[j] keeps both properties.",
+      "keyPoints": [
+        "Prefix: non-zeros in order",
+        "Between j and i: only zeros"
+      ],
+      "explanation": "That is why a swap (not an overwrite) leaves the zeros behind."
+    },
+    {
+      "id": "mz-time-01",
+      "category": "time_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Time complexity: ___",
+        "Move Zeroes in a single pass is ___ time."
+      ],
+      "answer": "O(n)",
+      "explanation": "One pass.",
+      "acceptedAnswers": [
+        "linear"
+      ]
+    },
+    {
+      "id": "mz-space-01",
+      "category": "space_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Extra space: ___",
+        "Move Zeroes in place uses ___ extra space."
+      ],
+      "answer": "O(1)",
+      "explanation": "In place.",
+      "acceptedAnswers": [
+        "constant"
+      ]
+    },
+    {
+      "id": "mz-code-01",
+      "category": "code_reasoning",
+      "type": "code_question",
+      "promptVariants": [
+        "When i == j the swap is a no-op. How could you avoid unnecessary writes, and why does the order stay stable?",
+        "Why does the swap-based Move Zeroes preserve the order of non-zero elements, and how would you skip redundant swaps?"
+      ],
+      "code": "j = 0\nfor i in range(len(nums)):\n    if nums[i] != 0:\n        nums[j], nums[i] = nums[i], nums[j]\n        j += 1",
+      "answer": "Skip the swap when i == j (nothing but non-zeros so far), or overwrite nums[j] = nums[i] and fill zeros afterwards. The order stays stable because non-zero elements are moved forward in the order they are encountered.",
+      "keyPoints": [
+        "Guard i != j",
+        "Non-zeros keep encounter order"
+      ],
+      "explanation": "Swapping is equivalent to compaction here."
+    },
+    {
+      "id": "mz-edge-01",
+      "category": "edge_case",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "What happens for an array without zeros?",
+        "What do you get for [0,0,1]?"
+      ],
+      "options": [
+        "Unchanged for no zeros; [1,0,0] for [0,0,1]",
+        "[0,0,1] unchanged",
+        "[0,1,0]",
+        "It raises an error"
+      ],
+      "answer": "Unchanged for no zeros; [1,0,0] for [0,0,1]",
+      "explanation": "With no zeros i and j move together (self-swaps); with leading zeros the first non-zero is swapped to the front.",
+      "incorrectOptionExplanations": {
+        "[0,0,1] unchanged": "The zeros must end up last.",
+        "[0,1,0]": "Not fully moved.",
+        "It raises an error": "No indexing issue."
+      }
+    }
+  ],
+  "generatedAt": "2026-10-01T14:08:18Z"
+}

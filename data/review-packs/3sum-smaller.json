@@ -1,0 +1,153 @@
+{
+  "schemaVersion": 1,
+  "problemSlug": "3sum-smaller",
+  "summary": "Count triplets (i < j < k) whose sum is less than the target.",
+  "patterns": [
+    "Two Pointers"
+  ],
+  "mainInsight": "After sorting, if nums[l] + nums[r] is below the (adjusted) target then every index between l and r also works with l, so add r - l at once and advance l; otherwise shrink r.",
+  "canonicalApproach": "Sort + two pointers with range counting",
+  "approaches": [
+    {
+      "name": "Brute force",
+      "summary": "Check all triplets.",
+      "timeComplexity": "O(n^3)",
+      "spaceComplexity": "O(1)"
+    },
+    {
+      "name": "Sort + two pointers with range counting",
+      "summary": "Fix i; for the suffix count pairs with sum < target - nums[i] by adding r - l when the pair works.",
+      "timeComplexity": "O(n^2)",
+      "spaceComplexity": "O(1)",
+      "interviewRelevance": "The expected answer."
+    },
+    {
+      "name": "Sort + binary search",
+      "summary": "For each pair binary-search the largest valid third element.",
+      "timeComplexity": "O(n^2 log n)",
+      "spaceComplexity": "O(1)",
+      "weaknesses": [
+        "Extra log factor"
+      ]
+    }
+  ],
+  "personalSolution": {
+    "approach": "Sort + two pointers with range counting",
+    "timeComplexity": "O(n^2)",
+    "spaceComplexity": "O(1)",
+    "isOptimal": true,
+    "notes": "Optimal. Fix the return type annotation (int)."
+  },
+  "commonMistakes": [],
+  "edgeCases": [],
+  "cards": [
+    {
+      "id": "3s-pattern-01",
+      "category": "pattern",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "What pattern solves 3Sum Smaller in O(n^2)?",
+        "Which technique counts triplets below a threshold efficiently?"
+      ],
+      "options": [
+        "Sort + two pointers with range counting",
+        "Hash map of pair sums",
+        "Prefix sums only",
+        "Backtracking"
+      ],
+      "answer": "Sort + two pointers with range counting",
+      "explanation": "Sorted order lets a single successful pair certify a whole range of valid partners.",
+      "incorrectOptionExplanations": {
+        "Hash map of pair sums": "Inequalities need order, not equality lookup.",
+        "Prefix sums only": "Triplets are not contiguous.",
+        "Backtracking": "Enumerating all triplets is O(n^3)."
+      }
+    },
+    {
+      "id": "3s-insight-01",
+      "category": "main_insight",
+      "type": "free_recall",
+      "promptVariants": [
+        "Why does `count += r - l` count several triplets at once?",
+        "Justify adding r - l when nums[l] + nums[r] < target."
+      ],
+      "answer": "The array is sorted, so for the fixed l every index between l+1 and r has value <= nums[r]; each such pair (l, m) also sums below the target. That is exactly r - l valid pairs, after which l can advance.",
+      "keyPoints": [
+        "Sorted => values between l and r are <= nums[r]",
+        "r - l pairs with this l",
+        "Then advance l"
+      ],
+      "explanation": "Counting a range instead of one match is the key difference from 3Sum."
+    },
+    {
+      "id": "3s-time-01",
+      "category": "time_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Time complexity of sort + two pointers: ___",
+        "3Sum Smaller runs in ___ time."
+      ],
+      "answer": "O(n^2)",
+      "explanation": "n sweeps of O(n); sorting is O(n log n).",
+      "acceptedAnswers": [
+        "O(n²)",
+        "quadratic"
+      ]
+    },
+    {
+      "id": "3s-space-01",
+      "category": "space_complexity",
+      "type": "free_recall",
+      "promptVariants": [
+        "What extra space does the solution use?",
+        "Why does 3Sum Smaller need no result storage, and what is its extra space?"
+      ],
+      "answer": "O(1) besides the sort (and no result lists are built since only a count is needed).",
+      "keyPoints": [
+        "O(1)",
+        "Count only, no triplets stored"
+      ],
+      "explanation": "Sorting may still use O(n) internally."
+    },
+    {
+      "id": "3s-code-01",
+      "category": "code_reasoning",
+      "type": "code_question",
+      "promptVariants": [
+        "Why is target reduced by nums[idx] inside the helper, and why start l at idx + 1?",
+        "What does the helper return?"
+      ],
+      "code": "def twoSum(self, nums, idx, target):\n    l, r = idx + 1, len(nums) - 1\n    target -= nums[idx]\n    count = 0\n    while l < r:\n        total = nums[l] + nums[r]\n        if total < target:\n            count += r - l\n            l += 1\n        else:\n            r -= 1\n    return count",
+      "answer": "Fixing nums[idx] turns the problem into counting pairs after it whose sum is below target - nums[idx]. Starting at idx + 1 ensures i < j < k so each triplet is counted once. It returns the number of qualifying pairs for that i.",
+      "keyPoints": [
+        "Reduce to a pair-count",
+        "idx + 1 keeps i < j < k",
+        "Count, not list"
+      ],
+      "explanation": "Note the stated return type list[list[int]] is wrong; it returns an int."
+    },
+    {
+      "id": "3s-edge-01",
+      "category": "edge_case",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "Why is sorting allowed here even though the problem counts index triplets?",
+        "Does sorting change the answer?"
+      ],
+      "options": [
+        "Only the multiset of values matters for the sum, so sorting preserves the count",
+        "Sorting changes the answer but we correct it later",
+        "It is not allowed",
+        "Only for distinct values"
+      ],
+      "answer": "Only the multiset of values matters for the sum, so sorting preserves the count",
+      "explanation": "Any triplet of indices maps to a triplet of values; reordering the array merely relabels indices, so the number of qualifying triplets is unchanged.",
+      "incorrectOptionExplanations": {
+        "Sorting changes the answer but we correct it later": "It does not change the count.",
+        "It is not allowed": "It is the standard technique.",
+        "Only for distinct values": "Duplicates are counted per index triplet and still work."
+      }
+    }
+  ],
+  "generatedAt": "2026-10-01T14:08:18Z"
+}

@@ -1,0 +1,151 @@
+{
+  "schemaVersion": 1,
+  "problemSlug": "rearrange-array-elements-by-sign",
+  "summary": "Rearrange an array with equal counts of positives and negatives so signs alternate starting with positive, preserving relative order within each sign.",
+  "patterns": [
+    "Two Pointers"
+  ],
+  "mainInsight": "Positives must land on even indices and negatives on odd indices in their original order, so keep two write pointers (stepping by 2) and place each element directly in one pass.",
+  "canonicalApproach": "Two write pointers (step 2)",
+  "approaches": [
+    {
+      "name": "Separate lists then interleave",
+      "summary": "Split into positives and negatives and interleave.",
+      "timeComplexity": "O(n)",
+      "spaceComplexity": "O(n)",
+      "strengths": [
+        "Clear"
+      ],
+      "weaknesses": [
+        "Two extra lists"
+      ]
+    },
+    {
+      "name": "Two write pointers (step 2)",
+      "summary": "pos at 0, neg at 1; place each element and advance its pointer by 2.",
+      "timeComplexity": "O(n)",
+      "spaceComplexity": "O(n)",
+      "strengths": [
+        "Single pass, one output array"
+      ],
+      "interviewRelevance": "The expected answer."
+    }
+  ],
+  "personalSolution": {
+    "approach": "Two write pointers (step 2)",
+    "timeComplexity": "O(n)",
+    "spaceComplexity": "O(n)",
+    "isOptimal": true,
+    "notes": "Optimal for this problem."
+  },
+  "commonMistakes": [],
+  "edgeCases": [],
+  "cards": [
+    {
+      "id": "ra-pattern-01",
+      "category": "pattern",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "What technique rearranges by sign in one pass?",
+        "How can you place each element straight into its final slot?"
+      ],
+      "options": [
+        "Two write indices stepping by 2",
+        "Sorting by absolute value",
+        "Binary search",
+        "Stack"
+      ],
+      "answer": "Two write indices stepping by 2",
+      "explanation": "Positives occupy indices 0,2,4,... and negatives 1,3,5,..., both in original order.",
+      "incorrectOptionExplanations": {
+        "Sorting by absolute value": "Would break the required relative order.",
+        "Binary search": "No searching.",
+        "Stack": "Not needed."
+      }
+    },
+    {
+      "id": "ra-insight-01",
+      "category": "main_insight",
+      "type": "free_recall",
+      "promptVariants": [
+        "Why can each element be written directly to its final position?",
+        "Why does a k-th positive always belong at index 2k in Rearrange Array Elements by Sign?"
+      ],
+      "answer": "Because the counts are equal and relative order within each sign must be preserved, the k-th positive always goes to index 2k and the k-th negative to 2k + 1; two counters compute exactly that.",
+      "keyPoints": [
+        "k-th positive -> 2k",
+        "k-th negative -> 2k+1",
+        "Equal counts guarantee it fits"
+      ],
+      "explanation": "No shifting is required."
+    },
+    {
+      "id": "ra-time-01",
+      "category": "time_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Time complexity: ___",
+        "Rearranging by sign with two write pointers is ___ time."
+      ],
+      "answer": "O(n)",
+      "explanation": "One pass.",
+      "acceptedAnswers": [
+        "linear"
+      ]
+    },
+    {
+      "id": "ra-space-01",
+      "category": "space_complexity",
+      "type": "free_recall",
+      "promptVariants": [
+        "Why does this need O(n) extra space, and is in-place possible while preserving order?",
+        "Explain the space cost of the two-pointer rearrangement and why in-place is harder."
+      ],
+      "answer": "A new output array is used (O(n)). Doing it in place while preserving relative order of both signs needs rotations (O(n^2)) or is much harder, so the extra array is the standard trade-off.",
+      "keyPoints": [
+        "Output array O(n)",
+        "In-place stable is harder"
+      ],
+      "explanation": "Interviewers accept O(n) here."
+    },
+    {
+      "id": "ra-code-01",
+      "category": "code_reasoning",
+      "type": "code_question",
+      "promptVariants": [
+        "What happens if you accidentally treat 0 as non-negative here, and why can that not occur?",
+        "Which constraint makes the `else` branch safe in the rearrange-by-sign loop?"
+      ],
+      "code": "p, n = 0, 1\nans = [0] * len(nums)\nfor i in range(len(nums)):\n    if nums[i] > 0:\n        ans[p] = nums[i]\n        p += 2\n    else:\n        ans[n] = nums[i]\n        n += 2",
+      "answer": "The problem guarantees non-zero integers, so the `else` branch only sees negatives. If zeros were allowed they would be classified as negatives by this code - a bug you would need to handle explicitly.",
+      "keyPoints": [
+        "Input has no zeros",
+        "else => negatives"
+      ],
+      "explanation": "Always check the constraints before relying on a binary classification."
+    },
+    {
+      "id": "ra-edge-01",
+      "category": "edge_case",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "What is the output for [3,1,-2,-5,2,-4]?",
+        "How is relative order within each sign preserved?"
+      ],
+      "options": [
+        "[3,-2,1,-5,2,-4]",
+        "[1,-2,2,-5,3,-4]",
+        "[3,1,2,-2,-5,-4]",
+        "[-2,3,-5,1,-4,2]"
+      ],
+      "answer": "[3,-2,1,-5,2,-4]",
+      "explanation": "Positives in order: 3,1,2 at indices 0,2,4; negatives in order: -2,-5,-4 at 1,3,5.",
+      "incorrectOptionExplanations": {
+        "[1,-2,2,-5,3,-4]": "Positive order is not preserved.",
+        "[3,1,2,-2,-5,-4]": "Signs do not alternate.",
+        "[-2,3,-5,1,-4,2]": "Must start with a positive."
+      }
+    }
+  ],
+  "generatedAt": "2026-10-01T14:08:18Z"
+}

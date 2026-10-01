@@ -1,0 +1,135 @@
+{
+  "schemaVersion": 1,
+  "problemSlug": "reverse-string",
+  "summary": "Reverse a list of characters in place.",
+  "patterns": [
+    "Two Pointers"
+  ],
+  "mainInsight": "Swap the mirrored elements s[l] and s[r] while moving the pointers toward each other; each pair is swapped once so it is O(n) time, O(1) space.",
+  "canonicalApproach": "Two pointers swap",
+  "approaches": [
+    {
+      "name": "Slice copy",
+      "summary": "s[:] = s[::-1].",
+      "timeComplexity": "O(n)",
+      "spaceComplexity": "O(n)",
+      "strengths": [
+        "One line"
+      ],
+      "weaknesses": [
+        "Allocates a copy"
+      ]
+    },
+    {
+      "name": "Two pointers swap",
+      "summary": "Swap s[l], s[r]; l++, r--.",
+      "timeComplexity": "O(n)",
+      "spaceComplexity": "O(1)",
+      "strengths": [
+        "In place"
+      ],
+      "interviewRelevance": "The expected answer."
+    }
+  ],
+  "personalSolution": {
+    "approach": "Two pointers swap",
+    "timeComplexity": "O(n)",
+    "spaceComplexity": "O(1)",
+    "isOptimal": true,
+    "notes": "Optimal."
+  },
+  "commonMistakes": [],
+  "edgeCases": [],
+  "cards": [
+    {
+      "id": "rs-pattern-01",
+      "category": "pattern",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "Which technique reverses an array in place?",
+        "What pattern pairs the first and last elements?"
+      ],
+      "options": [
+        "Two pointers moving inward",
+        "Sliding window",
+        "Binary search",
+        "Stack"
+      ],
+      "answer": "Two pointers moving inward",
+      "explanation": "Mirrored indices are swapped until the pointers meet.",
+      "incorrectOptionExplanations": {
+        "Sliding window": "No window.",
+        "Binary search": "No search.",
+        "Stack": "Would require O(n) extra space."
+      }
+    },
+    {
+      "id": "rs-time-01",
+      "category": "time_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Time complexity: ___",
+        "Reversing a character list with two pointers takes ___ time."
+      ],
+      "answer": "O(n)",
+      "explanation": "n/2 swaps.",
+      "acceptedAnswers": [
+        "linear"
+      ]
+    },
+    {
+      "id": "rs-space-01",
+      "category": "space_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Extra space of the two-pointer solution: ___",
+        "In-place Reverse String uses ___ extra space."
+      ],
+      "answer": "O(1)",
+      "explanation": "Two indices.",
+      "acceptedAnswers": [
+        "constant"
+      ]
+    },
+    {
+      "id": "rs-code-01",
+      "category": "code_reasoning",
+      "type": "code_question",
+      "promptVariants": [
+        "Does `while l <= r` vs `while l < r` matter here?",
+        "What happens when l == r in your loop?"
+      ],
+      "code": "l, r = 0, len(s) - 1\nwhile l <= r:\n    s[l], s[r] = s[r], s[l]\n    l += 1\n    r -= 1",
+      "answer": "When l == r the swap is a harmless self-swap of the middle element; `l < r` skips it. Both are correct; `l < r` avoids one redundant operation.",
+      "keyPoints": [
+        "l == r: middle element",
+        "Self-swap is harmless",
+        "l < r is tighter"
+      ],
+      "explanation": "Same as palindrome checks."
+    },
+    {
+      "id": "rs-edge-01",
+      "category": "edge_case",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "What does the algorithm do for a single character?",
+        "How many swaps happen for odd length n?"
+      ],
+      "options": [
+        "No real swap; the middle element stays",
+        "It raises an error",
+        "It deletes the character",
+        "It needs special casing"
+      ],
+      "answer": "No real swap; the middle element stays",
+      "explanation": "The pointers coincide immediately, so at most a self-swap occurs.",
+      "incorrectOptionExplanations": {
+        "It raises an error": "No out-of-range index.",
+        "It deletes the character": "Nothing is removed.",
+        "It needs special casing": "The loop handles it."
+      }
+    }
+  ],
+  "generatedAt": "2026-10-01T14:08:18Z"
+}
