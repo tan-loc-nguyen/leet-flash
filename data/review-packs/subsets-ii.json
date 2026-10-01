@@ -1,0 +1,167 @@
+{
+  "schemaVersion": 1,
+  "problemSlug": "subsets-ii",
+  "summary": "Return all distinct subsets of a list that may contain duplicates.",
+  "patterns": [
+    "Backtracking",
+    "Bit Manipulation"
+  ],
+  "mainInsight": "Sort first so equal values are adjacent. When enumerating, a subset that uses a duplicate value without using its immediately preceding equal value is a repeat of one already produced - skip it.",
+  "canonicalApproach": "Backtracking with sibling skipping",
+  "approaches": [
+    {
+      "name": "Generate all and de-duplicate with a set",
+      "summary": "Collect sorted tuples.",
+      "timeComplexity": "O(n * 2^n)",
+      "spaceComplexity": "O(n * 2^n)",
+      "strengths": [
+        "Easy"
+      ],
+      "weaknesses": [
+        "Builds duplicates"
+      ]
+    },
+    {
+      "name": "Backtracking with sibling skipping",
+      "summary": "Skip nums[i] when i > start and nums[i] == nums[i - 1].",
+      "timeComplexity": "O(n * 2^n)",
+      "spaceComplexity": "O(n)",
+      "strengths": [
+        "No duplicates generated"
+      ],
+      "interviewRelevance": "The expected answer."
+    },
+    {
+      "name": "Bitmask + duplicate rule",
+      "summary": "Reject masks that take nums[i] without nums[i-1] when equal.",
+      "timeComplexity": "O(n * 2^n)",
+      "spaceComplexity": "O(n)",
+      "strengths": [
+        "No recursion"
+      ],
+      "weaknesses": [
+        "Enumerates all 2^n masks even if many are skipped"
+      ],
+      "interviewRelevance": "Your approach."
+    }
+  ],
+  "personalSolution": {
+    "approach": "Bitmask enumeration with a duplicate-skip rule",
+    "timeComplexity": "O(n * 2^n)",
+    "spaceComplexity": "O(n)",
+    "isOptimal": true,
+    "notes": "Correct. The backtracking version avoids enumerating the rejected masks."
+  },
+  "commonMistakes": [],
+  "edgeCases": [],
+  "cards": [
+    {
+      "id": "s2-pattern-01",
+      "category": "pattern",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "What is the rule that removes duplicate subsets after sorting?",
+        "When is taking nums[i] a duplicate?"
+      ],
+      "options": [
+        "Taking nums[i] equal to nums[i-1] without taking nums[i-1]",
+        "Taking any element twice",
+        "Taking the largest element",
+        "Taking an empty subset"
+      ],
+      "answer": "Taking nums[i] equal to nums[i-1] without taking nums[i-1]",
+      "explanation": "The copies are interchangeable, so one canonical choice is to take them from the left: use the second copy only if the first is used.",
+      "incorrectOptionExplanations": {
+        "Taking any element twice": "Elements are used at most once.",
+        "Taking the largest element": "Irrelevant.",
+        "Taking an empty subset": "The empty set appears once."
+      }
+    },
+    {
+      "id": "s2-insight-01",
+      "category": "main_insight",
+      "type": "free_recall",
+      "promptVariants": [
+        "Why does the rule 'use the second copy only if the first is used' remove duplicates exactly?",
+        "How does this relate to `i > start` in the backtracking version?"
+      ],
+      "answer": "For k equal copies a subset with j of them can be formed in many ways; requiring the used copies to be the leftmost j makes each multiset appear once. In the backtracking version `i > start and nums[i] == nums[i-1]` skips choosing a later copy as a sibling at the same level, which enforces the same canonical choice.",
+      "keyPoints": [
+        "Take copies left to right",
+        "One representation per multiset",
+        "Sibling skipping equivalent"
+      ],
+      "explanation": "Sort first or equal values are not adjacent."
+    },
+    {
+      "id": "s2-time-01",
+      "category": "time_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Time complexity of the bitmask enumeration (n elements): ___",
+        "Complete the statement: Time complexity of the bitmask enumeration (n elements): ___"
+      ],
+      "answer": "O(n * 2^n)",
+      "explanation": "2^n masks, each inspected in O(n).",
+      "acceptedAnswers": [
+        "O(n*2^n)",
+        "O(2^n * n)"
+      ]
+    },
+    {
+      "id": "s2-space-01",
+      "category": "space_complexity",
+      "type": "free_recall",
+      "promptVariants": [
+        "What is the auxiliary space of your bitmask solution excluding the output?",
+        "What auxiliary space does the bitmask duplicate-subset enumeration use?"
+      ],
+      "answer": "O(n) for the current subset and loop variables; no recursion.",
+      "keyPoints": [
+        "O(n)",
+        "No recursion"
+      ],
+      "explanation": "Backtracking needs O(n) recursion depth too."
+    },
+    {
+      "id": "s2-code-01",
+      "category": "code_reasoning",
+      "type": "code_question",
+      "promptVariants": [
+        "Explain the skip condition `i > 0 and nums[i] == nums[i-1] and not (mask & (1 << (i-1)))`.",
+        "Why is sorting required?"
+      ],
+      "code": "nums.sort()\nfor mask in range(1 << n):\n    skip = False\n    subset = []\n    for i in range(n):\n        if mask & (1 << i):\n            if i > 0 and nums[i] == nums[i - 1] and not (mask & (1 << (i - 1))):\n                skip = True\n                break\n            subset.append(nums[i])\n    if not skip:\n        ans.append(subset)",
+      "answer": "If nums[i] equals the previous value but the previous element is NOT in the mask, this subset uses the second copy without the first, which duplicates the subset that uses the first copy instead - so the whole mask is rejected. Sorting makes equal values adjacent so that 'previous element' is the previous copy.",
+      "keyPoints": [
+        "Same value, previous copy unused => duplicate",
+        "Reject the mask",
+        "Sorting groups equals"
+      ],
+      "explanation": "Backtracking avoids even generating those masks."
+    },
+    {
+      "id": "s2-edge-01",
+      "category": "edge_case",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "How many distinct subsets does [1,2,2] have?",
+        "Which duplicate subset is avoided?"
+      ],
+      "options": [
+        "6",
+        "8",
+        "4",
+        "7"
+      ],
+      "answer": "6",
+      "explanation": "[], [1], [2], [1,2], [2,2], [1,2,2]; 8 would count [2] and [1,2] twice.",
+      "incorrectOptionExplanations": {
+        "8": "That counts duplicates.",
+        "4": "Too few.",
+        "7": "Still one too many."
+      }
+    }
+  ],
+  "generatedAt": "2026-10-01T14:34:53Z"
+}

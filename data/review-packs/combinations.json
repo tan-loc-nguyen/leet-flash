@@ -1,0 +1,136 @@
+{
+  "schemaVersion": 1,
+  "problemSlug": "combinations",
+  "summary": "Return all combinations of k numbers chosen from 1..n.",
+  "patterns": [
+    "Backtracking"
+  ],
+  "mainInsight": "Choose numbers in increasing order (start index) until k are picked: at each step pick i >= start, recurse with i + 1, undo. The tree has C(n, k) leaves.",
+  "canonicalApproach": "Backtracking with a start index",
+  "approaches": [
+    {
+      "name": "Backtracking with a start index",
+      "summary": "Append i, recurse from i + 1, pop.",
+      "timeComplexity": "O(C(n,k) * k)",
+      "spaceComplexity": "O(k)",
+      "strengths": [
+        "Canonical"
+      ],
+      "interviewRelevance": "Your approach; the expected answer."
+    },
+    {
+      "name": "Iterative / itertools.combinations",
+      "summary": "Library or lexicographic successor.",
+      "timeComplexity": "O(C(n,k) * k)",
+      "spaceComplexity": "O(k)",
+      "strengths": [
+        "Short"
+      ],
+      "weaknesses": [
+        "Hides the algorithm"
+      ]
+    }
+  ],
+  "personalSolution": {
+    "approach": "Backtracking with a start index",
+    "timeComplexity": "O(C(n,k) * k)",
+    "spaceComplexity": "O(k)",
+    "isOptimal": true,
+    "notes": "Optimal pattern; tighten the loop bound to n - (k - len) + 1."
+  },
+  "commonMistakes": [],
+  "edgeCases": [],
+  "cards": [
+    {
+      "id": "cb-pattern-01",
+      "category": "pattern",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "What prevents [1,2] and [2,1] from both being generated?",
+        "Which parameter enforces a canonical order?"
+      ],
+      "options": [
+        "The start index (only pick larger numbers next)",
+        "A set of results",
+        "Sorting the result",
+        "BFS"
+      ],
+      "answer": "The start index (only pick larger numbers next)",
+      "explanation": "Each combination is built in increasing order exactly once.",
+      "incorrectOptionExplanations": {
+        "A set of results": "Works but generates duplicates first.",
+        "Sorting the result": "Also generates duplicates first.",
+        "BFS": "Does not remove the ordering."
+      }
+    },
+    {
+      "id": "cb-insight-01",
+      "category": "main_insight",
+      "type": "free_recall",
+      "promptVariants": [
+        "How can you prune the loop's upper bound?",
+        "Which values of i can still complete a combination of size k?"
+      ],
+      "answer": "If `need = k - len(path)` more numbers are required, i can only go up to n - need + 1; larger i leaves too few numbers to finish. Tightening the bound avoids exploring dead branches.",
+      "keyPoints": [
+        "need = k - len(path)",
+        "i <= n - need + 1",
+        "Dead branches pruned"
+      ],
+      "explanation": "Your loop goes to n and relies on running out of numbers."
+    },
+    {
+      "id": "cb-time-01",
+      "category": "time_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Time complexity (counting the copy of each combination): ___",
+        "Complete the statement: Time complexity (counting the copy of each combination): ___"
+      ],
+      "answer": "O(C(n,k) * k)",
+      "explanation": "C(n, k) results each of length k.",
+      "acceptedAnswers": [
+        "O(k * C(n,k))",
+        "O(k*C(n,k))"
+      ]
+    },
+    {
+      "id": "cb-space-01",
+      "category": "space_complexity",
+      "type": "free_recall",
+      "promptVariants": [
+        "What is the auxiliary space excluding the output?",
+        "Besides the output, what is the memory of the combinations backtracking?"
+      ],
+      "answer": "O(k): recursion depth and the current combination.",
+      "keyPoints": [
+        "Depth k",
+        "Path k"
+      ],
+      "explanation": "The output holds C(n, k) lists."
+    },
+    {
+      "id": "cb-edge-01",
+      "category": "edge_case",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "How many combinations for n = 4, k = 2?",
+        "What is returned for k = n?"
+      ],
+      "options": [
+        "6; and a single combination [1..n]",
+        "4; and []",
+        "8; and [[1..n]]",
+        "12; and [[]]"
+      ],
+      "answer": "6; and a single combination [1..n]",
+      "explanation": "C(4,2) = 6 and choosing all n numbers has one combination.",
+      "incorrectOptionExplanations": {
+        "4; and []": "Counts are wrong.",
+        "8; and [[1..n]]": "C(4,2) is 6.",
+        "12; and [[]]": "That is the number of permutations of 2 from 4."
+      }
+    }
+  ],
+  "generatedAt": "2026-10-01T14:34:53Z"
+}

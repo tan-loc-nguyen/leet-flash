@@ -1,0 +1,156 @@
+{
+  "schemaVersion": 1,
+  "problemSlug": "course-schedule",
+  "summary": "Can all courses be finished given prerequisite pairs? (Is the prerequisite graph acyclic?)",
+  "patterns": [
+    "Topological Sort",
+    "Graph",
+    "BFS"
+  ],
+  "mainInsight": "A schedule exists iff the directed prerequisite graph has no cycle. Kahn's algorithm: repeatedly take courses with indegree 0, remove their outgoing edges, and check that all n courses were processed.",
+  "canonicalApproach": "Kahn's algorithm (BFS topological sort)",
+  "approaches": [
+    {
+      "name": "DFS cycle detection (3 colours)",
+      "summary": "Detect a back edge using visiting/visited states.",
+      "timeComplexity": "O(V + E)",
+      "spaceComplexity": "O(V + E)",
+      "strengths": [
+        "Direct cycle check"
+      ],
+      "weaknesses": [
+        "Recursion depth"
+      ]
+    },
+    {
+      "name": "Kahn's algorithm (BFS topological sort)",
+      "summary": "Queue of indegree-0 nodes; count processed nodes.",
+      "timeComplexity": "O(V + E)",
+      "spaceComplexity": "O(V + E)",
+      "strengths": [
+        "Iterative, gives an order"
+      ],
+      "interviewRelevance": "Your approach; the expected answer."
+    }
+  ],
+  "personalSolution": {
+    "approach": "Kahn's algorithm",
+    "timeComplexity": "O(V + E)",
+    "spaceComplexity": "O(V + E)",
+    "isOptimal": true,
+    "notes": "Optimal."
+  },
+  "commonMistakes": [],
+  "edgeCases": [],
+  "cards": [
+    {
+      "id": "cs3-pattern-01",
+      "category": "pattern",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "What graph property decides whether all courses can be finished?",
+        "Which algorithm tests it?"
+      ],
+      "options": [
+        "The directed graph must be acyclic (topological sort / Kahn's)",
+        "The graph must be connected",
+        "The graph must be a tree",
+        "The graph must be bipartite"
+      ],
+      "answer": "The directed graph must be acyclic (topological sort / Kahn's)",
+      "explanation": "A cycle of prerequisites can never be satisfied.",
+      "incorrectOptionExplanations": {
+        "The graph must be connected": "Courses may be independent.",
+        "The graph must be a tree": "Not required.",
+        "The graph must be bipartite": "Irrelevant."
+      }
+    },
+    {
+      "id": "cs3-insight-01",
+      "category": "main_insight",
+      "type": "free_recall",
+      "promptVariants": [
+        "Why does `len(order) < n` imply a cycle?",
+        "What stays unprocessed in a cycle?"
+      ],
+      "answer": "Kahn's algorithm only releases a course when all its prerequisites have been processed (indegree 0). Nodes on a cycle (and anything depending on them) always keep a positive indegree, so they are never enqueued; therefore fewer than n nodes are processed exactly when a cycle exists.",
+      "keyPoints": [
+        "Indegree 0 releases a node",
+        "Cycle nodes never reach 0",
+        "processed < n => cycle"
+      ],
+      "explanation": "The same fact gives the order in Course Schedule II."
+    },
+    {
+      "id": "cs3-time-01",
+      "category": "time_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Time complexity: ___",
+        "Complete the statement: Time complexity: ___"
+      ],
+      "answer": "O(V+E)",
+      "explanation": "Each node and edge is processed once.",
+      "acceptedAnswers": [
+        "O(V + E)",
+        "O(E + V)"
+      ]
+    },
+    {
+      "id": "cs3-space-01",
+      "category": "space_complexity",
+      "type": "free_recall",
+      "promptVariants": [
+        "What data structures does Kahn's algorithm use and what do they cost?",
+        "List the structures Kahn's algorithm allocates and their sizes."
+      ],
+      "answer": "Adjacency list O(V + E), indegree array O(V) and a queue O(V): O(V + E) in total.",
+      "keyPoints": [
+        "Adjacency list",
+        "Indegree array",
+        "Queue"
+      ],
+      "explanation": "DFS adds recursion depth O(V)."
+    },
+    {
+      "id": "cs3-code-01",
+      "category": "code_reasoning",
+      "type": "code_question",
+      "promptVariants": [
+        "Why is the edge stored as graph[v].append(u) with in_degree[u] += 1 for [u, v]?",
+        "What does decrementing the neighbour's indegree represent?"
+      ],
+      "code": "for u, v in pre:\n    graph[v].append(u)\n    in_degree[u] += 1\n...\nfor nei in graph[node]:\n    in_degree[nei] -= 1\n    if in_degree[nei] == 0:\n        queue.append(nei)",
+      "answer": "The pair [u, v] means v must be taken before u, so the edge points v -> u and u gains an incoming edge. When v is processed its outgoing edges are removed: each dependent course loses one unmet prerequisite; at 0 prerequisites it becomes available.",
+      "keyPoints": [
+        "Edge v -> u",
+        "indegree = unmet prerequisites",
+        "Decrement when a prerequisite finishes"
+      ],
+      "explanation": "Mixing up the direction is the common bug."
+    },
+    {
+      "id": "cs3-edge-01",
+      "category": "edge_case",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "Is [[1,0],[0,1]] schedulable?",
+        "What if there are no prerequisites?"
+      ],
+      "options": [
+        "No (a cycle); yes with no prerequisites",
+        "Yes; yes",
+        "No; no",
+        "Yes; no"
+      ],
+      "answer": "No (a cycle); yes with no prerequisites",
+      "explanation": "0 requires 1 and 1 requires 0 - a cycle. With no prerequisites any order works.",
+      "incorrectOptionExplanations": {
+        "Yes; yes": "The first pair is a cycle.",
+        "No; no": "No prerequisites is trivially fine.",
+        "Yes; no": "Reversed."
+      }
+    }
+  ],
+  "generatedAt": "2026-10-01T14:37:19Z"
+}

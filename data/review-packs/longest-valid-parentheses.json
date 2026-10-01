@@ -1,0 +1,172 @@
+{
+  "schemaVersion": 1,
+  "problemSlug": "longest-valid-parentheses",
+  "summary": "Return the length of the longest well-formed parentheses substring.",
+  "patterns": [
+    "Stack",
+    "Dynamic Programming"
+  ],
+  "mainInsight": "Use a stack of indices with a base marker: push the index of every '('; on ')' pop. If the stack becomes empty push the current index as the new base; otherwise the valid substring ends here and starts just after the new top.",
+  "canonicalApproach": "Stack of indices with a base",
+  "approaches": [
+    {
+      "name": "Brute force",
+      "summary": "Check every substring for validity.",
+      "timeComplexity": "O(n^3)",
+      "spaceComplexity": "O(n)"
+    },
+    {
+      "name": "Dynamic programming",
+      "summary": "dp[i] = longest valid ending at i.",
+      "timeComplexity": "O(n)",
+      "spaceComplexity": "O(n)",
+      "strengths": [
+        "Systematic"
+      ],
+      "weaknesses": [
+        "Index arithmetic"
+      ]
+    },
+    {
+      "name": "Stack of indices with a base",
+      "summary": "Push -1 first; track the last unmatched index.",
+      "timeComplexity": "O(n)",
+      "spaceComplexity": "O(n)",
+      "strengths": [
+        "One pass"
+      ],
+      "interviewRelevance": "Your approach; the expected answer."
+    },
+    {
+      "name": "Two counter passes",
+      "summary": "Left-to-right and right-to-left counting of opens/closes.",
+      "timeComplexity": "O(n)",
+      "spaceComplexity": "O(1)",
+      "strengths": [
+        "Constant space"
+      ],
+      "weaknesses": [
+        "Two passes, subtle"
+      ],
+      "interviewRelevance": "Optimal space."
+    }
+  ],
+  "personalSolution": {
+    "approach": "Stack of indices with a base",
+    "timeComplexity": "O(n)",
+    "spaceComplexity": "O(n)",
+    "isOptimal": true,
+    "notes": "Optimal in time; the two-pass counter version uses O(1) space."
+  },
+  "commonMistakes": [],
+  "edgeCases": [],
+  "cards": [
+    {
+      "id": "lv-pattern-01",
+      "category": "pattern",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "What do you store on the stack for Longest Valid Parentheses?",
+        "Why is -1 pushed first?"
+      ],
+      "options": [
+        "Indices of unmatched characters, with -1 as the initial base",
+        "The characters themselves",
+        "Counts of '('",
+        "Lengths of valid substrings"
+      ],
+      "answer": "Indices of unmatched characters, with -1 as the initial base",
+      "explanation": "The index below the top marks where the current valid run begins; -1 handles a valid prefix starting at index 0.",
+      "incorrectOptionExplanations": {
+        "The characters themselves": "Lengths need positions.",
+        "Counts of '('": "Counts lose positions.",
+        "Lengths of valid substrings": "That is the DP approach."
+      }
+    },
+    {
+      "id": "lv-invariant-01",
+      "category": "invariant",
+      "type": "free_recall",
+      "promptVariants": [
+        "What does the element below the top of the stack represent?",
+        "State the invariant."
+      ],
+      "answer": "The stack holds indices of '(' that are still unmatched plus one base index (the last position that cannot be part of a valid substring). For any current ')' that matches, the valid substring ends at i and starts at stack[-1] + 1 after the pop, giving length i - stack[-1].",
+      "keyPoints": [
+        "Unmatched '(' indices",
+        "Base = last unmatched ')' (or -1)",
+        "Length = i - stack[-1]"
+      ],
+      "explanation": "Pushing i when the stack empties resets the base."
+    },
+    {
+      "id": "lv-time-01",
+      "category": "time_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Time complexity: ___",
+        "Complete the statement: Time complexity: ___"
+      ],
+      "answer": "O(n)",
+      "explanation": "Each index is pushed and popped at most once.",
+      "acceptedAnswers": [
+        "linear"
+      ]
+    },
+    {
+      "id": "lv-space-01",
+      "category": "space_complexity",
+      "type": "free_recall",
+      "promptVariants": [
+        "What is the stack's worst-case size and how can it be reduced to O(1)?",
+        "How large can the index stack get, and how would you get O(1) extra space?"
+      ],
+      "answer": "O(n) (e.g. all '('). Two left-to-right and right-to-left passes with open/close counters achieve O(1) extra space: reset counters when closes exceed opens, record 2 * min when they are equal.",
+      "keyPoints": [
+        "O(n) worst case",
+        "Two-pass counters O(1)"
+      ],
+      "explanation": "Same time complexity."
+    },
+    {
+      "id": "lv-code-01",
+      "category": "code_reasoning",
+      "type": "code_question",
+      "promptVariants": [
+        "Why `if not stack: stack.append(i)` after the pop, and what does `cur_len = i - stack[-1]` measure?",
+        "What is the `elif stack:` condition for?"
+      ],
+      "code": "stack = [-1]\nfor i in range(len(s)):\n    if s[i] == '(':\n        stack.append(i)\n    elif stack:\n        idx = stack.pop()\n        if not stack:\n            stack.append(i)\n        else:\n            best = max(best, i - stack[-1])",
+      "answer": "A ')' pops the most recent '(' or the base marker. If the stack becomes empty that ')' was unmatched, so its index becomes the new base. Otherwise the matched substring runs from stack[-1] + 1 to i, whose length is i - stack[-1]. The `elif stack` condition is always true because the base keeps the stack non-empty.",
+      "keyPoints": [
+        "Pop the match or the base",
+        "Empty => new base",
+        "Length = i - stack[-1]"
+      ],
+      "explanation": "The base never gets popped permanently."
+    },
+    {
+      "id": "lv-edge-01",
+      "category": "edge_case",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "What is the answer for ')()())'?",
+        "Which substring is the longest valid?"
+      ],
+      "options": [
+        "4 ('()()')",
+        "2",
+        "6",
+        "0"
+      ],
+      "answer": "4 ('()()')",
+      "explanation": "The first ')' is unmatched, the next four characters form '()()', and the last ')' is unmatched.",
+      "incorrectOptionExplanations": {
+        "2": "Two adjacent pairs give 4.",
+        "6": "The unmatched outer ')' break the string.",
+        "0": "Valid substrings exist."
+      }
+    }
+  ],
+  "generatedAt": "2026-10-01T14:34:53Z"
+}

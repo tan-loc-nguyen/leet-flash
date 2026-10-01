@@ -1,0 +1,154 @@
+{
+  "schemaVersion": 1,
+  "problemSlug": "letter-combinations-of-a-phone-number",
+  "summary": "Return all letter strings a digit string (2-9) could represent on a phone keypad.",
+  "patterns": [
+    "Backtracking"
+  ],
+  "mainInsight": "Build the answer one digit at a time: the choice for digit i is one of its letters, and the recursion then moves to digit i + 1. The decision tree has one level per digit and a branching factor of 3-4.",
+  "canonicalApproach": "Backtracking by digit index",
+  "approaches": [
+    {
+      "name": "Iterative product",
+      "summary": "Extend all partial strings with each letter of the next digit (itertools.product).",
+      "timeComplexity": "O(4^n * n)",
+      "spaceComplexity": "O(4^n * n)",
+      "strengths": [
+        "No recursion"
+      ],
+      "weaknesses": [
+        "Stores all partial results"
+      ]
+    },
+    {
+      "name": "Backtracking by digit index",
+      "summary": "choose(idx): for each letter of digits[idx], append, recurse on idx + 1, pop.",
+      "timeComplexity": "O(4^n * n)",
+      "spaceComplexity": "O(n) stack + output",
+      "strengths": [
+        "Minimal state"
+      ],
+      "interviewRelevance": "The expected answer."
+    }
+  ],
+  "personalSolution": {
+    "approach": "Backtracking with a start index that also skips digits",
+    "timeComplexity": "O(4^n * n) results, extra wasted exploration",
+    "spaceComplexity": "O(n)",
+    "isOptimal": false,
+    "notes": "Correct output but explores useless digit-skipping branches. Recurse on the digit index only."
+  },
+  "commonMistakes": [],
+  "edgeCases": [],
+  "cards": [
+    {
+      "id": "lc4-pattern-01",
+      "category": "pattern",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "What is the shape of the decision tree for Letter Combinations?",
+        "Which pattern generates all combinations of one choice per position?"
+      ],
+      "options": [
+        "One level per digit, branching over that digit's letters (backtracking)",
+        "A single level with all letters",
+        "Binary choice include/exclude",
+        "Dynamic programming over prefixes"
+      ],
+      "answer": "One level per digit, branching over that digit's letters (backtracking)",
+      "explanation": "Every complete path picks exactly one letter for each digit.",
+      "incorrectOptionExplanations": {
+        "A single level with all letters": "That would mix letters of different digits.",
+        "Binary choice include/exclude": "That is the subsets pattern.",
+        "Dynamic programming over prefixes": "There are no overlapping subproblems."
+      }
+    },
+    {
+      "id": "lc4-insight-01",
+      "category": "main_insight",
+      "type": "free_recall",
+      "promptVariants": [
+        "Why should the recursion take the digit INDEX as its parameter rather than loop over all later digits?",
+        "What goes wrong with `for i in range(start, len(digits))`?"
+      ],
+      "answer": "Each digit must contribute exactly one letter in order, so the only decision at depth d is which letter of digits[d] to use. Looping over later digits as well lets branches skip digits; those paths can never reach full length so they are discarded, but they waste exponential work.",
+      "keyPoints": [
+        "One decision per digit",
+        "Skipping digits yields no solutions",
+        "Wasted exploration"
+      ],
+      "explanation": "Your result is right but the search tree is much larger than necessary."
+    },
+    {
+      "id": "lc4-time-01",
+      "category": "time_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Time complexity (n digits, up to 4 letters each): ___",
+        "Complete the statement: Time complexity (n digits, up to 4 letters each): ___"
+      ],
+      "answer": "O(4^n * n)",
+      "explanation": "Up to 4^n results, each a string of length n.",
+      "acceptedAnswers": [
+        "O(n * 4^n)",
+        "O(4^n)"
+      ]
+    },
+    {
+      "id": "lc4-space-01",
+      "category": "space_complexity",
+      "type": "free_recall",
+      "promptVariants": [
+        "What is the auxiliary space excluding the output?",
+        "How deep does the recursion go?"
+      ],
+      "answer": "O(n): the recursion depth and the path list both have at most n entries. The output itself holds up to 4^n strings.",
+      "keyPoints": [
+        "Depth n",
+        "Path of length n",
+        "Output separate"
+      ],
+      "explanation": "Iterative product stores all partial results."
+    },
+    {
+      "id": "lc4-code-01",
+      "category": "code_reasoning",
+      "type": "code_question",
+      "promptVariants": [
+        "Rewrite `choose` with the digit index and explain why the `len(path) > len(digits)` check is dead code.",
+        "What is the base case?"
+      ],
+      "code": "def choose(start):\n    if len(path) > len(digits):\n        return\n    if len(path) == len(digits):\n        ans.append(''.join(path))\n        return\n    for i in range(start, len(digits)):\n        for letter in hmap[digits[i]]:\n            path.append(letter)\n            choose(i + 1)\n            path.pop()",
+      "answer": "Standard form: `def choose(idx): if idx == len(digits): ans.append(''.join(path)); return; for letter in hmap[digits[idx]]: path.append(letter); choose(idx + 1); path.pop()`. The `len(path) > len(digits)` check can never be true because the path grows by exactly one per level and the base case fires at equality first. The base case is a complete assignment (one letter per digit).",
+      "keyPoints": [
+        "Pass idx, loop only over digits[idx]'s letters",
+        "Dead length check",
+        "Base case idx == len(digits)"
+      ],
+      "explanation": "Also return [] for empty input."
+    },
+    {
+      "id": "lc4-edge-01",
+      "category": "edge_case",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "What should be returned for digits = ''?",
+        "How does the naive code behave?"
+      ],
+      "options": [
+        "[] (the problem asks for no combinations for empty input)",
+        "[\"\"]",
+        "None",
+        "An error"
+      ],
+      "answer": "[] (the problem asks for no combinations for empty input)",
+      "explanation": "Special-case the empty string; otherwise the base case would immediately append the empty string.",
+      "incorrectOptionExplanations": {
+        "[\"\"]": "That would be one empty combination.",
+        "None": "Return a list.",
+        "An error": "No exception is needed."
+      }
+    }
+  ],
+  "generatedAt": "2026-10-01T14:34:53Z"
+}

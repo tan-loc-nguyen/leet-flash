@@ -1,0 +1,150 @@
+{
+  "schemaVersion": 1,
+  "problemSlug": "combination-sum",
+  "summary": "Find all unique combinations of candidates (reusable any number of times) that sum to the target.",
+  "patterns": [
+    "Backtracking"
+  ],
+  "mainInsight": "Choose candidates in non-decreasing index order (a start index prevents permutations of the same multiset) and allow reuse by recursing with the SAME index; stop when the remaining sum hits 0 or goes negative.",
+  "canonicalApproach": "Backtracking with a start index",
+  "approaches": [
+    {
+      "name": "Backtracking with a start index",
+      "summary": "choose(start, remaining): for i >= start try candidates[i], recurse with i.",
+      "timeComplexity": "O(N^(T/M))",
+      "spaceComplexity": "O(T/M) depth",
+      "strengths": [
+        "No duplicate combinations"
+      ],
+      "interviewRelevance": "Your approach; the expected answer."
+    },
+    {
+      "name": "Dynamic programming over targets",
+      "summary": "dp[t] = combinations summing to t.",
+      "timeComplexity": "O(T * N * avg size)",
+      "spaceComplexity": "O(T * ...)",
+      "weaknesses": [
+        "Stores many lists"
+      ]
+    }
+  ],
+  "personalSolution": {
+    "approach": "Backtracking with a start index (reuse via same index)",
+    "timeComplexity": "O(N^(T/M))",
+    "spaceComplexity": "O(T/M)",
+    "isOptimal": true,
+    "notes": "Optimal pattern; sorting + break prunes more."
+  },
+  "commonMistakes": [],
+  "edgeCases": [],
+  "cards": [
+    {
+      "id": "cs2-pattern-01",
+      "category": "pattern",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "How do you avoid generating the same combination in different orders?",
+        "What does the start index do?"
+      ],
+      "options": [
+        "Only consider candidates at index >= start (non-decreasing choice order)",
+        "Sort the result at the end",
+        "Use a set of tuples at the end",
+        "Use BFS"
+      ],
+      "answer": "Only consider candidates at index >= start (non-decreasing choice order)",
+      "explanation": "A combination is built in a canonical index order, so [2,3] and [3,2] are not both generated.",
+      "incorrectOptionExplanations": {
+        "Sort the result at the end": "Works but wastes time generating duplicates.",
+        "Use a set of tuples at the end": "Also wasteful.",
+        "Use BFS": "Does not remove ordering duplicates."
+      }
+    },
+    {
+      "id": "cs2-insight-01",
+      "category": "main_insight",
+      "type": "free_recall",
+      "promptVariants": [
+        "Why recurse with `i` (not `i + 1`) in Combination Sum?",
+        "How does this differ from Combination Sum II?"
+      ],
+      "answer": "Reusing the same candidate is allowed, so after choosing candidates[i] the next choice may again be candidates[i] (start = i). In Combination Sum II each candidate may be used once, so the recursion uses i + 1 (and duplicates must be skipped).",
+      "keyPoints": [
+        "start = i allows reuse",
+        "i + 1 forbids reuse",
+        "II also skips equal siblings"
+      ],
+      "explanation": "The start index still prevents reordering."
+    },
+    {
+      "id": "cs2-time-01",
+      "category": "time_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Time complexity in terms of N candidates, target T and minimum candidate M: ___",
+        "Complete the statement: Time complexity in terms of N candidates, target T and minimum candidate M: ___"
+      ],
+      "answer": "O(N^(T/M))",
+      "explanation": "The recursion depth is at most T/M with up to N branches per level.",
+      "acceptedAnswers": [
+        "O(N^(T/M))",
+        "exponential"
+      ]
+    },
+    {
+      "id": "cs2-space-01",
+      "category": "space_complexity",
+      "type": "free_recall",
+      "promptVariants": [
+        "What is the auxiliary space excluding the output?",
+        "How much auxiliary memory does Combination Sum need besides the result?"
+      ],
+      "answer": "O(T/M): the depth of the recursion and the length of the current combination.",
+      "keyPoints": [
+        "Depth T/M",
+        "Path length T/M"
+      ],
+      "explanation": "The output can be exponentially large."
+    },
+    {
+      "id": "cs2-code-01",
+      "category": "code_reasoning",
+      "type": "code_question",
+      "promptVariants": [
+        "Why check `remaining < 0` first and how could sorting improve pruning?",
+        "What does `path[:]` do?"
+      ],
+      "code": "def choose(start, remaining):\n    if remaining < 0:\n        return\n    if remaining == 0:\n        ans.append(path[:])\n        return\n    for i in range(start, len(candidates)):\n        path.append(candidates[i])\n        choose(i, remaining - candidates[i])\n        path.pop()",
+      "answer": "Overshooting means this branch cannot succeed, so return. If candidates are sorted, once candidates[i] > remaining all later candidates also overshoot, so you can `break` instead of recursing and returning each time. path[:] snapshots the current combination because path keeps being mutated.",
+      "keyPoints": [
+        "Prune overshoot",
+        "Sort + break for earlier pruning",
+        "Copy the path"
+      ],
+      "explanation": "Positive candidates guarantee termination."
+    },
+    {
+      "id": "cs2-edge-01",
+      "category": "edge_case",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "What does the function return for candidates = [2], target = 1?",
+        "How is 'no solution' represented?"
+      ],
+      "options": [
+        "[] (an empty list of combinations)",
+        "[[]]",
+        "None",
+        "An error"
+      ],
+      "answer": "[] (an empty list of combinations)",
+      "explanation": "No combination sums to 1, so no path is ever recorded.",
+      "incorrectOptionExplanations": {
+        "[[]]": "That would claim the empty combination sums to 1.",
+        "None": "The function returns a list.",
+        "An error": "No exception."
+      }
+    }
+  ],
+  "generatedAt": "2026-10-01T14:34:53Z"
+}

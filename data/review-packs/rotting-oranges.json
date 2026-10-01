@@ -1,0 +1,151 @@
+{
+  "schemaVersion": 1,
+  "problemSlug": "rotting-oranges",
+  "summary": "Return the minutes until no fresh orange remains (rotting spreads to 4-neighbours each minute), or -1 if impossible.",
+  "patterns": [
+    "Graph",
+    "BFS",
+    "Matrix"
+  ],
+  "mainInsight": "Multi-source BFS from all rotten oranges: each BFS level is one minute. Count fresh oranges up front; the answer is the number of levels needed to rot them all, or -1 if some stay fresh.",
+  "canonicalApproach": "Multi-source BFS with a fresh counter",
+  "approaches": [
+    {
+      "name": "Simulate minute by minute over the whole grid",
+      "summary": "Scan the grid each minute.",
+      "timeComplexity": "O((m n)^2)",
+      "spaceComplexity": "O(1)",
+      "weaknesses": [
+        "Rescans everything"
+      ]
+    },
+    {
+      "name": "Multi-source BFS with a fresh counter",
+      "summary": "Queue of rotten cells; process level by level.",
+      "timeComplexity": "O(m n)",
+      "spaceComplexity": "O(m n)",
+      "strengths": [
+        "Linear"
+      ],
+      "interviewRelevance": "Your approach; the expected answer."
+    }
+  ],
+  "personalSolution": {
+    "approach": "Multi-source BFS with a fresh counter",
+    "timeComplexity": "O(m n)",
+    "spaceComplexity": "O(m n)",
+    "isOptimal": true,
+    "notes": "Optimal."
+  },
+  "commonMistakes": [],
+  "edgeCases": [],
+  "cards": [
+    {
+      "id": "ro2-pattern-01",
+      "category": "pattern",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "Which technique models simultaneous spreading from several sources?",
+        "What does one BFS level represent?"
+      ],
+      "options": [
+        "Multi-source BFS; one level = one minute",
+        "DFS from the first rotten orange",
+        "Binary search on time",
+        "Sorting oranges"
+      ],
+      "answer": "Multi-source BFS; one level = one minute",
+      "explanation": "All rotten oranges spread at the same time, so they start together in the queue.",
+      "incorrectOptionExplanations": {
+        "DFS from the first rotten orange": "Spreading is simultaneous.",
+        "Binary search on time": "Unneeded.",
+        "Sorting oranges": "Irrelevant."
+      }
+    },
+    {
+      "id": "ro2-insight-01",
+      "category": "main_insight",
+      "type": "free_recall",
+      "promptVariants": [
+        "How do you detect the impossible case?",
+        "Why count fresh oranges at the start?"
+      ],
+      "answer": "Counting fresh oranges initially and decrementing when each is rotted lets you check in O(1) whether any remain after the BFS ends; if fresh > 0 at the end, some orange is unreachable and the answer is -1. It also lets the loop stop as soon as fresh hits 0.",
+      "keyPoints": [
+        "Track fresh count",
+        "fresh > 0 at the end => -1",
+        "Stop early at 0"
+      ],
+      "explanation": "No need to rescan the grid."
+    },
+    {
+      "id": "ro2-time-01",
+      "category": "time_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Time complexity: ___",
+        "Complete the statement: Time complexity: ___"
+      ],
+      "answer": "O(m*n)",
+      "explanation": "Each cell is enqueued at most once.",
+      "acceptedAnswers": [
+        "O(mn)"
+      ]
+    },
+    {
+      "id": "ro2-space-01",
+      "category": "space_complexity",
+      "type": "free_recall",
+      "promptVariants": [
+        "What is the queue's worst-case size and what does the grid mutation replace?",
+        "How large can the Rotting Oranges queue get, and what replaces a visited structure?"
+      ],
+      "answer": "O(m n) cells in the worst case. Marking rotted cells by setting them to 2 replaces a separate visited structure.",
+      "keyPoints": [
+        "O(mn)",
+        "In-place marking"
+      ],
+      "explanation": "Mutates the input."
+    },
+    {
+      "id": "ro2-code-01",
+      "category": "code_reasoning",
+      "type": "code_question",
+      "promptVariants": [
+        "Why the loop condition `while queue and fresh > 0` and where is `time` incremented?",
+        "What would return -1?"
+      ],
+      "code": "time = 0\nwhile queue and fresh > 0:\n    k = len(queue)\n    for _ in range(k):\n        r, c = queue.popleft()\n        for i in range(4):\n            nr, nc = r + DIR[i], c + DIR[i + 1]\n            if 0 <= nr < m and 0 <= nc < n and grid[nr][nc] == 1:\n                queue.append((nr, nc))\n                grid[nr][nc] = 2\n                fresh -= 1\n    time += 1\nreturn time if fresh <= 0 else -1",
+      "answer": "The loop stops as soon as no fresh orange remains (so trailing levels that rot nothing are not counted) or when the queue empties. time counts completed levels (minutes). If fresh oranges remain after the queue is exhausted they can never be reached, so return -1.",
+      "keyPoints": [
+        "Stop when fresh == 0",
+        "One level = one minute",
+        "fresh left => -1"
+      ],
+      "explanation": "If there is no fresh orange initially the answer is 0."
+    },
+    {
+      "id": "ro2-edge-01",
+      "category": "edge_case",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "What is the answer for a grid with no fresh oranges?",
+        "What about a fresh orange with no rotten orange anywhere?"
+      ],
+      "options": [
+        "0, and -1",
+        "1, and -1",
+        "0, and 0",
+        "-1, and -1"
+      ],
+      "answer": "0, and -1",
+      "explanation": "Nothing to rot takes 0 minutes; an unreachable fresh orange makes it impossible.",
+      "incorrectOptionExplanations": {
+        "1, and -1": "No minutes pass if nothing is fresh.",
+        "0, and 0": "An unreachable fresh orange is impossible.",
+        "-1, and -1": "No fresh oranges is fine."
+      }
+    }
+  ],
+  "generatedAt": "2026-10-01T14:37:19Z"
+}

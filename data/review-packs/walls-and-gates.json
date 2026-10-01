@@ -1,0 +1,152 @@
+{
+  "schemaVersion": 1,
+  "problemSlug": "walls-and-gates",
+  "summary": "Fill each empty room with its distance to the nearest gate (walls = -1, gates = 0, empty = INF).",
+  "patterns": [
+    "Graph",
+    "BFS",
+    "Matrix"
+  ],
+  "mainInsight": "Run a multi-source BFS starting from all gates simultaneously: the first time a room is reached is via a shortest path, so its distance is the BFS level. One BFS for all gates beats a BFS per room.",
+  "canonicalApproach": "Multi-source BFS from all gates",
+  "approaches": [
+    {
+      "name": "BFS from every empty room",
+      "summary": "Search for the nearest gate from each room.",
+      "timeComplexity": "O((m n)^2)",
+      "spaceComplexity": "O(m n)",
+      "weaknesses": [
+        "Quadratic"
+      ]
+    },
+    {
+      "name": "Multi-source BFS from all gates",
+      "summary": "Initialise the queue with all gates; expand level by level.",
+      "timeComplexity": "O(m n)",
+      "spaceComplexity": "O(m n)",
+      "strengths": [
+        "Linear"
+      ],
+      "interviewRelevance": "Your approach; the expected answer."
+    }
+  ],
+  "personalSolution": {
+    "approach": "Multi-source BFS from all gates",
+    "timeComplexity": "O(m n)",
+    "spaceComplexity": "O(m n)",
+    "isOptimal": true,
+    "notes": "Optimal; `min` and the `seen` set are redundant."
+  },
+  "commonMistakes": [],
+  "edgeCases": [],
+  "cards": [
+    {
+      "id": "wg-pattern-01",
+      "category": "pattern",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "Which technique gives the nearest-gate distance for all rooms in O(m n)?",
+        "Where does the BFS start?"
+      ],
+      "options": [
+        "Multi-source BFS starting from all gates at once",
+        "BFS from each room",
+        "DFS from each gate",
+        "Dynamic programming over rows only"
+      ],
+      "answer": "Multi-source BFS starting from all gates at once",
+      "explanation": "All sources at distance 0 are processed together, so each room gets the minimum over gates automatically.",
+      "incorrectOptionExplanations": {
+        "BFS from each room": "O((mn)^2).",
+        "DFS from each gate": "DFS does not give shortest paths.",
+        "Dynamic programming over rows only": "Paths wind around walls."
+      }
+    },
+    {
+      "id": "wg-insight-01",
+      "category": "main_insight",
+      "type": "free_recall",
+      "promptVariants": [
+        "Why is the first visit of a room by the BFS its final answer?",
+        "Why does your `min(...)` not change anything?"
+      ],
+      "answer": "BFS explores cells in increasing distance from the set of gates, so the first time a room is reached it is by a shortest path from the nearest gate. After that it is marked visited and never updated. Hence `min(rooms[nr][nc], span)` always picks span (the room still holds INF).",
+      "keyPoints": [
+        "BFS levels = distances",
+        "First visit is shortest",
+        "min is redundant"
+      ],
+      "explanation": "Check rooms == INF instead of a visited set."
+    },
+    {
+      "id": "wg-time-01",
+      "category": "time_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Time complexity: ___",
+        "Complete the statement: Time complexity: ___"
+      ],
+      "answer": "O(m*n)",
+      "explanation": "Each cell is enqueued at most once.",
+      "acceptedAnswers": [
+        "O(mn)"
+      ]
+    },
+    {
+      "id": "wg-space-01",
+      "category": "space_complexity",
+      "type": "free_recall",
+      "promptVariants": [
+        "What do the queue and the `seen` set cost, and how can the set be dropped?",
+        "What memory do the BFS queue and seen set use in Walls and Gates, and how can the set be dropped?"
+      ],
+      "answer": "The queue can hold O(m n) cells and `seen` another O(m n). Because unvisited rooms are exactly the cells still equal to INF, the grid itself can serve as the visited marker and the set is unnecessary.",
+      "keyPoints": [
+        "Queue O(mn)",
+        "seen O(mn)",
+        "Use rooms == INF as unvisited"
+      ],
+      "explanation": "Mutating the grid is allowed by the problem."
+    },
+    {
+      "id": "wg-code-01",
+      "category": "code_reasoning",
+      "type": "code_question",
+      "promptVariants": [
+        "Explain the `span` variable and the level-by-level loop.",
+        "Why is the check `rooms[nr][nc] > 0` used instead of `== INF`?"
+      ],
+      "code": "span = 1\nwhile queue:\n    k = len(queue)\n    for _ in range(k):\n        node = queue.popleft()\n        for i in range(4):\n            nr, nc = node[0] + DIR[i], node[1] + DIR[i + 1]\n            if 0 <= nr < m and 0 <= nc < n and (nr, nc) not in seen and rooms[nr][nc] > 0:\n                rooms[nr][nc] = min(rooms[nr][nc], span)\n                queue.append((nr, nc))\n                seen.add((nr, nc))\n    span += 1",
+      "answer": "Each outer iteration processes one BFS level, so span is the distance of the cells discovered during it. `> 0` excludes walls (-1) and gates (0) while including INF rooms; INF is a large positive number, so the test is equivalent to `== INF` for rooms. Gates are pre-seeded in `seen`.",
+      "keyPoints": [
+        "span = BFS level",
+        "> 0 excludes walls and gates",
+        "Gates in the initial queue"
+      ],
+      "explanation": "Level-by-level processing is what tracks distance."
+    },
+    {
+      "id": "wg-edge-01",
+      "category": "edge_case",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "What happens to a room that no gate can reach?",
+        "What value should it keep?"
+      ],
+      "options": [
+        "It stays INF (unchanged)",
+        "-1",
+        "0",
+        "The grid size"
+      ],
+      "answer": "It stays INF (unchanged)",
+      "explanation": "The BFS never reaches it, so it keeps its initial INF.",
+      "incorrectOptionExplanations": {
+        "-1": "That marks a wall.",
+        "0": "That marks a gate.",
+        "The grid size": "Not defined."
+      }
+    }
+  ],
+  "generatedAt": "2026-10-01T14:37:19Z"
+}

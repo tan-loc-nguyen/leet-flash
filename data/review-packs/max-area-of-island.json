@@ -1,0 +1,152 @@
+{
+  "schemaVersion": 1,
+  "problemSlug": "max-area-of-island",
+  "summary": "Return the size of the largest island of 1s in a grid.",
+  "patterns": [
+    "Graph",
+    "DFS",
+    "Matrix"
+  ],
+  "mainInsight": "Flood fill each island and have the DFS return its size (1 + sizes of the recursive calls on the four neighbours); keep the maximum.",
+  "canonicalApproach": "DFS returning the island size",
+  "approaches": [
+    {
+      "name": "DFS returning the island size",
+      "summary": "Mark cells visited by setting them to 0.",
+      "timeComplexity": "O(m n)",
+      "spaceComplexity": "O(m n) recursion worst case",
+      "strengths": [
+        "Compact"
+      ],
+      "weaknesses": [
+        "Recursion depth"
+      ],
+      "interviewRelevance": "Your approach."
+    },
+    {
+      "name": "BFS counting cells",
+      "summary": "Count dequeued cells per flood fill.",
+      "timeComplexity": "O(m n)",
+      "spaceComplexity": "O(min(m, n))",
+      "strengths": [
+        "No recursion limit"
+      ]
+    }
+  ],
+  "personalSolution": {
+    "approach": "DFS returning the island size",
+    "timeComplexity": "O(m n)",
+    "spaceComplexity": "O(m n) recursion worst case",
+    "isOptimal": true,
+    "notes": "Optimal in time; remove the duplicated bounds check."
+  },
+  "commonMistakes": [],
+  "edgeCases": [],
+  "cards": [
+    {
+      "id": "ma-pattern-01",
+      "category": "pattern",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "How does the DFS compute an island's area?",
+        "What does each call return?"
+      ],
+      "options": [
+        "1 plus the sizes returned for the four neighbours",
+        "The row index",
+        "The number of islands",
+        "The perimeter"
+      ],
+      "answer": "1 plus the sizes returned for the four neighbours",
+      "explanation": "Each cell counts itself once and delegates its unvisited neighbours.",
+      "incorrectOptionExplanations": {
+        "The row index": "Irrelevant.",
+        "The number of islands": "That is Number of Islands.",
+        "The perimeter": "That is Island Perimeter."
+      }
+    },
+    {
+      "id": "ma-insight-01",
+      "category": "main_insight",
+      "type": "free_recall",
+      "promptVariants": [
+        "Why must a cell be marked before exploring neighbours?",
+        "How is double counting prevented?"
+      ],
+      "answer": "Marking the cell as visited (set to 0) before recursing ensures each land cell is counted exactly once even though several neighbours may reach it.",
+      "keyPoints": [
+        "Mark on entry",
+        "Count once per cell"
+      ],
+      "explanation": "Same as Number of Islands but returning a count."
+    },
+    {
+      "id": "ma-time-01",
+      "category": "time_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Time complexity: ___",
+        "Complete the statement: Time complexity: ___"
+      ],
+      "answer": "O(m*n)",
+      "explanation": "Each cell is visited a constant number of times.",
+      "acceptedAnswers": [
+        "O(mn)"
+      ]
+    },
+    {
+      "id": "ma-space-01",
+      "category": "space_complexity",
+      "type": "free_recall",
+      "promptVariants": [
+        "What is the worst-case stack depth?",
+        "How can the recursion limit be avoided?"
+      ],
+      "answer": "O(m n) for a snake-like island. Use BFS (queue) or an explicit stack to avoid Python's recursion limit.",
+      "keyPoints": [
+        "O(mn) depth",
+        "Iterative alternatives"
+      ],
+      "explanation": "Typical for grid DFS."
+    },
+    {
+      "id": "ma-code-01",
+      "category": "code_reasoning",
+      "type": "code_question",
+      "promptVariants": [
+        "Why does your DFS check the bounds and `grid[r][c] == 1` at the start and again before recursing?",
+        "How could you remove the duplication?"
+      ],
+      "code": "def dfs(r, c):\n    if not (0 <= r < m and 0 <= c < n and grid[r][c] == 1):\n        return 0\n    grid[r][c] = 0\n    count = 1\n    for i in range(4):\n        nr, nc = r + DIR[i], c + DIR[i+1]\n        if 0 <= nr < m and 0 <= nc < n and grid[nr][nc] == 1:\n            count += dfs(nr, nc)\n    return count",
+      "answer": "The validity check at the top already returns 0 for invalid cells, so the check before the recursive call is redundant: simply `count += dfs(nr, nc)`. One of the two checks is enough.",
+      "keyPoints": [
+        "Top check suffices",
+        "Remove the redundant neighbour check"
+      ],
+      "explanation": "Redundant checks are harmless but noisy."
+    },
+    {
+      "id": "ma-edge-01",
+      "category": "edge_case",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "What is returned for a grid with no land?",
+        "How is the maximum initialised?"
+      ],
+      "options": [
+        "0",
+        "-1",
+        "1",
+        "None"
+      ],
+      "answer": "0",
+      "explanation": "best starts at 0 and no island ever updates it.",
+      "incorrectOptionExplanations": {
+        "-1": "The problem returns 0.",
+        "1": "No land means no area.",
+        "None": "The function returns an int."
+      }
+    }
+  ],
+  "generatedAt": "2026-10-01T14:37:19Z"
+}

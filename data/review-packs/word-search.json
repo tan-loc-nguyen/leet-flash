@@ -1,0 +1,170 @@
+{
+  "schemaVersion": 1,
+  "problemSlug": "word-search",
+  "summary": "Does the word exist as a path of adjacent (up/down/left/right) cells in the board, using each cell at most once?",
+  "patterns": [
+    "Backtracking",
+    "DFS",
+    "Matrix"
+  ],
+  "mainInsight": "DFS from every cell that matches the first letter, extending the match one character at a time into unvisited neighbours; mark the cell as used on the way in and unmark on the way out, and return as soon as the whole word is matched.",
+  "canonicalApproach": "DFS marking cells in place",
+  "approaches": [
+    {
+      "name": "DFS + visited set",
+      "summary": "A set of visited cells tracks the current path.",
+      "timeComplexity": "O(m n 3^L)",
+      "spaceComplexity": "O(L) + set",
+      "strengths": [
+        "Clear"
+      ],
+      "weaknesses": [
+        "Set overhead"
+      ],
+      "interviewRelevance": "Your approach."
+    },
+    {
+      "name": "DFS marking cells in place",
+      "summary": "Temporarily replace the cell with '#', restore on backtrack.",
+      "timeComplexity": "O(m n 3^L)",
+      "spaceComplexity": "O(L)",
+      "strengths": [
+        "No extra set"
+      ],
+      "weaknesses": [
+        "Mutates the board temporarily"
+      ],
+      "interviewRelevance": "The standard answer."
+    },
+    {
+      "name": "Pruning optimisations",
+      "summary": "Check letter counts first; search from the rarer end of the word.",
+      "timeComplexity": "Same worst case, much faster in practice",
+      "spaceComplexity": "O(L)",
+      "strengths": [
+        "Handles adversarial inputs"
+      ]
+    }
+  ],
+  "personalSolution": {
+    "approach": "DFS with a visited set and a shared path",
+    "timeComplexity": "O(m*n*3^L)",
+    "spaceComplexity": "O(L)",
+    "isOptimal": false,
+    "notes": "Correct answer but no early exit and leaves state uncleaned after finding the word. Return a boolean and short-circuit."
+  },
+  "commonMistakes": [],
+  "edgeCases": [],
+  "cards": [
+    {
+      "id": "ws-pattern-01",
+      "category": "pattern",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "Which pattern finds a path through a grid matching a string?",
+        "What does each DFS step choose?"
+      ],
+      "options": [
+        "Backtracking DFS over the 4 neighbours with a visited marker",
+        "BFS from every cell",
+        "Dynamic programming over the board",
+        "Binary search"
+      ],
+      "answer": "Backtracking DFS over the 4 neighbours with a visited marker",
+      "explanation": "The path must not reuse cells, so the visited state must be undone when backtracking.",
+      "incorrectOptionExplanations": {
+        "BFS from every cell": "BFS cannot easily forbid cell reuse per path.",
+        "Dynamic programming over the board": "The path-dependent visited state prevents standard DP.",
+        "Binary search": "Not a search problem."
+      }
+    },
+    {
+      "id": "ws-insight-01",
+      "category": "main_insight",
+      "type": "free_recall",
+      "promptVariants": [
+        "Why must the visited mark be removed after exploring a cell?",
+        "What happens if it is not?"
+      ],
+      "answer": "The visited set describes the cells on the CURRENT path only. A cell used on a failed path must be available again for other paths, so it has to be unmarked when the DFS returns. Leaving it marked would wrongly block valid alternative paths.",
+      "keyPoints": [
+        "Visited = current path only",
+        "Unmark on backtrack",
+        "Otherwise valid paths are missed"
+      ],
+      "explanation": "Marking in place with '#' follows the same rule."
+    },
+    {
+      "id": "ws-time-01",
+      "category": "time_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Time complexity for an m x n board and a word of length L: ___",
+        "Complete the statement: Time complexity for an m x n board and a word of length L: ___"
+      ],
+      "answer": "O(m*n*3^L)",
+      "explanation": "Each start cell explores up to 3 new directions per step for L steps.",
+      "acceptedAnswers": [
+        "O(mn * 3^L)",
+        "O(m n 3^L)",
+        "O(mn3^L)"
+      ]
+    },
+    {
+      "id": "ws-space-01",
+      "category": "space_complexity",
+      "type": "free_recall",
+      "promptVariants": [
+        "What is the extra space, and how does in-place marking help?",
+        "What does Word Search cost in memory and how can the visited set be avoided?"
+      ],
+      "answer": "O(L) for the recursion (the path length). Using a visited set adds up to O(L) entries; marking cells in place avoids the set entirely.",
+      "keyPoints": [
+        "Recursion O(L)",
+        "Set up to O(L)",
+        "In-place marking removes it"
+      ],
+      "explanation": "No O(mn) visited matrix is needed."
+    },
+    {
+      "id": "ws-code-01",
+      "category": "code_reasoning",
+      "type": "code_question",
+      "promptVariants": [
+        "After `found = True` your DFS returns without popping or unmarking, and the outer loops keep starting new searches. What problems can that cause and how do you fix them?",
+        "Rewrite the DFS to return a boolean."
+      ],
+      "code": "if len(path) == len(word):\n    found = True\n    return\nfor i in range(4):\n    ...\n    dfs(nr, nc)\npath.pop()\nseen.remove((r, c))\n# outer loops continue after found",
+      "answer": "Returning early skips the cleanup, so path/seen stay polluted; later dfs calls start with stale state and may do wasted work or odd branching, and the outer loops still scan every other start cell. Make dfs return True/False, stop as soon as it returns True (`if dfs(...): return True`), and clean up after failures only.",
+      "keyPoints": [
+        "Early return skips cleanup",
+        "State pollution",
+        "Return a boolean and short-circuit"
+      ],
+      "explanation": "The answer is still right here only because found is monotonic."
+    },
+    {
+      "id": "ws-edge-01",
+      "category": "edge_case",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "Can the same cell be used twice (e.g. word 'AA' on a 1x1 board containing 'A')?",
+        "What is the result?"
+      ],
+      "options": [
+        "No: the result is False because a cell can be used only once",
+        "Yes: True",
+        "Only for the first letter",
+        "Depends on the direction"
+      ],
+      "answer": "No: the result is False because a cell can be used only once",
+      "explanation": "The path must consist of distinct cells.",
+      "incorrectOptionExplanations": {
+        "Yes: True": "That would reuse the cell.",
+        "Only for the first letter": "No exceptions.",
+        "Depends on the direction": "Direction is irrelevant."
+      }
+    }
+  ],
+  "generatedAt": "2026-10-01T14:34:53Z"
+}

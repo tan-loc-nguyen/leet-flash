@@ -1,0 +1,154 @@
+{
+  "schemaVersion": 1,
+  "problemSlug": "permutations",
+  "summary": "Return all permutations of a list of distinct integers.",
+  "patterns": [
+    "Backtracking"
+  ],
+  "mainInsight": "Build a permutation position by position: at each step try every element not yet used, recurse, and undo. n! permutations, each costing O(n) to copy.",
+  "canonicalApproach": "Backtracking with a used set/array",
+  "approaches": [
+    {
+      "name": "Backtracking with a used set/array",
+      "summary": "Pick any unused element for the next position.",
+      "timeComplexity": "O(n * n!)",
+      "spaceComplexity": "O(n)",
+      "strengths": [
+        "Straightforward"
+      ],
+      "interviewRelevance": "Your approach."
+    },
+    {
+      "name": "In-place swapping",
+      "summary": "Swap the element at index start with each i >= start and recurse.",
+      "timeComplexity": "O(n * n!)",
+      "spaceComplexity": "O(n)",
+      "strengths": [
+        "No used structure"
+      ],
+      "weaknesses": [
+        "Mutates and restores the input"
+      ]
+    }
+  ],
+  "personalSolution": {
+    "approach": "Backtracking with a used set of values",
+    "timeComplexity": "O(n * n!)",
+    "spaceComplexity": "O(n)",
+    "isOptimal": true,
+    "notes": "Optimal pattern for distinct values; remove the dead code after return."
+  },
+  "commonMistakes": [],
+  "edgeCases": [],
+  "cards": [
+    {
+      "id": "pe2-pattern-01",
+      "category": "pattern",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "What is the decision at each level of the permutation tree?",
+        "How many leaves does the tree have?"
+      ],
+      "options": [
+        "Which unused element goes in the next position; n! leaves",
+        "Include or exclude each element; 2^n leaves",
+        "Which pair to swap; n^2 leaves",
+        "A binary choice; 2n leaves"
+      ],
+      "answer": "Which unused element goes in the next position; n! leaves",
+      "explanation": "The branching factor shrinks from n to 1 across the levels.",
+      "incorrectOptionExplanations": {
+        "Include or exclude each element; 2^n leaves": "That is Subsets.",
+        "Which pair to swap; n^2 leaves": "Not the structure.",
+        "A binary choice; 2n leaves": "Wrong count."
+      }
+    },
+    {
+      "id": "pe2-insight-01",
+      "category": "main_insight",
+      "type": "free_recall",
+      "promptVariants": [
+        "Why do you need a `seen`/used structure and how would duplicates change it?",
+        "What if the input had duplicate values?"
+      ],
+      "answer": "Each element must be used exactly once, so mark elements as used while they are on the current path and unmark on backtrack. Tracking VALUES in a set works only because values are distinct; with duplicate values you must track indices (a boolean array) and also skip repeated siblings after sorting (Permutations II).",
+      "keyPoints": [
+        "Track what is on the path",
+        "Values work only if distinct",
+        "Duplicates need indices + sibling skipping"
+      ],
+      "explanation": "Your `seen` set stores values."
+    },
+    {
+      "id": "pe2-time-01",
+      "category": "time_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Time complexity (counting copies): ___",
+        "Generating all permutations of n distinct items costs ___."
+      ],
+      "answer": "O(n * n!)",
+      "explanation": "n! leaves, each of length n to copy.",
+      "acceptedAnswers": [
+        "O(n*n!)",
+        "O(n! * n)"
+      ]
+    },
+    {
+      "id": "pe2-space-01",
+      "category": "space_complexity",
+      "type": "free_recall",
+      "promptVariants": [
+        "What is the auxiliary space excluding the output?",
+        "Besides the n! output lists, how much memory does the permutation backtracking use?"
+      ],
+      "answer": "O(n): the recursion depth, the path and the used set.",
+      "keyPoints": [
+        "Depth n",
+        "Path n",
+        "Used set n"
+      ],
+      "explanation": "The output has n! lists."
+    },
+    {
+      "id": "pe2-code-01",
+      "category": "code_reasoning",
+      "type": "code_question",
+      "promptVariants": [
+        "Why `seen.remove(path.pop())` at the end of the loop body, and what is wrong with the code after `return ans`?",
+        "What does `ans.append(path[:])` guard against?"
+      ],
+      "code": "def choose():\n    if len(path) == len(nums):\n        ans.append(path[:])\n        return\n    for num in nums:\n        if num in seen:\n            continue\n        seen.add(num)\n        path.append(num)\n        choose()\n        seen.remove(path.pop())",
+      "answer": "Backtracking must undo both mutations: path.pop() returns the last element, which is also removed from seen so the next iteration can use it again. The trailing `choose(0); return ans` lines are unreachable dead code left after the first return and can be deleted. path[:] copies the list since path is mutated afterwards.",
+      "keyPoints": [
+        "pop + unmark",
+        "Dead code after return",
+        "Copy at the leaf"
+      ],
+      "explanation": "Always clean up leftovers from earlier attempts."
+    },
+    {
+      "id": "pe2-edge-01",
+      "category": "edge_case",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "How many permutations of [1,2,3]?",
+        "What does the algorithm return for a single element?"
+      ],
+      "options": [
+        "6; and [[x]] for one element",
+        "3; and [[x]]",
+        "6; and []",
+        "9; and [[x,x]]"
+      ],
+      "answer": "6; and [[x]] for one element",
+      "explanation": "3! = 6 and a single element has exactly one permutation.",
+      "incorrectOptionExplanations": {
+        "3; and [[x]]": "3 is n, not n!.",
+        "6; and []": "A single element has one permutation.",
+        "9; and [[x,x]]": "Wrong counts."
+      }
+    }
+  ],
+  "generatedAt": "2026-10-01T14:34:53Z"
+}

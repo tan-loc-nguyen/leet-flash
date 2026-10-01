@@ -1,0 +1,172 @@
+{
+  "schemaVersion": 1,
+  "problemSlug": "number-of-islands",
+  "summary": "Count the connected groups of '1' cells (4-directional) in a grid.",
+  "patterns": [
+    "Graph",
+    "DFS",
+    "BFS",
+    "Matrix"
+  ],
+  "mainInsight": "Each unvisited land cell starts a new island; flood-fill (DFS/BFS) everything connected to it so it is never counted again. The number of flood fills started equals the number of islands.",
+  "canonicalApproach": "BFS flood fill",
+  "approaches": [
+    {
+      "name": "DFS flood fill (mutating the grid)",
+      "summary": "Mark visited land as '0' while exploring.",
+      "timeComplexity": "O(m n)",
+      "spaceComplexity": "O(m n) recursion worst case",
+      "strengths": [
+        "Simple, no visited set"
+      ],
+      "weaknesses": [
+        "Recursion depth up to m*n",
+        "Mutates the input"
+      ],
+      "interviewRelevance": "Your approach."
+    },
+    {
+      "name": "BFS flood fill",
+      "summary": "Queue of cells; mark when enqueuing.",
+      "timeComplexity": "O(m n)",
+      "spaceComplexity": "O(min(m, n)) frontier",
+      "strengths": [
+        "No recursion limit"
+      ],
+      "interviewRelevance": "Safest for large grids."
+    },
+    {
+      "name": "Union-Find",
+      "summary": "Union adjacent land cells; count components.",
+      "timeComplexity": "O(m n * alpha)",
+      "spaceComplexity": "O(m n)",
+      "strengths": [
+        "Good for dynamic variants (Number of Islands II)"
+      ],
+      "weaknesses": [
+        "More code"
+      ]
+    }
+  ],
+  "personalSolution": {
+    "approach": "DFS flood fill (mutating the grid)",
+    "timeComplexity": "O(m n)",
+    "spaceComplexity": "O(m n) recursion worst case",
+    "isOptimal": true,
+    "notes": "Correct and linear. Beware recursion depth on large grids: BFS or an explicit stack is safer."
+  },
+  "commonMistakes": [],
+  "edgeCases": [],
+  "cards": [
+    {
+      "id": "ni-pattern-01",
+      "category": "pattern",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "Which pattern counts connected components in a grid?",
+        "What starts a new island count?"
+      ],
+      "options": [
+        "Flood fill from each unvisited land cell (DFS/BFS)",
+        "Sorting rows",
+        "Binary search",
+        "Dynamic programming over rows"
+      ],
+      "answer": "Flood fill from each unvisited land cell (DFS/BFS)",
+      "explanation": "Each flood fill visits exactly one island, so the number of fills is the answer.",
+      "incorrectOptionExplanations": {
+        "Sorting rows": "Irrelevant.",
+        "Binary search": "Irrelevant.",
+        "Dynamic programming over rows": "Islands can wind across rows, so DP is not natural."
+      }
+    },
+    {
+      "id": "ni-insight-01",
+      "category": "main_insight",
+      "type": "free_recall",
+      "promptVariants": [
+        "Why does marking cells visited during the flood fill make the count correct?",
+        "What would happen without marking?"
+      ],
+      "answer": "Marking guarantees each land cell is processed once: after an island is explored all its cells are no longer '1', so the outer scan cannot start a second fill inside it. Without marking the DFS would loop forever (revisiting neighbours) and islands would be double counted.",
+      "keyPoints": [
+        "Mark visited cells",
+        "Each island explored once",
+        "Prevents infinite recursion"
+      ],
+      "explanation": "Marking in place avoids an extra visited set."
+    },
+    {
+      "id": "ni-time-01",
+      "category": "time_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Time complexity for an m x n grid: ___",
+        "Complete the statement: Time complexity for an m x n grid: ___"
+      ],
+      "answer": "O(m*n)",
+      "explanation": "Each cell is visited a constant number of times.",
+      "acceptedAnswers": [
+        "O(mn)",
+        "O(m n)"
+      ]
+    },
+    {
+      "id": "ni-space-01",
+      "category": "space_complexity",
+      "type": "free_recall",
+      "promptVariants": [
+        "What is the worst-case recursion depth of the DFS and why does BFS differ?",
+        "When can your DFS overflow the stack?"
+      ],
+      "answer": "A snake-shaped island can make DFS recurse up to m*n deep (O(m n) stack), risking Python's recursion limit on large grids. BFS keeps only the frontier (O(min(m, n)) for a grid), or use an explicit stack for DFS.",
+      "keyPoints": [
+        "O(mn) recursion worst case",
+        "BFS frontier is smaller",
+        "Iterative DFS avoids the limit"
+      ],
+      "explanation": "Python's default recursion limit is about 1000."
+    },
+    {
+      "id": "ni-code-01",
+      "category": "code_reasoning",
+      "type": "code_question",
+      "promptVariants": [
+        "Why set grid[r][c] = '0' at the start of dfs and check `grid[nr][nc] == '1'` before recursing?",
+        "Where is the island counted?"
+      ],
+      "code": "def dfs(r, c):\n    grid[r][c] = '0'\n    for i in range(4):\n        nr, nc = r + DIR[i], c + DIR[i + 1]\n        if 0 <= nr < m and 0 <= nc < n and grid[nr][nc] == '1':\n            dfs(nr, nc)\nfor i in range(m):\n    for j in range(n):\n        if grid[i][j] == '1':\n            dfs(i, j)\n            ans += 1",
+      "answer": "Marking on entry means each cell is processed once even when reached from several neighbours, and the neighbour check keeps the recursion inside the grid and on land. The count is incremented in the outer scan, once per fill started from an unvisited land cell. DIR = [0,1,0,-1,0] encodes the four directions as consecutive pairs.",
+      "keyPoints": [
+        "Mark on entry",
+        "Bounds + land check",
+        "Count at the outer loop",
+        "DIR pairs = 4 directions"
+      ],
+      "explanation": "Mention restoring the grid if mutation is not allowed."
+    },
+    {
+      "id": "ni-edge-01",
+      "category": "edge_case",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "Are diagonally adjacent '1' cells the same island?",
+        "What is the answer for [['1','0'],['0','1']]?"
+      ],
+      "options": [
+        "No: only 4-directional neighbours connect; the answer is 2",
+        "Yes: the answer is 1",
+        "Only horizontally: the answer is 1",
+        "It depends on the grid size"
+      ],
+      "answer": "No: only 4-directional neighbours connect; the answer is 2",
+      "explanation": "The problem defines islands by horizontal/vertical adjacency.",
+      "incorrectOptionExplanations": {
+        "Yes: the answer is 1": "Diagonals do not connect.",
+        "Only horizontally: the answer is 1": "Vertical also connects but these cells are not adjacent.",
+        "It depends on the grid size": "The definition is fixed."
+      }
+    }
+  ],
+  "generatedAt": "2026-10-01T14:37:19Z"
+}

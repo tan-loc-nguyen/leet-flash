@@ -1,0 +1,137 @@
+{
+  "schemaVersion": 1,
+  "problemSlug": "flood-fill",
+  "summary": "Recolour the connected region (same original colour, 4-directional) containing a starting pixel.",
+  "patterns": [
+    "Graph",
+    "DFS",
+    "Matrix"
+  ],
+  "mainInsight": "Starting from the pixel, recursively recolour every connected pixel that has the original colour. If the new colour equals the original, return immediately - otherwise the recolouring cannot mark pixels as visited and recursion never ends.",
+  "canonicalApproach": "DFS",
+  "approaches": [
+    {
+      "name": "DFS",
+      "summary": "Recolour and recurse into matching neighbours.",
+      "timeComplexity": "O(m n)",
+      "spaceComplexity": "O(m n) recursion worst case",
+      "strengths": [
+        "Short"
+      ],
+      "weaknesses": [
+        "Recursion depth"
+      ],
+      "interviewRelevance": "Your approach."
+    },
+    {
+      "name": "BFS",
+      "summary": "Queue-based fill.",
+      "timeComplexity": "O(m n)",
+      "spaceComplexity": "O(min(m, n))",
+      "strengths": [
+        "No recursion limit"
+      ]
+    }
+  ],
+  "personalSolution": {
+    "approach": "DFS",
+    "timeComplexity": "O(m n)",
+    "spaceComplexity": "O(m n) recursion worst case",
+    "isOptimal": true,
+    "notes": "Optimal; the early return for original == color is essential."
+  },
+  "commonMistakes": [],
+  "edgeCases": [],
+  "cards": [
+    {
+      "id": "ff-pattern-01",
+      "category": "pattern",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "Which pattern is Flood Fill?",
+        "What do you recurse on?"
+      ],
+      "options": [
+        "DFS/BFS over connected cells with the same colour",
+        "Binary search",
+        "Sorting",
+        "Dynamic programming"
+      ],
+      "answer": "DFS/BFS over connected cells with the same colour",
+      "explanation": "The region is defined by connectivity and equal colour.",
+      "incorrectOptionExplanations": {
+        "Binary search": "Irrelevant.",
+        "Sorting": "Irrelevant.",
+        "Dynamic programming": "Irrelevant."
+      }
+    },
+    {
+      "id": "ff-insight-01",
+      "category": "main_insight",
+      "type": "free_recall",
+      "promptVariants": [
+        "Why does recolouring double as the visited marker, and when does that fail?",
+        "Why return early when original == color?"
+      ],
+      "answer": "Changing a pixel to the new colour means it no longer equals the original colour, so the DFS naturally skips it later (no separate visited set). If the new colour equals the original, recolouring changes nothing, so pixels would be revisited forever; the early return avoids that.",
+      "keyPoints": [
+        "Recolour = visited marker",
+        "Fails when new == original",
+        "Early return"
+      ],
+      "explanation": "Same trick as Number of Islands."
+    },
+    {
+      "id": "ff-time-01",
+      "category": "time_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Time complexity: ___",
+        "Complete the statement: Time complexity: ___"
+      ],
+      "answer": "O(m*n)",
+      "explanation": "Each pixel is processed at most once.",
+      "acceptedAnswers": [
+        "O(mn)"
+      ]
+    },
+    {
+      "id": "ff-space-01",
+      "category": "space_complexity",
+      "type": "free_recall",
+      "promptVariants": [
+        "What is the worst-case recursion depth?",
+        "How deep can the Flood Fill recursion get, and what avoids the recursion limit?"
+      ],
+      "answer": "O(m n) when the region snakes through the whole image; BFS or an explicit stack avoids the recursion limit.",
+      "keyPoints": [
+        "O(mn)",
+        "Use BFS"
+      ],
+      "explanation": "Typical for grid DFS."
+    },
+    {
+      "id": "ff-edge-01",
+      "category": "edge_case",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "What happens when the new colour equals the starting pixel's colour?",
+        "Why is that a special case?"
+      ],
+      "options": [
+        "Return the image unchanged to avoid infinite recursion",
+        "Recolour everything to 0",
+        "Raise an error",
+        "Recolour only the start pixel"
+      ],
+      "answer": "Return the image unchanged to avoid infinite recursion",
+      "explanation": "Nothing would be marked as visited, so the DFS would revisit pixels without end.",
+      "incorrectOptionExplanations": {
+        "Recolour everything to 0": "Wrong behaviour.",
+        "Raise an error": "Not required.",
+        "Recolour only the start pixel": "It would not mark neighbours either."
+      }
+    }
+  ],
+  "generatedAt": "2026-10-01T14:37:19Z"
+}

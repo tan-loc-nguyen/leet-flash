@@ -1,0 +1,169 @@
+{
+  "schemaVersion": 1,
+  "problemSlug": "number-of-provinces",
+  "summary": "Count the groups of mutually connected cities given an adjacency matrix.",
+  "patterns": [
+    "Graph",
+    "DFS",
+    "Union Find"
+  ],
+  "mainInsight": "Provinces are the connected components of the graph. Run DFS/BFS from every unvisited city and count the number of searches started; union-find gives the same answer.",
+  "canonicalApproach": "DFS over the adjacency matrix",
+  "approaches": [
+    {
+      "name": "DFS over the adjacency matrix",
+      "summary": "dfs(i): for j with isConnected[i][j] unvisited, recurse.",
+      "timeComplexity": "O(n^2)",
+      "spaceComplexity": "O(n)",
+      "strengths": [
+        "No graph building"
+      ],
+      "interviewRelevance": "The simplest answer."
+    },
+    {
+      "name": "Build an adjacency list then DFS",
+      "summary": "Convert the matrix into lists.",
+      "timeComplexity": "O(n^2)",
+      "spaceComplexity": "O(n^2)",
+      "strengths": [
+        "Reuses a generic pattern"
+      ],
+      "weaknesses": [
+        "Extra memory"
+      ],
+      "interviewRelevance": "Your approach."
+    },
+    {
+      "name": "Union-Find",
+      "summary": "Union connected pairs; count roots.",
+      "timeComplexity": "O(n^2 * alpha)",
+      "spaceComplexity": "O(n)",
+      "strengths": [
+        "Good for incremental connectivity"
+      ],
+      "weaknesses": [
+        "More code"
+      ]
+    }
+  ],
+  "personalSolution": {
+    "approach": "Build an adjacency list, then DFS per component",
+    "timeComplexity": "O(n^2)",
+    "spaceComplexity": "O(n^2)",
+    "isOptimal": false,
+    "notes": "Correct. DFS directly on the matrix avoids the O(n^2) adjacency list."
+  },
+  "commonMistakes": [],
+  "edgeCases": [],
+  "cards": [
+    {
+      "id": "np2-pattern-01",
+      "category": "pattern",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "What graph concept does Number of Provinces ask for?",
+        "Which techniques count it?"
+      ],
+      "options": [
+        "Connected components via DFS/BFS or union-find",
+        "Shortest paths",
+        "Topological order",
+        "Minimum spanning tree"
+      ],
+      "answer": "Connected components via DFS/BFS or union-find",
+      "explanation": "A province is a group of cities connected directly or indirectly.",
+      "incorrectOptionExplanations": {
+        "Shortest paths": "No distances.",
+        "Topological order": "The graph is undirected.",
+        "Minimum spanning tree": "No weights."
+      }
+    },
+    {
+      "id": "np2-insight-01",
+      "category": "main_insight",
+      "type": "free_recall",
+      "promptVariants": [
+        "Why does each DFS start correspond to exactly one province?",
+        "What marks a city as belonging to a counted province?"
+      ],
+      "answer": "A DFS from a city visits every city reachable from it, i.e. its whole component, and marks them visited. Any later unvisited city must belong to a different component, so the number of DFS starts equals the number of components.",
+      "keyPoints": [
+        "DFS covers the whole component",
+        "Unvisited => new component",
+        "Count starts"
+      ],
+      "explanation": "Union-Find counts roots instead."
+    },
+    {
+      "id": "np2-time-01",
+      "category": "time_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Time complexity with an n x n matrix: ___",
+        "Complete the statement: Time complexity with an n x n matrix: ___"
+      ],
+      "answer": "O(n^2)",
+      "explanation": "Each matrix entry is examined a constant number of times.",
+      "acceptedAnswers": [
+        "O(n²)",
+        "quadratic"
+      ]
+    },
+    {
+      "id": "np2-space-01",
+      "category": "space_complexity",
+      "type": "free_recall",
+      "promptVariants": [
+        "What do the adjacency list and the visited set cost compared with DFS directly on the matrix?",
+        "Compare the memory of building an adjacency list with running DFS directly on the matrix."
+      ],
+      "answer": "The adjacency list costs O(n^2) in the worst case (dense graph), the visited set O(n), and recursion O(n). DFS directly on the matrix needs only O(n) (visited + recursion).",
+      "keyPoints": [
+        "List O(n^2)",
+        "Visited O(n)",
+        "Matrix DFS O(n)"
+      ],
+      "explanation": "The conversion is unnecessary."
+    },
+    {
+      "id": "np2-code-01",
+      "category": "code_reasoning",
+      "type": "code_question",
+      "promptVariants": [
+        "Why does `for node in graph.keys()` visit every city even though isolated cities exist?",
+        "What is the role of the diagonal entries?"
+      ],
+      "code": "for u in range(n):\n    for v in range(n):\n        if isConnected[u][v]:\n            graph[u].append(v)\n            graph[v].append(u)\nfor node in graph.keys():\n    if node not in visited:\n        dfs(node)\n        ans += 1",
+      "answer": "The diagonal isConnected[i][i] is 1 (every city is connected to itself), so every city gets at least one entry and appears in graph.keys(). Without that guarantee isolated cities would be missed; looping `for node in range(n)` is the robust choice.",
+      "keyPoints": [
+        "Diagonal makes every city a key",
+        "range(n) is more robust",
+        "Isolated city = its own province"
+      ],
+      "explanation": "Self-loops are harmless for DFS with a visited set."
+    },
+    {
+      "id": "np2-edge-01",
+      "category": "edge_case",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "What is the answer for [[1,0,0],[0,1,0],[0,0,1]]?",
+        "How many provinces if no cities are connected?"
+      ],
+      "options": [
+        "3 (each city is its own province)",
+        "1",
+        "0",
+        "9"
+      ],
+      "answer": "3 (each city is its own province)",
+      "explanation": "With only the diagonal set every city is isolated.",
+      "incorrectOptionExplanations": {
+        "1": "No connections exist.",
+        "0": "There are cities.",
+        "9": "The number of matrix entries."
+      }
+    }
+  ],
+  "generatedAt": "2026-10-01T14:37:19Z"
+}

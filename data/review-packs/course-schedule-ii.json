@@ -1,0 +1,153 @@
+{
+  "schemaVersion": 1,
+  "problemSlug": "course-schedule-ii",
+  "summary": "Return a valid order to take all courses, or an empty list if impossible.",
+  "patterns": [
+    "Topological Sort",
+    "Graph",
+    "BFS"
+  ],
+  "mainInsight": "Same as Course Schedule, but keep the order in which Kahn's algorithm removes nodes: it is a topological order if all n courses were processed, otherwise a cycle makes it impossible.",
+  "canonicalApproach": "Kahn's algorithm",
+  "approaches": [
+    {
+      "name": "DFS postorder (reverse)",
+      "summary": "Reverse the finishing order, with cycle detection.",
+      "timeComplexity": "O(V + E)",
+      "spaceComplexity": "O(V + E)",
+      "strengths": [
+        "Classic"
+      ],
+      "weaknesses": [
+        "Recursion depth"
+      ]
+    },
+    {
+      "name": "Kahn's algorithm",
+      "summary": "Process indegree-0 courses; the processing order is the answer.",
+      "timeComplexity": "O(V + E)",
+      "spaceComplexity": "O(V + E)",
+      "strengths": [
+        "Iterative, simple cycle check"
+      ],
+      "interviewRelevance": "Your approach; the expected answer."
+    }
+  ],
+  "personalSolution": {
+    "approach": "Kahn's algorithm",
+    "timeComplexity": "O(V + E)",
+    "spaceComplexity": "O(V + E)",
+    "isOptimal": true,
+    "notes": "Optimal; the level-by-level loop is unnecessary."
+  },
+  "commonMistakes": [],
+  "edgeCases": [],
+  "cards": [
+    {
+      "id": "c2s-pattern-01",
+      "category": "pattern",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "What do you return for Course Schedule II?",
+        "How does Kahn's algorithm produce the order?"
+      ],
+      "options": [
+        "The order in which indegree-0 nodes are dequeued (or [] if a cycle exists)",
+        "The reverse of the input",
+        "Sorted course numbers",
+        "Any permutation"
+      ],
+      "answer": "The order in which indegree-0 nodes are dequeued (or [] if a cycle exists)",
+      "explanation": "A course is dequeued only after all its prerequisites, giving a valid topological order.",
+      "incorrectOptionExplanations": {
+        "The reverse of the input": "Unrelated.",
+        "Sorted course numbers": "Ignores prerequisites.",
+        "Any permutation": "Must respect prerequisites."
+      }
+    },
+    {
+      "id": "c2s-insight-01",
+      "category": "main_insight",
+      "type": "free_recall",
+      "promptVariants": [
+        "Why is the dequeue order a valid schedule?",
+        "When do you return []?"
+      ],
+      "answer": "A node enters the queue only when its indegree reaches 0, i.e. all its prerequisites have already been dequeued, so every course appears after its prerequisites. If fewer than n nodes are dequeued, a cycle blocks some courses and no valid order exists, so return [].",
+      "keyPoints": [
+        "Enqueued when prerequisites done",
+        "All n dequeued => valid order",
+        "Otherwise []"
+      ],
+      "explanation": "Several valid orders may exist."
+    },
+    {
+      "id": "c2s-time-01",
+      "category": "time_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Time complexity: ___",
+        "Complete the statement: Time complexity: ___"
+      ],
+      "answer": "O(V+E)",
+      "explanation": "Each course and edge is handled once.",
+      "acceptedAnswers": [
+        "O(V + E)"
+      ]
+    },
+    {
+      "id": "c2s-space-01",
+      "category": "space_complexity",
+      "type": "free_recall",
+      "promptVariants": [
+        "What is the space cost?",
+        "What is the memory footprint of Kahn's algorithm for Course Schedule II?"
+      ],
+      "answer": "O(V + E): adjacency list, indegree array, queue and the output order.",
+      "keyPoints": [
+        "O(V+E)"
+      ],
+      "explanation": "Same as Course Schedule I."
+    },
+    {
+      "id": "c2s-code-01",
+      "category": "code_reasoning",
+      "type": "code_question",
+      "promptVariants": [
+        "Why process the queue level by level with `m = len(queue)` here though levels are not needed?",
+        "What does `len(ans) < n` check?"
+      ],
+      "code": "while queue:\n    m = len(queue)\n    for _ in range(m):\n        node = queue.popleft()\n        ans.append(node)\n        ...\nif len(ans) < n:\n    return []\nreturn ans",
+      "answer": "The level-by-level loop is unnecessary for a topological order: a plain `while queue: node = queue.popleft()` gives the same result (levels only matter if you need the number of semesters). `len(ans) < n` detects a cycle because courses on a cycle are never enqueued.",
+      "keyPoints": [
+        "Levels not required",
+        "Plain loop suffices",
+        "Fewer than n => cycle"
+      ],
+      "explanation": "Level processing would give the minimum number of semesters (Parallel Courses)."
+    },
+    {
+      "id": "c2s-edge-01",
+      "category": "edge_case",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "What is returned for n = 1 and no prerequisites?",
+        "How many orders exist for 2 independent courses?"
+      ],
+      "options": [
+        "[0]; two orders ([0,1] or [1,0])",
+        "[]; one",
+        "[0]; one",
+        "[1]; two"
+      ],
+      "answer": "[0]; two orders ([0,1] or [1,0])",
+      "explanation": "A single course is trivially orderable and independent courses can appear in either order.",
+      "incorrectOptionExplanations": {
+        "[]; one": "A single course is schedulable.",
+        "[0]; one": "Independent courses have two valid orders.",
+        "[1]; two": "Course 0 is the only course for n = 1."
+      }
+    }
+  ],
+  "generatedAt": "2026-10-01T14:37:19Z"
+}

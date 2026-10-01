@@ -1,0 +1,164 @@
+{
+  "schemaVersion": 1,
+  "problemSlug": "surrounded-regions",
+  "summary": "Capture all 'O' regions that are fully surrounded by 'X' (not connected to the border) by flipping them to 'X'.",
+  "patterns": [
+    "Graph",
+    "DFS",
+    "Matrix"
+  ],
+  "mainInsight": "Think in reverse: any 'O' connected to the border can never be captured. Mark all border-connected 'O' cells (DFS/BFS from the border), then flip every remaining 'O' to 'X' and restore the marked ones.",
+  "canonicalApproach": "Mark border-connected cells, then flip",
+  "approaches": [
+    {
+      "name": "Search each region for a border contact",
+      "summary": "Flood fill every region and check if it touches the border.",
+      "timeComplexity": "O(m n)",
+      "spaceComplexity": "O(m n)",
+      "strengths": [
+        "Direct"
+      ],
+      "weaknesses": [
+        "Two phases per region"
+      ]
+    },
+    {
+      "name": "Mark border-connected cells, then flip",
+      "summary": "DFS from border 'O's; flip unmarked 'O's.",
+      "timeComplexity": "O(m n)",
+      "spaceComplexity": "O(m n)",
+      "strengths": [
+        "Simple and standard"
+      ],
+      "interviewRelevance": "Your approach (with a set of safe cells)."
+    },
+    {
+      "name": "Mark with a temporary character",
+      "summary": "Temporarily change safe cells to 'E' and restore after.",
+      "timeComplexity": "O(m n)",
+      "spaceComplexity": "O(1) extra besides recursion",
+      "strengths": [
+        "No set"
+      ],
+      "interviewRelevance": "The usual in-place variant."
+    }
+  ],
+  "personalSolution": {
+    "approach": "DFS from border 'O's into a safe set, then flip the rest",
+    "timeComplexity": "O(m n)",
+    "spaceComplexity": "O(m n)",
+    "isOptimal": true,
+    "notes": "Correct. A temporary in-place marker avoids the set."
+  },
+  "commonMistakes": [],
+  "edgeCases": [],
+  "cards": [
+    {
+      "id": "sr-pattern-01",
+      "category": "pattern",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "What is the key trick for Surrounded Regions?",
+        "Which cells are safe from capture?"
+      ],
+      "options": [
+        "Start from the border: 'O's connected to the border are safe",
+        "Flip all 'O's",
+        "Search from the centre",
+        "Use binary search"
+      ],
+      "answer": "Start from the border: 'O's connected to the border are safe",
+      "explanation": "A region is captured only if no cell of it touches the border.",
+      "incorrectOptionExplanations": {
+        "Flip all 'O's": "Border regions must stay.",
+        "Search from the centre": "Interior regions are the ones to capture.",
+        "Use binary search": "Irrelevant."
+      }
+    },
+    {
+      "id": "sr-insight-01",
+      "category": "main_insight",
+      "type": "free_recall",
+      "promptVariants": [
+        "Why is it easier to find the regions that are NOT captured?",
+        "How many starting points does the border search need?"
+      ],
+      "answer": "A region is safe if any of its cells lies on the border, so a flood fill from all border 'O' cells finds every safe cell in O(m n). The captured cells are exactly the remaining 'O's, so a final scan flips them. Checking each interior region for border contact is more complicated.",
+      "keyPoints": [
+        "Safe = connected to the border",
+        "Flood fill from all border cells",
+        "Flip the rest"
+      ],
+      "explanation": "A set (or temporary marker) records the safe cells."
+    },
+    {
+      "id": "sr-time-01",
+      "category": "time_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Time complexity: ___",
+        "Complete the statement: Time complexity: ___"
+      ],
+      "answer": "O(m*n)",
+      "explanation": "Each cell is visited a constant number of times.",
+      "acceptedAnswers": [
+        "O(mn)"
+      ]
+    },
+    {
+      "id": "sr-space-01",
+      "category": "space_complexity",
+      "type": "free_recall",
+      "promptVariants": [
+        "What do the visited set and recursion cost, and how can the set be avoided?",
+        "Describe the in-place marking alternative."
+      ],
+      "answer": "The set stores up to O(m n) safe cells and the recursion can reach O(m n) depth. Marking safe cells in place with a temporary character (e.g. 'E'), flipping remaining 'O' to 'X' and converting 'E' back to 'O' removes the set.",
+      "keyPoints": [
+        "Set O(mn)",
+        "Temporary marker removes it"
+      ],
+      "explanation": "Recursion depth remains unless BFS is used."
+    },
+    {
+      "id": "sr-code-01",
+      "category": "code_reasoning",
+      "type": "code_question",
+      "promptVariants": [
+        "Your dfs takes a `mark` flag. What do the two modes do and why does the final loop only flip cells not in `not_valid`?",
+        "Explain the call pattern."
+      ],
+      "code": "for i in [0, m - 1]:\n    for j in range(n):\n        if board[i][j] == 'O':\n            dfs(i, j, False)\n...\nfor i in range(m):\n    for j in range(n):\n        if board[i][j] == 'O' and (i, j) not in not_valid:\n            dfs(i, j, True)",
+      "answer": "With mark=False the DFS collects border-connected 'O's into not_valid (safe set) without changing the board. With mark=True it flips an entire connected region to 'X'. The last loop starts a flipping DFS only from 'O's not in the safe set; flipped cells become 'X' so they are not revisited.",
+      "keyPoints": [
+        "mark=False collects safe cells",
+        "mark=True flips a region",
+        "Skip safe cells"
+      ],
+      "explanation": "A single pass with temporary markers is simpler."
+    },
+    {
+      "id": "sr-edge-01",
+      "category": "edge_case",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "Is an 'O' on the border ever captured?",
+        "What about boards smaller than 3x3?"
+      ],
+      "options": [
+        "No: border cells and anything connected to them are never captured; boards under 3x3 have nothing to capture",
+        "Yes if surrounded by X",
+        "Only corners are safe",
+        "Only the first row is safe"
+      ],
+      "answer": "No: border cells and anything connected to them are never captured; boards under 3x3 have nothing to capture",
+      "explanation": "A captured region must be completely enclosed, which requires interior cells.",
+      "incorrectOptionExplanations": {
+        "Yes if surrounded by X": "Border cells cannot be surrounded on all four sides.",
+        "Only corners are safe": "All border cells are safe.",
+        "Only the first row is safe": "All four borders are safe."
+      }
+    }
+  ],
+  "generatedAt": "2026-10-01T14:37:19Z"
+}

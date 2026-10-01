@@ -1,0 +1,163 @@
+{
+  "schemaVersion": 1,
+  "problemSlug": "generate-parentheses",
+  "summary": "Generate all well-formed strings with n pairs of parentheses.",
+  "patterns": [
+    "Backtracking"
+  ],
+  "mainInsight": "Build the string left to right, adding '(' while fewer than n are used and ')' while it would not exceed the number of '(' so far; every string built this way is valid, so nothing needs to be filtered afterwards.",
+  "canonicalApproach": "Backtracking with open/close counts",
+  "approaches": [
+    {
+      "name": "Brute force + filter",
+      "summary": "Generate all 2^(2n) strings and keep the valid ones.",
+      "timeComplexity": "O(2^(2n) * n)",
+      "spaceComplexity": "O(n)",
+      "weaknesses": [
+        "Exponentially more work"
+      ]
+    },
+    {
+      "name": "Backtracking with open/close counts",
+      "summary": "Add '(' if opens < n; add ')' if closes < opens.",
+      "timeComplexity": "O(4^n / sqrt(n))",
+      "spaceComplexity": "O(n) + output",
+      "strengths": [
+        "Only valid prefixes are explored"
+      ],
+      "interviewRelevance": "The expected answer."
+    },
+    {
+      "name": "Dynamic programming / closure numbers",
+      "summary": "Build n from smaller solutions: ( A ) B.",
+      "timeComplexity": "O(4^n / sqrt(n))",
+      "spaceComplexity": "O(4^n / sqrt(n))",
+      "strengths": [
+        "No recursion on strings"
+      ],
+      "weaknesses": [
+        "Needs memoisation"
+      ]
+    }
+  ],
+  "personalSolution": {
+    "approach": "Backtracking that prunes invalid prefixes after the fact",
+    "timeComplexity": "O(4^n / sqrt(n)) with extra calls",
+    "spaceComplexity": "O(n)",
+    "isOptimal": true,
+    "notes": "Correct. Add a return at the base case and prune before recursing."
+  },
+  "commonMistakes": [],
+  "edgeCases": [],
+  "cards": [
+    {
+      "id": "gp-pattern-01",
+      "category": "pattern",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "What rules define a valid prefix of parentheses?",
+        "Which two conditions allow adding a character?"
+      ],
+      "options": [
+        "'(' allowed while opens < n; ')' allowed while closes < opens",
+        "Any character any time",
+        "Only alternate '(' and ')'",
+        "')' first then '('"
+      ],
+      "answer": "'(' allowed while opens < n; ')' allowed while closes < opens",
+      "explanation": "These constraints ensure every prefix can be extended to a valid string.",
+      "incorrectOptionExplanations": {
+        "Any character any time": "That generates invalid strings.",
+        "Only alternate '(' and ')'": "Too restrictive, e.g. '((()))'.",
+        "')' first then '('": "A close can never come first."
+      }
+    },
+    {
+      "id": "gp-insight-01",
+      "category": "main_insight",
+      "type": "free_recall",
+      "promptVariants": [
+        "Why prune at placement time instead of filtering at the end?",
+        "What invariant do the counts maintain?"
+      ],
+      "answer": "Checking the constraints before adding a character keeps every partial string a valid prefix, so only valid strings are ever completed. Invariant: 0 <= closes <= opens <= n. Your version generates the invalid child and then rejects it at the top of the next call, which is correct but does extra calls.",
+      "keyPoints": [
+        "Prune before recursing",
+        "closes <= opens <= n",
+        "Only valid prefixes explored"
+      ],
+      "explanation": "The number of results is the n-th Catalan number."
+    },
+    {
+      "id": "gp-time-01",
+      "category": "time_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "The number of results is the Catalan number, so the time is about ___ (excluding string building).",
+        "Complete the statement: The number of results is the Catalan number, so the time is about ___ (excluding string building)."
+      ],
+      "answer": "O(4^n / sqrt(n))",
+      "explanation": "C_n ~ 4^n / (n^1.5), each result of length 2n.",
+      "acceptedAnswers": [
+        "O(4^n)",
+        "Catalan",
+        "O(4^n/sqrt(n))"
+      ]
+    },
+    {
+      "id": "gp-space-01",
+      "category": "space_complexity",
+      "type": "free_recall",
+      "promptVariants": [
+        "What is the auxiliary space excluding the output?",
+        "Besides the output, how much memory does the parentheses generator use?"
+      ],
+      "answer": "O(n): recursion depth up to 2n and the path list of up to 2n characters.",
+      "keyPoints": [
+        "Depth 2n",
+        "Path length 2n"
+      ],
+      "explanation": "The output has Catalan(n) strings."
+    },
+    {
+      "id": "gp-code-01",
+      "category": "code_reasoning",
+      "type": "code_question",
+      "promptVariants": [
+        "Why does your base case not `return` after appending, and what do the first-line checks do?",
+        "How would you restructure to prune earlier?"
+      ],
+      "code": "def choose(opens, closes):\n    if opens < closes or opens > n or closes > n:\n        return\n    if opens + closes == 2 * n:\n        ans.append(''.join(path))\n    for p in '()':\n        path.append(p)\n        if p == ')':\n            choose(opens, closes + 1)\n        else:\n            choose(opens + 1, closes)\n        path.pop()",
+      "answer": "At length 2n it appends but keeps looping; the next calls are immediately rejected by the first-line checks (counts exceed n), so the result is right but wasteful - add a `return` after appending. The first line rejects invalid prefixes after the fact; better to test before recursing: `if opens < n: ...'('...` and `if closes < opens: ...')'...`.",
+      "keyPoints": [
+        "Add return at the base case",
+        "Prune before recursing",
+        "Counts invariant"
+      ],
+      "explanation": "Fewer calls, same output."
+    },
+    {
+      "id": "gp-edge-01",
+      "category": "edge_case",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "How many strings for n = 3?",
+        "Which is the Catalan number?"
+      ],
+      "options": [
+        "5",
+        "3",
+        "6",
+        "8"
+      ],
+      "answer": "5",
+      "explanation": "C_3 = 5: ((())), (()()), (())(), ()(()), ()()().",
+      "incorrectOptionExplanations": {
+        "3": "That is n.",
+        "6": "Not Catalan(3).",
+        "8": "That is 2^3."
+      }
+    }
+  ],
+  "generatedAt": "2026-10-01T14:34:53Z"
+}

@@ -1,0 +1,158 @@
+{
+  "schemaVersion": 1,
+  "problemSlug": "island-perimeter",
+  "summary": "Compute the perimeter of the single island in a grid.",
+  "patterns": [
+    "Matrix"
+  ],
+  "mainInsight": "Each land cell contributes 4 sides minus the sides shared with adjacent land cells. Equivalently count, for every land cell, the neighbours that are water or outside the grid.",
+  "canonicalApproach": "Count exposed edges per land cell",
+  "approaches": [
+    {
+      "name": "Count exposed edges per land cell",
+      "summary": "For each land cell count neighbours that are water/out of bounds.",
+      "timeComplexity": "O(m n)",
+      "spaceComplexity": "O(1)",
+      "strengths": [
+        "No traversal needed"
+      ],
+      "interviewRelevance": "The expected answer."
+    },
+    {
+      "name": "4 * land - 2 * adjacent pairs",
+      "summary": "Count land cells and right/down adjacencies.",
+      "timeComplexity": "O(m n)",
+      "spaceComplexity": "O(1)",
+      "strengths": [
+        "Neat formula"
+      ]
+    },
+    {
+      "name": "DFS/BFS over the island",
+      "summary": "Traverse from one land cell.",
+      "timeComplexity": "O(m n)",
+      "spaceComplexity": "O(m n)",
+      "weaknesses": [
+        "Unnecessary work"
+      ]
+    }
+  ],
+  "personalSolution": {
+    "approach": "Iterate land cells (queue) and count exposed edges",
+    "timeComplexity": "O(m n)",
+    "spaceComplexity": "O(m n)",
+    "isOptimal": false,
+    "notes": "Correct. The queue is unnecessary: scan the grid and count exposed edges with O(1) extra space."
+  },
+  "commonMistakes": [],
+  "edgeCases": [],
+  "cards": [
+    {
+      "id": "ip-pattern-01",
+      "category": "pattern",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "What is the perimeter in terms of land cells and shared edges?",
+        "Which formula gives the perimeter?"
+      ],
+      "options": [
+        "4 * land cells - 2 * (number of shared edges)",
+        "Number of land cells",
+        "Rows + columns",
+        "Area squared"
+      ],
+      "answer": "4 * land cells - 2 * (number of shared edges)",
+      "explanation": "Every shared edge hides two cell sides (one from each cell).",
+      "incorrectOptionExplanations": {
+        "Number of land cells": "That is the area.",
+        "Rows + columns": "Unrelated.",
+        "Area squared": "Unrelated."
+      }
+    },
+    {
+      "id": "ip-insight-01",
+      "category": "main_insight",
+      "type": "free_recall",
+      "promptVariants": [
+        "Why is no DFS/BFS needed for Island Perimeter?",
+        "What does each land cell contribute locally?"
+      ],
+      "answer": "The perimeter is a sum of local contributions: each land cell adds one unit for every side that touches water or the grid boundary. That can be counted by a simple scan over all cells without exploring connectivity (the problem guarantees a single island).",
+      "keyPoints": [
+        "Local counting",
+        "Water/boundary neighbours",
+        "Single island guarantee"
+      ],
+      "explanation": "Your BFS queue only serves as a list of land cells."
+    },
+    {
+      "id": "ip-time-01",
+      "category": "time_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Time complexity: ___",
+        "Complete the statement: Time complexity: ___"
+      ],
+      "answer": "O(m*n)",
+      "explanation": "Each cell and its four neighbours are checked once.",
+      "acceptedAnswers": [
+        "O(mn)"
+      ]
+    },
+    {
+      "id": "ip-space-01",
+      "category": "space_complexity",
+      "type": "free_recall",
+      "promptVariants": [
+        "Your solution stores every land cell in a queue. What is the cost and the O(1) alternative?",
+        "How much memory does your Island Perimeter queue use and how can you reach O(1) extra space?"
+      ],
+      "answer": "The queue holds up to m*n coordinates (O(mn) space). Scanning the grid directly and counting exposed edges needs O(1) extra space.",
+      "keyPoints": [
+        "O(mn) queue",
+        "Direct scan O(1)"
+      ],
+      "explanation": "You never actually use BFS order."
+    },
+    {
+      "id": "ip-code-01",
+      "category": "code_reasoning",
+      "type": "code_question",
+      "promptVariants": [
+        "Why does the condition include both `grid[nr][nc] == 0` inside the grid and out-of-bounds checks?",
+        "Simplify the condition."
+      ],
+      "code": "if (0 <= nr < m and 0 <= nc < n and grid[nr][nc] == 0) or nr < 0 or nr >= m or nc < 0 or nc >= n:\n    perimeter += 1",
+      "answer": "A neighbour contributes to the perimeter if it is water or outside the grid. The two cases are checked separately because indexing out of range would raise an error. Simplify with one expression: `if not (0 <= nr < m and 0 <= nc < n) or grid[nr][nc] == 0:`.",
+      "keyPoints": [
+        "Water or outside the grid",
+        "Short-circuit protects indexing",
+        "Combine into one condition"
+      ],
+      "explanation": "Equivalent logic, fewer branches."
+    },
+    {
+      "id": "ip-edge-01",
+      "category": "edge_case",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "What is the perimeter of a single land cell?",
+        "What about a 1x2 horizontal island?"
+      ],
+      "options": [
+        "4 and 6",
+        "1 and 2",
+        "4 and 4",
+        "2 and 4"
+      ],
+      "answer": "4 and 6",
+      "explanation": "A lone cell has 4 exposed sides; two adjacent cells share one edge: 2 * 4 - 2 = 6.",
+      "incorrectOptionExplanations": {
+        "1 and 2": "Counts cells, not edges.",
+        "4 and 4": "The shared edge reduces the perimeter, but not to the same as one cell.",
+        "2 and 4": "Wrong values."
+      }
+    }
+  ],
+  "generatedAt": "2026-10-01T14:37:19Z"
+}

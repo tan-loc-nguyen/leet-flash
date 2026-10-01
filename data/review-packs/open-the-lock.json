@@ -1,0 +1,155 @@
+{
+  "schemaVersion": 1,
+  "problemSlug": "open-the-lock",
+  "summary": "Find the minimum number of wheel turns to reach the target lock combination from '0000', avoiding deadends.",
+  "patterns": [
+    "Graph",
+    "BFS"
+  ],
+  "mainInsight": "Model each 4-digit combination as a graph node connected to the 8 states reachable by one turn; the minimum number of turns is the BFS distance from '0000' to the target, skipping deadends and visited states.",
+  "canonicalApproach": "BFS over states",
+  "approaches": [
+    {
+      "name": "BFS over states",
+      "summary": "Level-by-level BFS with a visited set.",
+      "timeComplexity": "O(10^4 * 8)",
+      "spaceComplexity": "O(10^4)",
+      "strengths": [
+        "Natural shortest path"
+      ],
+      "interviewRelevance": "Your approach; the expected answer."
+    },
+    {
+      "name": "Bidirectional BFS",
+      "summary": "Search from both the start and the target.",
+      "timeComplexity": "Typically much faster",
+      "spaceComplexity": "O(10^4)",
+      "strengths": [
+        "Fewer states explored"
+      ],
+      "weaknesses": [
+        "More code"
+      ]
+    }
+  ],
+  "personalSolution": {
+    "approach": "BFS over states with a visited set",
+    "timeComplexity": "O(10^4 * 8)",
+    "spaceComplexity": "O(10^4)",
+    "isOptimal": true,
+    "notes": "Optimal; bidirectional BFS is a common speed-up."
+  },
+  "commonMistakes": [],
+  "edgeCases": [],
+  "cards": [
+    {
+      "id": "ol-pattern-01",
+      "category": "pattern",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "Which algorithm finds the minimum number of moves in an unweighted state graph?",
+        "How are the lock states modelled?"
+      ],
+      "options": [
+        "BFS over combinations, with 8 neighbours each",
+        "DFS",
+        "Dijkstra with weights",
+        "Sorting the deadends"
+      ],
+      "answer": "BFS over combinations, with 8 neighbours each",
+      "explanation": "All moves cost one turn, so BFS gives shortest paths.",
+      "incorrectOptionExplanations": {
+        "DFS": "Does not guarantee the shortest path.",
+        "Dijkstra with weights": "Unnecessary: all edges have weight 1.",
+        "Sorting the deadends": "Irrelevant."
+      }
+    },
+    {
+      "id": "ol-insight-01",
+      "category": "main_insight",
+      "type": "free_recall",
+      "promptVariants": [
+        "Why is BFS guaranteed to give the minimum number of turns?",
+        "What are the graph's nodes and edges?"
+      ],
+      "answer": "Nodes are the 10^4 four-digit combinations; edges connect combinations that differ by one wheel turned one step (8 edges per node). With unit edge weights BFS visits states in increasing distance, so the first time the target is reached is by a shortest path.",
+      "keyPoints": [
+        "Nodes = 10^4 states",
+        "8 neighbours each",
+        "BFS = unit weights"
+      ],
+      "explanation": "Deadends are simply removed nodes."
+    },
+    {
+      "id": "ol-time-01",
+      "category": "time_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Upper bound on states times moves: ___",
+        "Complete the statement: Upper bound on states times moves: ___"
+      ],
+      "answer": "O(10^4 * 8)",
+      "explanation": "At most 10^4 states each expanded with 8 moves (and a string rebuild per move).",
+      "acceptedAnswers": [
+        "O(10^4)",
+        "O(N * 8)",
+        "constant"
+      ]
+    },
+    {
+      "id": "ol-space-01",
+      "category": "space_complexity",
+      "type": "free_recall",
+      "promptVariants": [
+        "What does the visited set cost?",
+        "How much memory does the visited set of the lock BFS need?"
+      ],
+      "answer": "O(10^4) states (the queue and the seen set); this is constant because the state space is fixed.",
+      "keyPoints": [
+        "Up to 10^4 states",
+        "Constant"
+      ],
+      "explanation": "A deadends set adds O(d)."
+    },
+    {
+      "id": "ol-code-01",
+      "category": "code_reasoning",
+      "type": "code_question",
+      "promptVariants": [
+        "Why is `init` checked against deadends first and why is `target in seen` tested at the start of each level?",
+        "How does a rotation of '9' behave?"
+      ],
+      "code": "init = '0000'\nif init in deadends:\n    return -1\nqueue = deque([init])\nseen = set(queue)\ndis = 0\nwhile queue:\n    n = len(queue)\n    if target in seen:\n        return dis\n    dis += 1\n    ...",
+      "answer": "If the start is itself a deadend the lock is stuck immediately (-1). Checking `target in seen` at the beginning of each level (the target being added when discovered) returns the level count; for target == '0000' it returns 0 straight away. Rotating a digit uses modular arithmetic: (digit + 1) % 10 and (digit - 1) % 10, so 9 wraps to 0 and 0 wraps to 9.",
+      "keyPoints": [
+        "Start in deadends => -1",
+        "Target discovered => dis",
+        "Wheels wrap modulo 10"
+      ],
+      "explanation": "Marking visited when enqueuing keeps each state in the queue once."
+    },
+    {
+      "id": "ol-edge-01",
+      "category": "edge_case",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "What is the answer when target is a deadend?",
+        "Can you reach it?"
+      ],
+      "options": [
+        "-1 (deadends are never entered)",
+        "1",
+        "0",
+        "The distance ignoring deadends"
+      ],
+      "answer": "-1 (deadends are never entered)",
+      "explanation": "A deadend state is never added to the queue, so it is never reached.",
+      "incorrectOptionExplanations": {
+        "1": "Not generally.",
+        "0": "Only if the target is '0000'.",
+        "The distance ignoring deadends": "Deadends are blocking."
+      }
+    }
+  ],
+  "generatedAt": "2026-10-01T14:37:19Z"
+}

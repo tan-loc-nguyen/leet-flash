@@ -1,0 +1,146 @@
+{
+  "schemaVersion": 1,
+  "problemSlug": "subsets",
+  "summary": "Return all subsets (the power set) of a list of distinct integers.",
+  "patterns": [
+    "Backtracking",
+    "Bit Manipulation"
+  ],
+  "mainInsight": "Every node of the include/skip decision tree is a subset: record the current path at every call, then extend it with each later element (start index) and backtrack. There are 2^n subsets.",
+  "canonicalApproach": "Backtracking recording at every node",
+  "approaches": [
+    {
+      "name": "Backtracking recording at every node",
+      "summary": "Append path[:] on entry; loop over i >= start.",
+      "timeComplexity": "O(n * 2^n)",
+      "spaceComplexity": "O(n)",
+      "strengths": [
+        "Canonical"
+      ],
+      "interviewRelevance": "Your approach; the expected answer."
+    },
+    {
+      "name": "Iterative doubling",
+      "summary": "For each element, add it to a copy of all existing subsets.",
+      "timeComplexity": "O(n * 2^n)",
+      "spaceComplexity": "O(n * 2^n)",
+      "strengths": [
+        "No recursion"
+      ]
+    },
+    {
+      "name": "Bitmask enumeration",
+      "summary": "Each integer 0..2^n-1 selects a subset.",
+      "timeComplexity": "O(n * 2^n)",
+      "spaceComplexity": "O(n)",
+      "strengths": [
+        "Compact"
+      ],
+      "weaknesses": [
+        "Limited to small n"
+      ]
+    }
+  ],
+  "personalSolution": {
+    "approach": "Backtracking recording at every node",
+    "timeComplexity": "O(n * 2^n)",
+    "spaceComplexity": "O(n)",
+    "isOptimal": true,
+    "notes": "Optimal."
+  },
+  "commonMistakes": [],
+  "edgeCases": [],
+  "cards": [
+    {
+      "id": "su-pattern-01",
+      "category": "pattern",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "How many subsets does a set of n distinct elements have?",
+        "What does each recursive call record?"
+      ],
+      "options": [
+        "2^n; the current path (every node is a subset)",
+        "n!; only leaves",
+        "n^2; the pairs",
+        "C(n, k) only"
+      ],
+      "answer": "2^n; the current path (every node is a subset)",
+      "explanation": "Unlike permutations/combinations, the answer includes partial paths too.",
+      "incorrectOptionExplanations": {
+        "n!; only leaves": "That is permutations.",
+        "n^2; the pairs": "Wrong count.",
+        "C(n, k) only": "That is combinations of one size."
+      }
+    },
+    {
+      "id": "su-insight-01",
+      "category": "main_insight",
+      "type": "free_recall",
+      "promptVariants": [
+        "Why is the answer recorded on entry rather than at a depth limit?",
+        "What does the start index do?"
+      ],
+      "answer": "Every partial path is itself a valid subset, so each call appends a copy of the path immediately. The start index guarantees elements are added in increasing index order, so each subset is generated exactly once.",
+      "keyPoints": [
+        "Every node is a subset",
+        "start index avoids reordering",
+        "Record before extending"
+      ],
+      "explanation": "The empty subset is recorded first."
+    },
+    {
+      "id": "su-time-01",
+      "category": "time_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Time complexity (copying each subset): ___",
+        "Complete the statement: Time complexity (copying each subset): ___"
+      ],
+      "answer": "O(n * 2^n)",
+      "explanation": "2^n subsets of average length n / 2.",
+      "acceptedAnswers": [
+        "O(n*2^n)",
+        "O(2^n * n)"
+      ]
+    },
+    {
+      "id": "su-space-01",
+      "category": "space_complexity",
+      "type": "free_recall",
+      "promptVariants": [
+        "What is the auxiliary space excluding the output?",
+        "Besides the 2^n output subsets, what auxiliary space does subset backtracking use?"
+      ],
+      "answer": "O(n): the recursion depth and the path.",
+      "keyPoints": [
+        "Depth n",
+        "Path n"
+      ],
+      "explanation": "The output has 2^n lists."
+    },
+    {
+      "id": "su-edge-01",
+      "category": "edge_case",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "What does the algorithm return for nums = [0]?",
+        "Is the empty subset included?"
+      ],
+      "options": [
+        "[[], [0]]",
+        "[[0]]",
+        "[]",
+        "[[0],[0]]"
+      ],
+      "answer": "[[], [0]]",
+      "explanation": "The empty subset is always part of the power set.",
+      "incorrectOptionExplanations": {
+        "[[0]]": "The empty set is missing.",
+        "[]": "There are two subsets.",
+        "[[0],[0]]": "Subsets are distinct."
+      }
+    }
+  ],
+  "generatedAt": "2026-10-01T14:34:53Z"
+}

@@ -1,0 +1,142 @@
+{
+  "schemaVersion": 1,
+  "problemSlug": "number-of-connected-components-in-an-undirected-graph",
+  "summary": "Count the connected components of an undirected graph with n nodes and an edge list.",
+  "patterns": [
+    "Graph",
+    "DFS",
+    "Union Find"
+  ],
+  "mainInsight": "Build an adjacency list, then run DFS/BFS from every unvisited node; each search covers one component. Alternatively use union-find: start with n components and decrement for each successful union.",
+  "canonicalApproach": "Union-Find",
+  "approaches": [
+    {
+      "name": "DFS/BFS over an adjacency list",
+      "summary": "Count the number of searches started.",
+      "timeComplexity": "O(V + E)",
+      "spaceComplexity": "O(V + E)",
+      "strengths": [
+        "Straightforward"
+      ],
+      "weaknesses": [
+        "Recursion depth up to V"
+      ],
+      "interviewRelevance": "Your approach."
+    },
+    {
+      "name": "Union-Find",
+      "summary": "components = n; each union of two different roots reduces it by one.",
+      "timeComplexity": "O(E * alpha(V))",
+      "spaceComplexity": "O(V)",
+      "strengths": [
+        "No graph structure, handles edges as a stream"
+      ],
+      "weaknesses": [
+        "Needs path compression/rank"
+      ],
+      "interviewRelevance": "Often the shortest solution."
+    }
+  ],
+  "personalSolution": {
+    "approach": "Adjacency list + DFS",
+    "timeComplexity": "O(V + E)",
+    "spaceComplexity": "O(V + E)",
+    "isOptimal": true,
+    "notes": "Optimal in time; union-find is the compact alternative."
+  },
+  "commonMistakes": [],
+  "edgeCases": [],
+  "cards": [
+    {
+      "id": "cc-pattern-01",
+      "category": "pattern",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "How does union-find count components?",
+        "What changes the count?"
+      ],
+      "options": [
+        "Start with n and subtract 1 for every union of two different components",
+        "Add 1 for every edge",
+        "Count the leaves",
+        "Sort the edges"
+      ],
+      "answer": "Start with n and subtract 1 for every union of two different components",
+      "explanation": "Each successful merge joins two components into one.",
+      "incorrectOptionExplanations": {
+        "Add 1 for every edge": "Edges can join components or lie inside one.",
+        "Count the leaves": "Irrelevant.",
+        "Sort the edges": "Order does not matter."
+      }
+    },
+    {
+      "id": "cc-insight-01",
+      "category": "main_insight",
+      "type": "free_recall",
+      "promptVariants": [
+        "Why must isolated nodes (no edges) be counted?",
+        "How does your loop handle them?"
+      ],
+      "answer": "An isolated node is its own component. The loop iterates over all n node labels (not just those appearing in edges), so each unvisited isolated node triggers a (trivial) DFS and increments the count.",
+      "keyPoints": [
+        "Iterate over range(n)",
+        "Isolated node = component",
+        "Edge list may omit nodes"
+      ],
+      "explanation": "A graph.keys() loop would miss them."
+    },
+    {
+      "id": "cc-time-01",
+      "category": "time_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Time complexity (V nodes, E edges): ___",
+        "Complete the statement: Time complexity (V nodes, E edges): ___"
+      ],
+      "answer": "O(V+E)",
+      "explanation": "Building the lists and the traversals are linear.",
+      "acceptedAnswers": [
+        "O(V + E)",
+        "O(E + V)"
+      ]
+    },
+    {
+      "id": "cc-space-01",
+      "category": "space_complexity",
+      "type": "free_recall",
+      "promptVariants": [
+        "What are the memory costs of DFS vs union-find?",
+        "Compare the memory of DFS with an adjacency list and union-find for counting components."
+      ],
+      "answer": "DFS: O(V + E) for the adjacency list plus O(V) visited and recursion. Union-find: O(V) for the parent array.",
+      "keyPoints": [
+        "DFS O(V+E)",
+        "Union-find O(V)"
+      ],
+      "explanation": "Union-find is leaner."
+    },
+    {
+      "id": "cc-edge-01",
+      "category": "edge_case",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "What is the answer for n = 5 and edges = []?",
+        "What about a single connected chain?"
+      ],
+      "options": [
+        "5, and 1",
+        "0, and 1",
+        "1, and 1",
+        "5, and 5"
+      ],
+      "answer": "5, and 1",
+      "explanation": "Without edges every node is alone; a chain connects everything into one component.",
+      "incorrectOptionExplanations": {
+        "0, and 1": "There are nodes, so components exist.",
+        "1, and 1": "No edges means 5 components.",
+        "5, and 5": "A chain is one component."
+      }
+    }
+  ],
+  "generatedAt": "2026-10-01T14:37:19Z"
+}

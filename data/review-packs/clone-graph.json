@@ -1,0 +1,168 @@
+{
+  "schemaVersion": 1,
+  "problemSlug": "clone-graph",
+  "summary": "Return a deep copy of a connected undirected graph given a node.",
+  "patterns": [
+    "Graph",
+    "DFS",
+    "BFS"
+  ],
+  "mainInsight": "Traverse the graph once while keeping a map from each original node to its clone: when you meet a neighbour, create its clone only if it is not in the map yet, then link the cloned neighbours. The map also breaks cycles.",
+  "canonicalApproach": "DFS with a node map",
+  "approaches": [
+    {
+      "name": "copy.deepcopy",
+      "summary": "Use the standard library to copy the object graph.",
+      "timeComplexity": "O(V + E)",
+      "spaceComplexity": "O(V)",
+      "strengths": [
+        "One line"
+      ],
+      "weaknesses": [
+        "Hides the algorithm; may hit recursion limits; not what interviewers want"
+      ],
+      "interviewRelevance": "Your accepted solution."
+    },
+    {
+      "name": "DFS with a node map",
+      "summary": "clone(node): memoise original -> clone, recurse on neighbours.",
+      "timeComplexity": "O(V + E)",
+      "spaceComplexity": "O(V)",
+      "strengths": [
+        "Canonical"
+      ],
+      "weaknesses": [
+        "Recursion depth"
+      ],
+      "interviewRelevance": "The expected answer."
+    },
+    {
+      "name": "BFS with a node map",
+      "summary": "Queue-based; clone neighbours on first sight.",
+      "timeComplexity": "O(V + E)",
+      "spaceComplexity": "O(V)",
+      "strengths": [
+        "No recursion limit"
+      ]
+    }
+  ],
+  "personalSolution": {
+    "approach": "copy.deepcopy(node)",
+    "timeComplexity": "O(V + E)",
+    "spaceComplexity": "O(V)",
+    "isOptimal": false,
+    "notes": "Passes the judge but skips the actual algorithm. Practise the DFS/BFS version with an old -> new node map."
+  },
+  "commonMistakes": [],
+  "edgeCases": [],
+  "cards": [
+    {
+      "id": "cg2-pattern-01",
+      "category": "pattern",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "What structure makes graph cloning correct with cycles?",
+        "What does the map store?"
+      ],
+      "options": [
+        "A hash map from each original node to its clone",
+        "A sorted list",
+        "A stack of values",
+        "A heap"
+      ],
+      "answer": "A hash map from each original node to its clone",
+      "explanation": "Neighbours can be reached by several paths and cycles exist; the map ensures each node is cloned exactly once and reused.",
+      "incorrectOptionExplanations": {
+        "A sorted list": "No ordering is needed.",
+        "A stack of values": "Values are not unique identifiers.",
+        "A heap": "No priority."
+      }
+    },
+    {
+      "id": "cg2-insight-01",
+      "category": "main_insight",
+      "type": "free_recall",
+      "promptVariants": [
+        "Why must the clone be registered in the map BEFORE visiting its neighbours?",
+        "What goes wrong otherwise?"
+      ],
+      "answer": "In a cyclic graph the traversal may come back to the current node while processing its neighbours. If the clone is not yet in the map, a second clone would be created (and possibly infinite recursion). Registering first lets the recursive call find and reuse the existing clone.",
+      "keyPoints": [
+        "Register before recursing",
+        "Cycles revisit the node",
+        "Prevents duplicates/infinite recursion"
+      ],
+      "explanation": "That is the classic bug."
+    },
+    {
+      "id": "cg2-time-01",
+      "category": "time_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Time complexity (V vertices, E edges): ___",
+        "Complete the statement: Time complexity (V vertices, E edges): ___"
+      ],
+      "answer": "O(V+E)",
+      "explanation": "Every node and every adjacency entry is processed once.",
+      "acceptedAnswers": [
+        "O(V + E)",
+        "O(E + V)"
+      ]
+    },
+    {
+      "id": "cg2-space-01",
+      "category": "space_complexity",
+      "type": "free_recall",
+      "promptVariants": [
+        "What is the space of the map-based clone?",
+        "Why is O(V) unavoidable?"
+      ],
+      "answer": "O(V) for the map (plus O(V) recursion or queue); the clone itself is also O(V + E) but is the output.",
+      "keyPoints": [
+        "Map O(V)",
+        "Recursion/queue O(V)"
+      ],
+      "explanation": "Any deep copy needs at least the output size."
+    },
+    {
+      "id": "cg2-code-01",
+      "category": "code_reasoning",
+      "type": "code_question",
+      "promptVariants": [
+        "Your solution is `copy.deepcopy(node)`. Why might an interviewer reject it, and sketch the DFS with a map.",
+        "Write the recursion."
+      ],
+      "code": "def cloneGraph(self, node):\n    return copy.deepcopy(node)",
+      "answer": "It delegates the whole problem to a library function, so it demonstrates no understanding of cycles or traversal (and deepcopy is recursive, which can hit Python's recursion limit). Manual version: `old2new = {}; def dfs(n): if n in old2new: return old2new[n]; copy = Node(n.val); old2new[n] = copy; for nb in n.neighbors: copy.neighbors.append(dfs(nb)); return copy; return dfs(node) if node else None`.",
+      "keyPoints": [
+        "deepcopy hides the algorithm",
+        "Memoise old -> new before recursing",
+        "Link cloned neighbours"
+      ],
+      "explanation": "Know both DFS and BFS versions."
+    },
+    {
+      "id": "cg2-edge-01",
+      "category": "edge_case",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "What should the function return for a null input?",
+        "How is a graph with a single node and no neighbours handled?"
+      ],
+      "options": [
+        "None for null; a single node is cloned with an empty neighbour list",
+        "An empty node",
+        "An error",
+        "The original node"
+      ],
+      "answer": "None for null; a single node is cloned with an empty neighbour list",
+      "explanation": "The null guard returns None and a lone node produces a new node with no neighbours.",
+      "incorrectOptionExplanations": {
+        "An empty node": "Null input should return None.",
+        "An error": "Handled by a guard.",
+        "The original node": "A deep copy must be a different object."
+      }
+    }
+  ],
+  "generatedAt": "2026-10-01T14:37:19Z"
+}
