@@ -1,0 +1,124 @@
+{
+  "schemaVersion": 1,
+  "problemSlug": "baseball-game",
+  "summary": "Process a list of score operations (integer, '+', 'D', 'C') and return the sum of all scores.",
+  "patterns": [
+    "Stack"
+  ],
+  "mainInsight": "A stack of valid scores models the rules naturally: 'C' removes the last score, 'D' doubles it, '+' sums the last two, an integer adds a new score.",
+  "canonicalApproach": "Stack simulation",
+  "approaches": [
+    {
+      "name": "Stack simulation",
+      "summary": "Push scores; apply operations to the top elements; sum at the end.",
+      "timeComplexity": "O(n)",
+      "spaceComplexity": "O(n)",
+      "strengths": [
+        "Direct"
+      ],
+      "interviewRelevance": "The expected answer."
+    }
+  ],
+  "personalSolution": {
+    "approach": "Stack simulation",
+    "timeComplexity": "O(n)",
+    "spaceComplexity": "O(n)",
+    "isOptimal": true,
+    "notes": "Optimal; use sum(stack) for the final loop."
+  },
+  "commonMistakes": [],
+  "edgeCases": [],
+  "cards": [
+    {
+      "id": "bg-pattern-01",
+      "category": "pattern",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "Which data structure fits operations that refer to the previous scores?",
+        "What pattern does Baseball Game use?"
+      ],
+      "options": [
+        "Stack",
+        "Queue",
+        "Heap",
+        "Union find"
+      ],
+      "answer": "Stack",
+      "explanation": "Operations always reference the most recent valid scores.",
+      "incorrectOptionExplanations": {
+        "Queue": "FIFO would give the oldest scores.",
+        "Heap": "Order by value is irrelevant.",
+        "Union find": "No connectivity."
+      }
+    },
+    {
+      "id": "bg-insight-01",
+      "category": "main_insight",
+      "type": "free_recall",
+      "promptVariants": [
+        "Why is a stack the natural model and what does 'C' do to it?",
+        "Describe each operation's effect on the stack."
+      ],
+      "answer": "The record of valid scores behaves as a stack: an integer pushes a score; 'D' pushes twice the top; '+' pushes the sum of the top two; 'C' pops (invalidating the previous score). The answer is the sum of what remains.",
+      "keyPoints": [
+        "Integer: push",
+        "D: push 2 * top",
+        "+: push top two sum",
+        "C: pop"
+      ],
+      "explanation": "Peeking two elements is just stack[-1] and stack[-2]."
+    },
+    {
+      "id": "bg-time-01",
+      "category": "time_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Time complexity: ___",
+        "Complete the statement: Time complexity: ___"
+      ],
+      "answer": "O(n)",
+      "explanation": "One pass; each operation is O(1).",
+      "acceptedAnswers": [
+        "linear"
+      ]
+    },
+    {
+      "id": "bg-space-01",
+      "category": "space_complexity",
+      "type": "free_recall",
+      "promptVariants": [
+        "What is the space complexity and can you avoid the stack?",
+        "How many previous scores do you ever need?"
+      ],
+      "answer": "O(n) for the stack; you could keep a running total and only the last two scores, but 'C' needs earlier scores again, so the stack is the clean general solution.",
+      "keyPoints": [
+        "O(n)",
+        "C needs history"
+      ],
+      "explanation": "A running sum updated on push/pop avoids the final loop."
+    },
+    {
+      "id": "bg-edge-01",
+      "category": "edge_case",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "What is the total for ['5','2','C','D','+']?",
+        "How do 'C' and 'D' interact?"
+      ],
+      "options": [
+        "30",
+        "15",
+        "10",
+        "27"
+      ],
+      "answer": "30",
+      "explanation": "[5,2] -> C -> [5] -> D -> [5,10] -> + -> [5,10,15]; sum = 30.",
+      "incorrectOptionExplanations": {
+        "15": "That is only the last score.",
+        "10": "Ignores the 5 and 15.",
+        "27": "Arithmetic slip."
+      }
+    }
+  ],
+  "generatedAt": "2026-10-01T14:16:46Z"
+}

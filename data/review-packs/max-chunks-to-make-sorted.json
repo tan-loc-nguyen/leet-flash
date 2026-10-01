@@ -1,0 +1,155 @@
+{
+  "schemaVersion": 1,
+  "problemSlug": "max-chunks-to-make-sorted",
+  "summary": "Split a permutation of 0..n-1 into the maximum number of chunks that, sorted individually and concatenated, give the sorted array.",
+  "patterns": [
+    "Greedy",
+    "Monotonic Stack"
+  ],
+  "mainInsight": "In a permutation of 0..n-1, a chunk can end at index i exactly when the maximum value seen so far equals i: then the prefix contains precisely the values 0..i.",
+  "canonicalApproach": "Prefix max == index (greedy)",
+  "approaches": [
+    {
+      "name": "Prefix max == index (greedy)",
+      "summary": "Track the running max; count a chunk whenever max == i.",
+      "timeComplexity": "O(n)",
+      "spaceComplexity": "O(1)",
+      "strengths": [
+        "Simplest"
+      ],
+      "weaknesses": [
+        "Needs a permutation of 0..n-1"
+      ],
+      "interviewRelevance": "Your approach; the expected answer for this version."
+    },
+    {
+      "name": "Monotonic stack of chunk maxima",
+      "summary": "Merge chunks while the new element is smaller than a previous chunk's max.",
+      "timeComplexity": "O(n)",
+      "spaceComplexity": "O(n)",
+      "strengths": [
+        "Generalises to repeated/arbitrary values (version II)"
+      ],
+      "weaknesses": [
+        "More machinery"
+      ],
+      "interviewRelevance": "The general version."
+    }
+  ],
+  "personalSolution": {
+    "approach": "Prefix max == index (greedy)",
+    "timeComplexity": "O(n)",
+    "spaceComplexity": "O(1)",
+    "isOptimal": true,
+    "notes": "Optimal for the permutation version; the stack approach handles the general version II."
+  },
+  "commonMistakes": [],
+  "edgeCases": [],
+  "cards": [
+    {
+      "id": "mc3-pattern-01",
+      "category": "pattern",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "When can a chunk end at index i?",
+        "What condition cuts the array in Max Chunks To Make Sorted?"
+      ],
+      "options": [
+        "When max(arr[0..i]) == i",
+        "When arr[i] == i",
+        "When arr[i] < arr[i+1]",
+        "When the prefix sum is even"
+      ],
+      "answer": "When max(arr[0..i]) == i",
+      "explanation": "The prefix then contains exactly the values 0..i, so it sorts into its final place independently.",
+      "incorrectOptionExplanations": {
+        "When arr[i] == i": "The element at i may be fixed while earlier ones are not within 0..i.",
+        "When arr[i] < arr[i+1]": "Local order says nothing about prefix content.",
+        "When the prefix sum is even": "The sum condition is a valid alternative here but the max check is the standard one."
+      }
+    },
+    {
+      "id": "mc3-insight-01",
+      "category": "main_insight",
+      "type": "free_recall",
+      "promptVariants": [
+        "Why does max == i imply the prefix is exactly {0..i}?",
+        "Prove the chunk condition."
+      ],
+      "answer": "The prefix has i + 1 distinct values from 0..n-1 whose maximum is i; there are only i + 1 values in 0..i, so the prefix must contain all of them. Sorting it yields 0..i in place, so a chunk boundary is valid after i.",
+      "keyPoints": [
+        "i + 1 distinct values",
+        "Max i => all in 0..i",
+        "Prefix sorts into place"
+      ],
+      "explanation": "Every valid boundary is found by a single pass."
+    },
+    {
+      "id": "mc3-time-01",
+      "category": "time_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Time complexity: ___",
+        "Complete the statement: Time complexity: ___"
+      ],
+      "answer": "O(n)",
+      "explanation": "One pass.",
+      "acceptedAnswers": [
+        "linear"
+      ]
+    },
+    {
+      "id": "mc3-space-01",
+      "category": "space_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Extra space of the running-max solution: ___",
+        "Complete the statement: Extra space of the running-max solution: ___"
+      ],
+      "answer": "O(1)",
+      "explanation": "Two integers.",
+      "acceptedAnswers": [
+        "constant"
+      ]
+    },
+    {
+      "id": "mc3-code-01",
+      "category": "code_reasoning",
+      "type": "code_question",
+      "promptVariants": [
+        "Why does counting every index with best == i give the maximum number of chunks?",
+        "What happens for an already sorted array?"
+      ],
+      "code": "for i in range(n):\n    best = max(best, arr[i])\n    if best == i:\n        ans += 1",
+      "answer": "Every index where the prefix is exactly {0..i} is a valid cut, and using all valid cuts maximises the number of chunks (cuts are independent). For a sorted array best == i everywhere, so the answer is n.",
+      "keyPoints": [
+        "Every valid cut is used",
+        "Sorted => n chunks"
+      ],
+      "explanation": "Reverse-sorted gives 1 chunk."
+    },
+    {
+      "id": "mc3-edge-01",
+      "category": "edge_case",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "What is the answer for [1,0,2,3,4]?",
+        "Where are the cuts?"
+      ],
+      "options": [
+        "4",
+        "5",
+        "1",
+        "2"
+      ],
+      "answer": "4",
+      "explanation": "Cuts after index 1 (prefix {1,0}), 2, 3, 4: chunks [1,0],[2],[3],[4].",
+      "incorrectOptionExplanations": {
+        "5": "The first two elements cannot be separated.",
+        "1": "More cuts are possible.",
+        "2": "More cuts are possible."
+      }
+    }
+  ],
+  "generatedAt": "2026-10-01T14:16:46Z"
+}

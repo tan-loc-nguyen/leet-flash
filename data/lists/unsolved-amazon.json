@@ -1,6 +1,6 @@
 {
-  "name": "Amazon 75",
-  "slug": "amazon-75",
+  "name": "Unsolved Amazon",
+  "slug": "unsolved-amazon",
   "description": "",
   "problems": [
     "longest-palindromic-substring",
@@ -9,7 +9,6 @@
     "capacity-to-ship-packages-within-d-days",
     "next-permutation",
     "largest-number",
-    "fruit-into-baskets",
     "roman-to-integer",
     "house-robber",
     "search-in-rotated-sorted-array",

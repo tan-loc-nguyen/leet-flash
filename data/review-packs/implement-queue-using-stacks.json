@@ -1,0 +1,155 @@
+{
+  "schemaVersion": 1,
+  "problemSlug": "implement-queue-using-stacks",
+  "summary": "Implement a FIFO queue using only stack operations.",
+  "patterns": [
+    "Design",
+    "Stack"
+  ],
+  "mainInsight": "Use two stacks: push onto an input stack; when the output stack is empty, pour the input stack into it (reversing the order). Each element moves at most once, so operations are amortised O(1).",
+  "canonicalApproach": "Two stacks with lazy transfer",
+  "approaches": [
+    {
+      "name": "Costly push",
+      "summary": "Move everything between stacks on each push.",
+      "timeComplexity": "push O(n), pop O(1)",
+      "spaceComplexity": "O(n)",
+      "weaknesses": [
+        "Slow push"
+      ]
+    },
+    {
+      "name": "Two stacks with lazy transfer",
+      "summary": "Transfer only when the output stack is empty.",
+      "timeComplexity": "amortised O(1)",
+      "spaceComplexity": "O(n)",
+      "strengths": [
+        "Optimal amortised"
+      ],
+      "weaknesses": [
+        "Single pop can be O(n)"
+      ],
+      "interviewRelevance": "Your approach."
+    }
+  ],
+  "personalSolution": {
+    "approach": "Two stacks with lazy transfer",
+    "timeComplexity": "amortised O(1)",
+    "spaceComplexity": "O(n)",
+    "isOptimal": true,
+    "notes": "Optimal."
+  },
+  "commonMistakes": [],
+  "edgeCases": [],
+  "cards": [
+    {
+      "id": "qs-pattern-01",
+      "category": "pattern",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "How do two stacks implement a queue in amortised O(1)?",
+        "When should elements be moved between the stacks?"
+      ],
+      "options": [
+        "Move from the input stack only when the output stack is empty",
+        "On every push",
+        "On every peek",
+        "Never"
+      ],
+      "answer": "Move from the input stack only when the output stack is empty",
+      "explanation": "Elements keep their relative reversed order in the output stack and each moves once.",
+      "incorrectOptionExplanations": {
+        "On every push": "Makes push O(n).",
+        "On every peek": "Wasteful and can reverse order again.",
+        "Never": "The order would be LIFO."
+      }
+    },
+    {
+      "id": "qs-insight-01",
+      "category": "main_insight",
+      "type": "free_recall",
+      "promptVariants": [
+        "Why does transferring reverse the order, and why is it amortised O(1)?",
+        "Explain the amortised analysis."
+      ],
+      "answer": "Popping from one stack and pushing onto another reverses the order, turning LIFO into FIFO for the transferred elements. Each element is pushed/popped on each stack at most once, so the total transfer work is O(n) over n operations: amortised O(1) per operation.",
+      "keyPoints": [
+        "Double reversal gives FIFO",
+        "Each element moves at most once",
+        "Amortised O(1)"
+      ],
+      "explanation": "The cost of a transfer is paid by the pushes that created the elements."
+    },
+    {
+      "id": "qs-time-01",
+      "category": "time_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Amortised time per operation: ___",
+        "Complete the statement: Amortised time per operation: ___"
+      ],
+      "answer": "O(1)",
+      "explanation": "Each element is moved at most once between the stacks.",
+      "acceptedAnswers": [
+        "constant",
+        "amortized O(1)"
+      ]
+    },
+    {
+      "id": "qs-space-01",
+      "category": "space_complexity",
+      "type": "free_recall",
+      "promptVariants": [
+        "What is the space complexity and the worst-case time for a single pop?",
+        "What is the worst-case cost of a single pop in the two-stack queue and its overall space?"
+      ],
+      "answer": "O(n) total storage. A single pop can take O(n) when the output stack is empty and many elements must be transferred, but that cost is amortised.",
+      "keyPoints": [
+        "O(n) space",
+        "Worst case pop O(n)",
+        "Amortised O(1)"
+      ],
+      "explanation": "State both in an interview."
+    },
+    {
+      "id": "qs-code-01",
+      "category": "code_reasoning",
+      "type": "code_question",
+      "promptVariants": [
+        "Why transfer only `if not self.popStack`, and what bug appears if you transfer on every pop?",
+        "Why must elements only be moved when the output stack is empty?"
+      ],
+      "code": "def pop(self):\n    if not self.popStack:\n        while self.pushStack:\n            self.popStack.append(self.pushStack.pop())\n    return self.popStack.pop()",
+      "answer": "If popStack still has elements, its top is the oldest remaining element (the queue front). Transferring then would put newer elements on top of older ones and break FIFO order. Only an empty popStack can safely receive the next batch.",
+      "keyPoints": [
+        "popStack top = queue front",
+        "Transfer only when empty",
+        "Otherwise order breaks"
+      ],
+      "explanation": "peek uses the same transfer."
+    },
+    {
+      "id": "qs-edge-01",
+      "category": "edge_case",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "After push(1), push(2), pop(), push(3), pop(), what is returned by each pop?",
+        "What order do the pops return?"
+      ],
+      "options": [
+        "1 then 2",
+        "2 then 1",
+        "1 then 3",
+        "3 then 2"
+      ],
+      "answer": "1 then 2",
+      "explanation": "FIFO: 1 first. 3 is pushed after the first pop, so the next pop returns 2.",
+      "incorrectOptionExplanations": {
+        "2 then 1": "That is LIFO.",
+        "1 then 3": "2 was pushed before 3.",
+        "3 then 2": "Order is reversed."
+      }
+    }
+  ],
+  "generatedAt": "2026-10-01T14:16:46Z"
+}

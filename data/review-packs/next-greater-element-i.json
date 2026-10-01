@@ -1,0 +1,151 @@
+{
+  "schemaVersion": 1,
+  "problemSlug": "next-greater-element-i",
+  "summary": "For each element of nums1 (a subset of nums2) find the next greater element to its right in nums2.",
+  "patterns": [
+    "Monotonic Stack",
+    "Array / Hashing"
+  ],
+  "mainInsight": "Compute the next greater element for every value of nums2 in one pass with a monotonic stack and record results only for values that appear in nums1 (via a hash map).",
+  "canonicalApproach": "Monotonic stack + hash map",
+  "approaches": [
+    {
+      "name": "Brute force",
+      "summary": "For each nums1 value find it in nums2 and scan right.",
+      "timeComplexity": "O(n*m)",
+      "spaceComplexity": "O(n)",
+      "weaknesses": [
+        "Quadratic"
+      ]
+    },
+    {
+      "name": "Monotonic stack + hash map",
+      "summary": "One pass over nums2; when a value arrives, pop smaller values and set their answers.",
+      "timeComplexity": "O(n + m)",
+      "spaceComplexity": "O(n + m)",
+      "strengths": [
+        "Optimal"
+      ],
+      "interviewRelevance": "Your approach."
+    }
+  ],
+  "personalSolution": {
+    "approach": "Monotonic stack + hash map",
+    "timeComplexity": "O(n + m)",
+    "spaceComplexity": "O(n + m)",
+    "isOptimal": true,
+    "notes": "Optimal. Use `<` instead of `<=` for safety; your commented brute force is the baseline."
+  },
+  "commonMistakes": [],
+  "edgeCases": [],
+  "cards": [
+    {
+      "id": "ng1-pattern-01",
+      "category": "pattern",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "Which technique gives O(n + m)?",
+        "What data structure resolves 'next greater to the right' in one pass?"
+      ],
+      "options": [
+        "Monotonic stack",
+        "Sorting nums2",
+        "Binary search",
+        "Heap"
+      ],
+      "answer": "Monotonic stack",
+      "explanation": "Values waiting for a greater element sit on the stack until a bigger value arrives.",
+      "incorrectOptionExplanations": {
+        "Sorting nums2": "Loses the positions that define 'to the right'.",
+        "Binary search": "Not sorted.",
+        "Heap": "Order by value does not capture position."
+      }
+    },
+    {
+      "id": "ng1-insight-01",
+      "category": "main_insight",
+      "type": "free_recall",
+      "promptVariants": [
+        "Why compute the answer for all of nums2 first and then look up nums1 values?",
+        "How does the hash map connect the two arrays?"
+      ],
+      "answer": "The next greater element of a value depends only on nums2's order, so a single stack pass yields it for every element. The map from nums1 values to their output positions lets us write results only where needed (nums1 is a subset of nums2).",
+      "keyPoints": [
+        "Answers depend only on nums2",
+        "Map value -> output index in nums1",
+        "One pass for everything"
+      ],
+      "explanation": "That decouples the two arrays."
+    },
+    {
+      "id": "ng1-time-01",
+      "category": "time_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Time complexity (n = len(nums2), m = len(nums1)): ___",
+        "Complete the statement: Time complexity (n = len(nums2), m = len(nums1)): ___"
+      ],
+      "answer": "O(n+m)",
+      "explanation": "Build the map in O(m), single stack pass over nums2 in O(n).",
+      "acceptedAnswers": [
+        "O(n + m)",
+        "O(m+n)"
+      ]
+    },
+    {
+      "id": "ng1-space-01",
+      "category": "space_complexity",
+      "type": "free_recall",
+      "promptVariants": [
+        "What do the stack and the hash map cost?",
+        "What are the space costs of the stack and the hash map in Next Greater Element I?"
+      ],
+      "answer": "O(n) for the stack (worst case non-increasing nums2) and O(m) for the map, so O(n + m) total.",
+      "keyPoints": [
+        "Stack O(n)",
+        "Map O(m)"
+      ],
+      "explanation": "The output array adds O(m)."
+    },
+    {
+      "id": "ng1-code-01",
+      "category": "code_reasoning",
+      "type": "code_question",
+      "promptVariants": [
+        "Your pop condition is `nums2[stack[-1]] <= nums2[i]`. Why does that work here, and what would the strictly correct condition be?",
+        "When would `<=` give a wrong answer?"
+      ],
+      "code": "while stack and nums2[stack[-1]] <= nums2[i]:\n    idx = stack.pop()\n    if nums2[idx] in hmap:\n        ans[hmap[nums2[idx]]] = nums2[i]\nstack.append(i)",
+      "answer": "The problem guarantees all values are unique, so an equal value never occurs and `<=` behaves like `<`. With duplicates `<=` would assign an equal (not greater) value as the 'next greater'. The strictly correct condition is `<`.",
+      "keyPoints": [
+        "Unique values make <= safe",
+        "Duplicates require <",
+        "Greater means strictly greater"
+      ],
+      "explanation": "Use < to be safe in Next Greater Element II-style problems."
+    },
+    {
+      "id": "ng1-edge-01",
+      "category": "edge_case",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "What is the answer for an element with no greater element to its right?",
+        "What does the algorithm leave in `ans`?"
+      ],
+      "options": [
+        "-1 (the initial value)",
+        "0",
+        "The element itself",
+        "None"
+      ],
+      "answer": "-1 (the initial value)",
+      "explanation": "Elements never popped keep the default -1.",
+      "incorrectOptionExplanations": {
+        "0": "The problem specifies -1.",
+        "The element itself": "Not greater.",
+        "None": "The output is a list of integers."
+      }
+    }
+  ],
+  "generatedAt": "2026-10-01T14:16:46Z"
+}

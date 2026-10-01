@@ -1,0 +1,159 @@
+{
+  "schemaVersion": 1,
+  "problemSlug": "implement-stack-using-queues",
+  "summary": "Implement a LIFO stack using only queue operations.",
+  "patterns": [
+    "Design",
+    "Stack"
+  ],
+  "mainInsight": "A queue is FIFO, so make the newest element reach the front by rotating the queue after each push: push x, then move the previous n elements behind it. Pop and top are then plain queue operations.",
+  "canonicalApproach": "One queue, costly push",
+  "approaches": [
+    {
+      "name": "Two queues, costly pop",
+      "summary": "Push O(1); pop moves n-1 elements to a helper queue.",
+      "timeComplexity": "push O(1), pop O(n)",
+      "spaceComplexity": "O(n)",
+      "weaknesses": [
+        "Two queues"
+      ]
+    },
+    {
+      "name": "One queue, costly push",
+      "summary": "After pushing, rotate the queue n-1 times so the new element is at the front.",
+      "timeComplexity": "push O(n), pop/top O(1)",
+      "spaceComplexity": "O(n)",
+      "strengths": [
+        "One queue; fast pop/top"
+      ],
+      "weaknesses": [
+        "Slow push"
+      ],
+      "interviewRelevance": "Your approach."
+    },
+    {
+      "name": "One queue, costly pop",
+      "summary": "Rotate on pop instead.",
+      "timeComplexity": "push O(1), pop O(n)",
+      "spaceComplexity": "O(n)"
+    }
+  ],
+  "personalSolution": {
+    "approach": "One queue, costly push",
+    "timeComplexity": "push O(n), pop/top O(1)",
+    "spaceComplexity": "O(n)",
+    "isOptimal": true,
+    "notes": "Valid and common. Mention the one-queue costly-pop alternative."
+  },
+  "commonMistakes": [],
+  "edgeCases": [],
+  "cards": [
+    {
+      "id": "sq2-pattern-01",
+      "category": "pattern",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "How do you get LIFO from a FIFO queue?",
+        "What operation makes the newest element dequeue first?"
+      ],
+      "options": [
+        "Rotate the queue so the newest element is at the front",
+        "Sort the queue",
+        "Reverse by recursion only",
+        "Use a heap"
+      ],
+      "answer": "Rotate the queue so the newest element is at the front",
+      "explanation": "Moving the previous elements behind the new one reverses their relative order to LIFO.",
+      "incorrectOptionExplanations": {
+        "Sort the queue": "Values are not ordered.",
+        "Reverse by recursion only": "Recursion needs a stack frame, which defeats the purpose.",
+        "Use a heap": "Not a queue operation."
+      }
+    },
+    {
+      "id": "sq2-insight-01",
+      "category": "main_insight",
+      "type": "free_recall",
+      "promptVariants": [
+        "What is the invariant of your queue after each push?",
+        "Why does rotating n-1 times work?"
+      ],
+      "answer": "The front of the queue is always the most recently pushed element, with older elements behind it in LIFO order. After appending x, rotate the n-1 older elements (pop from the front, append to the back) so they sit behind x and x is at the front.",
+      "keyPoints": [
+        "Front = top of stack",
+        "Rotate the older elements behind the new one",
+        "Pop/top become O(1)"
+      ],
+      "explanation": "That cost is paid once per push."
+    },
+    {
+      "id": "sq2-time-01",
+      "category": "time_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Time of push in the one-queue rotation approach (n elements): ___",
+        "Complete the statement: Time of push in the one-queue rotation approach (n elements): ___"
+      ],
+      "answer": "O(n)",
+      "explanation": "n - 1 rotations (pop front, append back).",
+      "acceptedAnswers": [
+        "linear"
+      ]
+    },
+    {
+      "id": "sq2-space-01",
+      "category": "space_complexity",
+      "type": "free_recall",
+      "promptVariants": [
+        "What is the space complexity and the trade-off between making push or pop expensive?",
+        "Which costs can you trade in Stack-using-Queues and what is the space?"
+      ],
+      "answer": "O(n) for the single queue. You can choose push O(n)/pop O(1) (yours) or push O(1)/pop O(n); amortised O(1) for both is not possible with queues alone in this design.",
+      "keyPoints": [
+        "O(n) space",
+        "Trade push vs pop cost"
+      ],
+      "explanation": "Pick based on the expected operation mix."
+    },
+    {
+      "id": "sq2-code-01",
+      "category": "code_reasoning",
+      "type": "code_question",
+      "promptVariants": [
+        "Trace push(1), push(2), push(3). What does the queue look like after each push?",
+        "Show the queue contents after each of push(1), push(2), push(3) in the rotating-queue stack."
+      ],
+      "code": "def push(self, x):\n    self.queue.append(x)\n    for _ in range(len(self.queue) - 1):\n        val = self.queue.popleft()\n        self.queue.append(val)",
+      "answer": "[1] -> append 2 gives [1,2], rotate once -> [2,1] -> append 3 gives [2,1,3], rotate twice -> [3,2,1]. The front is always the latest push.",
+      "keyPoints": [
+        "[1]",
+        "[2,1]",
+        "[3,2,1]"
+      ],
+      "explanation": "pop() then returns 3, 2, 1."
+    },
+    {
+      "id": "sq2-edge-01",
+      "category": "edge_case",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "What should top() return on an empty stack according to the constraints?",
+        "How does your code treat it?"
+      ],
+      "options": [
+        "The constraints guarantee non-empty pops/tops; the guard is a safety net",
+        "It must raise an exception",
+        "It must return -1",
+        "It should rebuild the queue"
+      ],
+      "answer": "The constraints guarantee non-empty pops/tops; the guard is a safety net",
+      "explanation": "LeetCode only calls pop/top on non-empty stacks, so any guard value is arbitrary.",
+      "incorrectOptionExplanations": {
+        "It must raise an exception": "Not specified.",
+        "It must return -1": "Not specified.",
+        "It should rebuild the queue": "Nothing to rebuild."
+      }
+    }
+  ],
+  "generatedAt": "2026-10-01T14:16:46Z"
+}

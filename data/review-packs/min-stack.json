@@ -1,0 +1,172 @@
+{
+  "schemaVersion": 1,
+  "problemSlug": "min-stack",
+  "summary": "Design a stack that supports push, pop, top and retrieving the minimum in O(1).",
+  "patterns": [
+    "Stack",
+    "Design"
+  ],
+  "mainInsight": "The minimum of a stack only changes when elements are pushed or popped, so remember 'the minimum so far' alongside every element: pushing computes min(previous min, new value), popping simply discards the top of both.",
+  "canonicalApproach": "Parallel min stack",
+  "approaches": [
+    {
+      "name": "Scan for the min",
+      "summary": "Compute the min on demand.",
+      "timeComplexity": "O(n) getMin",
+      "spaceComplexity": "O(1)",
+      "weaknesses": [
+        "Violates the O(1) requirement"
+      ]
+    },
+    {
+      "name": "Parallel min stack",
+      "summary": "A second stack stores the running minimum for each position.",
+      "timeComplexity": "O(1) all ops",
+      "spaceComplexity": "O(n)",
+      "strengths": [
+        "Simple, obviously correct"
+      ],
+      "weaknesses": [
+        "Doubles the memory"
+      ],
+      "interviewRelevance": "Your approach."
+    },
+    {
+      "name": "Store (value, min) pairs",
+      "summary": "One stack of tuples.",
+      "timeComplexity": "O(1) all ops",
+      "spaceComplexity": "O(n)",
+      "strengths": [
+        "Single structure"
+      ],
+      "weaknesses": [
+        "Same memory"
+      ]
+    },
+    {
+      "name": "Push only new minimums",
+      "summary": "Second stack only gets a value when it is <= the current min.",
+      "timeComplexity": "O(1) all ops",
+      "spaceComplexity": "O(n) worst, less on average",
+      "strengths": [
+        "Saves memory when mins are rare"
+      ],
+      "weaknesses": [
+        "Needs <= (duplicates) and care on pop"
+      ],
+      "interviewRelevance": "Common optimisation."
+    }
+  ],
+  "personalSolution": {
+    "approach": "Parallel min stack",
+    "timeComplexity": "O(1) per operation",
+    "spaceComplexity": "O(n)",
+    "isOptimal": true,
+    "notes": "Optimal in time. The 'push only new minimums' variant saves memory."
+  },
+  "commonMistakes": [],
+  "edgeCases": [],
+  "cards": [
+    {
+      "id": "ms3-pattern-01",
+      "category": "pattern",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "How do you support getMin in O(1) on a stack?",
+        "What is the standard trick for Min Stack?"
+      ],
+      "options": [
+        "Store the running minimum alongside each element",
+        "Keep the stack sorted",
+        "Use a heap for all elements",
+        "Scan on each getMin"
+      ],
+      "answer": "Store the running minimum alongside each element",
+      "explanation": "Each state of the stack has a fixed minimum, so recording it per position gives O(1) retrieval after any pop.",
+      "incorrectOptionExplanations": {
+        "Keep the stack sorted": "Would destroy LIFO order.",
+        "Use a heap for all elements": "Heap operations are O(log n) and removal of arbitrary elements is awkward.",
+        "Scan on each getMin": "That is O(n)."
+      }
+    },
+    {
+      "id": "ms3-insight-01",
+      "category": "main_insight",
+      "type": "free_recall",
+      "promptVariants": [
+        "Why does popping not require recomputing the minimum?",
+        "Why is a per-position running minimum sufficient?"
+      ],
+      "answer": "When an element is popped, the stack returns exactly to an earlier state, and the minimum recorded at that earlier state is the correct one. So each push stores min(prev_min, value) and each pop simply discards the top of both stacks.",
+      "keyPoints": [
+        "Stack states are restored on pop",
+        "Min is stored per state",
+        "pop is O(1)"
+      ],
+      "explanation": "That is the whole design."
+    },
+    {
+      "id": "ms3-invariant-01",
+      "category": "invariant",
+      "type": "free_recall",
+      "promptVariants": [
+        "What is the invariant between `stack` and `mins` in your solution?",
+        "How do the two stacks stay in sync?"
+      ],
+      "answer": "They always have the same length, and mins[i] equals the minimum of stack[0..i]. Every push appends to both; every pop removes from both.",
+      "keyPoints": [
+        "Equal lengths",
+        "mins[i] = min(stack[0..i])"
+      ],
+      "explanation": "getMin is mins[-1]."
+    },
+    {
+      "id": "ms3-time-01",
+      "category": "time_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Time complexity of each operation: ___",
+        "push, pop, top and getMin each take ___."
+      ],
+      "answer": "O(1)",
+      "explanation": "Constant-time list append/pop and indexing.",
+      "acceptedAnswers": [
+        "constant",
+        "O(1) each"
+      ]
+    },
+    {
+      "id": "ms3-space-01",
+      "category": "space_complexity",
+      "type": "free_recall",
+      "promptVariants": [
+        "What is the space cost and how can it be reduced?",
+        "How would you reduce the memory of the second stack?"
+      ],
+      "answer": "O(n) for the extra stack. You can push onto mins only when the new value is <= the current minimum (and pop it only when the popped value equals it), saving memory when new minimums are rare.",
+      "keyPoints": [
+        "O(n) extra",
+        "Push to mins only on <=",
+        "Use <= to handle duplicates"
+      ],
+      "explanation": "Using < would break with duplicate minimums."
+    },
+    {
+      "id": "ms3-code-01",
+      "category": "code_reasoning",
+      "type": "code_question",
+      "promptVariants": [
+        "Why does push use min(self.mins[-1], value) and why must pop remove from both stacks?",
+        "What would break if pop forgot the mins stack?"
+      ],
+      "code": "def push(self, value):\n    self.stack.append(value)\n    if not self.mins:\n        self.mins.append(value)\n    else:\n        self.mins.append(min(self.mins[-1], value))\n\ndef pop(self):\n    self.stack.pop()\n    self.mins.pop()",
+      "answer": "The new minimum is either the old minimum or the new value. Pop must remove both entries so the stacks stay aligned; otherwise getMin would return a stale minimum belonging to an element that is no longer in the stack.",
+      "keyPoints": [
+        "min of old min and new value",
+        "Pop both to stay aligned"
+      ],
+      "explanation": "The `if not self.stack: return` guard hides invalid calls; the problem guarantees non-empty stacks."
+    }
+  ],
+  "generatedAt": "2026-10-01T14:16:46Z"
+}

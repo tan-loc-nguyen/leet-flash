@@ -1,0 +1,147 @@
+{
+  "schemaVersion": 1,
+  "problemSlug": "next-greater-element-ii",
+  "summary": "For each element of a circular array, find its next greater element (searching cyclically).",
+  "patterns": [
+    "Monotonic Stack"
+  ],
+  "mainInsight": "Treat the circular array as the array concatenated with itself: two laps of a monotonic stack resolve every element, because the first lap handles elements whose greater value lies to the right and the second lap handles wraparound.",
+  "canonicalApproach": "Monotonic stack over 2n steps",
+  "approaches": [
+    {
+      "name": "Brute force",
+      "summary": "For each index scan up to n steps cyclically.",
+      "timeComplexity": "O(n^2)",
+      "spaceComplexity": "O(1)"
+    },
+    {
+      "name": "Monotonic stack over 2n steps",
+      "summary": "Iterate i in 0..2n-1 using nums[i % n]; push indices only in the first lap.",
+      "timeComplexity": "O(n)",
+      "spaceComplexity": "O(n)",
+      "strengths": [
+        "Optimal"
+      ],
+      "interviewRelevance": "The expected answer."
+    }
+  ],
+  "personalSolution": {
+    "approach": "Monotonic stack over two laps",
+    "timeComplexity": "O(n)",
+    "spaceComplexity": "O(n)",
+    "isOptimal": true,
+    "notes": "Optimal. Use nums[i % n] instead of copying the array, and only push in the first lap."
+  },
+  "commonMistakes": [],
+  "edgeCases": [],
+  "cards": [
+    {
+      "id": "ng2-pattern-01",
+      "category": "pattern",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "How do you handle the circular array?",
+        "What trick turns Next Greater Element II into the linear version?"
+      ],
+      "options": [
+        "Iterate twice over the array (i % n) with a monotonic stack",
+        "Sort the array",
+        "Reverse the array",
+        "Binary search the maximum"
+      ],
+      "answer": "Iterate twice over the array (i % n) with a monotonic stack",
+      "explanation": "Two laps make every element see all other elements to its right, including the wrapped ones.",
+      "incorrectOptionExplanations": {
+        "Sort the array": "Loses positions.",
+        "Reverse the array": "Does not address wraparound.",
+        "Binary search the maximum": "The maximum has no answer; the rest need positional search."
+      }
+    },
+    {
+      "id": "ng2-insight-01",
+      "category": "main_insight",
+      "type": "free_recall",
+      "promptVariants": [
+        "Why are two passes enough, and why does the second pass not need to push indices?",
+        "Explain the doubling idea."
+      ],
+      "answer": "An element's next greater (cyclically) is within the next n - 1 elements after it, which is covered by scanning 2n positions. On the second lap every index is already on the stack or resolved, so pushing again is unnecessary; its job is only to resolve the remaining stack entries.",
+      "keyPoints": [
+        "Search window length n - 1",
+        "Two laps cover it",
+        "Second lap only resolves"
+      ],
+      "explanation": "Your code pushes i % n on both laps, which adds redundant entries."
+    },
+    {
+      "id": "ng2-time-01",
+      "category": "time_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Time complexity of the two-lap monotonic stack: ___",
+        "Complete the statement: Time complexity of the two-lap monotonic stack: ___"
+      ],
+      "answer": "O(n)",
+      "explanation": "Each index is pushed once (or twice) and popped once; 2n iterations.",
+      "acceptedAnswers": [
+        "linear"
+      ]
+    },
+    {
+      "id": "ng2-space-01",
+      "category": "space_complexity",
+      "type": "free_recall",
+      "promptVariants": [
+        "What extra memory does `circular = nums + nums` add and how can you avoid it?",
+        "How do you avoid the extra array when handling the circular case, and what is the remaining space?"
+      ],
+      "answer": "It allocates a second array of size 2n (O(n)). Index with nums[i % n] instead and no copy is needed; the stack and answer are O(n) anyway.",
+      "keyPoints": [
+        "Copy is O(n) extra",
+        "Use i % n",
+        "Stack/answer O(n)"
+      ],
+      "explanation": "Total remains O(n) but with a larger constant."
+    },
+    {
+      "id": "ng2-code-01",
+      "category": "code_reasoning",
+      "type": "code_question",
+      "promptVariants": [
+        "Why `nums[stack[-1]] < circular[i]` (strict) and what happens to the elements still on the stack after the loop?",
+        "What is the answer for the maximum element?"
+      ],
+      "code": "circular = nums + nums\nfor i in range(2 * n):\n    while stack and nums[stack[-1]] < circular[i]:\n        idx = stack.pop()\n        ans[idx] = circular[i]\n    stack.append(i % n)",
+      "answer": "Strict `<` ensures only a strictly greater value resolves an element. Elements left on the stack after two laps (the maximum and its equals) have no greater element anywhere, so they keep -1. Pushing i % n on the second lap is redundant but harmless.",
+      "keyPoints": [
+        "Strictly greater",
+        "Leftover = no greater element",
+        "Maximum keeps -1"
+      ],
+      "explanation": "Equal values never resolve each other."
+    },
+    {
+      "id": "ng2-edge-01",
+      "category": "edge_case",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "What is the output for [1,2,1]?",
+        "How does wraparound change the answer for the last element?"
+      ],
+      "options": [
+        "[2,-1,2]",
+        "[2,2,2]",
+        "[-1,-1,-1]",
+        "[2,-1,-1]"
+      ],
+      "answer": "[2,-1,2]",
+      "explanation": "The first 1 sees 2; 2 has no greater element; the last 1 wraps around to see 2.",
+      "incorrectOptionExplanations": {
+        "[2,2,2]": "2 has no greater element.",
+        "[-1,-1,-1]": "Greater elements exist for the 1s.",
+        "[2,-1,-1]": "The last 1 finds 2 by wrapping."
+      }
+    }
+  ],
+  "generatedAt": "2026-10-01T14:16:46Z"
+}

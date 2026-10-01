@@ -1,0 +1,159 @@
+{
+  "schemaVersion": 1,
+  "problemSlug": "daily-temperatures",
+  "summary": "For each day, find how many days until a warmer temperature (0 if none).",
+  "patterns": [
+    "Monotonic Stack"
+  ],
+  "mainInsight": "Keep a stack of indices of days still waiting for a warmer day, with non-increasing temperatures. A new warmer day resolves (pops) every colder waiting day at once.",
+  "canonicalApproach": "Monotonic decreasing stack",
+  "approaches": [
+    {
+      "name": "Brute force",
+      "summary": "For each day scan forward.",
+      "timeComplexity": "O(n^2)",
+      "spaceComplexity": "O(1)"
+    },
+    {
+      "name": "Monotonic decreasing stack",
+      "summary": "Pop colder indices when a warmer temperature appears and record the distance.",
+      "timeComplexity": "O(n)",
+      "spaceComplexity": "O(n)",
+      "strengths": [
+        "Optimal"
+      ],
+      "interviewRelevance": "The expected answer."
+    },
+    {
+      "name": "Backward scan with jumps",
+      "summary": "Iterate from the right, jump via already-computed answers.",
+      "timeComplexity": "O(n)",
+      "spaceComplexity": "O(1) extra",
+      "strengths": [
+        "No stack"
+      ],
+      "weaknesses": [
+        "Trickier"
+      ],
+      "interviewRelevance": "Optional."
+    }
+  ],
+  "personalSolution": {
+    "approach": "Monotonic decreasing stack",
+    "timeComplexity": "O(n)",
+    "spaceComplexity": "O(n)",
+    "isOptimal": true,
+    "notes": "Optimal."
+  },
+  "commonMistakes": [],
+  "edgeCases": [],
+  "cards": [
+    {
+      "id": "dt-pattern-01",
+      "category": "pattern",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "Which pattern solves 'next greater element' type questions?",
+        "What technique finds the next warmer day for every index?"
+      ],
+      "options": [
+        "Monotonic (decreasing) stack",
+        "Sliding window",
+        "Binary search",
+        "Two pointers from both ends"
+      ],
+      "answer": "Monotonic (decreasing) stack",
+      "explanation": "Indices waiting for a greater value are kept on a stack and resolved as soon as it appears.",
+      "incorrectOptionExplanations": {
+        "Sliding window": "No window property.",
+        "Binary search": "The array is unsorted.",
+        "Two pointers from both ends": "No symmetric structure."
+      }
+    },
+    {
+      "id": "dt-invariant-01",
+      "category": "invariant",
+      "type": "free_recall",
+      "promptVariants": [
+        "What does the stack contain at any time and why are the temperatures non-increasing from bottom to top?",
+        "State the invariant of the monotonic stack."
+      ],
+      "answer": "It holds the indices of days that have not yet found a warmer day, with temperatures non-increasing from bottom to top: any day colder than a later one would already have been popped when the later one arrived.",
+      "keyPoints": [
+        "Unresolved days only",
+        "Temperatures non-increasing bottom to top",
+        "Colder days popped by a warmer day"
+      ],
+      "explanation": "When a warmer day arrives it resolves the whole run of colder tops."
+    },
+    {
+      "id": "dt-time-01",
+      "category": "time_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Time complexity of the monotonic stack solution: ___",
+        "Complete the statement: Time complexity of the monotonic stack solution: ___"
+      ],
+      "answer": "O(n)",
+      "explanation": "Each index is pushed once and popped at most once.",
+      "acceptedAnswers": [
+        "linear"
+      ]
+    },
+    {
+      "id": "dt-space-01",
+      "category": "space_complexity",
+      "type": "free_recall",
+      "promptVariants": [
+        "What is the worst case for the stack size?",
+        "For which input does the Daily Temperatures stack grow to its maximum size?"
+      ],
+      "answer": "O(n): a non-increasing temperature sequence (e.g. 90, 80, 70, ...) never pops, so every index stays on the stack.",
+      "keyPoints": [
+        "Non-increasing input",
+        "O(n)"
+      ],
+      "explanation": "The answer array is also O(n)."
+    },
+    {
+      "id": "dt-code-01",
+      "category": "code_reasoning",
+      "type": "code_question",
+      "promptVariants": [
+        "Why `<` and not `<=` in `t[stack[-1]] < t[i]`, and how is the answer computed?",
+        "What does `i - idx` represent?"
+      ],
+      "code": "for i in range(n):\n    while stack and t[stack[-1]] < t[i]:\n        idx = stack.pop()\n        ans[idx] = i - idx\n    stack.append(i)",
+      "answer": "We need a STRICTLY warmer day, so equal temperatures must stay on the stack. i - idx is the number of days between the waiting day idx and the first warmer day i. Days left on the stack at the end keep the default 0.",
+      "keyPoints": [
+        "Strict greater needed",
+        "i - idx = wait",
+        "Leftovers stay 0"
+      ],
+      "explanation": "Using <= would wrongly resolve equal temperatures."
+    },
+    {
+      "id": "dt-edge-01",
+      "category": "edge_case",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "What is the output for [30,40,50,60]?",
+        "How does an increasing sequence behave?"
+      ],
+      "options": [
+        "[1,1,1,0]",
+        "[0,0,0,0]",
+        "[3,2,1,0]",
+        "[1,1,1,1]"
+      ],
+      "answer": "[1,1,1,0]",
+      "explanation": "Each day is followed by a warmer day the next day, except the last.",
+      "incorrectOptionExplanations": {
+        "[0,0,0,0]": "Warmer days do exist.",
+        "[3,2,1,0]": "That would be for a different pattern.",
+        "[1,1,1,1]": "The last day has no warmer day."
+      }
+    }
+  ],
+  "generatedAt": "2026-10-01T14:16:46Z"
+}

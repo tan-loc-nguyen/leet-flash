@@ -1,0 +1,148 @@
+{
+  "schemaVersion": 1,
+  "problemSlug": "maximum-subarray-min-product",
+  "summary": "Maximise (min element of a subarray) x (sum of the subarray) over all subarrays; return it modulo 1e9+7.",
+  "patterns": [
+    "Monotonic Stack",
+    "Prefix Sum"
+  ],
+  "mainInsight": "Fix each element as the minimum of its subarray; the best subarray for that minimum extends until a strictly smaller element on each side. Prefix sums give the range sum, and a monotonic stack gives the boundaries - then take the maximum before applying the modulus.",
+  "canonicalApproach": "Monotonic stack boundaries + prefix sums",
+  "approaches": [
+    {
+      "name": "Brute force",
+      "summary": "Compute min and sum for every subarray.",
+      "timeComplexity": "O(n^2)",
+      "spaceComplexity": "O(1)"
+    },
+    {
+      "name": "Monotonic stack boundaries + prefix sums",
+      "summary": "For each i find the left/right nearest smaller; score = nums[i] * range_sum.",
+      "timeComplexity": "O(n)",
+      "spaceComplexity": "O(n)",
+      "strengths": [
+        "Optimal"
+      ],
+      "interviewRelevance": "Your approach."
+    }
+  ],
+  "personalSolution": {
+    "approach": "Monotonic stack boundaries + prefix sums",
+    "timeComplexity": "O(n)",
+    "spaceComplexity": "O(n)",
+    "isOptimal": true,
+    "notes": "Optimal; the modulus is correctly applied only at the end."
+  },
+  "commonMistakes": [],
+  "edgeCases": [],
+  "cards": [
+    {
+      "id": "sm2-pattern-01",
+      "category": "pattern",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "Which combination solves 'min x sum over subarrays' in O(n)?",
+        "What two tools does this problem need?"
+      ],
+      "options": [
+        "Monotonic stack + prefix sums",
+        "Sliding window",
+        "Binary search + heap",
+        "Two pointers from both ends"
+      ],
+      "answer": "Monotonic stack + prefix sums",
+      "explanation": "The stack gives where each element stays the minimum; prefix sums give the range total in O(1).",
+      "incorrectOptionExplanations": {
+        "Sliding window": "Window validity is not monotone for this objective.",
+        "Binary search + heap": "Not needed.",
+        "Two pointers from both ends": "No symmetric structure."
+      }
+    },
+    {
+      "id": "sm2-insight-01",
+      "category": "main_insight",
+      "type": "free_recall",
+      "promptVariants": [
+        "Why is it enough to consider each element as the subarray minimum with the widest range?",
+        "Why take the maximum before applying the modulus?"
+      ],
+      "answer": "For a fixed minimum value all values are non-negative, so a wider subarray has a larger sum: the widest range (up to the nearest strictly smaller element on each side) is optimal for that minimum. The modulus would break comparisons, so compare real (big-int) values and reduce only at the end.",
+      "keyPoints": [
+        "Widest range for a fixed min",
+        "Non-negative values => bigger sum",
+        "Compare exact values; mod at the end"
+      ],
+      "explanation": "Python's big integers make this safe."
+    },
+    {
+      "id": "sm2-time-01",
+      "category": "time_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Time complexity: ___",
+        "Complete the statement: Time complexity: ___"
+      ],
+      "answer": "O(n)",
+      "explanation": "Prefix sums, two monotonic-stack passes and a final scan are all linear.",
+      "acceptedAnswers": [
+        "linear"
+      ]
+    },
+    {
+      "id": "sm2-space-01",
+      "category": "space_complexity",
+      "type": "free_recall",
+      "promptVariants": [
+        "List the extra structures and their sizes.",
+        "Which auxiliary arrays does the min-product solution allocate and what is the total space?"
+      ],
+      "answer": "Prefix array O(n), left/right boundary arrays O(n) and two stacks O(n): O(n) overall.",
+      "keyPoints": [
+        "prefix",
+        "boundL / boundR",
+        "stacks"
+      ],
+      "explanation": "A single pass with one stack can compute both boundaries."
+    },
+    {
+      "id": "sm2-code-01",
+      "category": "code_reasoning",
+      "type": "code_question",
+      "promptVariants": [
+        "How do boundL/boundR come out of the two stack passes and why `>` (strict) in the pop condition?",
+        "What does `prefix[boundR[i] + 1] - prefix[boundL[i]]` compute?"
+      ],
+      "code": "for i in range(n - 1, -1, -1):\n    while stackL and nums[stackL[-1]] > nums[i]:\n        idx = stackL.pop()\n        boundL[idx] = i + 1\n    stackL.append(i)\n...\nbest = max(nums[i] * (prefix[boundR[i] + 1] - prefix[boundL[i]]), best)",
+      "answer": "Scanning right-to-left, an element popped by a strictly smaller nums[i] has its left boundary just after i (the nearest smaller to its left). The mirrored pass gives the right boundary. Strict `>` lets equal elements extend each other's ranges, which is right because equal minima do not reduce the minimum. The prefix difference is the sum of the range [boundL, boundR].",
+      "keyPoints": [
+        "Popped by the nearest smaller",
+        "Strict > lets equals extend",
+        "Range sum from prefix sums"
+      ],
+      "explanation": "Elements never popped keep the default boundary (0 or n-1)."
+    },
+    {
+      "id": "sm2-edge-01",
+      "category": "edge_case",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "What is the answer for [1,2,3,2]?",
+        "Which subarray achieves it?"
+      ],
+      "options": [
+        "14 ([2,3,2], min 2 x sum 7)",
+        "12",
+        "10",
+        "8"
+      ],
+      "answer": "14 ([2,3,2], min 2 x sum 7)",
+      "explanation": "min 2 x sum 7 = 14; the whole array gives 1 x 8 = 8.",
+      "incorrectOptionExplanations": {
+        "12": "Not achievable.",
+        "10": "Not the maximum.",
+        "8": "That is the whole array's score, which is smaller."
+      }
+    }
+  ],
+  "generatedAt": "2026-10-01T14:16:46Z"
+}

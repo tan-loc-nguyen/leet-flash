@@ -1,0 +1,168 @@
+{
+  "schemaVersion": 1,
+  "problemSlug": "design-browser-history",
+  "summary": "Design a browser history supporting visit, back(steps) and forward(steps).",
+  "patterns": [
+    "Design",
+    "Stack"
+  ],
+  "mainInsight": "Keep the pages in an array with a cursor. Visiting a new page truncates everything ahead of the cursor and adds the page; back/forward just move the cursor, clamped to the valid range.",
+  "canonicalApproach": "Array + cursor",
+  "approaches": [
+    {
+      "name": "Two stacks (back/forward)",
+      "summary": "Move pages between back and forward stacks.",
+      "timeComplexity": "back/forward O(steps)",
+      "spaceComplexity": "O(n)",
+      "strengths": [
+        "Intuitive"
+      ],
+      "weaknesses": [
+        "Step cost"
+      ]
+    },
+    {
+      "name": "Array + cursor",
+      "summary": "history list with cur and a valid length (or truncate with slicing).",
+      "timeComplexity": "O(1) per operation",
+      "spaceComplexity": "O(n)",
+      "strengths": [
+        "Constant-time moves"
+      ],
+      "weaknesses": [
+        "Truncation bookkeeping"
+      ],
+      "interviewRelevance": "Your approach."
+    },
+    {
+      "name": "Doubly linked list",
+      "summary": "Move prev/next pointers.",
+      "timeComplexity": "O(steps)",
+      "spaceComplexity": "O(n)",
+      "strengths": [
+        "Natural model"
+      ],
+      "weaknesses": [
+        "Step cost"
+      ]
+    }
+  ],
+  "personalSolution": {
+    "approach": "Array + cursor with a valid length",
+    "timeComplexity": "O(1) per operation",
+    "spaceComplexity": "O(n)",
+    "isOptimal": true,
+    "notes": "Correct and O(1). Simplify back/forward with max/min clamping."
+  },
+  "commonMistakes": [],
+  "edgeCases": [],
+  "cards": [
+    {
+      "id": "bh-pattern-01",
+      "category": "pattern",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "Which structure gives O(1) back/forward?",
+        "How do you model the browser tabs' history efficiently?"
+      ],
+      "options": [
+        "Array with a cursor (clamped moves)",
+        "Priority queue",
+        "Hash set",
+        "Trie"
+      ],
+      "answer": "Array with a cursor (clamped moves)",
+      "explanation": "Index arithmetic jumps any number of steps at once.",
+      "incorrectOptionExplanations": {
+        "Priority queue": "No ordering by priority.",
+        "Hash set": "Order matters.",
+        "Trie": "Not a prefix problem."
+      }
+    },
+    {
+      "id": "bh-insight-01",
+      "category": "main_insight",
+      "type": "free_recall",
+      "promptVariants": [
+        "What does visit do to the forward history?",
+        "Why is the forward history discarded on visit?"
+      ],
+      "answer": "Visiting a new page from the middle of the history clears all pages ahead of the cursor (the forward history), because the browser branches to a new timeline. The new page is placed right after the cursor and becomes the last valid page.",
+      "keyPoints": [
+        "Visit truncates forward history",
+        "New page becomes the end",
+        "Cursor moves to it"
+      ],
+      "explanation": "That is the part most implementations get wrong."
+    },
+    {
+      "id": "bh-time-01",
+      "category": "time_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Time of back/forward with an array cursor: ___",
+        "Each back(steps)/forward(steps) call takes ___."
+      ],
+      "answer": "O(1)",
+      "explanation": "Just clamped index arithmetic.",
+      "acceptedAnswers": [
+        "constant"
+      ]
+    },
+    {
+      "id": "bh-space-01",
+      "category": "space_complexity",
+      "type": "free_recall",
+      "promptVariants": [
+        "What is the space cost and how does truncating by slicing compare with your 'valid length' trick?",
+        "How do slicing and a valid-length counter differ when truncating the forward history?"
+      ],
+      "answer": "O(n) pages. Slicing (history = history[:cur + 1]) is simple but may copy O(n) on each visit; tracking a valid length overwrites in place at O(1) per visit.",
+      "keyPoints": [
+        "O(n) pages",
+        "Slicing copies",
+        "Valid length avoids copies"
+      ],
+      "explanation": "Either is accepted; clarity matters."
+    },
+    {
+      "id": "bh-code-01",
+      "category": "code_reasoning",
+      "type": "code_question",
+      "promptVariants": [
+        "Your back() uses two conditions `steps > validLen - 1 or steps > curr`. Simplify the cursor movement.",
+        "How do you clamp back and forward correctly?"
+      ],
+      "code": "def back(self, steps):\n    if steps > self.validLen - 1 or steps > self.curr:\n        self.curr = 0\n    else:\n        self.curr -= steps\n    return self.history[self.curr]",
+      "answer": "Back is simply `self.curr = max(0, self.curr - steps)` and forward is `self.curr = min(self.validLen - 1, self.curr + steps)`. The first condition in your code is redundant because steps > curr already covers it.",
+      "keyPoints": [
+        "max(0, cur - steps)",
+        "min(valid - 1, cur + steps)"
+      ],
+      "explanation": "Fewer branches means fewer bugs."
+    },
+    {
+      "id": "bh-edge-01",
+      "category": "edge_case",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "After visit(a), visit(b), back(1), visit(c), what does forward(1) return?",
+        "What happens to b?"
+      ],
+      "options": [
+        "It stays on c (the forward history was discarded)",
+        "b",
+        "a",
+        "It raises an error"
+      ],
+      "answer": "It stays on c (the forward history was discarded)",
+      "explanation": "Visiting c from a clears the forward history, so forward(1) cannot move and returns c.",
+      "incorrectOptionExplanations": {
+        "b": "b was discarded when visiting c.",
+        "a": "forward does not move backwards.",
+        "It raises an error": "Forward is clamped, not an error."
+      }
+    }
+  ],
+  "generatedAt": "2026-10-01T14:16:46Z"
+}

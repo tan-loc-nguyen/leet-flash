@@ -1,0 +1,152 @@
+{
+  "schemaVersion": 1,
+  "problemSlug": "evaluate-reverse-polish-notation",
+  "summary": "Evaluate an arithmetic expression given in reverse Polish notation.",
+  "patterns": [
+    "Stack"
+  ],
+  "mainInsight": "In postfix notation each operator applies to the two most recent operands, so push numbers and, on an operator, pop two operands (the second pop is the LEFT operand), compute, and push the result.",
+  "canonicalApproach": "Stack evaluation",
+  "approaches": [
+    {
+      "name": "Stack evaluation",
+      "summary": "Push operands; on an operator pop right then left, apply, push.",
+      "timeComplexity": "O(n)",
+      "spaceComplexity": "O(n)",
+      "strengths": [
+        "Single pass"
+      ],
+      "interviewRelevance": "The expected answer."
+    },
+    {
+      "name": "Recursion from the end",
+      "summary": "Treat the last token as the root and recurse for its operands.",
+      "timeComplexity": "O(n)",
+      "spaceComplexity": "O(n)",
+      "strengths": [
+        "Mirrors the expression tree"
+      ],
+      "weaknesses": [
+        "Recursion depth"
+      ]
+    }
+  ],
+  "personalSolution": {
+    "approach": "Stack evaluation",
+    "timeComplexity": "O(n)",
+    "spaceComplexity": "O(n)",
+    "isOptimal": true,
+    "notes": "Optimal. Drop the redundant len(stack) guard."
+  },
+  "commonMistakes": [],
+  "edgeCases": [],
+  "cards": [
+    {
+      "id": "rp-pattern-01",
+      "category": "pattern",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "Which data structure evaluates postfix expressions?",
+        "What pattern fits 'operator applies to the previous two values'?"
+      ],
+      "options": [
+        "Stack",
+        "Queue",
+        "Heap",
+        "Hash map"
+      ],
+      "answer": "Stack",
+      "explanation": "The most recent operands are always on top of the stack.",
+      "incorrectOptionExplanations": {
+        "Queue": "FIFO would combine the wrong operands.",
+        "Heap": "Ordering by value is irrelevant.",
+        "Hash map": "No lookups."
+      }
+    },
+    {
+      "id": "rp-insight-01",
+      "category": "main_insight",
+      "type": "free_recall",
+      "promptVariants": [
+        "Why does postfix notation need no parentheses or precedence rules, and what does that mean for the algorithm?",
+        "Explain why a stack suffices."
+      ],
+      "answer": "In postfix the evaluation order is fully determined by token order: when an operator appears, its two operands are exactly the two most recently produced values. A stack holds those pending values, so a single left-to-right pass is enough.",
+      "keyPoints": [
+        "Order is explicit",
+        "Operands are the last two values",
+        "One pass with a stack"
+      ],
+      "explanation": "The stack mirrors the expression tree evaluated bottom-up."
+    },
+    {
+      "id": "rp-edge-01",
+      "category": "edge_case",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "For '-' and '/', which popped value is the left operand?",
+        "In `a = pop(); b = pop()`, which expression is correct for subtraction?"
+      ],
+      "options": [
+        "b - a (the second pop is the left operand)",
+        "a - b",
+        "a + b",
+        "-(a - b)"
+      ],
+      "answer": "b - a (the second pop is the left operand)",
+      "explanation": "The first value pushed is the left operand, so it is popped second.",
+      "incorrectOptionExplanations": {
+        "a - b": "That reverses the operands.",
+        "a + b": "That is addition.",
+        "-(a - b)": "Equivalent to b - a but obscure; the direct form is b - a."
+      }
+    },
+    {
+      "id": "rp-time-01",
+      "category": "time_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Time complexity: ___",
+        "Complete the statement: Time complexity: ___"
+      ],
+      "answer": "O(n)",
+      "explanation": "Each token is processed once.",
+      "acceptedAnswers": [
+        "linear"
+      ]
+    },
+    {
+      "id": "rp-space-01",
+      "category": "space_complexity",
+      "type": "free_recall",
+      "promptVariants": [
+        "What is the worst-case size of the stack?",
+        "When does the stack reach O(n)?"
+      ],
+      "answer": "O(n) when the expression has many operands before operators (e.g. all numbers first); at most about half the tokens.",
+      "keyPoints": [
+        "Operands before operators",
+        "O(n) worst case"
+      ],
+      "explanation": "A valid RPN expression never leaves more than one value at the end."
+    },
+    {
+      "id": "rp-code-01",
+      "category": "code_reasoning",
+      "type": "code_question",
+      "promptVariants": [
+        "Why does the division use `int(b / a)` and what rounding does it implement?",
+        "What is the concern with the condition `token in ops and len(stack) >= 2`?"
+      ],
+      "code": "if token in ops and len(stack) >= 2:\n    a = stack.pop()\n    b = stack.pop()\n    ...\n    elif token == '/':\n        stack.append(int(b / a))\nelse:\n    stack.append(int(token))",
+      "answer": "int() truncates toward zero, matching the problem's integer-division rule (Python's // would floor negative results). The `len(stack) >= 2` guard is unnecessary for valid input; if violated an operator token would reach `int(token)` and raise ValueError, hiding the real error.",
+      "keyPoints": [
+        "Truncate toward zero",
+        "// floors negatives",
+        "Guard is redundant for valid input"
+      ],
+      "explanation": "For huge values use integer arithmetic to avoid float rounding."
+    }
+  ],
+  "generatedAt": "2026-10-01T14:16:46Z"
+}

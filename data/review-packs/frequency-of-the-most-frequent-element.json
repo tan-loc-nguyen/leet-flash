@@ -153,11 +153,11 @@
       "answer": "2",
       "explanation": "4 and 8 cost 4 to equalise (<= 5); adding 1 or 13 would exceed the budget; so frequency 2.",
       "incorrectOptionExplanations": {
-        "3": "[1,4,8] needs 3+4 = 7 increments... more than 5.",
+        "3": "Even the cheapest triple [1,4,8] needs 7 + 4 = 11 increments, more than 5.",
         "1": "Two elements can be equalised within 5.",
         "4": "The whole array needs far more than 5."
       }
     }
   ],
-  "generatedAt": "2026-10-01T14:13:38Z"
+  "generatedAt": "2026-10-01T14:16:46Z"
 }

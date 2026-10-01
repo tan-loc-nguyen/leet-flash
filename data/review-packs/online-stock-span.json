@@ -1,0 +1,164 @@
+{
+  "schemaVersion": 1,
+  "problemSlug": "online-stock-span",
+  "summary": "Design a class that, for each new price, returns the number of consecutive previous days (including today) with price <= today's.",
+  "patterns": [
+    "Monotonic Stack",
+    "Design"
+  ],
+  "mainInsight": "The span is today's index minus the index of the previous strictly greater price. A monotonic stack of decreasing prices exposes that previous greater element directly.",
+  "canonicalApproach": "Stack of (price, span) pairs",
+  "approaches": [
+    {
+      "name": "Scan backwards",
+      "summary": "Walk back while prices <= today.",
+      "timeComplexity": "O(n) per call",
+      "spaceComplexity": "O(n)",
+      "weaknesses": [
+        "Quadratic overall"
+      ]
+    },
+    {
+      "name": "Monotonic stack of indices",
+      "summary": "Pop prices <= today; span = index - stack top index.",
+      "timeComplexity": "Amortised O(1)",
+      "spaceComplexity": "O(n)",
+      "strengths": [
+        "Optimal time"
+      ],
+      "weaknesses": [
+        "Keeps the full price list"
+      ],
+      "interviewRelevance": "Your approach."
+    },
+    {
+      "name": "Stack of (price, span) pairs",
+      "summary": "On a new price, pop pairs with price <= today and add their spans to today's span.",
+      "timeComplexity": "Amortised O(1)",
+      "spaceComplexity": "O(stack size)",
+      "strengths": [
+        "No full history stored"
+      ],
+      "interviewRelevance": "The usual memory-lean version."
+    }
+  ],
+  "personalSolution": {
+    "approach": "Monotonic stack of indices (plus a full price list)",
+    "timeComplexity": "O(1) amortised per call",
+    "spaceComplexity": "O(n)",
+    "isOptimal": true,
+    "notes": "Optimal time. Storing (price, span) pairs avoids keeping every price."
+  },
+  "commonMistakes": [],
+  "edgeCases": [],
+  "cards": [
+    {
+      "id": "ss-pattern-01",
+      "category": "pattern",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "Which structure computes 'previous greater element' online?",
+        "What pattern does Online Stock Span use?"
+      ],
+      "options": [
+        "Monotonic decreasing stack",
+        "Max-heap",
+        "Sliding window maximum deque",
+        "Binary search tree"
+      ],
+      "answer": "Monotonic decreasing stack",
+      "explanation": "Pop all smaller-or-equal prices; the remaining top is the previous greater price.",
+      "incorrectOptionExplanations": {
+        "Max-heap": "Cannot locate the nearest greater by position.",
+        "Sliding window maximum deque": "No fixed window.",
+        "Binary search tree": "Overkill; O(log n)."
+      }
+    },
+    {
+      "id": "ss-insight-01",
+      "category": "main_insight",
+      "type": "free_recall",
+      "promptVariants": [
+        "Why can popped prices be discarded forever?",
+        "Why does popping smaller-or-equal prices keep future spans correct?"
+      ],
+      "answer": "A popped price p <= today's price will always be covered by today's price: any later span that reaches back over p would also cover today's day, so we can summarise it by today's entry. The stack therefore stays strictly decreasing.",
+      "keyPoints": [
+        "Popped prices are dominated",
+        "Future spans extend past them via today",
+        "Stack strictly decreasing"
+      ],
+      "explanation": "This is amortised O(1) because each price is popped at most once."
+    },
+    {
+      "id": "ss-time-01",
+      "category": "time_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Amortised time per next() call: ___",
+        "Complete the statement: Amortised time per next() call: ___"
+      ],
+      "answer": "O(1)",
+      "explanation": "Each price is pushed once and popped at most once overall.",
+      "acceptedAnswers": [
+        "constant",
+        "amortized O(1)"
+      ]
+    },
+    {
+      "id": "ss-space-01",
+      "category": "space_complexity",
+      "type": "free_recall",
+      "promptVariants": [
+        "Your solution stores every price in `self.stock`. How could you avoid that?",
+        "How can Online Stock Span avoid storing every price ever seen?"
+      ],
+      "answer": "Store (price, span) pairs on the stack; when popping, add the popped span to the current span. Then only the stack (strictly decreasing prices) is kept, which can be much smaller than n.",
+      "keyPoints": [
+        "Stack of (price, span)",
+        "Accumulate spans when popping"
+      ],
+      "explanation": "Worst case remains O(n) for a decreasing sequence."
+    },
+    {
+      "id": "ss-code-01",
+      "category": "code_reasoning",
+      "type": "code_question",
+      "promptVariants": [
+        "How is the span computed from the index stack and why is `+ 1` needed?",
+        "What is the span when the stack is empty after popping?"
+      ],
+      "code": "while self.stack and self.stock[self.stack[-1]] <= price:\n    self.stack.pop()\nspan = len(self.stock)\nif self.stack:\n    span -= self.stack[-1] + 1",
+      "answer": "len(self.stock) is today's index + 1, i.e. the number of days so far. If no greater earlier price exists the span is all days so far. Otherwise subtract the number of days up to and including the previous greater day, which is its index + 1. Equal prices are popped because the span includes them.",
+      "keyPoints": [
+        "len = days so far",
+        "Subtract days up to the previous greater price",
+        "<= pops equal prices"
+      ],
+      "explanation": "Indices are 0-based, hence the + 1."
+    },
+    {
+      "id": "ss-edge-01",
+      "category": "edge_case",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "What are the spans for prices 100, 80, 60, 70, 60, 75, 85?",
+        "Which span shows equal prices being included?"
+      ],
+      "options": [
+        "1, 1, 1, 2, 1, 4, 6",
+        "1, 1, 1, 1, 1, 1, 1",
+        "1, 2, 3, 4, 5, 6, 7",
+        "1, 1, 1, 2, 1, 3, 6"
+      ],
+      "answer": "1, 1, 1, 2, 1, 4, 6",
+      "explanation": "75 spans 60, 70, 60, 75 (4 days); 85 spans everything after 100 (6 days).",
+      "incorrectOptionExplanations": {
+        "1, 1, 1, 1, 1, 1, 1": "Spans grow when earlier prices are <= today's.",
+        "1, 2, 3, 4, 5, 6, 7": "Prices must be non-greater than today's.",
+        "1, 1, 1, 2, 1, 3, 6": "The 75 spans four days, not three."
+      }
+    }
+  ],
+  "generatedAt": "2026-10-01T14:16:46Z"
+}

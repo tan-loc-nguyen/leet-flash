@@ -1,0 +1,147 @@
+{
+  "schemaVersion": 1,
+  "problemSlug": "remove-k-digits",
+  "summary": "Remove k digits from a number string to make the smallest possible number.",
+  "patterns": [
+    "Monotonic Stack",
+    "Greedy"
+  ],
+  "mainInsight": "To minimise the number, delete a digit whenever it is larger than the digit that follows it (the first 'descent'), because that makes the leading digits smaller. A monotonic increasing stack does this greedily; leftover removals come off the end.",
+  "canonicalApproach": "Monotonic increasing stack (greedy)",
+  "approaches": [
+    {
+      "name": "Brute force",
+      "summary": "Try all ways to remove k digits.",
+      "timeComplexity": "O(C(n, k))",
+      "spaceComplexity": "O(n)"
+    },
+    {
+      "name": "Monotonic increasing stack (greedy)",
+      "summary": "Pop while the top digit > current digit and removals remain; then trim extras and leading zeros.",
+      "timeComplexity": "O(n)",
+      "spaceComplexity": "O(n)",
+      "strengths": [
+        "Optimal"
+      ],
+      "interviewRelevance": "The expected answer."
+    }
+  ],
+  "personalSolution": {
+    "approach": "Monotonic increasing stack with deque",
+    "timeComplexity": "O(n)",
+    "spaceComplexity": "O(n)",
+    "isOptimal": true,
+    "notes": "Optimal. Comparing the digit characters directly (no int()) is slightly cleaner."
+  },
+  "commonMistakes": [],
+  "edgeCases": [],
+  "cards": [
+    {
+      "id": "rk-pattern-01",
+      "category": "pattern",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "Which technique removes k digits to minimise the number?",
+        "What structure implements the greedy choice?"
+      ],
+      "options": [
+        "Monotonic increasing stack",
+        "Sorting the digits",
+        "Dynamic programming over subsets",
+        "Binary search"
+      ],
+      "answer": "Monotonic increasing stack",
+      "explanation": "Keeping digits non-decreasing from left to right yields the smallest prefix.",
+      "incorrectOptionExplanations": {
+        "Sorting the digits": "Reordering is not allowed.",
+        "Dynamic programming over subsets": "Exponential and unnecessary.",
+        "Binary search": "Not a search problem."
+      }
+    },
+    {
+      "id": "rk-insight-01",
+      "category": "main_insight",
+      "type": "free_recall",
+      "promptVariants": [
+        "Why is removing a larger digit that precedes a smaller digit always beneficial?",
+        "Prove the greedy rule."
+      ],
+      "answer": "Earlier positions have more weight. If digit a is followed by a smaller digit b, removing a makes the digit at that position smaller (b replaces a), which beats any change at a later position. So we remove at the first descent; repeating this yields the minimum.",
+      "keyPoints": [
+        "More significant positions dominate",
+        "Remove at the first descent",
+        "Repeat k times"
+      ],
+      "explanation": "That is exactly what popping from the stack does."
+    },
+    {
+      "id": "rk-time-01",
+      "category": "time_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Time complexity: ___",
+        "Complete the statement: Time complexity: ___"
+      ],
+      "answer": "O(n)",
+      "explanation": "Each digit is pushed and popped at most once.",
+      "acceptedAnswers": [
+        "linear"
+      ]
+    },
+    {
+      "id": "rk-space-01",
+      "category": "space_complexity",
+      "type": "free_recall",
+      "promptVariants": [
+        "What is the space cost and why does Python need it?",
+        "Why does Remove K Digits need O(n) space even though it only removes digits?"
+      ],
+      "answer": "O(n) for the stack/result (strings are immutable and the answer can be as long as n - k).",
+      "keyPoints": [
+        "O(n)",
+        "Result length up to n - k"
+      ],
+      "explanation": "In place edits on a char array also take O(n)."
+    },
+    {
+      "id": "rk-code-01",
+      "category": "code_reasoning",
+      "type": "code_question",
+      "promptVariants": [
+        "Why are there three post-processing steps (leftover k, leading zeros, empty result)?",
+        "What happens with an increasing input like '12345' and k = 2?"
+      ],
+      "code": "while k > 0:\n    stack.pop()\n    k -= 1\nwhile stack and stack[0] == '0':\n    stack.popleft()\nreturn ''.join(stack) if stack else '0'",
+      "answer": "If digits never descend (e.g. '12345'), nothing is popped in the loop, so the remaining k removals must come from the end (the largest, least significant digits). Leading zeros are not allowed in the result, and an empty stack means all digits were removed, which is '0'.",
+      "keyPoints": [
+        "Leftover k pops from the end",
+        "Strip leading zeros",
+        "Empty => '0'"
+      ],
+      "explanation": "'12345', k = 2 gives '123'."
+    },
+    {
+      "id": "rk-edge-01",
+      "category": "edge_case",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "What is the result for num = '10200', k = 1?",
+        "How do leading zeros appear?"
+      ],
+      "options": [
+        "'200'",
+        "'1200'",
+        "'0200'",
+        "'20'"
+      ],
+      "answer": "'200'",
+      "explanation": "Removing '1' (a descent 1 > 0) gives '0200' which becomes '200' after stripping leading zeros.",
+      "incorrectOptionExplanations": {
+        "'1200'": "That removes a zero, which is not optimal.",
+        "'0200'": "Leading zeros must be stripped.",
+        "'20'": "That removes two digits."
+      }
+    }
+  ],
+  "generatedAt": "2026-10-01T14:16:46Z"
+}
