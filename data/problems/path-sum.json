@@ -1,0 +1,33 @@
+{
+  "leetcodeId": "112",
+  "title": "Path Sum",
+  "slug": "path-sum",
+  "url": "https://leetcode.com/problems/path-sum/",
+  "difficulty": "Easy",
+  "status": "solved",
+  "premium": false,
+  "tags": [
+    "Tree",
+    "Depth-First Search",
+    "Breadth-First Search",
+    "Binary Tree"
+  ],
+  "problemStatement": "Given the root of a binary tree and an integer targetSum, return true if the tree has a root-to-leaf path such that adding up all the values along the path equals targetSum.\n\nA leaf is a node with no children.\n\nExample 1:\n\nInput: root = [5,4,8,11,null,13,4,7,2,null,null,null,1], targetSum = 22\nOutput: true\nExplanation: The root-to-leaf path with the target sum is shown.\n\nExample 2:\n\nInput: root = [1,2,3], targetSum = 5\nOutput: false\nExplanation: There are two root-to-leaf paths in the tree:\n(1 --> 2): The sum is 3.\n(1 --> 3): The sum is 4.\nThere is no root-to-leaf path with sum = 5.\n\nExample 3:\n\nInput: root = [], targetSum = 0\nOutput: false\nExplanation: Since the tree is empty, there are no root-to-leaf paths.\n\nConstraints:\n\n- The number of nodes in the tree is in the range [0, 5000].\n\n- -1000 <= Node.val <= 1000\n\n- -1000 <= targetSum <= 1000",
+  "constraints": [
+    "The number of nodes in the tree is in the range [0, 5000].",
+    "-1000 <= Node.val <= 1000",
+    "-1000 <= targetSum <= 1000"
+  ],
+  "hints": [],
+  "acRate": 55.81,
+  "lastSubmittedAt": "2026-09-26T01:53:09Z",
+  "latestSubmission": {
+    "submissionId": "2153440601",
+    "language": "Python3",
+    "code": "# Definition for a binary tree node.\n# class TreeNode:\n#     def __init__(self, val=0, left=None, right=None):\n#         self.val = val\n#         self.left = left\n#         self.right = right\nclass Solution:\n    def hasPathSum(self, root: TreeNode | None, targetSum: int) -> bool:\n        if not root:\n            return False\n        \n        remaining = targetSum - root.val\n        if not root.left and not root.right:\n            return remaining == 0\n        \n        left = self.hasPathSum(root.left, remaining)\n        right = self.hasPathSum(root.right, remaining)\n\n        return left or right"
+  },
+  "notes": [],
+  "source": "leetcode",
+  "importedAt": "2026-10-01T13:44:25Z",
+  "lastSyncedAt": "2026-10-01T13:44:25Z"
+}

@@ -1,0 +1,31 @@
+{
+  "leetcodeId": "103",
+  "title": "Binary Tree Zigzag Level Order Traversal",
+  "slug": "binary-tree-zigzag-level-order-traversal",
+  "url": "https://leetcode.com/problems/binary-tree-zigzag-level-order-traversal/",
+  "difficulty": "Medium",
+  "status": "solved",
+  "premium": false,
+  "tags": [
+    "Tree",
+    "Breadth-First Search",
+    "Binary Tree"
+  ],
+  "problemStatement": "Given the root of a binary tree, return the zigzag level order traversal of its nodes' values. (i.e., from left to right, then right to left for the next level and alternate between).\n\nExample 1:\n\nInput: root = [3,9,20,null,null,15,7]\nOutput: [[3],[20,9],[15,7]]\n\nExample 2:\n\nInput: root = [1]\nOutput: [[1]]\n\nExample 3:\n\nInput: root = []\nOutput: []\n\nConstraints:\n\n- The number of nodes in the tree is in the range [0, 2000].\n\n- -100 <= Node.val <= 100",
+  "constraints": [
+    "The number of nodes in the tree is in the range [0, 2000].",
+    "-100 <= Node.val <= 100"
+  ],
+  "hints": [],
+  "acRate": 64.57,
+  "lastSubmittedAt": "2026-08-26T08:27:02Z",
+  "latestSubmission": {
+    "submissionId": "2120572377",
+    "language": "Python3",
+    "code": "# Definition for a binary tree node.\n# class TreeNode:\n#     def __init__(self, val=0, left=None, right=None):\n#         self.val = val\n#         self.left = left\n#         self.right = right\nclass Solution:\n    def zigzagLevelOrder(self, root: Optional[TreeNode]) -> List[List[int]]:\n        queue = deque([root])\n        ans = []\n        ltr = True\n        while queue:\n            n = len(queue)\n            level = []\n            for _ in range(n):\n                if ltr:\n                    node = queue.popleft()\n                    if node:\n                        queue.append(node.left)\n                        queue.append(node.right)\n                        level.append(node.val)\n                else:\n                    node = queue.pop()\n                    if node:\n                        queue.appendleft(node.right)\n                        queue.appendleft(node.left)\n                        level.append(node.val)\n            \n            if level:\n                ans.append(level)\n            ltr = not ltr\n        \n        return ans\n"
+  },
+  "notes": [],
+  "source": "leetcode",
+  "importedAt": "2026-10-01T13:44:25Z",
+  "lastSyncedAt": "2026-10-01T13:44:25Z"
+}

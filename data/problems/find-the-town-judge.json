@@ -1,0 +1,35 @@
+{
+  "leetcodeId": "997",
+  "title": "Find the Town Judge",
+  "slug": "find-the-town-judge",
+  "url": "https://leetcode.com/problems/find-the-town-judge/",
+  "difficulty": "Easy",
+  "status": "solved",
+  "premium": false,
+  "tags": [
+    "Array",
+    "Hash Table",
+    "Graph Theory"
+  ],
+  "problemStatement": "In a town, there are n people labeled from 1 to n. There is a rumor that one of these people is secretly the town judge.\n\nIf the town judge exists, then:\n\n- The town judge trusts nobody.\n\n- Everybody (except for the town judge) trusts the town judge.\n\n- There is exactly one person that satisfies properties 1 and 2.\n\nYou are given an array trust where trust[i] = [ai, bi] representing that the person labeled ai trusts the person labeled bi. If a trust relationship does not exist in trust array, then such a trust relationship does not exist.\n\nReturn the label of the town judge if the town judge exists and can be identified, or return -1 otherwise.\n\nExample 1:\n\nInput: n = 2, trust = [[1,2]]\nOutput: 2\n\nExample 2:\n\nInput: n = 3, trust = [[1,3],[2,3]]\nOutput: 3\n\nExample 3:\n\nInput: n = 3, trust = [[1,3],[2,3],[3,1]]\nOutput: -1\n\nConstraints:\n\n- 1 <= n <= 1000\n\n- 0 <= trust.length <= 10^4\n\n- trust[i].length == 2\n\n- All the pairs of trust are unique.\n\n- ai != bi\n\n- 1 <= ai, bi <= n",
+  "constraints": [
+    "1 <= n <= 1000",
+    "0 <= trust.length <= 10^4",
+    "trust[i].length == 2",
+    "All the pairs of trust are unique.",
+    "ai != bi",
+    "1 <= ai, bi <= n"
+  ],
+  "hints": [],
+  "acRate": 51.14,
+  "lastSubmittedAt": "2026-06-28T04:56:22Z",
+  "latestSubmission": {
+    "submissionId": "2048550715",
+    "language": "Python3",
+    "code": "class Solution:\n    def findJudge(self, n: int, trust: List[List[int]]) -> int:\n        # convert this edges list -> adjacencies lists\n        # Find the node with max num of adjacencies and compare with the num of nodes\n        # if found a list the contains that node then false?\n        incoming = collections.defaultdict(int)\n        outgoing = collections.defaultdict(int)\n        \n        for src, dst in trust:\n            outgoing[src] += 1\n            incoming[dst] += 1\n\n        for i in range(n):\n            if outgoing[i + 1] == 0 and incoming[i + 1] == n - 1:\n                return i + 1\n\n        return - 1 "
+  },
+  "notes": [],
+  "source": "leetcode",
+  "importedAt": "2026-10-01T13:44:25Z",
+  "lastSyncedAt": "2026-10-01T13:44:25Z"
+}

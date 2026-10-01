@@ -1,0 +1,38 @@
+{
+  "leetcodeId": "76",
+  "title": "Minimum Window Substring",
+  "slug": "minimum-window-substring",
+  "url": "https://leetcode.com/problems/minimum-window-substring/",
+  "difficulty": "Hard",
+  "status": "solved",
+  "premium": false,
+  "tags": [
+    "Hash Table",
+    "String",
+    "Sliding Window"
+  ],
+  "problemStatement": "Given two strings s and t of lengths m and n respectively, return the minimum window substring of s such that every character in t (including duplicates) is included in the window. If there is no such substring, return the empty string \"\".\n\nThe testcases will be generated such that the answer is unique.\n\nExample 1:\n\nInput: s = \"ADOBECODEBANC\", t = \"ABC\"\nOutput: \"BANC\"\nExplanation: The minimum window substring \"BANC\" includes 'A', 'B', and 'C' from string t.\n\nExample 2:\n\nInput: s = \"a\", t = \"a\"\nOutput: \"a\"\nExplanation: The entire string s is the minimum window.\n\nExample 3:\n\nInput: s = \"a\", t = \"aa\"\nOutput: \"\"\nExplanation: Both 'a's from t must be included in the window.\nSince the largest window of s only has one 'a', return empty string.\n\nConstraints:\n\n- m == s.length\n\n- n == t.length\n\n- 1 <= m, n <= 10^5\n\n- s and t consist of uppercase and lowercase English letters.\n\nFollow up: Could you find an algorithm that runs in O(m + n) time?",
+  "constraints": [
+    "m == s.length",
+    "n == t.length",
+    "1 <= m, n <= 10^5",
+    "s and t consist of uppercase and lowercase English letters."
+  ],
+  "hints": [
+    "Use two pointers to create a window of letters in s, which would have all the characters from t.",
+    "Expand the right pointer until all the characters of t are covered.",
+    "Once all the characters are covered, move the left pointer and ensure that all the characters are still covered to minimize the subarray size.",
+    "Continue expanding the right and left pointers until you reach the end of s."
+  ],
+  "acRate": 48.59,
+  "lastSubmittedAt": "2026-07-27T14:38:12Z",
+  "latestSubmission": {
+    "submissionId": "2083491034",
+    "language": "Python3",
+    "code": "class Solution:\n    def compare(self, freq: Counter[str], bar: Counter[str]) -> bool:\n        for k, v in bar.items():\n            if freq[k] < v:\n                return False\n        return True\n\n    def minWindow(self, s: str, t: str) -> str:\n        freq = defaultdict(int)\n        for c in t:\n            freq[c] = 0\n        bar = Counter(t)\n        ans = \"\"\n        best = float(\"Inf\")\n        l = 0\n\n        for r in range(len(s)):\n            if s[r] in freq:\n                freq[s[r]] += 1\n            \n            while self.compare(freq, bar):\n                currSize = r - l + 1\n                if best > currSize:\n                    best = currSize\n                    ans = s[l:r+1]\n                \n                if s[l] in freq:\n                    freq[s[l]] -= 1\n                l += 1\n\n        return ans"
+  },
+  "notes": [],
+  "source": "leetcode",
+  "importedAt": "2026-10-01T13:44:25Z",
+  "lastSyncedAt": "2026-10-01T13:44:25Z"
+}

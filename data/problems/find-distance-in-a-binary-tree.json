@@ -1,0 +1,40 @@
+{
+  "leetcodeId": "1740",
+  "title": "Find Distance in a Binary Tree",
+  "slug": "find-distance-in-a-binary-tree",
+  "url": "https://leetcode.com/problems/find-distance-in-a-binary-tree/",
+  "difficulty": "Medium",
+  "status": "solved",
+  "premium": true,
+  "tags": [
+    "Hash Table",
+    "Tree",
+    "Depth-First Search",
+    "Breadth-First Search",
+    "Binary Tree",
+    "Binary Lifting",
+    "Lowest Common Ancestor"
+  ],
+  "problemStatement": "Given the root of a binary tree and two integers p and q, return the distance between the nodes of value p and value q in the tree.\n\nThe distance between two nodes is the number of edges on the path from one to the other.\n\nExample 1:\n\nInput: root = [3,5,1,6,2,0,8,null,null,7,4], p = 5, q = 0\nOutput: 3\nExplanation: There are 3 edges between 5 and 0: 5-3-1-0.\n\nExample 2:\n\nInput: root = [3,5,1,6,2,0,8,null,null,7,4], p = 5, q = 7\nOutput: 2\nExplanation: There are 2 edges between 5 and 7: 5-2-7.\n\nExample 3:\n\nInput: root = [3,5,1,6,2,0,8,null,null,7,4], p = 5, q = 5\nOutput: 0\nExplanation: The distance between a node and itself is 0.\n\nConstraints:\n\n- The number of nodes in the tree is in the range [1, 10^4].\n\n- 0 <= Node.val <= 10^9\n\n- All Node.val are unique.\n\n- p and q are values in the tree.",
+  "constraints": [
+    "The number of nodes in the tree is in the range [1, 10^4].",
+    "0 <= Node.val <= 10^9",
+    "All Node.val are unique.",
+    "p and q are values in the tree."
+  ],
+  "hints": [
+    "Get the LCA of p and q.",
+    "The answer is the sum of distances between p-LCA and q-LCA"
+  ],
+  "acRate": 74.38,
+  "lastSubmittedAt": "2026-09-14T10:00:55Z",
+  "latestSubmission": {
+    "submissionId": "2141429651",
+    "language": "Python3",
+    "code": "# Definition for a binary tree node.\n# class TreeNode:\n#     def __init__(self, val=0, left=None, right=None):\n#         self.val = val\n#         self.left = left\n#         self.right = right\nclass Solution:\n    def lca(self, root: Optional[TreeNode], p: int, q: int) -> Optional[TreeNode]:\n        if not root:\n            return None\n        \n        if root.val == p or root.val == q:\n            return root\n        \n        left = self.lca(root.left, p, q)\n        right = self.lca(root.right, p, q)\n\n        if left and right:\n            return root\n        \n        return left or right\n\n    def findDistance(self, root: Optional[TreeNode], p: int, q: int) -> int:\n        # dist = dist(lca, p) + dist(lca, q)\n        # find lca\n        # use bfs to find the depth of p and q from lca\n        lca = self.lca(root, p, q)\n        queue = deque([lca])\n        cur_dep, p_dep, q_dep = 0, 0, 0\n        while queue:\n            n = len(queue)\n            for _ in range(n):\n                node = queue.popleft()\n                if node:\n                    if node.val == p:\n                        p_dep = cur_dep\n                    if node.val == q:\n                        q_dep = cur_dep\n                    queue.append(node.left)\n                    queue.append(node.right)\n            cur_dep += 1\n        \n        return p_dep + q_dep"
+  },
+  "notes": [],
+  "source": "leetcode",
+  "importedAt": "2026-10-01T13:44:25Z",
+  "lastSyncedAt": "2026-10-01T13:44:25Z"
+}

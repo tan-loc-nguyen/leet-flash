@@ -1,0 +1,33 @@
+{
+  "leetcodeId": "209",
+  "title": "Minimum Size Subarray Sum",
+  "slug": "minimum-size-subarray-sum",
+  "url": "https://leetcode.com/problems/minimum-size-subarray-sum/",
+  "difficulty": "Medium",
+  "status": "solved",
+  "premium": false,
+  "tags": [
+    "Array",
+    "Binary Search",
+    "Sliding Window",
+    "Prefix Sum"
+  ],
+  "problemStatement": "Given an array of positive integers nums and a positive integer target, return the minimal length of a subarray whose sum is greater than or equal to target. If there is no such subarray, return 0 instead.\n\nExample 1:\n\nInput: target = 7, nums = [2,3,1,2,4,3]\nOutput: 2\nExplanation: The subarray [4,3] has the minimal length under the problem constraint.\n\nExample 2:\n\nInput: target = 4, nums = [1,4,4]\nOutput: 1\n\nExample 3:\n\nInput: target = 11, nums = [1,1,1,1,1,1,1,1]\nOutput: 0\n\nConstraints:\n\n- 1 <= target <= 10^9\n\n- 1 <= nums.length <= 10^5\n\n- 1 <= nums[i] <= 10^4\n\nFollow up: If you have figured out the O(n) solution, try coding another solution of which the time complexity is O(n log(n)).",
+  "constraints": [
+    "1 <= target <= 10^9",
+    "1 <= nums.length <= 10^5",
+    "1 <= nums[i] <= 10^4"
+  ],
+  "hints": [],
+  "acRate": 53.04,
+  "lastSubmittedAt": "2026-09-30T08:33:05Z",
+  "latestSubmission": {
+    "submissionId": "2157963309",
+    "language": "Python3",
+    "code": "class Solution:\n    def minSubArrayLen(self, target: int, nums: list[int]) -> int:\n        ans = float(\"inf\")\n        curSum = 0\n        l = 0\n\n        for r in range(len(nums)):\n            curSum += nums[r]\n\n            while curSum >= target:\n                ans = min(ans, r - l + 1)\n                curSum -= nums[l]\n                l += 1\n        \n        return ans if ans != float(\"inf\") else 0"
+  },
+  "notes": [],
+  "source": "leetcode",
+  "importedAt": "2026-10-01T13:44:25Z",
+  "lastSyncedAt": "2026-10-01T13:44:25Z"
+}

@@ -1,0 +1,32 @@
+{
+  "leetcodeId": "101",
+  "title": "Symmetric Tree",
+  "slug": "symmetric-tree",
+  "url": "https://leetcode.com/problems/symmetric-tree/",
+  "difficulty": "Easy",
+  "status": "solved",
+  "premium": false,
+  "tags": [
+    "Tree",
+    "Depth-First Search",
+    "Breadth-First Search",
+    "Binary Tree"
+  ],
+  "problemStatement": "Given the root of a binary tree, check whether it is a mirror of itself (i.e., symmetric around its center).\n\nExample 1:\n\nInput: root = [1,2,2,3,4,4,3]\nOutput: true\n\nExample 2:\n\nInput: root = [1,2,2,null,3,null,3]\nOutput: false\n\nConstraints:\n\n- The number of nodes in the tree is in the range [1, 1000].\n\n- -100 <= Node.val <= 100\n\nFollow up: Could you solve it both recursively and iteratively?",
+  "constraints": [
+    "The number of nodes in the tree is in the range [1, 1000].",
+    "-100 <= Node.val <= 100"
+  ],
+  "hints": [],
+  "acRate": 62.1,
+  "lastSubmittedAt": "2026-09-09T12:26:52Z",
+  "latestSubmission": {
+    "submissionId": "2136311351",
+    "language": "Python3",
+    "code": "# Definition for a binary tree node.\n# class TreeNode:\n#     def __init__(self, val=0, left=None, right=None):\n#         self.val = val\n#         self.left = left\n#         self.right = right\nclass Solution:\n    def isSymmetric(self, root: Optional[TreeNode]) -> bool:\n        if not root:\n            return True\n        \n        def isMirror(p: Optional[TreeNode], q: Optional[TreeNode]) -> bool:\n            if not p and not q:\n                return True\n            if not p or not q:\n                return False\n            return p.val == q.val and isMirror(p.left, q.right) and isMirror(p.right, q.left)\n        \n        return isMirror(root.left, root.right)"
+  },
+  "notes": [],
+  "source": "leetcode",
+  "importedAt": "2026-10-01T13:44:25Z",
+  "lastSyncedAt": "2026-10-01T13:44:25Z"
+}

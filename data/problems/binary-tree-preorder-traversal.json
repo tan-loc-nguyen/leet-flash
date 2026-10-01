@@ -1,0 +1,32 @@
+{
+  "leetcodeId": "144",
+  "title": "Binary Tree Preorder Traversal",
+  "slug": "binary-tree-preorder-traversal",
+  "url": "https://leetcode.com/problems/binary-tree-preorder-traversal/",
+  "difficulty": "Easy",
+  "status": "solved",
+  "premium": false,
+  "tags": [
+    "Stack",
+    "Tree",
+    "Depth-First Search",
+    "Binary Tree"
+  ],
+  "problemStatement": "Given the root of a binary tree, return the preorder traversal of its nodes' values.\n\nExample 1:\n\nInput: root = [1,null,2,3]\n\nOutput: [1,2,3]\n\nExplanation:\n\nExample 2:\n\nInput: root = [1,2,3,4,5,null,8,null,null,6,7,9]\n\nOutput: [1,2,4,5,6,7,3,8,9]\n\nExplanation:\n\nExample 3:\n\nInput: root = []\n\nOutput: []\n\nExample 4:\n\nInput: root = [1]\n\nOutput: [1]\n\nConstraints:\n\n- The number of nodes in the tree is in the range [0, 100].\n\n- -100 <= Node.val <= 100\n\nFollow up: Recursive solution is trivial, could you do it iteratively?",
+  "constraints": [
+    "The number of nodes in the tree is in the range [0, 100].",
+    "-100 <= Node.val <= 100"
+  ],
+  "hints": [],
+  "acRate": 76.77,
+  "lastSubmittedAt": "2026-09-19T06:31:32Z",
+  "latestSubmission": {
+    "submissionId": "2146373792",
+    "language": "Python3",
+    "code": "# Definition for a binary tree node.\n# class TreeNode:\n#     def __init__(self, val=0, left=None, right=None):\n#         self.val = val\n#         self.left = left\n#         self.right = right\nclass Solution:\n    def preorderTraversal(self, root: TreeNode | None) -> list[int]:\n        ans = []\n\n        def dfs(root):\n            if not root:\n                return\n            \n            ans.append(root.val)\n            dfs(root.left)\n            dfs(root.right)\n\n        dfs(root)\n        return ans"
+  },
+  "notes": [],
+  "source": "leetcode",
+  "importedAt": "2026-10-01T13:44:25Z",
+  "lastSyncedAt": "2026-10-01T13:44:25Z"
+}

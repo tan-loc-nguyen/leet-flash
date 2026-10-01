@@ -1,0 +1,32 @@
+{
+  "leetcodeId": "70",
+  "title": "Climbing Stairs",
+  "slug": "climbing-stairs",
+  "url": "https://leetcode.com/problems/climbing-stairs/",
+  "difficulty": "Easy",
+  "status": "solved",
+  "premium": false,
+  "tags": [
+    "Math",
+    "Dynamic Programming",
+    "Memoization"
+  ],
+  "problemStatement": "You are climbing a staircase. It takes n steps to reach the top.\n\nEach time you can either climb 1 or 2 steps. In how many distinct ways can you climb to the top?\n\nExample 1:\n\nInput: n = 2\nOutput: 2\nExplanation: There are two ways to climb to the top.\n1. 1 step + 1 step\n2. 2 steps\n\nExample 2:\n\nInput: n = 3\nOutput: 3\nExplanation: There are three ways to climb to the top.\n1. 1 step + 1 step + 1 step\n2. 1 step + 2 steps\n3. 2 steps + 1 step\n\nConstraints:\n\n- 1 <= n <= 45",
+  "constraints": [
+    "1 <= n <= 45"
+  ],
+  "hints": [
+    "To reach nth step, what could have been your previous steps? (Think about the step sizes)"
+  ],
+  "acRate": 54.37,
+  "lastSubmittedAt": "2026-09-18T04:31:38Z",
+  "latestSubmission": {
+    "submissionId": "2145344367",
+    "language": "Python3",
+    "code": "\nclass Solution:\n    def climbStairs(self, n: int) -> int:\n            a, b = 1, 1\n            for _ in range(2, n + 1):\n                # can be a, b = b, a + b but I want the explicity\n                a, b = b, a + b\n            return b"
+  },
+  "notes": [],
+  "source": "leetcode",
+  "importedAt": "2026-10-01T13:44:25Z",
+  "lastSyncedAt": "2026-10-01T13:44:25Z"
+}

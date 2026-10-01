@@ -1,0 +1,30 @@
+{
+  "leetcodeId": "190",
+  "title": "Reverse Bits",
+  "slug": "reverse-bits",
+  "url": "https://leetcode.com/problems/reverse-bits/",
+  "difficulty": "Easy",
+  "status": "solved",
+  "premium": false,
+  "tags": [
+    "Divide and Conquer",
+    "Bit Manipulation"
+  ],
+  "problemStatement": "Reverse bits of a given 32 bits signed integer.\n\nExample 1:\n\nInput: n = 43261596\n\nOutput: 964176192\n\nExplanation:\n\n\t\t\tInteger\n\t\t\tBinary\n\n\t\t\t43261596\n\t\t\t00000010100101000001111010011100\n\n\t\t\t964176192\n\t\t\t00111001011110000010100101000000\n\nExample 2:\n\nInput: n = 2147483644\n\nOutput: 1073741822\n\nExplanation:\n\n\t\t\tInteger\n\t\t\tBinary\n\n\t\t\t2147483644\n\t\t\t01111111111111111111111111111100\n\n\t\t\t1073741822\n\t\t\t00111111111111111111111111111110\n\nConstraints:\n\n- 0 <= n <= 2^31 - 2\n\n- n is even.\n\nFollow up: If this function is called many times, how would you optimize it?",
+  "constraints": [
+    "0 <= n <= 2^31 - 2",
+    "n is even."
+  ],
+  "hints": [],
+  "acRate": 69.48,
+  "lastSubmittedAt": "2026-08-09T05:30:24Z",
+  "latestSubmission": {
+    "submissionId": "2099932128",
+    "language": "Python3",
+    "code": "class Solution:\n    def reverseBits(self, n: int) -> int:\n        # method 1: setBit at left and right \n        # method 2: flip bit if left != right\n        l, r = 0, 31\n        while l < r:\n            leftBit = (n >> l) & 1\n            rightBit = (n >> r) & 1\n\n            if leftBit != rightBit:\n                n = n ^ (1 << l)\n                n = n ^ (1 << r)\n            \n            l += 1\n            r -= 1\n        \n        return n"
+  },
+  "notes": [],
+  "source": "leetcode",
+  "importedAt": "2026-10-01T13:44:25Z",
+  "lastSyncedAt": "2026-10-01T13:44:25Z"
+}

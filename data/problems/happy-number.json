@@ -1,0 +1,31 @@
+{
+  "leetcodeId": "202",
+  "title": "Happy Number",
+  "slug": "happy-number",
+  "url": "https://leetcode.com/problems/happy-number/",
+  "difficulty": "Easy",
+  "status": "solved",
+  "premium": false,
+  "tags": [
+    "Hash Table",
+    "Math",
+    "Two Pointers",
+    "Floyd's Cycle Finding Algorithm"
+  ],
+  "problemStatement": "Write an algorithm to determine if a number n is happy.\n\nA happy number is a number defined by the following process:\n\n- Starting with any positive integer, replace the number by the sum of the squares of its digits.\n\n- Repeat the process until the number equals 1 (where it will stay), or it loops endlessly in a cycle which does not include 1.\n\n- Those numbers for which this process ends in 1 are happy.\n\nReturn true if n is a happy number, and false if not.\n\nExample 1:\n\nInput: n = 19\nOutput: true\nExplanation:\n1^2 + 9^2 = 82\n8^2 + 2^2 = 68\n6^2 + 8^2 = 100\n1^2 + 0^2 + 0^2 = 1\n\nExample 2:\n\nInput: n = 2\nOutput: false\n\nConstraints:\n\n- 1 <= n <= 2^31 - 1",
+  "constraints": [
+    "1 <= n <= 2^31 - 1"
+  ],
+  "hints": [],
+  "acRate": 60.35,
+  "lastSubmittedAt": "2026-08-26T08:43:19Z",
+  "latestSubmission": {
+    "submissionId": "2120585284",
+    "language": "Python3",
+    "code": "class Solution:\n    def isHappy(self, n: int) -> bool:\n        def squareSum(num: int) -> int:\n            total = 0\n            while num > 0:\n                digit = num % 10\n                total += digit ** 2\n                num //= 10\n            return total\n        \n        slow = n\n        fast = squareSum(squareSum(n))\n        while fast != 1:\n            slow = squareSum(slow)\n            fast = squareSum(squareSum(fast))\n\n            if slow == fast:\n                return False\n\n        return True\n        "
+  },
+  "notes": [],
+  "source": "leetcode",
+  "importedAt": "2026-10-01T13:44:25Z",
+  "lastSyncedAt": "2026-10-01T13:44:25Z"
+}

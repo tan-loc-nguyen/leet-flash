@@ -1,0 +1,35 @@
+{
+  "leetcodeId": "20",
+  "title": "Valid Parentheses",
+  "slug": "valid-parentheses",
+  "url": "https://leetcode.com/problems/valid-parentheses/",
+  "difficulty": "Easy",
+  "status": "solved",
+  "premium": false,
+  "tags": [
+    "String",
+    "Stack",
+    "Bracket Sequences"
+  ],
+  "problemStatement": "Given a string s containing just the characters '(', ')', '{', '}', '[' and ']', determine if the input string is valid.\n\nAn input string is valid if:\n\n- Open brackets must be closed by the same type of brackets.\n\n- Open brackets must be closed in the correct order.\n\n- Every close bracket has a corresponding open bracket of the same type.\n\nExample 1:\n\nInput: s = \"()\"\n\nOutput: true\n\nExample 2:\n\nInput: s = \"()[]{}\"\n\nOutput: true\n\nExample 3:\n\nInput: s = \"(]\"\n\nOutput: false\n\nExample 4:\n\nInput: s = \"([])\"\n\nOutput: true\n\nExample 5:\n\nInput: s = \"([)]\"\n\nOutput: false\n\nConstraints:\n\n- 1 <= s.length <= 10^4\n\n- s consists of parentheses only '()[]{}'.",
+  "constraints": [
+    "1 <= s.length <= 10^4",
+    "s consists of parentheses only '()[]{}'."
+  ],
+  "hints": [
+    "Use a stack of characters.",
+    "When you encounter an opening bracket, push it to the top of the stack.",
+    "When you encounter a closing bracket, check if the top of the stack was the opening for it. If yes, pop it from the stack. Otherwise, return false."
+  ],
+  "acRate": 45.13,
+  "lastSubmittedAt": "2026-07-19T23:39:09Z",
+  "latestSubmission": {
+    "submissionId": "2073935768",
+    "language": "Python3",
+    "code": "class Solution:\n    def isValid(self, s: str) -> bool:\n        closeToOpen = {\n            \")\": \"(\",\n            \"]\": \"[\",\n            \"}\": \"{\"\n        }\n        stack = []\n\n        for c in s:\n            if c in closeToOpen:\n                if stack and stack[-1] == closeToOpen[c]:\n                    stack.pop()\n                else:\n                    return False\n            else:\n                stack.append(c)\n\n        return True if not stack else False"
+  },
+  "notes": [],
+  "source": "leetcode",
+  "importedAt": "2026-10-01T00:00:00Z",
+  "lastSyncedAt": "2026-10-01T13:53:37Z"
+}

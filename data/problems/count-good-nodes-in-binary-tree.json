@@ -1,0 +1,34 @@
+{
+  "leetcodeId": "1448",
+  "title": "Count Good Nodes in Binary Tree",
+  "slug": "count-good-nodes-in-binary-tree",
+  "url": "https://leetcode.com/problems/count-good-nodes-in-binary-tree/",
+  "difficulty": "Medium",
+  "status": "solved",
+  "premium": false,
+  "tags": [
+    "Tree",
+    "Depth-First Search",
+    "Breadth-First Search",
+    "Binary Tree"
+  ],
+  "problemStatement": "Given a binary tree root, a node X in the tree is named good if in the path from root to X there are no nodes with a value greater than X.\n\r\n\r\n\nReturn the number of good nodes in the binary tree.\n\r\n\r\n\n\r\n\nExample 1:\n\r\n\r\n\n\r\n\r\n\n\r\nInput: root = [3,1,4,3,null,1,5]\r\nOutput: 4\r\nExplanation: Nodes in blue are good.\r\nRoot Node (3) is always a good node.\r\nNode 4 -> (3,4) is the maximum value in the path starting from the root.\r\nNode 5 -> (3,4,5) is the maximum value in the path\r\nNode 3 -> (3,1,3) is the maximum value in the path.\n\r\n\r\n\nExample 2:\n\r\n\r\n\n\r\n\r\n\n\r\nInput: root = [3,3,null,4,2]\r\nOutput: 3\r\nExplanation: Node 2 -> (3, 3, 2) is not good, because \"3\" is higher than it.\n\r\n\r\n\nExample 3:\n\r\n\r\n\n\r\nInput: root = [1]\r\nOutput: 1\r\nExplanation: Root is considered as good.\n\r\n\r\n\n\r\n\nConstraints:\n\r\n\r\n\n\r\n\n- The number of nodes in the binary tree is in the range [1, 10^5].\n\r\n\n- Each node's value is between [-10^4, 10^4].",
+  "constraints": [
+    "The number of nodes in the binary tree is in the range [1, 10^5].",
+    "Each node's value is between [-10^4, 10^4]."
+  ],
+  "hints": [
+    "Use DFS (Depth First Search) to traverse the tree, and constantly keep track of the current path maximum."
+  ],
+  "acRate": 74.0,
+  "lastSubmittedAt": "2026-07-13T18:31:15Z",
+  "latestSubmission": {
+    "submissionId": "2066549514",
+    "language": "Python3",
+    "code": "# Definition for a binary tree node.\n# class TreeNode:\n#     def __init__(self, val=0, left=None, right=None):\n#         self.val = val\n#         self.left = left\n#         self.right = right\nclass Solution:\n    def goodNodes(self, root: TreeNode) -> int:\n        self.ans = 0\n\n        def dfs(root: TreeNode, big: int) -> None:\n            if not root:\n                return\n            \n            big = max(big, root.val)\n            if root.val >= big:\n                self.ans += 1\n            \n            dfs(root.left, big)\n            dfs(root.right, big)\n\n        dfs(root, root.val)\n\n        return self.ans\n"
+  },
+  "notes": [],
+  "source": "leetcode",
+  "importedAt": "2026-10-01T13:44:25Z",
+  "lastSyncedAt": "2026-10-01T13:44:25Z"
+}

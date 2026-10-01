@@ -1,0 +1,35 @@
+{
+  "leetcodeId": "2958",
+  "title": "Length of Longest Subarray With at Most K Frequency",
+  "slug": "length-of-longest-subarray-with-at-most-k-frequency",
+  "url": "https://leetcode.com/problems/length-of-longest-subarray-with-at-most-k-frequency/",
+  "difficulty": "Medium",
+  "status": "solved",
+  "premium": false,
+  "tags": [
+    "Array",
+    "Hash Table",
+    "Sliding Window"
+  ],
+  "problemStatement": "You are given an integer array nums and an integer k.\n\nThe frequency of an element x is the number of times it occurs in an array.\n\nAn array is called good if the frequency of each element in this array is less than or equal to k.\n\nReturn the length of the longest good subarray of nums.\n\nA subarray is a contiguous non-empty sequence of elements within an array.\n\nExample 1:\n\nInput: nums = [1,2,3,1,2,3,1,2], k = 2\nOutput: 6\nExplanation: The longest possible good subarray is [1,2,3,1,2,3] since the values 1, 2, and 3 occur at most twice in this subarray. Note that the subarrays [2,3,1,2,3,1] and [3,1,2,3,1,2] are also good.\nIt can be shown that there are no good subarrays with length more than 6.\n\nExample 2:\n\nInput: nums = [1,2,1,2,1,2,1,2], k = 1\nOutput: 2\nExplanation: The longest possible good subarray is [1,2] since the values 1 and 2 occur at most once in this subarray. Note that the subarray [2,1] is also good.\nIt can be shown that there are no good subarrays with length more than 2.\n\nExample 3:\n\nInput: nums = [5,5,5,5,5,5,5], k = 4\nOutput: 4\nExplanation: The longest possible good subarray is [5,5,5,5] since the value 5 occurs 4 times in this subarray.\nIt can be shown that there are no good subarrays with length more than 4.\n\nConstraints:\n\n- 1 <= nums.length <= 10^5\n\n- 1 <= nums[i] <= 10^9\n\n- 1 <= k <= nums.length",
+  "constraints": [
+    "1 <= nums.length <= 10^5",
+    "1 <= nums[i] <= 10^9",
+    "1 <= k <= nums.length"
+  ],
+  "hints": [
+    "For each index i, find the rightmost index j >= i such that the frequency of each element in the subarray [i, j] is at most k.",
+    "We can use 2 pointers / sliding window to achieve it."
+  ],
+  "acRate": 60.5,
+  "lastSubmittedAt": "2026-08-14T05:40:20Z",
+  "latestSubmission": {
+    "submissionId": "2106212595",
+    "language": "Python3",
+    "code": "class Solution:\n    def maxSubarrayLength(self, nums: List[int], k: int) -> int:\n        cnt = collections.defaultdict(int)\n        l = 0\n        best = 0\n\n        for r in range(len(nums)):\n            cnt[nums[r]] += 1\n\n            while cnt[nums[r]] > k:\n                cnt[nums[l]] -= 1\n                if cnt[nums[l]] <= 0:\n                    cnt.pop(nums[l])\n                l += 1\n\n            best = max(best, r - l + 1)\n        \n        return best "
+  },
+  "notes": [],
+  "source": "leetcode",
+  "importedAt": "2026-10-01T13:44:25Z",
+  "lastSyncedAt": "2026-10-01T13:44:25Z"
+}

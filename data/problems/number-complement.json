@@ -1,0 +1,28 @@
+{
+  "leetcodeId": "476",
+  "title": "Number Complement",
+  "slug": "number-complement",
+  "url": "https://leetcode.com/problems/number-complement/",
+  "difficulty": "Easy",
+  "status": "solved",
+  "premium": false,
+  "tags": [
+    "Bit Manipulation"
+  ],
+  "problemStatement": "The complement of an integer is the integer you get when you flip all the 0's to 1's and all the 1's to 0's in its binary representation.\n\n- For example, The integer 5 is \"101\" in binary and its complement is \"010\" which is the integer 2.\n\nGiven an integer num, return its complement.\n\nExample 1:\n\nInput: num = 5\nOutput: 2\nExplanation: The binary representation of 5 is 101 (no leading zero bits), and its complement is 010. So you need to output 2.\n\nExample 2:\n\nInput: num = 1\nOutput: 0\nExplanation: The binary representation of 1 is 1 (no leading zero bits), and its complement is 0. So you need to output 0.\n\nConstraints:\n\n- 1 <= num < 2^31\n\nNote: This question is the same as 1009: https://leetcode.com/problems/complement-of-base-10-integer/",
+  "constraints": [
+    "1 <= num < 2^31"
+  ],
+  "hints": [],
+  "acRate": 70.6,
+  "lastSubmittedAt": "2026-08-09T05:42:51Z",
+  "latestSubmission": {
+    "submissionId": "2099944272",
+    "language": "Python3",
+    "code": "class Solution:\n    def findComplement(self, num: int) -> int:\n        mask = 1\n        while mask < num:\n            mask = (mask << 1) | 1\n        \n        return num ^ mask"
+  },
+  "notes": [],
+  "source": "leetcode",
+  "importedAt": "2026-10-01T13:44:25Z",
+  "lastSyncedAt": "2026-10-01T13:44:25Z"
+}

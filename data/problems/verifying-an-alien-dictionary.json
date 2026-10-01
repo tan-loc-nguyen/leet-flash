@@ -1,0 +1,33 @@
+{
+  "leetcodeId": "953",
+  "title": "Verifying an Alien Dictionary",
+  "slug": "verifying-an-alien-dictionary",
+  "url": "https://leetcode.com/problems/verifying-an-alien-dictionary/",
+  "difficulty": "Easy",
+  "status": "solved",
+  "premium": false,
+  "tags": [
+    "Array",
+    "Hash Table",
+    "String"
+  ],
+  "problemStatement": "In an alien language, surprisingly, they also use English lowercase letters, but possibly in a different order. The order of the alphabet is some permutation of lowercase letters.\n\nGiven a sequence of words written in the alien language, and the order of the alphabet, return true if and only if the given words are sorted lexicographically in this alien language.\n\nExample 1:\n\nInput: words = [\"hello\",\"leetcode\"], order = \"hlabcdefgijkmnopqrstuvwxyz\"\nOutput: true\nExplanation: As 'h' comes before 'l' in this language, then the sequence is sorted.\n\nExample 2:\n\nInput: words = [\"word\",\"world\",\"row\"], order = \"worldabcefghijkmnpqstuvxyz\"\nOutput: false\nExplanation: As 'd' comes after 'l' in this language, then words[0] > words[1], hence the sequence is unsorted.\n\nExample 3:\n\nInput: words = [\"apple\",\"app\"], order = \"abcdefghijklmnopqrstuvwxyz\"\nOutput: false\nExplanation: The first three characters \"app\" match, and the second string is shorter (in size.) According to lexicographical rules \"apple\" > \"app\", because 'l' > '∅', where '∅' is defined as the blank character which is less than any other character (More info).\n\nConstraints:\n\n- 1 <= words.length <= 100\n\n- 1 <= words[i].length <= 20\n\n- order.length == 26\n\n- All characters in words[i] and order are English lowercase letters.",
+  "constraints": [
+    "1 <= words.length <= 100",
+    "1 <= words[i].length <= 20",
+    "order.length == 26",
+    "All characters in words[i] and order are English lowercase letters."
+  ],
+  "hints": [],
+  "acRate": 56.15,
+  "lastSubmittedAt": "2026-06-28T04:11:20Z",
+  "latestSubmission": {
+    "submissionId": "2048518621",
+    "language": "Python3",
+    "code": "class Solution:\n    def isAlienSorted(self, words: List[str], order: str) -> bool:\n        orderMap = {}\n        for i in range(len(order)):\n            orderMap[order[i]] = i\n\n        for i in range(len(words) - 1):\n            n = min(len(words[i]), len(words[i + 1]))\n            for j in range(n):\n                if orderMap[words[i][j]] > orderMap[words[i + 1][j]]:\n                    return False\n                elif orderMap[words[i][j]] < orderMap[words[i + 1][j]]:\n                    break\n                elif j == n - 1 and len(words[i]) > len(words[i + 1]):\n                    return False\n\n        return True"
+  },
+  "notes": [],
+  "source": "leetcode",
+  "importedAt": "2026-10-01T13:44:25Z",
+  "lastSyncedAt": "2026-10-01T13:44:25Z"
+}

@@ -1,0 +1,35 @@
+{
+  "leetcodeId": "3968",
+  "title": "Maximum Manhattan Distance After All Moves",
+  "slug": "maximum-manhattan-distance-after-all-moves",
+  "url": "https://leetcode.com/problems/maximum-manhattan-distance-after-all-moves/",
+  "difficulty": "Medium",
+  "status": "solved",
+  "premium": false,
+  "tags": [
+    "Math",
+    "String",
+    "Counting"
+  ],
+  "problemStatement": "You are given a string moves consisting of the characters 'U', 'D', 'L', 'R', and '_'.\n\nStarting from the origin (0, 0), each character represents one move on a 2D plane:\n\n- 'U': Move up by 1 unit.\n\n- 'D': Move down by 1 unit.\n\n- 'L': Move left by 1 unit.\n\n- 'R': Move right by 1 unit.\n\n- '_': Can be independently replaced with any one of 'U', 'D', 'L', or 'R'.\n\nReturn the maximum Manhattan distance from the origin that can be achieved after all moves have been performed.\n\nExample 1:\n\nInput: moves = \"L_D_\"\n\nOutput: 4\n\nExplanation:\n\nOne optimal choice is:\n\n- 'L': (0, 0) -> (-1, 0)\n\n- '_' treated as 'D': (-1, 0) -> (-1, -1)\n\n- 'D': (-1, -1) -> (-1, -2)\n\n- '_' treated as 'L': (-1, -2) -> (-2, -2)\n\nThe final Manhattan distance from the origin is |0 - (-2)| + |0 - (-2)| = 4.\n\nExample 2:\n\nInput: moves = \"U_R\"\n\nOutput: 3\n\nExplanation:\n\nOne optimal choice is:\n\n- 'U': (0, 0) -> (0, 1)\n\n- '_' treated as 'U': (0, 1) -> (0, 2)\n\n- 'R': (0, 2) -> (1, 2)\n\nThe final Manhattan distance from the origin is |0 - 1| + |0 - 2| = 3.\n\nConstraints:\n\n- 1 <= moves.length <= 10^5\n\n- moves consists of only 'U', 'D', 'L', 'R', and '_'.",
+  "constraints": [
+    "1 <= moves.length <= 10^5",
+    "moves consists of only 'U', 'D', 'L', 'R', and '_'."
+  ],
+  "hints": [
+    "Count the net horizontal movement, net vertical movement, and the number of underscores.",
+    "Without underscores, the final distance is abs(x) + abs(y).",
+    "Each underscore can always be chosen to increase the final Manhattan distance by 1, so add the number of underscores to the fixed-move distance."
+  ],
+  "acRate": 63.3,
+  "lastSubmittedAt": "2026-06-21T02:47:01Z",
+  "latestSubmission": {
+    "submissionId": "2040406203",
+    "language": "Python3",
+    "code": "class Solution:\n    def maxDistance(self, moves: str) -> int:\n        x = 0\n        y = 0\n        wildCards = 0\n\n        for move in moves:\n            if move == 'U':\n                y += 1\n            elif move == 'D':\n                y -= 1\n            elif move == 'R':\n                x += 1\n            elif move == 'L':\n                x -= 1\n            else:\n                wildCards += 1\n\n        return abs(x) + abs(y) + wildCards"
+  },
+  "notes": [],
+  "source": "leetcode",
+  "importedAt": "2026-10-01T13:44:25Z",
+  "lastSyncedAt": "2026-10-01T13:44:25Z"
+}

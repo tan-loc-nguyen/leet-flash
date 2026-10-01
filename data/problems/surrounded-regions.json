@@ -1,0 +1,35 @@
+{
+  "leetcodeId": "130",
+  "title": "Surrounded Regions",
+  "slug": "surrounded-regions",
+  "url": "https://leetcode.com/problems/surrounded-regions/",
+  "difficulty": "Medium",
+  "status": "solved",
+  "premium": false,
+  "tags": [
+    "Array",
+    "Depth-First Search",
+    "Breadth-First Search",
+    "Union-Find",
+    "Matrix"
+  ],
+  "problemStatement": "You are given an m x n matrix board containing letters 'X' and 'O', capture regions that are surrounded:\n\n- Connect: A cell is connected to adjacent cells horizontally or vertically.\n\n- Region: To form a region connect every 'O' cell.\n\n- Surround: A region is surrounded if none of the 'O' cells in that region are on the edge of the board. Such regions are completely enclosed by 'X' cells.\n\nTo capture a surrounded region, replace all 'O's with 'X's in-place within the original board. You do not need to return anything.\n\nExample 1:\n\nInput: board = [[\"X\",\"X\",\"X\",\"X\"],[\"X\",\"O\",\"O\",\"X\"],[\"X\",\"X\",\"O\",\"X\"],[\"X\",\"O\",\"X\",\"X\"]]\n\nOutput: [[\"X\",\"X\",\"X\",\"X\"],[\"X\",\"X\",\"X\",\"X\"],[\"X\",\"X\",\"X\",\"X\"],[\"X\",\"O\",\"X\",\"X\"]]\n\nExplanation:\n\nIn the above diagram, the bottom region is not captured because it is on the edge of the board and cannot be surrounded.\n\nExample 2:\n\nInput: board = [[\"X\"]]\n\nOutput: [[\"X\"]]\n\nConstraints:\n\n- m == board.length\n\n- n == board[i].length\n\n- 1 <= m, n <= 200\n\n- board[i][j] is 'X' or 'O'.",
+  "constraints": [
+    "m == board.length",
+    "n == board[i].length",
+    "1 <= m, n <= 200",
+    "board[i][j] is 'X' or 'O'."
+  ],
+  "hints": [],
+  "acRate": 46.38,
+  "lastSubmittedAt": "2026-08-27T06:43:00Z",
+  "latestSubmission": {
+    "submissionId": "2121595177",
+    "language": "Python3",
+    "code": "\"\"\"\nboard=[\n[\"X\",\"O\",\"X\",\"X\"],\n[\"O\",\"X\",\"O\",\"X\"],\n[\"X\",\"O\",\"X\",\"O\"],\n[\"O\",\"X\",\"O\",\"X\"]]\n\"\"\"\n\nclass Solution:\n    def solve(self, board: List[List[str]]) -> None:\n        m, n = len(board), len(board[0])\n        DIR = [0,1,0,-1,0]\n        not_valid = set()\n\n        def dfs(r: int, c: int, mark: bool) -> None:\n            if not (0 <= r < m and 0 <= c < n and board[r][c] == \"O\"):\n                return\n\n            if mark:\n                board[r][c] = \"X\"\n            else:\n                not_valid.add((r, c))\n\n            for i in range(4):\n                nr, nc = r + DIR[i], c + DIR[i + 1]\n                if 0 <= nr < m and 0 <= nc < n and board[nr][nc] == \"O\" and (nr, nc) not in not_valid:\n                    dfs(nr, nc, mark)\n        \n        for i in [0, m - 1]:\n            for j in range(n):\n                if board[i][j] == \"O\":\n                    dfs(i, j, False)\n        \n        for j in [0, n - 1]:\n            for i in range(m):\n                if board[i][j] == \"O\":\n                    dfs(i, j, False)\n\n        for i in range(m):\n            for j in range(n):\n                if board[i][j] == \"O\" and (i, j) not in not_valid:\n                    dfs(i, j, True)\n"
+  },
+  "notes": [],
+  "source": "leetcode",
+  "importedAt": "2026-10-01T13:44:25Z",
+  "lastSyncedAt": "2026-10-01T13:44:25Z"
+}

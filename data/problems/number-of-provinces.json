@@ -1,0 +1,36 @@
+{
+  "leetcodeId": "547",
+  "title": "Number of Provinces",
+  "slug": "number-of-provinces",
+  "url": "https://leetcode.com/problems/number-of-provinces/",
+  "difficulty": "Medium",
+  "status": "solved",
+  "premium": false,
+  "tags": [
+    "Depth-First Search",
+    "Breadth-First Search",
+    "Union-Find",
+    "Graph Theory"
+  ],
+  "problemStatement": "There are n cities. Some of them are connected, while some are not. If city a is connected directly with city b, and city b is connected directly with city c, then city a is connected indirectly with city c.\n\nA province is a group of directly or indirectly connected cities and no other cities outside of the group.\n\nYou are given an n x n matrix isConnected where isConnected[i][j] = 1 if the i^th city and the j^th city are directly connected, and isConnected[i][j] = 0 otherwise.\n\nReturn the total number of provinces.\n\nExample 1:\n\nInput: isConnected = [[1,1,0],[1,1,0],[0,0,1]]\nOutput: 2\n\nExample 2:\n\nInput: isConnected = [[1,0,0],[0,1,0],[0,0,1]]\nOutput: 3\n\nConstraints:\n\n- 1 <= n <= 200\n\n- n == isConnected.length\n\n- n == isConnected[i].length\n\n- isConnected[i][j] is 1 or 0.\n\n- isConnected[i][i] == 1\n\n- isConnected[i][j] == isConnected[j][i]",
+  "constraints": [
+    "1 <= n <= 200",
+    "n == isConnected.length",
+    "n == isConnected[i].length",
+    "isConnected[i][j] is 1 or 0.",
+    "isConnected[i][i] == 1",
+    "isConnected[i][j] == isConnected[j][i]"
+  ],
+  "hints": [],
+  "acRate": 71.13,
+  "lastSubmittedAt": "2026-08-06T20:13:00Z",
+  "latestSubmission": {
+    "submissionId": "2097242234",
+    "language": "Python3",
+    "code": "class Solution:\n    def findCircleNum(self, isConnected: List[List[int]]) -> int:\n        ans = 0\n        n = len(isConnected)\n        graph = collections.defaultdict(list)\n\n        for u in range(n):\n            for v in range(n):\n                if isConnected[u][v]:\n                    graph[u].append(v)\n                    graph[v].append(u)\n\n        visited = set()\n        def dfs(node: int) -> None:\n            visited.add(node)\n            for nei in graph[node]:\n                if nei not in visited:\n                    dfs(nei)\n        \n        for node in graph.keys():\n            if node not in visited:\n                dfs(node)\n                ans += 1\n\n        return ans"
+  },
+  "notes": [],
+  "source": "leetcode",
+  "importedAt": "2026-10-01T13:44:25Z",
+  "lastSyncedAt": "2026-10-01T13:44:25Z"
+}

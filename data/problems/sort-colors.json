@@ -1,0 +1,38 @@
+{
+  "leetcodeId": "75",
+  "title": "Sort Colors",
+  "slug": "sort-colors",
+  "url": "https://leetcode.com/problems/sort-colors/",
+  "difficulty": "Medium",
+  "status": "solved",
+  "premium": false,
+  "tags": [
+    "Array",
+    "Two Pointers",
+    "Sorting",
+    "Quicksort",
+    "Bubble Sort"
+  ],
+  "problemStatement": "You are given an array nums with n objects colored red, white, or blue, sort them in-place so that objects of the same color are adjacent, with the colors in the order red, white, and blue.\n\nWe will use the integers 0, 1, and 2 to represent the color red, white, and blue, respectively.\n\nYou must solve this problem without using the library's sort function.\n\nExample 1:\n\nInput: nums = [2,0,2,1,1,0]\n\nOutput: [0,0,1,1,2,2]\n\nExplanation:\n\nThe array has two 0s, two 1s, and two 2s. Sorting them in-place places all 0s first, then all 1s, then all 2s.\n\nExample 2:\n\nInput: nums = [2,0,1]\n\nOutput: [0,1,2]\n\nExplanation:\n\nThe array has one each of 0, 1, and 2, arranged in-place in the order 0, 1, 2.\n\nConstraints:\n\n- n == nums.length\n\n- 1 <= n <= 300\n\n- nums[i] is either 0, 1, or 2.\n\nFollow up: Could you come up with a one-pass algorithm using only constant extra space?",
+  "constraints": [
+    "n == nums.length",
+    "1 <= n <= 300",
+    "nums[i] is either 0, 1, or 2."
+  ],
+  "hints": [
+    "A rather straight forward solution is a two-pass algorithm using counting sort.",
+    "Iterate the array counting number of 0's, 1's, and 2's.",
+    "Overwrite array with the total number of 0's, then 1's and followed by 2's."
+  ],
+  "acRate": 70.27,
+  "lastSubmittedAt": "2026-09-09T14:28:13Z",
+  "latestSubmission": {
+    "submissionId": "2136437818",
+    "language": "Python3",
+    "code": "class Solution:\n    def sortColors(self, nums: List[int]) -> None:\n        \"\"\"\n        Do not return anything, modify nums in-place instead.\n        \"\"\"\n        cnt = [0] * 3\n        for num in nums:\n            cnt[num] += 1\n        j = 0\n        for num in range(3):\n            for _ in range(cnt[num]):\n                nums[j] = num\n                j += 1"
+  },
+  "notes": [],
+  "source": "leetcode",
+  "importedAt": "2026-10-01T13:44:25Z",
+  "lastSyncedAt": "2026-10-01T13:44:25Z"
+}

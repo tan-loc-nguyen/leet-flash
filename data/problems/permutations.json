@@ -1,0 +1,31 @@
+{
+  "leetcodeId": "46",
+  "title": "Permutations",
+  "slug": "permutations",
+  "url": "https://leetcode.com/problems/permutations/",
+  "difficulty": "Medium",
+  "status": "solved",
+  "premium": false,
+  "tags": [
+    "Array",
+    "Backtracking"
+  ],
+  "problemStatement": "Given an array nums of distinct integers, return all the possible permutations. You can return the answer in any order.\n\nExample 1:\n\nInput: nums = [1,2,3]\nOutput: [[1,2,3],[1,3,2],[2,1,3],[2,3,1],[3,1,2],[3,2,1]]\n\nExample 2:\n\nInput: nums = [0,1]\nOutput: [[0,1],[1,0]]\n\nExample 3:\n\nInput: nums = [1]\nOutput: [[1]]\n\nConstraints:\n\n- 1 <= nums.length <= 6\n\n- -10 <= nums[i] <= 10\n\n- All the integers of nums are unique.",
+  "constraints": [
+    "1 <= nums.length <= 6",
+    "-10 <= nums[i] <= 10",
+    "All the integers of nums are unique."
+  ],
+  "hints": [],
+  "acRate": 82.39,
+  "lastSubmittedAt": "2026-09-19T06:24:50Z",
+  "latestSubmission": {
+    "submissionId": "2146367662",
+    "language": "Python3",
+    "code": "class Solution:\n    def permute(self, nums: List[int]) -> List[List[int]]:\n        ans = []\n        path = []\n        seen = set()\n\n        def choose() -> None:\n            if len(path) == len(nums):\n                ans.append(path[:])\n                return\n\n            for num in nums:\n                if num in seen:\n                    continue\n                seen.add(num)\n                path.append(num)\n                choose()\n                seen.remove(path.pop())\n        \n        choose()\n        return ans\n                \n\n        \n        choose(0)\n        return ans"
+  },
+  "notes": [],
+  "source": "leetcode",
+  "importedAt": "2026-10-01T13:44:25Z",
+  "lastSyncedAt": "2026-10-01T13:44:25Z"
+}

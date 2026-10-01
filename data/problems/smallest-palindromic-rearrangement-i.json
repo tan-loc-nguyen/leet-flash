@@ -1,0 +1,35 @@
+{
+  "leetcodeId": "3517",
+  "title": "Smallest Palindromic Rearrangement I",
+  "slug": "smallest-palindromic-rearrangement-i",
+  "url": "https://leetcode.com/problems/smallest-palindromic-rearrangement-i/",
+  "difficulty": "Medium",
+  "status": "solved",
+  "premium": false,
+  "tags": [
+    "String",
+    "Sorting",
+    "Counting Sort"
+  ],
+  "problemStatement": "You are given a palindromic string s.\n\nReturn the lexicographically smallest palindromic permutation of s.\n\nExample 1:\n\nInput: s = \"z\"\n\nOutput: \"z\"\n\nExplanation:\n\nA string of only one character is already the lexicographically smallest palindrome.\n\nExample 2:\n\nInput: s = \"babab\"\n\nOutput: \"abbba\"\n\nExplanation:\n\nRearranging \"babab\" → \"abbba\" gives the smallest lexicographic palindrome.\n\nExample 3:\n\nInput: s = \"daccad\"\n\nOutput: \"acddca\"\n\nExplanation:\n\nRearranging \"daccad\" → \"acddca\" gives the smallest lexicographic palindrome.\n\nConstraints:\n\n- 1 <= s.length <= 10^5\n\n- s consists of lowercase English letters.\n\n- s is guaranteed to be palindromic.",
+  "constraints": [
+    "1 <= s.length <= 10^5",
+    "s consists of lowercase English letters.",
+    "s is guaranteed to be palindromic."
+  ],
+  "hints": [
+    "Consider a palindrome as composed of two mirror-image halves.",
+    "Construct one half (using s), and then the other half is its reverse to obtain the lexicographically smallest permutation."
+  ],
+  "acRate": 74.32,
+  "lastSubmittedAt": "2026-07-29T04:42:10Z",
+  "latestSubmission": {
+    "submissionId": "2085562110",
+    "language": "Python3",
+    "code": "class Solution:\n    def smallestPalindrome(self, s: str) -> str:\n        cnt = [0] * 26\n        for c in s:\n            cnt[ord(c) - ord('a')] += 1\n\n        half = []\n        mid = ''\n        for i in range(26):\n            c = chr(ord('a') + i)\n            half.append(c * (cnt[i] // 2))\n            if cnt[i] % 2 == 1:\n                mid = c\n\n        left = ''.join(half)\n        return left + mid + left[::-1]"
+  },
+  "notes": [],
+  "source": "leetcode",
+  "importedAt": "2026-10-01T13:44:25Z",
+  "lastSyncedAt": "2026-10-01T13:44:25Z"
+}

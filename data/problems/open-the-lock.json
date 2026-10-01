@@ -1,0 +1,38 @@
+{
+  "leetcodeId": "752",
+  "title": "Open the Lock",
+  "slug": "open-the-lock",
+  "url": "https://leetcode.com/problems/open-the-lock/",
+  "difficulty": "Medium",
+  "status": "solved",
+  "premium": false,
+  "tags": [
+    "Array",
+    "Hash Table",
+    "String",
+    "Breadth-First Search",
+    "Bidirectional Search"
+  ],
+  "problemStatement": "You have a lock in front of you with 4 circular wheels. Each wheel has 10 slots: '0', '1', '2', '3', '4', '5', '6', '7', '8', '9'. The wheels can rotate freely and wrap around: for example we can turn '9' to be '0', or '0' to be '9'. Each move consists of turning one wheel one slot.\n\nThe lock initially starts at '0000', a string representing the state of the 4 wheels.\n\nYou are given a list of deadends dead ends, meaning if the lock displays any of these codes, the wheels of the lock will stop turning and you will be unable to open it.\n\nGiven a target representing the value of the wheels that will unlock the lock, return the minimum total number of turns required to open the lock, or -1 if it is impossible.\n\nExample 1:\n\nInput: deadends = [\"0201\",\"0101\",\"0102\",\"1212\",\"2002\"], target = \"0202\"\nOutput: 6\nExplanation:\nA sequence of valid moves would be \"0000\" -> \"1000\" -> \"1100\" -> \"1200\" -> \"1201\" -> \"1202\" -> \"0202\".\nNote that a sequence like \"0000\" -> \"0001\" -> \"0002\" -> \"0102\" -> \"0202\" would be invalid,\nbecause the wheels of the lock become stuck after the display becomes the dead end \"0102\".\n\nExample 2:\n\nInput: deadends = [\"8888\"], target = \"0009\"\nOutput: 1\nExplanation: We can turn the last wheel in reverse to move from \"0000\" -> \"0009\".\n\nExample 3:\n\nInput: deadends = [\"8887\",\"8889\",\"8878\",\"8898\",\"8788\",\"8988\",\"7888\",\"9888\"], target = \"8888\"\nOutput: -1\nExplanation: We cannot reach the target without getting stuck.\n\nConstraints:\n\n- 1 <= deadends.length <= 500\n\n- deadends[i].length == 4\n\n- target.length == 4\n\n- target will not be in the list deadends.\n\n- target and deadends[i] consist of digits only.",
+  "constraints": [
+    "1 <= deadends.length <= 500",
+    "deadends[i].length == 4",
+    "target.length == 4",
+    "target will not be in the list deadends.",
+    "target and deadends[i] consist of digits only."
+  ],
+  "hints": [
+    "We can think of this problem as a shortest path problem on a graph: there are `10000` nodes (strings `'0000'` to `'9999'`), and there is an edge between two nodes if they differ in one digit, that digit differs by 1 (wrapping around, so `'0'` and `'9'` differ by 1), and if *both* nodes are not in `deadends`."
+  ],
+  "acRate": 61.6,
+  "lastSubmittedAt": "2026-07-15T01:01:37Z",
+  "latestSubmission": {
+    "submissionId": "2067949224",
+    "language": "Python3",
+    "code": "class Solution:\n    def rotate(self, pin: str, pos: int, direction: int) -> str:\n        rotation = str((int(pin[pos]) + direction) % 10)\n        pin = list(pin)\n        pin[pos] = rotation\n        return ''.join(pin)\n\n    def openLock(self, deadends: List[str], target: str) -> int:\n        init = '0000'\n        deadends = set(deadends)\n        if init in deadends:\n            return -1\n        queue = collections.deque([init])\n\n        dis = 0\n        seen = set(queue)\n        while queue:\n            n = len(queue)\n            if target in seen:\n                return dis\n            dis += 1\n            for _ in range(n):\n                lock = queue.popleft()\n                for i in range(8):\n                    direction = 1 if i < 4 else -1\n                    rotation = self.rotate(lock, i % 4, direction)\n                    if rotation not in deadends and rotation not in seen:\n                        queue.append(rotation)\n                        seen.add(rotation)\n        return -1\n"
+  },
+  "notes": [],
+  "source": "leetcode",
+  "importedAt": "2026-10-01T13:44:25Z",
+  "lastSyncedAt": "2026-10-01T13:44:25Z"
+}

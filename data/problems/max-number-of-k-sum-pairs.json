@@ -1,0 +1,37 @@
+{
+  "leetcodeId": "1679",
+  "title": "Max Number of K-Sum Pairs",
+  "slug": "max-number-of-k-sum-pairs",
+  "url": "https://leetcode.com/problems/max-number-of-k-sum-pairs/",
+  "difficulty": "Medium",
+  "status": "solved",
+  "premium": false,
+  "tags": [
+    "Array",
+    "Hash Table",
+    "Two Pointers",
+    "Sorting"
+  ],
+  "problemStatement": "You are given an integer array nums and an integer k.\n\nIn one operation, you can pick two numbers from the array whose sum equals k and remove them from the array.\n\nReturn the maximum number of operations you can perform on the array.\n\nExample 1:\n\nInput: nums = [1,2,3,4], k = 5\nOutput: 2\nExplanation: Starting with nums = [1,2,3,4]:\n- Remove numbers 1 and 4, then nums = [2,3]\n- Remove numbers 2 and 3, then nums = []\nThere are no more pairs that sum up to 5, hence a total of 2 operations.\n\nExample 2:\n\nInput: nums = [3,1,3,4,3], k = 6\nOutput: 1\nExplanation: Starting with nums = [3,1,3,4,3]:\n- Remove the first two 3's, then nums = [1,4,3]\nThere are no more pairs that sum up to 6, hence a total of 1 operation.\n\nConstraints:\n\n- 1 <= nums.length <= 10^5\n\n- 1 <= nums[i] <= 10^9\n\n- 1 <= k <= 10^9",
+  "constraints": [
+    "1 <= nums.length <= 10^5",
+    "1 <= nums[i] <= 10^9",
+    "1 <= k <= 10^9"
+  ],
+  "hints": [
+    "The abstract problem asks to count the number of disjoint pairs with a given sum k.",
+    "For each possible value x, it can be paired up with k - x.",
+    "The number of such pairs equals to  min(count(x), count(k-x)), unless that x = k / 2, where the number of such pairs will be floor(count(x) / 2)."
+  ],
+  "acRate": 57.44,
+  "lastSubmittedAt": "2026-08-26T13:33:58Z",
+  "latestSubmission": {
+    "submissionId": "2120841948",
+    "language": "Python3",
+    "code": "class Solution:\n    def maxOperations(self, nums: List[int], k: int) -> int:\n        hmap = defaultdict(int)\n        count = 0\n\n        for i in range(len(nums)):\n            complement = k - nums[i]\n            if complement in hmap:\n                hmap[complement] -= 1\n                count += 1\n                if hmap[complement] <= 0:\n                    hmap.pop(complement)\n            else:\n                hmap[nums[i]] += 1\n\n        return count\n"
+  },
+  "notes": [],
+  "source": "leetcode",
+  "importedAt": "2026-10-01T13:44:25Z",
+  "lastSyncedAt": "2026-10-01T13:44:25Z"
+}

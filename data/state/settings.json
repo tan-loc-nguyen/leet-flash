@@ -1,0 +1,5 @@
+{
+  "dailyProblemTarget": 10,
+  "cardsPerProblem": 4,
+  "leetcodeRequestDelaySeconds": 0.4
+}

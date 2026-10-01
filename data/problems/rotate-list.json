@@ -1,0 +1,31 @@
+{
+  "leetcodeId": "61",
+  "title": "Rotate List",
+  "slug": "rotate-list",
+  "url": "https://leetcode.com/problems/rotate-list/",
+  "difficulty": "Medium",
+  "status": "solved",
+  "premium": false,
+  "tags": [
+    "Linked List",
+    "Two Pointers"
+  ],
+  "problemStatement": "Given the head of a linked list, rotate the list to the right by k places.\n\nExample 1:\n\nInput: head = [1,2,3,4,5], k = 2\nOutput: [4,5,1,2,3]\n\nExample 2:\n\nInput: head = [0,1,2], k = 4\nOutput: [2,0,1]\n\nConstraints:\n\n- The number of nodes in the list is in the range [0, 500].\n\n- -100 <= Node.val <= 100\n\n- 0 <= k <= 2 * 10^9",
+  "constraints": [
+    "The number of nodes in the list is in the range [0, 500].",
+    "-100 <= Node.val <= 100",
+    "0 <= k <= 2 * 10^9"
+  ],
+  "hints": [],
+  "acRate": 43.38,
+  "lastSubmittedAt": "2026-09-09T03:12:18Z",
+  "latestSubmission": {
+    "submissionId": "2135777594",
+    "language": "Python3",
+    "code": "# Definition for singly-linked list.\n# class ListNode:\n#     def __init__(self, val=0, next=None):\n#         self.val = val\n#         self.next = next\nclass Solution:\n    def rotateRight(self, head: Optional[ListNode], k: int) -> Optional[ListNode]:\n        if not head or not head.next or k == 0:\n            return head\n\n        # find length and tail\n        tail = head\n        n = 1\n        while tail.next:\n            tail = tail.next\n            n += 1\n\n        k %= n\n        if k == 0:\n            return head\n\n        # make it circular\n        tail.next = head\n\n        # find new tail at (n - k - 1) steps from head\n        new_tail = head\n        for _ in range(n - k - 1):\n            new_tail = new_tail.next\n\n        new_head = new_tail.next\n        new_tail.next = None\n\n        return new_head"
+  },
+  "notes": [],
+  "source": "leetcode",
+  "importedAt": "2026-10-01T13:44:25Z",
+  "lastSyncedAt": "2026-10-01T13:44:25Z"
+}

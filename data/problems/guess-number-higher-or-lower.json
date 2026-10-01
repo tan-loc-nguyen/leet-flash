@@ -1,0 +1,30 @@
+{
+  "leetcodeId": "374",
+  "title": "Guess Number Higher or Lower",
+  "slug": "guess-number-higher-or-lower",
+  "url": "https://leetcode.com/problems/guess-number-higher-or-lower/",
+  "difficulty": "Easy",
+  "status": "solved",
+  "premium": false,
+  "tags": [
+    "Binary Search",
+    "Interactive"
+  ],
+  "problemStatement": "We are playing the Guess Game. The game is as follows:\n\nI pick a number from 1 to n. You have to guess which number I picked (the number I picked stays the same throughout the game).\n\nEvery time you guess wrong, I will tell you whether the number I picked is higher or lower than your guess.\n\nYou call a pre-defined API int guess(int num), which returns three possible results:\n\n- -1: Your guess is higher than the number I picked (i.e. num > pick).\n\n- 1: Your guess is lower than the number I picked (i.e. num < pick).\n\n- 0: your guess is equal to the number I picked (i.e. num == pick).\n\nReturn the number that I picked.\n\nExample 1:\n\nInput: n = 10, pick = 6\nOutput: 6\n\nExample 2:\n\nInput: n = 1, pick = 1\nOutput: 1\n\nExample 3:\n\nInput: n = 2, pick = 1\nOutput: 1\n\nConstraints:\n\n- 1 <= n <= 2^31 - 1\n\n- 1 <= pick <= n",
+  "constraints": [
+    "1 <= n <= 2^31 - 1",
+    "1 <= pick <= n"
+  ],
+  "hints": [],
+  "acRate": 58.41,
+  "lastSubmittedAt": "2026-06-18T08:24:28Z",
+  "latestSubmission": {
+    "submissionId": "2037305426",
+    "language": "Python3",
+    "code": "# The guess API is already defined for you.\n# @param num, your guess\n# @return -1 if num is higher than the picked number\n#          1 if num is lower than the picked number\n#          otherwise return 0\n# def guess(num: int) -> int:\n\nclass Solution:\n    def guessNumber(self, n: int) -> int:\n        low, high = 1, n\n        while low <= high:\n            mid = (low + high) // 2\n            if guess(mid) == 0:\n                return mid\n            elif guess(mid) == 1:\n                low = mid + 1\n            else:\n                high = mid - 1\n\n        return 0 "
+  },
+  "notes": [],
+  "source": "leetcode",
+  "importedAt": "2026-10-01T13:44:25Z",
+  "lastSyncedAt": "2026-10-01T13:44:25Z"
+}

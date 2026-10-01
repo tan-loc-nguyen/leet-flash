@@ -1,0 +1,32 @@
+{
+  "leetcodeId": "343",
+  "title": "Integer Break",
+  "slug": "integer-break",
+  "url": "https://leetcode.com/problems/integer-break/",
+  "difficulty": "Medium",
+  "status": "solved",
+  "premium": false,
+  "tags": [
+    "Math",
+    "Dynamic Programming"
+  ],
+  "problemStatement": "Given an integer n, break it into the sum of k positive integers, where k >= 2, and maximize the product of those integers.\n\nReturn the maximum product you can get.\n\nExample 1:\n\nInput: n = 2\nOutput: 1\nExplanation: 2 = 1 + 1, 1 × 1 = 1.\n\nExample 2:\n\nInput: n = 10\nOutput: 36\nExplanation: 10 = 3 + 3 + 4, 3 × 3 × 4 = 36.\n\nConstraints:\n\n- 2 <= n <= 58",
+  "constraints": [
+    "2 <= n <= 58"
+  ],
+  "hints": [
+    "There is a simple O(n) solution to this problem.",
+    "You may check the breaking results of n ranging from 7 to 10 to discover the regularities."
+  ],
+  "acRate": 62.79,
+  "lastSubmittedAt": "2026-08-12T02:31:03Z",
+  "latestSubmission": {
+    "submissionId": "2103559571",
+    "language": "Python3",
+    "code": "class Solution:\n    def integerBreak(self, n: int) -> int:\n        if n <= 3:\n            return n - 1\n        if n == 4:\n            return n\n\n        factor = (n - 2) // 3\n        remain = n - 3 * factor\n\n        return 3**factor * remain\n        "
+  },
+  "notes": [],
+  "source": "leetcode",
+  "importedAt": "2026-10-01T13:44:25Z",
+  "lastSyncedAt": "2026-10-01T13:44:25Z"
+}

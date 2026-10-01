@@ -1,0 +1,31 @@
+{
+  "leetcodeId": "438",
+  "title": "Find All Anagrams in a String",
+  "slug": "find-all-anagrams-in-a-string",
+  "url": "https://leetcode.com/problems/find-all-anagrams-in-a-string/",
+  "difficulty": "Medium",
+  "status": "solved",
+  "premium": false,
+  "tags": [
+    "Hash Table",
+    "String",
+    "Sliding Window"
+  ],
+  "problemStatement": "Given two strings s and p, return an array of all the start indices of p's anagrams in s. You may return the answer in any order.\n\nExample 1:\n\nInput: s = \"cbaebabacd\", p = \"abc\"\nOutput: [0,6]\nExplanation:\nThe substring with start index = 0 is \"cba\", which is an anagram of \"abc\".\nThe substring with start index = 6 is \"bac\", which is an anagram of \"abc\".\n\nExample 2:\n\nInput: s = \"abab\", p = \"ab\"\nOutput: [0,1,2]\nExplanation:\nThe substring with start index = 0 is \"ab\", which is an anagram of \"ab\".\nThe substring with start index = 1 is \"ba\", which is an anagram of \"ab\".\nThe substring with start index = 2 is \"ab\", which is an anagram of \"ab\".\n\nConstraints:\n\n- 1 <= s.length, p.length <= 3 * 10^4\n\n- s and p consist of lowercase English letters.",
+  "constraints": [
+    "1 <= s.length, p.length <= 3 * 10^4",
+    "s and p consist of lowercase English letters."
+  ],
+  "hints": [],
+  "acRate": 54.61,
+  "lastSubmittedAt": "2026-07-23T12:19:00Z",
+  "latestSubmission": {
+    "submissionId": "2078364316",
+    "language": "Python3",
+    "code": "class Solution:\n    def findAnagrams(self, s: str, p: str) -> List[int]:\n        def toIdx(c: str) -> int:\n            return ord(c) - ord('a')\n        cnt = [0] * 26\n\n        for c in p:\n            cnt[toIdx(c)] += 1\n\n        ans = []\n        l = 0\n        for r, c in enumerate(s):\n            cnt[toIdx(c)] -= 1\n            while cnt[toIdx(c)] < 0:  # If number of characters `c` is more than our expectation\n                cnt[toIdx(s[l])] += 1  # Slide left until cnt[c] == 0\n                l += 1\n            if r - l + 1 == len(p):  #  If we already filled enough `p.length()` chars\n                ans.append(l)  # Add left index `l` to our result\n\n        return ans"
+  },
+  "notes": [],
+  "source": "leetcode",
+  "importedAt": "2026-10-01T13:44:25Z",
+  "lastSyncedAt": "2026-10-01T13:44:25Z"
+}

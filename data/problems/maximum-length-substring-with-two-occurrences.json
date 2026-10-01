@@ -1,0 +1,33 @@
+{
+  "leetcodeId": "3090",
+  "title": "Maximum Length Substring With Two Occurrences",
+  "slug": "maximum-length-substring-with-two-occurrences",
+  "url": "https://leetcode.com/problems/maximum-length-substring-with-two-occurrences/",
+  "difficulty": "Easy",
+  "status": "solved",
+  "premium": false,
+  "tags": [
+    "Hash Table",
+    "String",
+    "Sliding Window"
+  ],
+  "problemStatement": "Given a string s, return the maximum length of a substring such that it contains at most two occurrences of each character.\n\nExample 1:\n\nInput: s = \"bcbbbcba\"\n\nOutput: 4\n\nExplanation:\n\nThe following substring has a length of 4 and contains at most two occurrences of each character: \"bcbbbcba\".\n\nExample 2:\n\nInput: s = \"aaaa\"\n\nOutput: 2\n\nExplanation:\n\nThe following substring has a length of 2 and contains at most two occurrences of each character: \"aaaa\".\n\nConstraints:\n\n- 2 <= s.length <= 100\n\n- s consists only of lowercase English letters.",
+  "constraints": [
+    "2 <= s.length <= 100",
+    "s consists only of lowercase English letters."
+  ],
+  "hints": [
+    "We can try all substrings by brute-force since the constraints are very small."
+  ],
+  "acRate": 77.75,
+  "lastSubmittedAt": "2026-08-14T05:37:43Z",
+  "latestSubmission": {
+    "submissionId": "2106210016",
+    "language": "Python3",
+    "code": "class Solution:\n    def maximumLengthSubstring(self, s: str) -> int:\n        cnt = collections.defaultdict(int)\n        l = 0\n        best = 0\n\n        for r in range(len(s)):\n            cnt[s[r]] += 1\n\n            while cnt[s[r]] > 2:\n                cnt[s[l]] -= 1\n                if cnt[s[l]] <= 0:\n                    cnt.pop(s[l])\n                l += 1\n\n            best = max(best, r - l + 1)\n        \n        return best"
+  },
+  "notes": [],
+  "source": "leetcode",
+  "importedAt": "2026-10-01T13:44:25Z",
+  "lastSyncedAt": "2026-10-01T13:44:25Z"
+}

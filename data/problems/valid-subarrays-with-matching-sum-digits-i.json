@@ -1,0 +1,38 @@
+{
+  "leetcodeId": "3969",
+  "title": "Valid Subarrays With Matching Sum Digits I",
+  "slug": "valid-subarrays-with-matching-sum-digits-i",
+  "url": "https://leetcode.com/problems/valid-subarrays-with-matching-sum-digits-i/",
+  "difficulty": "Medium",
+  "status": "solved",
+  "premium": false,
+  "tags": [
+    "Array",
+    "Hash Table",
+    "Sliding Window",
+    "Enumeration",
+    "Prefix Sum"
+  ],
+  "problemStatement": "You are given an integer array nums and an integer digit x.\n\nA subarray nums[l..r] is considered valid if the sum of its elements satisfies both of the following conditions:\n\n- The first digit of the sum is equal to x.\n\n- The last digit of the sum is equal to x.\n\nReturn the number of valid subarrays.\n\nExample 1:\n\nInput: nums = [1,100,1], x = 1\n\nOutput: 4\n\nExplanation:\n\nThe valid subarrays are:\n\n- nums[0..0]: sum = 1\n\n- nums[0..1]: sum = 1 + 100 = 101\n\n- nums[1..2]: sum = 100 + 1 = 101\n\n- nums[2..2]: sum = 1\n\nThus, the answer is 4.\n\nExample 2:\n\nInput: nums = [1], x = 2\n\nOutput: 0\n\nExplanation:\n\nThe only subarray is nums[0..0] with a sum of 1, which does not satisfy the conditions.\n\nThus, the answer is 0.\n\nConstraints:\n\n- 1 <= nums.length <= 1500\n\n- 1 <= nums[i] <= 10^9\n\n- 1 <= x <= 9",
+  "constraints": [
+    "1 <= nums.length <= 1500",
+    "1 <= nums[i] <= 10^9",
+    "1 <= x <= 9"
+  ],
+  "hints": [
+    "Enumerate all subarrays with two loops. Since nums.length <= 1500, checking all O(n^2) subarrays is acceptable.",
+    "You can use prefix sums so the sum of any nums[l..r] can be computed in constant time. Alternatively, you can enumerate the starting index i, then extend the ending index j while maintaining the running sum of nums[i..j].",
+    "For each subarray sum, check whether its last digit is x, then repeatedly divide by 10 to get its first digit."
+  ],
+  "acRate": 46.34,
+  "lastSubmittedAt": "2026-06-21T03:09:35Z",
+  "latestSubmission": {
+    "submissionId": "2040450988",
+    "language": "Python3",
+    "code": "class Solution:\n    def countValidSubarrays(self, nums: list[int], x: int) -> int:\n        def isValid(sum: int, target: int) -> bool:\n            sumStr = str(sum)\n            targetStr = str(target)\n            return sumStr[0] == targetStr and sumStr[-1] == targetStr\n\n        ans = 0\n        n = len(nums)\n        for i in range(n):\n            sum = 0\n            for j in range(i, n):\n                sum += nums[j]\n                if isValid(sum, x):\n                    ans += 1\n        return ans"
+  },
+  "notes": [],
+  "source": "leetcode",
+  "importedAt": "2026-10-01T13:44:25Z",
+  "lastSyncedAt": "2026-10-01T13:44:25Z"
+}

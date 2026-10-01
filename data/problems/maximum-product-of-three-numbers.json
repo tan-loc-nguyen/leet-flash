@@ -1,0 +1,31 @@
+{
+  "leetcodeId": "628",
+  "title": "Maximum Product of Three Numbers",
+  "slug": "maximum-product-of-three-numbers",
+  "url": "https://leetcode.com/problems/maximum-product-of-three-numbers/",
+  "difficulty": "Easy",
+  "status": "solved",
+  "premium": false,
+  "tags": [
+    "Array",
+    "Math",
+    "Sorting"
+  ],
+  "problemStatement": "You are given an integer array nums.\n\nFind three numbers whose product is maximum and return the maximum product.\n\nExample 1:\n\nInput: nums = [1,2,3]\n\nOutput: 6\n\nExplanation:\n\nThe only three numbers are 1, 2, and 3, so the maximum product is 1 * 2 * 3 = 6.\n\nExample 2:\n\nInput: nums = [1,2,3,4]\n\nOutput: 24\n\nExplanation:\n\nThe largest product comes from the three greatest numbers: 2 * 3 * 4 = 24.\n\nExample 3:\n\nInput: nums = [-1,-2,-3]\n\nOutput: -6\n\nExplanation:\n\nThe only three numbers are -1, -2, and -3, so the maximum product is (-1) * (-2) * (-3) = -6.\n\nConstraints:\n\n- 3 <= nums.length <= 10^4\n\n- -1000 <= nums[i] <= 1000",
+  "constraints": [
+    "3 <= nums.length <= 10^4",
+    "-1000 <= nums[i] <= 1000"
+  ],
+  "hints": [],
+  "acRate": 48.29,
+  "lastSubmittedAt": "2026-07-27T11:36:57Z",
+  "latestSubmission": {
+    "submissionId": "2083283751",
+    "language": "Python3",
+    "code": "class Solution:\n    def maximumProduct(self, nums: List[int]) -> int:\n        # brute-force: 3 loops to find top 3 max nums\n        # return a * b * c -> n^3\n\n        # Sort nlogn then return product\n        nums.sort()\n        return max(nums[-1] * nums[-2] * nums[-3], nums[-1] * nums[0] * nums[1])"
+  },
+  "notes": [],
+  "source": "leetcode",
+  "importedAt": "2026-10-01T13:44:25Z",
+  "lastSyncedAt": "2026-10-01T13:44:25Z"
+}

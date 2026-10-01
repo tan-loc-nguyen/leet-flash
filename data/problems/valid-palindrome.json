@@ -1,0 +1,30 @@
+{
+  "leetcodeId": "125",
+  "title": "Valid Palindrome",
+  "slug": "valid-palindrome",
+  "url": "https://leetcode.com/problems/valid-palindrome/",
+  "difficulty": "Easy",
+  "status": "solved",
+  "premium": false,
+  "tags": [
+    "Two Pointers",
+    "String"
+  ],
+  "problemStatement": "A phrase is a palindrome if, after converting all uppercase letters into lowercase letters and removing all non-alphanumeric characters, it reads the same forward and backward. Alphanumeric characters include letters and numbers.\n\nGiven a string s, return true if it is a palindrome, or false otherwise.\n\nExample 1:\n\nInput: s = \"A man, a plan, a canal: Panama\"\nOutput: true\nExplanation: \"amanaplanacanalpanama\" is a palindrome.\n\nExample 2:\n\nInput: s = \"race a car\"\nOutput: false\nExplanation: \"raceacar\" is not a palindrome.\n\nExample 3:\n\nInput: s = \" \"\nOutput: true\nExplanation: s is an empty string \"\" after removing non-alphanumeric characters.\nSince an empty string reads the same forward and backward, it is a palindrome.\n\nConstraints:\n\n- 1 <= s.length <= 2 * 10^5\n\n- s consists only of printable ASCII characters.",
+  "constraints": [
+    "1 <= s.length <= 2 * 10^5",
+    "s consists only of printable ASCII characters."
+  ],
+  "hints": [],
+  "acRate": 54.41,
+  "lastSubmittedAt": "2026-08-02T23:49:28Z",
+  "latestSubmission": {
+    "submissionId": "2091933841",
+    "language": "Python3",
+    "code": "class Solution:\n    def isPalindrome(self, s: str) -> bool:\n        l, r = 0, len(s) - 1\n        lowercase = s.lower()\n\n        while l <= r:\n            if not lowercase[l].isalnum():\n                l += 1\n            elif not lowercase[r].isalnum():\n                r -= 1\n            elif lowercase[l] == lowercase[r]:\n                l += 1\n                r -= 1\n            else:\n                return False\n        return True"
+  },
+  "notes": [],
+  "source": "leetcode",
+  "importedAt": "2026-10-01T13:44:25Z",
+  "lastSyncedAt": "2026-10-01T13:44:25Z"
+}

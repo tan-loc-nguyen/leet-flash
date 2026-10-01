@@ -1,0 +1,31 @@
+{
+  "leetcodeId": "22",
+  "title": "Generate Parentheses",
+  "slug": "generate-parentheses",
+  "url": "https://leetcode.com/problems/generate-parentheses/",
+  "difficulty": "Medium",
+  "status": "solved",
+  "premium": false,
+  "tags": [
+    "String",
+    "Dynamic Programming",
+    "Backtracking",
+    "Bracket Sequences"
+  ],
+  "problemStatement": "Given n pairs of parentheses, write a function to generate all combinations of well-formed parentheses.\n\nExample 1:\n\nInput: n = 3\nOutput: [\"((()))\",\"(()())\",\"(())()\",\"()(())\",\"()()()\"]\n\nExample 2:\n\nInput: n = 1\nOutput: [\"()\"]\n\nConstraints:\n\n- 1 <= n <= 8",
+  "constraints": [
+    "1 <= n <= 8"
+  ],
+  "hints": [],
+  "acRate": 79.25,
+  "lastSubmittedAt": "2026-09-19T06:20:10Z",
+  "latestSubmission": {
+    "submissionId": "2146363357",
+    "language": "Python3",
+    "code": "class Solution:\n    def generateParenthesis(self, n: int) -> list[str]:\n        ans = []\n        path = []\n\n        def choose(opens: int, closes: int) -> None:\n            if opens < closes or opens > n or closes > n:\n                return\n            if opens + closes == 2 * n:\n                ans.append(\"\".join(path))\n            \n            for p in \"()\":\n                path.append(p)\n                if p == \")\":\n                    choose(opens, closes + 1)\n                else:\n                    choose(opens + 1, closes)\n                path.pop()\n            \n        choose(0, 0)\n        return ans"
+  },
+  "notes": [],
+  "source": "leetcode",
+  "importedAt": "2026-10-01T13:44:25Z",
+  "lastSyncedAt": "2026-10-01T13:44:25Z"
+}

@@ -1,0 +1,32 @@
+{
+  "leetcodeId": "1768",
+  "title": "Merge Strings Alternately",
+  "slug": "merge-strings-alternately",
+  "url": "https://leetcode.com/problems/merge-strings-alternately/",
+  "difficulty": "Easy",
+  "status": "solved",
+  "premium": false,
+  "tags": [
+    "Two Pointers",
+    "String"
+  ],
+  "problemStatement": "You are given two strings word1 and word2. Merge the strings by adding letters in alternating order, starting with word1. If a string is longer than the other, append the additional letters onto the end of the merged string.\n\r\n\r\n\nReturn the merged string.\n\r\n\r\n\n\r\n\nExample 1:\n\r\n\r\n\n\r\nInput: word1 = \"abc\", word2 = \"pqr\"\r\nOutput: \"apbqcr\"\r\nExplanation: The merged string will be merged as so:\r\nword1:  a   b   c\r\nword2:    p   q   r\r\nmerged: a p b q c r\r\n\n\r\n\r\n\nExample 2:\n\r\n\r\n\n\r\nInput: word1 = \"ab\", word2 = \"pqrs\"\r\nOutput: \"apbqrs\"\r\nExplanation: Notice that as word2 is longer, \"rs\" is appended to the end.\r\nword1:  a   b \r\nword2:    p   q   r   s\r\nmerged: a p b q   r   s\r\n\n\r\n\r\n\nExample 3:\n\r\n\r\n\n\r\nInput: word1 = \"abcd\", word2 = \"pq\"\r\nOutput: \"apbqcd\"\r\nExplanation: Notice that as word1 is longer, \"cd\" is appended to the end.\r\nword1:  a   b   c   d\r\nword2:    p   q \r\nmerged: a p b q c   d\r\n\n\r\n\r\n\n\r\n\nConstraints:\n\r\n\r\n\n\r\n\n- 1 <= word1.length, word2.length <= 100\n\r\n\n- word1 and word2 consist of lowercase English letters.",
+  "constraints": [
+    "1 <= word1.length, word2.length <= 100",
+    "word1 and word2 consist of lowercase English letters."
+  ],
+  "hints": [
+    "Use two pointers, one pointer for each string. Alternately choose the character from each pointer, and move the pointer upwards."
+  ],
+  "acRate": 82.15,
+  "lastSubmittedAt": "2026-06-14T10:09:44Z",
+  "latestSubmission": {
+    "submissionId": "2032692332",
+    "language": "Python3",
+    "code": "class Solution:\n    def mergeAlternately(self, word1: str, word2: str) -> str:\n        i = 0\n        ans = \"\"\n        while i < len(word1) and i < len(word2):\n            ans += word1[i]\n            ans += word2[i]\n            i += 1\n        if i < len(word1):\n            ans += word1[i:]\n        if i < len(word2):\n            ans += word2[i:]\n        return ans\n\n"
+  },
+  "notes": [],
+  "source": "leetcode",
+  "importedAt": "2026-10-01T13:44:25Z",
+  "lastSyncedAt": "2026-10-01T13:44:25Z"
+}

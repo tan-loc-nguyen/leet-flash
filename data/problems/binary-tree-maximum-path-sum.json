@@ -1,0 +1,33 @@
+{
+  "leetcodeId": "124",
+  "title": "Binary Tree Maximum Path Sum",
+  "slug": "binary-tree-maximum-path-sum",
+  "url": "https://leetcode.com/problems/binary-tree-maximum-path-sum/",
+  "difficulty": "Hard",
+  "status": "solved",
+  "premium": false,
+  "tags": [
+    "Dynamic Programming",
+    "Tree",
+    "Depth-First Search",
+    "Binary Tree",
+    "DP on Trees"
+  ],
+  "problemStatement": "A path in a binary tree is a sequence of nodes where each pair of adjacent nodes in the sequence has an edge connecting them. A node can only appear in the sequence at most once. Note that the path does not need to pass through the root.\n\nThe path sum of a path is the sum of the node's values in the path.\n\nGiven the root of a binary tree, return the maximum path sum of any non-empty path.\n\nExample 1:\n\nInput: root = [1,2,3]\nOutput: 6\nExplanation: The optimal path is 2 -> 1 -> 3 with a path sum of 2 + 1 + 3 = 6.\n\nExample 2:\n\nInput: root = [-10,9,20,null,null,15,7]\nOutput: 42\nExplanation: The optimal path is 15 -> 20 -> 7 with a path sum of 15 + 20 + 7 = 42.\n\nConstraints:\n\n- The number of nodes in the tree is in the range [1, 3 * 10^4].\n\n- -1000 <= Node.val <= 1000",
+  "constraints": [
+    "The number of nodes in the tree is in the range [1, 3 * 10^4].",
+    "-1000 <= Node.val <= 1000"
+  ],
+  "hints": [],
+  "acRate": 42.83,
+  "lastSubmittedAt": "2026-06-24T20:02:10Z",
+  "latestSubmission": {
+    "submissionId": "2045052124",
+    "language": "Python3",
+    "code": "# Definition for a binary tree node.\n# class TreeNode:\n#     def __init__(self, val=0, left=None, right=None):\n#         self.val = val\n#         self.left = left\n#         self.right = right\nclass Solution:\n    def maxPathSum(self, root: Optional[TreeNode]) -> int:\n        self.best = float('-inf')\n\n        def dfs(root: Optional[TreeNode]) -> int:\n            if not root:\n                return 0\n            maxLeft = max(dfs(root.left), 0)\n            maxRight = max(dfs(root.right), 0)\n\n            self.best = max(self.best, maxLeft + maxRight + root.val)\n            return max(maxLeft, maxRight) + root.val\n\n        dfs(root)\n        return self.best"
+  },
+  "notes": [],
+  "source": "leetcode",
+  "importedAt": "2026-10-01T13:44:25Z",
+  "lastSyncedAt": "2026-10-01T13:44:25Z"
+}

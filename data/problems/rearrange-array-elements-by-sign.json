@@ -1,0 +1,36 @@
+{
+  "leetcodeId": "2149",
+  "title": "Rearrange Array Elements by Sign",
+  "slug": "rearrange-array-elements-by-sign",
+  "url": "https://leetcode.com/problems/rearrange-array-elements-by-sign/",
+  "difficulty": "Medium",
+  "status": "solved",
+  "premium": false,
+  "tags": [
+    "Array",
+    "Two Pointers",
+    "Simulation"
+  ],
+  "problemStatement": "You are given a 0-indexed integer array nums of even length consisting of an equal number of positive and negative integers.\n\nYou should return the array of nums such that the array follows the given conditions:\n\n- Every consecutive pair of integers have opposite signs.\n\n- For all integers with the same sign, the order in which they were present in nums is preserved.\n\n- The rearranged array begins with a positive integer.\n\nReturn the modified array after rearranging the elements to satisfy the aforementioned conditions.\n\nExample 1:\n\nInput: nums = [3,1,-2,-5,2,-4]\nOutput: [3,-2,1,-5,2,-4]\nExplanation:\nThe positive integers in nums are [3,1,2]. The negative integers are [-2,-5,-4].\nThe only possible way to rearrange them such that they satisfy all conditions is [3,-2,1,-5,2,-4].\nOther ways such as [1,-2,2,-5,3,-4], [3,1,2,-2,-5,-4], [-2,3,-5,1,-4,2] are incorrect because they do not satisfy one or more conditions.\n\nExample 2:\n\nInput: nums = [-1,1]\nOutput: [1,-1]\nExplanation:\n1 is the only positive integer and -1 the only negative integer in nums.\nSo nums is rearranged to [1,-1].\n\nConstraints:\n\n- 2 <= nums.length <= 2 * 10^5\n\n- nums.length is even\n\n- 1 <= |nums[i]| <= 10^5\n\n- nums consists of equal number of positive and negative integers.\n\nIt is not required to do the modifications in-place.",
+  "constraints": [
+    "2 <= nums.length <= 2 * 10^5",
+    "nums.length is even",
+    "1 <= |nums[i]| <= 10^5",
+    "nums consists of equal number of positive and negative integers."
+  ],
+  "hints": [
+    "Divide the array into two parts- one comprising of only positive integers and the other of negative integers.",
+    "Merge the two parts to get the resultant array."
+  ],
+  "acRate": 84.83,
+  "lastSubmittedAt": "2026-08-04T09:37:50Z",
+  "latestSubmission": {
+    "submissionId": "2093780887",
+    "language": "Python3",
+    "code": "class Solution:\n    def rearrangeArray(self, nums: List[int]) -> List[int]:\n        p, n = 0, 1\n        ans = [0] * len(nums)\n        for i in range(len(nums)):\n            if nums[i] > 0:\n                ans[p] = nums[i]\n                p += 2\n            else:\n                ans[n] = nums[i]\n                n += 2\n        return ans"
+  },
+  "notes": [],
+  "source": "leetcode",
+  "importedAt": "2026-10-01T13:44:25Z",
+  "lastSyncedAt": "2026-10-01T13:44:25Z"
+}

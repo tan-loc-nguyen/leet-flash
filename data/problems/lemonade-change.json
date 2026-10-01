@@ -1,0 +1,30 @@
+{
+  "leetcodeId": "860",
+  "title": "Lemonade Change",
+  "slug": "lemonade-change",
+  "url": "https://leetcode.com/problems/lemonade-change/",
+  "difficulty": "Easy",
+  "status": "solved",
+  "premium": false,
+  "tags": [
+    "Array",
+    "Greedy"
+  ],
+  "problemStatement": "At a lemonade stand, each lemonade costs $5. Customers are standing in a queue to buy from you and order one at a time (in the order specified by bills). Each customer will only buy one lemonade and pay with either a $5, $10, or $20 bill. You must provide the correct change to each customer so that the net transaction is that the customer pays $5.\n\nNote that you do not have any change in hand at first.\n\nGiven an integer array bills where bills[i] is the bill the i^th customer pays, return true if you can provide every customer with the correct change, or false otherwise.\n\nExample 1:\n\nInput: bills = [5,5,5,10,20]\nOutput: true\nExplanation:\nFrom the first 3 customers, we collect three $5 bills in order.\nFrom the fourth customer, we collect a $10 bill and give back a $5.\nFrom the fifth customer, we give a $10 bill and a $5 bill.\nSince all customers got correct change, we output true.\n\nExample 2:\n\nInput: bills = [5,5,10,10,20]\nOutput: false\nExplanation:\nFrom the first two customers in order, we collect two $5 bills.\nFor the next two customers in order, we collect a $10 bill and give back a $5 bill.\nFor the last customer, we can not give the change of $15 back because we only have two $10 bills.\nSince not every customer received the correct change, the answer is false.\n\nConstraints:\n\n- 1 <= bills.length <= 10^5\n\n- bills[i] is either 5, 10, or 20.",
+  "constraints": [
+    "1 <= bills.length <= 10^5",
+    "bills[i] is either 5, 10, or 20."
+  ],
+  "hints": [],
+  "acRate": 59.51,
+  "lastSubmittedAt": "2026-08-15T02:16:33Z",
+  "latestSubmission": {
+    "submissionId": "2107144558",
+    "language": "Python3",
+    "code": "class Solution:\n    def lemonadeChange(self, bills: List[int]) -> bool:\n        changes = {5: 0, 10: 0}\n\n        for bill in bills:\n            if bill == 5:\n                changes[5] += 1\n            elif bill == 10:\n                changes[10] += 1\n                changes[5] -= 1\n            else:\n                if changes[10] > 0:\n                    changes[5] -= 1\n                    changes[10] -= 1\n                else:\n                    changes[5] -= 3\n\n            if changes[5] < 0:\n                return False\n            elif changes[10] < 0:\n                return False\n        \n        return True\n        "
+  },
+  "notes": [],
+  "source": "leetcode",
+  "importedAt": "2026-10-01T13:44:25Z",
+  "lastSyncedAt": "2026-10-01T13:44:25Z"
+}

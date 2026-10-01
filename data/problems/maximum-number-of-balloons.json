@@ -1,0 +1,34 @@
+{
+  "leetcodeId": "1189",
+  "title": "Maximum Number of Balloons",
+  "slug": "maximum-number-of-balloons",
+  "url": "https://leetcode.com/problems/maximum-number-of-balloons/",
+  "difficulty": "Easy",
+  "status": "solved",
+  "premium": false,
+  "tags": [
+    "Hash Table",
+    "String",
+    "Counting"
+  ],
+  "problemStatement": "Given a string text, you want to use the characters of text to form as many instances of the word \"balloon\" as possible.\n\nYou can use each character in text at most once. Return the maximum number of instances that can be formed.\n\nExample 1:\n\nInput: text = \"nlaebolko\"\nOutput: 1\n\nExample 2:\n\nInput: text = \"loonbalxballpoon\"\nOutput: 2\n\nExample 3:\n\nInput: text = \"leetcode\"\nOutput: 0\n\nConstraints:\n\n- 1 <= text.length <= 10^4\n\n- text consists of lower case English letters only.\n\nNote: This question is the same as  2287: Rearrange Characters to Make Target String.",
+  "constraints": [
+    "1 <= text.length <= 10^4",
+    "text consists of lower case English letters only."
+  ],
+  "hints": [
+    "Count the frequency of letters in the given string.",
+    "Find the letter than can make the minimum number of instances of the word \"balloon\"."
+  ],
+  "acRate": 64.34,
+  "lastSubmittedAt": "2026-06-22T13:23:28Z",
+  "latestSubmission": {
+    "submissionId": "2042206221",
+    "language": "Python3",
+    "code": "class Solution:\n    def maxNumberOfBalloons(self, text: str) -> int:\n        freq = [0] * 5 # unique chars in balloon\n\n        for ch in text:\n            if ch == 'a':\n                freq[0] += 1\n            if ch == 'b':\n                freq[1] += 1\n            if ch == 'l':\n                freq[2] += 1\n            if ch == 'o':\n                freq[3] += 1\n            if ch == 'n':\n                freq[4] += 1\n        \n        return min([freq[0], freq[1], freq[2] // 2, freq[3] // 2, freq[4]])\n"
+  },
+  "notes": [],
+  "source": "leetcode",
+  "importedAt": "2026-10-01T13:44:25Z",
+  "lastSyncedAt": "2026-10-01T13:44:25Z"
+}

@@ -1,0 +1,30 @@
+{
+  "leetcodeId": "206",
+  "title": "Reverse Linked List",
+  "slug": "reverse-linked-list",
+  "url": "https://leetcode.com/problems/reverse-linked-list/",
+  "difficulty": "Easy",
+  "status": "solved",
+  "premium": false,
+  "tags": [
+    "Linked List",
+    "Recursion"
+  ],
+  "problemStatement": "Given the head of a singly linked list, reverse the list, and return the reversed list.\n\nExample 1:\n\nInput: head = [1,2,3,4,5]\nOutput: [5,4,3,2,1]\n\nExample 2:\n\nInput: head = [1,2]\nOutput: [2,1]\n\nExample 3:\n\nInput: head = []\nOutput: []\n\nConstraints:\n\n- The number of nodes in the list is the range [0, 5000].\n\n- -5000 <= Node.val <= 5000\n\nFollow up: A linked list can be reversed either iteratively or recursively. Could you implement both?",
+  "constraints": [
+    "The number of nodes in the list is the range [0, 5000].",
+    "-5000 <= Node.val <= 5000"
+  ],
+  "hints": [],
+  "acRate": 81.11,
+  "lastSubmittedAt": "2026-08-04T23:17:33Z",
+  "latestSubmission": {
+    "submissionId": "2094638860",
+    "language": "Python3",
+    "code": "# Definition for singly-linked list.\n# class ListNode:\n#     def __init__(self, val=0, next=None):\n#         self.val = val\n#         self.next = next\nclass Solution:\n    def reverseList(self, head: Optional[ListNode]) -> Optional[ListNode]:\n        prev = None\n        curr = head\n\n        while curr:\n            nextt = curr.next\n            curr.next = prev\n            prev = curr\n            curr = nextt\n        \n        return prev"
+  },
+  "notes": [],
+  "source": "leetcode",
+  "importedAt": "2026-10-01T13:44:25Z",
+  "lastSyncedAt": "2026-10-01T13:44:25Z"
+}

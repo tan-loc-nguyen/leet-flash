@@ -1,0 +1,33 @@
+{
+  "leetcodeId": "49",
+  "title": "Group Anagrams",
+  "slug": "group-anagrams",
+  "url": "https://leetcode.com/problems/group-anagrams/",
+  "difficulty": "Medium",
+  "status": "solved",
+  "premium": false,
+  "tags": [
+    "Array",
+    "Hash Table",
+    "String",
+    "Sorting"
+  ],
+  "problemStatement": "Given an array of strings strs, group the anagrams together. You can return the answer in any order.\n\nExample 1:\n\nInput: strs = [\"eat\",\"tea\",\"tan\",\"ate\",\"nat\",\"bat\"]\n\nOutput: [[\"bat\"],[\"nat\",\"tan\"],[\"ate\",\"eat\",\"tea\"]]\n\nExplanation:\n\n- There is no string in strs that can be rearranged to form \"bat\".\n\n- The strings \"nat\" and \"tan\" are anagrams as they can be rearranged to form each other.\n\n- The strings \"ate\", \"eat\", and \"tea\" are anagrams as they can be rearranged to form each other.\n\nExample 2:\n\nInput: strs = [\"\"]\n\nOutput: [[\"\"]]\n\nExample 3:\n\nInput: strs = [\"a\"]\n\nOutput: [[\"a\"]]\n\nConstraints:\n\n- 1 <= strs.length <= 10^4\n\n- 0 <= strs[i].length <= 100\n\n- strs[i] consists of lowercase English letters.",
+  "constraints": [
+    "1 <= strs.length <= 10^4",
+    "0 <= strs[i].length <= 100",
+    "strs[i] consists of lowercase English letters."
+  ],
+  "hints": [],
+  "acRate": 73.36,
+  "lastSubmittedAt": "2026-06-28T03:43:46Z",
+  "latestSubmission": {
+    "submissionId": "2048484311",
+    "language": "Python3",
+    "code": "class Solution:\n    def groupAnagrams(self, strs: List[str]) -> List[List[str]]:\n        hmap = collections.defaultdict(list)\n        for str in strs:\n            alpha = [0] * 26\n            for ch in str:\n                alpha[ord(ch) - ord('a')] += 1\n            \n            hmap[tuple(alpha)].append(str)\n        \n        return list(hmap.values())\n"
+  },
+  "notes": [],
+  "source": "leetcode",
+  "importedAt": "2026-10-01T13:44:25Z",
+  "lastSyncedAt": "2026-10-01T13:44:25Z"
+}

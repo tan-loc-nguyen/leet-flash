@@ -1,0 +1,31 @@
+{
+  "leetcodeId": "21",
+  "title": "Merge Two Sorted Lists",
+  "slug": "merge-two-sorted-lists",
+  "url": "https://leetcode.com/problems/merge-two-sorted-lists/",
+  "difficulty": "Easy",
+  "status": "solved",
+  "premium": false,
+  "tags": [
+    "Linked List",
+    "Recursion"
+  ],
+  "problemStatement": "You are given the heads of two sorted linked lists list1 and list2.\n\nMerge the two lists into one sorted list. The list should be made by splicing together the nodes of the first two lists.\n\nReturn the head of the merged linked list.\n\nExample 1:\n\nInput: list1 = [1,2,4], list2 = [1,3,4]\nOutput: [1,1,2,3,4,4]\n\nExample 2:\n\nInput: list1 = [], list2 = []\nOutput: []\n\nExample 3:\n\nInput: list1 = [], list2 = [0]\nOutput: [0]\n\nConstraints:\n\n- The number of nodes in both lists is in the range [0, 50].\n\n- -100 <= Node.val <= 100\n\n- Both list1 and list2 are sorted in non-decreasing order.",
+  "constraints": [
+    "The number of nodes in both lists is in the range [0, 50].",
+    "-100 <= Node.val <= 100",
+    "Both list1 and list2 are sorted in non-decreasing order."
+  ],
+  "hints": [],
+  "acRate": 68.95,
+  "lastSubmittedAt": "2026-07-22T13:12:06Z",
+  "latestSubmission": {
+    "submissionId": "2077135315",
+    "language": "Python3",
+    "code": "# Definition for singly-linked list.\n# class ListNode:\n#     def __init__(self, val=0, next=None):\n#         self.val = val\n#         self.next = next\nclass Solution:\n    def mergeTwoLists(self, list1: Optional[ListNode], list2: Optional[ListNode]) -> Optional[ListNode]:\n        dummy = ListNode()\n        p = dummy\n        while list1 and list2:\n            if list1.val > list2.val:\n                p.next = list2\n                list2 = list2.next\n            else:\n                p.next = list1\n                list1 = list1.next\n            p = p.next\n\n        if list1:\n            p.next = list1 \n        if list2:\n            p.next = list2\n        return dummy.next"
+  },
+  "notes": [],
+  "source": "leetcode",
+  "importedAt": "2026-10-01T13:44:25Z",
+  "lastSyncedAt": "2026-10-01T13:44:25Z"
+}

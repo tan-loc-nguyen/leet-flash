@@ -1,0 +1,31 @@
+{
+  "leetcodeId": "3536",
+  "title": "Maximum Product of Two Digits",
+  "slug": "maximum-product-of-two-digits",
+  "url": "https://leetcode.com/problems/maximum-product-of-two-digits/",
+  "difficulty": "Easy",
+  "status": "solved",
+  "premium": false,
+  "tags": [
+    "Math",
+    "Sorting"
+  ],
+  "problemStatement": "You are given a positive integer n.\n\nReturn the maximum product of any two digits in n.\n\nNote: You may use the same digit twice if it appears more than once in n.\n\nExample 1:\n\nInput: n = 31\n\nOutput: 3\n\nExplanation:\n\n- The digits of n are [3, 1].\n\n- The possible products of any two digits are: 3 * 1 = 3.\n\n- The maximum product is 3.\n\nExample 2:\n\nInput: n = 22\n\nOutput: 4\n\nExplanation:\n\n- The digits of n are [2, 2].\n\n- The possible products of any two digits are: 2 * 2 = 4.\n\n- The maximum product is 4.\n\nExample 3:\n\nInput: n = 124\n\nOutput: 8\n\nExplanation:\n\n- The digits of n are [1, 2, 4].\n\n- The possible products of any two digits are: 1 * 2 = 2, 1 * 4 = 4, 2 * 4 = 8.\n\n- The maximum product is 8.\n\nConstraints:\n\n- 10 <= n <= 10^9",
+  "constraints": [
+    "10 <= n <= 10^9"
+  ],
+  "hints": [
+    "Use brute force"
+  ],
+  "acRate": 75.28,
+  "lastSubmittedAt": "2026-07-29T10:30:06Z",
+  "latestSubmission": {
+    "submissionId": "2085982704",
+    "language": "Python3",
+    "code": "class Solution:\n    def maxProduct(self, n: int) -> int:\n        a, b = 0, 0\n        while n > 0:\n            digit = n % 10\n            if digit > a:\n                b = a\n                a = digit\n            elif digit > b:\n                b = digit\n\n            n //= 10\n        return a * b"
+  },
+  "notes": [],
+  "source": "leetcode",
+  "importedAt": "2026-10-01T13:44:25Z",
+  "lastSyncedAt": "2026-10-01T13:44:25Z"
+}

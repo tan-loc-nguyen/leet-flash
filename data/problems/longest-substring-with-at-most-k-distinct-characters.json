@@ -1,0 +1,31 @@
+{
+  "leetcodeId": "340",
+  "title": "Longest Substring with At Most K Distinct Characters",
+  "slug": "longest-substring-with-at-most-k-distinct-characters",
+  "url": "https://leetcode.com/problems/longest-substring-with-at-most-k-distinct-characters/",
+  "difficulty": "Medium",
+  "status": "solved",
+  "premium": true,
+  "tags": [
+    "Hash Table",
+    "String",
+    "Sliding Window"
+  ],
+  "problemStatement": "Given a string s and an integer k, return the length of the longest substring of s that contains at most k distinct characters.\n\nExample 1:\n\nInput: s = \"eceba\", k = 2\nOutput: 3\nExplanation: The substring is \"ece\" with length 3.\n\nExample 2:\n\nInput: s = \"aa\", k = 1\nOutput: 2\nExplanation: The substring is \"aa\" with length 2.\n\nConstraints:\n\n- 1 <= s.length <= 5 * 10^4\n\n- 0 <= k <= 50",
+  "constraints": [
+    "1 <= s.length <= 5 * 10^4",
+    "0 <= k <= 50"
+  ],
+  "hints": [],
+  "acRate": 50.15,
+  "lastSubmittedAt": "2026-07-22T10:49:27Z",
+  "latestSubmission": {
+    "submissionId": "2077003235",
+    "language": "Python3",
+    "code": "class Solution:\n    def lengthOfLongestSubstringKDistinct(self, s: str, k: int) -> int:\n        # brute-force\n        # string s\n        # integer k\n        # ans -> max length substring p of s where p has <= k distinct character\n        # validity of the window gonna be the number of distinct characters\n        # in order to keep track of distinct charracters within a substring\n        # we gotta use a counter (dictionary)\n        ans = 0\n        counter = collections.defaultdict(int)\n        l = 0\n\n        for r in range(len(s)):\n            counter[s[r]] += 1\n            while len(counter) > k and l <= r:\n                counter[s[l]] -= 1\n                if counter[s[l]] <= 0:\n                    del counter[s[l]]\n                l += 1\n\n            size = (r - l) + 1\n            ans = max(ans, size)\n\n        return ans\n        "
+  },
+  "notes": [],
+  "source": "leetcode",
+  "importedAt": "2026-10-01T13:44:25Z",
+  "lastSyncedAt": "2026-10-01T13:44:25Z"
+}

@@ -1,0 +1,30 @@
+{
+  "leetcodeId": "83",
+  "title": "Remove Duplicates from Sorted List",
+  "slug": "remove-duplicates-from-sorted-list",
+  "url": "https://leetcode.com/problems/remove-duplicates-from-sorted-list/",
+  "difficulty": "Easy",
+  "status": "solved",
+  "premium": false,
+  "tags": [
+    "Linked List"
+  ],
+  "problemStatement": "Given the head of a sorted linked list, delete all duplicates such that each element appears only once. Return the linked list sorted as well.\n\nExample 1:\n\nInput: head = [1,1,2]\nOutput: [1,2]\n\nExample 2:\n\nInput: head = [1,1,2,3,3]\nOutput: [1,2,3]\n\nConstraints:\n\n- The number of nodes in the list is in the range [0, 300].\n\n- -100 <= Node.val <= 100\n\n- The list is guaranteed to be sorted in ascending order.",
+  "constraints": [
+    "The number of nodes in the list is in the range [0, 300].",
+    "-100 <= Node.val <= 100",
+    "The list is guaranteed to be sorted in ascending order."
+  ],
+  "hints": [],
+  "acRate": 57.62,
+  "lastSubmittedAt": "2026-08-01T14:49:11Z",
+  "latestSubmission": {
+    "submissionId": "2090104111",
+    "language": "Python3",
+    "code": "# Definition for singly-linked list.\n# class ListNode:\n#     def __init__(self, val=0, next=None):\n#         self.val = val\n#         self.next = next\nclass Solution:\n    def deleteDuplicates(self, head: Optional[ListNode]) -> Optional[ListNode]:\n        # brute-force (pretty straightforward)\n        # pointer curr keeps track of the current element\n        # pointer tmp to find the next non-duplicate element\n        # when tmp find the next non-duplicate element (slow.val != fast.val)\n        # then we point the current curr.next to tmp and update curr to equal to fast then continue moving tmp\n        if not head:\n            return None\n\n        curr = head\n\n        while curr:\n            tmp = curr.next\n            while tmp and tmp.val == curr.val:\n                tmp = tmp.next\n            curr.next = tmp\n            curr = curr.next\n\n        return head"
+  },
+  "notes": [],
+  "source": "leetcode",
+  "importedAt": "2026-10-01T13:44:25Z",
+  "lastSyncedAt": "2026-10-01T13:44:25Z"
+}

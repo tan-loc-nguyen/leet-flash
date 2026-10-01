@@ -1,0 +1,36 @@
+{
+  "leetcodeId": "79",
+  "title": "Word Search",
+  "slug": "word-search",
+  "url": "https://leetcode.com/problems/word-search/",
+  "difficulty": "Medium",
+  "status": "solved",
+  "premium": false,
+  "tags": [
+    "Array",
+    "String",
+    "Backtracking",
+    "Depth-First Search",
+    "Matrix"
+  ],
+  "problemStatement": "Given an m x n grid of characters board and a string word, return true if word exists in the grid.\n\nThe word can be constructed from letters of sequentially adjacent cells, where adjacent cells are horizontally or vertically neighboring. The same letter cell may not be used more than once.\n\nExample 1:\n\nInput: board = [[\"A\",\"B\",\"C\",\"E\"],[\"S\",\"F\",\"C\",\"S\"],[\"A\",\"D\",\"E\",\"E\"]], word = \"ABCCED\"\nOutput: true\n\nExample 2:\n\nInput: board = [[\"A\",\"B\",\"C\",\"E\"],[\"S\",\"F\",\"C\",\"S\"],[\"A\",\"D\",\"E\",\"E\"]], word = \"SEE\"\nOutput: true\n\nExample 3:\n\nInput: board = [[\"A\",\"B\",\"C\",\"E\"],[\"S\",\"F\",\"C\",\"S\"],[\"A\",\"D\",\"E\",\"E\"]], word = \"ABCB\"\nOutput: false\n\nConstraints:\n\n- m == board.length\n\n- n = board[i].length\n\n- 1 <= m, n <= 6\n\n- 1 <= word.length <= 15\n\n- board and word consists of only lowercase and uppercase English letters.\n\nFollow up: Could you use search pruning to make your solution faster with a larger board?",
+  "constraints": [
+    "m == board.length",
+    "n = board[i].length",
+    "1 <= m, n <= 6",
+    "1 <= word.length <= 15",
+    "board and word consists of only lowercase and uppercase English letters."
+  ],
+  "hints": [],
+  "acRate": 48.22,
+  "lastSubmittedAt": "2026-08-29T09:48:25Z",
+  "latestSubmission": {
+    "submissionId": "2123689695",
+    "language": "Python3",
+    "code": "class Solution:\n    def exist(self, board: List[List[str]], word: str) -> bool:\n        m, n = len(board), len(board[0])\n        DIR = [0, 1, 0, -1, 0]\n        found = False\n        seen = set()\n        path = []\n    \n        def dfs(r: int, c: int) -> None:\n            nonlocal found\n            if path and len(path) < len(word) and word[len(path)] != board[r][c]:\n                return\n\n            path.append(board[r][c])\n            seen.add((r, c))\n\n            if len(path) == len(word):\n                found = True\n                return\n\n            for i in range(4):\n                nr, nc = r + DIR[i], c + DIR[i + 1]\n                if 0 <= nr < m and 0 <= nc < n and (nr, nc) not in seen:\n                    dfs(nr, nc)\n            \n            path.pop()\n            seen.remove((r,c))\n        \n        for i in range(m):\n            for j in range(n):\n                if board[i][j] == word[0]:\n                    dfs(i, j)\n        \n        return found"
+  },
+  "notes": [],
+  "source": "leetcode",
+  "importedAt": "2026-10-01T13:44:25Z",
+  "lastSyncedAt": "2026-10-01T13:44:25Z"
+}

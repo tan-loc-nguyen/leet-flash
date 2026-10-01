@@ -1,0 +1,32 @@
+{
+  "leetcodeId": "543",
+  "title": "Diameter of Binary Tree",
+  "slug": "diameter-of-binary-tree",
+  "url": "https://leetcode.com/problems/diameter-of-binary-tree/",
+  "difficulty": "Easy",
+  "status": "solved",
+  "premium": false,
+  "tags": [
+    "Tree",
+    "Depth-First Search",
+    "Binary Tree",
+    "DP on Trees"
+  ],
+  "problemStatement": "Given the root of a binary tree, return the length of the diameter of the tree.\n\nThe diameter of a binary tree is the length of the longest path between any two nodes in a tree. This path may or may not pass through the root.\n\nThe length of a path between two nodes is represented by the number of edges between them.\n\nExample 1:\n\nInput: root = [1,2,3,4,5]\nOutput: 3\nExplanation: 3 is the length of the path [4,2,1,3] or [5,2,1,3].\n\nExample 2:\n\nInput: root = [1,2]\nOutput: 1\n\nConstraints:\n\n- The number of nodes in the tree is in the range [1, 10^4].\n\n- -100 <= Node.val <= 100",
+  "constraints": [
+    "The number of nodes in the tree is in the range [1, 10^4].",
+    "-100 <= Node.val <= 100"
+  ],
+  "hints": [],
+  "acRate": 66.32,
+  "lastSubmittedAt": "2026-06-24T19:49:55Z",
+  "latestSubmission": {
+    "submissionId": "2045044901",
+    "language": "Python3",
+    "code": "# Definition for a binary tree node.\n# class TreeNode:\n#     def __init__(self, val=0, left=None, right=None):\n#         self.val = val\n#         self.left = left\n#         self.right = right\nclass Solution:\n    def diameterOfBinaryTree(self, root: Optional[TreeNode]) -> int:\n        best = 0\n\n        def dfs(root: Optional[TreeNode]) -> int:\n            nonlocal best\n            if not root:\n                return 0\n            \n            maxLeft = dfs(root.left)\n            maxRight = dfs(root.right)\n\n            best = max(best, maxLeft + maxRight)\n            return max(maxLeft, maxRight) + 1\n        dfs(root)\n        return best"
+  },
+  "notes": [],
+  "source": "leetcode",
+  "importedAt": "2026-10-01T13:44:25Z",
+  "lastSyncedAt": "2026-10-01T13:44:25Z"
+}

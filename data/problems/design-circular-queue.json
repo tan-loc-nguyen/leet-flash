@@ -1,0 +1,33 @@
+{
+  "leetcodeId": "622",
+  "title": "Design Circular Queue",
+  "slug": "design-circular-queue",
+  "url": "https://leetcode.com/problems/design-circular-queue/",
+  "difficulty": "Medium",
+  "status": "solved",
+  "premium": false,
+  "tags": [
+    "Array",
+    "Linked List",
+    "Design",
+    "Queue"
+  ],
+  "problemStatement": "Design your implementation of the circular queue. The circular queue is a linear data structure in which the operations are performed based on FIFO (First In First Out) principle, and the last position is connected back to the first position to make a circle. It is also called \"Ring Buffer\".\n\nOne of the benefits of the circular queue is that we can make use of the spaces in front of the queue. In a normal queue, once the queue becomes full, we cannot insert the next element even if there is a space in front of the queue. But using the circular queue, we can use the space to store new values.\n\nImplement the MyCircularQueue class:\n\n- MyCircularQueue(k) Initializes the object with the size of the queue to be k.\n\n- int Front() Gets the front item from the queue. If the queue is empty, return -1.\n\n- int Rear() Gets the last item from the queue. If the queue is empty, return -1.\n\n- boolean enQueue(int value) Inserts an element into the circular queue. Return true if the operation is successful.\n\n- boolean deQueue() Deletes an element from the circular queue. Return true if the operation is successful.\n\n- boolean isEmpty() Checks whether the circular queue is empty or not.\n\n- boolean isFull() Checks whether the circular queue is full or not.\n\nYou must solve the problem without using the built-in queue data structure in your programming language.\n\nExample 1:\n\nInput\n[\"MyCircularQueue\", \"enQueue\", \"enQueue\", \"enQueue\", \"enQueue\", \"Rear\", \"isFull\", \"deQueue\", \"enQueue\", \"Rear\"]\n[[3], [1], [2], [3], [4], [], [], [], [4], []]\nOutput\n[null, true, true, true, false, 3, true, true, true, 4]\n\nExplanation\nMyCircularQueue myCircularQueue = new MyCircularQueue(3);\nmyCircularQueue.enQueue(1); // return True\nmyCircularQueue.enQueue(2); // return True\nmyCircularQueue.enQueue(3); // return True\nmyCircularQueue.enQueue(4); // return False\nmyCircularQueue.Rear();     // return 3\nmyCircularQueue.isFull();   // return True\nmyCircularQueue.deQueue();  // return True\nmyCircularQueue.enQueue(4); // return True\nmyCircularQueue.Rear();     // return 4\n\nConstraints:\n\n- 1 <= k <= 1000\n\n- 0 <= value <= 1000\n\n- At most 3000 calls will be made to enQueue, deQueue, Front, Rear, isEmpty, and isFull.",
+  "constraints": [
+    "1 <= k <= 1000",
+    "0 <= value <= 1000",
+    "At most 3000 calls will be made to enQueue, deQueue, Front, Rear, isEmpty, and isFull."
+  ],
+  "hints": [],
+  "acRate": 55.56,
+  "lastSubmittedAt": "2026-08-09T12:38:02Z",
+  "latestSubmission": {
+    "submissionId": "2100339367",
+    "language": "Python3",
+    "code": "class MyCircularQueue:\n\n    def __init__(self, k: int):\n        self.queue = [-1] * k\n        self.cap = k\n        self.head = 0\n        self.tail = 0\n        self.size = 0\n\n    def enQueue(self, value: int) -> bool:\n        if self.isFull():\n            return False\n        \n        self.queue[self.tail] = value\n        self.tail = (self.tail + 1) % self.cap\n        self.size += 1\n        return True\n\n    def deQueue(self) -> bool:\n        if self.isEmpty():\n            return False\n\n        self.queue[self.head] = -1\n        self.head = (self.head + 1) % self.cap\n        self.size -= 1\n\n        return True\n\n    def Front(self) -> int:\n        if self.isEmpty():\n            return -1\n        \n        return self.queue[self.head]\n\n    def Rear(self) -> int:\n        if self.isEmpty():\n            return -1\n        \n        return self.queue[self.tail - 1]\n\n    def isEmpty(self) -> bool:\n        return self.size == 0\n\n    def isFull(self) -> bool:\n        return self.size == self.cap\n\n\n# Your MyCircularQueue object will be instantiated and called as such:\n# obj = MyCircularQueue(k)\n# param_1 = obj.enQueue(value)\n# param_2 = obj.deQueue()\n# param_3 = obj.Front()\n# param_4 = obj.Rear()\n# param_5 = obj.isEmpty()\n# param_6 = obj.isFull()"
+  },
+  "notes": [],
+  "source": "leetcode",
+  "importedAt": "2026-10-01T13:44:25Z",
+  "lastSyncedAt": "2026-10-01T13:44:25Z"
+}

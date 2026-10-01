@@ -1,0 +1,32 @@
+{
+  "leetcodeId": "424",
+  "title": "Longest Repeating Character Replacement",
+  "slug": "longest-repeating-character-replacement",
+  "url": "https://leetcode.com/problems/longest-repeating-character-replacement/",
+  "difficulty": "Medium",
+  "status": "solved",
+  "premium": false,
+  "tags": [
+    "Hash Table",
+    "String",
+    "Sliding Window"
+  ],
+  "problemStatement": "You are given a string s and an integer k. You can choose any character of the string and change it to any other uppercase English character. You can perform this operation at most k times.\n\nReturn the length of the longest substring containing the same letter you can get after performing the above operations.\n\nExample 1:\n\nInput: s = \"ABAB\", k = 2\nOutput: 4\nExplanation: Replace the two 'A's with two 'B's or vice versa.\n\nExample 2:\n\nInput: s = \"AABABBA\", k = 1\nOutput: 4\nExplanation: Replace the one 'A' in the middle with 'B' and form \"AABBBBA\".\nThe substring \"BBBB\" has the longest repeating letters, which is 4.\nThere may exists other ways to achieve this answer too.\n\nConstraints:\n\n- 1 <= s.length <= 10^5\n\n- s consists of only uppercase English letters.\n\n- 0 <= k <= s.length",
+  "constraints": [
+    "1 <= s.length <= 10^5",
+    "s consists of only uppercase English letters.",
+    "0 <= k <= s.length"
+  ],
+  "hints": [],
+  "acRate": 60.76,
+  "lastSubmittedAt": "2026-09-30T08:28:48Z",
+  "latestSubmission": {
+    "submissionId": "2157959937",
+    "language": "Python3",
+    "code": "class Solution:\n    def characterReplacement(self, s: str, k: int) -> int:\n        # a string S where max freq char + k <= len(S)\n        count = defaultdict(int)\n        l = 0\n        ans = 0\n        maxFreq = 0\n        for r in range(len(s)):\n            count[s[r]] += 1\n            maxFreq = max(maxFreq, count[s[r]])\n\n            if maxFreq + k < r - l + 1:\n                count[s[l]] -= 1\n                if count[s[l]] <= 0:\n                    count.pop(s[l])\n                l += 1\n            \n            ans = max(ans, r - l + 1)\n        return ans"
+  },
+  "notes": [],
+  "source": "leetcode",
+  "importedAt": "2026-10-01T13:44:25Z",
+  "lastSyncedAt": "2026-10-01T13:44:25Z"
+}

@@ -1,0 +1,33 @@
+{
+  "leetcodeId": "2095",
+  "title": "Delete the Middle Node of a Linked List",
+  "slug": "delete-the-middle-node-of-a-linked-list",
+  "url": "https://leetcode.com/problems/delete-the-middle-node-of-a-linked-list/",
+  "difficulty": "Medium",
+  "status": "solved",
+  "premium": false,
+  "tags": [
+    "Linked List",
+    "Two Pointers"
+  ],
+  "problemStatement": "You are given the head of a linked list. Delete the middle node, and return the head of the modified linked list.\n\nThe middle node of a linked list of size n is the ⌊n / 2⌋^th node from the start using 0-based indexing, where ⌊x⌋ denotes the largest integer less than or equal to x.\n\n- For n = 1, 2, 3, 4, and 5, the middle nodes are 0, 1, 1, 2, and 2, respectively.\n\nExample 1:\n\nInput: head = [1,3,4,7,1,2,6]\nOutput: [1,3,4,1,2,6]\nExplanation:\nThe above figure represents the given linked list. The indices of the nodes are written below.\nSince n = 7, node 3 with value 7 is the middle node, which is marked in red.\nWe return the new list after removing this node.\n\nExample 2:\n\nInput: head = [1,2,3,4]\nOutput: [1,2,4]\nExplanation:\nThe above figure represents the given linked list.\nFor n = 4, node 2 with value 3 is the middle node, which is marked in red.\n\nExample 3:\n\nInput: head = [2,1]\nOutput: [2]\nExplanation:\nThe above figure represents the given linked list.\nFor n = 2, node 1 with value 1 is the middle node, which is marked in red.\nNode 0 with value 2 is the only node remaining after removing node 1.\n\nConstraints:\n\n- The number of nodes in the list is in the range [1, 10^5].\n\n- 1 <= Node.val <= 10^5",
+  "constraints": [
+    "The number of nodes in the list is in the range [1, 10^5].",
+    "1 <= Node.val <= 10^5"
+  ],
+  "hints": [
+    "If a point with a speed s moves n units in a given time, a point with speed 2 * s will move 2 * n units at the same time. Can you use this to find the middle node of a linked list?",
+    "If you are given the middle node, the node before it, and the node after it, how can you modify the linked list?"
+  ],
+  "acRate": 60.9,
+  "lastSubmittedAt": "2026-06-15T10:40:57Z",
+  "latestSubmission": {
+    "submissionId": "2033829164",
+    "language": "Python3",
+    "code": "# Definition for singly-linked list.\n# class ListNode:\n#     def __init__(self, val=0, next=None):\n#         self.val = val\n#         self.next = next\nclass Solution:\n    def deleteMiddle(self, head: Optional[ListNode]) -> Optional[ListNode]:\n        # find the middle node\n        # remove that node\n        # find the length of the list\n        # based on that length I can tell the position of the middle node by dividing the number into half\n        if head.next is None:\n            return None\n\n        slow, fast = head, head.next.next\n\n        # I wanna stop at the element before the middle node\n        while fast != None and fast.next != None:\n            slow = slow.next\n            fast = fast.next.next\n\n        slow.next = slow.next.next\n\n        return head"
+  },
+  "notes": [],
+  "source": "leetcode",
+  "importedAt": "2026-10-01T13:44:25Z",
+  "lastSyncedAt": "2026-10-01T13:44:25Z"
+}

@@ -1,0 +1,32 @@
+{
+  "leetcodeId": "143",
+  "title": "Reorder List",
+  "slug": "reorder-list",
+  "url": "https://leetcode.com/problems/reorder-list/",
+  "difficulty": "Medium",
+  "status": "solved",
+  "premium": false,
+  "tags": [
+    "Linked List",
+    "Two Pointers",
+    "Stack",
+    "Recursion"
+  ],
+  "problemStatement": "You are given the head of a singly linked-list. The list can be represented as:\n\nL0 → L1 → … → Ln - 1 → Ln\n\nReorder the list to be on the following form:\n\nL0 → Ln → L1 → Ln - 1 → L2 → Ln - 2 → …\n\nYou may not modify the values in the list's nodes. Only nodes themselves may be changed.\n\nExample 1:\n\nInput: head = [1,2,3,4]\nOutput: [1,4,2,3]\n\nExample 2:\n\nInput: head = [1,2,3,4,5]\nOutput: [1,5,2,4,3]\n\nConstraints:\n\n- The number of nodes in the list is in the range [1, 5 * 10^4].\n\n- 1 <= Node.val <= 1000",
+  "constraints": [
+    "The number of nodes in the list is in the range [1, 5 * 10^4].",
+    "1 <= Node.val <= 1000"
+  ],
+  "hints": [],
+  "acRate": 66.37,
+  "lastSubmittedAt": "2026-10-01T13:40:20Z",
+  "latestSubmission": {
+    "submissionId": "2159239688",
+    "language": "Python3",
+    "code": "# Definition for singly-linked list.\n# class ListNode:\n#     def __init__(self, val=0, next=None):\n#         self.val = val\n#         self.next = next\nclass Solution:\n    def reorderList(self, head: ListNode | None) -> None:\n        \"\"\"\n        Do not return anything, modify head in-place instead.\n        \"\"\"\n        slow = fast = head\n\n        while fast and fast.next:\n            slow = slow.next\n            fast = fast.next.next\n\n        prev = None\n        cur = slow.next\n\n        while cur:\n            next_node = cur.next\n            cur.next = prev\n            prev = cur\n            cur = next_node\n        \n        slow.next = None\n\n        dummy = ListNode()\n        cur = dummy\n        l1 = head\n        l2 = prev\n\n        while l1 or l2:\n            if l1:\n                cur.next = l1\n                l1 =l1.next\n                cur = cur.next\n            \n            if l2:\n                cur.next = l2\n                l2 =l2.next\n                cur = cur.next"
+  },
+  "notes": [],
+  "source": "leetcode",
+  "importedAt": "2026-10-01T13:44:25Z",
+  "lastSyncedAt": "2026-10-01T13:44:25Z"
+}

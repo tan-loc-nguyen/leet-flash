@@ -1,0 +1,33 @@
+{
+  "leetcodeId": "709",
+  "title": "To Lower Case",
+  "slug": "to-lower-case",
+  "url": "https://leetcode.com/problems/to-lower-case/",
+  "difficulty": "Easy",
+  "status": "solved",
+  "premium": false,
+  "tags": [
+    "String"
+  ],
+  "problemStatement": "Given a string s, return the string after replacing every uppercase letter with the same lowercase letter.\n\nExample 1:\n\nInput: s = \"Hello\"\nOutput: \"hello\"\n\nExample 2:\n\nInput: s = \"here\"\nOutput: \"here\"\n\nExample 3:\n\nInput: s = \"LOVELY\"\nOutput: \"lovely\"\n\nConstraints:\n\n- 1 <= s.length <= 100\n\n- s consists of printable ASCII characters.",
+  "constraints": [
+    "1 <= s.length <= 100",
+    "s consists of printable ASCII characters."
+  ],
+  "hints": [
+    "Most languages support lowercase conversion for a string data type. However, that is certainly not the purpose of the problem. Think about how the implementation of the lowercase function call can be done easily.",
+    "Think ASCII!",
+    "Think about the different capital letters and their ASCII codes and how that relates to their lowercase counterparts. Does there seem to be any pattern there? Any mathematical relationship that we can use?"
+  ],
+  "acRate": 85.21,
+  "lastSubmittedAt": "2026-08-11T11:39:35Z",
+  "latestSubmission": {
+    "submissionId": "2102761553",
+    "language": "Python3",
+    "code": "class Solution:\n    def toLowerCase(self, s: str) -> str:\n        ans = \"\"\n        for c in s:\n            if ord('A') <= ord(c) <= ord('Z'):\n                ans += chr(ord(c) - ord('A') + ord('a'))\n            else:\n                ans += c\n\n        return ans"
+  },
+  "notes": [],
+  "source": "leetcode",
+  "importedAt": "2026-10-01T13:44:25Z",
+  "lastSyncedAt": "2026-10-01T13:44:25Z"
+}

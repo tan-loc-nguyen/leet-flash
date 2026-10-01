@@ -1,0 +1,35 @@
+{
+  "leetcodeId": "463",
+  "title": "Island Perimeter",
+  "slug": "island-perimeter",
+  "url": "https://leetcode.com/problems/island-perimeter/",
+  "difficulty": "Easy",
+  "status": "solved",
+  "premium": false,
+  "tags": [
+    "Array",
+    "Depth-First Search",
+    "Breadth-First Search",
+    "Matrix"
+  ],
+  "problemStatement": "You are given row x col grid representing a map where grid[i][j] = 1 represents land and grid[i][j] = 0 represents water.\n\nGrid cells are connected horizontally/vertically (not diagonally). The grid is completely surrounded by water, and there is exactly one island (i.e., one or more connected land cells).\n\nThe island doesn't have \"lakes\", meaning the water inside isn't connected to the water around the island. One cell is a square with side length 1. The grid is rectangular, width and height don't exceed 100. Determine the perimeter of the island.\n\nExample 1:\n\nInput: grid = [[0,1,0,0],[1,1,1,0],[0,1,0,0],[1,1,0,0]]\nOutput: 16\nExplanation: The perimeter is the 16 yellow stripes in the image above.\n\nExample 2:\n\nInput: grid = [[1]]\nOutput: 4\n\nExample 3:\n\nInput: grid = [[1,0]]\nOutput: 4\n\nConstraints:\n\n- row == grid.length\n\n- col == grid[i].length\n\n- 1 <= row, col <= 100\n\n- grid[i][j] is 0 or 1.\n\n- There is exactly one island in grid.",
+  "constraints": [
+    "row == grid.length",
+    "col == grid[i].length",
+    "1 <= row, col <= 100",
+    "grid[i][j] is 0 or 1.",
+    "There is exactly one island in grid."
+  ],
+  "hints": [],
+  "acRate": 74.43,
+  "lastSubmittedAt": "2026-07-02T03:41:41Z",
+  "latestSubmission": {
+    "submissionId": "2052961170",
+    "language": "Python3",
+    "code": "class Solution:\n    def islandPerimeter(self, grid: List[List[int]]) -> int:\n        # accumulate the total of land edges that exposed to water\n        m, n = len(grid), len(grid[0])\n        DIR = [0, 1, 0, -1, 0]\n        queue = collections.deque()\n        for i in range(m):\n            for j in range(n):\n                if grid[i][j] == 1:\n                    queue.append((i, j))\n        \n        perimeter = 0\n        while queue:\n            cell = queue.popleft()\n            for i in range(4):\n                nr, nc = cell[0] + DIR[i], cell[1] + DIR[i + 1]\n                if (0 <= nr < m and 0 <= nc < n and grid[nr][nc] == 0) or nr < 0 or nr >= m or nc <0 or nc >= n:\n                    perimeter += 1\n                \n        \n        return perimeter\n"
+  },
+  "notes": [],
+  "source": "leetcode",
+  "importedAt": "2026-10-01T13:44:25Z",
+  "lastSyncedAt": "2026-10-01T13:44:25Z"
+}

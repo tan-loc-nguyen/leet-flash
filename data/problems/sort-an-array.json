@@ -1,0 +1,36 @@
+{
+  "leetcodeId": "912",
+  "title": "Sort an Array",
+  "slug": "sort-an-array",
+  "url": "https://leetcode.com/problems/sort-an-array/",
+  "difficulty": "Medium",
+  "status": "solved",
+  "premium": false,
+  "tags": [
+    "Array",
+    "Divide and Conquer",
+    "Sorting",
+    "Heap (Priority Queue)",
+    "Merge Sort",
+    "Bucket Sort",
+    "Radix Sort",
+    "Counting Sort"
+  ],
+  "problemStatement": "Given an array of integers nums, sort the array in ascending order and return it.\n\nYou must solve the problem without using any built-in functions in O(nlog(n)) time complexity and with the smallest space complexity possible.\n\nExample 1:\n\nInput: nums = [5,2,3,1]\nOutput: [1,2,3,5]\nExplanation: After sorting the array, the positions of some numbers are not changed (for example, 2 and 3), while the positions of other numbers are changed (for example, 1 and 5).\n\nExample 2:\n\nInput: nums = [5,1,1,2,0,0]\nOutput: [0,0,1,1,2,5]\nExplanation: Note that the values of nums are not necessarily unique.\n\nConstraints:\n\n- 1 <= nums.length <= 5 * 10^4\n\n- -5 * 10^4 <= nums[i] <= 5 * 10^4",
+  "constraints": [
+    "1 <= nums.length <= 5 * 10^4",
+    "-5 * 10^4 <= nums[i] <= 5 * 10^4"
+  ],
+  "hints": [],
+  "acRate": 55.57,
+  "lastSubmittedAt": "2026-08-19T13:12:59Z",
+  "latestSubmission": {
+    "submissionId": "2112712487",
+    "language": "Python3",
+    "code": "class Solution:\n    def sortArray(self, nums: List[int]) -> List[int]:\n        def mergeSortedArrays(left: list[int], m: int, right: list[int], n: int):\n            ans = [0] * (m + n)\n            i, j = 0, 0\n            curr = 0\n            while i < m and j < n:\n                if left[i] < right[j]:\n                    ans[curr] = left[i]\n                    i += 1\n                else:\n                    ans[curr] = right[j]\n                    j += 1\n                curr += 1\n            \n            while i < m:\n                ans[curr] = left[i]\n                i += 1\n                curr += 1\n            \n            while j < n:\n                ans[curr] = right[j]\n                j += 1\n                curr += 1\n            return ans\n\n        def mergeSort(nums: list[int], n: int):\n            if n == 1:\n                return nums\n\n            mid = n // 2\n            left = mergeSort(nums[0:mid], mid)\n            right = mergeSort(nums[mid:n], n - mid)\n\n            return mergeSortedArrays(left, mid, right, n - mid)\n        \n        return mergeSort(nums, len(nums))"
+  },
+  "notes": [],
+  "source": "leetcode",
+  "importedAt": "2026-10-01T13:44:25Z",
+  "lastSyncedAt": "2026-10-01T13:44:25Z"
+}

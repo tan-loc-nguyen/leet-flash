@@ -1,0 +1,32 @@
+{
+  "leetcodeId": "445",
+  "title": "Add Two Numbers II",
+  "slug": "add-two-numbers-ii",
+  "url": "https://leetcode.com/problems/add-two-numbers-ii/",
+  "difficulty": "Medium",
+  "status": "solved",
+  "premium": false,
+  "tags": [
+    "Linked List",
+    "Math",
+    "Stack"
+  ],
+  "problemStatement": "You are given two non-empty linked lists representing two non-negative integers. The most significant digit comes first and each of their nodes contains a single digit. Add the two numbers and return the sum as a linked list.\n\nYou may assume the two numbers do not contain any leading zero, except the number 0 itself.\n\nExample 1:\n\nInput: l1 = [7,2,4,3], l2 = [5,6,4]\nOutput: [7,8,0,7]\n\nExample 2:\n\nInput: l1 = [2,4,3], l2 = [5,6,4]\nOutput: [8,0,7]\n\nExample 3:\n\nInput: l1 = [0], l2 = [0]\nOutput: [0]\n\nConstraints:\n\n- The number of nodes in each linked list is in the range [1, 100].\n\n- 0 <= Node.val <= 9\n\n- It is guaranteed that the list represents a number that does not have leading zeros.\n\nFollow up: Could you solve it without reversing the input lists?",
+  "constraints": [
+    "The number of nodes in each linked list is in the range [1, 100].",
+    "0 <= Node.val <= 9",
+    "It is guaranteed that the list represents a number that does not have leading zeros."
+  ],
+  "hints": [],
+  "acRate": 63.08,
+  "lastSubmittedAt": "2026-09-14T13:00:43Z",
+  "latestSubmission": {
+    "submissionId": "2141569941",
+    "language": "Python3",
+    "code": "# Definition for singly-linked list.\n# class ListNode:\n#     def __init__(self, val=0, next=None):\n#         self.val = val\n#         self.next = next\nclass Solution:\n    def reverse(self, l: Optional[ListNode]) -> Optional[ListNode]:\n        curr = l\n        prev = None\n\n        while curr:\n            nextt = curr.next\n            curr.next = prev\n            prev = curr\n            curr = nextt\n        return prev\n\n    def addTwoNumbers(self, l1: Optional[ListNode], l2: Optional[ListNode]) -> Optional[ListNode]:\n        list1 = self.reverse(l1)\n        list2 = self.reverse(l2)\n\n        dummy = ListNode()\n        curr = dummy\n        carry = 0\n\n        while list1 or list2:\n            total = carry\n\n            if list1:\n                total += list1.val\n                list1 = list1.next\n        \n            if list2:\n                total += list2.val\n                list2 = list2.next\n            \n            curr.next = ListNode(total % 10)\n            curr = curr.next\n\n            carry = total // 10\n        \n        if carry:\n            curr.next = ListNode(carry)\n            curr = curr.next\n        \n        dummy = dummy.next\n        return self.reverse(dummy)\n"
+  },
+  "notes": [],
+  "source": "leetcode",
+  "importedAt": "2026-10-01T13:44:25Z",
+  "lastSyncedAt": "2026-10-01T13:44:25Z"
+}

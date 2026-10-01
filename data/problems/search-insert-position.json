@@ -1,0 +1,32 @@
+{
+  "leetcodeId": "35",
+  "title": "Search Insert Position",
+  "slug": "search-insert-position",
+  "url": "https://leetcode.com/problems/search-insert-position/",
+  "difficulty": "Easy",
+  "status": "solved",
+  "premium": false,
+  "tags": [
+    "Array",
+    "Binary Search"
+  ],
+  "problemStatement": "Given a sorted array of distinct integers and a target value, return the index if the target is found. If not, return the index where it would be if it were inserted in order.\n\nYou must write an algorithm with O(log n) runtime complexity.\n\nExample 1:\n\nInput: nums = [1,3,5,6], target = 5\nOutput: 2\n\nExample 2:\n\nInput: nums = [1,3,5,6], target = 2\nOutput: 1\n\nExample 3:\n\nInput: nums = [1,3,5,6], target = 7\nOutput: 4\n\nConstraints:\n\n- 1 <= nums.length <= 10^4\n\n- -10^4 <= nums[i] <= 10^4\n\n- nums contains distinct values sorted in ascending order.\n\n- -10^4 <= target <= 10^4",
+  "constraints": [
+    "1 <= nums.length <= 10^4",
+    "-10^4 <= nums[i] <= 10^4",
+    "nums contains distinct values sorted in ascending order.",
+    "-10^4 <= target <= 10^4"
+  ],
+  "hints": [],
+  "acRate": 52.37,
+  "lastSubmittedAt": "2026-09-14T07:31:07Z",
+  "latestSubmission": {
+    "submissionId": "2141320527",
+    "language": "Python3",
+    "code": "class Solution:\n    def searchInsert(self, nums: List[int], target: int) -> int:\n        n = len(nums)\n        l, r = 0, n - 1\n        ans = n\n\n        while l <= r:\n            mid = (l + r) // 2\n\n            if nums[mid] >= target:\n                ans = mid\n                r -= 1\n            else:\n                l += 1\n        \n        return ans"
+  },
+  "notes": [],
+  "source": "leetcode",
+  "importedAt": "2026-10-01T13:44:25Z",
+  "lastSyncedAt": "2026-10-01T13:44:25Z"
+}

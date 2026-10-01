@@ -1,0 +1,40 @@
+{
+  "leetcodeId": "3413",
+  "title": "Maximum Coins From K Consecutive Bags",
+  "slug": "maximum-coins-from-k-consecutive-bags",
+  "url": "https://leetcode.com/problems/maximum-coins-from-k-consecutive-bags/",
+  "difficulty": "Medium",
+  "status": "solved",
+  "premium": false,
+  "tags": [
+    "Array",
+    "Binary Search",
+    "Greedy",
+    "Sliding Window",
+    "Sorting",
+    "Prefix Sum"
+  ],
+  "problemStatement": "There are an infinite amount of bags on a number line, one bag for each coordinate. Some of these bags contain coins.\n\nYou are given a 2D array coins, where coins[i] = [li, ri, ci] denotes that every bag from li to ri contains ci coins.\n\nThe segments that coins contain are non-overlapping.\n\nYou are also given an integer k.\n\nReturn the maximum amount of coins you can obtain by collecting k consecutive bags.\n\nExample 1:\n\nInput: coins = [[8,10,1],[1,3,2],[5,6,4]], k = 4\n\nOutput: 10\n\nExplanation:\n\nSelecting bags at positions [3, 4, 5, 6] gives the maximum number of coins: 2 + 0 + 4 + 4 = 10.\n\nExample 2:\n\nInput: coins = [[1,10,3]], k = 2\n\nOutput: 6\n\nExplanation:\n\nSelecting bags at positions [1, 2] gives the maximum number of coins: 3 + 3 = 6.\n\nConstraints:\n\n- 1 <= coins.length <= 10^5\n\n- 1 <= k <= 10^9\n\n- coins[i] == [li, ri, ci]\n\n- 1 <= li <= ri <= 10^9\n\n- 1 <= ci <= 1000\n\n- The given segments are non-overlapping.",
+  "constraints": [
+    "1 <= coins.length <= 10^5",
+    "1 <= k <= 10^9",
+    "coins[i] == [li, ri, ci]",
+    "1 <= li <= ri <= 10^9",
+    "1 <= ci <= 1000",
+    "The given segments are non-overlapping."
+  ],
+  "hints": [
+    "An optimal starting position for k consecutive bags will be either li or ri - k + 1."
+  ],
+  "acRate": 28.09,
+  "lastSubmittedAt": "2026-10-01T04:03:13Z",
+  "latestSubmission": {
+    "submissionId": "2158761166",
+    "language": "Python3",
+    "code": "class Solution:\n    def maximumCoins(self, coins: List[List[int]], k: int) -> int:\n        # coins = [[4,5,7],[8,11,3]], k = 6   →  expected 20, got 14\n        # [0,0,0,7,7,0,0,3,3,3,3]\n        #    1,2,3,4,5,6,7,8,9,0,1\n        # sort the bag\n        coins.sort(key = lambda x: x[0])\n        n = len(coins)\n        best = 0\n\n        # left --> right sweep with sliding window of full bag\n        j = 0\n        fullSum = 0\n        for i in range(n):\n            # precompute the right boundary from i\n            rightBound = coins[i][0] + k\n\n            # compute full-bag sum till the bag before the boundary\n            while j + 1 < n and coins[j + 1][0] < rightBound:\n                lj, rj, cj = coins[j]\n                fullSum += (rj - lj + 1) * cj\n                j += 1\n            \n            # compute the edge bag, check if its partial or full\n            edge = 0\n            if j < n and coins[j][0] < rightBound:\n                lj, rj, cj = coins[j]\n                edge += min(rj - lj + 1, rightBound - lj) * cj\n            \n            # record the best\n            best = max(best, fullSum + edge)\n\n            # roll to next i\n            fullSum -= (coins[i][1] - coins[i][0] + 1) * coins[i][2]\n        \n        # right --> left sweep with sliding window of full bag\n        j = n - 1\n        fullSum = 0\n        for i in range(n - 1, -1, -1):\n            # pre compute left boundary\n            leftBound = coins[i][1] - k\n\n            # compute the full-bag sum exclude the edge left bag\n            while j - 1 >= 0 and coins[j - 1][1] > leftBound:\n                lj, rj, cj = coins[j]\n                fullSum += (rj - lj + 1) * cj\n                j -= 1\n            \n            # compute the edge\n            edge = 0\n            if j >= 0 and coins[j][1] > leftBound:\n                lj, rj, cj = coins[j]\n                edge += min(rj - lj + 1, rj - leftBound) * cj\n            \n            best = max(best, fullSum + edge)\n            # roll\n            fullSum -= (coins[i][1] - coins[i][0] + 1) * coins[i][2]\n        \n        return best"
+  },
+  "notes": [],
+  "source": "leetcode",
+  "importedAt": "2026-10-01T13:44:25Z",
+  "lastSyncedAt": "2026-10-01T13:44:25Z"
+}

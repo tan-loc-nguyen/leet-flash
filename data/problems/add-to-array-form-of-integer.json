@@ -1,0 +1,32 @@
+{
+  "leetcodeId": "989",
+  "title": "Add to Array-Form of Integer",
+  "slug": "add-to-array-form-of-integer",
+  "url": "https://leetcode.com/problems/add-to-array-form-of-integer/",
+  "difficulty": "Easy",
+  "status": "solved",
+  "premium": false,
+  "tags": [
+    "Array",
+    "Math"
+  ],
+  "problemStatement": "The array-form of an integer num is an array representing its digits in left to right order.\n\n- For example, for num = 1321, the array form is [1,3,2,1].\n\nGiven num, the array-form of an integer, and an integer k, return the array-form of the integer num + k.\n\nExample 1:\n\nInput: num = [1,2,0,0], k = 34\nOutput: [1,2,3,4]\nExplanation: 1200 + 34 = 1234\n\nExample 2:\n\nInput: num = [2,7,4], k = 181\nOutput: [4,5,5]\nExplanation: 274 + 181 = 455\n\nExample 3:\n\nInput: num = [2,1,5], k = 806\nOutput: [1,0,2,1]\nExplanation: 215 + 806 = 1021\n\nConstraints:\n\n- 1 <= num.length <= 10^4\n\n- 0 <= num[i] <= 9\n\n- num does not contain any leading zeros except for the zero itself.\n\n- 1 <= k <= 10^4",
+  "constraints": [
+    "1 <= num.length <= 10^4",
+    "0 <= num[i] <= 9",
+    "num does not contain any leading zeros except for the zero itself.",
+    "1 <= k <= 10^4"
+  ],
+  "hints": [],
+  "acRate": 45.72,
+  "lastSubmittedAt": "2026-09-17T01:21:06Z",
+  "latestSubmission": {
+    "submissionId": "2144193012",
+    "language": "Python3",
+    "code": "class Solution:\n    def addToArrayForm(self, num: list[int], k: int) -> list[int]:\n        num2 = []\n        while k:\n            digit = k % 10\n            num2.append(digit)\n            k //= 10\n        \n        num2.reverse()\n\n        i, j = len(num) - 1, len(num2) - 1\n        carry = 0\n        ans = []\n        while i >= 0 or j >= 0:\n            total = carry\n\n            if i >= 0:\n                total += num[i]\n                i -= 1\n            \n            if j >= 0:\n                total += num2[j]\n                j -= 1\n            \n            ans.append(total % 10)\n            carry = total // 10\n        \n        if carry:\n            ans.append(carry)\n\n        ans.reverse()\n        return ans\n"
+  },
+  "notes": [],
+  "source": "leetcode",
+  "importedAt": "2026-10-01T13:44:25Z",
+  "lastSyncedAt": "2026-10-01T13:44:25Z"
+}

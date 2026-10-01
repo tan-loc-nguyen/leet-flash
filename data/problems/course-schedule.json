@@ -1,0 +1,40 @@
+{
+  "leetcodeId": "207",
+  "title": "Course Schedule",
+  "slug": "course-schedule",
+  "url": "https://leetcode.com/problems/course-schedule/",
+  "difficulty": "Medium",
+  "status": "solved",
+  "premium": false,
+  "tags": [
+    "Depth-First Search",
+    "Breadth-First Search",
+    "Graph Theory",
+    "Topological Sort",
+    "Directed Acyclic Graph"
+  ],
+  "problemStatement": "There are a total of numCourses courses you have to take, labeled from 0 to numCourses - 1. You are given an array prerequisites where prerequisites[i] = [ai, bi] indicates that you must take course bi first if you want to take course ai.\n\n- For example, the pair [0, 1], indicates that to take course 0 you have to first take course 1.\n\nReturn true if you can finish all courses. Otherwise, return false.\n\nExample 1:\n\nInput: numCourses = 2, prerequisites = [[1,0]]\nOutput: true\nExplanation: There are a total of 2 courses to take.\nTo take course 1 you should have finished course 0. So it is possible.\n\nExample 2:\n\nInput: numCourses = 2, prerequisites = [[1,0],[0,1]]\nOutput: false\nExplanation: There are a total of 2 courses to take.\nTo take course 1 you should have finished course 0, and to take course 0 you should also have finished course 1. So it is impossible.\n\nConstraints:\n\n- 1 <= numCourses <= 2000\n\n- 0 <= prerequisites.length <= 5000\n\n- prerequisites[i].length == 2\n\n- 0 <= ai, bi < numCourses\n\n- All the pairs prerequisites[i] are unique.",
+  "constraints": [
+    "1 <= numCourses <= 2000",
+    "0 <= prerequisites.length <= 5000",
+    "prerequisites[i].length == 2",
+    "0 <= ai, bi < numCourses",
+    "All the pairs prerequisites[i] are unique."
+  ],
+  "hints": [
+    "This problem is equivalent to finding if a cycle exists in a directed graph. If a cycle exists, no topological ordering exists and therefore it will be impossible to take all courses.",
+    "Topological Sort via DFS - A great tutorial explaining the basic concepts of Topological Sort.",
+    "Topological sort could also be done via BFS."
+  ],
+  "acRate": 52.31,
+  "lastSubmittedAt": "2026-09-09T13:51:04Z",
+  "latestSubmission": {
+    "submissionId": "2136395354",
+    "language": "Python3",
+    "code": "class Solution:\n    def canFinish(self, n: int, pre: List[List[int]]) -> bool:\n        # build adjacent list and in_degree list\n        graph = defaultdict(list)\n        in_degree = [0] * n\n        for u, v in pre:\n            graph[v].append(u)\n            in_degree[u] += 1\n        \n        # take no pre courses to queue\n        queue = deque()\n        for course in range(n):\n            if in_degree[course] == 0:\n                queue.append(course)\n\n        ans = []\n        while queue:\n            m = len(queue)\n            for _ in range(m):\n                node = queue.popleft()\n                ans.append(node)\n                for nei in graph[node]:\n                    in_degree[nei] -= 1\n                    if in_degree[nei] == 0:\n                        queue.append(nei)\n\n        if len(ans) < n:\n            return False\n        return True\n        "
+  },
+  "notes": [],
+  "source": "leetcode",
+  "importedAt": "2026-10-01T13:44:25Z",
+  "lastSyncedAt": "2026-10-01T13:44:25Z"
+}

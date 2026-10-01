@@ -1,0 +1,37 @@
+{
+  "leetcodeId": "88",
+  "title": "Merge Sorted Array",
+  "slug": "merge-sorted-array",
+  "url": "https://leetcode.com/problems/merge-sorted-array/",
+  "difficulty": "Easy",
+  "status": "solved",
+  "premium": false,
+  "tags": [
+    "Array",
+    "Two Pointers",
+    "Sorting"
+  ],
+  "problemStatement": "You are given two integer arrays nums1 and nums2, sorted in non-decreasing order, and two integers m and n, representing the number of elements in nums1 and nums2 respectively.\n\nMerge nums1 and nums2 into a single array sorted in non-decreasing order.\n\nThe final sorted array should not be returned by the function, but instead be stored inside the array nums1. To accommodate this, nums1 has a length of m + n, where the first m elements denote the elements that should be merged, and the last n elements are set to 0 and should be ignored. nums2 has a length of n.\n\nExample 1:\n\nInput: nums1 = [1,2,3,0,0,0], m = 3, nums2 = [2,5,6], n = 3\nOutput: [1,2,2,3,5,6]\nExplanation: The arrays we are merging are [1,2,3] and [2,5,6].\nThe result of the merge is [1,2,2,3,5,6] with the underlined elements coming from nums1.\n\nExample 2:\n\nInput: nums1 = [1], m = 1, nums2 = [], n = 0\nOutput: [1]\nExplanation: The arrays we are merging are [1] and [].\nThe result of the merge is [1].\n\nExample 3:\n\nInput: nums1 = [0], m = 0, nums2 = [1], n = 1\nOutput: [1]\nExplanation: The arrays we are merging are [] and [1].\nThe result of the merge is [1].\nNote that because m = 0, there are no elements in nums1. The 0 is only there to ensure the merge result can fit in nums1.\n\nConstraints:\n\n- nums1.length == m + n\n\n- nums2.length == n\n\n- 0 <= m, n <= 200\n\n- 1 <= m + n <= 200\n\n- -10^9 <= nums1[i], nums2[j] <= 10^9\n\nFollow up: Can you come up with an algorithm that runs in O(m + n) time?",
+  "constraints": [
+    "nums1.length == m + n",
+    "nums2.length == n",
+    "0 <= m, n <= 200",
+    "1 <= m + n <= 200",
+    "-10^9 <= nums1[i], nums2[j] <= 10^9"
+  ],
+  "hints": [
+    "You can easily solve this problem if you simply think about two elements at a time rather than two arrays. We know that each of the individual arrays is sorted. What we don't know is how they will intertwine. Can we take a local decision and arrive at an optimal solution?",
+    "If you simply consider one element each at a time from the two arrays and make a decision and proceed accordingly, you will arrive at the optimal solution."
+  ],
+  "acRate": 55.81,
+  "lastSubmittedAt": "2026-07-18T05:36:59Z",
+  "latestSubmission": {
+    "submissionId": "2071802522",
+    "language": "Python3",
+    "code": "class Solution:\n    def merge(self, nums1: List[int], m: int, nums2: List[int], n: int) -> None:\n        \"\"\"\n        Do not return anything, modify nums1 in-place instead.\n        \"\"\"\n        i, j, k = m - 1, n -1, m + n - 1\n        while j >= 0:\n            if i >= 0 and nums1[i] > nums2[j]:\n                nums1[k] = nums1[i]\n                i -= 1\n            else:\n                nums1[k] = nums2[j]\n                j -= 1\n            k -= 1"
+  },
+  "notes": [],
+  "source": "leetcode",
+  "importedAt": "2026-10-01T13:44:25Z",
+  "lastSyncedAt": "2026-10-01T13:44:25Z"
+}

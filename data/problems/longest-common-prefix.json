@@ -1,0 +1,32 @@
+{
+  "leetcodeId": "14",
+  "title": "Longest Common Prefix",
+  "slug": "longest-common-prefix",
+  "url": "https://leetcode.com/problems/longest-common-prefix/",
+  "difficulty": "Easy",
+  "status": "solved",
+  "premium": false,
+  "tags": [
+    "Array",
+    "String",
+    "Trie"
+  ],
+  "problemStatement": "Write a function to find the longest common prefix string amongst an array of strings.\n\nIf there is no common prefix, return an empty string \"\".\n\nExample 1:\n\nInput: strs = [\"flower\",\"flow\",\"flight\"]\nOutput: \"fl\"\n\nExample 2:\n\nInput: strs = [\"dog\",\"racecar\",\"car\"]\nOutput: \"\"\nExplanation: There is no common prefix among the input strings.\n\nConstraints:\n\n- 1 <= strs.length <= 200\n\n- 0 <= strs[i].length <= 200\n\n- strs[i] consists of only lowercase English letters if it is non-empty.",
+  "constraints": [
+    "1 <= strs.length <= 200",
+    "0 <= strs[i].length <= 200",
+    "strs[i] consists of only lowercase English letters if it is non-empty."
+  ],
+  "hints": [],
+  "acRate": 48.45,
+  "lastSubmittedAt": "2026-09-09T14:13:07Z",
+  "latestSubmission": {
+    "submissionId": "2136420432",
+    "language": "Python3",
+    "code": "class Solution:\n    def longestCommonPrefix(self, strs: List[str]) -> str:\n        if not strs:\n            return \"\"\n        \n        for i in range(len(strs[0])):\n            c = strs[0][i]\n            for j in range(len(strs)):\n                if i >= len(strs[j]) or strs[j][i] != c:\n                    return strs[0][0:i]\n        return strs[0]"
+  },
+  "notes": [],
+  "source": "leetcode",
+  "importedAt": "2026-10-01T13:44:25Z",
+  "lastSyncedAt": "2026-10-01T13:44:25Z"
+}

@@ -1,0 +1,33 @@
+{
+  "leetcodeId": "283",
+  "title": "Move Zeroes",
+  "slug": "move-zeroes",
+  "url": "https://leetcode.com/problems/move-zeroes/",
+  "difficulty": "Easy",
+  "status": "solved",
+  "premium": false,
+  "tags": [
+    "Array",
+    "Two Pointers"
+  ],
+  "problemStatement": "Given an integer array nums, move all 0's to the end of it while maintaining the relative order of the non-zero elements.\n\nNote that you must do this in-place without making a copy of the array.\n\nExample 1:\n\nInput: nums = [0,1,0,3,12]\nOutput: [1,3,12,0,0]\n\nExample 2:\n\nInput: nums = [0]\nOutput: [0]\n\nConstraints:\n\n- 1 <= nums.length <= 10^4\n\n- -2^31 <= nums[i] <= 2^31 - 1\n\nFollow up: Could you minimize the total number of operations done?",
+  "constraints": [
+    "1 <= nums.length <= 10^4",
+    "-2^31 <= nums[i] <= 2^31 - 1"
+  ],
+  "hints": [
+    "In-place means we should not be allocating any space for extra array. But we are allowed to modify the existing array. However, as a first step, try coming up with a solution that makes use of additional space. For this problem as well, first apply the idea discussed using an additional array and the in-place solution will pop up eventually.",
+    "A two-pointer approach could be helpful here. The idea would be to have one pointer for iterating the array and another pointer that just works on the non-zero elements of the array."
+  ],
+  "acRate": 64.44,
+  "lastSubmittedAt": "2026-10-01T05:28:44Z",
+  "latestSubmission": {
+    "submissionId": "2158844041",
+    "language": "Python3",
+    "code": "class Solution:\n    def moveZeroes(self, nums: list[int]) -> None:\n        \"\"\"\n        Do not return anything, modify nums in-place instead.\n        \"\"\"\n        j = 0\n        for i in range(len(nums)):\n            if nums[i] != 0:\n                nums[j], nums[i] = nums[i], nums[j]\n                j += 1"
+  },
+  "notes": [],
+  "source": "leetcode",
+  "importedAt": "2026-10-01T13:44:25Z",
+  "lastSyncedAt": "2026-10-01T13:44:25Z"
+}

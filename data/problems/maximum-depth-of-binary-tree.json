@@ -1,0 +1,32 @@
+{
+  "leetcodeId": "104",
+  "title": "Maximum Depth of Binary Tree",
+  "slug": "maximum-depth-of-binary-tree",
+  "url": "https://leetcode.com/problems/maximum-depth-of-binary-tree/",
+  "difficulty": "Easy",
+  "status": "solved",
+  "premium": false,
+  "tags": [
+    "Tree",
+    "Depth-First Search",
+    "Breadth-First Search",
+    "Binary Tree"
+  ],
+  "problemStatement": "Given the root of a binary tree, return its maximum depth.\n\nA binary tree's maximum depth is the number of nodes along the longest path from the root node down to the farthest leaf node.\n\nExample 1:\n\nInput: root = [3,9,20,null,null,15,7]\nOutput: 3\n\nExample 2:\n\nInput: root = [1,null,2]\nOutput: 2\n\nConstraints:\n\n- The number of nodes in the tree is in the range [0, 10^4].\n\n- -100 <= Node.val <= 100",
+  "constraints": [
+    "The number of nodes in the tree is in the range [0, 10^4].",
+    "-100 <= Node.val <= 100"
+  ],
+  "hints": [],
+  "acRate": 78.67,
+  "lastSubmittedAt": "2026-06-22T22:39:27Z",
+  "latestSubmission": {
+    "submissionId": "2042696148",
+    "language": "Python3",
+    "code": "# Definition for a binary tree node.\n# class TreeNode:\n#     def __init__(self, val=0, left=None, right=None):\n#         self.val = val\n#         self.left = left\n#         self.right = right\nclass Solution:\n    def maxDepth(self, root: Optional[TreeNode]) -> int:\n        if not root:\n            return 0\n        \n        maxLeft = self.maxDepth(root.left) + 1\n        maxRight = self.maxDepth(root.right) + 1\n\n        return max(maxLeft, maxRight)"
+  },
+  "notes": [],
+  "source": "leetcode",
+  "importedAt": "2026-10-01T13:44:25Z",
+  "lastSyncedAt": "2026-10-01T13:44:25Z"
+}

@@ -1,0 +1,30 @@
+{
+  "leetcodeId": "633",
+  "title": "Sum of Square Numbers",
+  "slug": "sum-of-square-numbers",
+  "url": "https://leetcode.com/problems/sum-of-square-numbers/",
+  "difficulty": "Medium",
+  "status": "solved",
+  "premium": false,
+  "tags": [
+    "Math",
+    "Two Pointers",
+    "Binary Search"
+  ],
+  "problemStatement": "Given a non-negative integer c, decide whether there're two integers a and b such that a^2 + b^2 = c.\n\nExample 1:\n\nInput: c = 5\nOutput: true\nExplanation: 1 * 1 + 2 * 2 = 5\n\nExample 2:\n\nInput: c = 3\nOutput: false\n\nConstraints:\n\n- 0 <= c <= 2^31 - 1",
+  "constraints": [
+    "0 <= c <= 2^31 - 1"
+  ],
+  "hints": [],
+  "acRate": 37.05,
+  "lastSubmittedAt": "2026-07-26T04:40:54Z",
+  "latestSubmission": {
+    "submissionId": "2081527185",
+    "language": "Python3",
+    "code": "class Solution:\n    def judgeSquareSum(self, c: int) -> bool:\n        low, high = 0, int(c**0.5)\n\n        while low <= high:\n            total = low**2 + high**2\n\n            if total == c:\n                return True\n            elif total > c:\n                high -= 1\n            else:\n                low += 1\n        return False"
+  },
+  "notes": [],
+  "source": "leetcode",
+  "importedAt": "2026-10-01T13:44:25Z",
+  "lastSyncedAt": "2026-10-01T13:44:25Z"
+}

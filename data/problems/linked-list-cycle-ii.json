@@ -1,0 +1,33 @@
+{
+  "leetcodeId": "142",
+  "title": "Linked List Cycle II",
+  "slug": "linked-list-cycle-ii",
+  "url": "https://leetcode.com/problems/linked-list-cycle-ii/",
+  "difficulty": "Medium",
+  "status": "solved",
+  "premium": false,
+  "tags": [
+    "Hash Table",
+    "Linked List",
+    "Two Pointers",
+    "Floyd's Cycle Finding Algorithm"
+  ],
+  "problemStatement": "Given the head of a linked list, return the node where the cycle begins. If there is no cycle, return null.\n\nThere is a cycle in a linked list if there is some node in the list that can be reached again by continuously following the next pointer. Internally, pos is used to denote the index of the node that tail's next pointer is connected to (0-indexed). It is -1 if there is no cycle. Note that pos is not passed as a parameter.\n\nDo not modify the linked list.\n\nExample 1:\n\nInput: head = [3,2,0,-4], pos = 1\nOutput: tail connects to node index 1\nExplanation: There is a cycle in the linked list, where tail connects to the second node.\n\nExample 2:\n\nInput: head = [1,2], pos = 0\nOutput: tail connects to node index 0\nExplanation: There is a cycle in the linked list, where tail connects to the first node.\n\nExample 3:\n\nInput: head = [1], pos = -1\nOutput: no cycle\nExplanation: There is no cycle in the linked list.\n\nConstraints:\n\n- The number of the nodes in the list is in the range [0, 10^4].\n\n- -10^5 <= Node.val <= 10^5\n\n- pos is -1 or a valid index in the linked-list.\n\nFollow up: Can you solve it using O(1) (i.e. constant) memory?",
+  "constraints": [
+    "The number of the nodes in the list is in the range [0, 10^4].",
+    "-10^5 <= Node.val <= 10^5",
+    "pos is -1 or a valid index in the linked-list."
+  ],
+  "hints": [],
+  "acRate": 59.32,
+  "lastSubmittedAt": "2026-08-02T04:22:20Z",
+  "latestSubmission": {
+    "submissionId": "2090854824",
+    "language": "Python3",
+    "code": "# Definition for singly-linked list.\n# class ListNode:\n#     def __init__(self, x):\n#         self.val = x\n#         self.next = None\n\nclass Solution:\n    def detectCycle(self, head: Optional[ListNode]) -> Optional[ListNode]:\n        slow = fast = head\n\n        meet = False\n        while fast and fast.next:\n            slow = slow.next\n            fast = fast.next.next\n\n            if slow == fast:\n                meet = True\n                break\n        \n        if not meet:\n            return None\n        \n        fast = head\n\n        while fast != slow:\n            fast = fast.next\n            slow = slow.next\n        \n        return fast\n            "
+  },
+  "notes": [],
+  "source": "leetcode",
+  "importedAt": "2026-10-01T13:44:25Z",
+  "lastSyncedAt": "2026-10-01T13:44:25Z"
+}

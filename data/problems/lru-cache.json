@@ -1,0 +1,34 @@
+{
+  "leetcodeId": "146",
+  "title": "LRU Cache",
+  "slug": "lru-cache",
+  "url": "https://leetcode.com/problems/lru-cache/",
+  "difficulty": "Medium",
+  "status": "solved",
+  "premium": false,
+  "tags": [
+    "Hash Table",
+    "Linked List",
+    "Design",
+    "Doubly-Linked List"
+  ],
+  "problemStatement": "Design a data structure that follows the constraints of a Least Recently Used (LRU) cache.\n\nImplement the LRUCache class:\n\n- LRUCache(int capacity) Initialize the LRU cache with positive size capacity.\n\n- int get(int key) Return the value of the key if the key exists, otherwise return -1.\n\n- void put(int key, int value) Update the value of the key if the key exists. Otherwise, add the key-value pair to the cache. If the number of keys exceeds the capacity from this operation, evict the least recently used key.\n\nThe functions get and put must each run in O(1) average time complexity.\n\nExample 1:\n\nInput\n[\"LRUCache\", \"put\", \"put\", \"get\", \"put\", \"get\", \"put\", \"get\", \"get\", \"get\"]\n[[2], [1, 1], [2, 2], [1], [3, 3], [2], [4, 4], [1], [3], [4]]\nOutput\n[null, null, null, 1, null, -1, null, -1, 3, 4]\n\nExplanation\nLRUCache lRUCache = new LRUCache(2);\nlRUCache.put(1, 1); // cache is {1=1}\nlRUCache.put(2, 2); // cache is {1=1, 2=2}\nlRUCache.get(1);    // return 1\nlRUCache.put(3, 3); // LRU key was 2, evicts key 2, cache is {1=1, 3=3}\nlRUCache.get(2);    // returns -1 (not found)\nlRUCache.put(4, 4); // LRU key was 1, evicts key 1, cache is {4=4, 3=3}\nlRUCache.get(1);    // return -1 (not found)\nlRUCache.get(3);    // return 3\nlRUCache.get(4);    // return 4\n\nConstraints:\n\n- 1 <= capacity <= 3000\n\n- 0 <= key <= 10^4\n\n- 0 <= value <= 10^5\n\n- At most 2 * 10^5 calls will be made to get and put.",
+  "constraints": [
+    "1 <= capacity <= 3000",
+    "0 <= key <= 10^4",
+    "0 <= value <= 10^5",
+    "At most 2 * 10^5 calls will be made to get and put."
+  ],
+  "hints": [],
+  "acRate": 48.14,
+  "lastSubmittedAt": "2026-09-14T10:08:54Z",
+  "latestSubmission": {
+    "submissionId": "2141436020",
+    "language": "Python3",
+    "code": "class Node:\n    def __init__(self, key: int = -1, val: int = -1, nextt: Optional[\"Node\"] = None, prev: Optional[\"Node\"] = None):\n        self.key = key\n        self.val = val\n        self.next = nextt\n        self.prev = prev\n\nclass LinkedList:\n\n    def __init__(self):\n        self.head = Node()\n        self.tail = Node()\n\n        self.head.next = self.tail\n        self.tail.prev = self.head\n\n    def addHead(self, node: Node) -> None:\n        headNext = self.head.next\n        node.next = headNext\n        node.prev = self.head\n        self.head.next= node\n        headNext.prev = node\n\n    def removeTail(self) -> Optional[\"Node\"]:\n        if self.tail.prev == self.head:\n            return None\n\n        removedNode = self.tail.prev\n        self.remove(removedNode)\n        return removedNode\n\n    def remove(self, node: Node) -> None:\n        prev = node.prev\n        nextt = node.next\n\n        prev.next = nextt\n        nextt.prev = prev\n\n        node.next = None\n        node.prev = None\n\nclass LRUCache:\n\n    def __init__(self, capacity: int):\n        self.cap = capacity\n        # key -> key, value -> Node\n        self.hashmap = {}\n        self.list = LinkedList()\n\n    def size(self) -> int:\n        return len(self.hashmap)\n\n    def get(self, key: int) -> int:\n        if key not in self.hashmap:\n            return -1\n\n        node = self.hashmap[key]\n        self.updateRecentlyUsed(node)\n        return node.val\n\n    def put(self, key: int, value: int) -> None:\n        if key not in self.hashmap:\n            self.hashmap[key] = Node(key, value)\n            self.list.addHead(self.hashmap[key])\n        else:\n            node = self.hashmap[key]\n            node.val = value\n            self.updateRecentlyUsed(node)\n\n        if self.size() > self.cap:\n            self.evict()\n\n    def updateRecentlyUsed(self, node: Node) -> None:\n        self.list.remove(node)\n        self.list.addHead(node)\n\n    def evict(self) -> None:\n        removedNode = self.list.removeTail()\n        del self.hashmap[removedNode.key]"
+  },
+  "notes": [],
+  "source": "leetcode",
+  "importedAt": "2026-10-01T13:44:25Z",
+  "lastSyncedAt": "2026-10-01T13:44:25Z"
+}

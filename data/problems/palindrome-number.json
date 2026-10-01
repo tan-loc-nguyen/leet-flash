@@ -1,0 +1,30 @@
+{
+  "leetcodeId": "9",
+  "title": "Palindrome Number",
+  "slug": "palindrome-number",
+  "url": "https://leetcode.com/problems/palindrome-number/",
+  "difficulty": "Easy",
+  "status": "solved",
+  "premium": false,
+  "tags": [
+    "Math"
+  ],
+  "problemStatement": "Given an integer x, return true if x is a palindrome, and false otherwise.\n\nExample 1:\n\nInput: x = 121\nOutput: true\nExplanation: 121 reads as 121 from left to right and from right to left.\n\nExample 2:\n\nInput: x = -121\nOutput: false\nExplanation: From left to right, it reads -121. From right to left, it becomes 121-. Therefore it is not a palindrome.\n\nExample 3:\n\nInput: x = 10\nOutput: false\nExplanation: Reads 01 from right to left. Therefore it is not a palindrome.\n\nConstraints:\n\n- -2^31 <= x <= 2^31 - 1\n\nFollow up: Could you solve it without converting the integer to a string?",
+  "constraints": [
+    "-2^31 <= x <= 2^31 - 1"
+  ],
+  "hints": [
+    "Beware of overflow when you reverse the integer."
+  ],
+  "acRate": 61.0,
+  "lastSubmittedAt": "2026-09-09T14:16:33Z",
+  "latestSubmission": {
+    "submissionId": "2136424379",
+    "language": "Python3",
+    "code": "class Solution:\n    def isPalindrome(self, x: int) -> bool:\n        if x < 0:\n            return False\n\n        reversed_x = 0\n        tmp = x\n        while tmp > 0:\n            last_digit = tmp % 10          # Get the last digit\n            reversed_x = (reversed_x * 10) + last_digit  # Shift and add\n            tmp //= 10                     # Remove the last digit\n        \n        return reversed_x == x"
+  },
+  "notes": [],
+  "source": "leetcode",
+  "importedAt": "2026-10-01T13:44:25Z",
+  "lastSyncedAt": "2026-10-01T13:44:25Z"
+}

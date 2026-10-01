@@ -1,0 +1,32 @@
+{
+  "leetcodeId": "226",
+  "title": "Invert Binary Tree",
+  "slug": "invert-binary-tree",
+  "url": "https://leetcode.com/problems/invert-binary-tree/",
+  "difficulty": "Easy",
+  "status": "solved",
+  "premium": false,
+  "tags": [
+    "Tree",
+    "Depth-First Search",
+    "Breadth-First Search",
+    "Binary Tree"
+  ],
+  "problemStatement": "Given the root of a binary tree, invert the tree, and return its root.\n\nExample 1:\n\nInput: root = [4,2,7,1,3,6,9]\nOutput: [4,7,2,9,6,3,1]\n\nExample 2:\n\nInput: root = [2,1,3]\nOutput: [2,3,1]\n\nExample 3:\n\nInput: root = []\nOutput: []\n\nConstraints:\n\n- The number of nodes in the tree is in the range [0, 100].\n\n- -100 <= Node.val <= 100",
+  "constraints": [
+    "The number of nodes in the tree is in the range [0, 100].",
+    "-100 <= Node.val <= 100"
+  ],
+  "hints": [],
+  "acRate": 80.5,
+  "lastSubmittedAt": "2026-06-23T03:01:26Z",
+  "latestSubmission": {
+    "submissionId": "2042784025",
+    "language": "Python3",
+    "code": "# Definition for a binary tree node.\n# class TreeNode:\n#     def __init__(self, val=0, left=None, right=None):\n#         self.val = val\n#         self.left = left\n#         self.right = right\nclass Solution:\n    def invertTree(self, root: Optional[TreeNode]) -> Optional[TreeNode]:\n        if not root:\n            return None\n        queue = collections.deque([root])\n\n        while queue:\n            current = queue.popleft()\n            \n            # Structurally swap the actual left and right child pointers\n            current.left, current.right = current.right, current.left\n            \n            # Add the children to the queue to continue the traversal\n            if current.left:\n                queue.append(current.left)\n            if current.right:\n                queue.append(current.right)\n        return root"
+  },
+  "notes": [],
+  "source": "leetcode",
+  "importedAt": "2026-10-01T13:44:25Z",
+  "lastSyncedAt": "2026-10-01T13:44:25Z"
+}

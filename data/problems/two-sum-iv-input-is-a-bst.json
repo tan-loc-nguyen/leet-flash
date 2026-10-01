@@ -1,0 +1,37 @@
+{
+  "leetcodeId": "653",
+  "title": "Two Sum IV - Input is a BST",
+  "slug": "two-sum-iv-input-is-a-bst",
+  "url": "https://leetcode.com/problems/two-sum-iv-input-is-a-bst/",
+  "difficulty": "Easy",
+  "status": "solved",
+  "premium": false,
+  "tags": [
+    "Hash Table",
+    "Two Pointers",
+    "Tree",
+    "Depth-First Search",
+    "Breadth-First Search",
+    "Binary Search Tree",
+    "Binary Tree"
+  ],
+  "problemStatement": "Given the root of a binary search tree and an integer k, return true if there exist two elements in the BST such that their sum is equal to k, or false otherwise.\n\nExample 1:\n\nInput: root = [5,3,6,2,4,null,7], k = 9\nOutput: true\n\nExample 2:\n\nInput: root = [5,3,6,2,4,null,7], k = 28\nOutput: false\n\nConstraints:\n\n- The number of nodes in the tree is in the range [1, 10^4].\n\n- -10^4 <= Node.val <= 10^4\n\n- root is guaranteed to be a valid binary search tree.\n\n- -10^5 <= k <= 10^5",
+  "constraints": [
+    "The number of nodes in the tree is in the range [1, 10^4].",
+    "-10^4 <= Node.val <= 10^4",
+    "root is guaranteed to be a valid binary search tree.",
+    "-10^5 <= k <= 10^5"
+  ],
+  "hints": [],
+  "acRate": 63.75,
+  "lastSubmittedAt": "2026-09-16T08:31:02Z",
+  "latestSubmission": {
+    "submissionId": "2143456569",
+    "language": "Python3",
+    "code": "# Definition for a binary tree node.\n# class TreeNode:\n#     def __init__(self, val=0, left=None, right=None):\n#         self.val = val\n#         self.left = left\n#         self.right = right\nclass Solution:\n    def findTarget(self, root: Optional[TreeNode], k: int) -> bool:\n        hmap = {}\n        ans = False\n\n        def dfs(root: Optional[TreeNode()]) -> None:\n            nonlocal ans\n            if not root:\n                return None\n\n            dfs(root.left)\n            complement = k - root.val\n            if complement in hmap:\n                ans = True\n                return\n            hmap[root.val] = complement\n            dfs(root.right)\n\n        dfs(root)\n        return ans"
+  },
+  "notes": [],
+  "source": "leetcode",
+  "importedAt": "2026-10-01T13:44:25Z",
+  "lastSyncedAt": "2026-10-01T13:44:25Z"
+}

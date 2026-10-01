@@ -1,0 +1,32 @@
+{
+  "leetcodeId": "98",
+  "title": "Validate Binary Search Tree",
+  "slug": "validate-binary-search-tree",
+  "url": "https://leetcode.com/problems/validate-binary-search-tree/",
+  "difficulty": "Medium",
+  "status": "solved",
+  "premium": false,
+  "tags": [
+    "Tree",
+    "Depth-First Search",
+    "Binary Search Tree",
+    "Binary Tree"
+  ],
+  "problemStatement": "Given the root of a binary tree, determine if it is a valid binary search tree (BST).\n\nA valid BST is defined as follows:\n\n- The left subtree of a node contains only nodes with keys strictly less than the node's key.\n\n- The right subtree of a node contains only nodes with keys strictly greater than the node's key.\n\n- Both the left and right subtrees must also be binary search trees.\n\nExample 1:\n\nInput: root = [2,1,3]\nOutput: true\n\nExample 2:\n\nInput: root = [5,1,4,null,null,3,6]\nOutput: false\nExplanation: The root node's value is 5 but its right child's value is 4.\n\nConstraints:\n\n- The number of nodes in the tree is in the range [1, 10^4].\n\n- -2^31 <= Node.val <= 2^31 - 1",
+  "constraints": [
+    "The number of nodes in the tree is in the range [1, 10^4].",
+    "-2^31 <= Node.val <= 2^31 - 1"
+  ],
+  "hints": [],
+  "acRate": 36.42,
+  "lastSubmittedAt": "2026-09-19T06:38:25Z",
+  "latestSubmission": {
+    "submissionId": "2146379864",
+    "language": "Python3",
+    "code": "# Definition for a binary tree node.\n# class TreeNode:\n#     def __init__(self, val=0, left=None, right=None):\n#         self.val = val\n#         self.left = left\n#         self.right = right\nclass Solution:\n    def isValidBST(self, root: Optional[TreeNode]) -> bool:\n        self.prev = float(\"-inf\")\n\n        def dfs(root: Optional[TreeNode]) -> bool:\n            if not root:\n                return True\n            \n            left = dfs(root.left)\n            if root.val <= self.prev:\n                return False\n            self.prev = root.val\n            right = dfs(root.right)\n\n            return left and right\n        \n        return dfs(root)"
+  },
+  "notes": [],
+  "source": "leetcode",
+  "importedAt": "2026-10-01T13:44:25Z",
+  "lastSyncedAt": "2026-10-01T13:44:25Z"
+}

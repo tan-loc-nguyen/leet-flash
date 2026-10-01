@@ -1,0 +1,32 @@
+{
+  "leetcodeId": "2",
+  "title": "Add Two Numbers",
+  "slug": "add-two-numbers",
+  "url": "https://leetcode.com/problems/add-two-numbers/",
+  "difficulty": "Medium",
+  "status": "solved",
+  "premium": false,
+  "tags": [
+    "Linked List",
+    "Math",
+    "Recursion"
+  ],
+  "problemStatement": "You are given two non-empty linked lists representing two non-negative integers. The digits are stored in reverse order, and each of their nodes contains a single digit. Add the two numbers and return the sum as a linked list.\n\nYou may assume the two numbers do not contain any leading zero, except the number 0 itself.\n\nExample 1:\n\nInput: l1 = [2,4,3], l2 = [5,6,4]\nOutput: [7,0,8]\nExplanation: 342 + 465 = 807.\n\nExample 2:\n\nInput: l1 = [0], l2 = [0]\nOutput: [0]\n\nExample 3:\n\nInput: l1 = [9,9,9,9,9,9,9], l2 = [9,9,9,9]\nOutput: [8,9,9,9,0,0,0,1]\n\nConstraints:\n\n- The number of nodes in each linked list is in the range [1, 100].\n\n- 0 <= Node.val <= 9\n\n- It is guaranteed that the list represents a number that does not have leading zeros.",
+  "constraints": [
+    "The number of nodes in each linked list is in the range [1, 100].",
+    "0 <= Node.val <= 9",
+    "It is guaranteed that the list represents a number that does not have leading zeros."
+  ],
+  "hints": [],
+  "acRate": 49.44,
+  "lastSubmittedAt": "2026-10-01T13:36:48Z",
+  "latestSubmission": {
+    "submissionId": "2159236634",
+    "language": "Python3",
+    "code": "# Definition for singly-linked list.\n# class ListNode:\n#     def __init__(self, val=0, next=None):\n#         self.val = val\n#         self.next = next\nclass Solution:\n    def addTwoNumbers(self, l1: ListNode | None, l2: ListNode | None) -> ListNode | None:\n        dummy = ListNode()\n        curr = dummy\n        carry = 0\n        while l1 or l2:\n            total = carry\n            \n            if l1:\n                total += l1.val\n                l1 = l1.next\n            if l2:\n                total += l2.val\n                l2 = l2.next\n            \n            curr.next = ListNode(total % 10)\n            curr = curr.next\n            carry = total // 10\n        \n        if carry:\n            curr.next = ListNode(carry)\n        \n        return dummy.next "
+  },
+  "notes": [],
+  "source": "leetcode",
+  "importedAt": "2026-10-01T13:44:25Z",
+  "lastSyncedAt": "2026-10-01T13:44:25Z"
+}

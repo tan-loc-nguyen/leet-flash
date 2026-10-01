@@ -1,0 +1,29 @@
+{
+  "leetcodeId": "191",
+  "title": "Number of 1 Bits",
+  "slug": "number-of-1-bits",
+  "url": "https://leetcode.com/problems/number-of-1-bits/",
+  "difficulty": "Easy",
+  "status": "solved",
+  "premium": false,
+  "tags": [
+    "Divide and Conquer",
+    "Bit Manipulation"
+  ],
+  "problemStatement": "Given a positive integer n, write a function that returns the number of set bits in its binary representation (also known as the Hamming weight).\n\nExample 1:\n\nInput: n = 11\n\nOutput: 3\n\nExplanation:\n\nThe input binary string 1011 has a total of three set bits.\n\nExample 2:\n\nInput: n = 128\n\nOutput: 1\n\nExplanation:\n\nThe input binary string 10000000 has a total of one set bit.\n\nExample 3:\n\nInput: n = 2147483645\n\nOutput: 30\n\nExplanation:\n\nThe input binary string 1111111111111111111111111111101 has a total of thirty set bits.\n\nConstraints:\n\n- 1 <= n <= 2^31 - 1\n\nFollow up: If this function is called many times, how would you optimize it?",
+  "constraints": [
+    "1 <= n <= 2^31 - 1"
+  ],
+  "hints": [],
+  "acRate": 77.64,
+  "lastSubmittedAt": "2026-07-26T12:01:30Z",
+  "latestSubmission": {
+    "submissionId": "2081986887",
+    "language": "Python3",
+    "code": "class Solution:\n    def hammingWeight(self, n: int) -> int:\n        ans = 0\n        while n > 0:\n            n = n & (n - 1)\n            ans += 1\n        return ans"
+  },
+  "notes": [],
+  "source": "leetcode",
+  "importedAt": "2026-10-01T13:44:25Z",
+  "lastSyncedAt": "2026-10-01T13:44:25Z"
+}

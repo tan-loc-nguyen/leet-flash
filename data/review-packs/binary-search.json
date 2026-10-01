@@ -1,0 +1,244 @@
+{
+  "schemaVersion": 1,
+  "problemSlug": "binary-search",
+  "summary": "Given a sorted array of distinct integers and a target, return the target's index or -1 in O(log n) time.",
+  "patterns": [
+    "Binary Search"
+  ],
+  "mainInsight": "In a sorted array, comparing the target with the middle element tells you which half cannot contain it, so each step discards half of the remaining candidates.",
+  "invariant": "If the target is in the array, it lies within nums[lo..hi] (inclusive). Each iteration keeps this true while shrinking the range.",
+  "canonicalApproach": "Iterative binary search (inclusive bounds)",
+  "approaches": [
+    {
+      "name": "Linear scan",
+      "summary": "Check each element in order.",
+      "timeComplexity": "O(n)",
+      "spaceComplexity": "O(1)",
+      "strengths": [
+        "Works on unsorted data"
+      ],
+      "weaknesses": [
+        "Ignores sortedness; too slow if O(log n) is required"
+      ],
+      "interviewRelevance": "Baseline only."
+    },
+    {
+      "name": "Iterative binary search (inclusive bounds)",
+      "summary": "lo=0, hi=n-1; while lo <= hi compare nums[mid]; discard the half that cannot contain the target using mid +/- 1.",
+      "timeComplexity": "O(log n)",
+      "spaceComplexity": "O(1)",
+      "strengths": [
+        "Optimal",
+        "No recursion"
+      ],
+      "weaknesses": [
+        "Off-by-one prone"
+      ],
+      "interviewRelevance": "The expected answer."
+    },
+    {
+      "name": "Recursive binary search",
+      "summary": "Same logic, recursing on the half-range.",
+      "timeComplexity": "O(log n)",
+      "spaceComplexity": "O(log n)",
+      "strengths": [
+        "Mirrors the definition"
+      ],
+      "weaknesses": [
+        "Call-stack space"
+      ],
+      "interviewRelevance": "Fine if asked; iterative is preferred."
+    }
+  ],
+  "commonMistakes": [
+    "Using `while lo < hi` with inclusive bounds (misses the last candidate).",
+    "Setting lo = mid or hi = mid (infinite loop).",
+    "Computing mid with (lo + hi) // 2 in languages with fixed-width ints (overflow)."
+  ],
+  "edgeCases": [
+    "Single-element array.",
+    "Target smaller than all / larger than all elements.",
+    "Target at either end."
+  ],
+  "cards": [
+    {
+      "id": "binary-search-pattern-01",
+      "category": "pattern",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "What technique does 'sorted array + O(log n)' suggest?",
+        "Which approach should a sorted input and an O(log n) requirement trigger?",
+        "What interview pattern fits Binary Search?"
+      ],
+      "options": [
+        "Binary search",
+        "Hash map",
+        "Two pointers from both ends",
+        "Heap"
+      ],
+      "answer": "Binary search",
+      "explanation": "Sortedness lets you discard half the search space per comparison, giving O(log n).",
+      "incorrectOptionExplanations": {
+        "Hash map": "O(1) average lookup but O(n) extra space, and it ignores the sorted structure the problem hints at.",
+        "Two pointers from both ends": "That gives O(n); it does not exploit sorted order for halving.",
+        "Heap": "A heap does not support efficient arbitrary lookup."
+      },
+      "enabled": true
+    },
+    {
+      "id": "binary-search-invariant-01",
+      "category": "invariant",
+      "type": "free_recall",
+      "promptVariants": [
+        "What invariant do lo and hi maintain in `while lo <= hi`?",
+        "State the loop invariant of binary search with inclusive bounds."
+      ],
+      "answer": "If the target exists, its index is within [lo, hi]. Every update (lo = mid + 1 or hi = mid - 1) discards only indices proven not to contain the target, and the range strictly shrinks.",
+      "keyPoints": [
+        "Target (if present) is in [lo, hi]",
+        "Discard only ruled-out indices",
+        "Range strictly shrinks => terminates"
+      ],
+      "explanation": "When lo > hi the range is empty, so the target is absent and we return -1.",
+      "enabled": true
+    },
+    {
+      "id": "binary-search-impl-01",
+      "category": "implementation_detail",
+      "type": "fill_blank",
+      "promptVariants": [
+        "With inclusive bounds (lo, hi = 0, n - 1) the loop condition is `while ___`.",
+        "Complete the loop header for inclusive bounds: while ___:"
+      ],
+      "answer": "lo <= hi",
+      "explanation": "lo == hi is still a one-element candidate range that must be examined; `lo < hi` would skip it.",
+      "enabled": true,
+      "acceptedAnswers": [
+        "lo<=hi",
+        "lo <= hi:"
+      ]
+    },
+    {
+      "id": "binary-search-impl-02",
+      "category": "implementation_detail",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "Why write mid = lo + (hi - lo) // 2 instead of (lo + hi) // 2?",
+        "What is the purpose of `lo + (hi - lo) // 2`?"
+      ],
+      "options": [
+        "It avoids integer overflow of lo + hi in fixed-width languages",
+        "It rounds mid up instead of down",
+        "It is faster to compute",
+        "It guarantees mid is never equal to lo"
+      ],
+      "answer": "It avoids integer overflow of lo + hi in fixed-width languages",
+      "explanation": "lo + hi can exceed the int range in C++/Java. Python has big ints so it is harmless, but it is the standard idiom to mention.",
+      "incorrectOptionExplanations": {
+        "It rounds mid up instead of down": "Both forms round down (floor division).",
+        "It is faster to compute": "There is no meaningful speed difference.",
+        "It guarantees mid is never equal to lo": "mid == lo whenever hi - lo is 0 or 1."
+      },
+      "enabled": true
+    },
+    {
+      "id": "binary-search-code-01",
+      "category": "code_reasoning",
+      "type": "code_question",
+      "promptVariants": [
+        "What happens if `lo = mid + 1` and `hi = mid - 1` are replaced by `lo = mid` and `hi = mid`?",
+        "Why must the updates exclude mid itself?"
+      ],
+      "code": "lo, hi = 0, len(nums) - 1\nwhile lo <= hi:\n    mid = lo + (hi - lo) // 2\n    if nums[mid] == target:\n        return mid\n    if nums[mid] < target:\n        lo = mid + 1\n    else:\n        hi = mid - 1\nreturn -1",
+      "answer": "mid has already been compared and ruled out, so it must be excluded. Using lo = mid can leave the range unchanged (lo=0, hi=1, target=1: mid=0, lo=mid=0 forever) -> infinite loop.",
+      "keyPoints": [
+        "mid is already ruled out",
+        "Range must strictly shrink",
+        "Infinite loop example [1,2]/target 2"
+      ],
+      "explanation": "Strict shrinkage guarantees termination.",
+      "enabled": true
+    },
+    {
+      "id": "binary-search-time-01",
+      "category": "time_complexity",
+      "type": "free_recall",
+      "promptVariants": [
+        "Why is binary search O(log n)?",
+        "Explain the logarithmic running time of binary search."
+      ],
+      "answer": "The search range halves every iteration (n, n/2, n/4, ... 1), so after at most floor(log2 n) + 1 iterations the range is empty.",
+      "keyPoints": [
+        "Range halves each iteration",
+        "~log2(n) iterations",
+        "O(1) work per iteration"
+      ],
+      "explanation": "Each iteration does one comparison and O(1) bookkeeping.",
+      "enabled": true
+    },
+    {
+      "id": "binary-search-space-01",
+      "category": "space_complexity",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "What are the space complexities of iterative vs recursive binary search?",
+        "How does recursion change the space cost of binary search?"
+      ],
+      "options": [
+        "Iterative O(1); recursive O(log n) call stack",
+        "Iterative O(log n); recursive O(1)",
+        "Both O(1)",
+        "Iterative O(n); recursive O(n)"
+      ],
+      "answer": "Iterative O(1); recursive O(log n) call stack",
+      "explanation": "The iterative version keeps three integers; recursion adds one stack frame per halving, i.e. log n frames.",
+      "incorrectOptionExplanations": {
+        "Iterative O(log n); recursive O(1)": "Reversed: recursion is the one that uses the stack.",
+        "Both O(1)": "Python does not eliminate tail recursion, so recursion uses O(log n) stack.",
+        "Iterative O(n); recursive O(n)": "Neither copies the array if you pass indices instead of slices."
+      },
+      "enabled": true
+    },
+    {
+      "id": "binary-search-edge-01",
+      "category": "edge_case",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "Which input breaks `while lo < hi` combined with hi = len(nums) - 1?",
+        "Which test case exposes the wrong loop condition `lo < hi` (inclusive hi)?"
+      ],
+      "options": [
+        "nums = [5], target = 5",
+        "nums = [1, 2, 3], target = 4",
+        "nums = [1, 3], target = 1",
+        "nums = [], target = 1"
+      ],
+      "answer": "nums = [5], target = 5",
+      "explanation": "With one element lo == hi == 0, so the loop never runs and the answer -1 is wrong.",
+      "incorrectOptionExplanations": {
+        "nums = [1, 2, 3], target = 4": "Target is absent; -1 is correct either way.",
+        "nums = [1, 3], target = 1": "mid = 0 finds it before the condition matters.",
+        "nums = [], target = 1": "Not allowed by the constraints, and -1 is right anyway."
+      },
+      "enabled": true
+    },
+    {
+      "id": "binary-search-alt-01",
+      "category": "alternative_approach",
+      "type": "free_recall",
+      "promptVariants": [
+        "How would the algorithm change to find the FIRST occurrence in an array with duplicates?",
+        "Adapt binary search to return the leftmost index of target when duplicates exist."
+      ],
+      "answer": "Do not return on a match. On nums[mid] >= target keep mid as a candidate and move hi = mid - 1 (or use a lower-bound template with hi = mid); finally check that the candidate equals target.",
+      "keyPoints": [
+        "Do not stop at the first match",
+        "Keep searching the left half after a match",
+        "Lower-bound template"
+      ],
+      "explanation": "This is the lower-bound variant; it underlies 'search insert position' and 'first bad version'.",
+      "enabled": true
+    }
+  ],
+  "generatedAt": "2026-10-01T00:00:00Z"
+}

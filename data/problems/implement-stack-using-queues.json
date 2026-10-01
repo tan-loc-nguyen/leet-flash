@@ -1,0 +1,32 @@
+{
+  "leetcodeId": "225",
+  "title": "Implement Stack using Queues",
+  "slug": "implement-stack-using-queues",
+  "url": "https://leetcode.com/problems/implement-stack-using-queues/",
+  "difficulty": "Easy",
+  "status": "solved",
+  "premium": false,
+  "tags": [
+    "Stack",
+    "Design",
+    "Queue"
+  ],
+  "problemStatement": "Implement a last-in-first-out (LIFO) stack using only two queues. The implemented stack should support all the functions of a normal stack (push, top, pop, and empty).\n\nImplement the MyStack class:\n\n- void push(int x) Pushes element x to the top of the stack.\n\n- int pop() Removes the element on the top of the stack and returns it.\n\n- int top() Returns the element on the top of the stack.\n\n- boolean empty() Returns true if the stack is empty, false otherwise.\n\nNotes:\n\n- You must use only standard operations of a queue, which means that only push to back, peek/pop from front, size and is empty operations are valid.\n\n- Depending on your language, the queue may not be supported natively. You may simulate a queue using a list or deque (double-ended queue) as long as you use only a queue's standard operations.\n\nExample 1:\n\nInput\n[\"MyStack\", \"push\", \"push\", \"top\", \"pop\", \"empty\"]\n[[], [1], [2], [], [], []]\nOutput\n[null, null, null, 2, 2, false]\n\nExplanation\nMyStack myStack = new MyStack();\nmyStack.push(1);\nmyStack.push(2);\nmyStack.top(); // return 2\nmyStack.pop(); // return 2\nmyStack.empty(); // return False\n\nConstraints:\n\n- 1 <= x <= 9\n\n- At most 100 calls will be made to push, pop, top, and empty.\n\n- All the calls to pop and top are valid.\n\nFollow-up: Can you implement the stack using only one queue?",
+  "constraints": [
+    "1 <= x <= 9",
+    "At most 100 calls will be made to push, pop, top, and empty.",
+    "All the calls to pop and top are valid."
+  ],
+  "hints": [],
+  "acRate": 70.52,
+  "lastSubmittedAt": "2026-08-04T16:28:18Z",
+  "latestSubmission": {
+    "submissionId": "2094281946",
+    "language": "Python3",
+    "code": "class MyStack:\n\n    def __init__(self):\n        self.queue = collections.deque()\n\n    def push(self, x: int) -> None:\n        self.queue.append(x)\n        for _ in range(len(self.queue) - 1):\n            val = self.queue.popleft()\n            self.queue.append(val)\n\n    def pop(self) -> int:\n        return self.queue.popleft()\n\n    def top(self) -> int:\n        if self.empty():\n            return 0\n\n        return self.queue[0]\n\n    def empty(self) -> bool:\n        return len(self.queue) == 0\n\n\n# Your MyStack object will be instantiated and called as such:\n# obj = MyStack()\n# obj.push(x)\n# param_2 = obj.pop()\n# param_3 = obj.top()\n# param_4 = obj.empty()"
+  },
+  "notes": [],
+  "source": "leetcode",
+  "importedAt": "2026-10-01T13:44:25Z",
+  "lastSyncedAt": "2026-10-01T13:44:25Z"
+}

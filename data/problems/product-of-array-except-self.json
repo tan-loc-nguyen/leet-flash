@@ -1,0 +1,34 @@
+{
+  "leetcodeId": "238",
+  "title": "Product of Array Except Self",
+  "slug": "product-of-array-except-self",
+  "url": "https://leetcode.com/problems/product-of-array-except-self/",
+  "difficulty": "Medium",
+  "status": "solved",
+  "premium": false,
+  "tags": [
+    "Array",
+    "Prefix Sum"
+  ],
+  "problemStatement": "Given an integer array nums, return an array answer such that answer[i] is equal to the product of all the elements of nums except nums[i].\n\nThe product of any prefix or suffix of nums is guaranteed to fit in a 32-bit integer.\n\nYou must write an algorithm that runs in O(n) time and without using the division operation.\n\nExample 1:\n\nInput: nums = [1,2,3,4]\nOutput: [24,12,8,6]\n\nExample 2:\n\nInput: nums = [-1,1,0,-3,3]\nOutput: [0,0,9,0,0]\n\nConstraints:\n\n- 2 <= nums.length <= 10^5\n\n- -30 <= nums[i] <= 30\n\n- The input is generated such that answer[i] is guaranteed to fit in a 32-bit integer.\n\nFollow up: Can you solve the problem in O(1) extra space complexity? (The output array does not count as extra space for space complexity analysis.)",
+  "constraints": [
+    "2 <= nums.length <= 10^5",
+    "-30 <= nums[i] <= 30",
+    "The input is generated such that answer[i] is guaranteed to fit in a 32-bit integer."
+  ],
+  "hints": [
+    "Think how you can efficiently utilize prefix and suffix products to calculate the product of all elements except self for each index. Can you pre-compute the prefix and suffix products in linear time to avoid redundant calculations?",
+    "Can you minimize additional space usage by reusing memory or modifying the input array to store intermediate results?"
+  ],
+  "acRate": 69.32,
+  "lastSubmittedAt": "2026-07-18T15:00:34Z",
+  "latestSubmission": {
+    "submissionId": "2072400368",
+    "language": "Python3",
+    "code": "class Solution:\n    def productExceptSelf(self, nums: List[int]) -> List[int]:\n        # Approach 1: brute-fore\n        # TC O(n^2) - SC O(n)\n        # idea is to do 2 loops\n        # outer loop to mark the position need to be excluded from the product of the array\n        # inner loop is to calculate the product of the rest of the elements of the arrays \n\n        # Approach 2: prefix + suffix product\n        # TC O(n) - SC O(n)\n        # idea is to pre compute the prefix and suffix product of the array\n        # prefix[i] = the product of i elements from the start\n        # suffix[i] = the product of i element from the end\n        # the ans[i] = prefix[i - 1] * suffix[n - i - 1]\n        # suffix[n - i - 1] is because suffix is built backward\n\n        prefix = [1]\n        suffix = [1]\n        n = len(nums)\n        for i in range(n):\n            prefix.append(prefix[-1] * nums[i])\n            suffix.append(suffix[-1] * nums[n - i - 1])\n\n        for i in range(n):\n            nums[i] = prefix[i] * suffix[n - i - 1]\n\n        return nums"
+  },
+  "notes": [],
+  "source": "leetcode",
+  "importedAt": "2026-10-01T13:44:25Z",
+  "lastSyncedAt": "2026-10-01T13:44:25Z"
+}

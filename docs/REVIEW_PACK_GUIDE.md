@@ -1,0 +1,110 @@
+# Writing review packs (guide for the coding agent)
+
+A review pack (`data/review-packs/<slug>.json`) turns one problem into **short, recall-based
+interview practice**. Quality beats quantity: 8–12 excellent cards per problem is plenty;
+each review session only asks 3–5 of them.
+
+## Workflow
+
+1. `uv run python scripts/list_missing_review_packs.py --json`
+2. For each problem: read `data/problems/<slug>.json` — statement, constraints, tags, and
+   `latestSubmission.code` (the user's accepted Python solution, if present).
+3. `uv run python scripts/scaffold_review_pack.py <slug>` creates a valid skeleton
+   (suggested patterns pre-filled). Never overwrites unless `--force`.
+4. Fill in the pack (see schema below). Use `--force` only to regenerate; stable ids are kept by
+   re-using the same ids (see "Stable ids").
+5. `uv run python scripts/validate_review_packs.py` — fix every error; address warnings.
+
+## Pack schema
+
+```jsonc
+{
+  "schemaVersion": 1,
+  "problemSlug": "two-sum",              // must match the file name and data/problems/<slug>.json
+  "summary": "one-sentence restatement of the task",
+  "patterns": ["Array / Hashing"],       // prefer the standard taxonomy; may be more specific
+  "mainInsight": "the one idea that unlocks the optimal solution",
+  "invariant": "what is always true inside the main loop (optional)",
+  "canonicalApproach": "name of the optimal entry in approaches",
+  "approaches": [{ "name", "summary", "timeComplexity", "spaceComplexity",
+                   "strengths": [], "weaknesses": [], "interviewRelevance": "" }],
+  "personalSolution": {                  // ONLY when the user's accepted code differs from canonical
+    "approach": "...", "timeComplexity": "O(n^2)", "spaceComplexity": "O(1)",
+    "isOptimal": false, "notes": "what to improve" },
+  "commonMistakes": [], "edgeCases": [],
+  "cards": [ ... ]
+}
+```
+
+`summary`, `mainInsight`, `invariant`, `approaches` and `personalSolution` also power the
+progressive hints (summary → pattern → invariant → main insight → approaches → the user's Python).
+
+**Personal vs canonical.** Read the user's accepted solution. If it is suboptimal, say so in
+`personalSolution` and add cards that contrast it with the optimal approach
+(`alternative_approach` / `why_not` / complexity cards). Never silently present the user's code as optimal.
+
+## Card schema
+
+| Field | Notes |
+|---|---|
+| `id` | **Stable**, `<slug>-<topic>-NN` (letters, digits, `-`, `_`). Unique inside the problem. |
+| `category` | `pattern, main_insight, data_structure, time_complexity, space_complexity, invariant, alternative_approach, implementation_detail, code_reasoning, edge_case, why_not` |
+| `type` | `multiple_choice`, `free_recall`, `fill_blank`, `code_question` |
+| `promptVariants` | 2–3 phrasings (the validator warns on 1). Rotated automatically. |
+| `options` | MCQ only, 3–6 plausible options; `answer` must be one of them (exact text). |
+| `answer` | Reference answer (required for every type). |
+| `acceptedAnswers` | `fill_blank` synonyms (`"linear"`, `"O(n) average"`). Complexity variants (`O(N)`, `o(n)`, `O(n²)`) are normalised automatically. |
+| `keyPoints` | `free_recall`/`code_question`: checklist used to grade Failed/Partial/Correct. |
+| `code` | `code_question` snippet (from the user's solution or the canonical one). |
+| `explanation` | Required. Why the answer is right. |
+| `incorrectOptionExplanations` | MCQ: `{ "<wrong option text>": "why it is wrong" }`. |
+| `enabled` | `false` retires a card without deleting its history. |
+| `source` | `generated` (default) or `manual`. |
+
+`fill_blank` prompts must contain `___`.
+
+## What good cards look like
+
+BAD: *What LeetCode number is Two Sum?* / *Is Two Sum Easy?* — trivia.
+
+GOOD, tied to reasoning an interviewer probes:
+
+* *Why does a hash map eliminate the need to check every pair?* (main_insight)
+* *What should the map contain at iteration i?* (invariant)
+* *Why check the complement before inserting the current number?* (implementation_detail)
+* *What breaks if these two lines are swapped?* (code_reasoning, with `code`)
+* *Which input exposes a missing empty-stack check?* (edge_case)
+* *Why isn't a counter per bracket type enough?* (why_not)
+* *Time-space trade-off between brute force and hash map?* (alternative_approach)
+
+Guidelines:
+
+* Only include categories that add value for this problem — never pad to cover a checklist.
+* Typical mix: 1 pattern, 1–2 main_insight/invariant, 1 time + 1 space complexity,
+  1–2 edge/why_not, 1–2 code_reasoning (from the user's own code when it is informative),
+  1 alternative approach.
+* MCQ distractors must be *plausible* techniques/complexities a candidate might really confuse —
+  no joke options. Vary which position holds the answer (the engine shuffles anyway).
+* Write `incorrectOptionExplanations` for every distractor; they are the learning content.
+* Complexity cards should say *why*, not just the symbol (amortised analysis, alphabet-bounded space…).
+* Avoid trivial Python-syntax questions unless they carry interview reasoning (heap tuple ordering,
+  `last[ch] >= left` guards, `lo + (hi - lo)//2`…).
+* Interview focus: pattern recognition, invariants, complexity, trade-offs, edge cases.
+
+## Stable ids and regeneration
+
+* Progress is keyed by **card id** (`cardStats` in `review-state.json`, `card` in history).
+* Editing a card's text but keeping its id keeps its statistics.
+* A new id starts fresh; removed or `enabled: false` cards simply stop appearing — history is never erased.
+* Problem-level state (level, next review) is independent of the pack and survives regeneration.
+* **Manual cards** live in `data/review-packs/custom/<slug>.json`, are merged at load time, carry
+  `"source": "manual"`, and are never touched by scaffolding or regeneration
+  (`scripts/add_card.py`). Their ids must not collide with generated ids (the validator checks).
+* Notes (`scripts/add_note.py`) live in the problem JSON and are shown at the start of that problem's review.
+
+## Seed examples
+
+`two-sum`, `valid-parentheses`, `longest-substring-without-repeating-characters`,
+`binary-search` and `3sum` are hand-written reference packs demonstrating every question type,
+prompt variants, incorrect-option explanations, alternative approaches and complexity cards.
+Imitate their depth.

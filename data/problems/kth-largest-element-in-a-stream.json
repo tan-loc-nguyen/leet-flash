@@ -1,0 +1,37 @@
+{
+  "leetcodeId": "703",
+  "title": "Kth Largest Element in a Stream",
+  "slug": "kth-largest-element-in-a-stream",
+  "url": "https://leetcode.com/problems/kth-largest-element-in-a-stream/",
+  "difficulty": "Easy",
+  "status": "solved",
+  "premium": false,
+  "tags": [
+    "Tree",
+    "Design",
+    "Binary Search Tree",
+    "Heap (Priority Queue)",
+    "Binary Tree",
+    "Data Stream"
+  ],
+  "problemStatement": "You are part of a university admissions office and need to keep track of the kth highest test score from applicants in real-time. This helps to determine cut-off marks for interviews and admissions dynamically as new applicants submit their scores.\n\nYou are tasked to implement a class which, for a given integer k, maintains a stream of test scores and continuously returns the kth highest test score after a new score has been submitted. More specifically, we are looking for the kth highest score in the sorted list of all scores.\n\nImplement the KthLargest class:\n\n- KthLargest(int k, int[] nums) Initializes the object with the integer k and the stream of test scores nums.\n\n- int add(int val) Adds a new test score val to the stream and returns the element representing the k^th largest element in the pool of test scores so far.\n\nExample 1:\n\nInput:\n\n[\"KthLargest\", \"add\", \"add\", \"add\", \"add\", \"add\"]\n\n[[3, [4, 5, 8, 2]], [3], [5], [10], [9], [4]]\n\nOutput: [null, 4, 5, 5, 8, 8]\n\nExplanation:\n\nKthLargest kthLargest = new KthLargest(3, [4, 5, 8, 2]);\n\nkthLargest.add(3); // return 4\n\nkthLargest.add(5); // return 5\n\nkthLargest.add(10); // return 5\n\nkthLargest.add(9); // return 8\n\nkthLargest.add(4); // return 8\n\nExample 2:\n\nInput:\n\n[\"KthLargest\", \"add\", \"add\", \"add\", \"add\"]\n\n[[4, [7, 7, 7, 7, 8, 3]], [2], [10], [9], [9]]\n\nOutput: [null, 7, 7, 7, 8]\n\nExplanation:\n\nKthLargest kthLargest = new KthLargest(4, [7, 7, 7, 7, 8, 3]);\n\nkthLargest.add(2); // return 7\n\nkthLargest.add(10); // return 7\n\nkthLargest.add(9); // return 7\n\nkthLargest.add(9); // return 8\n\nConstraints:\n\n- 0 <= nums.length <= 10^4\n\n- 1 <= k <= nums.length + 1\n\n- -10^4 <= nums[i] <= 10^4\n\n- -10^4 <= val <= 10^4\n\n- At most 10^4 calls will be made to add.",
+  "constraints": [
+    "0 <= nums.length <= 10^4",
+    "1 <= k <= nums.length + 1",
+    "-10^4 <= nums[i] <= 10^4",
+    "-10^4 <= val <= 10^4",
+    "At most 10^4 calls will be made to add."
+  ],
+  "hints": [],
+  "acRate": 61.64,
+  "lastSubmittedAt": "2026-06-28T22:54:09Z",
+  "latestSubmission": {
+    "submissionId": "2049393377",
+    "language": "Python3",
+    "code": "class KthLargest:\n\n    def __init__(self, k: int, nums: List[int]):\n        self.heap = nums[:]\n        self.k = k\n\n    def add(self, val: int) -> int:\n        self.heap.append(val)\n\n        self.heap.sort()\n        return self.heap[-self.k]\n\n\n# Your KthLargest object will be instantiated and called as such:\n# obj = KthLargest(k, nums)\n# param_1 = obj.add(val)"
+  },
+  "notes": [],
+  "source": "leetcode",
+  "importedAt": "2026-10-01T13:44:25Z",
+  "lastSyncedAt": "2026-10-01T13:44:25Z"
+}

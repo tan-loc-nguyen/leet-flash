@@ -1,0 +1,16 @@
+# Secrets - never commit LeetCode credentials
+.local/
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+.pytest_cache/
+*.egg-info/
+dist/
+build/
+
+# Backups produced by scripts/rebuild_state.py
+data/state/*.bak-*
+data/state/*.tmp
+*.tmp

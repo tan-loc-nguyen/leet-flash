@@ -1,0 +1,31 @@
+{
+  "leetcodeId": "92",
+  "title": "Reverse Linked List II",
+  "slug": "reverse-linked-list-ii",
+  "url": "https://leetcode.com/problems/reverse-linked-list-ii/",
+  "difficulty": "Medium",
+  "status": "solved",
+  "premium": false,
+  "tags": [
+    "Linked List"
+  ],
+  "problemStatement": "Given the head of a singly linked list and two integers left and right where left <= right, reverse the nodes of the list from position left to position right, and return the reversed list.\n\nExample 1:\n\nInput: head = [1,2,3,4,5], left = 2, right = 4\nOutput: [1,4,3,2,5]\n\nExample 2:\n\nInput: head = [5], left = 1, right = 1\nOutput: [5]\n\nConstraints:\n\n- The number of nodes in the list is n.\n\n- 1 <= n <= 500\n\n- -500 <= Node.val <= 500\n\n- 1 <= left <= right <= n\n\nFollow up: Could you do it in one pass?",
+  "constraints": [
+    "The number of nodes in the list is n.",
+    "1 <= n <= 500",
+    "-500 <= Node.val <= 500",
+    "1 <= left <= right <= n"
+  ],
+  "hints": [],
+  "acRate": 52.52,
+  "lastSubmittedAt": "2026-06-20T06:30:33Z",
+  "latestSubmission": {
+    "submissionId": "2039432266",
+    "language": "Python3",
+    "code": "# Definition for singly-linked list.\n# class ListNode:\n#     def __init__(self, val=0, next=None):\n#         self.val = val\n#         self.next = next\nclass Solution:\n    def reverseBetween(self, head: Optional[ListNode], left: int, right: int) -> Optional[ListNode]:\n        # brute-force: I convert this into an array then swap element i the range then return a new list from that array\n        # arr = []\n        # while head:\n        #     arr.append(head.val)\n        #     head = head.next\n        \n        # l, r = left - 1, right - 1\n        # while l < r:\n        #     arr[l], arr[r] = arr[r], arr[l]\n        #     l += 1\n        #     r -= 1\n        \n        # res = ListNode()\n        # dummy = res\n\n        # for val in arr:\n        #     dummy.next = ListNode()\n        #     dummy = dummy.next\n        #     dummy.val = val\n        \n        # return res.next\n\n        # left is starting sign\n        # right is our exit sign\n        # we only do the reverse operation when we have the start sign and stop when exit sign\n        # start, stop = left - 1, right - 1\n        # record the nodes right before and after I reverse the list\n        # init start and stop nodes\n        # convert the current left and right counters into 0-based index\n        # iterate on the list\n        #   when left == 1 --> record start node\n        #   when left == 0 --> start reversing\n        #   when right == 0 --> record stop node (next node) exit the loop\n        # point the head of the reversed list\n        if not head.next or left == right:\n            return head\n\n        dummy = ListNode(0, head)\n\n        leftNode = dummy\n        for _ in range(left - 1):\n            leftNode = leftNode.next\n        \n        prev = None\n        curr = leftNode.next\n        tail = leftNode.next\n        for _ in range(right - left + 1):\n            nextt = curr.next\n            curr.next = prev\n            prev = curr\n            curr = nextt\n        \n        tail.next = curr\n        leftNode.next = prev\n\n        return dummy.next\n        \n\n"
+  },
+  "notes": [],
+  "source": "leetcode",
+  "importedAt": "2026-10-01T13:44:25Z",
+  "lastSyncedAt": "2026-10-01T13:44:25Z"
+}

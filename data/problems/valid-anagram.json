@@ -1,0 +1,31 @@
+{
+  "leetcodeId": "242",
+  "title": "Valid Anagram",
+  "slug": "valid-anagram",
+  "url": "https://leetcode.com/problems/valid-anagram/",
+  "difficulty": "Easy",
+  "status": "solved",
+  "premium": false,
+  "tags": [
+    "Hash Table",
+    "String",
+    "Sorting"
+  ],
+  "problemStatement": "Given two strings s and t, return true if t is an anagram of s, and false otherwise.\n\nExample 1:\n\nInput: s = \"anagram\", t = \"nagaram\"\n\nOutput: true\n\nExample 2:\n\nInput: s = \"rat\", t = \"car\"\n\nOutput: false\n\nConstraints:\n\n- 1 <= s.length, t.length <= 5 * 10^4\n\n- s and t consist of lowercase English letters.\n\nFollow up: What if the inputs contain Unicode characters? How would you adapt your solution to such a case?",
+  "constraints": [
+    "1 <= s.length, t.length <= 5 * 10^4",
+    "s and t consist of lowercase English letters."
+  ],
+  "hints": [],
+  "acRate": 68.71,
+  "lastSubmittedAt": "2026-07-23T05:21:56Z",
+  "latestSubmission": {
+    "submissionId": "2077915110",
+    "language": "Python3",
+    "code": "class Solution:\n    def isAnagram(self, s: str, t: str) -> bool:\n        if len(s) != len(t):\n            return False\n        \n        arr = [0] * 26\n        for i in range(len(s)):\n            arr[ord(s[i]) - ord('a')] += 1\n            arr[ord(t[i]) - ord('a')] -= 1\n        \n        for check in arr:\n            if check != 0:\n                return False\n        return True\n        "
+  },
+  "notes": [],
+  "source": "leetcode",
+  "importedAt": "2026-10-01T13:44:25Z",
+  "lastSyncedAt": "2026-10-01T13:44:25Z"
+}

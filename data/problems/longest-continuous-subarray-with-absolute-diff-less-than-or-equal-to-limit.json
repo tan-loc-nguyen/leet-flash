@@ -1,0 +1,38 @@
+{
+  "leetcodeId": "1438",
+  "title": "Longest Continuous Subarray With Absolute Diff Less Than or Equal to Limit",
+  "slug": "longest-continuous-subarray-with-absolute-diff-less-than-or-equal-to-limit",
+  "url": "https://leetcode.com/problems/longest-continuous-subarray-with-absolute-diff-less-than-or-equal-to-limit/",
+  "difficulty": "Medium",
+  "status": "solved",
+  "premium": false,
+  "tags": [
+    "Array",
+    "Queue",
+    "Sliding Window",
+    "Heap (Priority Queue)",
+    "Ordered Set",
+    "Monotonic Queue"
+  ],
+  "problemStatement": "Given an array of integers nums and an integer limit, return the size of the longest non-empty subarray such that the absolute difference between any two elements of this subarray is less than or equal to limit.\n\nExample 1:\n\nInput: nums = [8,2,4,7], limit = 4\nOutput: 2\nExplanation: All subarrays are:\n[8] with maximum absolute diff |8-8| = 0 <= 4.\n[8,2] with maximum absolute diff |8-2| = 6 > 4.\n[8,2,4] with maximum absolute diff |8-2| = 6 > 4.\n[8,2,4,7] with maximum absolute diff |8-2| = 6 > 4.\n[2] with maximum absolute diff |2-2| = 0 <= 4.\n[2,4] with maximum absolute diff |2-4| = 2 <= 4.\n[2,4,7] with maximum absolute diff |2-7| = 5 > 4.\n[4] with maximum absolute diff |4-4| = 0 <= 4.\n[4,7] with maximum absolute diff |4-7| = 3 <= 4.\n[7] with maximum absolute diff |7-7| = 0 <= 4.\nTherefore, the size of the longest subarray is 2.\n\nExample 2:\n\nInput: nums = [10,1,2,4,7,2], limit = 5\nOutput: 4\nExplanation: The subarray [2,4,7,2] is the longest since the maximum absolute diff is |2-7| = 5 <= 5.\n\nExample 3:\n\nInput: nums = [4,2,2,2,4,4,2,2], limit = 0\nOutput: 3\n\nConstraints:\n\n- 1 <= nums.length <= 10^5\n\n- 1 <= nums[i] <= 10^9\n\n- 0 <= limit <= 10^9",
+  "constraints": [
+    "1 <= nums.length <= 10^5",
+    "1 <= nums[i] <= 10^9",
+    "0 <= limit <= 10^9"
+  ],
+  "hints": [
+    "Use a sliding window approach keeping the maximum and minimum value using a data structure like a multiset from STL in C++.",
+    "More specifically, use the two pointer technique, moving the right pointer as far as possible to the right until the subarray is not valid (maxValue - minValue > limit), then moving the left pointer until the subarray is valid again (maxValue - minValue <= limit). Keep repeating this process."
+  ],
+  "acRate": 58.1,
+  "lastSubmittedAt": "2026-08-15T01:12:01Z",
+  "latestSubmission": {
+    "submissionId": "2107126647",
+    "language": "Python3",
+    "code": "class Solution:\n    def longestSubarray(self, nums: List[int], limit: int) -> int:\n        # core idea is:\n        # window is only valid and good to record when all pairs are <= limit\n        # so the window is invalid when there exists a pair where it > limit\n        # and so that pair will have the maximum diff between the elements\n        # so only max and min of the subarray meet that\n        # so the abs diff of every pair in the subarray is <= limit\n        # when and only when max - min <= limit\n        l = 0\n        min_queue = collections.deque()\n        max_queue = collections.deque()\n        best = 0\n\n        for r in range(len(nums)):\n            # expand\n            while max_queue and nums[max_queue[-1]] < nums[r]:\n                max_queue.pop()\n            \n            max_queue.append(r)\n\n            while min_queue and nums[min_queue[-1]] > nums[r]:\n                min_queue.pop()\n            \n            min_queue.append(r)\n            \n            # shrink\n            while nums[max_queue[0]] - nums[min_queue[0]] > limit:\n                l = min(max_queue[0], min_queue[0]) + 1\n\n                while max_queue[0] < l:\n                    max_queue.popleft()\n                while min_queue[0] < l:\n                    min_queue.popleft()\n                \n            # record\n            best = max(best, r - l + 1)\n        return best"
+  },
+  "notes": [],
+  "source": "leetcode",
+  "importedAt": "2026-10-01T13:44:25Z",
+  "lastSyncedAt": "2026-10-01T13:44:25Z"
+}

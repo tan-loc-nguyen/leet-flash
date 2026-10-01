@@ -1,0 +1,32 @@
+{
+  "leetcodeId": "111",
+  "title": "Minimum Depth of Binary Tree",
+  "slug": "minimum-depth-of-binary-tree",
+  "url": "https://leetcode.com/problems/minimum-depth-of-binary-tree/",
+  "difficulty": "Easy",
+  "status": "solved",
+  "premium": false,
+  "tags": [
+    "Tree",
+    "Depth-First Search",
+    "Breadth-First Search",
+    "Binary Tree"
+  ],
+  "problemStatement": "Given a binary tree, find its minimum depth.\n\nThe minimum depth is the number of nodes along the shortest path from the root node down to the nearest leaf node.\n\nNote: A leaf is a node with no children.\n\nExample 1:\n\nInput: root = [3,9,20,null,null,15,7]\nOutput: 2\n\nExample 2:\n\nInput: root = [2,null,3,null,4,null,5,null,6]\nOutput: 5\n\nConstraints:\n\n- The number of nodes in the tree is in the range [0, 10^5].\n\n- -1000 <= Node.val <= 1000",
+  "constraints": [
+    "The number of nodes in the tree is in the range [0, 10^5].",
+    "-1000 <= Node.val <= 1000"
+  ],
+  "hints": [],
+  "acRate": 53.88,
+  "lastSubmittedAt": "2026-08-01T12:19:42Z",
+  "latestSubmission": {
+    "submissionId": "2089925190",
+    "language": "Python3",
+    "code": "# Definition for a binary tree node.\n# class TreeNode:\n#     def __init__(self, val=0, left=None, right=None):\n#         self.val = val\n#         self.left = left\n#         self.right = right\nclass Solution:\n    def minDepth(self, root: Optional[TreeNode]) -> int:\n        if not root:\n            return 0\n        ans = 0\n        queue = collections.deque([root])\n\n        while queue:\n            ans += 1\n            n = len(queue)\n            for _ in range(n):\n                node = queue.popleft()\n                if node and not node.left and not node.right:\n                    return ans\n                elif node:\n                    queue.append(node.left)\n                    queue.append(node.right)\n            \n        return ans\n"
+  },
+  "notes": [],
+  "source": "leetcode",
+  "importedAt": "2026-10-01T13:44:25Z",
+  "lastSyncedAt": "2026-10-01T13:44:25Z"
+}

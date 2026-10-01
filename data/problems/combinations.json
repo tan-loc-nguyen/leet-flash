@@ -1,0 +1,29 @@
+{
+  "leetcodeId": "77",
+  "title": "Combinations",
+  "slug": "combinations",
+  "url": "https://leetcode.com/problems/combinations/",
+  "difficulty": "Medium",
+  "status": "solved",
+  "premium": false,
+  "tags": [
+    "Backtracking"
+  ],
+  "problemStatement": "Given two integers n and k, return all possible combinations of k numbers chosen from the range [1, n].\n\nYou may return the answer in any order.\n\nExample 1:\n\nInput: n = 4, k = 2\nOutput: [[1,2],[1,3],[1,4],[2,3],[2,4],[3,4]]\nExplanation: There are 4 choose 2 = 6 total combinations.\nNote that combinations are unordered, i.e., [1,2] and [2,1] are considered to be the same combination.\n\nExample 2:\n\nInput: n = 1, k = 1\nOutput: [[1]]\nExplanation: There is 1 choose 1 = 1 total combination.\n\nConstraints:\n\n- 1 <= n <= 20\n\n- 1 <= k <= n",
+  "constraints": [
+    "1 <= n <= 20",
+    "1 <= k <= n"
+  ],
+  "hints": [],
+  "acRate": 75.25,
+  "lastSubmittedAt": "2026-08-26T09:53:06Z",
+  "latestSubmission": {
+    "submissionId": "2120644535",
+    "language": "Python3",
+    "code": "class Solution:\n    def combine(self, n: int, k: int) -> List[List[int]]:\n        cur_comb = []\n        ans = []\n\n        def choose(start: int) -> None:\n            if len(cur_comb) == k:\n                ans.append(cur_comb[:])\n                return\n            \n            for i in range(start, n + 1):\n                cur_comb.append(i)\n                choose(i + 1)\n                cur_comb.pop()\n\n        choose(1)\n        return ans"
+  },
+  "notes": [],
+  "source": "leetcode",
+  "importedAt": "2026-10-01T13:44:25Z",
+  "lastSyncedAt": "2026-10-01T13:44:25Z"
+}

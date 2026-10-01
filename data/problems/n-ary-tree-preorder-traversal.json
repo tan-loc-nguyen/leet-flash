@@ -1,0 +1,32 @@
+{
+  "leetcodeId": "589",
+  "title": "N-ary Tree Preorder Traversal",
+  "slug": "n-ary-tree-preorder-traversal",
+  "url": "https://leetcode.com/problems/n-ary-tree-preorder-traversal/",
+  "difficulty": "Easy",
+  "status": "solved",
+  "premium": false,
+  "tags": [
+    "Stack",
+    "Tree",
+    "Depth-First Search"
+  ],
+  "problemStatement": "Given the root of an n-ary tree, return the preorder traversal of its nodes' values.\n\nNary-Tree input serialization is represented in their level order traversal. Each group of children is separated by the null value (See examples)\n\nExample 1:\n\nInput: root = [1,null,3,2,4,null,5,6]\nOutput: [1,3,5,6,2,4]\n\nExample 2:\n\nInput: root = [1,null,2,3,4,5,null,null,6,7,null,8,null,9,10,null,null,11,null,12,null,13,null,null,14]\nOutput: [1,2,3,6,7,11,14,4,8,12,5,9,13,10]\n\nConstraints:\n\n- The number of nodes in the tree is in the range [0, 10^4].\n\n- 0 <= Node.val <= 10^4\n\n- The height of the n-ary tree is less than or equal to 1000.\n\nFollow up: Recursive solution is trivial, could you do it iteratively?",
+  "constraints": [
+    "The number of nodes in the tree is in the range [0, 10^4].",
+    "0 <= Node.val <= 10^4",
+    "The height of the n-ary tree is less than or equal to 1000."
+  ],
+  "hints": [],
+  "acRate": 77.02,
+  "lastSubmittedAt": "2026-07-30T00:27:52Z",
+  "latestSubmission": {
+    "submissionId": "2086769179",
+    "language": "Python3",
+    "code": "\"\"\"\n# Definition for a Node.\nclass Node:\n    def __init__(self, val: Optional[int] = None, children: Optional[List['Node']] = None):\n        self.val = val\n        self.children = children\n\"\"\"\n\nclass Solution:\n    def preorder(self, root: 'Node') -> List[int]:\n        ans = []\n\n        def dfs(root: 'Node') -> None:\n            if not root:\n                return\n            \n            ans.append(root.val)\n            for child in root.children:\n                dfs(child)\n        \n        dfs(root)\n        return ans"
+  },
+  "notes": [],
+  "source": "leetcode",
+  "importedAt": "2026-10-01T13:44:25Z",
+  "lastSyncedAt": "2026-10-01T13:44:25Z"
+}

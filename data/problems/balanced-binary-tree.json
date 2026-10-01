@@ -1,0 +1,31 @@
+{
+  "leetcodeId": "110",
+  "title": "Balanced Binary Tree",
+  "slug": "balanced-binary-tree",
+  "url": "https://leetcode.com/problems/balanced-binary-tree/",
+  "difficulty": "Easy",
+  "status": "solved",
+  "premium": false,
+  "tags": [
+    "Tree",
+    "Depth-First Search",
+    "Binary Tree"
+  ],
+  "problemStatement": "Given a binary tree, determine if it is height-balanced.\n\nExample 1:\n\nInput: root = [3,9,20,null,null,15,7]\nOutput: true\n\nExample 2:\n\nInput: root = [1,2,2,3,3,null,null,4,4]\nOutput: false\n\nExample 3:\n\nInput: root = []\nOutput: true\n\nConstraints:\n\n- The number of nodes in the tree is in the range [0, 5000].\n\n- -10^4 <= Node.val <= 10^4",
+  "constraints": [
+    "The number of nodes in the tree is in the range [0, 5000].",
+    "-10^4 <= Node.val <= 10^4"
+  ],
+  "hints": [],
+  "acRate": 59.29,
+  "lastSubmittedAt": "2026-08-03T12:56:55Z",
+  "latestSubmission": {
+    "submissionId": "2092618342",
+    "language": "Python3",
+    "code": "# Definition for a binary tree node.\n# class TreeNode:\n#     def __init__(self, val=0, left=None, right=None):\n#         self.val = val\n#         self.left = left\n#         self.right = right\nclass Solution:\n    def isBalanced(self, root: Optional[TreeNode]) -> bool:\n        self.ans = True\n\n        def dfs(root: Optional[TreeNode]) -> int:\n            if not root:\n                return 0\n\n            left = dfs(root.left)\n            right = dfs(root.right)\n\n            if abs(right - left) > 1:\n                self.ans = False\n\n            return max(left, right) + 1\n        \n        dfs(root)\n        return self.ans"
+  },
+  "notes": [],
+  "source": "leetcode",
+  "importedAt": "2026-10-01T13:44:25Z",
+  "lastSyncedAt": "2026-10-01T13:44:25Z"
+}

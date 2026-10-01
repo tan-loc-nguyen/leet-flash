@@ -1,0 +1,36 @@
+{
+  "leetcodeId": "11",
+  "title": "Container With Most Water",
+  "slug": "container-with-most-water",
+  "url": "https://leetcode.com/problems/container-with-most-water/",
+  "difficulty": "Medium",
+  "status": "solved",
+  "premium": false,
+  "tags": [
+    "Array",
+    "Two Pointers",
+    "Greedy"
+  ],
+  "problemStatement": "You are given an integer array height of length n. There are n vertical lines drawn such that the two endpoints of the i^th line are (i, 0) and (i, height[i]).\n\nFind two lines that together with the x-axis form a container, such that the container contains the most water.\n\nReturn the maximum amount of water a container can store.\n\nNotice that you may not slant the container.\n\nExample 1:\n\nInput: height = [1,8,6,2,5,4,8,3,7]\nOutput: 49\nExplanation: The above vertical lines are represented by array [1,8,6,2,5,4,8,3,7]. In this case, the max area of water (blue section) the container can contain is 49.\n\nExample 2:\n\nInput: height = [1,1]\nOutput: 1\n\nConstraints:\n\n- n == height.length\n\n- 2 <= n <= 10^5\n\n- 0 <= height[i] <= 10^4",
+  "constraints": [
+    "n == height.length",
+    "2 <= n <= 10^5",
+    "0 <= height[i] <= 10^4"
+  ],
+  "hints": [
+    "If you simulate the problem, it will be O(n^2) which is not efficient.",
+    "Try to use two-pointers. Set one pointer to the left and one to the right of the array. Always move the pointer that points to the lower line.",
+    "How can you calculate the amount of water at each step?"
+  ],
+  "acRate": 60.94,
+  "lastSubmittedAt": "2026-07-26T05:55:33Z",
+  "latestSubmission": {
+    "submissionId": "2081603798",
+    "language": "Python3",
+    "code": "class Solution:\n    def maxArea(self, height: List[int]) -> int:\n        # brute-force:\n        # calculate all possible volumes\n        # then get the max\n        # volume of a container = dis * min(i, j)\n        # TC O(n^2) SC O(1)\n        # ans = 0\n        # for i in range(len(height)):\n        #     for j in range(i + 1, len(height)):\n        #         vol = (j - i) * min(height[i], height[j])\n        #         ans = max(ans, vol)\n        \n        # return ans\n\n        # TC O(n^2) -> O(n)\n        # two pointers:\n        # i at beginning, j at the end\n        # vol is directly proportional with dis and the min height between heights at i and j\n        # So technically we can greedily move either i or j inward by comparing the heights between i and j\n        # if height at i is lower, move i forward and vice versa for j\n        # ^ safe to discard the shorter wall, any other pair using it has less width and the same/lower cap, so it's already ≤ what we just recorded\n        ans = -1\n        l, r = 0, len(height) - 1\n        \n        while l < r:\n            vol = (r - l) * min(height[l], height[r])\n            ans = max(ans, vol)\n\n            if height[l] >= height[r]:\n                r -= 1\n            else:\n                l += 1\n        \n        return ans\n"
+  },
+  "notes": [],
+  "source": "leetcode",
+  "importedAt": "2026-10-01T13:44:25Z",
+  "lastSyncedAt": "2026-10-01T13:44:25Z"
+}

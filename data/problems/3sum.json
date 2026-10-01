@@ -1,0 +1,35 @@
+{
+  "leetcodeId": "15",
+  "title": "3Sum",
+  "slug": "3sum",
+  "url": "https://leetcode.com/problems/3sum/",
+  "difficulty": "Medium",
+  "status": "solved",
+  "premium": false,
+  "tags": [
+    "Array",
+    "Two Pointers",
+    "Sorting"
+  ],
+  "problemStatement": "Given an integer array nums, return all the triplets [nums[i], nums[j], nums[k]] such that i != j, i != k, and j != k, and nums[i] + nums[j] + nums[k] == 0.\n\nNotice that the solution set must not contain duplicate triplets.\n\nExample 1:\n\nInput: nums = [-1,0,1,2,-1,-4]\nOutput: [[-1,-1,2],[-1,0,1]]\nExplanation:\nnums[0] + nums[1] + nums[2] = (-1) + 0 + 1 = 0.\nnums[1] + nums[2] + nums[4] = 0 + 1 + (-1) = 0.\nnums[0] + nums[3] + nums[4] = (-1) + 2 + (-1) = 0.\nThe distinct triplets are [-1,0,1] and [-1,-1,2].\nNotice that the order of the output and the order of the triplets does not matter.\n\nExample 2:\n\nInput: nums = [0,1,1]\nOutput: []\nExplanation: The only possible triplet does not sum up to 0.\n\nExample 3:\n\nInput: nums = [0,0,0]\nOutput: [[0,0,0]]\nExplanation: The only possible triplet sums up to 0.\n\nConstraints:\n\n- 3 <= nums.length <= 3000\n\n- -10^5 <= nums[i] <= 10^5",
+  "constraints": [
+    "3 <= nums.length <= 3000",
+    "-10^5 <= nums[i] <= 10^5"
+  ],
+  "hints": [
+    "So, we essentially need to find three numbers x, y, and z such that they add up to the given value. If we fix one of the numbers say x, we are left with the two-sum problem at hand!",
+    "For the two-sum problem, if we fix one of the numbers, say x, we have to scan the entire array to find the next number y, which is value - x where value is the input parameter. Can we change our array somehow so that this search becomes faster?",
+    "The second train of thought for two-sum is, without changing the array, can we use additional space somehow? Like maybe a hash map to speed up the search?"
+  ],
+  "acRate": 39.97,
+  "lastSubmittedAt": "2026-10-01T02:35:42Z",
+  "latestSubmission": {
+    "submissionId": "2158707545",
+    "language": "Python3",
+    "code": "class Solution:\n    def twoSum(self, nums, targetIdx) -> list[list[int]]:\n        target = -nums[targetIdx]\n        l, r = targetIdx + 1, len(nums) - 1\n        triplets = []\n\n        while l < r:\n            total = nums[l] + nums[r]\n            if total == target:\n                triplets.append([nums[targetIdx], nums[l], nums[r]])\n                l += 1\n                r -= 1\n\n                while l < r and nums[l] == nums[l - 1]:\n                    l += 1\n\n            elif total > target:\n                r -= 1\n            else:\n                l += 1\n\n        return triplets\n\n    def threeSum(self, nums: list[int]) -> list[list[int]]:\n        nums.sort()\n        ans = []\n\n        for i in range(len(nums)):\n            if nums[i] > 0:\n                break\n            if i == 0 or nums[i] != nums[i - 1]:\n                ans += self.twoSum(nums, i)\n        \n        return ans"
+  },
+  "notes": [],
+  "source": "leetcode",
+  "importedAt": "2026-10-01T00:00:00Z",
+  "lastSyncedAt": "2026-10-01T13:53:37Z"
+}

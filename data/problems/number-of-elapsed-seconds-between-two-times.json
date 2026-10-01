@@ -1,0 +1,38 @@
+{
+  "leetcodeId": "3986",
+  "title": "Number of Elapsed Seconds Between Two Times",
+  "slug": "number-of-elapsed-seconds-between-two-times",
+  "url": "https://leetcode.com/problems/number-of-elapsed-seconds-between-two-times/",
+  "difficulty": "Easy",
+  "status": "solved",
+  "premium": false,
+  "tags": [
+    "Math",
+    "String"
+  ],
+  "problemStatement": "You are given two valid times startTime and endTime, each represented as a string in the format \"HH:MM:SS\".\n\nReturn the number of seconds that have elapsed from startTime to endTime.\n\nExample 1:\n\nInput: startTime = \"01:00:00\", endTime = \"01:00:25\"\n\nOutput: 25\n\nExplanation:\n\nendTime is 25 seconds ahead of startTime.\n\nExample 2:\n\nInput: startTime = \"12:34:56\", endTime = \"13:00:00\"\n\nOutput: 1504\n\nExplanation:\n\nendTime is 25 minutes and 4 seconds ahead of startTime, which equals 1504 seconds.\n\nConstraints:\n\n- startTime.length == 8\n\n- endTime.length == 8\n\n- startTime and endTime are valid times in the format \"HH:MM:SS\"\n\n- 00 <= HH <= 23\n\n- 00 <= MM <= 59\n\n- 00 <= SS <= 59\n\n- endTime is not earlier than startTime",
+  "constraints": [
+    "startTime.length == 8",
+    "endTime.length == 8",
+    "startTime and endTime are valid times in the format \"HH:MM:SS\"",
+    "00 <= HH <= 23",
+    "00 <= MM <= 59",
+    "00 <= SS <= 59",
+    "endTime is not earlier than startTime"
+  ],
+  "hints": [
+    "Convert each time into the total number of seconds since 00:00:00.",
+    "The answer is the difference between the two converted values."
+  ],
+  "acRate": 82.58,
+  "lastSubmittedAt": "2026-07-12T02:36:50Z",
+  "latestSubmission": {
+    "submissionId": "2064394269",
+    "language": "Python3",
+    "code": "class Solution:\n    def secondsBetweenTimes(self, startTime: str, endTime: str) -> int:\n        start = startTime.split(\":\")\n        end = endTime.split(\":\")\n\n        startSec = int(start[0]) * 3600 + int(start[1]) * 60 + int(start[2])\n        endSec = int(end[0]) * 3600 + int(end[1]) * 60 + int(end[2])\n        return endSec - startSec\n            "
+  },
+  "notes": [],
+  "source": "leetcode",
+  "importedAt": "2026-10-01T13:44:25Z",
+  "lastSyncedAt": "2026-10-01T13:44:25Z"
+}

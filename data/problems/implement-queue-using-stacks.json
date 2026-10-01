@@ -1,0 +1,32 @@
+{
+  "leetcodeId": "232",
+  "title": "Implement Queue using Stacks",
+  "slug": "implement-queue-using-stacks",
+  "url": "https://leetcode.com/problems/implement-queue-using-stacks/",
+  "difficulty": "Easy",
+  "status": "solved",
+  "premium": false,
+  "tags": [
+    "Stack",
+    "Design",
+    "Queue"
+  ],
+  "problemStatement": "Implement a first in first out (FIFO) queue using only two stacks. The implemented queue should support all the functions of a normal queue (push, peek, pop, and empty).\n\nImplement the MyQueue class:\n\n- void push(int x) Pushes element x to the back of the queue.\n\n- int pop() Removes the element from the front of the queue and returns it.\n\n- int peek() Returns the element at the front of the queue.\n\n- boolean empty() Returns true if the queue is empty, false otherwise.\n\nNotes:\n\n- You must use only standard operations of a stack, which means only push to top, peek/pop from top, size, and is empty operations are valid.\n\n- Depending on your language, the stack may not be supported natively. You may simulate a stack using a list or deque (double-ended queue) as long as you use only a stack's standard operations.\n\nExample 1:\n\nInput\n[\"MyQueue\", \"push\", \"push\", \"peek\", \"pop\", \"empty\"]\n[[], [1], [2], [], [], []]\nOutput\n[null, null, null, 1, 1, false]\n\nExplanation\nMyQueue myQueue = new MyQueue();\nmyQueue.push(1); // queue is: [1]\nmyQueue.push(2); // queue is: [1, 2] (leftmost is front of the queue)\nmyQueue.peek(); // return 1\nmyQueue.pop(); // return 1, queue is [2]\nmyQueue.empty(); // return false\n\nConstraints:\n\n- 1 <= x <= 9\n\n- At most 100 calls will be made to push, pop, peek, and empty.\n\n- All the calls to pop and peek are valid.\n\nFollow-up: Can you implement the queue such that each operation is amortized O(1) time complexity? In other words, performing n operations will take overall O(n) time even if one of those operations may take longer.",
+  "constraints": [
+    "1 <= x <= 9",
+    "At most 100 calls will be made to push, pop, peek, and empty.",
+    "All the calls to pop and peek are valid."
+  ],
+  "hints": [],
+  "acRate": 70.32,
+  "lastSubmittedAt": "2026-08-04T16:55:12Z",
+  "latestSubmission": {
+    "submissionId": "2094325331",
+    "language": "Python3",
+    "code": "class MyQueue:\n\n    def __init__(self):\n        self.pushStack = []\n        self.popStack = []\n\n    def push(self, x: int) -> None:\n        self.pushStack.append(x)\n\n    def pop(self) -> int:\n        if not self.popStack:\n            while self.pushStack:\n                self.popStack.append(self.pushStack.pop())\n        return self.popStack.pop()\n\n    def peek(self) -> int:\n        if not self.popStack:\n            while self.pushStack:\n                self.popStack.append(self.pushStack.pop())\n        return self.popStack[-1]\n\n    def empty(self) -> bool:\n        return not self.pushStack and not self.popStack\n\n\n# Your MyQueue object will be instantiated and called as such:\n# obj = MyQueue()\n# obj.push(x)\n# param_2 = obj.pop()\n# param_3 = obj.peek()\n# param_4 = obj.empty()"
+  },
+  "notes": [],
+  "source": "leetcode",
+  "importedAt": "2026-10-01T13:44:25Z",
+  "lastSyncedAt": "2026-10-01T13:44:25Z"
+}

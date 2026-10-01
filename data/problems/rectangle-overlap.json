@@ -1,0 +1,32 @@
+{
+  "leetcodeId": "836",
+  "title": "Rectangle Overlap",
+  "slug": "rectangle-overlap",
+  "url": "https://leetcode.com/problems/rectangle-overlap/",
+  "difficulty": "Easy",
+  "status": "solved",
+  "premium": false,
+  "tags": [
+    "Math",
+    "Geometry"
+  ],
+  "problemStatement": "An axis-aligned rectangle is represented as a list [x1, y1, x2, y2], where (x1, y1) is the coordinate of its bottom-left corner, and (x2, y2) is the coordinate of its top-right corner. Its top and bottom edges are parallel to the X-axis, and its left and right edges are parallel to the Y-axis.\n\nTwo rectangles overlap if the area of their intersection is positive. To be clear, two rectangles that only touch at the corner or edges do not overlap.\n\nGiven two axis-aligned rectangles rec1 and rec2, return true if they overlap, otherwise return false.\n\nExample 1:\n\nInput: rec1 = [0,0,2,2], rec2 = [1,1,3,3]\nOutput: true\n\nExample 2:\n\nInput: rec1 = [0,0,1,1], rec2 = [1,0,2,1]\nOutput: false\n\nExample 3:\n\nInput: rec1 = [0,0,1,1], rec2 = [2,2,3,3]\nOutput: false\n\nConstraints:\n\n- rec1.length == 4\n\n- rec2.length == 4\n\n- -10^9 <= rec1[i], rec2[i] <= 10^9\n\n- rec1 and rec2 represent a valid rectangle with a non-zero area.",
+  "constraints": [
+    "rec1.length == 4",
+    "rec2.length == 4",
+    "-10^9 <= rec1[i], rec2[i] <= 10^9",
+    "rec1 and rec2 represent a valid rectangle with a non-zero area."
+  ],
+  "hints": [],
+  "acRate": 53.44,
+  "lastSubmittedAt": "2026-09-14T04:14:34Z",
+  "latestSubmission": {
+    "submissionId": "2141166646",
+    "language": "Python3",
+    "code": "class Solution:\n    def isRectangleOverlap(self, rec1: List[int], rec2: List[int]) -> bool:\n        # when do two recs overlap?\n        return (\n            rec1[0] < rec2[2]\n            and rec2[0] < rec1[2]\n            and rec1[1] < rec2[3]\n            and rec2[1] < rec1[3]\n        )"
+  },
+  "notes": [],
+  "source": "leetcode",
+  "importedAt": "2026-10-01T13:44:25Z",
+  "lastSyncedAt": "2026-10-01T13:44:25Z"
+}

@@ -1,0 +1,30 @@
+{
+  "leetcodeId": "3870",
+  "title": "Count Commas in Range",
+  "slug": "count-commas-in-range",
+  "url": "https://leetcode.com/problems/count-commas-in-range/",
+  "difficulty": "Easy",
+  "status": "solved",
+  "premium": false,
+  "tags": [
+    "Math"
+  ],
+  "problemStatement": "You are given an integer n.\n\nReturn the total number of commas used when writing all integers from [1, n] (inclusive) in standard number formatting.\n\nIn standard formatting:\n\n- A comma is inserted after every three digits from the right.\n\n- Numbers with fewer than 4 digits contain no commas.\n\nExample 1:\n\nInput: n = 1002\n\nOutput: 3\n\nExplanation:\n\nThe numbers \"1,000\", \"1,001\", and \"1,002\" each contain one comma, giving a total of 3.\n\nExample 2:\n\nInput: n = 998\n\nOutput: 0\n\nExplanation:\n\nAll numbers from 1 to 998 have fewer than four digits. Therefore, no commas are used.\n\nConstraints:\n\n- 1 <= n <= 10^5",
+  "constraints": [
+    "1 <= n <= 10^5"
+  ],
+  "hints": [
+    "Numbers in the range [1000, 100000] have one comma."
+  ],
+  "acRate": 78.12,
+  "lastSubmittedAt": "2026-09-09T03:13:39Z",
+  "latestSubmission": {
+    "submissionId": "2135778468",
+    "language": "Python3",
+    "code": "class Solution:\n    def countCommas(self, n: int) -> int:\n        if n < 1000:\n            return 0\n        return n - 999"
+  },
+  "notes": [],
+  "source": "leetcode",
+  "importedAt": "2026-10-01T13:44:25Z",
+  "lastSyncedAt": "2026-10-01T13:44:25Z"
+}

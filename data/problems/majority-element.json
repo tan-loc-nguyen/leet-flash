@@ -1,0 +1,36 @@
+{
+  "leetcodeId": "169",
+  "title": "Majority Element",
+  "slug": "majority-element",
+  "url": "https://leetcode.com/problems/majority-element/",
+  "difficulty": "Easy",
+  "status": "solved",
+  "premium": false,
+  "tags": [
+    "Array",
+    "Hash Table",
+    "Divide and Conquer",
+    "Sorting",
+    "Counting",
+    "Boyer–Moore Majority Vote Algorithm"
+  ],
+  "problemStatement": "Given an array nums of size n, return the majority element.\n\nThe majority element is the element that appears more than ⌊n / 2⌋ times. You may assume that the majority element always exists in the array.\n\nExample 1:\n\nInput: nums = [3,2,3]\nOutput: 3\n\nExample 2:\n\nInput: nums = [2,2,1,1,1,2,2]\nOutput: 2\n\nConstraints:\n\n- n == nums.length\n\n- 1 <= n <= 5 * 10^4\n\n- -10^9 <= nums[i] <= 10^9\n\n- The input is generated such that a majority element will exist in the array.\n\nFollow-up: Could you solve the problem in linear time and in O(1) space?",
+  "constraints": [
+    "n == nums.length",
+    "1 <= n <= 5 * 10^4",
+    "-10^9 <= nums[i] <= 10^9",
+    "The input is generated such that a majority element will exist in the array."
+  ],
+  "hints": [],
+  "acRate": 66.53,
+  "lastSubmittedAt": "2026-06-14T05:15:12Z",
+  "latestSubmission": {
+    "submissionId": "2032451307",
+    "language": "Python3",
+    "code": "class Solution:\n    def majorityElement(self, nums: List[int]) -> int:\n        # time o(n) space o(n)\n        # counter = {}\n        # for num in nums:\n        #     if num in counter:\n        #         counter[num] += 1\n        #     else:\n        #         counter[num] = 1\n\n        # major, maxFreq = nums[0], 0\n        # for k, v in counter.items():\n        #     if maxFreq < v:\n        #         maxFreq = v\n        #         major = k\n        \n        # return major\n        # time o(nlogn) space o(1)\n        nums.sort()\n        return nums[int(len(nums)/2)]"
+  },
+  "notes": [],
+  "source": "leetcode",
+  "importedAt": "2026-10-01T13:44:25Z",
+  "lastSyncedAt": "2026-10-01T13:44:25Z"
+}

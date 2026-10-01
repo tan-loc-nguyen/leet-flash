@@ -1,0 +1,31 @@
+{
+  "leetcodeId": "66",
+  "title": "Plus One",
+  "slug": "plus-one",
+  "url": "https://leetcode.com/problems/plus-one/",
+  "difficulty": "Easy",
+  "status": "solved",
+  "premium": false,
+  "tags": [
+    "Array",
+    "Math"
+  ],
+  "problemStatement": "You are given a large integer represented as an integer array digits, where each digits[i] is the i^th digit of the integer. The digits are ordered from most significant to least significant in left-to-right order. The large integer does not contain any leading 0's.\n\nIncrement the large integer by one and return the resulting array of digits.\n\nExample 1:\n\nInput: digits = [1,2,3]\nOutput: [1,2,4]\nExplanation: The array represents the integer 123.\nIncrementing by one gives 123 + 1 = 124.\nThus, the result should be [1,2,4].\n\nExample 2:\n\nInput: digits = [4,3,2,1]\nOutput: [4,3,2,2]\nExplanation: The array represents the integer 4321.\nIncrementing by one gives 4321 + 1 = 4322.\nThus, the result should be [4,3,2,2].\n\nExample 3:\n\nInput: digits = [9]\nOutput: [1,0]\nExplanation: The array represents the integer 9.\nIncrementing by one gives 9 + 1 = 10.\nThus, the result should be [1,0].\n\nConstraints:\n\n- 1 <= digits.length <= 100\n\n- 0 <= digits[i] <= 9\n\n- digits does not contain any leading 0's.",
+  "constraints": [
+    "1 <= digits.length <= 100",
+    "0 <= digits[i] <= 9",
+    "digits does not contain any leading 0's."
+  ],
+  "hints": [],
+  "acRate": 50.69,
+  "lastSubmittedAt": "2026-07-18T14:30:09Z",
+  "latestSubmission": {
+    "submissionId": "2072310932",
+    "language": "Python3",
+    "code": "class Solution:\n    def plusOne(self, digits: List[int]) -> List[int]:\n        # brute-force\n        # TC O(n) - SC O(1)\n        # idea is to have a carry var so that if the current digit + 1 >= 10 we can move the carry to sum with the next digit\n\n        # we go right to left to peform the plus one\n        i = len(digits) - 1\n        # assign carry to 1 so that we just need to plus the carry to the most-right element on 1st iteration\n        carry = 1\n        while i >= 0 and carry:\n            total = digits[i] + carry\n            digits[i] = total % 10\n            carry = total // 10\n            i -= 1\n\n        if carry:\n            return [1] + digits\n\n        return digits\n            "
+  },
+  "notes": [],
+  "source": "leetcode",
+  "importedAt": "2026-10-01T13:44:25Z",
+  "lastSyncedAt": "2026-10-01T13:44:25Z"
+}

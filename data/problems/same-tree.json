@@ -1,0 +1,32 @@
+{
+  "leetcodeId": "100",
+  "title": "Same Tree",
+  "slug": "same-tree",
+  "url": "https://leetcode.com/problems/same-tree/",
+  "difficulty": "Easy",
+  "status": "solved",
+  "premium": false,
+  "tags": [
+    "Tree",
+    "Depth-First Search",
+    "Breadth-First Search",
+    "Binary Tree"
+  ],
+  "problemStatement": "Given the roots of two binary trees p and q, write a function to check if they are the same or not.\n\nTwo binary trees are considered the same if they are structurally identical, and the nodes have the same value.\n\nExample 1:\n\nInput: p = [1,2,3], q = [1,2,3]\nOutput: true\n\nExample 2:\n\nInput: p = [1,2], q = [1,null,2]\nOutput: false\n\nExample 3:\n\nInput: p = [1,2,1], q = [1,1,2]\nOutput: false\n\nConstraints:\n\n- The number of nodes in both trees is in the range [0, 100].\n\n- -10^4 <= Node.val <= 10^4",
+  "constraints": [
+    "The number of nodes in both trees is in the range [0, 100].",
+    "-10^4 <= Node.val <= 10^4"
+  ],
+  "hints": [],
+  "acRate": 68.07,
+  "lastSubmittedAt": "2026-06-24T21:29:36Z",
+  "latestSubmission": {
+    "submissionId": "2045092260",
+    "language": "Python3",
+    "code": "# Definition for a binary tree node.\n# class TreeNode:\n#     def __init__(self, val=0, left=None, right=None):\n#         self.val = val\n#         self.left = left\n#         self.right = right\nclass Solution:\n    def isSameTree(self, p: Optional[TreeNode], q: Optional[TreeNode]) -> bool:\n        if not p and not q:\n            return True\n        if not p and q:\n            return False\n        if p and not q:\n            return False\n        \n        sameLeft = self.isSameTree(p.left, q.left)\n        sameRight = self.isSameTree(p.right, q.right)\n        \n        return sameLeft and sameRight and p.val == q.val"
+  },
+  "notes": [],
+  "source": "leetcode",
+  "importedAt": "2026-10-01T13:44:25Z",
+  "lastSyncedAt": "2026-10-01T13:44:25Z"
+}

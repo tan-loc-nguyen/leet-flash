@@ -1,0 +1,258 @@
+{
+  "schemaVersion": 1,
+  "problemSlug": "longest-substring-without-repeating-characters",
+  "summary": "Return the length of the longest substring of s that contains no repeated character.",
+  "patterns": [
+    "Sliding Window",
+    "Array / Hashing"
+  ],
+  "mainInsight": "Keep a window [left, right] that is always duplicate-free. When s[right] repeats a character inside the window, move left just past that character's previous occurrence instead of restarting - the window never moves backwards, so every character is processed O(1) times.",
+  "invariant": "The window s[left..right] contains no duplicate characters, and left only ever moves forward; its length is a candidate answer at every step.",
+  "canonicalApproach": "Sliding window with last-seen index map",
+  "approaches": [
+    {
+      "name": "Brute force",
+      "summary": "Check every substring for uniqueness (set per start index, stopping at the first duplicate).",
+      "timeComplexity": "O(n^2) to O(n^3)",
+      "spaceComplexity": "O(min(n, m))",
+      "strengths": [
+        "Obviously correct"
+      ],
+      "weaknesses": [
+        "Re-scans overlapping substrings"
+      ],
+      "interviewRelevance": "State and dismiss quickly."
+    },
+    {
+      "name": "Sliding window with set",
+      "summary": "Expand right; while s[right] is already in the set, remove s[left] and advance left; add s[right].",
+      "timeComplexity": "O(n)",
+      "spaceComplexity": "O(min(n, m))",
+      "strengths": [
+        "Simple invariant",
+        "No index bookkeeping"
+      ],
+      "weaknesses": [
+        "Inner while loop can look quadratic (it is amortised O(n))"
+      ],
+      "interviewRelevance": "Common first implementation."
+    },
+    {
+      "name": "Sliding window with last-seen index map",
+      "summary": "Store the last index of each character; on a repeat inside the window jump left to last[ch] + 1.",
+      "timeComplexity": "O(n)",
+      "spaceComplexity": "O(min(n, m))",
+      "strengths": [
+        "Each character visited once",
+        "No inner loop"
+      ],
+      "weaknesses": [
+        "Must guard against stale entries (last[ch] < left)"
+      ],
+      "interviewRelevance": "The expected optimal answer."
+    }
+  ],
+  "commonMistakes": [
+    "Moving left backwards on a stale last-seen index (e.g. 'abba').",
+    "Resetting the window to empty after a duplicate.",
+    "Off-by-one in the length: right - left + 1."
+  ],
+  "edgeCases": [
+    "Empty string -> 0.",
+    "All identical characters ('bbbb') -> 1.",
+    "'abba' (stale index).",
+    " Whole string unique."
+  ],
+  "cards": [
+    {
+      "id": "lswrc-pattern-01",
+      "category": "pattern",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "Which technique gives the O(n) solution to Longest Substring Without Repeating Characters?",
+        "What pattern should 'longest/shortest contiguous substring with a property' make you think of?",
+        "Which pattern solves this problem optimally?"
+      ],
+      "options": [
+        "Sliding window",
+        "Binary search on the answer",
+        "Dynamic programming over prefixes",
+        "Monotonic stack"
+      ],
+      "answer": "Sliding window",
+      "explanation": "A contiguous range with a validity condition (no duplicates) that can be restored by moving the left edge is the textbook sliding window.",
+      "incorrectOptionExplanations": {
+        "Binary search on the answer": "Length feasibility is monotone so it works, but needs O(n log n) checks; the sliding window is O(n).",
+        "Dynamic programming over prefixes": "Overkill; the window already captures all the state needed.",
+        "Monotonic stack": "There is no nearest-greater / smaller relationship to maintain."
+      },
+      "enabled": true
+    },
+    {
+      "id": "lswrc-invariant-01",
+      "category": "invariant",
+      "type": "free_recall",
+      "promptVariants": [
+        "What invariant does the sliding window maintain?",
+        "State what is always true about s[left..right] during the algorithm.",
+        "At every iteration, what is guaranteed about the current window?"
+      ],
+      "answer": "The window s[left..right] contains no repeated characters, so right - left + 1 is a valid candidate length; left never decreases.",
+      "keyPoints": [
+        "No duplicates inside the window",
+        "Window length is a valid candidate",
+        "left only moves forward"
+      ],
+      "explanation": "Whenever adding s[right] would break the invariant, left is advanced until it is restored.",
+      "enabled": true
+    },
+    {
+      "id": "lswrc-main-insight-01",
+      "category": "main_insight",
+      "type": "free_recall",
+      "promptVariants": [
+        "Why don't we need to restart the scan after finding a duplicate?",
+        "Why does the window never need to move its left edge backwards?"
+      ],
+      "answer": "Any valid window ending at the new right must start after the previous occurrence of s[right]; starts before that are already invalid, and starts we skipped can never become valid again because the duplicate is still to their right. So we simply advance left and keep right moving: O(n).",
+      "keyPoints": [
+        "New window must start after previous occurrence",
+        "Earlier starts stay invalid",
+        "Both pointers only move forward"
+      ],
+      "explanation": "Monotone pointers are what turn the O(n^2) brute force into O(n).",
+      "enabled": true
+    },
+    {
+      "id": "lswrc-datastructure-01",
+      "category": "data_structure",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "What should the map store so left can jump in O(1) after a duplicate?",
+        "Which value per character lets the window skip directly past the duplicate?"
+      ],
+      "options": [
+        "The last index where each character appeared",
+        "The count of each character in the window",
+        "The first index where each character appeared",
+        "A sorted list of characters in the window"
+      ],
+      "answer": "The last index where each character appeared",
+      "explanation": "On a repeat, left = last[ch] + 1 removes the old occurrence and everything before it in one jump.",
+      "incorrectOptionExplanations": {
+        "The count of each character in the window": "A count works with a shrinking while-loop, but does not allow a direct jump.",
+        "The first index where each character appeared": "That index can be stale or point to an older copy; the most recent occurrence is what matters.",
+        "A sorted list of characters in the window": "Sorting is unnecessary and costs extra."
+      },
+      "enabled": true
+    },
+    {
+      "id": "lswrc-code-01",
+      "category": "code_reasoning",
+      "type": "code_question",
+      "promptVariants": [
+        "Why is the condition `last[ch] >= left` necessary?",
+        "What goes wrong on 'abba' if you drop the `last[ch] >= left` check?"
+      ],
+      "code": "last = {}\nleft = best = 0\nfor right, ch in enumerate(s):\n    if ch in last and last[ch] >= left:\n        left = last[ch] + 1\n    last[ch] = right\n    best = max(best, right - left + 1)",
+      "answer": "The map can hold stale indices from before the window. Without the guard, the final 'a' (last index 0 < left 2) would pull left back to 1, re-including the second 'b' and returning 3 instead of 2.",
+      "keyPoints": [
+        "Stale entries outside the window",
+        "left would move backwards",
+        "'abba' gives 3 instead of 2"
+      ],
+      "explanation": "Entries are never deleted, so the guard enforces 'only a repeat INSIDE the window counts'.",
+      "enabled": true
+    },
+    {
+      "id": "lswrc-edge-01",
+      "category": "edge_case",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "Which input catches the bug of moving left backwards on a stale index?",
+        "Which test case exposes a missing `last[ch] >= left` guard?"
+      ],
+      "options": [
+        "abba",
+        "aaaa",
+        "abcabcbb",
+        "pwwkew"
+      ],
+      "answer": "abba",
+      "explanation": "The final 'a' was last seen at index 0, before the window start (2). Using it blindly would move left back to 1 and corrupt the window.",
+      "incorrectOptionExplanations": {
+        "aaaa": "Every character repeats immediately inside the window, so the stale case never occurs.",
+        "abcabcbb": "Each repeat is inside the current window, so stale indices never trigger.",
+        "pwwkew": "The only repeats are inside the window; no stale index is reused."
+      },
+      "enabled": true
+    },
+    {
+      "id": "lswrc-time-01",
+      "category": "time_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Time complexity of the sliding-window solution: ___",
+        "Longest Substring Without Repeating Characters runs in ___ time."
+      ],
+      "answer": "O(n)",
+      "explanation": "right visits each index once and left only moves forward, so total pointer movement is at most 2n.",
+      "enabled": true,
+      "acceptedAnswers": [
+        "O(n) amortized",
+        "linear"
+      ]
+    },
+    {
+      "id": "lswrc-time-02",
+      "category": "time_complexity",
+      "type": "free_recall",
+      "promptVariants": [
+        "In the set-based version the inner while loop shrinks the window. Why is the total still O(n)?",
+        "Why is the nested loop in the set-based sliding window not O(n^2)?"
+      ],
+      "answer": "Each character is added to the set once (when right passes it) and removed at most once (when left passes it), so total add + remove operations are at most 2n. The work is amortised O(n).",
+      "keyPoints": [
+        "Each element enters once",
+        "Each element leaves at most once",
+        "Amortised analysis, 2n operations"
+      ],
+      "explanation": "Count total pointer moves, not loop nesting.",
+      "enabled": true
+    },
+    {
+      "id": "lswrc-space-01",
+      "category": "space_complexity",
+      "type": "free_recall",
+      "promptVariants": [
+        "What bounds the extra space of the window solution?",
+        "State the space complexity and what it depends on."
+      ],
+      "answer": "O(min(n, m)), where m is the alphabet size: the map/set holds at most one entry per distinct character, which cannot exceed either the string length or the alphabet (e.g. 128 or 256, effectively constant).",
+      "keyPoints": [
+        "One entry per distinct character",
+        "min(n, alphabet size)"
+      ],
+      "explanation": "For ASCII it is effectively O(1); the safe general answer is O(min(n, m)).",
+      "enabled": true
+    },
+    {
+      "id": "lswrc-alt-01",
+      "category": "alternative_approach",
+      "type": "free_recall",
+      "promptVariants": [
+        "Compare the set-shrinking window with the last-seen-index jump. When would you choose each?",
+        "What is the difference between the set-based and index-map sliding window?"
+      ],
+      "answer": "Both are O(n) time and O(min(n,m)) space. The set version shrinks left one step at a time (simpler to reason about, amortised O(n)); the map version jumps left in one move (single pass, no inner loop) but needs the stale-index guard.",
+      "keyPoints": [
+        "Same complexity",
+        "Set: incremental shrink, simple",
+        "Map: direct jump, needs last[ch] >= left"
+      ],
+      "explanation": "In interviews, start with the set version if unsure, then mention the jump optimisation.",
+      "enabled": true
+    }
+  ],
+  "generatedAt": "2026-10-01T00:00:00Z"
+}

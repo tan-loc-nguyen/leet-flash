@@ -1,0 +1,283 @@
+{
+  "schemaVersion": 1,
+  "problemSlug": "valid-parentheses",
+  "summary": "Given a string of ()[]{} characters, decide whether every opener is closed by the matching type in the correct nesting order.",
+  "patterns": [
+    "Stack"
+  ],
+  "mainInsight": "The most recently opened bracket must be the first one closed (last-in, first-out). Push openers; on each closer, the stack top must be its matching opener.",
+  "invariant": "After processing any prefix, the stack holds exactly the still-unmatched opening brackets in the order they were opened (innermost on top).",
+  "canonicalApproach": "Stack with closer-to-opener map",
+  "approaches": [
+    {
+      "name": "Repeated pair removal",
+      "summary": "Repeatedly delete '()', '[]' and '{}' substrings until nothing changes; valid iff the string becomes empty.",
+      "timeComplexity": "O(n^2)",
+      "spaceComplexity": "O(n)",
+      "strengths": [
+        "Very short code"
+      ],
+      "weaknesses": [
+        "Quadratic in the worst case (e.g. '((((....))))')"
+      ],
+      "interviewRelevance": "Mention as a naive idea; the stack is the expected solution."
+    },
+    {
+      "name": "Stack with closer-to-opener map",
+      "summary": "Push openers; for a closer, fail if the stack is empty or its top is not the matching opener; at the end the stack must be empty.",
+      "timeComplexity": "O(n)",
+      "spaceComplexity": "O(n)",
+      "strengths": [
+        "Single pass",
+        "Extends to any bracket set"
+      ],
+      "weaknesses": [
+        "O(n) stack in the worst case"
+      ],
+      "interviewRelevance": "The expected answer."
+    }
+  ],
+  "commonMistakes": [
+    "Forgetting the final 'stack must be empty' check ('((' would pass).",
+    "Popping from an empty stack on input like ')'.",
+    "Counting brackets per type, which ignores ordering."
+  ],
+  "edgeCases": [
+    "Starts with a closer: ')('.",
+    "Only openers: '((('.",
+    "Interleaved types: '([)]'.",
+    "Odd length can never be valid."
+  ],
+  "cards": [
+    {
+      "id": "valid-parentheses-pattern-01",
+      "category": "pattern",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "Which data structure naturally solves bracket matching?",
+        "What technique should 'match nested brackets' suggest in an interview?",
+        "Which pattern fits Valid Parentheses?"
+      ],
+      "options": [
+        "Stack",
+        "Queue",
+        "Two pointers",
+        "Union find"
+      ],
+      "answer": "Stack",
+      "explanation": "Nesting means the latest unmatched opener must close first - exactly LIFO order.",
+      "incorrectOptionExplanations": {
+        "Queue": "FIFO would match the oldest opener first, which is wrong for nesting.",
+        "Two pointers": "Matching pairs are not at symmetric positions in general ('()[]{}' is valid).",
+        "Union find": "There is no connectivity merging, just ordered matching."
+      },
+      "enabled": true
+    },
+    {
+      "id": "valid-parentheses-main-insight-01",
+      "category": "main_insight",
+      "type": "free_recall",
+      "promptVariants": [
+        "Why is a stack the right structure for bracket matching?",
+        "Explain the core idea of the Valid Parentheses solution."
+      ],
+      "answer": "Valid nesting means the most recently opened bracket must be closed first. A stack stores unmatched openers with the latest on top, so each closer only needs to compare against the top.",
+      "keyPoints": [
+        "LIFO matches nesting",
+        "Only the top can match a closer",
+        "Closers never need to look deeper"
+      ],
+      "explanation": "Any mismatch at the top is immediately an error, since deeper openers are blocked by the innermost one.",
+      "enabled": true
+    },
+    {
+      "id": "valid-parentheses-invariant-01",
+      "category": "invariant",
+      "type": "free_recall",
+      "promptVariants": [
+        "What does the stack contain after processing a prefix of the string?",
+        "State the loop invariant for the bracket stack."
+      ],
+      "answer": "Exactly the opening brackets that have not been matched yet, in the order opened, with the innermost on top.",
+      "keyPoints": [
+        "Unmatched openers only",
+        "Order preserved, innermost on top"
+      ],
+      "explanation": "A closer either matches (and removes) the top opener or proves the string invalid.",
+      "enabled": true
+    },
+    {
+      "id": "valid-parentheses-why-not-01",
+      "category": "why_not",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "Why is keeping one counter per bracket type not enough?",
+        "What does a counting solution get wrong?"
+      ],
+      "options": [
+        "Counters ignore nesting order, e.g. '([)]' has balanced counts but is invalid",
+        "Counters use more memory than a stack",
+        "Counters cannot handle more than one bracket type",
+        "Counters are slower than a stack"
+      ],
+      "answer": "Counters ignore nesting order, e.g. '([)]' has balanced counts but is invalid",
+      "explanation": "Balanced counts are necessary but not sufficient; order and type interleaving matter.",
+      "incorrectOptionExplanations": {
+        "Counters use more memory than a stack": "Counters use less memory, which is why they are tempting - but wrong.",
+        "Counters cannot handle more than one bracket type": "You can keep one counter per type; the problem is order.",
+        "Counters are slower than a stack": "Speed is not the issue; correctness is."
+      },
+      "enabled": true
+    },
+    {
+      "id": "valid-parentheses-edge-01",
+      "category": "edge_case",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "Which input breaks a solution that pops without checking for an empty stack?",
+        "Which test case exposes a missing empty-stack check?"
+      ],
+      "options": [
+        ")",
+        "()",
+        "([])",
+        "{[]}"
+      ],
+      "answer": ")",
+      "explanation": "A closer arriving first means there is no opener to match; popping would raise an error (or must return False).",
+      "incorrectOptionExplanations": {
+        "()": "A normal valid string; the stack is non-empty when the closer arrives.",
+        "([])": "Valid and always has an opener available for each closer.",
+        "{[]}": "Valid and always has an opener available for each closer."
+      },
+      "enabled": true
+    },
+    {
+      "id": "valid-parentheses-edge-02",
+      "category": "edge_case",
+      "type": "fill_blank",
+      "promptVariants": [
+        "After the loop, return True only if the stack is ___.",
+        "The final check for '(((' is that the stack must be ___."
+      ],
+      "answer": "empty",
+      "explanation": "Leftover openers (like '((') are unmatched, so the string is invalid even though no mismatch occurred.",
+      "enabled": true,
+      "acceptedAnswers": [
+        "empty.",
+        "len 0",
+        "falsy"
+      ]
+    },
+    {
+      "id": "valid-parentheses-time-01",
+      "category": "time_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Time complexity of the stack solution: ___",
+        "Valid Parentheses runs in ___ time with a stack."
+      ],
+      "answer": "O(n)",
+      "explanation": "Each character is pushed or popped at most once, each in O(1).",
+      "enabled": true
+    },
+    {
+      "id": "valid-parentheses-space-01",
+      "category": "space_complexity",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "What is the worst-case extra space, and which input causes it?",
+        "When does the bracket stack use the most memory?"
+      ],
+      "options": [
+        "O(n), for inputs like '((((('",
+        "O(1), because there are only three bracket types",
+        "O(n), only for '()()()'",
+        "O(log n) for balanced nesting"
+      ],
+      "answer": "O(n), for inputs like '((((('",
+      "explanation": "All openers are pushed and never popped, so the stack grows to n. (Also '((()))' reaches n/2.)",
+      "incorrectOptionExplanations": {
+        "O(1), because there are only three bracket types": "The number of types is constant, but the stack stores one entry per unmatched opener.",
+        "O(n), only for '()()()'": "In '()()()' the stack never holds more than one element.",
+        "O(log n) for balanced nesting": "Nesting depth can be Θ(n), e.g. '((((....))))'."
+      },
+      "enabled": true
+    },
+    {
+      "id": "valid-parentheses-code-01",
+      "category": "code_reasoning",
+      "type": "code_question",
+      "promptVariants": [
+        "Why is `not stack` tested before `stack.pop()`, and what does the `or` guarantee?",
+        "Explain the condition `if not stack or stack.pop() != pairs[ch]`."
+      ],
+      "code": "pairs = {')': '(', ']': '[', '}': '{'}\nstack = []\nfor ch in s:\n    if ch in pairs:\n        if not stack or stack.pop() != pairs[ch]:\n            return False\n    else:\n        stack.append(ch)\nreturn not stack",
+      "answer": "`or` short-circuits: if the stack is empty the pop never executes (so no IndexError) and we return False. Otherwise the popped top is compared with the opener expected for this closer; a mismatch means wrong type/order.",
+      "keyPoints": [
+        "Short-circuit prevents pop on empty",
+        "Pop and compare in one step",
+        "Mismatch => invalid"
+      ],
+      "explanation": "The final `return not stack` handles leftover openers.",
+      "enabled": true
+    },
+    {
+      "id": "valid-parentheses-impl-01",
+      "category": "implementation_detail",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "Why map closers to openers (rather than openers to closers)?",
+        "What does a closer-keyed dict give you for free?"
+      ],
+      "options": [
+        "Membership in the dict identifies a closer and its value is the opener to compare with the top",
+        "It makes lookups O(1) while the other direction is O(n)",
+        "Openers cannot be dictionary keys",
+        "It lets you avoid the stack"
+      ],
+      "answer": "Membership in the dict identifies a closer and its value is the opener to compare with the top",
+      "explanation": "Keyed by closer, `ch in pairs` is both the 'is this a closer?' test and the lookup of the expected opener.",
+      "incorrectOptionExplanations": {
+        "It makes lookups O(1) while the other direction is O(n)": "Both directions are O(1) hash lookups.",
+        "Openers cannot be dictionary keys": "They can; it would simply be less convenient here.",
+        "It lets you avoid the stack": "The stack is still required to remember unmatched openers."
+      },
+      "enabled": true
+    },
+    {
+      "id": "valid-parentheses-prune-01",
+      "category": "edge_case",
+      "type": "fill_blank",
+      "promptVariants": [
+        "If len(s) is ___, the string can be rejected immediately.",
+        "A quick early exit: strings of ___ length can never be valid."
+      ],
+      "answer": "odd",
+      "explanation": "Brackets come in pairs, so a valid string has even length.",
+      "enabled": true,
+      "acceptedAnswers": [
+        "odd length",
+        "an odd number"
+      ]
+    },
+    {
+      "id": "valid-parentheses-alt-01",
+      "category": "alternative_approach",
+      "type": "free_recall",
+      "promptVariants": [
+        "Describe a non-stack approach and why it is worse.",
+        "How could you solve Valid Parentheses with string replacement, and what does it cost?"
+      ],
+      "answer": "Repeatedly remove '()', '[]' and '{}' from the string until it stops changing; valid iff it ends empty. Each pass is O(n) and up to n/2 passes are needed, so O(n^2) worst case.",
+      "keyPoints": [
+        "Repeated pair removal",
+        "Up to n/2 passes of O(n)",
+        "O(n^2) vs stack O(n)"
+      ],
+      "explanation": "It works because innermost pairs are always adjacent, but the repeated rescans waste time.",
+      "enabled": true
+    }
+  ],
+  "generatedAt": "2026-10-01T00:00:00Z"
+}

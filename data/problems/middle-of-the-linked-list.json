@@ -1,0 +1,30 @@
+{
+  "leetcodeId": "876",
+  "title": "Middle of the Linked List",
+  "slug": "middle-of-the-linked-list",
+  "url": "https://leetcode.com/problems/middle-of-the-linked-list/",
+  "difficulty": "Easy",
+  "status": "solved",
+  "premium": false,
+  "tags": [
+    "Linked List",
+    "Two Pointers"
+  ],
+  "problemStatement": "Given the head of a singly linked list, return the middle node of the linked list.\n\nIf there are two middle nodes, return the second middle node.\n\nExample 1:\n\nInput: head = [1,2,3,4,5]\nOutput: [3,4,5]\nExplanation: The middle node of the list is node 3.\n\nExample 2:\n\nInput: head = [1,2,3,4,5,6]\nOutput: [4,5,6]\nExplanation: Since the list has two middle nodes with values 3 and 4, we return the second one.\n\nConstraints:\n\n- The number of nodes in the list is in the range [1, 100].\n\n- 1 <= Node.val <= 100",
+  "constraints": [
+    "The number of nodes in the list is in the range [1, 100].",
+    "1 <= Node.val <= 100"
+  ],
+  "hints": [],
+  "acRate": 82.45,
+  "lastSubmittedAt": "2026-07-19T12:43:34Z",
+  "latestSubmission": {
+    "submissionId": "2073461941",
+    "language": "Python3",
+    "code": "# Definition for singly-linked list.\n# class ListNode:\n#     def __init__(self, val=0, next=None):\n#         self.val = val\n#         self.next = next\nclass Solution:\n    def middleNode(self, head: Optional[ListNode]) -> Optional[ListNode]:\n        slow = head\n        fast = head\n        \n        while fast and fast.next:\n            fast = fast.next.next\n            slow = slow.next\n        \n        return slow"
+  },
+  "notes": [],
+  "source": "leetcode",
+  "importedAt": "2026-10-01T13:44:25Z",
+  "lastSyncedAt": "2026-10-01T13:44:25Z"
+}

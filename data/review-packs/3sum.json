@@ -1,0 +1,251 @@
+{
+  "schemaVersion": 1,
+  "problemSlug": "3sum",
+  "summary": "Return all unique triplets in the array that sum to zero, without duplicate triplets.",
+  "patterns": [
+    "Two Pointers",
+    "Array / Hashing"
+  ],
+  "mainInsight": "Sort the array, fix the first element a = nums[i], and solve the remaining 'two numbers summing to -a' on the sorted suffix with two pointers. Sorting also puts duplicates next to each other so they can be skipped.",
+  "invariant": "For a fixed i, lo and hi bracket the only region that can still contain an undiscovered pair summing to -nums[i]: sum too small => lo moves right (no pair with the current lo can work), sum too large => hi moves left.",
+  "canonicalApproach": "Sort + two pointers",
+  "approaches": [
+    {
+      "name": "Brute force",
+      "summary": "Try every triple (i, j, k) and deduplicate with a set of sorted tuples.",
+      "timeComplexity": "O(n^3)",
+      "spaceComplexity": "O(n)",
+      "strengths": [
+        "Easy to get right"
+      ],
+      "weaknesses": [
+        "27 billion operations at n = 3000"
+      ],
+      "interviewRelevance": "Baseline only."
+    },
+    {
+      "name": "Fix one + hash set",
+      "summary": "For each i run Two Sum on the rest using a set; deduplicate via sorting + skipping or a result set.",
+      "timeComplexity": "O(n^2)",
+      "spaceComplexity": "O(n)",
+      "strengths": [
+        "No sort required for the search itself"
+      ],
+      "weaknesses": [
+        "Extra memory",
+        "Deduplication is awkward"
+      ],
+      "interviewRelevance": "Valid alternative; mention the trade-off."
+    },
+    {
+      "name": "Sort + two pointers",
+      "summary": "Sort; for each distinct first value run a two-pointer sweep on the suffix; skip duplicates for the first element and after each hit.",
+      "timeComplexity": "O(n^2)",
+      "spaceComplexity": "O(1) extra (plus sort space)",
+      "strengths": [
+        "Natural duplicate skipping",
+        "Minimal extra memory"
+      ],
+      "weaknesses": [
+        "Must be careful with duplicate-skip logic"
+      ],
+      "interviewRelevance": "The expected answer."
+    }
+  ],
+  "commonMistakes": [
+    "Skipping duplicates against nums[i+1] instead of nums[i-1] (loses triplets like [-1,-1,2]).",
+    "Forgetting to skip duplicates for lo after a hit (duplicate triplets).",
+    "Breaking the loop on a > 0 before sorting."
+  ],
+  "edgeCases": [
+    "[0,0,0,0] -> [[0,0,0]].",
+    "Fewer than three elements or no zero-sum triplet -> [].",
+    "Many duplicates such as [-1,-1,-1,2,2]."
+  ],
+  "cards": [
+    {
+      "id": "3sum-pattern-01",
+      "category": "pattern",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "Which approach gives the standard O(n^2) solution?",
+        "What technique should '3Sum, unique triplets' make you reach for?",
+        "Which pattern solves 3Sum optimally?"
+      ],
+      "options": [
+        "Sorting + two pointers",
+        "Prefix sum",
+        "BFS",
+        "Monotonic stack"
+      ],
+      "answer": "Sorting + two pointers",
+      "explanation": "Sorting enables a linear two-pointer search for each fixed first element: O(n log n) + O(n^2) = O(n^2).",
+      "incorrectOptionExplanations": {
+        "Prefix sum": "Prefix sums answer contiguous-subarray queries; triplets are not contiguous.",
+        "BFS": "There is no graph or level structure.",
+        "Monotonic stack": "There is no nearest-greater / smaller relation to exploit."
+      },
+      "enabled": true
+    },
+    {
+      "id": "3sum-main-insight-01",
+      "category": "main_insight",
+      "type": "free_recall",
+      "promptVariants": [
+        "Why does sorting make the inner search linear?",
+        "Explain how 3Sum reduces to a two-pointer problem."
+      ],
+      "answer": "Fixing nums[i] reduces the task to finding a pair with sum -nums[i]. In a sorted array, the sum of two pointers is monotone in each pointer: moving lo right increases it, moving hi left decreases it, so each step eliminates one candidate and the sweep is O(n) per i.",
+      "keyPoints": [
+        "Fix one element => Two Sum",
+        "Sorted => monotone sum in lo/hi",
+        "Each step discards a candidate => O(n) per i"
+      ],
+      "explanation": "That gives n fixed values x O(n) sweep = O(n^2) overall.",
+      "enabled": true
+    },
+    {
+      "id": "3sum-invariant-01",
+      "category": "invariant",
+      "type": "free_recall",
+      "promptVariants": [
+        "For a fixed i, why is it safe to move lo right when the sum is too small?",
+        "Why can you discard the current lo when a + nums[lo] + nums[hi] < 0?"
+      ],
+      "answer": "nums[hi] is the largest value still available, so even paired with it nums[lo] cannot reach the target; any other partner is smaller still. Hence nums[lo] cannot be part of any answer with this a, and discarding it loses nothing. Symmetrically for hi when the sum is too large.",
+      "keyPoints": [
+        "hi is the best possible partner for lo",
+        "If lo fails with hi it fails with everything",
+        "Symmetric argument for hi"
+      ],
+      "explanation": "This is the correctness argument for every two-pointer search on sorted data.",
+      "enabled": true
+    },
+    {
+      "id": "3sum-edge-01",
+      "category": "edge_case",
+      "type": "free_recall",
+      "promptVariants": [
+        "Where must duplicates be skipped in 3Sum, and why in each place?",
+        "How do you avoid duplicate triplets? List every place you skip duplicates."
+      ],
+      "answer": "(1) For the first element: skip nums[i] if it equals nums[i-1] (same first value would repeat all triplets). (2) After finding a triplet: advance lo past equal values (and optionally hi) so the same pair is not reported again.",
+      "keyPoints": [
+        "Skip duplicate first elements",
+        "Skip duplicate lo (and hi) after a hit",
+        "Compare with the PREVIOUS element"
+      ],
+      "explanation": "Both skips are required: the first prevents repeating whole sweeps, the second prevents repeating pairs within a sweep.",
+      "enabled": true
+    },
+    {
+      "id": "3sum-time-01",
+      "category": "time_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Overall time complexity of sort + two pointers (including the sort): ___",
+        "3Sum with sorting and two pointers runs in ___ time."
+      ],
+      "answer": "O(n^2)",
+      "explanation": "Sorting is O(n log n) and n two-pointer sweeps cost O(n) each, so O(n^2) dominates.",
+      "enabled": true,
+      "acceptedAnswers": [
+        "O(n^2) time",
+        "O(n²)",
+        "quadratic"
+      ]
+    },
+    {
+      "id": "3sum-space-01",
+      "category": "space_complexity",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "Ignoring the output, what extra space does sort + two pointers need?",
+        "What is the extra space of the canonical 3Sum solution?"
+      ],
+      "options": [
+        "O(1) beyond the sort itself (Python's sort uses up to O(n))",
+        "O(n) for a hash set",
+        "O(n^2) for storing all pairs",
+        "O(log n) for recursion"
+      ],
+      "answer": "O(1) beyond the sort itself (Python's sort uses up to O(n))",
+      "explanation": "Two pointers need only a few integers; any extra space comes from the sort implementation. The result list is excluded from the analysis.",
+      "incorrectOptionExplanations": {
+        "O(n) for a hash set": "That is the hash-set alternative, not the two-pointer solution.",
+        "O(n^2) for storing all pairs": "No pair table is ever built.",
+        "O(log n) for recursion": "The algorithm is iterative."
+      },
+      "enabled": true
+    },
+    {
+      "id": "3sum-code-01",
+      "category": "code_reasoning",
+      "type": "code_question",
+      "promptVariants": [
+        "Why can the loop `break` as soon as a > 0?",
+        "Explain the `if a > 0: break` line in the sorted 3Sum loop."
+      ],
+      "code": "nums.sort()\nres = []\nfor i, a in enumerate(nums):\n    if a > 0:\n        break\n    if i > 0 and a == nums[i - 1]:\n        continue\n    lo, hi = i + 1, len(nums) - 1\n    while lo < hi:\n        s = a + nums[lo] + nums[hi]\n        if s < 0:\n            lo += 1\n        elif s > 0:\n            hi -= 1\n        else:\n            res.append([a, nums[lo], nums[hi]])\n            lo += 1\n            while lo < hi and nums[lo] == nums[lo - 1]:\n                lo += 1",
+      "answer": "The array is sorted ascending, so if the smallest element a of the triplet is positive, all three are positive and the sum cannot be zero - and every later i is also positive. It is an optimisation, not needed for correctness.",
+      "keyPoints": [
+        "Sorted ascending",
+        "All three would be positive",
+        "Pure pruning optimisation"
+      ],
+      "explanation": "It prunes the remainder of the array in one step.",
+      "enabled": true
+    },
+    {
+      "id": "3sum-code-02",
+      "category": "code_reasoning",
+      "type": "code_question",
+      "promptVariants": [
+        "Why does `if i > 0 and a == nums[i - 1]: continue` compare with the previous element rather than the next one?",
+        "What would break if the duplicate check were `a == nums[i + 1]`?"
+      ],
+      "code": "for i, a in enumerate(nums):\n    if i > 0 and a == nums[i - 1]:\n        continue\n    lo, hi = i + 1, len(nums) - 1\n    ...",
+      "answer": "Comparing with the previous element keeps the FIRST copy of a value as the fixed element, so its copies can still be used as lo/hi partners (e.g. [-1,-1,2] is found with a = first -1, lo = second -1). Comparing with the next element would skip that first copy and lose such triplets.",
+      "keyPoints": [
+        "Keep the first occurrence",
+        "Later duplicates remain available as lo/hi",
+        "Example [-1,-1,2]"
+      ],
+      "explanation": "The skip rule is 'skip a value we already used as the FIRST element', not 'skip a value that has a twin'.",
+      "enabled": true
+    },
+    {
+      "id": "3sum-alt-01",
+      "category": "alternative_approach",
+      "type": "free_recall",
+      "promptVariants": [
+        "Describe the hash-set alternative to two pointers and when you might prefer it.",
+        "How would you solve 3Sum without two pointers, and what do you trade off?"
+      ],
+      "answer": "For each i, run Two Sum on the rest with a set of seen values (still sorting or using tuple dedupe to avoid duplicates). Time is still O(n^2) but extra space is O(n), and deduplication is clumsier; prefer it only if the data cannot be sorted in place.",
+      "keyPoints": [
+        "Fix one + Two Sum with a set",
+        "Same O(n^2) time, O(n) space",
+        "Duplicate handling is harder"
+      ],
+      "explanation": "Two pointers is usually preferable: less memory and built-in duplicate skipping.",
+      "enabled": true
+    },
+    {
+      "id": "3sum-edge-02",
+      "category": "edge_case",
+      "type": "fill_blank",
+      "promptVariants": [
+        "For nums = [0, 0, 0, 0] the correct output is ___.",
+        "3Sum on four zeros returns ___."
+      ],
+      "answer": "[[0,0,0]]",
+      "explanation": "Only one unique triplet exists even though there are four ways to choose indices; duplicate skipping ensures it is reported once.",
+      "enabled": true,
+      "acceptedAnswers": [
+        "[[0, 0, 0]]"
+      ]
+    }
+  ],
+  "generatedAt": "2026-10-01T00:00:00Z"
+}

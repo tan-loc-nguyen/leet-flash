@@ -1,0 +1,34 @@
+{
+  "leetcodeId": "496",
+  "title": "Next Greater Element I",
+  "slug": "next-greater-element-i",
+  "url": "https://leetcode.com/problems/next-greater-element-i/",
+  "difficulty": "Easy",
+  "status": "solved",
+  "premium": false,
+  "tags": [
+    "Array",
+    "Hash Table",
+    "Stack",
+    "Monotonic Stack"
+  ],
+  "problemStatement": "The next greater element of some element x in an array is the first greater element that is to the right of x in the same array.\n\nYou are given two distinct 0-indexed integer arrays nums1 and nums2, where nums1 is a subset of nums2.\n\nFor each 0 <= i < nums1.length, find the index j such that nums1[i] == nums2[j] and determine the next greater element of nums2[j] in nums2. If there is no next greater element, then the answer for this query is -1.\n\nReturn an array ans of length nums1.length such that ans[i] is the next greater element as described above.\n\nExample 1:\n\nInput: nums1 = [4,1,2], nums2 = [1,3,4,2]\nOutput: [-1,3,-1]\nExplanation: The next greater element for each value of nums1 is as follows:\n- 4 is underlined in nums2 = [1,3,4,2]. There is no next greater element, so the answer is -1.\n- 1 is underlined in nums2 = [1,3,4,2]. The next greater element is 3.\n- 2 is underlined in nums2 = [1,3,4,2]. There is no next greater element, so the answer is -1.\n\nExample 2:\n\nInput: nums1 = [2,4], nums2 = [1,2,3,4]\nOutput: [3,-1]\nExplanation: The next greater element for each value of nums1 is as follows:\n- 2 is underlined in nums2 = [1,2,3,4]. The next greater element is 3.\n- 4 is underlined in nums2 = [1,2,3,4]. There is no next greater element, so the answer is -1.\n\nConstraints:\n\n- 1 <= nums1.length <= nums2.length <= 1000\n\n- 0 <= nums1[i], nums2[i] <= 10^4\n\n- All integers in nums1 and nums2 are unique.\n\n- All the integers of nums1 also appear in nums2.\n\nFollow up: Could you find an O(nums1.length + nums2.length) solution?",
+  "constraints": [
+    "1 <= nums1.length <= nums2.length <= 1000",
+    "0 <= nums1[i], nums2[i] <= 10^4",
+    "All integers in nums1 and nums2 are unique.",
+    "All the integers of nums1 also appear in nums2."
+  ],
+  "hints": [],
+  "acRate": 76.91,
+  "lastSubmittedAt": "2026-09-30T10:45:12Z",
+  "latestSubmission": {
+    "submissionId": "2158072194",
+    "language": "Python3",
+    "code": "class Solution:\n    def nextGreaterElement(self, nums1: List[int], nums2: List[int]) -> List[int]:\n        # nums1 is the subset of nums2\n        # for every element in nums1 i need to find the next greater element of that in nums2\n        # brute-force approach where I use a hashmap and a nested loop\n        # the hashmap will record the elements in nums2 as key and find their corresponding position in nums2 as val\n        # then I will iterate through that hashmap\n        # each iteration I will scan through nums2 from the position of that element to find the next greater element\n        # n = len(nums2)\n        # hashmap = {}\n        # for i in range(n):\n        #     hashmap[nums2[i]] = i\n        \n        # m = len(nums1)\n        # ans = [-1] * m\n\n        # for i in range(m):\n        #     num = nums1[i]\n        #     idx = hashmap[num]\n        #     for j in range(idx + 1, n):\n        #         if nums2[j] > num:\n        #             ans[i] = nums2[j]\n        #             break\n        # return ans\n\n        # TC: O(n*m) and sc O(n)\n        stack = []\n        ans = [-1] * len(nums1)\n        hmap = {num: i for i, num in enumerate(nums1)}\n\n        for i in range(len(nums2)):\n            while stack and nums2[stack[-1]] <= nums2[i]:\n                idx = stack.pop()\n                if nums2[idx] in hmap:\n                    ans[hmap[nums2[idx]]] = nums2[i]\n            \n            stack.append(i)\n\n        return ans\n"
+  },
+  "notes": [],
+  "source": "leetcode",
+  "importedAt": "2026-10-01T13:44:25Z",
+  "lastSyncedAt": "2026-10-01T13:44:25Z"
+}

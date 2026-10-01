@@ -1,0 +1,37 @@
+{
+  "leetcodeId": "23",
+  "title": "Merge k Sorted Lists",
+  "slug": "merge-k-sorted-lists",
+  "url": "https://leetcode.com/problems/merge-k-sorted-lists/",
+  "difficulty": "Hard",
+  "status": "solved",
+  "premium": false,
+  "tags": [
+    "Linked List",
+    "Divide and Conquer",
+    "Heap (Priority Queue)",
+    "Merge Sort",
+    "Tournament Sort"
+  ],
+  "problemStatement": "You are given an array of k linked-lists lists, each linked-list is sorted in ascending order.\n\nMerge all the linked-lists into one sorted linked-list and return it.\n\nExample 1:\n\nInput: lists = [[1,4,5],[1,3,4],[2,6]]\nOutput: [1,1,2,3,4,4,5,6]\nExplanation: The linked-lists are:\n[\n  1->4->5,\n  1->3->4,\n  2->6\n]\nmerging them into one sorted linked list:\n1->1->2->3->4->4->5->6\n\nExample 2:\n\nInput: lists = []\nOutput: []\n\nExample 3:\n\nInput: lists = [[]]\nOutput: []\n\nConstraints:\n\n- k == lists.length\n\n- 0 <= k <= 10^4\n\n- 0 <= lists[i].length <= 500\n\n- -10^4 <= lists[i][j] <= 10^4\n\n- lists[i] is sorted in ascending order.\n\n- The sum of lists[i].length will not exceed 10^4.",
+  "constraints": [
+    "k == lists.length",
+    "0 <= k <= 10^4",
+    "0 <= lists[i].length <= 500",
+    "-10^4 <= lists[i][j] <= 10^4",
+    "lists[i] is sorted in ascending order.",
+    "The sum of lists[i].length will not exceed 10^4."
+  ],
+  "hints": [],
+  "acRate": 60.65,
+  "lastSubmittedAt": "2026-09-23T13:44:56Z",
+  "latestSubmission": {
+    "submissionId": "2150930947",
+    "language": "Python3",
+    "code": "# Definition for singly-linked list.\n# class ListNode:\n#     def __init__(self, val=0, next=None):\n#         self.val = val\n#         self.next = next\nclass Solution:\n    ListNode.__lt__ = lambda self, other: self.val < other.val\n\n    def mergeKLists(self, lists: list[ListNode | None]) -> ListNode | None:\n        heap = []\n        for l in lists:\n            if l:\n                heap.append(l)\n        heapify(heap)\n\n        dummy = ListNode()\n        cur = dummy\n        while heap:\n            node = heappop(heap)\n            cur.next = node\n            cur = cur.next\n            if node.next:\n                heappush(heap, node.next)\n        return dummy.next"
+  },
+  "notes": [],
+  "source": "leetcode",
+  "importedAt": "2026-10-01T13:44:25Z",
+  "lastSyncedAt": "2026-10-01T13:44:25Z"
+}

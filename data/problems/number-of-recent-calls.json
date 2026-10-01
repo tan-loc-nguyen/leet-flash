@@ -1,0 +1,32 @@
+{
+  "leetcodeId": "933",
+  "title": "Number of Recent Calls",
+  "slug": "number-of-recent-calls",
+  "url": "https://leetcode.com/problems/number-of-recent-calls/",
+  "difficulty": "Easy",
+  "status": "solved",
+  "premium": false,
+  "tags": [
+    "Design",
+    "Queue",
+    "Data Stream"
+  ],
+  "problemStatement": "You have a RecentCounter class which counts the number of recent requests within a certain time frame.\n\nImplement the RecentCounter class:\n\n- RecentCounter() Initializes the counter with zero recent requests.\n\n- int ping(int t) Adds a new request at time t, where t represents some time in milliseconds, and returns the number of requests that have happened in the inclusive range [t - 3000, t], that is, the new request plus every earlier request that is no more than 3000 milliseconds older.\n\nIt is guaranteed that every call to ping uses a strictly larger value of t than the previous call.\n\nExample 1:\n\nInput\n[\"RecentCounter\", \"ping\", \"ping\", \"ping\", \"ping\"]\n[[], [1], [100], [3001], [3002]]\nOutput\n[null, 1, 2, 3, 3]\n\nExplanation\nRecentCounter recentCounter = new RecentCounter();\nrecentCounter.ping(1);     // requests = [1], range is [-2999,1], return 1\nrecentCounter.ping(100);   // requests = [1, 100], range is [-2900,100], return 2\nrecentCounter.ping(3001);  // requests = [1, 100, 3001], range is [1,3001], return 3\nrecentCounter.ping(3002);  // requests = [1, 100, 3001, 3002], range is [2,3002], return 3\n\nConstraints:\n\n- 1 <= t <= 10^9\n\n- Each test case will call ping with strictly increasing values of t.\n\n- At most 10^4 calls will be made to ping.",
+  "constraints": [
+    "1 <= t <= 10^9",
+    "Each test case will call ping with strictly increasing values of t.",
+    "At most 10^4 calls will be made to ping."
+  ],
+  "hints": [],
+  "acRate": 79.12,
+  "lastSubmittedAt": "2026-08-14T05:26:36Z",
+  "latestSubmission": {
+    "submissionId": "2106198732",
+    "language": "Python3",
+    "code": "class RecentCounter:\n\n    def __init__(self):\n        self.queue = collections.deque([])\n\n    def ping(self, t: int) -> int:\n        self.queue.append(t)\n\n        while self.queue and self.queue[0] < t - 3000:\n            self.queue.popleft()\n\n        return len(self.queue)\n        \n\n\n# Your RecentCounter object will be instantiated and called as such:\n# obj = RecentCounter()\n# param_1 = obj.ping(t)"
+  },
+  "notes": [],
+  "source": "leetcode",
+  "importedAt": "2026-10-01T13:44:25Z",
+  "lastSyncedAt": "2026-10-01T13:44:25Z"
+}

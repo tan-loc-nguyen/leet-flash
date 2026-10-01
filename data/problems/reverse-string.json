@@ -1,0 +1,32 @@
+{
+  "leetcodeId": "344",
+  "title": "Reverse String",
+  "slug": "reverse-string",
+  "url": "https://leetcode.com/problems/reverse-string/",
+  "difficulty": "Easy",
+  "status": "solved",
+  "premium": false,
+  "tags": [
+    "Two Pointers",
+    "String"
+  ],
+  "problemStatement": "Write a function that reverses a string. The input string is given as an array of characters s.\n\nYou must do this by modifying the input array in-place with O(1) extra memory.\n\nExample 1:\n\nInput: s = [\"h\",\"e\",\"l\",\"l\",\"o\"]\nOutput: [\"o\",\"l\",\"l\",\"e\",\"h\"]\n\nExample 2:\n\nInput: s = [\"H\",\"a\",\"n\",\"n\",\"a\",\"h\"]\nOutput: [\"h\",\"a\",\"n\",\"n\",\"a\",\"H\"]\n\nConstraints:\n\n- 1 <= s.length <= 10^5\n\n- s[i] is a printable ascii character.",
+  "constraints": [
+    "1 <= s.length <= 10^5",
+    "s[i] is a printable ascii character."
+  ],
+  "hints": [
+    "The entire logic for reversing a string is based on using the opposite directional two-pointer approach!"
+  ],
+  "acRate": 81.39,
+  "lastSubmittedAt": "2026-07-20T03:07:50Z",
+  "latestSubmission": {
+    "submissionId": "2074006130",
+    "language": "Python3",
+    "code": "class Solution:\n    def reverseString(self, s: List[str]) -> None:\n        \"\"\"\n        Do not return anything, modify s in-place instead.\n        \"\"\"\n        l, r = 0, len(s) - 1\n        while l <= r:\n            s[l], s[r] = s[r], s[l]\n            l += 1\n            r -= 1"
+  },
+  "notes": [],
+  "source": "leetcode",
+  "importedAt": "2026-10-01T13:44:25Z",
+  "lastSyncedAt": "2026-10-01T13:44:25Z"
+}

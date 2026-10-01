@@ -1,0 +1,28 @@
+{
+  "leetcodeId": "7",
+  "title": "Reverse Integer",
+  "slug": "reverse-integer",
+  "url": "https://leetcode.com/problems/reverse-integer/",
+  "difficulty": "Medium",
+  "status": "solved",
+  "premium": false,
+  "tags": [
+    "Math"
+  ],
+  "problemStatement": "Given a signed 32-bit integer x, return x with its digits reversed. If reversing x causes the value to go outside the signed 32-bit integer range [-2^31, 2^31 - 1], then return 0.\n\nAssume the environment does not allow you to store 64-bit integers (signed or unsigned).\n\nExample 1:\n\nInput: x = 123\nOutput: 321\n\nExample 2:\n\nInput: x = -123\nOutput: -321\n\nExample 3:\n\nInput: x = 120\nOutput: 21\n\nConstraints:\n\n- -2^31 <= x <= 2^31 - 1",
+  "constraints": [
+    "-2^31 <= x <= 2^31 - 1"
+  ],
+  "hints": [],
+  "acRate": 32.6,
+  "lastSubmittedAt": "2026-09-09T14:20:50Z",
+  "latestSubmission": {
+    "submissionId": "2136429346",
+    "language": "Python3",
+    "code": "class Solution:\n    def reverse(self, x: int) -> int:\n        sign = 1 if x >= 0 else -1\n        x = abs(x)\n        reversed_x = 0\n        while x > 0:\n            last_digit = x % 10          # Get the last digit\n            reversed_x = (reversed_x * 10) + last_digit  # Shift and add\n            x //= 10                     # Remove the last digit\n    \n        if not (-2**31 <= reversed_x <= 2**31 - 1):\n            return 0\n\n        return reversed_x * sign"
+  },
+  "notes": [],
+  "source": "leetcode",
+  "importedAt": "2026-10-01T13:44:25Z",
+  "lastSyncedAt": "2026-10-01T13:44:25Z"
+}

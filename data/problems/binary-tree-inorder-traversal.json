@@ -1,0 +1,32 @@
+{
+  "leetcodeId": "94",
+  "title": "Binary Tree Inorder Traversal",
+  "slug": "binary-tree-inorder-traversal",
+  "url": "https://leetcode.com/problems/binary-tree-inorder-traversal/",
+  "difficulty": "Easy",
+  "status": "solved",
+  "premium": false,
+  "tags": [
+    "Stack",
+    "Tree",
+    "Depth-First Search",
+    "Binary Tree"
+  ],
+  "problemStatement": "Given the root of a binary tree, return the inorder traversal of its nodes' values.\n\nExample 1:\n\nInput: root = [1,null,2,3]\n\nOutput: [1,3,2]\n\nExplanation:\n\nExample 2:\n\nInput: root = [1,2,3,4,5,null,8,null,null,6,7,9]\n\nOutput: [4,2,6,5,7,1,3,9,8]\n\nExplanation:\n\nExample 3:\n\nInput: root = []\n\nOutput: []\n\nExample 4:\n\nInput: root = [1]\n\nOutput: [1]\n\nConstraints:\n\n- The number of nodes in the tree is in the range [0, 100].\n\n- -100 <= Node.val <= 100\n\nFollow up: Recursive solution is trivial, could you do it iteratively?",
+  "constraints": [
+    "The number of nodes in the tree is in the range [0, 100].",
+    "-100 <= Node.val <= 100"
+  ],
+  "hints": [],
+  "acRate": 80.69,
+  "lastSubmittedAt": "2026-09-19T06:32:35Z",
+  "latestSubmission": {
+    "submissionId": "2146374662",
+    "language": "Python3",
+    "code": "# Definition for a binary tree node.\n# class TreeNode:\n#     def __init__(self, val=0, left=None, right=None):\n#         self.val = val\n#         self.left = left\n#         self.right = right\nclass Solution:\n    def inorderTraversal(self, root: TreeNode | None) -> list[int]:\n        ans = []\n\n        def dfs(root):\n            if not root:\n                return\n            \n            dfs(root.left)\n            ans.append(root.val)\n            dfs(root.right)\n\n        dfs(root)\n        return ans"
+  },
+  "notes": [],
+  "source": "leetcode",
+  "importedAt": "2026-10-01T13:44:25Z",
+  "lastSyncedAt": "2026-10-01T13:44:25Z"
+}

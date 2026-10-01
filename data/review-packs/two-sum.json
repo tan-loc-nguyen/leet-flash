@@ -1,0 +1,282 @@
+{
+  "schemaVersion": 1,
+  "problemSlug": "two-sum",
+  "summary": "Given an array and a target, return the indices of two distinct elements whose values sum to the target (exactly one answer exists).",
+  "patterns": [
+    "Array / Hashing"
+  ],
+  "mainInsight": "For each x the partner you need is target - x. A hash map from value to index turns 'has the partner appeared earlier?' into an O(1) lookup, so a single pass is enough.",
+  "invariant": "Before processing index i, the map holds every value at indices < i (value -> index), and no valid pair using only indices < i has been missed.",
+  "canonicalApproach": "One-pass hash map",
+  "approaches": [
+    {
+      "name": "Brute force",
+      "summary": "Check every pair (i, j) with i < j.",
+      "timeComplexity": "O(n^2)",
+      "spaceComplexity": "O(1)",
+      "strengths": [
+        "Trivial to write",
+        "No extra memory"
+      ],
+      "weaknesses": [
+        "Too slow for large n"
+      ],
+      "interviewRelevance": "Always state it first as the baseline, then optimise."
+    },
+    {
+      "name": "Sort + two pointers",
+      "summary": "Sort (value, original index) pairs, then move two pointers inward from both ends comparing the sum with the target.",
+      "timeComplexity": "O(n log n)",
+      "spaceComplexity": "O(n)",
+      "strengths": [
+        "Becomes O(1) extra space if the input is already sorted"
+      ],
+      "weaknesses": [
+        "Sorting loses original indices, so you must carry them along",
+        "Slower than hashing"
+      ],
+      "interviewRelevance": "Good follow-up: 'what if the array is sorted?' (Two Sum II)."
+    },
+    {
+      "name": "One-pass hash map",
+      "summary": "Iterate once; if target - x is already in the map return both indices, otherwise store x -> i.",
+      "timeComplexity": "O(n)",
+      "spaceComplexity": "O(n)",
+      "strengths": [
+        "Optimal time",
+        "Single pass",
+        "Handles duplicates naturally"
+      ],
+      "weaknesses": [
+        "Uses O(n) extra memory"
+      ],
+      "interviewRelevance": "The expected answer."
+    }
+  ],
+  "commonMistakes": [
+    "Inserting the current number before checking its complement (reuses the same element, e.g. [3,2,4] target 6).",
+    "Returning values instead of indices.",
+    "Sorting the array and forgetting the original indices."
+  ],
+  "edgeCases": [
+    "Duplicate values: [3,3] with target 6.",
+    "Negative numbers and zeros: [0,4,3,0] target 0.",
+    "The two elements are adjacent / at the extremes."
+  ],
+  "cards": [
+    {
+      "id": "two-sum-pattern-01",
+      "category": "pattern",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "What is the key pattern behind the optimal Two Sum solution?",
+        "Which technique gives the standard one-pass solution for Two Sum?",
+        "What interview pattern should you recognise for Two Sum?"
+      ],
+      "options": [
+        "Hash map",
+        "Sliding window",
+        "Binary search",
+        "Monotonic stack"
+      ],
+      "answer": "Hash map",
+      "explanation": "The hash map stores previously seen values so each complement lookup is O(1) on average.",
+      "incorrectOptionExplanations": {
+        "Sliding window": "There is no contiguous-window constraint; the two elements can be anywhere.",
+        "Binary search": "It needs sorted data; sorting would destroy the original indices you must return.",
+        "Monotonic stack": "There is no nearest-greater / nearest-smaller structure in the problem."
+      },
+      "enabled": true
+    },
+    {
+      "id": "two-sum-main-insight-01",
+      "category": "main_insight",
+      "type": "free_recall",
+      "promptVariants": [
+        "Why does using a hash map eliminate the need to check every pair?",
+        "What does the hash map buy you compared with brute force?",
+        "Explain the core idea of the O(n) Two Sum solution."
+      ],
+      "answer": "For each element x the only partner that works is target - x. Instead of scanning for it (O(n) per element), the map answers 'have I seen target - x?' in O(1), so n lookups replace n^2 pair checks.",
+      "keyPoints": [
+        "Partner is fully determined: target - x",
+        "Lookup replaces an inner scan",
+        "O(1) average lookup => O(n) overall"
+      ],
+      "explanation": "Brute force is n scans of length n. A hash map precomputes 'what I have seen' so each scan collapses to one lookup.",
+      "enabled": true
+    },
+    {
+      "id": "two-sum-invariant-01",
+      "category": "invariant",
+      "type": "free_recall",
+      "promptVariants": [
+        "What information should the hash map contain at iteration i?",
+        "State the loop invariant of the one-pass solution.",
+        "At index i, what do the map's keys and values represent?"
+      ],
+      "answer": "Keys are the values at indices 0..i-1 and each maps to its index. Therefore if a valid pair ends at i, its earlier element is in the map.",
+      "keyPoints": [
+        "Only elements BEFORE i",
+        "value -> index",
+        "Guarantees any earlier partner is findable"
+      ],
+      "explanation": "Because the current element is inserted only after the check, the map never contains index i itself while we look for its complement.",
+      "enabled": true
+    },
+    {
+      "id": "two-sum-implementation-01",
+      "category": "implementation_detail",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "Why should the complement be checked before inserting the current number?",
+        "What goes wrong if you insert nums[i] into the map before the lookup?",
+        "Why is the order 'check, then insert' important?"
+      ],
+      "options": [
+        "The same element could be paired with itself",
+        "The map would no longer be sorted",
+        "Dictionary lookups only work on keys not yet inserted",
+        "It halves the memory usage"
+      ],
+      "answer": "The same element could be paired with itself",
+      "explanation": "If x is inserted first and 2*x == target, the lookup finds x itself and returns [i, i], reusing one element.",
+      "incorrectOptionExplanations": {
+        "The map would no longer be sorted": "Hash maps are unordered; order is irrelevant here.",
+        "Dictionary lookups only work on keys not yet inserted": "Lookups work on any existing key; this is not a dictionary restriction.",
+        "It halves the memory usage": "The memory use is identical either way."
+      },
+      "enabled": true
+    },
+    {
+      "id": "two-sum-time-01",
+      "category": "time_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Time complexity of the one-pass hash-map solution: ___",
+        "The optimal Two Sum solution runs in ___ time (average case)."
+      ],
+      "answer": "O(n)",
+      "explanation": "One pass of n elements, each doing an O(1) average-time dictionary lookup and insertion.",
+      "enabled": true,
+      "acceptedAnswers": [
+        "O(n) average",
+        "linear",
+        "O(N)"
+      ]
+    },
+    {
+      "id": "two-sum-space-01",
+      "category": "space_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Space complexity of the one-pass hash-map solution: ___",
+        "In the worst case the map stores up to n entries, so extra space is ___."
+      ],
+      "answer": "O(n)",
+      "explanation": "In the worst case (no pair until the end) every element is stored in the map.",
+      "enabled": true,
+      "acceptedAnswers": [
+        "linear"
+      ]
+    },
+    {
+      "id": "two-sum-tradeoff-01",
+      "category": "alternative_approach",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "What is the time-space trade-off between brute force and the hash-map solution?",
+        "How do brute force and the hash-map approach compare on time and space?"
+      ],
+      "options": [
+        "Hash map: O(n) time / O(n) space vs brute force: O(n^2) time / O(1) space",
+        "Hash map: O(n log n) time / O(1) space vs brute force: O(n^2) time / O(n) space",
+        "Hash map: O(n) time / O(1) space vs brute force: O(n^2) time / O(n) space",
+        "Both are O(n^2) time; the hash map only saves constant factors"
+      ],
+      "answer": "Hash map: O(n) time / O(n) space vs brute force: O(n^2) time / O(1) space",
+      "explanation": "You spend O(n) memory on the map to remove the inner loop: a classic time-for-space trade.",
+      "incorrectOptionExplanations": {
+        "Hash map: O(n log n) time / O(1) space vs brute force: O(n^2) time / O(n) space": "That mixes up the approaches; O(n log n) belongs to sorting and the hash map is not O(1) space.",
+        "Hash map: O(n) time / O(1) space vs brute force: O(n^2) time / O(n) space": "The map needs O(n) space; brute force needs none.",
+        "Both are O(n^2) time; the hash map only saves constant factors": "It removes the entire inner loop: n^2 -> n."
+      },
+      "enabled": true
+    },
+    {
+      "id": "two-sum-edge-01",
+      "category": "edge_case",
+      "type": "free_recall",
+      "promptVariants": [
+        "Why does the one-pass solution still work when duplicate values exist (e.g. [3,3], target 6)?",
+        "Trace [3,3] with target 6 through the hash-map solution. Why is the duplicate not a problem?"
+      ],
+      "answer": "At index 0 the complement 3 is not in the map, so 3 -> 0 is stored. At index 1 the complement 3 IS in the map (index 0), so we return [0,1] before the later duplicate could overwrite the entry.",
+      "keyPoints": [
+        "Check happens before insert",
+        "First 3 stored, second 3 finds it",
+        "Overwrite of duplicate keys never matters because the answer is returned first"
+      ],
+      "explanation": "Overwriting a key only loses the older index, which only matters if a later element needed it - but a valid pair would already have been returned.",
+      "enabled": true
+    },
+    {
+      "id": "two-sum-why-not-01",
+      "category": "why_not",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "Why is 'sort then two pointers' not the preferred Two Sum solution?",
+        "What is the main drawback of sorting first in Two Sum?"
+      ],
+      "options": [
+        "Sorting costs O(n log n) and loses the original indices",
+        "Two pointers cannot find sums",
+        "Sorting makes duplicates impossible to handle",
+        "It needs O(n^2) memory"
+      ],
+      "answer": "Sorting costs O(n log n) and loses the original indices",
+      "explanation": "You must return original indices, so you have to carry (value, index) pairs through the sort, and the sort makes it O(n log n) instead of O(n).",
+      "incorrectOptionExplanations": {
+        "Two pointers cannot find sums": "Two pointers works on sorted data (it is the Two Sum II solution).",
+        "Sorting makes duplicates impossible to handle": "Duplicates are fine after sorting.",
+        "It needs O(n^2) memory": "Memory is O(n) for the index pairs."
+      },
+      "enabled": true
+    },
+    {
+      "id": "two-sum-code-01",
+      "category": "code_reasoning",
+      "type": "code_question",
+      "promptVariants": [
+        "What breaks if `seen[x] = i` is moved above the `if need in seen` check?",
+        "Swap the insert and the lookup below. For which input does the answer become wrong?"
+      ],
+      "code": "seen = {}\nfor i, x in enumerate(nums):\n    need = target - x\n    if need in seen:\n        return [seen[need], i]\n    seen[x] = i",
+      "answer": "When 2*x == target the lookup finds x's own entry, returning [i, i] (e.g. nums=[3,2,4], target=6 returns [0,0]) - the same element is used twice.",
+      "keyPoints": [
+        "Same element reused",
+        "Example: [3,2,4], target 6"
+      ],
+      "explanation": "Insert-after-check guarantees the map only contains earlier indices.",
+      "enabled": true
+    },
+    {
+      "id": "two-sum-alt-01",
+      "category": "alternative_approach",
+      "type": "free_recall",
+      "promptVariants": [
+        "If the array were already sorted and you must use O(1) extra space, what would you do?",
+        "How would you solve Two Sum on a sorted array without a hash map?"
+      ],
+      "answer": "Use two pointers, lo = 0 and hi = n-1. If the sum is too small move lo right; if too large move hi left; stop when it equals the target. O(n) time, O(1) space.",
+      "keyPoints": [
+        "Two pointers from both ends",
+        "Sum too small => lo++, too large => hi--",
+        "O(n) time, O(1) space"
+      ],
+      "explanation": "Sortedness gives monotonic information: moving lo increases the sum, moving hi decreases it.",
+      "enabled": true
+    }
+  ],
+  "generatedAt": "2026-10-01T00:00:00Z"
+}

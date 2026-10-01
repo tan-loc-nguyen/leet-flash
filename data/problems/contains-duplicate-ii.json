@@ -1,0 +1,32 @@
+{
+  "leetcodeId": "219",
+  "title": "Contains Duplicate II",
+  "slug": "contains-duplicate-ii",
+  "url": "https://leetcode.com/problems/contains-duplicate-ii/",
+  "difficulty": "Easy",
+  "status": "solved",
+  "premium": false,
+  "tags": [
+    "Array",
+    "Hash Table",
+    "Sliding Window"
+  ],
+  "problemStatement": "Given an integer array nums and an integer k, return true if there are two distinct indices i and j in the array such that nums[i] == nums[j] and abs(i - j) <= k.\n\nExample 1:\n\nInput: nums = [1,2,3,1], k = 3\nOutput: true\n\nExample 2:\n\nInput: nums = [1,0,1,1], k = 1\nOutput: true\n\nExample 3:\n\nInput: nums = [1,2,3,1,2,3], k = 2\nOutput: false\n\nConstraints:\n\n- 1 <= nums.length <= 10^5\n\n- -10^9 <= nums[i] <= 10^9\n\n- 0 <= k <= 10^5",
+  "constraints": [
+    "1 <= nums.length <= 10^5",
+    "-10^9 <= nums[i] <= 10^9",
+    "0 <= k <= 10^5"
+  ],
+  "hints": [],
+  "acRate": 52.0,
+  "lastSubmittedAt": "2026-06-18T04:28:54Z",
+  "latestSubmission": {
+    "submissionId": "2037031005",
+    "language": "Python3",
+    "code": "class Solution:\n    def containsNearbyDuplicate(self, nums: List[int], k: int) -> bool:\n        # Check if any subarrays of nums contains duplicate\n        # have all possible subarrays of nums\n        # detect duplicate within these subarrays\n\n        # init a hashmap counter\n        # build the window with the counter on the first k elements\n        # another loop to slide the window\n        # each time slide by 1 unit\n        # I need to maintain the hashmap counter\n        # while maintaining, i will also check if there is duplicate to return true\n        # exit loop then return fals\n        # sett = set()\n        # n = len(nums)\n        # for i in range(min(k, n)):\n        #     if nums[i] in sett:\n        #         return True\n        #     sett.add(nums[i])\n        \n        # if k >= n:\n        #     return False\n        \n        # for i in range(k, n, 1):\n        #     if nums[i] in sett:\n        #         return True\n            \n        #     sett.add(nums[i])\n        #     sett.remove(nums[i - k])\n        \n        # return False\n        sett = set()\n        l = 0\n\n        for r in range(len(nums)):\n            if r - l > k:\n                sett.remove(nums[l])\n                l += 1\n\n            if nums[r] in sett:\n                return True\n\n            sett.add(nums[r])\n        \n        return False\n\n\n            \n"
+  },
+  "notes": [],
+  "source": "leetcode",
+  "importedAt": "2026-10-01T13:44:25Z",
+  "lastSyncedAt": "2026-10-01T13:44:25Z"
+}

@@ -1,0 +1,37 @@
+{
+  "leetcodeId": "2583",
+  "title": "Kth Largest Sum in a Binary Tree",
+  "slug": "kth-largest-sum-in-a-binary-tree",
+  "url": "https://leetcode.com/problems/kth-largest-sum-in-a-binary-tree/",
+  "difficulty": "Medium",
+  "status": "solved",
+  "premium": false,
+  "tags": [
+    "Tree",
+    "Breadth-First Search",
+    "Sorting",
+    "Binary Tree"
+  ],
+  "problemStatement": "You are given the root of a binary tree and a positive integer k.\n\nThe level sum in the tree is the sum of the values of the nodes that are on the same level.\n\nReturn the k^th largest level sum in the tree (not necessarily distinct). If there are fewer than k levels in the tree, return -1.\n\nNote that two nodes are on the same level if they have the same distance from the root.\n\nExample 1:\n\nInput: root = [5,8,9,2,1,3,7,4,6], k = 2\nOutput: 13\nExplanation: The level sums are the following:\n- Level 1: 5.\n- Level 2: 8 + 9 = 17.\n- Level 3: 2 + 1 + 3 + 7 = 13.\n- Level 4: 4 + 6 = 10.\nThe 2^nd largest level sum is 13.\n\nExample 2:\n\nInput: root = [1,2,null,3], k = 1\nOutput: 3\nExplanation: The largest level sum is 3.\n\nConstraints:\n\n- The number of nodes in the tree is n.\n\n- 2 <= n <= 10^5\n\n- 1 <= Node.val <= 10^6\n\n- 1 <= k <= n",
+  "constraints": [
+    "The number of nodes in the tree is n.",
+    "2 <= n <= 10^5",
+    "1 <= Node.val <= 10^6",
+    "1 <= k <= n"
+  ],
+  "hints": [
+    "Find the sum of values of nodes on each level and return the kth largest one.",
+    "To find the sum of the values of nodes on each level, you can use a DFS or BFS algorithm to traverse the tree and keep track of the level of each node."
+  ],
+  "acRate": 58.92,
+  "lastSubmittedAt": "2026-08-06T18:16:45Z",
+  "latestSubmission": {
+    "submissionId": "2097131556",
+    "language": "Python3",
+    "code": "# Definition for a binary tree node.\n# class TreeNode:\n#     def __init__(self, val=0, left=None, right=None):\n#         self.val = val\n#         self.left = left\n#         self.right = right\nclass Solution:\n    def kthLargestLevelSum(self, root: Optional[TreeNode], k: int) -> int:\n        heap = []\n        queue = collections.deque([root])\n\n        while queue:\n            n = len(queue)\n            levelSum = 0\n            for _ in range(n):\n                node = queue.popleft()\n                if node:\n                    levelSum += node.val\n                    queue.append(node.left)\n                    queue.append(node.right)\n            if levelSum:\n                heapq.heappush(heap, levelSum)\n\n            if len(heap) > k:\n                heapq.heappop(heap)\n\n        if len(heap) < k:\n            return -1\n        \n        return heap[-k]"
+  },
+  "notes": [],
+  "source": "leetcode",
+  "importedAt": "2026-10-01T13:44:25Z",
+  "lastSyncedAt": "2026-10-01T13:44:25Z"
+}

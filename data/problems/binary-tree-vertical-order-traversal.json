@@ -1,0 +1,39 @@
+{
+  "leetcodeId": "314",
+  "title": "Binary Tree Vertical Order Traversal",
+  "slug": "binary-tree-vertical-order-traversal",
+  "url": "https://leetcode.com/problems/binary-tree-vertical-order-traversal/",
+  "difficulty": "Medium",
+  "status": "solved",
+  "premium": true,
+  "tags": [
+    "Hash Table",
+    "Tree",
+    "Depth-First Search",
+    "Breadth-First Search",
+    "Sorting",
+    "Binary Tree"
+  ],
+  "problemStatement": "Given the root of a binary tree, return the vertical order traversal of its nodes' values. (i.e., from top to bottom, column by column).\n\nIf two nodes are in the same row and column, the order should be from left to right.\n\nExample 1:\n\nInput: root = [3,9,20,null,null,15,7]\nOutput: [[9],[3,15],[20],[7]]\n\nExample 2:\n\nInput: root = [3,9,8,4,0,1,7]\nOutput: [[4],[9],[3,0,1],[8],[7]]\n\nExample 3:\n\nInput: root = [1,2,3,4,10,9,11,null,5,null,null,null,null,null,null,null,6]\nOutput: [[4],[2,5],[1,10,9,6],[3],[11]]\n\nConstraints:\n\n- The number of nodes in the tree is in the range [0, 100].\n\n- -100 <= Node.val <= 100",
+  "constraints": [
+    "The number of nodes in the tree is in the range [0, 100].",
+    "-100 <= Node.val <= 100"
+  ],
+  "hints": [
+    "Do BFS from the root. Let the root be at column 0. In the BFS, keep in the queue the node and its column.",
+    "When you traverse a node, store its value in the column index. For example, the root's value should be stored at index 0.",
+    "If the node has a left node, it column should be col - 1. Similarly, if the node has a right node, its column should be col + 1.",
+    "At the end, check the minimum and maximum col and output their values."
+  ],
+  "acRate": 57.9,
+  "lastSubmittedAt": "2026-08-23T10:22:17Z",
+  "latestSubmission": {
+    "submissionId": "2117211011",
+    "language": "Python3",
+    "code": "# Definition for a binary tree node.\n# class TreeNode:\n#     def __init__(self, val=0, left=None, right=None):\n#         self.val = val\n#         self.left = left\n#         self.right = right\nclass Solution:\n    def verticalOrder(self, root: Optional[TreeNode]) -> List[List[int]]:\n        store = defaultdict(list)\n\n        def dfs(root: Optional[TreeNode], col: int, row: int) -> None:\n            if not root:\n                return\n            \n            store[(col, row)].append(root.val)\n            dfs(root.left, col - 1, row + 1)\n            dfs(root.right, col + 1, row + 1)\n            \n        dfs(root, 0, 0)\n\n        sortedKey = sorted(store.keys())\n        minCol = 100\n        maxCol = -100\n        for col, _ in sortedKey:\n            minCol = min(minCol, col)\n            maxCol = max(maxCol, col)\n        ans = [[] for _ in range(maxCol - minCol + 1)]\n        for col, row in sortedKey:\n            ans[col - minCol].extend(store[(col, row)])\n\n        return ans"
+  },
+  "notes": [],
+  "source": "leetcode",
+  "importedAt": "2026-10-01T13:44:25Z",
+  "lastSyncedAt": "2026-10-01T13:44:25Z"
+}

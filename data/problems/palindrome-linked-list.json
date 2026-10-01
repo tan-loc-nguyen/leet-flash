@@ -1,0 +1,32 @@
+{
+  "leetcodeId": "234",
+  "title": "Palindrome Linked List",
+  "slug": "palindrome-linked-list",
+  "url": "https://leetcode.com/problems/palindrome-linked-list/",
+  "difficulty": "Easy",
+  "status": "solved",
+  "premium": false,
+  "tags": [
+    "Linked List",
+    "Two Pointers",
+    "Stack",
+    "Recursion"
+  ],
+  "problemStatement": "Given the head of a singly linked list, return true if it is a palindrome or false otherwise.\n\nExample 1:\n\nInput: head = [1,2,2,1]\nOutput: true\n\nExample 2:\n\nInput: head = [1,2]\nOutput: false\n\nConstraints:\n\n- The number of nodes in the list is in the range [1, 10^5].\n\n- 0 <= Node.val <= 9\n\nFollow up: Could you do it in O(n) time and O(1) space?",
+  "constraints": [
+    "The number of nodes in the list is in the range [1, 10^5].",
+    "0 <= Node.val <= 9"
+  ],
+  "hints": [],
+  "acRate": 58.87,
+  "lastSubmittedAt": "2026-08-01T15:01:47Z",
+  "latestSubmission": {
+    "submissionId": "2090135548",
+    "language": "Python3",
+    "code": "# Definition for singly-linked list.\n# class ListNode:\n#     def __init__(self, val=0, next=None):\n#         self.val = val\n#         self.next = next\nclass Solution:\n    def isPalindrome(self, head: Optional[ListNode]) -> bool:\n        # find the middle node\n        slow = head\n        fast = head\n        while fast and fast.next:\n            slow = slow.next\n            fast = fast.next.next\n        \n        # reverse the second half\n        prev = None\n        curr = slow\n        while curr:\n            nextt = curr.next\n            curr.next = prev\n            prev = curr\n            curr = nextt\n        \n        # compare prev and head\n        while prev and head:\n            if prev.val != head.val:\n                return False\n            prev = prev.next\n            head = head.next\n        return True\n\n\n\n"
+  },
+  "notes": [],
+  "source": "leetcode",
+  "importedAt": "2026-10-01T13:44:25Z",
+  "lastSyncedAt": "2026-10-01T13:44:25Z"
+}

@@ -1,0 +1,34 @@
+{
+  "leetcodeId": "3541",
+  "title": "Find Most Frequent Vowel and Consonant",
+  "slug": "find-most-frequent-vowel-and-consonant",
+  "url": "https://leetcode.com/problems/find-most-frequent-vowel-and-consonant/",
+  "difficulty": "Easy",
+  "status": "solved",
+  "premium": false,
+  "tags": [
+    "Hash Table",
+    "String",
+    "Counting"
+  ],
+  "problemStatement": "You are given a string s consisting of lowercase English letters ('a' to 'z').\n\nYour task is to:\n\n- Find the vowel (one of 'a', 'e', 'i', 'o', or 'u') with the maximum frequency.\n\n- Find the consonant (all other letters excluding vowels) with the maximum frequency.\n\nReturn the sum of the two frequencies.\n\nNote: If multiple vowels or consonants have the same maximum frequency, you may choose any one of them. If there are no vowels or no consonants in the string, consider their frequency as 0.\n\nThe frequency of a letter x is the number of times it occurs in the string.\n\nExample 1:\n\nInput: s = \"successes\"\n\nOutput: 6\n\nExplanation:\n\n- The vowels are: 'u' (frequency 1), 'e' (frequency 2). The maximum frequency is 2.\n\n- The consonants are: 's' (frequency 4), 'c' (frequency 2). The maximum frequency is 4.\n\n- The output is 2 + 4 = 6.\n\nExample 2:\n\nInput: s = \"aeiaeia\"\n\nOutput: 3\n\nExplanation:\n\n- The vowels are: 'a' (frequency 3), 'e' ( frequency 2), 'i' (frequency 2). The maximum frequency is 3.\n\n- There are no consonants in s. Hence, maximum consonant frequency = 0.\n\n- The output is 3 + 0 = 3.\n\nConstraints:\n\n- 1 <= s.length <= 100\n\n- s consists of lowercase English letters only.",
+  "constraints": [
+    "1 <= s.length <= 100",
+    "s consists of lowercase English letters only."
+  ],
+  "hints": [
+    "Use a hashmap",
+    "Simulate as described"
+  ],
+  "acRate": 88.96,
+  "lastSubmittedAt": "2026-09-15T16:04:51Z",
+  "latestSubmission": {
+    "submissionId": "2142785076",
+    "language": "Python3",
+    "code": "class Solution:\n    def maxFreqSum(self, s: str) -> int:\n        vowel = set(['a', 'e', 'i', 'o', 'u'])\n        count = defaultdict(int)\n        max_v = 0\n        max_c = 0\n        for c in s:\n            count[c] += 1\n            if c in vowel:\n                max_v = max(max_v, count[c])\n            else:\n                max_c = max(max_c, count[c])\n        \n        return max_c + max_v\n"
+  },
+  "notes": [],
+  "source": "leetcode",
+  "importedAt": "2026-10-01T13:44:25Z",
+  "lastSyncedAt": "2026-10-01T13:44:25Z"
+}
