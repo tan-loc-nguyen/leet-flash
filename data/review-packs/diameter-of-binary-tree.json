@@ -1,0 +1,152 @@
+{
+  "schemaVersion": 1,
+  "problemSlug": "diameter-of-binary-tree",
+  "summary": "Return the length (in edges) of the longest path between any two nodes in a binary tree.",
+  "patterns": [
+    "Tree",
+    "DFS"
+  ],
+  "mainInsight": "The longest path through a node uses its deepest left and deepest right descent: left height + right height. Compute heights bottom-up, update a global best at every node, and return the usual height to the parent.",
+  "canonicalApproach": "One-pass postorder",
+  "approaches": [
+    {
+      "name": "Height at every node",
+      "summary": "For each node compute left and right heights separately.",
+      "timeComplexity": "O(n^2) worst",
+      "spaceComplexity": "O(h)",
+      "strengths": [
+        "Easy to reason about"
+      ],
+      "weaknesses": [
+        "Recomputes heights"
+      ]
+    },
+    {
+      "name": "One-pass postorder",
+      "summary": "dfs returns height; best = max(best, left + right).",
+      "timeComplexity": "O(n)",
+      "spaceComplexity": "O(h)",
+      "strengths": [
+        "Each node once"
+      ],
+      "interviewRelevance": "Your approach; the expected answer."
+    }
+  ],
+  "personalSolution": {
+    "approach": "One-pass postorder with a nonlocal best",
+    "timeComplexity": "O(n)",
+    "spaceComplexity": "O(h)",
+    "isOptimal": true,
+    "notes": "Optimal."
+  },
+  "commonMistakes": [],
+  "edgeCases": [],
+  "cards": [
+    {
+      "id": "dm2-pattern-01",
+      "category": "pattern",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "What pattern computes the diameter in O(n)?",
+        "Which quantity is returned vs recorded?"
+      ],
+      "options": [
+        "Return the height upward; record left + right in a global at each node",
+        "Return the diameter upward",
+        "Use BFS depth only",
+        "Sort the node depths"
+      ],
+      "answer": "Return the height upward; record left + right in a global at each node",
+      "explanation": "The parent needs the height (one branch), while the best path may bend at any node using both branches.",
+      "incorrectOptionExplanations": {
+        "Return the diameter upward": "The parent cannot extend a path that already uses both children.",
+        "Use BFS depth only": "The path may not pass through the root.",
+        "Sort the node depths": "Unrelated."
+      }
+    },
+    {
+      "id": "dm2-insight-01",
+      "category": "main_insight",
+      "type": "free_recall",
+      "promptVariants": [
+        "Why is the diameter not necessarily through the root?",
+        "Why do you return a different value than you record?"
+      ],
+      "answer": "The longest path can bend at any node: the best path whose highest node is v has length left_height(v) + right_height(v). So we record that at every node. But a path extending upward from v can only use one of v's branches, so the function returns the single-branch height 1 + max(left, right) for the parent.",
+      "keyPoints": [
+        "Path bends at its highest node",
+        "Record left + right",
+        "Return 1 + max(left, right)"
+      ],
+      "explanation": "The same 'record vs return' split solves Maximum Path Sum."
+    },
+    {
+      "id": "dm2-time-01",
+      "category": "time_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Time complexity: ___",
+        "Complete the statement: Time complexity: ___"
+      ],
+      "answer": "O(n)",
+      "explanation": "One visit per node.",
+      "acceptedAnswers": [
+        "linear"
+      ]
+    },
+    {
+      "id": "dm2-space-01",
+      "category": "space_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Recursion stack space: ___",
+        "Complete the statement: Recursion stack space: ___"
+      ],
+      "answer": "O(h)",
+      "explanation": "Depth equals the tree height.",
+      "acceptedAnswers": [
+        "O(height)"
+      ]
+    },
+    {
+      "id": "dm2-code-01",
+      "category": "code_reasoning",
+      "type": "code_question",
+      "promptVariants": [
+        "Why does `best = max(best, maxLeft + maxRight)` count edges and not nodes, and what does the function return for a leaf?",
+        "Why is the base case 0?"
+      ],
+      "code": "def dfs(root):\n    nonlocal best\n    if not root:\n        return 0\n    maxLeft = dfs(root.left)\n    maxRight = dfs(root.right)\n    best = max(best, maxLeft + maxRight)\n    return max(maxLeft, maxRight) + 1",
+      "answer": "dfs returns heights counted in nodes. A branch of height h hanging below v contributes exactly h edges to a path through v (one edge to the child plus the edges inside), so the path bending at v has leftHeight + rightHeight edges. A leaf returns 1; an empty tree 0 so that a node with one child gets maxRight = 0.",
+      "keyPoints": [
+        "Heights in nodes",
+        "left + right = edges on the bent path",
+        "Leaf = 1, empty = 0"
+      ],
+      "explanation": "Diameter in nodes would add 1."
+    },
+    {
+      "id": "dm2-edge-01",
+      "category": "edge_case",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "What is the diameter of a single node?",
+        "And of a root with one child?"
+      ],
+      "options": [
+        "0 and 1",
+        "1 and 2",
+        "0 and 0",
+        "1 and 1"
+      ],
+      "answer": "0 and 1",
+      "explanation": "Diameter counts edges: a single node has no edges, a root with one child has one edge.",
+      "incorrectOptionExplanations": {
+        "1 and 2": "That counts nodes.",
+        "0 and 0": "The second case has one edge.",
+        "1 and 1": "A single node has no edges."
+      }
+    }
+  ],
+  "generatedAt": "2026-10-01T14:29:30Z"
+}

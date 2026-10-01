@@ -1,0 +1,154 @@
+{
+  "schemaVersion": 1,
+  "problemSlug": "minimum-depth-of-binary-tree",
+  "summary": "Return the number of nodes on the shortest root-to-LEAF path.",
+  "patterns": [
+    "Tree",
+    "BFS"
+  ],
+  "mainInsight": "The minimum depth ends at the nearest leaf (a node with no children), not at the first missing child. Level-order BFS finds it as soon as it meets the first leaf, without exploring deeper levels.",
+  "canonicalApproach": "BFS level order with early exit",
+  "approaches": [
+    {
+      "name": "Recursive DFS",
+      "summary": "If one child is missing, use the other child's depth; else 1 + min(left, right).",
+      "timeComplexity": "O(n)",
+      "spaceComplexity": "O(h)",
+      "strengths": [
+        "Short"
+      ],
+      "weaknesses": [
+        "Must handle single-child nodes correctly",
+        "Explores the whole tree"
+      ]
+    },
+    {
+      "name": "BFS level order with early exit",
+      "summary": "Return the level of the first leaf found.",
+      "timeComplexity": "O(n) worst, often much less",
+      "spaceComplexity": "O(w)",
+      "strengths": [
+        "Stops at the nearest leaf"
+      ],
+      "interviewRelevance": "Your approach; the expected answer."
+    }
+  ],
+  "personalSolution": {
+    "approach": "BFS level order with early exit",
+    "timeComplexity": "O(n)",
+    "spaceComplexity": "O(w)",
+    "isOptimal": true,
+    "notes": "Optimal; only enqueue non-null children."
+  },
+  "commonMistakes": [],
+  "edgeCases": [],
+  "cards": [
+    {
+      "id": "mn-pattern-01",
+      "category": "pattern",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "Why is BFS a good fit for the minimum depth?",
+        "Which traversal finds the nearest leaf first?"
+      ],
+      "options": [
+        "Level-order BFS: the first leaf met is the shallowest",
+        "Preorder DFS",
+        "Inorder DFS",
+        "Postorder DFS"
+      ],
+      "answer": "Level-order BFS: the first leaf met is the shallowest",
+      "explanation": "BFS visits nodes by increasing depth, so it can stop at the first leaf.",
+      "incorrectOptionExplanations": {
+        "Preorder DFS": "May explore deep branches before finding a shallow leaf.",
+        "Inorder DFS": "Same issue.",
+        "Postorder DFS": "Same issue; it visits everything."
+      }
+    },
+    {
+      "id": "mn-insight-01",
+      "category": "main_insight",
+      "type": "free_recall",
+      "promptVariants": [
+        "Why is `1 + min(left depth, right depth)` wrong for nodes with only one child?",
+        "What does the minimum depth require at the end of the path?"
+      ],
+      "answer": "A missing child is not a leaf: for a node with one child, min(0, d) = 0 would stop at that node even though it is not a leaf. The path must end at a leaf, so with one child you must follow the existing child; only when both children exist is min() appropriate.",
+      "keyPoints": [
+        "Path must end at a leaf",
+        "Single-child node is not a leaf",
+        "Use the existing child's depth"
+      ],
+      "explanation": "BFS avoids this pitfall naturally."
+    },
+    {
+      "id": "mn-time-01",
+      "category": "time_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Worst-case time complexity: ___",
+        "Complete the statement: Worst-case time complexity: ___"
+      ],
+      "answer": "O(n)",
+      "explanation": "In the worst case (e.g. a complete tree where leaves are on the last level) all nodes are visited.",
+      "acceptedAnswers": [
+        "linear"
+      ]
+    },
+    {
+      "id": "mn-space-01",
+      "category": "space_complexity",
+      "type": "free_recall",
+      "promptVariants": [
+        "What is the BFS memory and when is it large?",
+        "How does BFS space compare with DFS recursion?"
+      ],
+      "answer": "BFS stores one level at a time: O(w), up to about n/2 for a complete tree. DFS uses O(h), which is O(log n) when balanced but O(n) for a skewed tree.",
+      "keyPoints": [
+        "BFS O(width)",
+        "DFS O(height)"
+      ],
+      "explanation": "Pick by tree shape."
+    },
+    {
+      "id": "mn-code-01",
+      "category": "code_reasoning",
+      "type": "code_question",
+      "promptVariants": [
+        "Your queue also enqueues None children and you check `if node and ...`. What is the effect and how would you tidy it?",
+        "Why does the level counter increase per while-iteration?"
+      ],
+      "code": "while queue:\n    ans += 1\n    n = len(queue)\n    for _ in range(n):\n        node = queue.popleft()\n        if node and not node.left and not node.right:\n            return ans\n        elif node:\n            queue.append(node.left)\n            queue.append(node.right)",
+      "answer": "Each outer iteration processes exactly one level, so ans counts levels (depth). Enqueuing None children adds useless work and requires the `if node` guards; only enqueue existing children: `if node.left: queue.append(node.left)`. The first leaf encountered ends the search.",
+      "keyPoints": [
+        "One level per outer loop",
+        "Only enqueue real children",
+        "First leaf returns the depth"
+      ],
+      "explanation": "The early return is the BFS advantage."
+    },
+    {
+      "id": "mn-edge-01",
+      "category": "edge_case",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "What is the minimum depth of the left-skewed tree 2 -> 3 -> 4 (all left children)?",
+        "Why is it 3 and not 1?"
+      ],
+      "options": [
+        "3 (the only leaf is at depth 3)",
+        "1",
+        "2",
+        "0"
+      ],
+      "answer": "3 (the only leaf is at depth 3)",
+      "explanation": "Node 2 is not a leaf because it has a child, so the path must continue to the leaf 4.",
+      "incorrectOptionExplanations": {
+        "1": "The root is not a leaf.",
+        "2": "Node 3 still has a child.",
+        "0": "Depth is counted in nodes."
+      }
+    }
+  ],
+  "generatedAt": "2026-10-01T14:29:30Z"
+}

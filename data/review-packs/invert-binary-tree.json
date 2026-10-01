@@ -1,0 +1,166 @@
+{
+  "schemaVersion": 1,
+  "problemSlug": "invert-binary-tree",
+  "summary": "Mirror a binary tree by swapping the left and right children of every node.",
+  "patterns": [
+    "Tree",
+    "BFS",
+    "DFS"
+  ],
+  "mainInsight": "Inverting a tree is the same local operation applied to every node: swap its two children. Any traversal (DFS recursion, BFS queue, explicit stack) that visits every node once does it.",
+  "canonicalApproach": "Recursive DFS",
+  "approaches": [
+    {
+      "name": "Recursive DFS",
+      "summary": "Swap children, recurse on both.",
+      "timeComplexity": "O(n)",
+      "spaceComplexity": "O(h) call stack",
+      "strengths": [
+        "Shortest code"
+      ],
+      "weaknesses": [
+        "Deep recursion on skewed trees"
+      ]
+    },
+    {
+      "name": "Iterative BFS with a queue",
+      "summary": "Pop a node, swap its children, enqueue them.",
+      "timeComplexity": "O(n)",
+      "spaceComplexity": "O(w) queue (w = max width)",
+      "strengths": [
+        "No recursion"
+      ],
+      "weaknesses": [
+        "O(n/2) queue for the bottom level"
+      ],
+      "interviewRelevance": "Your approach."
+    },
+    {
+      "name": "Iterative DFS with a stack",
+      "summary": "Same with a stack.",
+      "timeComplexity": "O(n)",
+      "spaceComplexity": "O(h)",
+      "strengths": [
+        "No recursion, O(h) space"
+      ]
+    }
+  ],
+  "personalSolution": {
+    "approach": "Iterative BFS with a queue",
+    "timeComplexity": "O(n)",
+    "spaceComplexity": "O(w)",
+    "isOptimal": true,
+    "notes": "Optimal; recursion is the shortest to write."
+  },
+  "commonMistakes": [],
+  "edgeCases": [],
+  "cards": [
+    {
+      "id": "it-pattern-01",
+      "category": "pattern",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "What is the core operation of Invert Binary Tree?",
+        "Which traversal inverts a tree?"
+      ],
+      "options": [
+        "Swap left and right children at every node (any full traversal)",
+        "Reverse the inorder sequence only",
+        "Sort the children",
+        "Rotate the tree"
+      ],
+      "answer": "Swap left and right children at every node (any full traversal)",
+      "explanation": "The mirrored tree is exactly the tree with every node's children exchanged, and order of visiting does not matter.",
+      "incorrectOptionExplanations": {
+        "Reverse the inorder sequence only": "That describes the effect on values but not how to restructure the tree.",
+        "Sort the children": "Values are not compared.",
+        "Rotate the tree": "Rotation is a different operation."
+      }
+    },
+    {
+      "id": "it-insight-01",
+      "category": "main_insight",
+      "type": "free_recall",
+      "promptVariants": [
+        "Why does the order of traversal not matter for inversion?",
+        "Why is a single pass enough?"
+      ],
+      "answer": "The swap at a node is independent of the swaps at other nodes: each node's children are exchanged exactly once, and the children subtrees are inverted by the same rule wherever and whenever they are visited. So any complete traversal (pre-, post-order or BFS) gives the same result.",
+      "keyPoints": [
+        "Swaps are independent",
+        "Each node visited once",
+        "Any traversal order works"
+      ],
+      "explanation": "Postorder (children first) is also fine."
+    },
+    {
+      "id": "it-time-01",
+      "category": "time_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Time complexity: ___",
+        "Complete the statement: Time complexity: ___"
+      ],
+      "answer": "O(n)",
+      "explanation": "Every node is visited once.",
+      "acceptedAnswers": [
+        "linear"
+      ]
+    },
+    {
+      "id": "it-space-01",
+      "category": "space_complexity",
+      "type": "free_recall",
+      "promptVariants": [
+        "Compare the space of BFS (queue) and DFS (recursion/stack).",
+        "What dominates the memory in your BFS solution?"
+      ],
+      "answer": "BFS holds up to one level in the queue: O(w), which can be about n/2 for a complete tree. DFS holds one root-to-leaf path: O(h), which is O(log n) for a balanced tree but O(n) for a skewed one.",
+      "keyPoints": [
+        "BFS O(width)",
+        "DFS O(height)",
+        "Skewed tree worst for DFS"
+      ],
+      "explanation": "Choose by tree shape if memory matters."
+    },
+    {
+      "id": "it-code-01",
+      "category": "code_reasoning",
+      "type": "code_question",
+      "promptVariants": [
+        "Why is it safe to swap first and then enqueue `current.left` and `current.right`?",
+        "What would change if you enqueued before swapping?"
+      ],
+      "code": "current = queue.popleft()\ncurrent.left, current.right = current.right, current.left\nif current.left:\n    queue.append(current.left)\nif current.right:\n    queue.append(current.right)",
+      "answer": "After the swap both children are still the same subtrees (just exchanged), so enqueuing either order visits both exactly once. Enqueuing before swapping also works as long as both children are enqueued; only the order of visiting changes.",
+      "keyPoints": [
+        "Both children are still enqueued",
+        "Order of visiting is irrelevant"
+      ],
+      "explanation": "The tuple assignment swaps without a temp variable."
+    },
+    {
+      "id": "it-edge-01",
+      "category": "edge_case",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "What does the function return for an empty tree?",
+        "How is a single node handled?"
+      ],
+      "options": [
+        "None for an empty tree; a single node is unchanged",
+        "An error",
+        "A new empty node",
+        "The node with swapped value"
+      ],
+      "answer": "None for an empty tree; a single node is unchanged",
+      "explanation": "The null check returns None and a leaf swaps two null children (a no-op).",
+      "incorrectOptionExplanations": {
+        "An error": "Handled by the guard.",
+        "A new empty node": "No node is created.",
+        "The node with swapped value": "Values are never swapped, only children."
+      }
+    }
+  ],
+  "generatedAt": "2026-10-01T14:29:30Z"
+}

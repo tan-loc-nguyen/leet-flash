@@ -1,0 +1,149 @@
+{
+  "schemaVersion": 1,
+  "problemSlug": "count-good-nodes-in-binary-tree",
+  "summary": "Count nodes that are not smaller than any value on the path from the root to them.",
+  "patterns": [
+    "Tree",
+    "DFS"
+  ],
+  "mainInsight": "Carry the maximum value seen so far down the path; a node is good iff its value is at least that maximum. One preorder traversal does it.",
+  "canonicalApproach": "DFS carrying the path maximum",
+  "approaches": [
+    {
+      "name": "Check the whole path for each node",
+      "summary": "Walk up from each node.",
+      "timeComplexity": "O(n * h)",
+      "spaceComplexity": "O(1)",
+      "weaknesses": [
+        "Repeats work"
+      ]
+    },
+    {
+      "name": "DFS carrying the path maximum",
+      "summary": "Pass max_so_far; count when val >= it; update the max.",
+      "timeComplexity": "O(n)",
+      "spaceComplexity": "O(h)",
+      "strengths": [
+        "Optimal"
+      ],
+      "interviewRelevance": "Your approach; the expected answer."
+    }
+  ],
+  "personalSolution": {
+    "approach": "DFS carrying the path maximum",
+    "timeComplexity": "O(n)",
+    "spaceComplexity": "O(h)",
+    "isOptimal": true,
+    "notes": "Optimal."
+  },
+  "commonMistakes": [],
+  "edgeCases": [],
+  "cards": [
+    {
+      "id": "cg-pattern-01",
+      "category": "pattern",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "What state should DFS pass down to decide whether a node is 'good'?",
+        "Which pattern is Count Good Nodes?"
+      ],
+      "options": [
+        "The maximum value on the path from the root",
+        "The depth of the node",
+        "The sum of the path",
+        "The number of children"
+      ],
+      "answer": "The maximum value on the path from the root",
+      "explanation": "A node is good iff no ancestor is larger, i.e. node.val >= path maximum.",
+      "incorrectOptionExplanations": {
+        "The depth of the node": "Depth is irrelevant.",
+        "The sum of the path": "The sum does not decide goodness.",
+        "The number of children": "Irrelevant."
+      }
+    },
+    {
+      "id": "cg-insight-01",
+      "category": "main_insight",
+      "type": "free_recall",
+      "promptVariants": [
+        "Why is it enough to remember only the maximum of the path?",
+        "Why does updating the max before checking still count the node correctly?"
+      ],
+      "answer": "A node is good iff its value >= every value on the path, which is equivalent to value >= the path maximum. Updating max_so_far = max(old, val) first and then checking val >= max_so_far is the same as val >= old max, since val >= max(old, val) iff val >= old.",
+      "keyPoints": [
+        "Maximum summarises the path",
+        "Check val >= old max",
+        "Update for the children"
+      ],
+      "explanation": "The root is always good."
+    },
+    {
+      "id": "cg-time-01",
+      "category": "time_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Time complexity: ___",
+        "Complete the statement: Time complexity: ___"
+      ],
+      "answer": "O(n)",
+      "explanation": "One visit per node.",
+      "acceptedAnswers": [
+        "linear"
+      ]
+    },
+    {
+      "id": "cg-space-01",
+      "category": "space_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Recursion stack space: ___",
+        "Complete the statement: Recursion stack space: ___"
+      ],
+      "answer": "O(h)",
+      "explanation": "Depth of the recursion.",
+      "acceptedAnswers": [
+        "O(height)"
+      ]
+    },
+    {
+      "id": "cg-code-01",
+      "category": "code_reasoning",
+      "type": "code_question",
+      "promptVariants": [
+        "Why is `dfs(root, root.val)` started with root.val as the initial maximum?",
+        "What does the update `big = max(big, root.val)` before the comparison do?"
+      ],
+      "code": "def dfs(root, big):\n    if not root:\n        return\n    big = max(big, root.val)\n    if root.val >= big:\n        self.ans += 1\n    dfs(root.left, big)\n    dfs(root.right, big)\ndfs(root, root.val)",
+      "answer": "Starting with the root's own value makes the root good (it is >= itself). After updating big to include the current node, `root.val >= big` holds exactly when the node is at least as large as every ancestor; the updated big is then passed to the children.",
+      "keyPoints": [
+        "Root is always good",
+        "val >= big after updating == val >= old max",
+        "Pass the updated max down"
+      ],
+      "explanation": "-inf as the initial maximum also works."
+    },
+    {
+      "id": "cg-edge-01",
+      "category": "edge_case",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "How many good nodes are in the chain 3 -> 1 -> 4 -> 3 (each the left child of the previous)?",
+        "Which nodes are good?"
+      ],
+      "options": [
+        "2 (3 and 4)",
+        "3",
+        "1",
+        "4"
+      ],
+      "answer": "2 (3 and 4)",
+      "explanation": "3 (root) and 4 are not smaller than their ancestors; 1 and the last 3 (< 4) are not good.",
+      "incorrectOptionExplanations": {
+        "3": "The last 3 has ancestor 4 > 3.",
+        "1": "Both 3 and 4 qualify.",
+        "4": "Only two nodes qualify."
+      }
+    }
+  ],
+  "generatedAt": "2026-10-01T14:29:30Z"
+}

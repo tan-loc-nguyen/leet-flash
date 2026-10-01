@@ -1,0 +1,147 @@
+{
+  "schemaVersion": 1,
+  "problemSlug": "binary-tree-maximum-path-sum",
+  "summary": "Find the maximum sum of any non-empty path (not necessarily through the root) in a binary tree.",
+  "patterns": [
+    "Tree",
+    "DFS",
+    "Dynamic Programming"
+  ],
+  "mainInsight": "At each node the best path that bends there is val + best downward gain from the left + best downward gain from the right, where a negative gain is dropped (clamped to 0). Return only the best single-branch gain to the parent.",
+  "canonicalApproach": "Postorder DP with clamped gains",
+  "approaches": [
+    {
+      "name": "Brute force",
+      "summary": "Try every pair of nodes.",
+      "timeComplexity": "O(n^2)",
+      "spaceComplexity": "O(h)"
+    },
+    {
+      "name": "Postorder DP with clamped gains",
+      "summary": "dfs returns max(left, 0, right) + val; record val + left + right globally.",
+      "timeComplexity": "O(n)",
+      "spaceComplexity": "O(h)",
+      "strengths": [
+        "Optimal"
+      ],
+      "interviewRelevance": "Your approach; the expected answer."
+    }
+  ],
+  "personalSolution": {
+    "approach": "Postorder DP with clamped gains",
+    "timeComplexity": "O(n)",
+    "spaceComplexity": "O(h)",
+    "isOptimal": true,
+    "notes": "Optimal."
+  },
+  "commonMistakes": [],
+  "edgeCases": [],
+  "cards": [
+    {
+      "id": "mp-pattern-01",
+      "category": "pattern",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "Which pattern solves Maximum Path Sum?",
+        "What do you do with a negative subtree gain?"
+      ],
+      "options": [
+        "Postorder DP: ignore negative gains (clamp to 0) and record the bent path globally",
+        "Add all values",
+        "Sort the values",
+        "BFS level sums"
+      ],
+      "answer": "Postorder DP: ignore negative gains (clamp to 0) and record the bent path globally",
+      "explanation": "A negative branch only reduces the sum, so the path should not extend into it.",
+      "incorrectOptionExplanations": {
+        "Add all values": "Negative nodes would reduce the sum.",
+        "Sort the values": "A path must follow tree edges.",
+        "BFS level sums": "Level sums are unrelated to paths."
+      }
+    },
+    {
+      "id": "mp-insight-01",
+      "category": "main_insight",
+      "type": "free_recall",
+      "promptVariants": [
+        "Why must the returned value use only ONE child branch but the recorded value use BOTH?",
+        "Why clamp negative gains to 0?"
+      ],
+      "answer": "A path continuing to the parent can include only one of the node's branches (otherwise it would fork), so dfs returns val + max(left, right). The best path that peaks at this node may use both branches, so val + left + right is recorded in the global best. A negative branch is better omitted, hence max(gain, 0).",
+      "keyPoints": [
+        "Parent extension uses one branch",
+        "Peak path uses both",
+        "Negative gains are skipped"
+      ],
+      "explanation": "Same record-vs-return split as Diameter of Binary Tree."
+    },
+    {
+      "id": "mp-time-01",
+      "category": "time_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Time complexity: ___",
+        "Complete the statement: Time complexity: ___"
+      ],
+      "answer": "O(n)",
+      "explanation": "One visit per node.",
+      "acceptedAnswers": [
+        "linear"
+      ]
+    },
+    {
+      "id": "mp-space-01",
+      "category": "space_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Recursion stack space: ___",
+        "Complete the statement: Recursion stack space: ___"
+      ],
+      "answer": "O(h)",
+      "explanation": "Depth of the recursion equals the height.",
+      "acceptedAnswers": [
+        "O(height)"
+      ]
+    },
+    {
+      "id": "mp-code-01",
+      "category": "code_reasoning",
+      "type": "code_question",
+      "promptVariants": [
+        "Why is `self.best` initialised to -inf rather than 0?",
+        "What goes wrong for an all-negative tree if best starts at 0?"
+      ],
+      "code": "self.best = float('-inf')\ndef dfs(root):\n    if not root:\n        return 0\n    maxLeft = max(dfs(root.left), 0)\n    maxRight = max(dfs(root.right), 0)\n    self.best = max(self.best, maxLeft + maxRight + root.val)\n    return max(maxLeft, maxRight) + root.val",
+      "answer": "The path must be non-empty, so for an all-negative tree the answer is the largest (least negative) single node, which is negative. Starting best at 0 would wrongly return 0 (an empty path). -inf lets any real path value replace it.",
+      "keyPoints": [
+        "Path must be non-empty",
+        "All-negative trees have a negative answer",
+        "-inf initialisation"
+      ],
+      "explanation": "Gains are clamped but node values are not."
+    },
+    {
+      "id": "mp-edge-01",
+      "category": "edge_case",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "What is the answer for a single node with value -3?",
+        "What about [-10,9,20,null,null,15,7]?"
+      ],
+      "options": [
+        "-3, and 42 (15 + 20 + 7)",
+        "0 and 42",
+        "-3 and 25",
+        "0 and 29"
+      ],
+      "answer": "-3, and 42 (15 + 20 + 7)",
+      "explanation": "A one-node path must be taken for the single node; the second tree's best path 15 -> 20 -> 7 sums to 42.",
+      "incorrectOptionExplanations": {
+        "0 and 42": "The empty path is not allowed.",
+        "-3 and 25": "25 omits the left child 7 or 15.",
+        "0 and 29": "Both parts are wrong."
+      }
+    }
+  ],
+  "generatedAt": "2026-10-01T14:29:30Z"
+}

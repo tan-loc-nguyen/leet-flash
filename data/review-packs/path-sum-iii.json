@@ -1,0 +1,158 @@
+{
+  "schemaVersion": 1,
+  "problemSlug": "path-sum-iii",
+  "summary": "Count downward paths (not necessarily root-to-leaf) whose values sum to targetSum.",
+  "patterns": [
+    "Tree",
+    "DFS",
+    "Prefix Sum"
+  ],
+  "mainInsight": "A path sum from ancestor a to node v equals prefix(v) - prefix(a). Keep a hash map of prefix-sum counts along the current root-to-node path; the number of valid paths ending at v is count[prefix(v) - target].",
+  "canonicalApproach": "Prefix sums with a hash map",
+  "approaches": [
+    {
+      "name": "DFS from every node (nested)",
+      "summary": "For each node run a DFS counting paths starting there.",
+      "timeComplexity": "O(n^2) worst, O(n log n) balanced",
+      "spaceComplexity": "O(h)",
+      "strengths": [
+        "Simple"
+      ],
+      "weaknesses": [
+        "Quadratic on skewed trees"
+      ],
+      "interviewRelevance": "Your approach."
+    },
+    {
+      "name": "Prefix sums with a hash map",
+      "summary": "Count prefix sums on the current path; backtrack the counts.",
+      "timeComplexity": "O(n)",
+      "spaceComplexity": "O(h)",
+      "strengths": [
+        "Linear"
+      ],
+      "weaknesses": [
+        "Needs the prefix-sum idea"
+      ],
+      "interviewRelevance": "The expected optimal answer."
+    }
+  ],
+  "personalSolution": {
+    "approach": "DFS from every node (nested DFS)",
+    "timeComplexity": "O(n^2) worst, O(n log n) balanced",
+    "spaceComplexity": "O(h)",
+    "isOptimal": false,
+    "notes": "Correct. The prefix-sum hash map gives O(n)."
+  },
+  "commonMistakes": [],
+  "edgeCases": [],
+  "cards": [
+    {
+      "id": "p3-pattern-01",
+      "category": "pattern",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "Which technique gives O(n) for counting downward paths with a target sum?",
+        "What combines with DFS to avoid re-summing?"
+      ],
+      "options": [
+        "Prefix sums stored in a hash map along the current path",
+        "Sorting node values",
+        "Binary search on the tree",
+        "Two stacks"
+      ],
+      "answer": "Prefix sums stored in a hash map along the current path",
+      "explanation": "The sum of a path from ancestor a to v is prefix(v) - prefix(a), so we need how many ancestors have prefix(v) - target.",
+      "incorrectOptionExplanations": {
+        "Sorting node values": "Paths must follow tree edges.",
+        "Binary search on the tree": "The tree is not a BST.",
+        "Two stacks": "Not helpful."
+      }
+    },
+    {
+      "id": "p3-insight-01",
+      "category": "main_insight",
+      "type": "free_recall",
+      "promptVariants": [
+        "Why must the hash-map counts be undone when leaving a node?",
+        "What does count[prefix - target] represent?"
+      ],
+      "answer": "The map must reflect only the ancestors of the current node (the current root-to-node path); siblings' branches must not contribute. So after exploring a node's subtrees you decrement its prefix count (backtrack). count[prefix - target] is the number of ancestor positions a such that the path sum from just below a to the current node equals target.",
+      "keyPoints": [
+        "Map = prefix sums on the current path",
+        "Backtrack counts on exit",
+        "Seed with {0: 1} for paths starting at the root"
+      ],
+      "explanation": "Same trick as Subarray Sum Equals K on arrays."
+    },
+    {
+      "id": "p3-time-01",
+      "category": "time_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Time complexity of the prefix-sum solution: ___",
+        "Complete the statement: Time complexity of the prefix-sum solution: ___"
+      ],
+      "answer": "O(n)",
+      "explanation": "One DFS with O(1) map operations.",
+      "acceptedAnswers": [
+        "linear"
+      ]
+    },
+    {
+      "id": "p3-space-01",
+      "category": "space_complexity",
+      "type": "free_recall",
+      "promptVariants": [
+        "What is the space of the prefix-sum solution and of your nested-DFS solution?",
+        "Compare memory."
+      ],
+      "answer": "Prefix-sum map: O(h) entries on the current path plus the recursion stack O(h). Your nested DFS needs only the recursion stack O(h) but takes O(n^2) time on skewed trees.",
+      "keyPoints": [
+        "Map O(h)",
+        "Nested DFS O(h) space but slower"
+      ],
+      "explanation": "Both use stack space proportional to the height."
+    },
+    {
+      "id": "p3-code-01",
+      "category": "code_reasoning",
+      "type": "code_question",
+      "promptVariants": [
+        "Why does your `backtrack` keep going after `remaining == 0` and why is the `dfs` re-launching backtrack at every node?",
+        "What is the worst-case behaviour?"
+      ],
+      "code": "def backtrack(root, target):\n    nonlocal ans\n    if not root:\n        return\n    remaining = target - root.val\n    if remaining == 0:\n        ans += 1\n    for node in [root.left, root.right]:\n        backtrack(node, remaining)\n\ndef dfs(root):\n    if not root:\n        return\n    backtrack(root, targetSum)\n    dfs(root.left)\n    dfs(root.right)",
+      "answer": "Node values can be negative or zero, so a longer path may again reach the target after the sum hits 0 - hence no early stop. dfs launches a downward search from every node as a starting point, making the total work the sum of subtree sizes: O(n^2) for a skewed tree, O(n log n) for a balanced one.",
+      "keyPoints": [
+        "Negatives => no pruning",
+        "Start a search at every node",
+        "O(n^2) skewed, O(n log n) balanced"
+      ],
+      "explanation": "Prefix sums cut it to O(n)."
+    },
+    {
+      "id": "p3-edge-01",
+      "category": "edge_case",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "Which special case makes the prefix-sum map start with {0: 1}?",
+        "Why is the empty prefix counted?"
+      ],
+      "options": [
+        "Paths that start at the root: prefix(v) - 0 == target",
+        "Empty trees",
+        "Negative targets",
+        "Leaves only"
+      ],
+      "answer": "Paths that start at the root: prefix(v) - 0 == target",
+      "explanation": "Counting the empty prefix once lets a path beginning at the root be found as prefix(v) - 0.",
+      "incorrectOptionExplanations": {
+        "Empty trees": "Handled by the null check.",
+        "Negative targets": "Not related.",
+        "Leaves only": "Paths may end anywhere."
+      }
+    }
+  ],
+  "generatedAt": "2026-10-01T14:29:30Z"
+}

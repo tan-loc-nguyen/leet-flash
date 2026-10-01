@@ -1,0 +1,149 @@
+{
+  "schemaVersion": 1,
+  "problemSlug": "maximum-depth-of-binary-tree",
+  "summary": "Return the number of nodes on the longest root-to-leaf path.",
+  "patterns": [
+    "Tree",
+    "DFS"
+  ],
+  "mainInsight": "The depth of a tree is 1 + the larger depth of its two subtrees, with an empty tree having depth 0: a textbook postorder recursion.",
+  "canonicalApproach": "Recursive DFS",
+  "approaches": [
+    {
+      "name": "Recursive DFS",
+      "summary": "1 + max(depth(left), depth(right)).",
+      "timeComplexity": "O(n)",
+      "spaceComplexity": "O(h)",
+      "strengths": [
+        "Shortest"
+      ],
+      "weaknesses": [
+        "Recursion depth on skewed trees"
+      ],
+      "interviewRelevance": "Your approach."
+    },
+    {
+      "name": "BFS level counting",
+      "summary": "Count the levels of a level-order traversal.",
+      "timeComplexity": "O(n)",
+      "spaceComplexity": "O(w)",
+      "strengths": [
+        "No recursion"
+      ],
+      "weaknesses": [
+        "Queue width"
+      ]
+    },
+    {
+      "name": "Iterative DFS with depth in the stack",
+      "summary": "Push (node, depth) pairs and track the max.",
+      "timeComplexity": "O(n)",
+      "spaceComplexity": "O(h)",
+      "strengths": [
+        "No recursion"
+      ]
+    }
+  ],
+  "personalSolution": {
+    "approach": "Recursive DFS",
+    "timeComplexity": "O(n)",
+    "spaceComplexity": "O(h)",
+    "isOptimal": true,
+    "notes": "Optimal."
+  },
+  "commonMistakes": [],
+  "edgeCases": [],
+  "cards": [
+    {
+      "id": "md-pattern-01",
+      "category": "pattern",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "What recurrence defines the depth of a tree?",
+        "How do you combine the subtree results?"
+      ],
+      "options": [
+        "1 + max(left depth, right depth)",
+        "left depth + right depth",
+        "min(left, right)",
+        "left depth - right depth"
+      ],
+      "answer": "1 + max(left depth, right depth)",
+      "explanation": "The longest path goes through the deeper child.",
+      "incorrectOptionExplanations": {
+        "left depth + right depth": "That is the diameter (in edges), not the depth.",
+        "min(left, right)": "That is the minimum depth idea (and is wrong for single-child nodes).",
+        "left depth - right depth": "That is used to test balance."
+      }
+    },
+    {
+      "id": "md-insight-01",
+      "category": "main_insight",
+      "type": "free_recall",
+      "promptVariants": [
+        "Why does recursion need only the children's results?",
+        "What is the base case?"
+      ],
+      "answer": "A node's depth depends only on its subtrees' depths (postorder: solve children first, then combine). The base case is the empty tree with depth 0, so a leaf gets 1 + max(0, 0) = 1.",
+      "keyPoints": [
+        "Postorder combine",
+        "Empty tree = 0",
+        "Leaf = 1"
+      ],
+      "explanation": "Many tree problems follow this skeleton."
+    },
+    {
+      "id": "md-time-01",
+      "category": "time_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Time complexity: ___",
+        "Complete the statement: Time complexity: ___"
+      ],
+      "answer": "O(n)",
+      "explanation": "Every node is visited once.",
+      "acceptedAnswers": [
+        "linear"
+      ]
+    },
+    {
+      "id": "md-space-01",
+      "category": "space_complexity",
+      "type": "free_recall",
+      "promptVariants": [
+        "What is the recursion depth in the best and worst case?",
+        "How much stack space does the recursive solution use?"
+      ],
+      "answer": "O(h): about log n for a balanced tree and n for a completely skewed (linked-list-shaped) tree.",
+      "keyPoints": [
+        "O(h)",
+        "log n balanced",
+        "n skewed"
+      ],
+      "explanation": "Iterative BFS uses O(width) instead."
+    },
+    {
+      "id": "md-edge-01",
+      "category": "edge_case",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "What is the depth of a tree with a single node and of an empty tree?",
+        "How are they counted?"
+      ],
+      "options": [
+        "1 and 0",
+        "0 and 0",
+        "1 and 1",
+        "0 and -1"
+      ],
+      "answer": "1 and 0",
+      "explanation": "Depth is counted in nodes here: an empty tree has none and a single node has one.",
+      "incorrectOptionExplanations": {
+        "0 and 0": "A single node has depth 1 in this definition.",
+        "1 and 1": "An empty tree has depth 0.",
+        "0 and -1": "Another convention (edges), not this problem."
+      }
+    }
+  ],
+  "generatedAt": "2026-10-01T14:29:30Z"
+}

@@ -1,0 +1,132 @@
+{
+  "schemaVersion": 1,
+  "problemSlug": "path-sum",
+  "summary": "Does the tree have a root-to-leaf path whose node values sum to targetSum?",
+  "patterns": [
+    "Tree",
+    "DFS"
+  ],
+  "mainInsight": "Subtract each node's value from the remaining target on the way down; at a LEAF check whether the remainder is exactly 0.",
+  "canonicalApproach": "Recursive DFS with a remaining sum",
+  "approaches": [
+    {
+      "name": "Recursive DFS with a remaining sum",
+      "summary": "Pass target - val to the children; test at leaves.",
+      "timeComplexity": "O(n)",
+      "spaceComplexity": "O(h)",
+      "strengths": [
+        "Short"
+      ],
+      "interviewRelevance": "Your approach; the expected answer."
+    },
+    {
+      "name": "Iterative DFS/BFS with (node, remaining) pairs",
+      "summary": "Same with an explicit stack.",
+      "timeComplexity": "O(n)",
+      "spaceComplexity": "O(h)",
+      "strengths": [
+        "No recursion"
+      ]
+    }
+  ],
+  "personalSolution": {
+    "approach": "Recursive DFS with a remaining sum",
+    "timeComplexity": "O(n)",
+    "spaceComplexity": "O(h)",
+    "isOptimal": true,
+    "notes": "Optimal."
+  },
+  "commonMistakes": [],
+  "edgeCases": [],
+  "cards": [
+    {
+      "id": "ps-pattern-01",
+      "category": "pattern",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "How do you track the required sum while descending?",
+        "Which pattern fits root-to-leaf path sums?"
+      ],
+      "options": [
+        "Pass down the remaining target (target - node.val)",
+        "Sum all values first",
+        "Use a heap",
+        "Sort the path"
+      ],
+      "answer": "Pass down the remaining target (target - node.val)",
+      "explanation": "A leaf succeeds iff the remaining value is exactly 0 after subtracting its value.",
+      "incorrectOptionExplanations": {
+        "Sum all values first": "Paths differ per leaf.",
+        "Use a heap": "No ordering needed.",
+        "Sort the path": "Order is fixed by the tree."
+      }
+    },
+    {
+      "id": "ps-insight-01",
+      "category": "main_insight",
+      "type": "free_recall",
+      "promptVariants": [
+        "Why must the test happen at a leaf, not at any node?",
+        "What goes wrong if you test at every node?"
+      ],
+      "answer": "The problem asks for root-to-LEAF paths. A partial path that sums to the target but continues to a leaf does not count. Testing at every node would accept paths ending at internal nodes (wrong).",
+      "keyPoints": [
+        "Path must end at a leaf",
+        "Check remaining == 0 at leaves",
+        "Internal-node match is not enough"
+      ],
+      "explanation": "Negative values mean you cannot prune when the remaining sum becomes negative."
+    },
+    {
+      "id": "ps-time-01",
+      "category": "time_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Time complexity: ___",
+        "Complete the statement: Time complexity: ___"
+      ],
+      "answer": "O(n)",
+      "explanation": "Each node is visited at most once.",
+      "acceptedAnswers": [
+        "linear"
+      ]
+    },
+    {
+      "id": "ps-space-01",
+      "category": "space_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Recursion stack space: ___",
+        "Complete the statement: Recursion stack space: ___"
+      ],
+      "answer": "O(h)",
+      "explanation": "Depth of the recursion.",
+      "acceptedAnswers": [
+        "O(height)"
+      ]
+    },
+    {
+      "id": "ps-edge-01",
+      "category": "edge_case",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "What should hasPathSum(None, 0) return?",
+        "Why is the empty tree special?"
+      ],
+      "options": [
+        "False (there is no root-to-leaf path)",
+        "True because the sum is 0",
+        "An error",
+        "None"
+      ],
+      "answer": "False (there is no root-to-leaf path)",
+      "explanation": "An empty tree has no paths at all, even when the target is 0.",
+      "incorrectOptionExplanations": {
+        "True because the sum is 0": "A path must exist.",
+        "An error": "Handled by the base case.",
+        "None": "The function returns a boolean."
+      }
+    }
+  ],
+  "generatedAt": "2026-10-01T14:29:30Z"
+}

@@ -1,0 +1,152 @@
+{
+  "schemaVersion": 1,
+  "problemSlug": "balanced-binary-tree",
+  "summary": "Check whether a binary tree is height-balanced (every node's subtree heights differ by at most 1).",
+  "patterns": [
+    "Tree",
+    "DFS"
+  ],
+  "mainInsight": "Compute heights bottom-up and check the balance condition at every node in the same traversal; returning a sentinel (-1) for 'unbalanced' lets you stop early and keeps the whole check at O(n).",
+  "canonicalApproach": "Bottom-up single pass",
+  "approaches": [
+    {
+      "name": "Top-down height checks",
+      "summary": "At every node compute both heights recursively.",
+      "timeComplexity": "O(n^2) worst",
+      "spaceComplexity": "O(h)",
+      "strengths": [
+        "Straightforward"
+      ],
+      "weaknesses": [
+        "Recomputes heights"
+      ]
+    },
+    {
+      "name": "Bottom-up single pass",
+      "summary": "dfs returns the height and records/flags imbalance.",
+      "timeComplexity": "O(n)",
+      "spaceComplexity": "O(h)",
+      "strengths": [
+        "Each node visited once"
+      ],
+      "interviewRelevance": "Your approach; the expected answer."
+    }
+  ],
+  "personalSolution": {
+    "approach": "Bottom-up single pass with a flag",
+    "timeComplexity": "O(n)",
+    "spaceComplexity": "O(h)",
+    "isOptimal": true,
+    "notes": "Optimal; a -1 sentinel allows early termination."
+  },
+  "commonMistakes": [],
+  "edgeCases": [],
+  "cards": [
+    {
+      "id": "bb-pattern-01",
+      "category": "pattern",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "Which traversal order checks balance in O(n)?",
+        "How do you avoid recomputing heights?"
+      ],
+      "options": [
+        "Postorder: return the height and check balance on the way up",
+        "Preorder with a height helper at each node",
+        "BFS",
+        "Inorder only"
+      ],
+      "answer": "Postorder: return the height and check balance on the way up",
+      "explanation": "Children heights are available when the parent is processed, so each node's check is O(1).",
+      "incorrectOptionExplanations": {
+        "Preorder with a height helper at each node": "That is the O(n^2) top-down approach.",
+        "BFS": "Level order does not give subtree heights directly.",
+        "Inorder only": "Does not provide subtree heights at the node."
+      }
+    },
+    {
+      "id": "bb-insight-01",
+      "category": "main_insight",
+      "type": "free_recall",
+      "promptVariants": [
+        "Why can you compute balance and height in the same recursion?",
+        "What does each call return and check?"
+      ],
+      "answer": "A node is balanced iff both subtrees are balanced and their heights differ by at most 1. The recursion returns the height; at each node it compares the two child heights (the balance check) and returns max + 1 for the parent - one visit per node.",
+      "keyPoints": [
+        "Height returned upward",
+        "Check |left - right| <= 1 at each node",
+        "O(1) work per node"
+      ],
+      "explanation": "A sentinel -1 can also propagate 'unbalanced' to stop early."
+    },
+    {
+      "id": "bb-time-01",
+      "category": "time_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Time complexity of the bottom-up solution: ___",
+        "Complete the statement: Time complexity of the bottom-up solution: ___"
+      ],
+      "answer": "O(n)",
+      "explanation": "One visit per node.",
+      "acceptedAnswers": [
+        "linear"
+      ]
+    },
+    {
+      "id": "bb-space-01",
+      "category": "space_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Recursion stack space (h = height): ___",
+        "Complete the statement: Recursion stack space (h = height): ___"
+      ],
+      "answer": "O(h)",
+      "explanation": "Depth of the recursion equals the tree height.",
+      "acceptedAnswers": [
+        "O(height)"
+      ]
+    },
+    {
+      "id": "bb-code-01",
+      "category": "code_reasoning",
+      "type": "code_question",
+      "promptVariants": [
+        "Why does your dfs keep running after setting `self.ans = False`, and how would a sentinel value prune it?",
+        "What is the role of `max(left, right) + 1`?"
+      ],
+      "code": "def dfs(root):\n    if not root:\n        return 0\n    left = dfs(root.left)\n    right = dfs(root.right)\n    if abs(right - left) > 1:\n        self.ans = False\n    return max(left, right) + 1",
+      "answer": "The flag does not stop the traversal, so the rest of the tree is still visited (still O(n) overall). Returning -1 as an 'unbalanced' sentinel and short-circuiting (`if left == -1: return -1`) prunes the remaining work. `max(left, right) + 1` is the node's own height for its parent.",
+      "keyPoints": [
+        "Flag keeps traversing",
+        "Use -1 sentinel to prune",
+        "max + 1 = height"
+      ],
+      "explanation": "Both are O(n) in the worst case."
+    },
+    {
+      "id": "bb-edge-01",
+      "category": "edge_case",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "Is a tree where a node has a child with a deep chain below it but a missing sibling balanced?",
+        "What does the check look at?"
+      ],
+      "options": [
+        "Not necessarily: balance compares the two child heights at every node, not only at the root",
+        "Yes always",
+        "Only the root matters",
+        "Only the leaves matter"
+      ],
+      "answer": "Not necessarily: balance compares the two child heights at every node, not only at the root",
+      "explanation": "A deep imbalance anywhere in the tree makes it unbalanced.",
+      "incorrectOptionExplanations": {
+        "Yes always": "Local imbalances matter.",
+        "Only the root matters": "Every node is checked.",
+        "Only the leaves matter": "Leaves always have balanced (empty) children."
+      }
+    }
+  ],
+  "generatedAt": "2026-10-01T14:29:30Z"
+}

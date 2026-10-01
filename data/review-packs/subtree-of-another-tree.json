@@ -1,0 +1,167 @@
+{
+  "schemaVersion": 1,
+  "problemSlug": "subtree-of-another-tree",
+  "summary": "Check whether subRoot appears as a subtree (same structure and values) somewhere in root.",
+  "patterns": [
+    "Tree",
+    "DFS"
+  ],
+  "mainInsight": "Try every node of root as a potential match and test Same Tree against subRoot; stop as soon as one succeeds. For a linear-time guarantee, serialise both trees and use substring search (KMP) or hash subtrees.",
+  "canonicalApproach": "Serialise + substring search",
+  "approaches": [
+    {
+      "name": "DFS + Same Tree at every node",
+      "summary": "For each node of root run isSameTree(node, subRoot).",
+      "timeComplexity": "O(n * m) worst case",
+      "spaceComplexity": "O(h)",
+      "strengths": [
+        "Simple, reuses Same Tree"
+      ],
+      "weaknesses": [
+        "Quadratic in the worst case"
+      ],
+      "interviewRelevance": "Your approach."
+    },
+    {
+      "name": "Serialise + substring search",
+      "summary": "Preorder strings with null markers and delimiters; check substring (KMP for O(n + m)).",
+      "timeComplexity": "O(n + m)",
+      "spaceComplexity": "O(n + m)",
+      "strengths": [
+        "Linear worst case"
+      ],
+      "weaknesses": [
+        "Needs careful delimiters"
+      ]
+    },
+    {
+      "name": "Merkle hashing",
+      "summary": "Hash each subtree and compare hashes (verify on match).",
+      "timeComplexity": "O(n + m) expected",
+      "spaceComplexity": "O(n)",
+      "weaknesses": [
+        "Hash collisions"
+      ]
+    }
+  ],
+  "personalSolution": {
+    "approach": "DFS over root + Same Tree at each node",
+    "timeComplexity": "O(n * m)",
+    "spaceComplexity": "O(h)",
+    "isOptimal": false,
+    "notes": "Standard accepted solution. Return booleans for an early exit; serialisation + KMP gives O(n + m)."
+  },
+  "commonMistakes": [],
+  "edgeCases": [],
+  "cards": [
+    {
+      "id": "sb2-pattern-01",
+      "category": "pattern",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "How do you test 'subtree of' using an existing helper?",
+        "Which combination solves Subtree of Another Tree?"
+      ],
+      "options": [
+        "DFS over root and Same Tree at each node",
+        "Binary search tree insertion",
+        "BFS only",
+        "Sorting both trees"
+      ],
+      "answer": "DFS over root and Same Tree at each node",
+      "explanation": "A subtree match must be rooted at some node of root, so try each node as the candidate root.",
+      "incorrectOptionExplanations": {
+        "Binary search tree insertion": "Not applicable.",
+        "BFS only": "A traversal alone finds candidates but still needs the equality test.",
+        "Sorting both trees": "Trees are not sortable that way."
+      }
+    },
+    {
+      "id": "sb2-insight-01",
+      "category": "main_insight",
+      "type": "free_recall",
+      "promptVariants": [
+        "Why is the worst case O(n * m) and how does serialisation fix it?",
+        "What input makes the naive approach slow?"
+      ],
+      "answer": "For each of the n nodes the Same Tree check can run up to m comparisons (e.g. a long chain of equal values with a mismatch deep in subRoot). Serialising both trees (with null markers) turns the question into substring search, which KMP does in O(n + m).",
+      "keyPoints": [
+        "n candidate roots x m comparisons",
+        "Equal-valued chains",
+        "Serialise + KMP is linear"
+      ],
+      "explanation": "Add delimiters/null markers to avoid false matches such as 12 vs 2."
+    },
+    {
+      "id": "sb2-time-01",
+      "category": "time_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Worst-case time of DFS + Same Tree (n = |root|, m = |subRoot|): ___",
+        "Complete the statement: Worst-case time of DFS + Same Tree (n = |root|, m = |subRoot|): ___"
+      ],
+      "answer": "O(n*m)",
+      "explanation": "Up to n candidate roots, each compared in O(m).",
+      "acceptedAnswers": [
+        "O(nm)",
+        "O(n m)",
+        "O(m*n)"
+      ]
+    },
+    {
+      "id": "sb2-space-01",
+      "category": "space_complexity",
+      "type": "free_recall",
+      "promptVariants": [
+        "What is the extra space of the DFS solution versus serialisation?",
+        "How do recursion depths add up?"
+      ],
+      "answer": "DFS: O(h_root + h_sub) for the nested recursion. Serialisation: O(n + m) for the strings. KMP adds O(m) for the prefix table.",
+      "keyPoints": [
+        "DFS O(h)",
+        "Serialisation O(n + m)"
+      ],
+      "explanation": "Trade memory for a guaranteed linear time."
+    },
+    {
+      "id": "sb2-code-01",
+      "category": "code_reasoning",
+      "type": "code_question",
+      "promptVariants": [
+        "Your dfs keeps traversing after a match is found. How would you add an early exit, and what does `if not self.ans` achieve?",
+        "Rewrite with return values."
+      ],
+      "code": "def dfs(root):\n    if not root:\n        return\n    dfs(root.left)\n    dfs(root.right)\n    if not self.ans:\n        self.ans = self.isSameTree(root, subRoot)",
+      "answer": "`if not self.ans` avoids calling isSameTree again after a match, but the traversal itself still visits every remaining node. Return a boolean instead: `if isSameTree(root, sub): return True; return dfs(root.left) or dfs(root.right)`, which stops as soon as a match is found.",
+      "keyPoints": [
+        "Flag only skips the comparison",
+        "Return booleans for an early exit",
+        "or short-circuits"
+      ],
+      "explanation": "Preorder (check before recursing) is the natural order here."
+    },
+    {
+      "id": "sb2-edge-01",
+      "category": "edge_case",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "Is the tree [3,4,5,1,2,null,null,0] a subtree match for subRoot [4,1,2]?",
+        "Why not?"
+      ],
+      "options": [
+        "No: the node 2 has an extra child 0 in root, so the subtree rooted at 4 is not identical",
+        "Yes",
+        "Only if values are unique",
+        "Cannot tell"
+      ],
+      "answer": "No: the node 2 has an extra child 0 in root, so the subtree rooted at 4 is not identical",
+      "explanation": "A subtree must include ALL descendants of the matched node, not just a prefix of them.",
+      "incorrectOptionExplanations": {
+        "Yes": "The extra descendant breaks the match.",
+        "Only if values are unique": "Irrelevant.",
+        "Cannot tell": "It can be decided by comparison."
+      }
+    }
+  ],
+  "generatedAt": "2026-10-01T14:29:30Z"
+}

@@ -1,0 +1,150 @@
+{
+  "schemaVersion": 1,
+  "problemSlug": "symmetric-tree",
+  "summary": "Check whether a binary tree is a mirror of itself.",
+  "patterns": [
+    "Tree",
+    "DFS"
+  ],
+  "mainInsight": "A tree is symmetric iff its left and right subtrees are mirror images: roots equal, left.left mirrors right.right and left.right mirrors right.left.",
+  "canonicalApproach": "Recursive mirror check",
+  "approaches": [
+    {
+      "name": "Recursive mirror check",
+      "summary": "isMirror(a, b): values equal and the crossed children mirror.",
+      "timeComplexity": "O(n)",
+      "spaceComplexity": "O(h)",
+      "strengths": [
+        "Short"
+      ],
+      "interviewRelevance": "Your approach; the expected answer."
+    },
+    {
+      "name": "Iterative BFS with a queue of pairs",
+      "summary": "Enqueue mirrored pairs and compare.",
+      "timeComplexity": "O(n)",
+      "spaceComplexity": "O(w)",
+      "strengths": [
+        "No recursion"
+      ]
+    }
+  ],
+  "personalSolution": {
+    "approach": "Recursive mirror check",
+    "timeComplexity": "O(n)",
+    "spaceComplexity": "O(h)",
+    "isOptimal": true,
+    "notes": "Optimal."
+  },
+  "commonMistakes": [],
+  "edgeCases": [],
+  "cards": [
+    {
+      "id": "sy-pattern-01",
+      "category": "pattern",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "Which children are compared in a mirror check?",
+        "How do you test symmetry recursively?"
+      ],
+      "options": [
+        "Outer pair (left.left, right.right) and inner pair (left.right, right.left)",
+        "Left with left and right with right",
+        "Only the roots",
+        "Inorder traversal equals reversed preorder"
+      ],
+      "answer": "Outer pair (left.left, right.right) and inner pair (left.right, right.left)",
+      "explanation": "A mirror crosses the children: the outer nodes face each other and the inner nodes face each other.",
+      "incorrectOptionExplanations": {
+        "Left with left and right with right": "That is Same Tree.",
+        "Only the roots": "Ignores the structure.",
+        "Inorder traversal equals reversed preorder": "Not a valid test."
+      }
+    },
+    {
+      "id": "sy-insight-01",
+      "category": "main_insight",
+      "type": "free_recall",
+      "promptVariants": [
+        "How does Symmetric Tree differ from Same Tree?",
+        "What changes in the recursive call?"
+      ],
+      "answer": "It is Same Tree applied to the left subtree and the mirrored right subtree: instead of pairing left with left, the children are crossed (left of one with right of the other). The base cases and value checks are the same.",
+      "keyPoints": [
+        "Cross the children",
+        "Same base cases",
+        "Reuse the Same Tree skeleton"
+      ],
+      "explanation": "Start with root.left and root.right."
+    },
+    {
+      "id": "sy-time-01",
+      "category": "time_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Time complexity: ___",
+        "Complete the statement: Time complexity: ___"
+      ],
+      "answer": "O(n)",
+      "explanation": "Each node is compared once.",
+      "acceptedAnswers": [
+        "linear"
+      ]
+    },
+    {
+      "id": "sy-space-01",
+      "category": "space_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Space complexity of the recursion (h = height): ___",
+        "Complete the statement: Space complexity of the recursion (h = height): ___"
+      ],
+      "answer": "O(h)",
+      "explanation": "Call stack depth equals the tree height.",
+      "acceptedAnswers": [
+        "O(height)",
+        "O(log n) balanced"
+      ]
+    },
+    {
+      "id": "sy-code-01",
+      "category": "code_reasoning",
+      "type": "code_question",
+      "promptVariants": [
+        "Why does isMirror return False when exactly one of p and q is None?",
+        "What does the final line combine?"
+      ],
+      "code": "def isMirror(p, q):\n    if not p and not q:\n        return True\n    if not p or not q:\n        return False\n    return p.val == q.val and isMirror(p.left, q.right) and isMirror(p.right, q.left)",
+      "answer": "A mirror image must have a node exactly where the other side has one: one present and one absent breaks symmetry. The last line requires equal values and both crossed child pairs to be mirrors, short-circuiting on the first failure.",
+      "keyPoints": [
+        "Presence must match",
+        "Values equal",
+        "Crossed children mirror"
+      ],
+      "explanation": "The `not p and not q` base case is the success case."
+    },
+    {
+      "id": "sy-edge-01",
+      "category": "edge_case",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "Is [1,2,2,null,3,null,3] symmetric?",
+        "Why not?"
+      ],
+      "options": [
+        "No: both 2s have only a right child (3 and 3), which are not mirrored",
+        "Yes",
+        "Only if values are sorted",
+        "Cannot tell"
+      ],
+      "answer": "No: both 2s have only a right child (3 and 3), which are not mirrored",
+      "explanation": "Mirrors need the left 2's right child to match the right 2's left child, but the right 2 has none.",
+      "incorrectOptionExplanations": {
+        "Yes": "The structure is not mirrored.",
+        "Only if values are sorted": "Sortedness is irrelevant.",
+        "Cannot tell": "It can be decided."
+      }
+    }
+  ],
+  "generatedAt": "2026-10-01T14:29:30Z"
+}

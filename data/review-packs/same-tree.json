@@ -1,0 +1,160 @@
+{
+  "schemaVersion": 1,
+  "problemSlug": "same-tree",
+  "summary": "Check whether two binary trees are structurally identical with equal node values.",
+  "patterns": [
+    "Tree",
+    "DFS"
+  ],
+  "mainInsight": "Two trees are the same iff their roots have equal values and their left subtrees and right subtrees are the same - a simultaneous recursion with the base case that two empty trees are equal and exactly one empty tree is not.",
+  "canonicalApproach": "Simultaneous recursion",
+  "approaches": [
+    {
+      "name": "Simultaneous recursion",
+      "summary": "Compare roots, recurse on children pairs.",
+      "timeComplexity": "O(min(n, m))",
+      "spaceComplexity": "O(h)",
+      "strengths": [
+        "Short"
+      ],
+      "interviewRelevance": "Your approach; the expected answer."
+    },
+    {
+      "name": "Serialize both and compare",
+      "summary": "Preorder with null markers.",
+      "timeComplexity": "O(n + m)",
+      "spaceComplexity": "O(n + m)",
+      "weaknesses": [
+        "Extra memory"
+      ]
+    },
+    {
+      "name": "Iterative with two stacks/queues",
+      "summary": "Compare pairs iteratively.",
+      "timeComplexity": "O(min(n, m))",
+      "spaceComplexity": "O(h) or O(w)",
+      "strengths": [
+        "No recursion"
+      ]
+    }
+  ],
+  "personalSolution": {
+    "approach": "Simultaneous recursion (compares values after recursing)",
+    "timeComplexity": "O(n)",
+    "spaceComplexity": "O(h)",
+    "isOptimal": true,
+    "notes": "Correct. Check the root values first and short-circuit to avoid needless recursion."
+  },
+  "commonMistakes": [],
+  "edgeCases": [],
+  "cards": [
+    {
+      "id": "st-pattern-01",
+      "category": "pattern",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "Which pattern compares two trees?",
+        "How do you traverse two trees in lockstep?"
+      ],
+      "options": [
+        "Simultaneous recursion on matching children",
+        "Sort both trees",
+        "Inorder of one tree only",
+        "Count the nodes"
+      ],
+      "answer": "Simultaneous recursion on matching children",
+      "explanation": "Equality is structural: roots, left subtrees and right subtrees must all match.",
+      "incorrectOptionExplanations": {
+        "Sort both trees": "Trees are not sorted collections.",
+        "Inorder of one tree only": "Ignores the other tree.",
+        "Count the nodes": "Equal counts do not imply equal shape or values."
+      }
+    },
+    {
+      "id": "st-insight-01",
+      "category": "main_insight",
+      "type": "free_recall",
+      "promptVariants": [
+        "What are the three base cases of Same Tree?",
+        "Why can recursion stop early?"
+      ],
+      "answer": "Both empty -> equal; exactly one empty -> not equal; both non-empty -> compare values and recurse. As soon as a value mismatch or an empty/non-empty pair occurs the answer is False, so there is no need to explore the rest of the trees.",
+      "keyPoints": [
+        "Both None => True",
+        "One None => False",
+        "Values differ => False immediately"
+      ],
+      "explanation": "Short-circuiting saves work on mismatching trees."
+    },
+    {
+      "id": "st-time-01",
+      "category": "time_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Time complexity (n nodes): ___",
+        "Complete the statement: Time complexity (n nodes): ___"
+      ],
+      "answer": "O(n)",
+      "explanation": "Each pair of nodes is compared at most once.",
+      "acceptedAnswers": [
+        "O(min(n, m))",
+        "linear"
+      ]
+    },
+    {
+      "id": "st-space-01",
+      "category": "space_complexity",
+      "type": "free_recall",
+      "promptVariants": [
+        "What bounds the recursion stack?",
+        "What is the space for balanced vs skewed trees?"
+      ],
+      "answer": "The height h: O(log n) for balanced trees and O(n) for skewed trees.",
+      "keyPoints": [
+        "O(h)",
+        "log n vs n"
+      ],
+      "explanation": "Same as most tree DFS."
+    },
+    {
+      "id": "st-code-01",
+      "category": "code_reasoning",
+      "type": "code_question",
+      "promptVariants": [
+        "Your code recurses on both subtrees before comparing p.val and q.val. Why is that wasteful and how would you reorder it?",
+        "Which comparisons can be short-circuited?"
+      ],
+      "code": "sameLeft = self.isSameTree(p.left, q.left)\nsameRight = self.isSameTree(p.right, q.right)\nreturn sameLeft and sameRight and p.val == q.val",
+      "answer": "It evaluates both full subtree comparisons even when the root values already differ. Check the values first and return early: `if p.val != q.val: return False`, then `return self.isSameTree(p.left, q.left) and self.isSameTree(p.right, q.right)` (the second call is skipped when the first is False).",
+      "keyPoints": [
+        "Compare values first",
+        "Short-circuit with and",
+        "Avoid exploring when already different"
+      ],
+      "explanation": "Same worst-case big-O, much faster on mismatches."
+    },
+    {
+      "id": "st-edge-01",
+      "category": "edge_case",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "What should isSameTree(None, None) and isSameTree(node, None) return?",
+        "How are empty trees compared?"
+      ],
+      "options": [
+        "True and False",
+        "False and False",
+        "True and True",
+        "Error and False"
+      ],
+      "answer": "True and False",
+      "explanation": "Two empty trees are identical; an empty and a non-empty tree are not.",
+      "incorrectOptionExplanations": {
+        "False and False": "Two empty trees are equal.",
+        "True and True": "A non-empty tree differs from an empty one.",
+        "Error and False": "The base cases return booleans."
+      }
+    }
+  ],
+  "generatedAt": "2026-10-01T14:29:30Z"
+}

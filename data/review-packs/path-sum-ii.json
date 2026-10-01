@@ -1,0 +1,155 @@
+{
+  "schemaVersion": 1,
+  "problemSlug": "path-sum-ii",
+  "summary": "Return all root-to-leaf paths whose values sum to targetSum.",
+  "patterns": [
+    "Backtracking",
+    "Tree",
+    "DFS"
+  ],
+  "mainInsight": "DFS with a single shared path list: append the node, recurse, then pop (backtrack). When a leaf's remaining sum is 0 record a COPY of the path.",
+  "canonicalApproach": "Backtracking with a shared path",
+  "approaches": [
+    {
+      "name": "DFS with path copies per call",
+      "summary": "Pass a new list to each recursive call.",
+      "timeComplexity": "O(n^2) worst",
+      "spaceComplexity": "O(n^2)",
+      "strengths": [
+        "No explicit pop"
+      ],
+      "weaknesses": [
+        "Copies at every step"
+      ]
+    },
+    {
+      "name": "Backtracking with a shared path",
+      "summary": "append / recurse / pop; copy only at solutions.",
+      "timeComplexity": "O(n * h) worst (copies at solutions)",
+      "spaceComplexity": "O(h) + output",
+      "strengths": [
+        "Minimal copying"
+      ],
+      "interviewRelevance": "Your approach; the expected answer."
+    }
+  ],
+  "personalSolution": {
+    "approach": "Backtracking with a shared path",
+    "timeComplexity": "O(n * h) worst",
+    "spaceComplexity": "O(h)",
+    "isOptimal": true,
+    "notes": "Optimal pattern: copy only when a solution is found."
+  },
+  "commonMistakes": [],
+  "edgeCases": [],
+  "cards": [
+    {
+      "id": "p2-pattern-01",
+      "category": "pattern",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "Which technique enumerates all root-to-leaf paths without copying at every step?",
+        "What is the backtracking pattern here?"
+      ],
+      "options": [
+        "Append the node, recurse, then pop it",
+        "Sort all paths",
+        "BFS with sets",
+        "Memoisation"
+      ],
+      "answer": "Append the node, recurse, then pop it",
+      "explanation": "The shared list always holds the current root-to-node path.",
+      "incorrectOptionExplanations": {
+        "Sort all paths": "Not required.",
+        "BFS with sets": "Paths need ordered lists.",
+        "Memoisation": "There are no repeated subproblems."
+      }
+    },
+    {
+      "id": "p2-insight-01",
+      "category": "main_insight",
+      "type": "free_recall",
+      "promptVariants": [
+        "Why must the recorded path be a copy (`path[:]`)?",
+        "What would the answer contain without the copy?"
+      ],
+      "answer": "The same list object is mutated as the DFS proceeds; storing the list itself would make every stored path alias that one list, which ends up empty/only the last state after backtracking. Copying captures the path at the moment of the match.",
+      "keyPoints": [
+        "Shared mutable list",
+        "Aliasing",
+        "Copy at solutions"
+      ],
+      "explanation": "Cost: O(h) per solution."
+    },
+    {
+      "id": "p2-time-01",
+      "category": "time_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Worst-case time (n nodes): ___",
+        "Complete the statement: Worst-case time (n nodes): ___"
+      ],
+      "answer": "O(n^2)",
+      "explanation": "Visiting is O(n); copying up to O(n) paths of length up to O(h) can be quadratic (e.g. ~n/2 paths of length ~n/2 in an adversarial tree).",
+      "acceptedAnswers": [
+        "O(n*h)",
+        "O(n log n) balanced"
+      ]
+    },
+    {
+      "id": "p2-space-01",
+      "category": "space_complexity",
+      "type": "free_recall",
+      "promptVariants": [
+        "What is the auxiliary space and what about the output?",
+        "Distinguish stack space from output space."
+      ],
+      "answer": "Auxiliary: O(h) for the recursion stack and the shared path list. The output can be large (all matching paths, each O(h)), which is usually excluded from the auxiliary analysis.",
+      "keyPoints": [
+        "O(h) auxiliary",
+        "Output is separate"
+      ],
+      "explanation": "Mention both when asked."
+    },
+    {
+      "id": "p2-code-01",
+      "category": "code_reasoning",
+      "type": "code_question",
+      "promptVariants": [
+        "Walk through the append/pop around the recursive call and explain why `path = [root.val]` starts with the root.",
+        "What does `remaining` represent?"
+      ],
+      "code": "path = [root.val]\ndef backtrack(root, target):\n    remaining = target - root.val\n    if not root.left and not root.right and remaining == 0:\n        ans.append(path[:])\n    for node in [root.left, root.right]:\n        if node:\n            path.append(node.val)\n            backtrack(node, remaining)\n            path.pop()",
+      "answer": "Each child's value is appended before descending and popped after returning, so the list always equals the path from the root to the current node. The root is pre-seeded because the loop only appends children. remaining is the target minus the sum of the path so far including this node; a leaf with remaining 0 completes a valid path.",
+      "keyPoints": [
+        "Append before, pop after",
+        "Root pre-seeded",
+        "remaining = target - path sum"
+      ],
+      "explanation": "Appending inside the callee (at entry) is an equivalent style."
+    },
+    {
+      "id": "p2-edge-01",
+      "category": "edge_case",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "What does the function return for an empty tree?",
+        "How is an empty tree handled?"
+      ],
+      "options": [
+        "An empty list",
+        "[[]]",
+        "None",
+        "An error"
+      ],
+      "answer": "An empty list",
+      "explanation": "There are no root-to-leaf paths, so the result list is empty.",
+      "incorrectOptionExplanations": {
+        "[[]]": "That would claim an empty path exists.",
+        "None": "The function returns a list.",
+        "An error": "The guard handles it."
+      }
+    }
+  ],
+  "generatedAt": "2026-10-01T14:29:30Z"
+}
