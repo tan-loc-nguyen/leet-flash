@@ -1,0 +1,150 @@
+{
+  "schemaVersion": 1,
+  "problemSlug": "predict-the-winner",
+  "summary": "Players alternately take a number from either end of the array; does player 1 end with at least as much as player 2?",
+  "patterns": [
+    "Dynamic Programming",
+    "Math"
+  ],
+  "mainInsight": "Define dp[i][j] as the best score difference (current player minus the opponent) on the subarray i..j. The current player takes either end and the opponent then plays optimally: dp[i][j] = max(nums[i] - dp[i + 1][j], nums[j] - dp[i][j - 1]). Player 1 wins iff dp[0][n - 1] >= 0.",
+  "canonicalApproach": "Interval DP on score difference",
+  "approaches": [
+    {
+      "name": "Minimax recursion",
+      "summary": "Try both ends at each turn with exponential branching.",
+      "timeComplexity": "O(2^n)",
+      "spaceComplexity": "O(n)",
+      "strengths": [
+        "Direct"
+      ],
+      "weaknesses": [
+        "Exponential"
+      ]
+    },
+    {
+      "name": "Interval DP on score difference",
+      "summary": "dp[i][j] as above.",
+      "timeComplexity": "O(n^2)",
+      "spaceComplexity": "O(n^2)",
+      "strengths": [
+        "Standard"
+      ],
+      "interviewRelevance": "The expected answer."
+    },
+    {
+      "name": "1D rolling DP",
+      "summary": "Keep one row of differences.",
+      "timeComplexity": "O(n^2)",
+      "spaceComplexity": "O(n)",
+      "strengths": [
+        "Smaller memory"
+      ],
+      "weaknesses": [
+        "Index care"
+      ]
+    }
+  ],
+  "commonMistakes": [
+    "Treating ties as a loss",
+    "Adding instead of subtracting the opponent's value",
+    "Greedy end-picking"
+  ],
+  "edgeCases": [
+    "Single element (True)",
+    "Even length arrays (player 1 always wins in the Stone Game variant)",
+    "Ties"
+  ],
+  "cards": [
+    {
+      "id": "ptw-pattern-01",
+      "category": "pattern",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "What does dp[i][j] represent in Predict the Winner?",
+        "Why store a difference rather than a score?"
+      ],
+      "options": [
+        "The best score difference (mover minus opponent) on the subarray i..j",
+        "The maximum sum the first player can collect from i..j",
+        "The number of subarrays in which player 1 wins",
+        "The plain sum of the numbers from index i to j"
+      ],
+      "answer": "The best score difference (mover minus opponent) on the subarray i..j",
+      "explanation": "A zero-sum game: what you gain is what the opponent loses.",
+      "incorrectOptionExplanations": {
+        "The maximum sum the first player can collect from i..j": "That ignores the opponent's replies.",
+        "The number of subarrays in which player 1 wins": "It is not a count.",
+        "The plain sum of the numbers from index i to j": "That is a prefix sum quantity."
+      }
+    },
+    {
+      "id": "ptw-insight-01",
+      "category": "main_insight",
+      "type": "free_recall",
+      "promptVariants": [
+        "Why does the recurrence subtract dp of the sub-problem?",
+        "What does that subtraction model?"
+      ],
+      "answer": "After the mover takes an end, the opponent becomes the mover on the smaller range and obtains dp[...] difference in their favour. From the original mover's view that difference counts against them, so the result is nums[end] - dp[remaining]. Taking the max over both ends gives optimal play.",
+      "keyPoints": [
+        "Roles swap after a move",
+        "Subtract the opponent's best difference",
+        "Max over the two ends"
+      ],
+      "explanation": "Player 1 wins on dp[0][n-1] >= 0 (ties go to player 1)."
+    },
+    {
+      "id": "ptw-time-01",
+      "category": "time_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Time complexity: ___",
+        "Complete the statement: Time complexity: ___"
+      ],
+      "answer": "O(n^2)",
+      "explanation": "n^2 intervals, constant work each.",
+      "acceptedAnswers": [
+        "O(n²)",
+        "quadratic"
+      ]
+    },
+    {
+      "id": "ptw-space-01",
+      "category": "space_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Space complexity (excluding the input): ___",
+        "Complete the statement: Space complexity (excluding the input): ___"
+      ],
+      "answer": "O(n^2)",
+      "explanation": "The dp table (O(n) with a rolling array).",
+      "acceptedAnswers": [
+        "O(n)",
+        "O(n²)"
+      ]
+    },
+    {
+      "id": "ptw-edge-01",
+      "category": "edge_case",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "What is the result for [1, 5, 2]?",
+        "Does player 1 win?"
+      ],
+      "options": [
+        "False: dp = 1 - max(5 - 2, 2 - 5) = -2 < 0",
+        "True: player 1 takes 5 first",
+        "True: player 1 gets 1 + 2 = 3 against 5",
+        "False: a tie is a loss for player 1"
+      ],
+      "answer": "False: dp = 1 - max(5 - 2, 2 - 5) = -2 < 0",
+      "explanation": "Whatever player 1 takes, player 2 can take 5.",
+      "incorrectOptionExplanations": {
+        "True: player 1 takes 5 first": "5 is not on an end of [1, 5, 2].",
+        "True: player 1 gets 1 + 2 = 3 against 5": "5 beats 3 for player 2.",
+        "False: a tie is a loss for player 1": "A tie is a win for player 1."
+      }
+    }
+  ],
+  "generatedAt": "2026-10-01T15:00:56Z"
+}

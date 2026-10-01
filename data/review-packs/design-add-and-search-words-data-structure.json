@@ -1,0 +1,142 @@
+{
+  "schemaVersion": 1,
+  "problemSlug": "design-add-and-search-words-data-structure",
+  "summary": "Support addWord(word) and search(pattern) where '.' matches any single letter.",
+  "patterns": [
+    "Trie",
+    "DFS"
+  ],
+  "mainInsight": "Store words in a trie. search walks the trie character by character; for '.' it tries every child (DFS/backtracking). Each non-wildcard step follows a single child.",
+  "canonicalApproach": "Trie + DFS for wildcards",
+  "approaches": [
+    {
+      "name": "List of words",
+      "summary": "Compare each pattern with every word.",
+      "timeComplexity": "O(N * L)",
+      "spaceComplexity": "O(N * L)",
+      "strengths": [
+        "Simple"
+      ],
+      "weaknesses": [
+        "Slow with many words"
+      ]
+    },
+    {
+      "name": "Trie + DFS for wildcards",
+      "summary": "Branch on '.' over all children.",
+      "timeComplexity": "O(L) add, up to O(26^dots * L) search",
+      "spaceComplexity": "O(total characters)",
+      "strengths": [
+        "Efficient prefix sharing"
+      ],
+      "weaknesses": [
+        "Wildcards branch"
+      ],
+      "interviewRelevance": "The expected answer."
+    }
+  ],
+  "commonMistakes": [
+    "Treating '.' as zero or many characters",
+    "Missing the end-of-word flag",
+    "Not recursing on every child"
+  ],
+  "edgeCases": [
+    "Pattern of all dots",
+    "Pattern longer than any word",
+    "Empty trie"
+  ],
+  "cards": [
+    {
+      "id": "dsw-pattern-01",
+      "category": "pattern",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "How should the search handle the '.' wildcard in a trie?",
+        "What happens at a '.' node?"
+      ],
+      "options": [
+        "Recursively try every child of the current node",
+        "Skip the character without moving down the trie",
+        "Stop the search and return True",
+        "Replace it with 'a' and continue"
+      ],
+      "answer": "Recursively try every child of the current node",
+      "explanation": "'.' consumes one character and may take any branch.",
+      "incorrectOptionExplanations": {
+        "Skip the character without moving down the trie": "The wildcard stands for exactly one letter.",
+        "Stop the search and return True": "The remaining characters must still match.",
+        "Replace it with 'a' and continue": "That would miss other letters."
+      }
+    },
+    {
+      "id": "dsw-insight-01",
+      "category": "main_insight",
+      "type": "free_recall",
+      "promptVariants": [
+        "Why is an end-of-word flag needed in each trie node?",
+        "Which pattern would give a false positive without it?"
+      ],
+      "answer": "A path may spell a prefix of a stored word. For example after adding 'apple' the search 'app' reaches a node but is not a word, so only nodes marked as word ends count as matches.",
+      "keyPoints": [
+        "Prefix is not a word",
+        "Mark word ends",
+        "'app' vs 'apple'"
+      ],
+      "explanation": "Return node.is_end at the last character."
+    },
+    {
+      "id": "dsw-time-01",
+      "category": "time_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Time complexity: ___",
+        "Complete the statement: Time complexity: ___"
+      ],
+      "answer": "O(L)",
+      "explanation": "addWord is O(L); search is O(L) without wildcards and up to O(26^k * L) with k dots.",
+      "acceptedAnswers": [
+        "O(L) for add",
+        "O(26^k * L)",
+        "O(26^dots * L)"
+      ]
+    },
+    {
+      "id": "dsw-space-01",
+      "category": "space_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Space complexity (excluding the input): ___",
+        "Complete the statement: Space complexity (excluding the input): ___"
+      ],
+      "answer": "O(N*L)",
+      "explanation": "The trie stores the characters of all inserted words.",
+      "acceptedAnswers": [
+        "O(total characters)",
+        "O(N * L)"
+      ]
+    },
+    {
+      "id": "dsw-edge-01",
+      "category": "edge_case",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "What does search('b..') return after adding 'bad' and 'dad'?",
+        "Which words are reachable from the 'b' child?"
+      ],
+      "options": [
+        "True: 'bad' matches the pattern",
+        "False: the wildcards need to match different letters",
+        "True: because 'dad' also matches",
+        "False: the pattern is longer than the first word"
+      ],
+      "answer": "True: 'bad' matches the pattern",
+      "explanation": "Only words starting with 'b' and of length 3 qualify.",
+      "incorrectOptionExplanations": {
+        "False: the wildcards need to match different letters": "Wildcards may match any letters.",
+        "True: because 'dad' also matches": "'dad' does not start with 'b'.",
+        "False: the pattern is longer than the first word": "The lengths are equal."
+      }
+    }
+  ],
+  "generatedAt": "2026-10-01T15:00:55Z"
+}

@@ -1,0 +1,141 @@
+{
+  "schemaVersion": 1,
+  "problemSlug": "find-x-value-of-array-i",
+  "summary": "Count subarrays (via prefix/suffix removal) by product modulo k, for k <= 5.",
+  "patterns": [
+    "Dynamic Programming",
+    "Math"
+  ],
+  "mainInsight": "Let cnt[r] be the number of subarrays ending at the previous index with product % k == r. For a new value a, the new counts are new[(r * a) % k] += cnt[r] for every r, plus the single-element subarray new[a % k] += 1. Add new into the global result. This is O(n * k).",
+  "canonicalApproach": "DP over remainders of subarrays ending at i",
+  "approaches": [
+    {
+      "name": "Brute force products",
+      "summary": "Compute every subarray product mod k.",
+      "timeComplexity": "O(n^2)",
+      "spaceComplexity": "O(1)",
+      "strengths": [
+        "Simple"
+      ],
+      "weaknesses": [
+        "Too slow for 10^5"
+      ]
+    },
+    {
+      "name": "DP over remainders of subarrays ending at i",
+      "summary": "Roll the counts through a multiplication by each new element.",
+      "timeComplexity": "O(n * k)",
+      "spaceComplexity": "O(k)",
+      "strengths": [
+        "Linear with k <= 5"
+      ],
+      "weaknesses": [
+        "Mod bookkeeping"
+      ],
+      "interviewRelevance": "The expected answer."
+    }
+  ],
+  "commonMistakes": [
+    "Resetting the counts for each start index",
+    "Forgetting the single-element subarray",
+    "Multiplying remainders without % k"
+  ],
+  "edgeCases": [
+    "k = 1 (everything is remainder 0)",
+    "Single element",
+    "Values divisible by k"
+  ],
+  "cards": [
+    {
+      "id": "fxv-pattern-01",
+      "category": "pattern",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "What does dp[i][r] represent for Find X Value of Array I?",
+        "Which transition extends a subarray?"
+      ],
+      "options": [
+        "The number of subarrays ending at i whose product modulo k is r",
+        "The product of the first i elements modulo k",
+        "The longest subarray ending at i with remainder r",
+        "Whether a subarray with remainder r exists at index i"
+      ],
+      "answer": "The number of subarrays ending at i whose product modulo k is r",
+      "explanation": "Extend each subarray ending at i - 1 by nums[i]: remainder r becomes (r * nums[i]) % k.",
+      "incorrectOptionExplanations": {
+        "The product of the first i elements modulo k": "That counts a single subarray.",
+        "The longest subarray ending at i with remainder r": "Counts are needed, not lengths.",
+        "Whether a subarray with remainder r exists at index i": "Counts matter, not existence."
+      }
+    },
+    {
+      "id": "fxv-insight-01",
+      "category": "main_insight",
+      "type": "free_recall",
+      "promptVariants": [
+        "Why is the state small and why can it be rolled?",
+        "What is added for the new single-element subarray?"
+      ],
+      "answer": "k is at most 5, so there are at most 5 remainder buckets per index, and dp[i] depends only on dp[i - 1]. A new subarray starting and ending at i contributes one to bucket nums[i] % k. Summing dp over all i gives the final result array.",
+      "keyPoints": [
+        "k <= 5 buckets",
+        "Depends only on the previous row",
+        "+1 for [nums[i]]"
+      ],
+      "explanation": "Total subarrays = n(n + 1) / 2."
+    },
+    {
+      "id": "fxv-time-01",
+      "category": "time_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Time complexity: ___",
+        "Complete the statement: Time complexity: ___"
+      ],
+      "answer": "O(n*k)",
+      "explanation": "For each element update k remainder buckets.",
+      "acceptedAnswers": [
+        "O(nk)",
+        "O(n * k)"
+      ]
+    },
+    {
+      "id": "fxv-space-01",
+      "category": "space_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Space complexity (excluding the input): ___",
+        "Complete the statement: Space complexity (excluding the input): ___"
+      ],
+      "answer": "O(k)",
+      "explanation": "Two arrays of size k (current and next).",
+      "acceptedAnswers": [
+        "O(1)",
+        "constant"
+      ]
+    },
+    {
+      "id": "fxv-edge-01",
+      "category": "edge_case",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "What is the result for nums = [1, 1, 2, 1, 1] and k = 2?",
+        "How many subarrays have an even product?"
+      ],
+      "options": [
+        "[9, 6]: nine subarrays have product % 2 = 0 and six have 1",
+        "[6, 9]: six even products and nine odd products",
+        "[15, 0]: every subarray has an even product",
+        "[5, 10]: the counts are split evenly in a balanced way"
+      ],
+      "answer": "[9, 6]: nine subarrays have product % 2 = 0 and six have 1",
+      "explanation": "The subarrays containing the 2 (3 * 3 = 9) are even.",
+      "incorrectOptionExplanations": {
+        "[6, 9]: six even products and nine odd products": "The subarrays containing the 2 are even.",
+        "[15, 0]: every subarray has an even product": "Subarrays without the 2 are odd.",
+        "[5, 10]: the counts are split evenly in a balanced way": "There are 15 subarrays in total."
+      }
+    }
+  ],
+  "generatedAt": "2026-10-01T15:00:56Z"
+}

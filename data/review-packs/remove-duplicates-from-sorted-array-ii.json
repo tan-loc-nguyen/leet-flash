@@ -1,0 +1,135 @@
+{
+  "schemaVersion": 1,
+  "problemSlug": "remove-duplicates-from-sorted-array-ii",
+  "summary": "Remove duplicates in place so each value appears at most twice; return the new length.",
+  "patterns": [
+    "Two Pointers"
+  ],
+  "mainInsight": "Keep a write index k. Process each element x; it may be written iff k < 2 or x != nums[k - 2]. Since the array is sorted, comparing with the element two positions behind the write index guarantees at most two copies of any value.",
+  "canonicalApproach": "Compare with nums[k - 2]",
+  "approaches": [
+    {
+      "name": "Counting duplicates with a counter",
+      "summary": "Track the run length and write only if count <= 2.",
+      "timeComplexity": "O(n)",
+      "spaceComplexity": "O(1)",
+      "strengths": [
+        "Explicit"
+      ],
+      "weaknesses": [
+        "More state"
+      ]
+    },
+    {
+      "name": "Compare with nums[k - 2]",
+      "summary": "Write when k < 2 or x != nums[k - 2].",
+      "timeComplexity": "O(n)",
+      "spaceComplexity": "O(1)",
+      "strengths": [
+        "Tiny and generalises to 'at most K'"
+      ],
+      "interviewRelevance": "The expected answer."
+    }
+  ],
+  "commonMistakes": [
+    "Comparing with nums[k - 1]",
+    "Starting k at 0 without the k < 2 guard",
+    "Comparing with the read element after it was overwritten"
+  ],
+  "edgeCases": [
+    "Length 1 or 2",
+    "All equal",
+    "No duplicates"
+  ],
+  "cards": [
+    {
+      "id": "rd3-pattern-01",
+      "category": "pattern",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "What condition decides whether the current element is written?",
+        "How does the write pointer enforce 'at most twice'?"
+      ],
+      "options": [
+        "k < 2 or x != nums[k - 2]",
+        "k < 2 or x != nums[k - 1]",
+        "k > 2 or x == nums[k - 2]",
+        "x != nums[i - 2] using the read index"
+      ],
+      "answer": "k < 2 or x != nums[k - 2]",
+      "explanation": "If x equals the element two slots behind the write head, a third copy would form.",
+      "incorrectOptionExplanations": {
+        "k < 2 or x != nums[k - 1]": "That allows only one copy of each value.",
+        "k > 2 or x == nums[k - 2]": "That keeps duplicates beyond two.",
+        "x != nums[i - 2] using the read index": "The original array has been overwritten."
+      }
+    },
+    {
+      "id": "rd3-insight-01",
+      "category": "main_insight",
+      "type": "free_recall",
+      "promptVariants": [
+        "Why compare with nums[k - 2] rather than the read pointer's previous element?",
+        "What does it generalise to?"
+      ],
+      "answer": "The write region nums[:k] is the valid output so far. If x equals nums[k - 2] and the array is sorted then nums[k - 1] is also equal to x, so adding x would create a third copy. For 'at most K copies' compare with nums[k - K].",
+      "keyPoints": [
+        "Compare against the write region",
+        "Sorted => adjacent equal values",
+        "Use nums[k - K] for K copies"
+      ],
+      "explanation": "Comparing against read positions is unsafe since they may be overwritten."
+    },
+    {
+      "id": "rd3-time-01",
+      "category": "time_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Time complexity: ___",
+        "Complete the statement: Time complexity: ___"
+      ],
+      "answer": "O(n)",
+      "explanation": "One pass.",
+      "acceptedAnswers": [
+        "linear"
+      ]
+    },
+    {
+      "id": "rd3-space-01",
+      "category": "space_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Space complexity (excluding the input): ___",
+        "Complete the statement: Space complexity (excluding the input): ___"
+      ],
+      "answer": "O(1)",
+      "explanation": "In-place writes.",
+      "acceptedAnswers": [
+        "constant"
+      ]
+    },
+    {
+      "id": "rd3-edge-01",
+      "category": "edge_case",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "What is the result for [1, 1, 1, 2, 2, 3]?",
+        "How many elements remain?"
+      ],
+      "options": [
+        "5 elements: [1, 1, 2, 2, 3]",
+        "3 elements: [1, 2, 3]",
+        "6 elements: nothing is removed",
+        "4 elements: [1, 1, 2, 3]"
+      ],
+      "answer": "5 elements: [1, 1, 2, 2, 3]",
+      "explanation": "Only the third 1 is dropped.",
+      "incorrectOptionExplanations": {
+        "3 elements: [1, 2, 3]": "Each value is allowed twice.",
+        "6 elements: nothing is removed": "The third 1 must go.",
+        "4 elements: [1, 1, 2, 3]": "Both 2s are kept."
+      }
+    }
+  ],
+  "generatedAt": "2026-10-01T14:56:24Z"
+}

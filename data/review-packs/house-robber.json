@@ -1,0 +1,137 @@
+{
+  "schemaVersion": 1,
+  "problemSlug": "house-robber",
+  "summary": "Maximum sum of non-adjacent houses to rob.",
+  "patterns": [
+    "Dynamic Programming"
+  ],
+  "mainInsight": "At each house either skip it (keep the best so far) or rob it (best two houses back plus its value): dp[i] = max(dp[i-1], dp[i-2] + nums[i]). Only two previous values are needed.",
+  "canonicalApproach": "Rolling two variables",
+  "approaches": [
+    {
+      "name": "Recursion with memo",
+      "summary": "rob(i) = max(rob(i+1), nums[i] + rob(i+2)).",
+      "timeComplexity": "O(n)",
+      "spaceComplexity": "O(n)",
+      "strengths": [
+        "Direct from the definition"
+      ],
+      "weaknesses": [
+        "Stack depth"
+      ]
+    },
+    {
+      "name": "Rolling two variables",
+      "summary": "prev2, prev1 = prev1, max(prev1, prev2 + x).",
+      "timeComplexity": "O(n)",
+      "spaceComplexity": "O(1)",
+      "strengths": [
+        "Tiny state"
+      ],
+      "weaknesses": [
+        "Must understand the recurrence"
+      ],
+      "interviewRelevance": "The expected answer."
+    }
+  ],
+  "commonMistakes": [
+    "Using max(dp[i-1], dp[i-2]) + nums[i]",
+    "Not handling a single-element array",
+    "Initialising the rolling variables wrongly"
+  ],
+  "edgeCases": [
+    "One house",
+    "Two houses (take the larger)",
+    "All zeros"
+  ],
+  "cards": [
+    {
+      "id": "hr-pattern-01",
+      "category": "pattern",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "What is the recurrence for House Robber?",
+        "How do you combine 'skip' and 'rob' at house i?"
+      ],
+      "options": [
+        "dp[i] = max(dp[i-1], dp[i-2] + nums[i])",
+        "dp[i] = dp[i-1] + nums[i]",
+        "dp[i] = max(dp[i-1], dp[i-2]) + nums[i]",
+        "dp[i] = dp[i-2] + nums[i]"
+      ],
+      "answer": "dp[i] = max(dp[i-1], dp[i-2] + nums[i])",
+      "explanation": "Skipping keeps dp[i-1]; robbing adds nums[i] to the best that excludes house i-1.",
+      "incorrectOptionExplanations": {
+        "dp[i] = dp[i-1] + nums[i]": "That robs adjacent houses.",
+        "dp[i] = max(dp[i-1], dp[i-2]) + nums[i]": "That may add adjacent houses.",
+        "dp[i] = dp[i-2] + nums[i]": "That forces robbing every other house."
+      }
+    },
+    {
+      "id": "hr-insight-01",
+      "category": "main_insight",
+      "type": "free_recall",
+      "promptVariants": [
+        "Why are only the previous two dp values needed?",
+        "What does the state at i depend on?"
+      ],
+      "answer": "dp[i] depends only on dp[i-1] and dp[i-2], because robbing house i forbids i-1 and skipping it leaves exactly the best for the prefix up to i-1. A rolling pair of variables is therefore enough, reducing space to O(1).",
+      "keyPoints": [
+        "dp[i] uses i-1 and i-2 only",
+        "Roll two variables"
+      ],
+      "explanation": "Same shape as Fibonacci with a max."
+    },
+    {
+      "id": "hr-time-01",
+      "category": "time_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Time complexity: ___",
+        "Complete the statement: Time complexity: ___"
+      ],
+      "answer": "O(n)",
+      "explanation": "One pass.",
+      "acceptedAnswers": [
+        "linear"
+      ]
+    },
+    {
+      "id": "hr-space-01",
+      "category": "space_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Space complexity (excluding the input): ___",
+        "Complete the statement: Space complexity (excluding the input): ___"
+      ],
+      "answer": "O(1)",
+      "explanation": "Two rolling variables.",
+      "acceptedAnswers": [
+        "constant"
+      ]
+    },
+    {
+      "id": "hr-edge-01",
+      "category": "edge_case",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "What is the answer for [2, 1, 1, 2]?",
+        "Why isn't greedily robbing the biggest house enough?"
+      ],
+      "options": [
+        "4 (rob the first and last houses)",
+        "3 (rob the two middle houses)",
+        "6 (rob every house)",
+        "2 (rob only the largest house)"
+      ],
+      "answer": "4 (rob the first and last houses)",
+      "explanation": "Houses 0 and 3 give 2 + 2 = 4; no valid plan beats it.",
+      "incorrectOptionExplanations": {
+        "3 (rob the two middle houses)": "Middle houses are adjacent.",
+        "6 (rob every house)": "Adjacent houses cannot both be robbed.",
+        "2 (rob only the largest house)": "A better combination exists."
+      }
+    }
+  ],
+  "generatedAt": "2026-10-01T14:52:56Z"
+}

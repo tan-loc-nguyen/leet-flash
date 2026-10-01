@@ -1,0 +1,139 @@
+{
+  "schemaVersion": 1,
+  "problemSlug": "next-permutation",
+  "summary": "Rearrange nums into the next lexicographically greater permutation in place (or the smallest if none).",
+  "patterns": [
+    "Two Pointers",
+    "Array / Hashing"
+  ],
+  "mainInsight": "Scan from the right for the first index i with nums[i] < nums[i+1] (the pivot). Swap it with the smallest larger element to its right (found from the right since the suffix is non-increasing), then reverse the suffix after i to make it the smallest.",
+  "canonicalApproach": "Pivot, swap, reverse",
+  "approaches": [
+    {
+      "name": "Generate all permutations",
+      "summary": "Sort and pick the next.",
+      "timeComplexity": "O(n!)",
+      "spaceComplexity": "O(n!)",
+      "strengths": [
+        "Obvious"
+      ],
+      "weaknesses": [
+        "Impossible for n = 100"
+      ]
+    },
+    {
+      "name": "Pivot, swap, reverse",
+      "summary": "Find pivot, swap with next larger from the right, reverse the tail.",
+      "timeComplexity": "O(n)",
+      "spaceComplexity": "O(1)",
+      "strengths": [
+        "In place, linear"
+      ],
+      "weaknesses": [
+        "Fiddly details"
+      ],
+      "interviewRelevance": "The expected answer."
+    }
+  ],
+  "commonMistakes": [
+    "Choosing the first larger element from the left instead of the right",
+    "Forgetting to reverse the suffix",
+    "Using >= vs > when looking for the pivot with duplicates"
+  ],
+  "edgeCases": [
+    "Fully descending array",
+    "Duplicates [1,1,5]",
+    "Single element"
+  ],
+  "cards": [
+    {
+      "id": "np3-pattern-01",
+      "category": "pattern",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "What are the three steps of the next-permutation algorithm?",
+        "How do you transform the array into the next permutation in place?"
+      ],
+      "options": [
+        "Find the rightmost ascent, swap with the next larger on its right, reverse the suffix",
+        "Sort the suffix descending, then swap the first two items",
+        "Reverse the whole array, then swap the last two items",
+        "Swap the two largest items, then sort everything again"
+      ],
+      "answer": "Find the rightmost ascent, swap with the next larger on its right, reverse the suffix",
+      "explanation": "The suffix right of the pivot is non-increasing, so reversing it makes it the smallest possible.",
+      "incorrectOptionExplanations": {
+        "Sort the suffix descending, then swap the first two items": "That does not produce the next permutation.",
+        "Reverse the whole array, then swap the last two items": "That produces a different order.",
+        "Swap the two largest items, then sort everything again": "That can skip many permutations."
+      }
+    },
+    {
+      "id": "np3-insight-01",
+      "category": "main_insight",
+      "type": "free_recall",
+      "promptVariants": [
+        "Why is the suffix after the pivot in non-increasing order, and why is reversing it enough?",
+        "Why do we swap with the smallest larger element?"
+      ],
+      "answer": "The pivot is the rightmost ascent, so everything to its right is non-increasing, i.e. already the largest arrangement of that suffix. Swapping the pivot with the smallest larger element increases the prefix minimally, and the suffix (still non-increasing after the swap) is then reversed into ascending order, which is the smallest arrangement.",
+      "keyPoints": [
+        "Suffix is non-increasing",
+        "Smallest larger element keeps the increase minimal",
+        "Reverse to get ascending"
+      ],
+      "explanation": "That gives the very next permutation."
+    },
+    {
+      "id": "np3-time-01",
+      "category": "time_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Time complexity: ___",
+        "Complete the statement: Time complexity: ___"
+      ],
+      "answer": "O(n)",
+      "explanation": "One scan for the pivot, one for the swap target, one reverse.",
+      "acceptedAnswers": [
+        "linear"
+      ]
+    },
+    {
+      "id": "np3-space-01",
+      "category": "space_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Space complexity (excluding the input): ___",
+        "Complete the statement: Space complexity (excluding the input): ___"
+      ],
+      "answer": "O(1)",
+      "explanation": "The array is modified in place.",
+      "acceptedAnswers": [
+        "constant"
+      ]
+    },
+    {
+      "id": "np3-edge-01",
+      "category": "edge_case",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "What does the algorithm do for [3, 2, 1]?",
+        "What if no pivot exists?"
+      ],
+      "options": [
+        "No pivot exists, so the whole array is reversed to [1, 2, 3]",
+        "It raises an error because no larger permutation exists",
+        "It returns the array unchanged",
+        "It swaps the first and last elements only to [1, 2, 3]"
+      ],
+      "answer": "No pivot exists, so the whole array is reversed to [1, 2, 3]",
+      "explanation": "When the array is entirely non-increasing it is the last permutation, so it wraps to the first.",
+      "incorrectOptionExplanations": {
+        "It raises an error because no larger permutation exists": "The problem asks for the smallest permutation instead.",
+        "It returns the array unchanged": "The wrap-around must produce ascending order.",
+        "It swaps the first and last elements only to [1, 2, 3]": "That only works by accident for length 3."
+      }
+    }
+  ],
+  "generatedAt": "2026-10-01T14:52:56Z"
+}

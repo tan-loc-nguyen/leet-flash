@@ -1,0 +1,150 @@
+{
+  "schemaVersion": 1,
+  "problemSlug": "unique-paths",
+  "summary": "Number of paths from the top-left to the bottom-right of an m x n grid moving only right or down.",
+  "patterns": [
+    "Dynamic Programming",
+    "Math"
+  ],
+  "mainInsight": "dp[i][j] = dp[i - 1][j] + dp[i][j - 1], with the first row and column equal to 1; it can be rolled to one row. Combinatorially, any path has m - 1 downs and n - 1 rights, so the count is C(m + n - 2, m - 1).",
+  "canonicalApproach": "DP table / rolling row",
+  "approaches": [
+    {
+      "name": "Recursion",
+      "summary": "paths(i, j) = paths(i - 1, j) + paths(i, j - 1).",
+      "timeComplexity": "O(2^(m+n))",
+      "spaceComplexity": "O(m+n)",
+      "strengths": [
+        "Direct"
+      ],
+      "weaknesses": [
+        "Exponential"
+      ]
+    },
+    {
+      "name": "DP table / rolling row",
+      "summary": "Each cell sums the cell above and to the left.",
+      "timeComplexity": "O(m * n)",
+      "spaceComplexity": "O(n)",
+      "strengths": [
+        "Straightforward"
+      ],
+      "interviewRelevance": "The expected answer."
+    },
+    {
+      "name": "Combinatorics",
+      "summary": "C(m + n - 2, m - 1).",
+      "timeComplexity": "O(min(m, n))",
+      "spaceComplexity": "O(1)",
+      "strengths": [
+        "Fastest"
+      ],
+      "weaknesses": [
+        "Overflow care in other languages"
+      ]
+    }
+  ],
+  "commonMistakes": [
+    "Initialising the first row and column with 0",
+    "Multiplying instead of adding",
+    "Swapping m and n when sizing the table"
+  ],
+  "edgeCases": [
+    "1 x 1 grid",
+    "Single row or column",
+    "Large grid (answer fits in 2 * 10^9)"
+  ],
+  "cards": [
+    {
+      "id": "up-pattern-01",
+      "category": "pattern",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "What recurrence counts the paths in a grid with right and down moves?",
+        "How is a cell reached?"
+      ],
+      "options": [
+        "dp[i][j] = dp[i - 1][j] + dp[i][j - 1]",
+        "dp[i][j] = dp[i - 1][j] * dp[i][j - 1]",
+        "dp[i][j] = max(dp[i - 1][j], dp[i][j - 1]) + 1",
+        "dp[i][j] = dp[i - 1][j - 1] + 1"
+      ],
+      "answer": "dp[i][j] = dp[i - 1][j] + dp[i][j - 1]",
+      "explanation": "A cell is reached from above or from the left.",
+      "incorrectOptionExplanations": {
+        "dp[i][j] = dp[i - 1][j] * dp[i][j - 1]": "Counts add, not multiply.",
+        "dp[i][j] = max(dp[i - 1][j], dp[i][j - 1]) + 1": "That is a longest path.",
+        "dp[i][j] = dp[i - 1][j - 1] + 1": "Diagonal moves are not allowed."
+      }
+    },
+    {
+      "id": "up-insight-01",
+      "category": "main_insight",
+      "type": "free_recall",
+      "promptVariants": [
+        "How does the combinatorial formula follow from the problem?",
+        "Which moves are chosen?"
+      ],
+      "answer": "Every path consists of exactly (m - 1) downs and (n - 1) rights in some order, so the number of paths is the number of ways to choose which of the m + n - 2 moves are downs: C(m + n - 2, m - 1).",
+      "keyPoints": [
+        "m - 1 downs, n - 1 rights",
+        "Choose the positions of the downs"
+      ],
+      "explanation": "Compute with multiplication and division in a loop to avoid huge factorials."
+    },
+    {
+      "id": "up-time-01",
+      "category": "time_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Time complexity: ___",
+        "Complete the statement: Time complexity: ___"
+      ],
+      "answer": "O(m*n)",
+      "explanation": "One DP cell per grid cell (O(min(m, n)) with the formula).",
+      "acceptedAnswers": [
+        "O(mn)",
+        "O(m * n)"
+      ]
+    },
+    {
+      "id": "up-space-01",
+      "category": "space_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Space complexity (excluding the input): ___",
+        "Complete the statement: Space complexity (excluding the input): ___"
+      ],
+      "answer": "O(n)",
+      "explanation": "A single row of the table (O(1) with the formula).",
+      "acceptedAnswers": [
+        "O(min(m, n))",
+        "O(1)",
+        "O(m * n)"
+      ]
+    },
+    {
+      "id": "up-edge-01",
+      "category": "edge_case",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "How many paths are there in a 1 x n or m x 1 grid?",
+        "Why?"
+      ],
+      "options": [
+        "1: there is only one straight line of moves",
+        "n: any cell of the line may be skipped on the way",
+        "2: you can go right or down at the first cell",
+        "0: the grid has no interior cells to walk through"
+      ],
+      "answer": "1: there is only one straight line of moves",
+      "explanation": "The first row and column all have a count of 1.",
+      "incorrectOptionExplanations": {
+        "n: any cell of the line may be skipped on the way": "Moves cannot skip cells.",
+        "2: you can go right or down at the first cell": "In one row only right moves exist.",
+        "0: the grid has no interior cells to walk through": "The single path exists."
+      }
+    }
+  ],
+  "generatedAt": "2026-10-01T15:00:56Z"
+}

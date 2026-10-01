@@ -1,0 +1,135 @@
+{
+  "schemaVersion": 1,
+  "problemSlug": "jump-game",
+  "summary": "Can you reach the last index when nums[i] is the maximum jump length from i?",
+  "patterns": [
+    "Greedy",
+    "Dynamic Programming"
+  ],
+  "mainInsight": "Track the farthest index reachable so far. Scan left to right: if the current index exceeds the farthest reach, you are stuck (return False); otherwise update reach = max(reach, i + nums[i]). If the reach covers the last index, return True.",
+  "canonicalApproach": "Greedy farthest reach",
+  "approaches": [
+    {
+      "name": "DP / recursion with memo",
+      "summary": "canReach(i) = any(canReach(j)) for j in i+1..i+nums[i].",
+      "timeComplexity": "O(n^2)",
+      "spaceComplexity": "O(n)",
+      "strengths": [
+        "Direct"
+      ],
+      "weaknesses": [
+        "Quadratic"
+      ]
+    },
+    {
+      "name": "Greedy farthest reach",
+      "summary": "Maintain the farthest reachable index.",
+      "timeComplexity": "O(n)",
+      "spaceComplexity": "O(1)",
+      "strengths": [
+        "Linear, constant space"
+      ],
+      "interviewRelevance": "The expected answer."
+    }
+  ],
+  "commonMistakes": [
+    "Treating jumps as exact distances",
+    "Not stopping when i exceeds the reach",
+    "Counting jumps instead of reachability"
+  ],
+  "edgeCases": [
+    "Single element (True)",
+    "Zero at the first index with n > 1",
+    "Zero in the middle that can be jumped over"
+  ],
+  "cards": [
+    {
+      "id": "jg-pattern-01",
+      "category": "pattern",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "What single value summarises everything you need while scanning Jump Game?",
+        "What is the stuck condition?"
+      ],
+      "options": [
+        "The farthest index reachable so far; if i exceeds it you are stuck",
+        "The number of jumps made so far; stop at the last index",
+        "The largest value in the array; jump greedily by it",
+        "The sum of nums so far; stop when it exceeds n"
+      ],
+      "answer": "The farthest index reachable so far; if i exceeds it you are stuck",
+      "explanation": "If every earlier index reaches less than i, index i is unreachable.",
+      "incorrectOptionExplanations": {
+        "The number of jumps made so far; stop at the last index": "That is Jump Game II.",
+        "The largest value in the array; jump greedily by it": "Jump sizes are upper bounds.",
+        "The sum of nums so far; stop when it exceeds n": "The sum has no meaning for reachability."
+      }
+    },
+    {
+      "id": "jg-insight-01",
+      "category": "main_insight",
+      "type": "free_recall",
+      "promptVariants": [
+        "Why is tracking only the farthest reach sufficient?",
+        "Why can any index below the reach be used?"
+      ],
+      "answer": "From any reachable index you can jump to any smaller distance (nums[i] is a maximum), so all indices up to the farthest reach are reachable. Therefore the set of reachable indices is a prefix [0, reach], and a single number represents it.",
+      "keyPoints": [
+        "Reachable indices form a prefix",
+        "Jumps can be shorter than the maximum"
+      ],
+      "explanation": "That contiguity is the key insight."
+    },
+    {
+      "id": "jg-time-01",
+      "category": "time_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Time complexity: ___",
+        "Complete the statement: Time complexity: ___"
+      ],
+      "answer": "O(n)",
+      "explanation": "One pass.",
+      "acceptedAnswers": [
+        "linear"
+      ]
+    },
+    {
+      "id": "jg-space-01",
+      "category": "space_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Space complexity (excluding the input): ___",
+        "Complete the statement: Space complexity (excluding the input): ___"
+      ],
+      "answer": "O(1)",
+      "explanation": "A single variable.",
+      "acceptedAnswers": [
+        "constant"
+      ]
+    },
+    {
+      "id": "jg-edge-01",
+      "category": "edge_case",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "What is the result for [3, 2, 1, 0, 4]?",
+        "Where do you get stuck?"
+      ],
+      "options": [
+        "False: every path leads to index 3 whose jump length is 0",
+        "True: index 0 can jump straight to index 3 and then to 4",
+        "True: the array has enough total jump length",
+        "False: index 0 cannot jump at all"
+      ],
+      "answer": "False: every path leads to index 3 whose jump length is 0",
+      "explanation": "The maximum reach is 3 < 4.",
+      "incorrectOptionExplanations": {
+        "True: index 0 can jump straight to index 3 and then to 4": "Index 3 has jump length 0.",
+        "True: the array has enough total jump length": "Total length is not what matters.",
+        "False: index 0 cannot jump at all": "It can jump up to three steps."
+      }
+    }
+  ],
+  "generatedAt": "2026-10-01T15:00:56Z"
+}

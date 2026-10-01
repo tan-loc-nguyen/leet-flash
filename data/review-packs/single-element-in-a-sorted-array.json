@@ -1,0 +1,138 @@
+{
+  "schemaVersion": 1,
+  "problemSlug": "single-element-in-a-sorted-array",
+  "summary": "Find the one element that appears once in a sorted array where all others appear twice, in O(log n).",
+  "patterns": [
+    "Binary Search"
+  ],
+  "mainInsight": "Before the single element, pairs start at even indices (nums[2k] == nums[2k + 1]); after it, the pairing shifts to odd indices. Binary search on even indices: if nums[mid] equals its partner, the single element is to the right, otherwise it is at mid or to the left.",
+  "canonicalApproach": "Binary search on pair parity",
+  "approaches": [
+    {
+      "name": "XOR all elements",
+      "summary": "Pairs cancel.",
+      "timeComplexity": "O(n)",
+      "spaceComplexity": "O(1)",
+      "strengths": [
+        "Very short"
+      ],
+      "weaknesses": [
+        "Not logarithmic"
+      ]
+    },
+    {
+      "name": "Binary search on pair parity",
+      "summary": "Compare nums[mid] with the partner at mid ^ 1.",
+      "timeComplexity": "O(log n)",
+      "spaceComplexity": "O(1)",
+      "strengths": [
+        "Meets the O(log n) requirement"
+      ],
+      "weaknesses": [
+        "Parity details"
+      ],
+      "interviewRelevance": "The expected answer."
+    }
+  ],
+  "commonMistakes": [
+    "Not forcing mid to be even",
+    "Using nums[mid + 1] without a bounds check",
+    "Returning the index"
+  ],
+  "edgeCases": [
+    "Single element",
+    "Single at the start",
+    "Single at the end"
+  ],
+  "cards": [
+    {
+      "id": "sea-pattern-01",
+      "category": "pattern",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "How does binary search locate the single element?",
+        "What changes after the single element in a sorted pair array?"
+      ],
+      "options": [
+        "Pairs start on even indices before it and on odd indices after it",
+        "The single element is always the middle of the array",
+        "The values before it are smaller than the values after it",
+        "The sum of the left half is even before it"
+      ],
+      "answer": "Pairs start on even indices before it and on odd indices after it",
+      "explanation": "Check whether nums[mid] pairs with its even-aligned partner.",
+      "incorrectOptionExplanations": {
+        "The single element is always the middle of the array": "It can be anywhere.",
+        "The values before it are smaller than the values after it": "Sortedness does not tell where the single lies.",
+        "The sum of the left half is even before it": "Sums do not locate it reliably."
+      }
+    },
+    {
+      "id": "sea-insight-01",
+      "category": "main_insight",
+      "type": "free_recall",
+      "promptVariants": [
+        "Why compare nums[mid] with nums[mid ^ 1]?",
+        "What does a match imply about where the single element is?"
+      ],
+      "answer": "mid ^ 1 is the partner index if pairs are aligned (even index with the next, odd index with the previous). If nums[mid] == nums[mid ^ 1], everything up to mid is correctly paired, so the single element lies to the right; otherwise it is at mid or to the left.",
+      "keyPoints": [
+        "mid ^ 1 is the aligned partner",
+        "Match => single is to the right",
+        "Mismatch => single at mid or left"
+      ],
+      "explanation": "XOR gives the O(n) alternative."
+    },
+    {
+      "id": "sea-time-01",
+      "category": "time_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Time complexity: ___",
+        "Complete the statement: Time complexity: ___"
+      ],
+      "answer": "O(log n)",
+      "explanation": "Halving the search range each step.",
+      "acceptedAnswers": [
+        "logarithmic"
+      ]
+    },
+    {
+      "id": "sea-space-01",
+      "category": "space_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Space complexity (excluding the input): ___",
+        "Complete the statement: Space complexity (excluding the input): ___"
+      ],
+      "answer": "O(1)",
+      "explanation": "Only index variables.",
+      "acceptedAnswers": [
+        "constant"
+      ]
+    },
+    {
+      "id": "sea-edge-01",
+      "category": "edge_case",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "What does the search return for [1]?",
+        "How does the loop handle a one-element array?"
+      ],
+      "options": [
+        "1: lo == hi == 0 immediately",
+        "-1: no pair exists to compare",
+        "0: the index of the element is returned",
+        "An error: mid ^ 1 is out of range"
+      ],
+      "answer": "1: lo == hi == 0 immediately",
+      "explanation": "The length is odd, so a single element always exists.",
+      "incorrectOptionExplanations": {
+        "-1: no pair exists to compare": "The single element is the answer.",
+        "0: the index of the element is returned": "The value, not the index, is returned.",
+        "An error: mid ^ 1 is out of range": "The loop ends before it is evaluated."
+      }
+    }
+  ],
+  "generatedAt": "2026-10-01T14:54:43Z"
+}

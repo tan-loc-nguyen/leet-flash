@@ -1,0 +1,136 @@
+{
+  "schemaVersion": 1,
+  "problemSlug": "squares-of-a-sorted-array",
+  "summary": "Return the squares of a non-decreasing array sorted in non-decreasing order.",
+  "patterns": [
+    "Two Pointers",
+    "Sorting"
+  ],
+  "mainInsight": "The largest square is at one of the ends. Use two pointers at both ends and fill the result from the back, taking the larger square each time and moving that pointer inward. This is O(n) instead of squaring and sorting in O(n log n).",
+  "canonicalApproach": "Two pointers from both ends",
+  "approaches": [
+    {
+      "name": "Square then sort",
+      "summary": "sorted(x * x for x in nums).",
+      "timeComplexity": "O(n log n)",
+      "spaceComplexity": "O(n)",
+      "strengths": [
+        "One line"
+      ],
+      "weaknesses": [
+        "Slower"
+      ]
+    },
+    {
+      "name": "Two pointers from both ends",
+      "summary": "Fill the result from the end with the larger square.",
+      "timeComplexity": "O(n)",
+      "spaceComplexity": "O(n)",
+      "strengths": [
+        "Linear"
+      ],
+      "interviewRelevance": "The expected answer."
+    }
+  ],
+  "commonMistakes": [
+    "Using absolute values in the wrong order",
+    "Filling from the front",
+    "Forgetting that all-negative or all-positive arrays are valid"
+  ],
+  "edgeCases": [
+    "All negative",
+    "All non-negative",
+    "Single element"
+  ],
+  "cards": [
+    {
+      "id": "ssa-pattern-01",
+      "category": "pattern",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "Why does the largest square always lie at one of the two ends?",
+        "Where do the negatives matter?"
+      ],
+      "options": [
+        "Large-magnitude negatives square to large values, so a maximum sits at an end",
+        "The largest square is always the last element",
+        "The largest square always sits in the array's middle",
+        "The largest square belongs to the value nearest zero"
+      ],
+      "answer": "Large-magnitude negatives square to large values, so a maximum sits at an end",
+      "explanation": "The array is sorted by value, not by absolute value.",
+      "incorrectOptionExplanations": {
+        "The largest square is always the last element": "A large negative at the front can be larger in magnitude.",
+        "The largest square always sits in the array's middle": "Near zero the squares are smallest.",
+        "The largest square belongs to the value nearest zero": "That gives the smallest square."
+      }
+    },
+    {
+      "id": "ssa-insight-01",
+      "category": "main_insight",
+      "type": "free_recall",
+      "promptVariants": [
+        "Why fill the result from the back?",
+        "What would happen if you filled it from the front?"
+      ],
+      "answer": "The pointers at the ends give the largest remaining square, so each step determines the next largest value. Filling from the front would need the smallest square, which lies in the middle near zero and requires a different pointer strategy.",
+      "keyPoints": [
+        "Ends give the largest",
+        "Fill positions n - 1 down to 0",
+        "Middle gives the smallest"
+      ],
+      "explanation": "Alternative: start at the sign change and merge outward."
+    },
+    {
+      "id": "ssa-time-01",
+      "category": "time_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Time complexity: ___",
+        "Complete the statement: Time complexity: ___"
+      ],
+      "answer": "O(n)",
+      "explanation": "Each element is placed once.",
+      "acceptedAnswers": [
+        "linear"
+      ]
+    },
+    {
+      "id": "ssa-space-01",
+      "category": "space_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Space complexity (excluding the input): ___",
+        "Complete the statement: Space complexity (excluding the input): ___"
+      ],
+      "answer": "O(n)",
+      "explanation": "The output array.",
+      "acceptedAnswers": [
+        "linear"
+      ]
+    },
+    {
+      "id": "ssa-edge-01",
+      "category": "edge_case",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "What is the result for [-4, -1, 0, 3, 10]?",
+        "Which values are compared first?"
+      ],
+      "options": [
+        "[0, 1, 9, 16, 100]: 100 beats 16 first",
+        "[16, 1, 0, 9, 100]: the squares in the original order",
+        "[0, 1, 9, 16, 100] after comparing 16 and 0 first",
+        "[1, 0, 9, 16, 100]: the sign change is not handled"
+      ],
+      "answer": "[0, 1, 9, 16, 100]: 100 beats 16 first",
+      "explanation": "Compare |-4| = 4 and 10; 100 is placed at the end.",
+      "incorrectOptionExplanations": {
+        "[16, 1, 0, 9, 100]: the squares in the original order": "The output must be sorted.",
+        "[0, 1, 9, 16, 100] after comparing 16 and 0 first": "The first comparison is 16 vs 100.",
+        "[1, 0, 9, 16, 100]: the sign change is not handled": "0 is smaller than 1."
+      }
+    }
+  ],
+  "generatedAt": "2026-10-01T15:00:56Z"
+}

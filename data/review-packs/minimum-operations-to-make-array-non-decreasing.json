@@ -1,0 +1,139 @@
+{
+  "schemaVersion": 1,
+  "problemSlug": "minimum-operations-to-make-array-non-decreasing",
+  "summary": "Minimum total x added over subarray-increment operations so the array becomes non-decreasing.",
+  "patterns": [
+    "Greedy",
+    "Array / Hashing"
+  ],
+  "mainInsight": "Only descents matter. At each i with nums[i] > nums[i+1], the suffix starting at i+1 must be raised by at least the drop; operations on suffixes are free to combine, so the answer is the sum of all positive drops max(0, nums[i] - nums[i+1]).",
+  "canonicalApproach": "Sum of positive drops",
+  "approaches": [
+    {
+      "name": "Simulate operations",
+      "summary": "Repeatedly fix the first descent with an increment.",
+      "timeComplexity": "O(n * max)",
+      "spaceComplexity": "O(1)",
+      "strengths": [
+        "Matches the statement"
+      ],
+      "weaknesses": [
+        "Too slow, no insight"
+      ]
+    },
+    {
+      "name": "Sum of positive drops",
+      "summary": "answer = sum(max(0, nums[i] - nums[i+1])).",
+      "timeComplexity": "O(n)",
+      "spaceComplexity": "O(1)",
+      "strengths": [
+        "One pass"
+      ],
+      "weaknesses": [
+        "Needs the suffix argument"
+      ],
+      "interviewRelevance": "Optimal."
+    }
+  ],
+  "commonMistakes": [
+    "Counting descents instead of summing their sizes",
+    "Adding the rises too",
+    "Trying to simulate the operations"
+  ],
+  "edgeCases": [
+    "Already non-decreasing",
+    "Strictly decreasing",
+    "Single element"
+  ],
+  "cards": [
+    {
+      "id": "mon-pattern-01",
+      "category": "pattern",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "What is the minimum total cost expressed in terms of the array?",
+        "Which quantity must you pay for at each index?"
+      ],
+      "options": [
+        "The sum of every positive drop nums[i] - nums[i+1]",
+        "The difference between the maximum and minimum elements",
+        "The number of indices where the array decreases",
+        "The sum of all elements minus the sorted prefix sum"
+      ],
+      "answer": "The sum of every positive drop nums[i] - nums[i+1]",
+      "explanation": "Each descent forces the suffix after it up by exactly the drop.",
+      "incorrectOptionExplanations": {
+        "The difference between the maximum and minimum elements": "That ignores where the descents occur.",
+        "The number of indices where the array decreases": "The size of each drop matters, not the count.",
+        "The sum of all elements minus the sorted prefix sum": "That is not the cost of increments."
+      }
+    },
+    {
+      "id": "mon-insight-01",
+      "category": "main_insight",
+      "type": "free_recall",
+      "promptVariants": [
+        "Why can each drop be fixed independently, with the suffix after it raised by the drop?",
+        "Why is the sum of drops also a lower bound?"
+      ],
+      "answer": "Raising the suffix starting at i + 1 by d closes the drop at i without changing any other adjacent difference, so the drops are independent. Each positive drop must be closed by increments that start exactly at i + 1 (an operation starting later or earlier cannot change that adjacent difference by itself), so the total of x values is at least the sum of the drops.",
+      "keyPoints": [
+        "Suffix increments change one difference",
+        "Drops are independent",
+        "Sum of drops is also a lower bound"
+      ],
+      "explanation": "Increments must start exactly at i + 1 to change only that difference."
+    },
+    {
+      "id": "mon-time-01",
+      "category": "time_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Time complexity: ___",
+        "Complete the statement: Time complexity: ___"
+      ],
+      "answer": "O(n)",
+      "explanation": "A single pass over adjacent pairs.",
+      "acceptedAnswers": [
+        "linear"
+      ]
+    },
+    {
+      "id": "mon-space-01",
+      "category": "space_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Space complexity (excluding the input): ___",
+        "Complete the statement: Space complexity (excluding the input): ___"
+      ],
+      "answer": "O(1)",
+      "explanation": "One accumulator.",
+      "acceptedAnswers": [
+        "constant"
+      ]
+    },
+    {
+      "id": "mon-edge-01",
+      "category": "edge_case",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "What is the answer for [5, 1, 2, 3]?",
+        "Which index contributes?"
+      ],
+      "options": [
+        "4: only the drop 5 -> 1 contributes",
+        "2: the array has two descents",
+        "0: the array can already be sorted by reordering",
+        "7: the total of all decreases and increases"
+      ],
+      "answer": "4: only the drop 5 -> 1 contributes",
+      "explanation": "Raising [1, 2, 3] by 4 gives [5, 6, 7].",
+      "incorrectOptionExplanations": {
+        "2: the array has two descents": "There is only one descent and its size is 4.",
+        "0: the array can already be sorted by reordering": "Only increments are allowed.",
+        "7: the total of all decreases and increases": "Increases cost nothing."
+      }
+    }
+  ],
+  "generatedAt": "2026-10-01T14:54:43Z"
+}

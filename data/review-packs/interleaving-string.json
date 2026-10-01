@@ -1,0 +1,152 @@
+{
+  "schemaVersion": 1,
+  "problemSlug": "interleaving-string",
+  "summary": "Is s3 formed by interleaving s1 and s2 while preserving each string's order?",
+  "patterns": [
+    "Dynamic Programming"
+  ],
+  "mainInsight": "dp[i][j] is true if s3[:i + j] can be formed from s1[:i] and s2[:j]: dp[i][j] = (dp[i - 1][j] and s1[i - 1] == s3[i + j - 1]) or (dp[i][j - 1] and s2[j - 1] == s3[i + j - 1]). A length check len(s1) + len(s2) == len(s3) comes first. The table can be rolled to one row.",
+  "canonicalApproach": "Rolling 1D DP",
+  "approaches": [
+    {
+      "name": "Recursion",
+      "summary": "Try taking the next character from s1 or s2.",
+      "timeComplexity": "O(2^(m+n))",
+      "spaceComplexity": "O(m+n)",
+      "strengths": [
+        "Direct"
+      ],
+      "weaknesses": [
+        "Exponential without memo"
+      ]
+    },
+    {
+      "name": "2D DP",
+      "summary": "dp[i][j] as above.",
+      "timeComplexity": "O(m * n)",
+      "spaceComplexity": "O(m * n)",
+      "strengths": [
+        "Standard"
+      ],
+      "weaknesses": [
+        "Memory"
+      ]
+    },
+    {
+      "name": "Rolling 1D DP",
+      "summary": "Keep only the previous row.",
+      "timeComplexity": "O(m * n)",
+      "spaceComplexity": "O(n)",
+      "strengths": [
+        "Less memory"
+      ],
+      "weaknesses": [
+        "Index care"
+      ],
+      "interviewRelevance": "Optimal space."
+    }
+  ],
+  "commonMistakes": [
+    "Missing the length check",
+    "Greedy matching",
+    "Wrong index for s3 (i + j - 1)"
+  ],
+  "edgeCases": [
+    "Both empty",
+    "One string empty",
+    "Length mismatch"
+  ],
+  "cards": [
+    {
+      "id": "is3-pattern-01",
+      "category": "pattern",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "How is dp[i][j] defined for Interleaving String?",
+        "What does each state say about the prefixes?"
+      ],
+      "options": [
+        "Whether the first i + j characters of s3 interleave s1[:i] and s2[:j]",
+        "The length of the longest common subsequence of s1 and s2",
+        "The number of ways to delete characters from s3",
+        "Whether the prefix s1[:i] equals the prefix s3[:i]"
+      ],
+      "answer": "Whether the first i + j characters of s3 interleave s1[:i] and s2[:j]",
+      "explanation": "The next character of s3 must come from s1 or from s2.",
+      "incorrectOptionExplanations": {
+        "The length of the longest common subsequence of s1 and s2": "That is a different DP.",
+        "The number of ways to delete characters from s3": "This is a boolean feasibility DP.",
+        "Whether the prefix s1[:i] equals the prefix s3[:i]": "It must allow characters from both strings."
+      }
+    },
+    {
+      "id": "is3-insight-01",
+      "category": "main_insight",
+      "type": "free_recall",
+      "promptVariants": [
+        "Why is a greedy 'take the matching character' approach wrong?",
+        "When can both strings match the next character?"
+      ],
+      "answer": "If s1 and s2 both start with the same letter as the next character of s3, choosing either may lead to failure later (e.g. s1 = 'aab', s2 = 'aac', s3 = 'aaabac'), so both choices must be explored - which the DP table does by combining the two transitions.",
+      "keyPoints": [
+        "Both strings may match",
+        "Wrong choice can fail later",
+        "DP explores both"
+      ],
+      "explanation": "Without memoisation recursion would be exponential."
+    },
+    {
+      "id": "is3-time-01",
+      "category": "time_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Time complexity: ___",
+        "Complete the statement: Time complexity: ___"
+      ],
+      "answer": "O(m * n)",
+      "explanation": "One cell per pair of prefixes.",
+      "acceptedAnswers": [
+        "O(mn)",
+        "O(m*n)"
+      ]
+    },
+    {
+      "id": "is3-space-01",
+      "category": "space_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Space complexity (excluding the input): ___",
+        "Complete the statement: Space complexity (excluding the input): ___"
+      ],
+      "answer": "O(n)",
+      "explanation": "A rolling row of size len(s2) + 1 (O(m * n) for a full table).",
+      "acceptedAnswers": [
+        "O(min(m, n))",
+        "O(m * n)"
+      ]
+    },
+    {
+      "id": "is3-edge-01",
+      "category": "edge_case",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "What does the algorithm do first when len(s1) + len(s2) != len(s3)?",
+        "Why is that check needed?"
+      ],
+      "options": [
+        "Return False immediately: the lengths cannot match an interleaving",
+        "Continue anyway; the DP will find a mismatch by itself",
+        "Truncate s3 to the combined length of s1 and s2",
+        "Swap s1 and s2 so the shorter is first"
+      ],
+      "answer": "Return False immediately: the lengths cannot match an interleaving",
+      "explanation": "It is cheap and avoids invalid indexing.",
+      "incorrectOptionExplanations": {
+        "Continue anyway; the DP will find a mismatch by itself": "The indices s3[i + j - 1] can go out of range.",
+        "Truncate s3 to the combined length of s1 and s2": "That changes the question.",
+        "Swap s1 and s2 so the shorter is first": "That does not fix the length."
+      }
+    }
+  ],
+  "generatedAt": "2026-10-01T14:56:24Z"
+}

@@ -1,0 +1,138 @@
+{
+  "schemaVersion": 1,
+  "problemSlug": "roman-to-integer",
+  "summary": "Convert a Roman numeral string to an integer.",
+  "patterns": [
+    "Array / Hashing",
+    "Math"
+  ],
+  "mainInsight": "Scan left to right; add each symbol's value, but if a symbol is smaller than the next one, subtract it instead (IV = 5 - 1). A dict maps the seven symbols to values.",
+  "canonicalApproach": "Compare with next symbol",
+  "approaches": [
+    {
+      "name": "Subtractive pairs lookup",
+      "summary": "Check two-character tokens (IV, IX, XL, ...) first.",
+      "timeComplexity": "O(n)",
+      "spaceComplexity": "O(1)",
+      "strengths": [
+        "Explicit"
+      ],
+      "weaknesses": [
+        "More cases to list"
+      ]
+    },
+    {
+      "name": "Compare with next symbol",
+      "summary": "Add the value, or subtract it when it is less than the next symbol's value.",
+      "timeComplexity": "O(n)",
+      "spaceComplexity": "O(1)",
+      "strengths": [
+        "Short, general"
+      ],
+      "weaknesses": [
+        "Needs a bounds check on the last symbol"
+      ],
+      "interviewRelevance": "The expected answer."
+    }
+  ],
+  "commonMistakes": [
+    "Indexing past the end when looking ahead",
+    "Adding the subtractive symbol and the larger one separately",
+    "Using a wrong value for one of the symbols"
+  ],
+  "edgeCases": [
+    "Single symbol",
+    "Four-like numerals such as IV, IX",
+    "Maximum 3999"
+  ],
+  "cards": [
+    {
+      "id": "r2i-pattern-01",
+      "category": "pattern",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "How do you handle subtractive notation such as IV and CM when parsing?",
+        "What rule decides whether a symbol is added or subtracted?"
+      ],
+      "options": [
+        "Subtract a symbol when it is smaller than the symbol after it, otherwise add it",
+        "Subtract every symbol that appears before a vowel-like letter",
+        "Always add, then subtract 2 for each pair of equal symbols",
+        "Process right to left and only subtract the symbol 'I'"
+      ],
+      "answer": "Subtract a symbol when it is smaller than the symbol after it, otherwise add it",
+      "explanation": "In IV, I < V so I counts as -1 and V as +5.",
+      "incorrectOptionExplanations": {
+        "Subtract every symbol that appears before a vowel-like letter": "Roman numerals have no vowels rule.",
+        "Always add, then subtract 2 for each pair of equal symbols": "Equal symbols simply add (II = 2).",
+        "Process right to left and only subtract the symbol 'I'": "X and C subtract too (XL, CM)."
+      }
+    },
+    {
+      "id": "r2i-insight-01",
+      "category": "main_insight",
+      "type": "free_recall",
+      "promptVariants": [
+        "Why does 'subtract if smaller than next' work for all valid numerals?",
+        "Which symbols can be subtracted?"
+      ],
+      "answer": "In valid Roman numerals a smaller symbol directly before a larger one is always part of a subtractive pair (I before V/X, X before L/C, C before D/M), meaning it contributes negatively. All other symbols contribute positively, so one pass with a look-ahead gives the value.",
+      "keyPoints": [
+        "Smaller before larger => subtractive",
+        "Only I, X, C are subtractive"
+      ],
+      "explanation": "Equivalent to scanning right to left with a 'previous' value."
+    },
+    {
+      "id": "r2i-time-01",
+      "category": "time_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Time complexity: ___",
+        "Complete the statement: Time complexity: ___"
+      ],
+      "answer": "O(n)",
+      "explanation": "One pass over the characters.",
+      "acceptedAnswers": [
+        "linear"
+      ]
+    },
+    {
+      "id": "r2i-space-01",
+      "category": "space_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Space complexity (excluding the input): ___",
+        "Complete the statement: Space complexity (excluding the input): ___"
+      ],
+      "answer": "O(1)",
+      "explanation": "A fixed seven-entry map.",
+      "acceptedAnswers": [
+        "constant"
+      ]
+    },
+    {
+      "id": "r2i-edge-01",
+      "category": "edge_case",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "What does 'MCMXCIV' evaluate to?",
+        "How are its subtractive pairs resolved?"
+      ],
+      "options": [
+        "1994 = 1000 + (1000 - 100) + (100 - 10) + (5 - 1)",
+        "2994, treating every symbol as additive",
+        "1904, applying only the CM pair",
+        "1894, treating C as subtractive twice"
+      ],
+      "answer": "1994 = 1000 + (1000 - 100) + (100 - 10) + (5 - 1)",
+      "explanation": "M + CM + XC + IV = 1000 + 900 + 90 + 4 = 1994.",
+      "incorrectOptionExplanations": {
+        "2994, treating every symbol as additive": "That ignores the subtractive pairs.",
+        "1904, applying only the CM pair": "XC and IV also subtract.",
+        "1894, treating C as subtractive twice": "Only a smaller symbol before a larger one subtracts."
+      }
+    }
+  ],
+  "generatedAt": "2026-10-01T14:52:56Z"
+}

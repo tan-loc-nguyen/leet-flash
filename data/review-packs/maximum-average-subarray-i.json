@@ -1,0 +1,146 @@
+{
+  "schemaVersion": 1,
+  "problemSlug": "maximum-average-subarray-i",
+  "summary": "Maximum average of any contiguous subarray of length k.",
+  "patterns": [
+    "Sliding Window"
+  ],
+  "mainInsight": "Maintain the sum of a fixed-size window: add the entering element and subtract the leaving one. Track the maximum sum and divide by k once at the end.",
+  "canonicalApproach": "Fixed-size sliding window",
+  "approaches": [
+    {
+      "name": "Recompute every window",
+      "summary": "Sum each window from scratch.",
+      "timeComplexity": "O(n * k)",
+      "spaceComplexity": "O(1)",
+      "strengths": [
+        "Easy"
+      ],
+      "weaknesses": [
+        "Too slow"
+      ]
+    },
+    {
+      "name": "Fixed-size sliding window",
+      "summary": "Update the window sum in O(1) per step.",
+      "timeComplexity": "O(n)",
+      "spaceComplexity": "O(1)",
+      "strengths": [
+        "Linear"
+      ],
+      "interviewRelevance": "The expected answer."
+    },
+    {
+      "name": "Prefix sums",
+      "summary": "pref[i + k] - pref[i].",
+      "timeComplexity": "O(n)",
+      "spaceComplexity": "O(n)",
+      "strengths": [
+        "Also simple"
+      ],
+      "weaknesses": [
+        "Extra memory"
+      ]
+    }
+  ],
+  "commonMistakes": [
+    "Initialising the maximum with 0 when all values are negative",
+    "Dividing inside the loop",
+    "Off-by-one when removing the leaving element"
+  ],
+  "edgeCases": [
+    "k = n",
+    "All negative numbers",
+    "k = 1"
+  ],
+  "cards": [
+    {
+      "id": "mas-pattern-01",
+      "category": "pattern",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "Which technique avoids recomputing the sum of every window?",
+        "How do you slide from one window of size k to the next?"
+      ],
+      "options": [
+        "Add the new element and subtract the one that leaves the window",
+        "Sort the array and take the k largest elements",
+        "Binary search on the best possible average value",
+        "Keep a heap of the k largest windows seen so far"
+      ],
+      "answer": "Add the new element and subtract the one that leaves the window",
+      "explanation": "Each step changes the sum by nums[i] - nums[i - k].",
+      "incorrectOptionExplanations": {
+        "Sort the array and take the k largest elements": "The subarray must be contiguous.",
+        "Binary search on the best possible average value": "That is a harder variant, not needed here.",
+        "Keep a heap of the k largest windows seen so far": "Heaps do not preserve contiguity."
+      }
+    },
+    {
+      "id": "mas-insight-01",
+      "category": "main_insight",
+      "type": "free_recall",
+      "promptVariants": [
+        "Why compare sums rather than averages while sliding?",
+        "When should the division by k happen?"
+      ],
+      "answer": "All windows have the same length k, so comparing sums gives the same ordering as comparing averages. Divide once at the end, which avoids repeated floating point work and rounding noise.",
+      "keyPoints": [
+        "Same length => same ordering",
+        "Divide once at the end"
+      ],
+      "explanation": "Integer sums are exact in Python."
+    },
+    {
+      "id": "mas-time-01",
+      "category": "time_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Time complexity: ___",
+        "Complete the statement: Time complexity: ___"
+      ],
+      "answer": "O(n)",
+      "explanation": "One pass after the initial window.",
+      "acceptedAnswers": [
+        "linear"
+      ]
+    },
+    {
+      "id": "mas-space-01",
+      "category": "space_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Space complexity (excluding the input): ___",
+        "Complete the statement: Space complexity (excluding the input): ___"
+      ],
+      "answer": "O(1)",
+      "explanation": "A running sum and a maximum.",
+      "acceptedAnswers": [
+        "constant"
+      ]
+    },
+    {
+      "id": "mas-edge-01",
+      "category": "edge_case",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "What does the algorithm return for nums = [5] and k = 1?",
+        "Which window is examined?"
+      ],
+      "options": [
+        "5.0: the only window is the single element",
+        "0.0: there is no full window yet",
+        "An error: there is no element to subtract",
+        "1.0: the average is divided by k twice"
+      ],
+      "answer": "5.0: the only window is the single element",
+      "explanation": "The initial window is also the best.",
+      "incorrectOptionExplanations": {
+        "0.0: there is no full window yet": "There is exactly one window.",
+        "An error: there is no element to subtract": "The loop simply does not run.",
+        "1.0: the average is divided by k twice": "The average is 5 / 1."
+      }
+    }
+  ],
+  "generatedAt": "2026-10-01T14:54:43Z"
+}

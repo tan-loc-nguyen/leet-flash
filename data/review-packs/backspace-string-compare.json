@@ -1,0 +1,141 @@
+{
+  "schemaVersion": 1,
+  "problemSlug": "backspace-string-compare",
+  "summary": "Compare two strings after applying '#' as a backspace.",
+  "patterns": [
+    "Two Pointers",
+    "Stack"
+  ],
+  "mainInsight": "Build both final strings with a stack (O(n) space), or compare from the end of each string with two pointers and skip counters (O(1) space): count '#' characters and skip that many valid characters before comparing the next real character.",
+  "canonicalApproach": "Two pointers from the end",
+  "approaches": [
+    {
+      "name": "Stack for each string",
+      "summary": "Push characters; pop on '#'.",
+      "timeComplexity": "O(n)",
+      "spaceComplexity": "O(n)",
+      "strengths": [
+        "Simple"
+      ],
+      "weaknesses": [
+        "Extra memory"
+      ]
+    },
+    {
+      "name": "Two pointers from the end",
+      "summary": "Skip characters with a backspace counter and compare.",
+      "timeComplexity": "O(n)",
+      "spaceComplexity": "O(1)",
+      "strengths": [
+        "Constant space"
+      ],
+      "weaknesses": [
+        "Skip logic"
+      ],
+      "interviewRelevance": "Optimal."
+    }
+  ],
+  "commonMistakes": [
+    "Comparing the raw strings",
+    "Treating '#' as a character",
+    "Not skipping several backspaces in a row"
+  ],
+  "edgeCases": [
+    "All backspaces",
+    "Different lengths with the same result",
+    "Empty results (a#, b#)"
+  ],
+  "cards": [
+    {
+      "id": "bsc-pattern-01",
+      "category": "pattern",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "Why scan from the end for the O(1)-space solution?",
+        "What does a '#' affect?"
+      ],
+      "options": [
+        "A '#' deletes what came before it, so a backwards scan can skip it",
+        "Backspaces only affect the characters after them",
+        "The end of the string is always the shortest part",
+        "Scanning backwards sorts the characters on the way"
+      ],
+      "answer": "A '#' deletes what came before it, so a backwards scan can skip it",
+      "explanation": "Going forwards you cannot know if a character will be deleted later.",
+      "incorrectOptionExplanations": {
+        "Backspaces only affect the characters after them": "They delete the preceding character.",
+        "The end of the string is always the shortest part": "Lengths are unrelated.",
+        "Scanning backwards sorts the characters on the way": "Order is preserved."
+      }
+    },
+    {
+      "id": "bsc-insight-01",
+      "category": "main_insight",
+      "type": "free_recall",
+      "promptVariants": [
+        "How does the skip counter work?",
+        "When do you compare characters?"
+      ],
+      "answer": "On '#' increase the counter; on a normal character with a positive counter decrement the counter and skip it. When a character is found with a zero counter it is a real remaining character; compare it between the two strings (or both pointers are exhausted).",
+      "keyPoints": [
+        "Count backspaces",
+        "Skip while counter > 0",
+        "Compare surviving characters"
+      ],
+      "explanation": "A '#' on an empty text does nothing."
+    },
+    {
+      "id": "bsc-time-01",
+      "category": "time_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Time complexity: ___",
+        "Complete the statement: Time complexity: ___"
+      ],
+      "answer": "O(n + m)",
+      "explanation": "Each string is scanned once.",
+      "acceptedAnswers": [
+        "O(n+m)",
+        "linear"
+      ]
+    },
+    {
+      "id": "bsc-space-01",
+      "category": "space_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Space complexity (excluding the input): ___",
+        "Complete the statement: Space complexity (excluding the input): ___"
+      ],
+      "answer": "O(1)",
+      "explanation": "Two pointers and two counters (a stack version uses O(n)).",
+      "acceptedAnswers": [
+        "constant",
+        "O(n)"
+      ]
+    },
+    {
+      "id": "bsc-edge-01",
+      "category": "edge_case",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "Are 'a##c' and '#a#c' equal?",
+        "Which backspaces apply to an empty string?"
+      ],
+      "options": [
+        "Yes: both become 'c' since a backspace on empty text is a no-op",
+        "No: 'a##c' becomes 'c' but '#a#c' becomes 'ac'",
+        "No: backspaces are not allowed on an empty text",
+        "Yes: both become 'ac' after the backspaces apply"
+      ],
+      "answer": "Yes: both become 'c' since a backspace on empty text is a no-op",
+      "explanation": "'a##c' -> 'c'; '#a#c' -> 'c'.",
+      "incorrectOptionExplanations": {
+        "No: 'a##c' becomes 'c' but '#a#c' becomes 'ac'": "The '#' after 'a' deletes it.",
+        "No: backspaces are not allowed on an empty text": "They are allowed and have no effect.",
+        "Yes: both become 'ac' after the backspaces apply": "'a' is deleted in both."
+      }
+    }
+  ],
+  "generatedAt": "2026-10-01T15:00:56Z"
+}

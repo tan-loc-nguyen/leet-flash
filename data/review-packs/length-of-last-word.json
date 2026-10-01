@@ -1,0 +1,135 @@
+{
+  "schemaVersion": 1,
+  "problemSlug": "length-of-last-word",
+  "summary": "Return the length of the last word in a string of words separated by spaces.",
+  "patterns": [
+    "Array / Hashing"
+  ],
+  "mainInsight": "Scan from the end: skip trailing spaces, then count characters until the next space or the start. This avoids splitting the whole string.",
+  "canonicalApproach": "Scan backwards",
+  "approaches": [
+    {
+      "name": "split() and take the last word",
+      "summary": "len(s.split()[-1]).",
+      "timeComplexity": "O(n)",
+      "spaceComplexity": "O(n)",
+      "strengths": [
+        "One line"
+      ],
+      "weaknesses": [
+        "Allocates every word"
+      ]
+    },
+    {
+      "name": "Scan backwards",
+      "summary": "Skip trailing spaces, then count.",
+      "timeComplexity": "O(n)",
+      "spaceComplexity": "O(1)",
+      "strengths": [
+        "No extra memory"
+      ],
+      "interviewRelevance": "The expected answer."
+    }
+  ],
+  "commonMistakes": [
+    "Not skipping trailing spaces",
+    "Counting the spaces themselves",
+    "Using the first word"
+  ],
+  "edgeCases": [
+    "Single word",
+    "Trailing spaces",
+    "Leading spaces"
+  ],
+  "cards": [
+    {
+      "id": "llw-pattern-01",
+      "category": "pattern",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "How can you find the last word's length without splitting the string?",
+        "Where do you start the scan?"
+      ],
+      "options": [
+        "Start at the end, skip trailing spaces, then count characters up to the next space",
+        "Start at the beginning and count up to the first space",
+        "Count all the spaces and subtract them from the length",
+        "Find the longest word and return that word's length"
+      ],
+      "answer": "Start at the end, skip trailing spaces, then count characters up to the next space",
+      "explanation": "Trailing spaces must be skipped first.",
+      "incorrectOptionExplanations": {
+        "Start at the beginning and count up to the first space": "That finds the first word.",
+        "Count all the spaces and subtract them from the length": "That is not the last word's length.",
+        "Find the longest word and return that word's length": "The last word may be shorter."
+      }
+    },
+    {
+      "id": "llw-insight-01",
+      "category": "main_insight",
+      "type": "free_recall",
+      "promptVariants": [
+        "What common bug does the backwards scan avoid?",
+        "How should trailing spaces be treated?"
+      ],
+      "answer": "Taking the characters after the last space returns 0 when the string ends with spaces. Skipping trailing spaces first locates the real last word, and counting stops at the next space or the start of the string.",
+      "keyPoints": [
+        "Skip trailing spaces first",
+        "Stop at space or start"
+      ],
+      "explanation": "split() handles this automatically."
+    },
+    {
+      "id": "llw-time-01",
+      "category": "time_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Time complexity: ___",
+        "Complete the statement: Time complexity: ___"
+      ],
+      "answer": "O(n)",
+      "explanation": "At worst the whole string is scanned.",
+      "acceptedAnswers": [
+        "linear"
+      ]
+    },
+    {
+      "id": "llw-space-01",
+      "category": "space_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Space complexity (excluding the input): ___",
+        "Complete the statement: Space complexity (excluding the input): ___"
+      ],
+      "answer": "O(1)",
+      "explanation": "Index variables only.",
+      "acceptedAnswers": [
+        "constant",
+        "O(n)"
+      ]
+    },
+    {
+      "id": "llw-edge-01",
+      "category": "edge_case",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "What is the answer for 'luffy is still joyboy   '?",
+        "How should the trailing spaces be treated?"
+      ],
+      "options": [
+        "6 ('joyboy'): the trailing spaces are skipped",
+        "0: the string ends with a space",
+        "5: 'still' is the last word",
+        "9: the length of the last three spaces plus 'joyboy'"
+      ],
+      "answer": "6 ('joyboy'): the trailing spaces are skipped",
+      "explanation": "Skip trailing spaces, then count 'joyboy'.",
+      "incorrectOptionExplanations": {
+        "0: the string ends with a space": "The last word is still 'joyboy'.",
+        "5: 'still' is the last word": "There is more text after 'still'.",
+        "9: the length of the last three spaces plus 'joyboy'": "Spaces are not part of a word."
+      }
+    }
+  ],
+  "generatedAt": "2026-10-01T14:57:58Z"
+}

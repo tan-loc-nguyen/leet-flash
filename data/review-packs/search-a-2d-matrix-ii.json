@@ -1,0 +1,149 @@
+{
+  "schemaVersion": 1,
+  "problemSlug": "search-a-2d-matrix-ii",
+  "summary": "Search a matrix whose rows and columns are each sorted ascending.",
+  "patterns": [
+    "Binary Search",
+    "Matrix"
+  ],
+  "mainInsight": "Start at the top-right corner. If the value is greater than the target, no later element in this column can match, so move left; if it is smaller, no earlier element in this row can match, so move down. Each step removes a row or a column, so it needs at most m + n steps.",
+  "canonicalApproach": "Staircase search",
+  "approaches": [
+    {
+      "name": "Binary search every row",
+      "summary": "O(m log n).",
+      "timeComplexity": "O(m log n)",
+      "spaceComplexity": "O(1)",
+      "strengths": [
+        "Easy to write"
+      ],
+      "weaknesses": [
+        "Slower than the staircase"
+      ]
+    },
+    {
+      "name": "Staircase search",
+      "summary": "Start top-right; move left or down.",
+      "timeComplexity": "O(m + n)",
+      "spaceComplexity": "O(1)",
+      "strengths": [
+        "Optimal"
+      ],
+      "interviewRelevance": "The expected answer."
+    },
+    {
+      "name": "Divide and conquer",
+      "summary": "Pick the middle and discard a quadrant.",
+      "timeComplexity": "O(n^1.58)",
+      "spaceComplexity": "O(log n)",
+      "strengths": [
+        "Interesting"
+      ],
+      "weaknesses": [
+        "Complex"
+      ]
+    }
+  ],
+  "commonMistakes": [
+    "Starting at top-left or bottom-right",
+    "Mixing up row and column moves",
+    "Treating it as the fully sorted matrix (Search a 2D Matrix I)"
+  ],
+  "edgeCases": [
+    "Empty matrix",
+    "1 x 1 matrix",
+    "Target absent"
+  ],
+  "cards": [
+    {
+      "id": "sm5-pattern-01",
+      "category": "pattern",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "Where does the staircase search start and why?",
+        "Which corner lets you discard a row or a column on every comparison?"
+      ],
+      "options": [
+        "At the top-right corner: it is the largest in its row and the smallest in its column",
+        "At the top-left corner: it is the smallest of the whole matrix",
+        "At the centre: it splits the matrix into four sorted quadrants",
+        "At the bottom-right corner: it is the largest of the matrix"
+      ],
+      "answer": "At the top-right corner: it is the largest in its row and the smallest in its column",
+      "explanation": "From the top-right, one move direction always decreases and the other always increases.",
+      "incorrectOptionExplanations": {
+        "At the top-left corner: it is the smallest of the whole matrix": "Both moves would be increasing.",
+        "At the centre: it splits the matrix into four sorted quadrants": "That is the divide-and-conquer variant.",
+        "At the bottom-right corner: it is the largest of the matrix": "Both moves would be decreasing."
+      }
+    },
+    {
+      "id": "sm5-insight-01",
+      "category": "main_insight",
+      "type": "free_recall",
+      "promptVariants": [
+        "Why is each comparison guaranteed to eliminate a whole row or column?",
+        "What invariant does the staircase maintain?"
+      ],
+      "answer": "If the current value is larger than the target, it is the smallest in its column among remaining rows, so everything below it is larger too and the column can be dropped; if smaller, it is the largest in its row among the remaining columns, so everything to the left is smaller and the row can be dropped. The target, if present, always lies in the remaining sub-matrix.",
+      "keyPoints": [
+        "Larger => drop the column",
+        "Smaller => drop the row",
+        "Target stays in the remaining region"
+      ],
+      "explanation": "At most m + n steps."
+    },
+    {
+      "id": "sm5-time-01",
+      "category": "time_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Time complexity: ___",
+        "Complete the statement: Time complexity: ___"
+      ],
+      "answer": "O(m + n)",
+      "explanation": "At most one row or column is removed per step.",
+      "acceptedAnswers": [
+        "O(m+n)",
+        "linear"
+      ]
+    },
+    {
+      "id": "sm5-space-01",
+      "category": "space_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Space complexity (excluding the input): ___",
+        "Complete the statement: Space complexity (excluding the input): ___"
+      ],
+      "answer": "O(1)",
+      "explanation": "Two indices.",
+      "acceptedAnswers": [
+        "constant"
+      ]
+    },
+    {
+      "id": "sm5-edge-01",
+      "category": "edge_case",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "What happens if you start at the top-left corner instead?",
+        "Why does the algorithm not work from there?"
+      ],
+      "options": [
+        "Both moves increase the value, so you cannot tell which side to drop",
+        "It works the same, only the loop bounds change",
+        "It runs in O(log n) because the corner is the minimum",
+        "It always misses the last row of the matrix"
+      ],
+      "answer": "Both moves increase the value, so you cannot tell which side to drop",
+      "explanation": "You need one direction that decreases and one that increases.",
+      "incorrectOptionExplanations": {
+        "It works the same, only the loop bounds change": "The direction becomes ambiguous.",
+        "It runs in O(log n) because the corner is the minimum": "It does not run faster.",
+        "It always misses the last row of the matrix": "That is not the cause."
+      }
+    }
+  ],
+  "generatedAt": "2026-10-01T14:56:24Z"
+}

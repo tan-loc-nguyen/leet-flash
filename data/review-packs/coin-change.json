@@ -1,0 +1,154 @@
+{
+  "schemaVersion": 1,
+  "problemSlug": "coin-change",
+  "summary": "Fewest coins that sum to amount (unlimited supply of each denomination), or -1.",
+  "patterns": [
+    "Dynamic Programming",
+    "BFS"
+  ],
+  "mainInsight": "Unbounded knapsack: dp[a] = min over coins c <= a of dp[a - c] + 1, with dp[0] = 0 and infinity as unreachable. Greedy by largest coin fails for general denominations (e.g. coins [1, 3, 4] and amount 6).",
+  "canonicalApproach": "Bottom-up DP",
+  "approaches": [
+    {
+      "name": "Greedy",
+      "summary": "Take the largest coin repeatedly.",
+      "timeComplexity": "O(n)",
+      "spaceComplexity": "O(1)",
+      "strengths": [
+        "Fast"
+      ],
+      "weaknesses": [
+        "Incorrect for arbitrary denominations"
+      ]
+    },
+    {
+      "name": "Bottom-up DP",
+      "summary": "dp[a] = min(dp[a - c] + 1).",
+      "timeComplexity": "O(amount * coins)",
+      "spaceComplexity": "O(amount)",
+      "strengths": [
+        "Standard"
+      ],
+      "weaknesses": [
+        "Depends on amount"
+      ],
+      "interviewRelevance": "The expected answer."
+    },
+    {
+      "name": "BFS over amounts",
+      "summary": "Each coin is an edge; the shortest path to 0 is the answer.",
+      "timeComplexity": "O(amount * coins)",
+      "spaceComplexity": "O(amount)",
+      "strengths": [
+        "Intuitive"
+      ],
+      "weaknesses": [
+        "Needs a visited set"
+      ]
+    }
+  ],
+  "commonMistakes": [
+    "Greedy largest-first",
+    "Initialising dp with 0 so unreachable states look free",
+    "Not handling amount 0 (answer 0)"
+  ],
+  "edgeCases": [
+    "amount = 0",
+    "Impossible amount",
+    "Coin larger than amount"
+  ],
+  "cards": [
+    {
+      "id": "cc2-pattern-01",
+      "category": "pattern",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "What recurrence solves Coin Change?",
+        "How is the minimum coin count for amount a built from smaller amounts?"
+      ],
+      "options": [
+        "dp[a] = min(dp[a - c] + 1) over coins c <= a, with dp[0] = 0",
+        "dp[a] = max(dp[a - c] + 1) over coins c <= a, dp[0] = 0",
+        "dp[a] = dp[a // c] for the largest coin c <= a, dp[0] = 0",
+        "dp[a] = dp[a - 1] + dp[a - 2], with dp[0] = 0 and dp[1] = 1"
+      ],
+      "answer": "dp[a] = min(dp[a - c] + 1) over coins c <= a, with dp[0] = 0",
+      "explanation": "The last coin used is some c; the rest is the best for a - c.",
+      "incorrectOptionExplanations": {
+        "dp[a] = max(dp[a - c] + 1) over coins c <= a, dp[0] = 0": "Maximum counts the most coins.",
+        "dp[a] = dp[a // c] for the largest coin c <= a, dp[0] = 0": "Greedy division is not optimal.",
+        "dp[a] = dp[a - 1] + dp[a - 2], with dp[0] = 0 and dp[1] = 1": "That counts Fibonacci-style steps."
+      }
+    },
+    {
+      "id": "cc2-insight-01",
+      "category": "main_insight",
+      "type": "free_recall",
+      "promptVariants": [
+        "Why does the greedy 'largest coin first' approach fail?",
+        "Give a counterexample."
+      ],
+      "answer": "With coins [1, 3, 4] and amount 6 greedy picks 4 + 1 + 1 (3 coins) while 3 + 3 uses only 2. A locally largest coin can leave a remainder that needs many small coins, so every smaller amount's optimum must be considered via DP.",
+      "keyPoints": [
+        "Counterexample [1,3,4], 6",
+        "Greedy needs canonical coin systems",
+        "DP tries every last coin"
+      ],
+      "explanation": "Greedy works only for special systems like US coins."
+    },
+    {
+      "id": "cc2-time-01",
+      "category": "time_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Time complexity: ___",
+        "Complete the statement: Time complexity: ___"
+      ],
+      "answer": "O(S * n)",
+      "explanation": "Each of the S amounts tries n coins.",
+      "acceptedAnswers": [
+        "O(amount * coins)",
+        "O(amount*n)",
+        "O(S*n)"
+      ]
+    },
+    {
+      "id": "cc2-space-01",
+      "category": "space_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Space complexity (excluding the input): ___",
+        "Complete the statement: Space complexity (excluding the input): ___"
+      ],
+      "answer": "O(S)",
+      "explanation": "A table of size amount + 1.",
+      "acceptedAnswers": [
+        "O(amount)",
+        "linear in the amount"
+      ]
+    },
+    {
+      "id": "cc2-edge-01",
+      "category": "edge_case",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "What should the function return for coins = [2] and amount = 3?",
+        "How does the table express 'impossible'?"
+      ],
+      "options": [
+        "-1: dp[3] stays at infinity because 3 cannot be formed from 2s",
+        "0: no coin fits evenly, so no coins are needed",
+        "1: a single coin of size 2 is the closest we can get",
+        "2: use the 2-coin twice and drop one unit of value"
+      ],
+      "answer": "-1: dp[3] stays at infinity because 3 cannot be formed from 2s",
+      "explanation": "Initialise dp with amount + 1 (or inf) and map unreachable back to -1.",
+      "incorrectOptionExplanations": {
+        "0: no coin fits evenly, so no coins are needed": "0 is only for amount 0.",
+        "1: a single coin of size 2 is the closest we can get": "The sum must be exactly the amount.",
+        "2: use the 2-coin twice and drop one unit of value": "Coins cannot be partially used."
+      }
+    }
+  ],
+  "generatedAt": "2026-10-01T14:54:43Z"
+}

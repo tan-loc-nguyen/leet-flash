@@ -1,0 +1,139 @@
+{
+  "schemaVersion": 1,
+  "problemSlug": "all-nodes-distance-k-in-binary-tree",
+  "summary": "Return all nodes at distance k from a target node in a binary tree.",
+  "patterns": [
+    "Tree",
+    "BFS"
+  ],
+  "mainInsight": "A tree node only knows its children, so first record each node's parent (DFS). Then run BFS from the target over three neighbours (left, right, parent) with a visited set, stopping at depth k and returning that frontier.",
+  "canonicalApproach": "Parent map + BFS",
+  "approaches": [
+    {
+      "name": "Recursive distance bookkeeping",
+      "summary": "Return distance to the target up the recursion and search the other side.",
+      "timeComplexity": "O(n)",
+      "spaceComplexity": "O(h)",
+      "strengths": [
+        "No parent map"
+      ],
+      "weaknesses": [
+        "Subtle"
+      ]
+    },
+    {
+      "name": "Parent map + BFS",
+      "summary": "Treat the tree as an undirected graph.",
+      "timeComplexity": "O(n)",
+      "spaceComplexity": "O(n)",
+      "strengths": [
+        "Simple to reason about"
+      ],
+      "weaknesses": [
+        "Extra map"
+      ],
+      "interviewRelevance": "The expected answer."
+    }
+  ],
+  "commonMistakes": [
+    "Searching only downwards from the target",
+    "No visited set",
+    "Using node values (not identity) as keys when values repeat"
+  ],
+  "edgeCases": [
+    "k = 0",
+    "k larger than the tree depth (empty result)",
+    "Target is the root"
+  ],
+  "cards": [
+    {
+      "id": "adk-pattern-01",
+      "category": "pattern",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "Why do you need parent pointers for this problem?",
+        "What does the BFS start from?"
+      ],
+      "options": [
+        "Nodes at distance k may lie above the target, via its ancestors",
+        "Parents are needed to sort the nodes by value first",
+        "Parents are needed to locate the root of the whole tree",
+        "BFS cannot visit children without a parent map"
+      ],
+      "answer": "Nodes at distance k may lie above the target, via its ancestors",
+      "explanation": "BFS from the target in all three directions.",
+      "incorrectOptionExplanations": {
+        "Parents are needed to sort the nodes by value first": "Values are not sorted.",
+        "Parents are needed to locate the root of the whole tree": "The root is given.",
+        "BFS cannot visit children without a parent map": "Children are reachable directly."
+      }
+    },
+    {
+      "id": "adk-insight-01",
+      "category": "main_insight",
+      "type": "free_recall",
+      "promptVariants": [
+        "Why is a visited set required in the BFS?",
+        "What happens without it?"
+      ],
+      "answer": "With parent edges, a node's neighbours include its parent and the parent's neighbours include the node, so without a visited set the BFS would bounce back and forth between them and revisit nodes (never stopping at the right depth).",
+      "keyPoints": [
+        "Parent edges make cycles in the neighbour graph",
+        "Mark nodes when enqueuing",
+        "Stop after k levels"
+      ],
+      "explanation": "Equivalent to BFS on an undirected graph."
+    },
+    {
+      "id": "adk-time-01",
+      "category": "time_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Time complexity: ___",
+        "Complete the statement: Time complexity: ___"
+      ],
+      "answer": "O(n)",
+      "explanation": "Build the parent map and run the BFS once.",
+      "acceptedAnswers": [
+        "linear"
+      ]
+    },
+    {
+      "id": "adk-space-01",
+      "category": "space_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Space complexity (excluding the input): ___",
+        "Complete the statement: Space complexity (excluding the input): ___"
+      ],
+      "answer": "O(n)",
+      "explanation": "Parent map, visited set and the queue.",
+      "acceptedAnswers": [
+        "linear"
+      ]
+    },
+    {
+      "id": "adk-edge-01",
+      "category": "edge_case",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "What is returned for k = 0?",
+        "Which node is at distance 0?"
+      ],
+      "options": [
+        "Only the target node itself",
+        "An empty list: no node has distance 0",
+        "The target's parent only",
+        "All leaves of the tree"
+      ],
+      "answer": "Only the target node itself",
+      "explanation": "BFS stops immediately at depth 0.",
+      "incorrectOptionExplanations": {
+        "An empty list: no node has distance 0": "The target is at distance zero.",
+        "The target's parent only": "The parent is at distance 1.",
+        "All leaves of the tree": "Leaves are unrelated here."
+      }
+    }
+  ],
+  "generatedAt": "2026-10-01T15:00:56Z"
+}

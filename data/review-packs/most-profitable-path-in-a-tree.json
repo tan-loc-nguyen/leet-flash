@@ -1,0 +1,136 @@
+{
+  "schemaVersion": 1,
+  "problemSlug": "most-profitable-path-in-a-tree",
+  "summary": "Alice walks from root 0 to any leaf, Bob walks from node bob to the root; gates cost or pay amount[i]; shared gates are split.",
+  "patterns": [
+    "Tree",
+    "DFS"
+  ],
+  "mainInsight": "Run DFS from Bob's start to find his arrival time at each node on his path to 0. Then DFS from 0 for Alice with time t: take the full amount if t < bobTime[node], half if t == bobTime[node], nothing if Bob arrived earlier. The answer is the maximum income over leaves.",
+  "canonicalApproach": "Bob's arrival times + Alice DFS",
+  "approaches": [
+    {
+      "name": "Simulate with explicit steps",
+      "summary": "Move both players one step at a time.",
+      "timeComplexity": "O(n)",
+      "spaceComplexity": "O(n)",
+      "strengths": [
+        "Matches the statement"
+      ],
+      "weaknesses": [
+        "Bookkeeping for Alice's choices"
+      ]
+    },
+    {
+      "name": "Bob's arrival times + Alice DFS",
+      "summary": "Precompute Bob's time per node; DFS Alice with the running income.",
+      "timeComplexity": "O(n)",
+      "spaceComplexity": "O(n)",
+      "strengths": [
+        "Clean separation"
+      ],
+      "interviewRelevance": "The expected answer."
+    }
+  ],
+  "commonMistakes": [
+    "Treating the root as a leaf",
+    "Splitting incorrectly (use integer halves for negative amounts)",
+    "Letting Alice's time and Bob's time start at different offsets"
+  ],
+  "edgeCases": [
+    "Bob starts at a leaf",
+    "Bob starts at the root's child",
+    "Negative gate amounts"
+  ],
+  "cards": [
+    {
+      "id": "mpt-pattern-01",
+      "category": "pattern",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "Why can Bob's path be computed independently of Alice's?",
+        "What do you store for each node on Bob's path?"
+      ],
+      "options": [
+        "Bob's route to the root is fixed, so his arrival times can be stored",
+        "Bob moves randomly, so his times must be sampled",
+        "Alice's path decides where Bob walks each step",
+        "Both players always meet at the root before gates"
+      ],
+      "answer": "Bob's route to the root is fixed, so his arrival times can be stored",
+      "explanation": "Nodes off Bob's path have an infinite arrival time.",
+      "incorrectOptionExplanations": {
+        "Bob moves randomly, so his times must be sampled": "Bob follows the unique path to node 0.",
+        "Alice's path decides where Bob walks each step": "Bob's path does not depend on Alice.",
+        "Both players always meet at the root before gates": "Only some nodes may be shared."
+      }
+    },
+    {
+      "id": "mpt-insight-01",
+      "category": "main_insight",
+      "type": "free_recall",
+      "promptVariants": [
+        "How is each gate's amount resolved based on arrival times?",
+        "What are the three cases?"
+      ],
+      "answer": "If Alice arrives strictly earlier than Bob she takes the full amount; if they arrive at the same time they split it (amount / 2); if Bob was there earlier, the gate is already open and it contributes nothing. Alice maximises the sum along root-to-leaf paths.",
+      "keyPoints": [
+        "t_alice < t_bob => full",
+        "equal => half",
+        "later => 0"
+      ],
+      "explanation": "Nodes Bob never visits count as full."
+    },
+    {
+      "id": "mpt-time-01",
+      "category": "time_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Time complexity: ___",
+        "Complete the statement: Time complexity: ___"
+      ],
+      "answer": "O(n)",
+      "explanation": "Two DFS traversals of the tree.",
+      "acceptedAnswers": [
+        "linear"
+      ]
+    },
+    {
+      "id": "mpt-space-01",
+      "category": "space_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Space complexity (excluding the input): ___",
+        "Complete the statement: Space complexity (excluding the input): ___"
+      ],
+      "answer": "O(n)",
+      "explanation": "Adjacency lists, parent links and the recursion stack.",
+      "acceptedAnswers": [
+        "linear"
+      ]
+    },
+    {
+      "id": "mpt-edge-01",
+      "category": "edge_case",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "What is the leaf in the case of the root having a single child?",
+        "How should the root be treated as a leaf?"
+      ],
+      "options": [
+        "Not the root, which Alice starts at; leaves are nodes other than 0 with degree one",
+        "The root itself, since it has only one neighbour",
+        "There are no leaves in this case at all",
+        "Every node with degree two, as it ends a branch"
+      ],
+      "answer": "Not the root, which Alice starts at; leaves are nodes other than 0 with degree one",
+      "explanation": "Check len(adj[node]) == 1 and node != 0.",
+      "incorrectOptionExplanations": {
+        "The root itself, since it has only one neighbour": "Alice's start is not a leaf.",
+        "There are no leaves in this case at all": "The far end is a leaf.",
+        "Every node with degree two, as it ends a branch": "Leaves have degree one."
+      }
+    }
+  ],
+  "generatedAt": "2026-10-01T15:00:56Z"
+}

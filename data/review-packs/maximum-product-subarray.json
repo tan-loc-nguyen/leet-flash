@@ -1,0 +1,147 @@
+{
+  "schemaVersion": 1,
+  "problemSlug": "maximum-product-subarray",
+  "summary": "Maximum product of a contiguous subarray.",
+  "patterns": [
+    "Dynamic Programming"
+  ],
+  "mainInsight": "Negatives flip the sign, so keep both the maximum and the minimum product of subarrays ending at the current index: new_max = max(x, max * x, min * x), new_min = min(x, max * x, min * x). Track the best max. Zero resets the run.",
+  "canonicalApproach": "Track running max and min",
+  "approaches": [
+    {
+      "name": "Brute force",
+      "summary": "Compute the product of every subarray.",
+      "timeComplexity": "O(n^2)",
+      "spaceComplexity": "O(1)",
+      "strengths": [
+        "Simple"
+      ],
+      "weaknesses": [
+        "Slow"
+      ]
+    },
+    {
+      "name": "Track running max and min",
+      "summary": "Carry both extremes ending at i.",
+      "timeComplexity": "O(n)",
+      "spaceComplexity": "O(1)",
+      "strengths": [
+        "Linear"
+      ],
+      "interviewRelevance": "The expected answer."
+    },
+    {
+      "name": "Prefix and suffix products",
+      "summary": "Max over all prefix and suffix products, resetting on zero.",
+      "timeComplexity": "O(n)",
+      "spaceComplexity": "O(1)",
+      "strengths": [
+        "Neat"
+      ],
+      "weaknesses": [
+        "Needs a proof"
+      ]
+    }
+  ],
+  "commonMistakes": [
+    "Updating max and min in place with a mixed-up temporary",
+    "Resetting on zero without taking x",
+    "Only tracking the maximum"
+  ],
+  "edgeCases": [
+    "Contains zero",
+    "All negative with odd count",
+    "Single element"
+  ],
+  "cards": [
+    {
+      "id": "mps-pattern-01",
+      "category": "pattern",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "Why does Maximum Product Subarray need both a running max and a running min?",
+        "What can a very negative product become?"
+      ],
+      "options": [
+        "A negative minimum can become the maximum after multiplying by another negative number",
+        "The minimum is needed to detect an integer overflow",
+        "The minimum is used to reset the product after a zero",
+        "The minimum tracks the shortest subarray found so far"
+      ],
+      "answer": "A negative minimum can become the maximum after multiplying by another negative number",
+      "explanation": "A large negative times a negative can be the new best.",
+      "incorrectOptionExplanations": {
+        "The minimum is needed to detect an integer overflow": "Python integers do not overflow.",
+        "The minimum is used to reset the product after a zero": "A zero resets everything, not only the minimum.",
+        "The minimum tracks the shortest subarray found so far": "Subarray length is not tracked."
+      }
+    },
+    {
+      "id": "mps-insight-01",
+      "category": "main_insight",
+      "type": "free_recall",
+      "promptVariants": [
+        "How do zeros and negatives affect the DP?",
+        "Why do you include x itself in the max and min?"
+      ],
+      "answer": "A zero makes both extremes 0 so the next element starts a new run (taking x itself in the comparison does that); an odd number of negatives makes the running max negative, but the running min then holds the large-magnitude negative that a later negative will turn into a positive.",
+      "keyPoints": [
+        "x starts a new subarray",
+        "Zero resets",
+        "Min stores the large negative"
+      ],
+      "explanation": "Update both extremes from the old values."
+    },
+    {
+      "id": "mps-time-01",
+      "category": "time_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Time complexity: ___",
+        "Complete the statement: Time complexity: ___"
+      ],
+      "answer": "O(n)",
+      "explanation": "One pass with constant work.",
+      "acceptedAnswers": [
+        "linear"
+      ]
+    },
+    {
+      "id": "mps-space-01",
+      "category": "space_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Space complexity (excluding the input): ___",
+        "Complete the statement: Space complexity (excluding the input): ___"
+      ],
+      "answer": "O(1)",
+      "explanation": "Two running values and the best.",
+      "acceptedAnswers": [
+        "constant"
+      ]
+    },
+    {
+      "id": "mps-edge-01",
+      "category": "edge_case",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "What is the answer for [-2, 3, -4]?",
+        "Which subarray is best?"
+      ],
+      "options": [
+        "24: the whole array (-2 * 3 * -4)",
+        "3: the single element 3 is the largest",
+        "12: the subarray [3, -4] with the sign dropped",
+        "-24: the product keeps the first negative"
+      ],
+      "answer": "24: the whole array (-2 * 3 * -4)",
+      "explanation": "Two negatives cancel.",
+      "incorrectOptionExplanations": {
+        "3: the single element 3 is the largest": "The whole array's product is larger.",
+        "12: the subarray [3, -4] with the sign dropped": "That product is -12.",
+        "-24: the product keeps the first negative": "Two negatives multiply to a positive."
+      }
+    }
+  ],
+  "generatedAt": "2026-10-01T15:00:56Z"
+}

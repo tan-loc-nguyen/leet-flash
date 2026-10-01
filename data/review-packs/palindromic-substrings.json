@@ -1,0 +1,150 @@
+{
+  "schemaVersion": 1,
+  "problemSlug": "palindromic-substrings",
+  "summary": "Count all palindromic substrings (by position, not distinct).",
+  "patterns": [
+    "Two Pointers",
+    "Dynamic Programming"
+  ],
+  "mainInsight": "Every palindrome has a centre; expand from each of the 2n - 1 centres (n characters and n - 1 gaps) and count every successful expansion step. This is O(n^2) time and O(1) space. A DP table gives the same time with O(n^2) space.",
+  "canonicalApproach": "Expand around centres",
+  "approaches": [
+    {
+      "name": "Check every substring",
+      "summary": "Test each substring for palindromicity.",
+      "timeComplexity": "O(n^3)",
+      "spaceComplexity": "O(1)",
+      "strengths": [
+        "Easy"
+      ],
+      "weaknesses": [
+        "Cubic"
+      ]
+    },
+    {
+      "name": "Expand around centres",
+      "summary": "Count each valid expansion.",
+      "timeComplexity": "O(n^2)",
+      "spaceComplexity": "O(1)",
+      "strengths": [
+        "Simple"
+      ],
+      "interviewRelevance": "The expected answer."
+    },
+    {
+      "name": "DP table",
+      "summary": "dp[i][j] = s[i] == s[j] and dp[i + 1][j - 1].",
+      "timeComplexity": "O(n^2)",
+      "spaceComplexity": "O(n^2)",
+      "strengths": [
+        "Reusable"
+      ],
+      "weaknesses": [
+        "Memory"
+      ]
+    }
+  ],
+  "commonMistakes": [
+    "Counting distinct palindromes only",
+    "Missing even-length centres",
+    "Counting a palindrome twice from different centres"
+  ],
+  "edgeCases": [
+    "Single character",
+    "All equal letters (n(n+1)/2)",
+    "No repeated characters (answer n)"
+  ],
+  "cards": [
+    {
+      "id": "ps2-pattern-01",
+      "category": "pattern",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "How do you count palindromic substrings without testing all substrings?",
+        "What is the number of centres to expand?"
+      ],
+      "options": [
+        "Expand from each of the 2n - 1 centres, counting each successful step",
+        "Count the pairs of equal letters in the string",
+        "Sort the letters and count the runs of equal ones",
+        "Count the distinct letters and square the result"
+      ],
+      "answer": "Expand from each of the 2n - 1 centres, counting each successful step",
+      "explanation": "Each successful expansion is one more palindrome.",
+      "incorrectOptionExplanations": {
+        "Count the pairs of equal letters in the string": "Equal letters are not necessarily palindromes.",
+        "Sort the letters and count the runs of equal ones": "Sorting loses the substring order.",
+        "Count the distinct letters and square the result": "That has no relation to palindromes."
+      }
+    },
+    {
+      "id": "ps2-insight-01",
+      "category": "main_insight",
+      "type": "free_recall",
+      "promptVariants": [
+        "Why does each expansion step add exactly one to the count?",
+        "How does this differ from the longest palindromic substring?"
+      ],
+      "answer": "At a centre, every time the two ends match, the span so far is a new distinct palindrome (a different start/end pair), so the count increases by one; the loop stops at the first mismatch because no larger palindrome with that centre exists. Longest palindromic substring only keeps the maximum span instead of counting.",
+      "keyPoints": [
+        "Each match is a new palindrome",
+        "Stop at first mismatch",
+        "Count instead of keeping the max"
+      ],
+      "explanation": "Both odd and even centres are needed."
+    },
+    {
+      "id": "ps2-time-01",
+      "category": "time_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Time complexity: ___",
+        "Complete the statement: Time complexity: ___"
+      ],
+      "answer": "O(n^2)",
+      "explanation": "2n - 1 centres with up to O(n) expansion each.",
+      "acceptedAnswers": [
+        "O(n²)",
+        "quadratic"
+      ]
+    },
+    {
+      "id": "ps2-space-01",
+      "category": "space_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Space complexity (excluding the input): ___",
+        "Complete the statement: Space complexity (excluding the input): ___"
+      ],
+      "answer": "O(1)",
+      "explanation": "Just counters (the DP variant uses O(n^2)).",
+      "acceptedAnswers": [
+        "constant",
+        "O(n^2)"
+      ]
+    },
+    {
+      "id": "ps2-edge-01",
+      "category": "edge_case",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "How many palindromic substrings does 'aaa' have?",
+        "Which are they?"
+      ],
+      "options": [
+        "6: a, a, a, aa, aa, aaa",
+        "3: only the single letters",
+        "4: a, a, a and aaa",
+        "5: three singles and the two 'aa'"
+      ],
+      "answer": "6: a, a, a, aa, aa, aaa",
+      "explanation": "Substrings are counted by position.",
+      "incorrectOptionExplanations": {
+        "3: only the single letters": "Longer substrings are palindromes too.",
+        "4: a, a, a and aaa": "Both 'aa' substrings count.",
+        "5: three singles and the two 'aa'": "The full 'aaa' counts as well."
+      }
+    }
+  ],
+  "generatedAt": "2026-10-01T14:56:24Z"
+}

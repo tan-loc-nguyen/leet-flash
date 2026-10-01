@@ -1,0 +1,141 @@
+{
+  "schemaVersion": 1,
+  "problemSlug": "minimum-moves-to-clean-the-classroom",
+  "summary": "Shortest number of moves to collect all litter in a grid with limited energy and reset tiles.",
+  "patterns": [
+    "BFS",
+    "Bit Manipulation"
+  ],
+  "mainInsight": "BFS over states (row, col, mask of collected litter, energy). Each move costs 1 energy; stepping on 'R' resets energy to the maximum; stepping on 'L' sets its bit in the mask. Because there are at most 10 litter cells the mask has at most 1024 values. Prune with best[row][col][mask] = the highest energy seen: a state with no more energy than one already seen is dominated.",
+  "canonicalApproach": "BFS with dominance pruning",
+  "approaches": [
+    {
+      "name": "BFS over (cell, mask, energy)",
+      "summary": "Explore all states level by level.",
+      "timeComplexity": "O(m * n * 2^L * E)",
+      "spaceComplexity": "O(m * n * 2^L * E)",
+      "strengths": [
+        "Correct"
+      ],
+      "weaknesses": [
+        "Large state space"
+      ]
+    },
+    {
+      "name": "BFS with dominance pruning",
+      "summary": "Keep the best energy for (cell, mask).",
+      "timeComplexity": "O(m * n * 2^L * E) worst",
+      "spaceComplexity": "O(m * n * 2^L)",
+      "strengths": [
+        "Far fewer states"
+      ],
+      "weaknesses": [
+        "Needs the dominance argument"
+      ],
+      "interviewRelevance": "The expected answer."
+    }
+  ],
+  "commonMistakes": [
+    "Not resetting energy on 'R'",
+    "Ignoring the mask in the visited set",
+    "Moving with 0 energy outside a reset tile"
+  ],
+  "edgeCases": [
+    "No litter (answer 0)",
+    "Unreachable litter",
+    "Energy exactly enough"
+  ],
+  "cards": [
+    {
+      "id": "mmc-pattern-01",
+      "category": "pattern",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "What is the state of the BFS and why is a bitmask used?",
+        "How do you track which litter has been collected?"
+      ],
+      "options": [
+        "(row, col, mask of collected litter, energy), one mask bit per litter cell",
+        "(row, col) only, with one global visited set",
+        "(row, col, steps), explored by a heap ordered by steps",
+        "A permutation of the litter cells to visit, in order"
+      ],
+      "answer": "(row, col, mask of collected litter, energy), one mask bit per litter cell",
+      "explanation": "With at most 10 litter cells the mask has at most 1024 values.",
+      "incorrectOptionExplanations": {
+        "(row, col) only, with one global visited set": "The collected set and energy matter.",
+        "(row, col, steps), explored by a heap ordered by steps": "Moves are unit cost; the mask is missing.",
+        "A permutation of the litter cells to visit, in order": "That multiplies the work by L!."
+      }
+    },
+    {
+      "id": "mmc-insight-01",
+      "category": "main_insight",
+      "type": "free_recall",
+      "promptVariants": [
+        "Why can a state be pruned when its energy is not larger than a previously seen one?",
+        "What does dominance mean here?"
+      ],
+      "answer": "BFS reaches states in nondecreasing move count, so a later arrival at the same (cell, mask) with energy no greater than an earlier visit is no better: anything it can do, the earlier state can do as well and with at most as many moves. Only a state with strictly higher energy can improve future options.",
+      "keyPoints": [
+        "Earlier visit has fewer or equal moves",
+        "Higher energy dominates",
+        "Only strictly higher energy continues"
+      ],
+      "explanation": "This is the hint's best_energy pruning."
+    },
+    {
+      "id": "mmc-time-01",
+      "category": "time_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Time complexity: ___",
+        "Complete the statement: Time complexity: ___"
+      ],
+      "answer": "O(m*n*2^L*E)",
+      "explanation": "Each (cell, mask, energy) state is expanded with four neighbours; pruning reduces constant factors.",
+      "acceptedAnswers": [
+        "O(m * n * 2^L * E)",
+        "O(mn2^L E)"
+      ]
+    },
+    {
+      "id": "mmc-space-01",
+      "category": "space_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Space complexity (excluding the input): ___",
+        "Complete the statement: Space complexity (excluding the input): ___"
+      ],
+      "answer": "O(m*n*2^L)",
+      "explanation": "The best-energy array holds one value per (cell, mask).",
+      "acceptedAnswers": [
+        "O(m * n * 2^L)",
+        "O(m*n*2^L*E)"
+      ]
+    },
+    {
+      "id": "mmc-edge-01",
+      "category": "edge_case",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "What does the BFS return for classroom = ['L.S', 'RXL'] and energy = 3?",
+        "Why?"
+      ],
+      "options": [
+        "-1: collecting both litter cells is impossible with this energy",
+        "3: the nearest litter takes three moves to reach",
+        "4: a reset on 'R' makes the whole trip possible",
+        "0: the start cell already contains some litter"
+      ],
+      "answer": "-1: collecting both litter cells is impossible with this energy",
+      "explanation": "The statement's Example 3 shows -1.",
+      "incorrectOptionExplanations": {
+        "3: the nearest litter takes three moves to reach": "Both litter cells must be collected.",
+        "4: a reset on 'R' makes the whole trip possible": "The route to the second litter needs more energy than the reset gives.",
+        "0: the start cell already contains some litter": "The start is 'S'."
+      }
+    }
+  ],
+  "generatedAt": "2026-10-01T14:57:58Z"
+}

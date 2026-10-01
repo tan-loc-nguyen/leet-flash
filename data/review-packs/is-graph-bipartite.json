@@ -1,0 +1,150 @@
+{
+  "schemaVersion": 1,
+  "problemSlug": "is-graph-bipartite",
+  "summary": "Can the nodes of an undirected graph be 2-coloured so no edge joins same-coloured nodes?",
+  "patterns": [
+    "Graph",
+    "BFS"
+  ],
+  "mainInsight": "Colour with BFS or DFS: give a start node colour 0, colour its neighbours with the opposite colour, and fail if you meet a neighbour already coloured the same. Repeat from every uncoloured node because the graph may be disconnected. Equivalent: the graph has no odd-length cycle.",
+  "canonicalApproach": "BFS colouring",
+  "approaches": [
+    {
+      "name": "BFS colouring",
+      "summary": "Colour levels alternately; check each edge.",
+      "timeComplexity": "O(V + E)",
+      "spaceComplexity": "O(V)",
+      "strengths": [
+        "Iterative"
+      ],
+      "interviewRelevance": "Common."
+    },
+    {
+      "name": "DFS colouring",
+      "summary": "Recursive alternate colouring.",
+      "timeComplexity": "O(V + E)",
+      "spaceComplexity": "O(V)",
+      "strengths": [
+        "Short"
+      ],
+      "weaknesses": [
+        "Recursion depth"
+      ]
+    },
+    {
+      "name": "Union find",
+      "summary": "Union a node's neighbours; fail if a node shares a set with a neighbour.",
+      "timeComplexity": "O(V + E) α",
+      "spaceComplexity": "O(V)",
+      "strengths": [
+        "No colours"
+      ],
+      "weaknesses": [
+        "Less direct"
+      ]
+    }
+  ],
+  "commonMistakes": [
+    "Only starting from node 0",
+    "Not comparing against already coloured neighbours",
+    "Assuming connectedness"
+  ],
+  "edgeCases": [
+    "Disconnected graph",
+    "Isolated nodes",
+    "Self-loop or odd cycle"
+  ],
+  "cards": [
+    {
+      "id": "igb-pattern-01",
+      "category": "pattern",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "What property does a bipartite graph satisfy in terms of cycles?",
+        "Which graphs cannot be 2-coloured?"
+      ],
+      "options": [
+        "It contains no odd-length cycle",
+        "It contains no cycle of any length",
+        "Every node has an even degree",
+        "It is connected and has exactly V - 1 edges"
+      ],
+      "answer": "It contains no odd-length cycle",
+      "explanation": "An odd cycle forces two adjacent nodes to share a colour.",
+      "incorrectOptionExplanations": {
+        "It contains no cycle of any length": "Even cycles are allowed (e.g. a square).",
+        "Every node has an even degree": "Degree parity is unrelated.",
+        "It is connected and has exactly V - 1 edges": "That describes a tree, which is only one case."
+      }
+    },
+    {
+      "id": "igb-insight-01",
+      "category": "main_insight",
+      "type": "free_recall",
+      "promptVariants": [
+        "Why must the colouring be started from every uncoloured node?",
+        "What does the traversal check on each edge?"
+      ],
+      "answer": "The graph may have several connected components and each needs its own colouring. For an edge (u, v): if v is uncoloured give it the opposite colour of u and continue; if v already has the same colour as u, an odd cycle exists and the answer is False.",
+      "keyPoints": [
+        "Loop over all components",
+        "Opposite colour for new neighbours",
+        "Same colour => not bipartite"
+      ],
+      "explanation": "Starting only from node 0 misses other components."
+    },
+    {
+      "id": "igb-time-01",
+      "category": "time_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Time complexity: ___",
+        "Complete the statement: Time complexity: ___"
+      ],
+      "answer": "O(V + E)",
+      "explanation": "Every node and edge is visited once.",
+      "acceptedAnswers": [
+        "O(V+E)",
+        "linear"
+      ]
+    },
+    {
+      "id": "igb-space-01",
+      "category": "space_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Space complexity (excluding the input): ___",
+        "Complete the statement: Space complexity (excluding the input): ___"
+      ],
+      "answer": "O(V)",
+      "explanation": "The colour array and queue/stack.",
+      "acceptedAnswers": [
+        "linear",
+        "O(n)"
+      ]
+    },
+    {
+      "id": "igb-edge-01",
+      "category": "edge_case",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "Is a triangle (3-cycle) bipartite?",
+        "Why or why not?"
+      ],
+      "options": [
+        "No: it is an odd cycle, so two adjacent nodes must share a colour",
+        "Yes: colour the three nodes 0, 1, 0 in turn",
+        "Yes: any graph with three nodes is bipartite",
+        "No: a graph needs at least four nodes to be bipartite"
+      ],
+      "answer": "No: it is an odd cycle, so two adjacent nodes must share a colour",
+      "explanation": "Nodes 0, 1, 2 mutually adjacent need three colours.",
+      "incorrectOptionExplanations": {
+        "Yes: colour the three nodes 0, 1, 0 in turn": "The first and third nodes are adjacent.",
+        "Yes: any graph with three nodes is bipartite": "A triangle fails.",
+        "No: a graph needs at least four nodes to be bipartite": "Two nodes with one edge are already bipartite."
+      }
+    }
+  ],
+  "generatedAt": "2026-10-01T14:57:58Z"
+}

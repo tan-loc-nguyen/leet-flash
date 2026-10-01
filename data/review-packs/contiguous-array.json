@@ -1,0 +1,138 @@
+{
+  "schemaVersion": 1,
+  "problemSlug": "contiguous-array",
+  "summary": "Longest subarray with an equal number of 0s and 1s.",
+  "patterns": [
+    "Prefix Sum",
+    "Array / Hashing"
+  ],
+  "mainInsight": "Map 0 to -1 so that a balanced subarray has sum 0. With a running sum, two equal prefix sums mean the elements between them sum to 0. Store the first index of each prefix sum (with {0: -1}) and take the longest distance.",
+  "canonicalApproach": "Prefix sum + first occurrence map",
+  "approaches": [
+    {
+      "name": "Brute force",
+      "summary": "Count zeros and ones for every subarray.",
+      "timeComplexity": "O(n^2)",
+      "spaceComplexity": "O(1)",
+      "strengths": [
+        "Easy"
+      ],
+      "weaknesses": [
+        "Too slow"
+      ]
+    },
+    {
+      "name": "Prefix sum + first occurrence map",
+      "summary": "Convert 0 to -1; look up the earliest index of the same sum.",
+      "timeComplexity": "O(n)",
+      "spaceComplexity": "O(n)",
+      "strengths": [
+        "Linear"
+      ],
+      "weaknesses": [
+        "Extra memory"
+      ],
+      "interviewRelevance": "The expected answer."
+    }
+  ],
+  "commonMistakes": [
+    "Overwriting the first index of a prefix sum",
+    "Forgetting the {0: -1} seed",
+    "Not converting 0 to -1"
+  ],
+  "edgeCases": [
+    "No balanced subarray",
+    "Whole array balanced",
+    "Single element"
+  ],
+  "cards": [
+    {
+      "id": "ca3-pattern-01",
+      "category": "pattern",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "What trick turns 'equal zeros and ones' into a sum problem?",
+        "How do you detect a balanced subarray with a running total?"
+      ],
+      "options": [
+        "Treat 0 as -1, so a balanced subarray has total 0 (repeated prefix sum)",
+        "Treat 1 as -1, so a balanced subarray has a total of 1",
+        "Sort the array, so that equal counts become neighbours",
+        "Count only the ones, since the zeros are then implied"
+      ],
+      "answer": "Treat 0 as -1, so a balanced subarray has total 0 (repeated prefix sum)",
+      "explanation": "Equal prefix sums at i and j mean the elements in (i, j] sum to 0.",
+      "incorrectOptionExplanations": {
+        "Treat 1 as -1, so a balanced subarray has a total of 1": "The target would be 0, not 1.",
+        "Sort the array, so that equal counts become neighbours": "Sorting destroys contiguity.",
+        "Count only the ones, since the zeros are then implied": "Both counts are required."
+      }
+    },
+    {
+      "id": "ca3-insight-01",
+      "category": "main_insight",
+      "type": "free_recall",
+      "promptVariants": [
+        "Why store only the first index of each prefix sum, and why seed the map with {0: -1}?",
+        "What does the seed handle?"
+      ],
+      "answer": "The longest subarray ending at j for a given prefix sum starts after the earliest index with that sum, so only the first occurrence is kept. The seed {0: -1} represents the empty prefix, so a balanced subarray that starts at index 0 is measured correctly.",
+      "keyPoints": [
+        "First occurrence gives the longest span",
+        "{0: -1} for subarrays starting at 0"
+      ],
+      "explanation": "Do not overwrite the stored index."
+    },
+    {
+      "id": "ca3-time-01",
+      "category": "time_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Time complexity: ___",
+        "Complete the statement: Time complexity: ___"
+      ],
+      "answer": "O(n)",
+      "explanation": "One pass with O(1) map operations.",
+      "acceptedAnswers": [
+        "linear"
+      ]
+    },
+    {
+      "id": "ca3-space-01",
+      "category": "space_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Space complexity (excluding the input): ___",
+        "Complete the statement: Space complexity (excluding the input): ___"
+      ],
+      "answer": "O(n)",
+      "explanation": "The map can hold up to n distinct prefix sums.",
+      "acceptedAnswers": [
+        "linear"
+      ]
+    },
+    {
+      "id": "ca3-edge-01",
+      "category": "edge_case",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "What is the answer for [0, 1, 0]?",
+        "Which subarray is balanced?"
+      ],
+      "options": [
+        "2: [0, 1] (or [1, 0])",
+        "3: the whole array has equal counts",
+        "1: only single elements are balanced",
+        "0: no balanced subarray exists"
+      ],
+      "answer": "2: [0, 1] (or [1, 0])",
+      "explanation": "Prefix sums are -1, 0, -1; the repeat of -1 at index 2 gives length 2.",
+      "incorrectOptionExplanations": {
+        "3: the whole array has equal counts": "It has two zeros and one one.",
+        "1: only single elements are balanced": "A single element is never balanced.",
+        "0: no balanced subarray exists": "[0, 1] is balanced."
+      }
+    }
+  ],
+  "generatedAt": "2026-10-01T14:56:24Z"
+}

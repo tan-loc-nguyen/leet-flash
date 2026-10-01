@@ -1,0 +1,152 @@
+{
+  "schemaVersion": 1,
+  "problemSlug": "insert-delete-getrandom-o1",
+  "summary": "Design a set with O(1) average insert, remove and getRandom.",
+  "patterns": [
+    "Design",
+    "Array / Hashing"
+  ],
+  "mainInsight": "Keep values in a list for O(1) random indexing plus a dict from value to its list index. To remove, swap the element with the last one, update the moved element's index, pop the last, and delete the key.",
+  "canonicalApproach": "List + dict of indices",
+  "approaches": [
+    {
+      "name": "List only",
+      "summary": "Insert by append; remove by list.remove.",
+      "timeComplexity": "remove O(n)",
+      "spaceComplexity": "O(n)",
+      "strengths": [
+        "Simple"
+      ],
+      "weaknesses": [
+        "Removal is linear"
+      ]
+    },
+    {
+      "name": "Dict only",
+      "summary": "Hash set; random choice via list(set).",
+      "timeComplexity": "getRandom O(n)",
+      "spaceComplexity": "O(n)",
+      "strengths": [
+        "O(1) insert/remove"
+      ],
+      "weaknesses": [
+        "getRandom is linear"
+      ]
+    },
+    {
+      "name": "List + dict of indices",
+      "summary": "Swap-with-last removal keeps everything O(1).",
+      "timeComplexity": "O(1) average",
+      "spaceComplexity": "O(n)",
+      "strengths": [
+        "All operations O(1)"
+      ],
+      "weaknesses": [
+        "Index bookkeeping"
+      ],
+      "interviewRelevance": "The expected answer."
+    }
+  ],
+  "commonMistakes": [
+    "Using list.remove (O(n))",
+    "Forgetting to update the moved element's index",
+    "Returning the wrong boolean for duplicates"
+  ],
+  "edgeCases": [
+    "Remove the last element",
+    "Remove from a one-element set",
+    "Insert a duplicate"
+  ],
+  "cards": [
+    {
+      "id": "rs3-pattern-01",
+      "category": "pattern",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "Which two structures give O(1) insert, remove and getRandom?",
+        "Why is one data structure not enough?"
+      ],
+      "options": [
+        "A list for indexing and a dict from value to index",
+        "A heap for removal and a stack for random choice",
+        "A sorted array and a binary search tree",
+        "Two hash sets that mirror each other"
+      ],
+      "answer": "A list for indexing and a dict from value to index",
+      "explanation": "The list gives random index access; the dict finds an element's index.",
+      "incorrectOptionExplanations": {
+        "A heap for removal and a stack for random choice": "Neither supports O(1) random access.",
+        "A sorted array and a binary search tree": "Both need O(log n) updates.",
+        "Two hash sets that mirror each other": "Hash sets cannot pick a random element in O(1)."
+      }
+    },
+    {
+      "id": "rs3-insight-01",
+      "category": "main_insight",
+      "type": "free_recall",
+      "promptVariants": [
+        "How does removal stay O(1)?",
+        "Why swap with the last element before popping?"
+      ],
+      "answer": "Deleting from the middle of a list is O(n) because of shifting. Instead the element to remove is overwritten by the last element, the dict entry of the moved element is updated to the new index, and the last slot is popped (O(1)). Order does not matter in a set, so this is allowed.",
+      "keyPoints": [
+        "Swap with last",
+        "Update the moved element's index",
+        "Pop the tail"
+      ],
+      "explanation": "Handle the case where the removed element is the last one."
+    },
+    {
+      "id": "rs3-time-01",
+      "category": "time_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Time complexity: ___",
+        "Complete the statement: Time complexity: ___"
+      ],
+      "answer": "O(1)",
+      "explanation": "Average over all three operations.",
+      "acceptedAnswers": [
+        "constant",
+        "O(1) average"
+      ]
+    },
+    {
+      "id": "rs3-space-01",
+      "category": "space_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Space complexity (excluding the input): ___",
+        "Complete the statement: Space complexity (excluding the input): ___"
+      ],
+      "answer": "O(n)",
+      "explanation": "The list and dictionary store n values.",
+      "acceptedAnswers": [
+        "linear"
+      ]
+    },
+    {
+      "id": "rs3-edge-01",
+      "category": "edge_case",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "What goes wrong if you remove the last element without checking whether it is the one being removed?",
+        "Which order of operations is safest?"
+      ],
+      "options": [
+        "A stale dict key can remain; move last into place, update its index, then delete",
+        "Nothing; the swap works the same when both indices are equal",
+        "The list would become unsorted and getRandom would fail then",
+        "The dictionary would raise a KeyError on the very next insert"
+      ],
+      "answer": "A stale dict key can remain; move last into place, update its index, then delete",
+      "explanation": "Delete the key after the index update so a single-element removal still ends consistent.",
+      "incorrectOptionExplanations": {
+        "Nothing; the swap works the same when both indices are equal": "The stale-key ordering matters when they are equal.",
+        "The list would become unsorted and getRandom would fail then": "The list does not need to be sorted.",
+        "The dictionary would raise a KeyError on the very next insert": "The first insert has nothing to do with it."
+      }
+    }
+  ],
+  "generatedAt": "2026-10-01T14:54:43Z"
+}

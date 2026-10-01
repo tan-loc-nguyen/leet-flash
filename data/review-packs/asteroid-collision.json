@@ -1,0 +1,138 @@
+{
+  "schemaVersion": 1,
+  "problemSlug": "asteroid-collision",
+  "summary": "Simulate collisions of asteroids moving along a line; positive moves right, negative left; the smaller explodes.",
+  "patterns": [
+    "Stack"
+  ],
+  "mainInsight": "A stack holds surviving asteroids. A collision occurs only when the top is moving right (positive) and the incoming one is moving left (negative). Pop smaller tops, destroy both on a tie, and push the incoming asteroid only if it survives.",
+  "canonicalApproach": "Stack",
+  "approaches": [
+    {
+      "name": "Repeated pass simulation",
+      "summary": "Scan for collisions until none remain.",
+      "timeComplexity": "O(n^2)",
+      "spaceComplexity": "O(1)",
+      "strengths": [
+        "Matches the statement"
+      ],
+      "weaknesses": [
+        "Slow"
+      ]
+    },
+    {
+      "name": "Stack",
+      "summary": "Resolve each incoming negative asteroid against the top of the stack.",
+      "timeComplexity": "O(n)",
+      "spaceComplexity": "O(n)",
+      "strengths": [
+        "Linear, each asteroid popped once"
+      ],
+      "weaknesses": [
+        "Careful cases"
+      ],
+      "interviewRelevance": "The expected answer."
+    }
+  ],
+  "commonMistakes": [
+    "Colliding two negatives or two positives",
+    "Not looping after popping",
+    "Forgetting the equal-size case"
+  ],
+  "edgeCases": [
+    "All same direction",
+    "Left-movers first (never collide)",
+    "Equal sizes"
+  ],
+  "cards": [
+    {
+      "id": "ac3-pattern-01",
+      "category": "pattern",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "Which data structure resolves chain collisions in one pass?",
+        "How do you decide whether two neighbouring asteroids collide?"
+      ],
+      "options": [
+        "A stack; collide only when the top is positive and the incoming one is negative",
+        "A queue; collide when the front and back differ in sign",
+        "A min-heap by size; always collide the two smallest first",
+        "A hash map from size to count; cancel the equal sizes"
+      ],
+      "answer": "A stack; collide only when the top is positive and the incoming one is negative",
+      "explanation": "Only a right-mover followed by a left-mover can meet.",
+      "incorrectOptionExplanations": {
+        "A queue; collide when the front and back differ in sign": "Asteroids interact with their neighbours, not the ends.",
+        "A min-heap by size; always collide the two smallest first": "Position order matters, not size order.",
+        "A hash map from size to count; cancel the equal sizes": "Positions determine collisions."
+      }
+    },
+    {
+      "id": "ac3-insight-01",
+      "category": "main_insight",
+      "type": "free_recall",
+      "promptVariants": [
+        "Why does each asteroid need a while loop against the stack?",
+        "What are the three outcomes of a collision?"
+      ],
+      "answer": "A single left-moving asteroid may destroy several right-moving asteroids in a row, so it must keep colliding with the new top until it is destroyed, ties with it, or the top is no longer a right-mover. The outcomes are: the incoming one explodes, the top explodes (pop and continue), or both explode (pop and stop).",
+      "keyPoints": [
+        "While loop against the top",
+        "Incoming loses / top loses / tie",
+        "Push only if it survives"
+      ],
+      "explanation": "Amortised O(n) because each asteroid is popped at most once."
+    },
+    {
+      "id": "ac3-time-01",
+      "category": "time_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Time complexity: ___",
+        "Complete the statement: Time complexity: ___"
+      ],
+      "answer": "O(n)",
+      "explanation": "Every asteroid is pushed once and popped at most once.",
+      "acceptedAnswers": [
+        "linear"
+      ]
+    },
+    {
+      "id": "ac3-space-01",
+      "category": "space_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Space complexity (excluding the input): ___",
+        "Complete the statement: Space complexity (excluding the input): ___"
+      ],
+      "answer": "O(n)",
+      "explanation": "The stack of survivors.",
+      "acceptedAnswers": [
+        "linear"
+      ]
+    },
+    {
+      "id": "ac3-edge-01",
+      "category": "edge_case",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "What remains for [10, 2, -5]?",
+        "Which asteroids survive?"
+      ],
+      "options": [
+        "[10]: -5 destroys 2 and then explodes against 10",
+        "[10, -5]: -5 survives because it is larger than 2",
+        "[-5]: -5 is the largest in magnitude",
+        "[]: all asteroids cancel"
+      ],
+      "answer": "[10]: -5 destroys 2 and then explodes against 10",
+      "explanation": "-5 beats 2 (pop) then loses to 10.",
+      "incorrectOptionExplanations": {
+        "[10, -5]: -5 survives because it is larger than 2": "It must still face the 10.",
+        "[-5]: -5 is the largest in magnitude": "10 is larger in magnitude.",
+        "[]: all asteroids cancel": "The 10 survives."
+      }
+    }
+  ],
+  "generatedAt": "2026-10-01T14:54:43Z"
+}

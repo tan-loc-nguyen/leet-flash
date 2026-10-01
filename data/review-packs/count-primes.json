@@ -1,0 +1,139 @@
+{
+  "schemaVersion": 1,
+  "problemSlug": "count-primes",
+  "summary": "Count the primes strictly less than n.",
+  "patterns": [
+    "Math",
+    "Array / Hashing"
+  ],
+  "mainInsight": "Sieve of Eratosthenes: mark all numbers as prime, then for each prime p up to sqrt(n) cross out p*p, p*p + p, ... Starting at p*p is enough because smaller multiples were already crossed by smaller primes.",
+  "canonicalApproach": "Sieve of Eratosthenes",
+  "approaches": [
+    {
+      "name": "Trial division per number",
+      "summary": "Test each number up to sqrt.",
+      "timeComplexity": "O(n sqrt n)",
+      "spaceComplexity": "O(1)",
+      "strengths": [
+        "Easy"
+      ],
+      "weaknesses": [
+        "Too slow for 5 * 10^6"
+      ]
+    },
+    {
+      "name": "Sieve of Eratosthenes",
+      "summary": "Cross out multiples of each prime starting at p * p.",
+      "timeComplexity": "O(n log log n)",
+      "spaceComplexity": "O(n)",
+      "strengths": [
+        "Near linear"
+      ],
+      "weaknesses": [
+        "O(n) memory"
+      ],
+      "interviewRelevance": "The expected answer."
+    }
+  ],
+  "commonMistakes": [
+    "Counting 0 and 1 as prime",
+    "Including n itself",
+    "Starting the inner loop at 2p instead of p*p (correct but slower)"
+  ],
+  "edgeCases": [
+    "n = 0, 1, 2 (answer 0)",
+    "n = 3 (answer 1)",
+    "n = 5 * 10^6"
+  ],
+  "cards": [
+    {
+      "id": "cpx-pattern-01",
+      "category": "pattern",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "Which algorithm counts primes below n fastest in practice?",
+        "How are composite numbers eliminated?"
+      ],
+      "options": [
+        "The sieve of Eratosthenes: cross out multiples of each prime starting at its square",
+        "Trial division of every number by all smaller numbers",
+        "A hash set of every number divisible by two or three",
+        "Binary search on the count of primes below each value"
+      ],
+      "answer": "The sieve of Eratosthenes: cross out multiples of each prime starting at its square",
+      "explanation": "The leftover unmarked numbers are exactly the primes.",
+      "incorrectOptionExplanations": {
+        "Trial division of every number by all smaller numbers": "That is quadratic.",
+        "A hash set of every number divisible by two or three": "That misses most composites.",
+        "Binary search on the count of primes below each value": "Primality is not monotone."
+      }
+    },
+    {
+      "id": "cpx-insight-01",
+      "category": "main_insight",
+      "type": "free_recall",
+      "promptVariants": [
+        "Why can the inner loop start at p * p and the outer loop stop at sqrt(n)?",
+        "Which multiples were already marked?"
+      ],
+      "answer": "A composite number m < n has a prime factor at most sqrt(n). Multiples of p below p * p, such as p * k with k < p, already have the smaller prime factor k (or one of its prime factors) and were crossed out in an earlier round, so crossing can begin at p * p.",
+      "keyPoints": [
+        "Composite has a factor <= sqrt(n)",
+        "Smaller multiples already marked"
+      ],
+      "explanation": "That brings the time to O(n log log n)."
+    },
+    {
+      "id": "cpx-time-01",
+      "category": "time_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Time complexity: ___",
+        "Complete the statement: Time complexity: ___"
+      ],
+      "answer": "O(n log log n)",
+      "explanation": "Sum of n / p over primes p up to n.",
+      "acceptedAnswers": [
+        "O(n loglog n)",
+        "O(n log(log n))"
+      ]
+    },
+    {
+      "id": "cpx-space-01",
+      "category": "space_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Space complexity (excluding the input): ___",
+        "Complete the statement: Space complexity (excluding the input): ___"
+      ],
+      "answer": "O(n)",
+      "explanation": "A boolean array of size n.",
+      "acceptedAnswers": [
+        "linear"
+      ]
+    },
+    {
+      "id": "cpx-edge-01",
+      "category": "edge_case",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "How many primes are there below 10?",
+        "Which numbers remain after the sieve?"
+      ],
+      "options": [
+        "4: the primes 2, 3, 5 and 7",
+        "5: counting 1 as prime",
+        "3: counting only odd primes",
+        "5: counting 10 itself"
+      ],
+      "answer": "4: the primes 2, 3, 5 and 7",
+      "explanation": "n is excluded.",
+      "incorrectOptionExplanations": {
+        "5: counting 1 as prime": "1 is not prime.",
+        "3: counting only odd primes": "2 is prime too.",
+        "5: counting 10 itself": "The limit is strictly less than n."
+      }
+    }
+  ],
+  "generatedAt": "2026-10-01T14:56:24Z"
+}

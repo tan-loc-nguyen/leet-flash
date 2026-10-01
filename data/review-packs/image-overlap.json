@@ -1,0 +1,141 @@
+{
+  "schemaVersion": 1,
+  "problemSlug": "image-overlap",
+  "summary": "Largest overlap of 1s after translating one binary image over another.",
+  "patterns": [
+    "Matrix",
+    "Array / Hashing"
+  ],
+  "mainInsight": "Every pair (1 in img1 at (r1, c1), 1 in img2 at (r2, c2)) votes for the translation vector (r2 - r1, c2 - c1). The answer is the largest vote count for any vector. With lists of 1-positions this is O(a * b) where a, b are the numbers of ones.",
+  "canonicalApproach": "Vote by translation vectors",
+  "approaches": [
+    {
+      "name": "Try every translation",
+      "summary": "For each shift (dx, dy), count overlapping ones.",
+      "timeComplexity": "O(n^4)",
+      "spaceComplexity": "O(1)",
+      "strengths": [
+        "Direct"
+      ],
+      "weaknesses": [
+        "Slow for n = 30 in Python but accepted"
+      ]
+    },
+    {
+      "name": "Vote by translation vectors",
+      "summary": "Count (r2 - r1, c2 - c1) for all pairs of ones.",
+      "timeComplexity": "O(a * b)",
+      "spaceComplexity": "O(a * b)",
+      "strengths": [
+        "Efficient when sparse"
+      ],
+      "weaknesses": [
+        "Counting dict"
+      ],
+      "interviewRelevance": "The expected answer."
+    }
+  ],
+  "commonMistakes": [
+    "Rotating or reflecting the image",
+    "Calling max on an empty counter",
+    "Counting zeros"
+  ],
+  "edgeCases": [
+    "All zeros",
+    "1 x 1 images",
+    "Fully filled images"
+  ],
+  "cards": [
+    {
+      "id": "iox-pattern-01",
+      "category": "pattern",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "How can you count overlaps for every translation without sliding the whole image?",
+        "What does each pair of 1 cells imply?"
+      ],
+      "options": [
+        "Each pair of ones (one from each image) votes for one translation vector",
+        "Each row of ones votes for a vertical shift only",
+        "Each pair of zeros votes for a rotation angle",
+        "Each column of ones votes for a horizontal shift only"
+      ],
+      "answer": "Each pair of ones (one from each image) votes for one translation vector",
+      "explanation": "The best translation is the most-voted vector.",
+      "incorrectOptionExplanations": {
+        "Each row of ones votes for a vertical shift only": "Shifts are two-dimensional.",
+        "Each pair of zeros votes for a rotation angle": "Zeros are ignored and there is no rotation.",
+        "Each column of ones votes for a horizontal shift only": "Both axes matter."
+      }
+    },
+    {
+      "id": "iox-insight-01",
+      "category": "main_insight",
+      "type": "free_recall",
+      "promptVariants": [
+        "Why is the answer the maximum vote count?",
+        "What does a vote count equal?"
+      ],
+      "answer": "A translation (dx, dy) overlaps a pair of ones exactly when img2's cell equals img1's cell shifted by (dx, dy); so the number of pairs that produce that vector equals the overlap for that translation. The largest count over all vectors is therefore the maximum overlap.",
+      "keyPoints": [
+        "Pair (a, b) <=> translation b - a",
+        "Vote count = overlap",
+        "Take the maximum"
+      ],
+      "explanation": "Zeros never contribute."
+    },
+    {
+      "id": "iox-time-01",
+      "category": "time_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Time complexity: ___",
+        "Complete the statement: Time complexity: ___"
+      ],
+      "answer": "O(a * b)",
+      "explanation": "All pairs of ones (at most O(n^4)).",
+      "acceptedAnswers": [
+        "O(n^4)",
+        "O(a*b)"
+      ]
+    },
+    {
+      "id": "iox-space-01",
+      "category": "space_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Space complexity (excluding the input): ___",
+        "Complete the statement: Space complexity (excluding the input): ___"
+      ],
+      "answer": "O(a * b)",
+      "explanation": "A counter of up to one entry per pair (at most (2n - 1)^2 distinct vectors).",
+      "acceptedAnswers": [
+        "O(n^2)",
+        "O(a*b)"
+      ]
+    },
+    {
+      "id": "iox-edge-01",
+      "category": "edge_case",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "What is the overlap if img1 is all zeros?",
+        "Which translation maximises it?"
+      ],
+      "options": [
+        "0: there are no pairs of ones, so no vector receives a vote",
+        "1: the image can always overlap in a single cell",
+        "n^2: every cell of the grid overlaps with another",
+        "-1: no valid translation exists for an empty image"
+      ],
+      "answer": "0: there are no pairs of ones, so no vector receives a vote",
+      "explanation": "Guard against max() of an empty counter.",
+      "incorrectOptionExplanations": {
+        "1: the image can always overlap in a single cell": "Both cells must be 1.",
+        "n^2: every cell of the grid overlaps with another": "Zeros do not count.",
+        "-1: no valid translation exists for an empty image": "The overlap is a count, never negative."
+      }
+    }
+  ],
+  "generatedAt": "2026-10-01T14:57:58Z"
+}

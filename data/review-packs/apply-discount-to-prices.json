@@ -1,0 +1,138 @@
+{
+  "schemaVersion": 1,
+  "problemSlug": "apply-discount-to-prices",
+  "summary": "Apply a percentage discount to each price word ('$' followed only by digits) in a sentence.",
+  "patterns": [
+    "Array / Hashing"
+  ],
+  "mainInsight": "Split by single spaces. A word is a price iff it starts with '$', has length > 1 and the rest isdigit(). Replace it by '$' + format(price * (100 - discount) / 100, '.2f'). Join with single spaces.",
+  "canonicalApproach": "Split, process words, join",
+  "approaches": [
+    {
+      "name": "Split, process words, join",
+      "summary": "Check each word and reformat prices.",
+      "timeComplexity": "O(n)",
+      "spaceComplexity": "O(n)",
+      "strengths": [
+        "Straightforward"
+      ],
+      "weaknesses": [
+        "Careful price test"
+      ],
+      "interviewRelevance": "The expected answer."
+    },
+    {
+      "name": "Regular expression",
+      "summary": "re.sub on tokens matching (^|(?<= ))\\$\\d+(?= |$).",
+      "timeComplexity": "O(n)",
+      "spaceComplexity": "O(n)",
+      "strengths": [
+        "Short"
+      ],
+      "weaknesses": [
+        "Boundary conditions"
+      ]
+    }
+  ],
+  "commonMistakes": [
+    "Treating a bare '$' as a price",
+    "Forgetting to prefix '$' again",
+    "Using round() and losing trailing zeros"
+  ],
+  "edgeCases": [
+    "Discount 0 or 100",
+    "No prices",
+    "Ten-digit price"
+  ],
+  "cards": [
+    {
+      "id": "adp-pattern-01",
+      "category": "pattern",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "How do you decide whether a word is a price?",
+        "Which words are not prices?"
+      ],
+      "options": [
+        "It starts with '$' and the rest is one or more digits",
+        "It contains a '$' somewhere inside the word",
+        "It is a number written with a decimal point",
+        "It starts with a digit and ends with a '$'"
+      ],
+      "answer": "It starts with '$' and the rest is one or more digits",
+      "explanation": "'$' alone and '$1e5' are not prices.",
+      "incorrectOptionExplanations": {
+        "It contains a '$' somewhere inside the word": "'5$' is not a price.",
+        "It is a number written with a decimal point": "Prices are integers here.",
+        "It starts with a digit and ends with a '$'": "The dollar sign must come first."
+      }
+    },
+    {
+      "id": "adp-insight-01",
+      "category": "main_insight",
+      "type": "free_recall",
+      "promptVariants": [
+        "Why use integer arithmetic or careful formatting for the discounted price?",
+        "How is the two-decimal output produced?"
+      ],
+      "answer": "Prices have up to 10 digits and the result must have exactly two decimals, e.g. 2 at 50% -> '1.00'. Using f'{price * (100 - d) / 100:.2f}' (or integer cents price * (100 - d) divided with two decimals) gives the format; floats are exact enough for 10 digit values with 2 decimals.",
+      "keyPoints": [
+        "Exactly two decimals",
+        "Format with .2f",
+        "'$' prefix restored"
+      ],
+      "explanation": "Check '$' length > 1 before isdigit()."
+    },
+    {
+      "id": "adp-time-01",
+      "category": "time_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Time complexity: ___",
+        "Complete the statement: Time complexity: ___"
+      ],
+      "answer": "O(n)",
+      "explanation": "One pass over the characters of the sentence.",
+      "acceptedAnswers": [
+        "linear"
+      ]
+    },
+    {
+      "id": "adp-space-01",
+      "category": "space_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Space complexity (excluding the input): ___",
+        "Complete the statement: Space complexity (excluding the input): ___"
+      ],
+      "answer": "O(n)",
+      "explanation": "The list of words and the output string.",
+      "acceptedAnswers": [
+        "linear"
+      ]
+    },
+    {
+      "id": "adp-edge-01",
+      "category": "edge_case",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "Which words are transformed in '$5 5$ $ $1e5 $10'?",
+        "Which are left unchanged?"
+      ],
+      "options": [
+        "Only '$5' and '$10'; '5$', '$' and '$1e5' are not prices",
+        "'$5', '5$', '$1e5' and '$10' all change alike",
+        "Only the bare '$' and '$10' are changed",
+        "Only '5$' changes, since a digit precedes the '$'"
+      ],
+      "answer": "Only '$5' and '$10'; '5$', '$' and '$1e5' are not prices",
+      "explanation": "A price is '$' followed by a non-empty digit sequence.",
+      "incorrectOptionExplanations": {
+        "'$5', '5$', '$1e5' and '$10' all change alike": "Only a '$' followed by digits is a price.",
+        "Only the bare '$' and '$10' are changed": "A bare '$' has no digits.",
+        "Only '5$' changes, since a digit precedes the '$'": "The '$' must be first."
+      }
+    }
+  ],
+  "generatedAt": "2026-10-01T14:57:58Z"
+}

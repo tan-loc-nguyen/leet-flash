@@ -1,0 +1,153 @@
+{
+  "schemaVersion": 1,
+  "problemSlug": "4sum",
+  "summary": "All unique quadruplets that sum to target.",
+  "patterns": [
+    "Two Pointers",
+    "Sorting"
+  ],
+  "mainInsight": "Sort, fix the first two numbers with nested loops, and finish with two pointers on the remaining suffix. Skip duplicate values at every level to keep quadruplets unique. This is O(n^3); the same idea generalises to kSum with recursion down to the 2-pointer base case.",
+  "canonicalApproach": "Sort + two nested loops + two pointers",
+  "approaches": [
+    {
+      "name": "Brute force",
+      "summary": "Four nested loops over all combinations with a set for uniqueness.",
+      "timeComplexity": "O(n^4)",
+      "spaceComplexity": "O(n)",
+      "strengths": [
+        "Simple"
+      ],
+      "weaknesses": [
+        "Far too slow"
+      ]
+    },
+    {
+      "name": "Sort + two nested loops + two pointers",
+      "summary": "Fix i and j, then close in with left/right pointers.",
+      "timeComplexity": "O(n^3)",
+      "spaceComplexity": "O(1) extra",
+      "strengths": [
+        "Standard"
+      ],
+      "weaknesses": [
+        "Duplicate skipping is easy to get wrong"
+      ],
+      "interviewRelevance": "The expected answer."
+    },
+    {
+      "name": "Hash map of pair sums",
+      "summary": "Store sums of pairs and look up the complement.",
+      "timeComplexity": "O(n^2) average",
+      "spaceComplexity": "O(n^2)",
+      "strengths": [
+        "Better time"
+      ],
+      "weaknesses": [
+        "Handling duplicate quadruplets and overlapping indices is hard"
+      ]
+    }
+  ],
+  "commonMistakes": [
+    "Not skipping duplicates at the second level",
+    "Skipping duplicates before using the first element",
+    "Forgetting to sort first"
+  ],
+  "edgeCases": [
+    "Fewer than four numbers",
+    "All equal numbers",
+    "Negative target"
+  ],
+  "cards": [
+    {
+      "id": "fs4-pattern-01",
+      "category": "pattern",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "Which technique reduces 4Sum to a simpler problem?",
+        "How is the last pair of numbers found efficiently?"
+      ],
+      "options": [
+        "Sort, fix two numbers, then use two pointers on the rest",
+        "Sort, fix one number, then binary search the remaining three",
+        "Use a sliding window of size four over the sorted array",
+        "Use a max-heap of the four largest sums found so far"
+      ],
+      "answer": "Sort, fix two numbers, then use two pointers on the rest",
+      "explanation": "The sorted order makes the pointer movement direction deterministic.",
+      "incorrectOptionExplanations": {
+        "Sort, fix one number, then binary search the remaining three": "Three unknowns cannot be binary searched directly.",
+        "Use a sliding window of size four over the sorted array": "Sum quadruplets are not contiguous.",
+        "Use a max-heap of the four largest sums found so far": "Heaps do not enumerate all unique quadruplets."
+      }
+    },
+    {
+      "id": "fs4-insight-01",
+      "category": "main_insight",
+      "type": "free_recall",
+      "promptVariants": [
+        "How do you avoid duplicate quadruplets?",
+        "Where must duplicates be skipped?"
+      ],
+      "answer": "Skip an element equal to the previous one at the first loop, the second loop (when j > i + 1), and after recording a quadruplet move both pointers past equal neighbours. Because the array is sorted, equal values are adjacent so each distinct combination is considered exactly once.",
+      "keyPoints": [
+        "Sort first",
+        "Skip equal values at every level",
+        "Advance both pointers after a match"
+      ],
+      "explanation": "Using a set of tuples also works but is slower."
+    },
+    {
+      "id": "fs4-time-01",
+      "category": "time_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Time complexity: ___",
+        "Complete the statement: Time complexity: ___"
+      ],
+      "answer": "O(n^3)",
+      "explanation": "Two nested loops times a linear two-pointer sweep.",
+      "acceptedAnswers": [
+        "O(n³)",
+        "cubic"
+      ]
+    },
+    {
+      "id": "fs4-space-01",
+      "category": "space_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Space complexity (excluding the input): ___",
+        "Complete the statement: Space complexity (excluding the input): ___"
+      ],
+      "answer": "O(1)",
+      "explanation": "Only pointers (plus the output and the sort).",
+      "acceptedAnswers": [
+        "constant",
+        "O(log n)"
+      ]
+    },
+    {
+      "id": "fs4-edge-01",
+      "category": "edge_case",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "What does 4Sum return for [2, 2, 2, 2, 2] with target 8?",
+        "How many unique quadruplets exist?"
+      ],
+      "options": [
+        "[[2, 2, 2, 2]]: the duplicates are skipped so it is reported once",
+        "[[2, 2, 2, 2]] repeated five times, once per choice of omitted 2",
+        "[]: four equal numbers are not allowed",
+        "[[2, 2, 2, 2, 2]]: all five elements are used"
+      ],
+      "answer": "[[2, 2, 2, 2]]: the duplicates are skipped so it is reported once",
+      "explanation": "Without duplicate skipping you would emit the same quadruplet several times.",
+      "incorrectOptionExplanations": {
+        "[[2, 2, 2, 2]] repeated five times, once per choice of omitted 2": "Equal values are interchangeable.",
+        "[]: four equal numbers are not allowed": "There is no such restriction.",
+        "[[2, 2, 2, 2, 2]]: all five elements are used": "A quadruplet has exactly four elements."
+      }
+    }
+  ],
+  "generatedAt": "2026-10-01T14:56:23Z"
+}

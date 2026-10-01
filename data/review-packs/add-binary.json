@@ -1,0 +1,141 @@
+{
+  "schemaVersion": 1,
+  "problemSlug": "add-binary",
+  "summary": "Add two binary strings and return the sum as a binary string.",
+  "patterns": [
+    "Math",
+    "Bit Manipulation"
+  ],
+  "mainInsight": "Add digit by digit from the right with a carry: total = a_bit + b_bit + carry; the output bit is total % 2 and the new carry is total // 2. Append a final carry if non-zero and reverse. In Python int(a, 2) + int(b, 2) with format(..., 'b') also works but hides the algorithm.",
+  "canonicalApproach": "Digit-by-digit with carry",
+  "approaches": [
+    {
+      "name": "Convert to ints",
+      "summary": "bin(int(a, 2) + int(b, 2)).",
+      "timeComplexity": "O(n)",
+      "spaceComplexity": "O(n)",
+      "strengths": [
+        "One line"
+      ],
+      "weaknesses": [
+        "Hides the algorithm; fails in languages without big ints"
+      ]
+    },
+    {
+      "name": "Digit-by-digit with carry",
+      "summary": "Walk both strings from the end.",
+      "timeComplexity": "O(max(m, n))",
+      "spaceComplexity": "O(max(m, n))",
+      "strengths": [
+        "General and expected"
+      ],
+      "weaknesses": [
+        "Reverse at the end"
+      ],
+      "interviewRelevance": "The expected answer."
+    }
+  ],
+  "commonMistakes": [
+    "Dropping the final carry",
+    "Not padding different lengths",
+    "Concatenating in the wrong order"
+  ],
+  "edgeCases": [
+    "Different lengths",
+    "'0' + '0'",
+    "Final carry"
+  ],
+  "cards": [
+    {
+      "id": "ab-pattern-01",
+      "category": "pattern",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "How is each output bit and the carry computed?",
+        "What is total // 2 used for?"
+      ],
+      "options": [
+        "total = a + b + carry; bit = total % 2; carry = total // 2",
+        "bit = total // 2; carry = total % 2 per column",
+        "bit = total; carry = 0 for every column added",
+        "bit = a ^ b; carry = a | b without the carry in"
+      ],
+      "answer": "total = a + b + carry; bit = total % 2; carry = total // 2",
+      "explanation": "Totals range from 0 to 3.",
+      "incorrectOptionExplanations": {
+        "bit = total // 2; carry = total % 2 per column": "The roles of the quotient and remainder are swapped.",
+        "bit = total; carry = 0 for every column added": "Totals up to 3 are not a single bit.",
+        "bit = a ^ b; carry = a | b without the carry in": "That ignores the incoming carry and the AND."
+      }
+    },
+    {
+      "id": "ab-insight-01",
+      "category": "main_insight",
+      "type": "free_recall",
+      "promptVariants": [
+        "Why must you handle a final carry and different lengths?",
+        "What does the loop condition look like?"
+      ],
+      "answer": "The strings can have different lengths, so continue while either has digits left or the carry is non-zero. A final carry of 1 produces an extra leading bit (e.g. '1' + '1' = '10').",
+      "keyPoints": [
+        "Different lengths",
+        "Final carry adds a digit",
+        "Loop while i >= 0 or j >= 0 or carry"
+      ],
+      "explanation": "Reverse the collected bits at the end."
+    },
+    {
+      "id": "ab-time-01",
+      "category": "time_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Time complexity: ___",
+        "Complete the statement: Time complexity: ___"
+      ],
+      "answer": "O(max(m,n))",
+      "explanation": "One pass over the longer string.",
+      "acceptedAnswers": [
+        "O(max(m, n))",
+        "linear"
+      ]
+    },
+    {
+      "id": "ab-space-01",
+      "category": "space_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Space complexity (excluding the input): ___",
+        "Complete the statement: Space complexity (excluding the input): ___"
+      ],
+      "answer": "O(max(m,n))",
+      "explanation": "The result string.",
+      "acceptedAnswers": [
+        "O(max(m, n))",
+        "linear"
+      ]
+    },
+    {
+      "id": "ab-edge-01",
+      "category": "edge_case",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "What is '11' + '1'?",
+        "Where does the carry end up?"
+      ],
+      "options": [
+        "'100': the carry ripples into a new leading bit",
+        "'12': decimal-style digit addition",
+        "'10': the carry is dropped",
+        "'101': the carry is added at the wrong position"
+      ],
+      "answer": "'100': the carry ripples into a new leading bit",
+      "explanation": "1 + 1 = 10: write 0 and carry 1, twice.",
+      "incorrectOptionExplanations": {
+        "'12': decimal-style digit addition": "Digits are only 0 or 1.",
+        "'10': the carry is dropped": "The final carry must be appended.",
+        "'101': the carry is added at the wrong position": "The carry becomes the leading bit."
+      }
+    }
+  ],
+  "generatedAt": "2026-10-01T15:00:56Z"
+}

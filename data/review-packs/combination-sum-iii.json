@@ -1,0 +1,139 @@
+{
+  "schemaVersion": 1,
+  "problemSlug": "combination-sum-iii",
+  "summary": "All combinations of k distinct digits 1..9 that sum to n.",
+  "patterns": [
+    "Backtracking"
+  ],
+  "mainInsight": "Backtrack over increasing digits. At each step choose a digit d from start..9, recurse with start = d + 1, and prune when the running sum exceeds n or when the combination reaches length k. A combination is recorded only if its length is k and its sum is n.",
+  "canonicalApproach": "Backtracking with pruning",
+  "approaches": [
+    {
+      "name": "Generate all subsets of 1..9 and filter",
+      "summary": "512 subsets, check length and sum.",
+      "timeComplexity": "O(2^9 * 9)",
+      "spaceComplexity": "O(1)",
+      "strengths": [
+        "Tiny input"
+      ],
+      "weaknesses": [
+        "No pruning"
+      ]
+    },
+    {
+      "name": "Backtracking with pruning",
+      "summary": "Increasing digits, stop when sum > n or len == k.",
+      "timeComplexity": "O(C(9, k) * k)",
+      "spaceComplexity": "O(k)",
+      "strengths": [
+        "Standard"
+      ],
+      "interviewRelevance": "The expected answer."
+    }
+  ],
+  "commonMistakes": [
+    "Reusing digits",
+    "Producing permutations",
+    "Missing the length condition"
+  ],
+  "edgeCases": [
+    "k = 1",
+    "n too small or too large",
+    "k = 9 (n = 45)"
+  ],
+  "cards": [
+    {
+      "id": "cs3x-pattern-01",
+      "category": "pattern",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "How do you ensure each digit is used at most once and combinations are unique?",
+        "What argument does the recursion carry?"
+      ],
+      "options": [
+        "Recurse with start = d + 1 so digits are strictly increasing",
+        "Sort the digits and use each as many times as needed",
+        "Use a visited array and permute all digits",
+        "Recurse with the same start so digits repeat"
+      ],
+      "answer": "Recurse with start = d + 1 so digits are strictly increasing",
+      "explanation": "Increasing order removes ordering duplicates.",
+      "incorrectOptionExplanations": {
+        "Sort the digits and use each as many times as needed": "Digits can be used only once.",
+        "Use a visited array and permute all digits": "That would list permutations, not combinations.",
+        "Recurse with the same start so digits repeat": "That allows repeated digits (Combination Sum I)."
+      }
+    },
+    {
+      "id": "cs3x-insight-01",
+      "category": "main_insight",
+      "type": "free_recall",
+      "promptVariants": [
+        "Which prunings keep the search small?",
+        "When can a branch be abandoned?"
+      ],
+      "answer": "Stop when the current sum exceeds n or when k digits have been chosen; also skip starts where the remaining digits cannot reach n. Because digits are increasing, once d is too large for the remaining sum, every larger d is too.",
+      "keyPoints": [
+        "sum > n => stop",
+        "len == k => check and stop",
+        "Increasing digits allow breaking the loop"
+      ],
+      "explanation": "Search space is at most C(9, k)."
+    },
+    {
+      "id": "cs3x-time-01",
+      "category": "time_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Time complexity: ___",
+        "Complete the statement: Time complexity: ___"
+      ],
+      "answer": "O(C(9,k) * k)",
+      "explanation": "At most C(9, k) combinations are examined, each costing O(k) to copy.",
+      "acceptedAnswers": [
+        "O(2^9)",
+        "O(9 * 2^9)",
+        "O(C(9,k)*k)",
+        "O(1)"
+      ]
+    },
+    {
+      "id": "cs3x-space-01",
+      "category": "space_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Space complexity (excluding the input): ___",
+        "Complete the statement: Space complexity (excluding the input): ___"
+      ],
+      "answer": "O(k)",
+      "explanation": "Recursion depth and the current combination.",
+      "acceptedAnswers": [
+        "O(1)",
+        "constant"
+      ]
+    },
+    {
+      "id": "cs3x-edge-01",
+      "category": "edge_case",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "What is returned for k = 3, n = 7?",
+        "Which combination exists?"
+      ],
+      "options": [
+        "[[1, 2, 4]]: the only three distinct digits summing to 7",
+        "[[1, 2, 4], [1, 3, 3]]: 1 + 3 + 3 also sums to 7",
+        "[]: three digits cannot reach a sum of 7 at all",
+        "[[7]]: a single digit that equals 7 is returned"
+      ],
+      "answer": "[[1, 2, 4]]: the only three distinct digits summing to 7",
+      "explanation": "The minimum sum of three distinct digits is 6; 7 allows only 1 + 2 + 4.",
+      "incorrectOptionExplanations": {
+        "[[1, 2, 4], [1, 3, 3]]: 1 + 3 + 3 also sums to 7": "Digits must be distinct.",
+        "[]: three digits cannot reach a sum of 7 at all": "1 + 2 + 4 does.",
+        "[[7]]: a single digit that equals 7 is returned": "Exactly three digits are required."
+      }
+    }
+  ],
+  "generatedAt": "2026-10-01T14:57:58Z"
+}

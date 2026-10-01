@@ -1,0 +1,150 @@
+{
+  "schemaVersion": 1,
+  "problemSlug": "word-break",
+  "summary": "Can a string be segmented into a sequence of dictionary words?",
+  "patterns": [
+    "Dynamic Programming",
+    "Trie"
+  ],
+  "mainInsight": "dp[i] is true if the prefix s[:i] can be segmented: dp[0] = True and dp[i] = any(dp[j] and s[j:i] in words for j < i). Limit j to the maximum word length and keep words in a set. Memoised DFS is the top-down version.",
+  "canonicalApproach": "Bottom-up DP over prefixes",
+  "approaches": [
+    {
+      "name": "Plain recursion",
+      "summary": "Try each prefix word and recurse.",
+      "timeComplexity": "O(2^n)",
+      "spaceComplexity": "O(n)",
+      "strengths": [
+        "Direct"
+      ],
+      "weaknesses": [
+        "Exponential"
+      ]
+    },
+    {
+      "name": "Bottom-up DP over prefixes",
+      "summary": "dp[i] from dp[j] and a word s[j:i].",
+      "timeComplexity": "O(n * L)",
+      "spaceComplexity": "O(n)",
+      "strengths": [
+        "Standard"
+      ],
+      "interviewRelevance": "The expected answer."
+    },
+    {
+      "name": "Trie + DP",
+      "summary": "Walk the trie from each reachable start.",
+      "timeComplexity": "O(n * L)",
+      "spaceComplexity": "O(total chars)",
+      "strengths": [
+        "Early exits"
+      ],
+      "weaknesses": [
+        "More code"
+      ]
+    }
+  ],
+  "commonMistakes": [
+    "Not caching sub-results",
+    "Using the dictionary as a list (O(L) lookups)",
+    "Starting dp with dp[0] = False"
+  ],
+  "edgeCases": [
+    "Empty dictionary",
+    "Reusing a word many times",
+    "Overlapping words like a / aa"
+  ],
+  "cards": [
+    {
+      "id": "wb-pattern-01",
+      "category": "pattern",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "What does dp[i] mean for Word Break?",
+        "How is it computed from earlier prefixes?"
+      ],
+      "options": [
+        "Whether s[:i] can be segmented: some dp[j] is true and s[j:i] is a word",
+        "The number of words used to build the prefix s[:i]",
+        "The longest dictionary word ending at position i",
+        "Whether the single character s[i] is in the dictionary"
+      ],
+      "answer": "Whether s[:i] can be segmented: some dp[j] is true and s[j:i] is a word",
+      "explanation": "dp[0] = True represents the empty prefix.",
+      "incorrectOptionExplanations": {
+        "The number of words used to build the prefix s[:i]": "dp stores a boolean, not a count.",
+        "The longest dictionary word ending at position i": "Only feasibility is tracked.",
+        "Whether the single character s[i] is in the dictionary": "Words are substrings, not characters."
+      }
+    },
+    {
+      "id": "wb-insight-01",
+      "category": "main_insight",
+      "type": "free_recall",
+      "promptVariants": [
+        "Why is memoisation (or DP) required, and how can the inner loop be bounded?",
+        "What makes the plain recursion exponential?"
+      ],
+      "answer": "The same suffix is explored through many different segmentations (e.g. 'aaaa...' with words 'a', 'aa'), so without caching the recursion is exponential. Bounding j to at most the maximum word length avoids useless long substring checks and gives O(n * L) set lookups.",
+      "keyPoints": [
+        "Overlapping subproblems",
+        "Cache dp / memo",
+        "Limit to max word length"
+      ],
+      "explanation": "Store the dictionary in a set."
+    },
+    {
+      "id": "wb-time-01",
+      "category": "time_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Time complexity: ___",
+        "Complete the statement: Time complexity: ___"
+      ],
+      "answer": "O(n*L)",
+      "explanation": "n prefixes, each tests up to L candidate words (plus slicing cost).",
+      "acceptedAnswers": [
+        "O(n * L)",
+        "O(n^2)",
+        "O(nL)"
+      ]
+    },
+    {
+      "id": "wb-space-01",
+      "category": "space_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Space complexity (excluding the input): ___",
+        "Complete the statement: Space complexity (excluding the input): ___"
+      ],
+      "answer": "O(n)",
+      "explanation": "The dp table (plus the dictionary).",
+      "acceptedAnswers": [
+        "linear"
+      ]
+    },
+    {
+      "id": "wb-edge-01",
+      "category": "edge_case",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "Can 'catsandog' be segmented with ['cats', 'dog', 'sand', 'and', 'cat']?",
+        "Why or why not?"
+      ],
+      "options": [
+        "No: 'catsand' can be built but the leftover 'og' is not a word",
+        "Yes: 'cats' + 'and' + 'og' covers the whole string",
+        "Yes: 'cat' + 'sand' + 'dog' covers the whole string",
+        "No: because 'dog' is longer than the leftover word 'og'"
+      ],
+      "answer": "No: 'catsand' can be built but the leftover 'og' is not a word",
+      "explanation": "Both 'cats|and' and 'cat|sand' leave 'og'.",
+      "incorrectOptionExplanations": {
+        "Yes: 'cats' + 'and' + 'og' covers the whole string": "'og' is not in the dictionary.",
+        "Yes: 'cat' + 'sand' + 'dog' covers the whole string": "That spells 'catsanddog', not 'catsandog'.",
+        "No: because 'dog' is longer than the leftover word 'og'": "Length of 'dog' is irrelevant."
+      }
+    }
+  ],
+  "generatedAt": "2026-10-01T15:00:56Z"
+}

@@ -1,0 +1,151 @@
+{
+  "schemaVersion": 1,
+  "problemSlug": "sum-of-subarray-minimums",
+  "summary": "Sum of min(subarray) over all contiguous subarrays, modulo 10^9 + 7.",
+  "patterns": [
+    "Monotonic Stack",
+    "Dynamic Programming"
+  ],
+  "mainInsight": "Count, for each element, in how many subarrays it is the minimum: it extends left until a smaller element (strictly less) and right until a smaller-or-equal element (or the reverse), so ties are counted once. Contribution = arr[i] * left_span * right_span. A monotonic stack finds both spans in O(n).",
+  "canonicalApproach": "Monotonic stack contribution",
+  "approaches": [
+    {
+      "name": "Brute force",
+      "summary": "Enumerate all subarrays and take their minimum.",
+      "timeComplexity": "O(n^2)",
+      "spaceComplexity": "O(1)",
+      "strengths": [
+        "Easy"
+      ],
+      "weaknesses": [
+        "Too slow for 3 * 10^4"
+      ]
+    },
+    {
+      "name": "Monotonic stack contribution",
+      "summary": "Compute left and right extents of each element as the minimum.",
+      "timeComplexity": "O(n)",
+      "spaceComplexity": "O(n)",
+      "strengths": [
+        "Linear"
+      ],
+      "weaknesses": [
+        "Tie-breaking"
+      ],
+      "interviewRelevance": "The expected answer."
+    },
+    {
+      "name": "DP with a monotonic stack",
+      "summary": "dp[i] = sum of minimums of subarrays ending at i.",
+      "timeComplexity": "O(n)",
+      "spaceComplexity": "O(n)",
+      "strengths": [
+        "One pass"
+      ],
+      "weaknesses": [
+        "Less intuitive"
+      ]
+    }
+  ],
+  "commonMistakes": [
+    "Double-counting equal minima",
+    "Forgetting the modulo",
+    "Off-by-one in the spans"
+  ],
+  "edgeCases": [
+    "All equal values",
+    "Strictly increasing or decreasing",
+    "Single element"
+  ],
+  "cards": [
+    {
+      "id": "ssm-pattern-01",
+      "category": "pattern",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "How can you compute the answer without enumerating all subarrays?",
+        "What do you count for each element?"
+      ],
+      "options": [
+        "Count the subarrays where each element is the minimum, times its value",
+        "Sum the elements and multiply by the number of subarrays",
+        "Sort the array and sum the first n - k elements",
+        "Sum the minimum of each window of a fixed length k"
+      ],
+      "answer": "Count the subarrays where each element is the minimum, times its value",
+      "explanation": "Contribution = value * (choices on the left) * (choices on the right).",
+      "incorrectOptionExplanations": {
+        "Sum the elements and multiply by the number of subarrays": "That ignores which element is the minimum.",
+        "Sort the array and sum the first n - k elements": "Sorting loses subarray structure.",
+        "Sum the minimum of each window of a fixed length k": "Subarrays have all lengths."
+      }
+    },
+    {
+      "id": "ssm-insight-01",
+      "category": "main_insight",
+      "type": "free_recall",
+      "promptVariants": [
+        "Why must ties be broken asymmetrically?",
+        "What happens with equal values if both sides use strict comparisons?"
+      ],
+      "answer": "If an equal value was a minimum on both sides of the comparison, a subarray containing two equal minima would be counted twice. Using 'previous less' (strict) on one side and 'next less or equal' on the other assigns each subarray to exactly one of the equal minima.",
+      "keyPoints": [
+        "Equal minima would double count",
+        "Strict on one side",
+        "Non-strict on the other"
+      ],
+      "explanation": "A single pass stack with a final flush also works."
+    },
+    {
+      "id": "ssm-time-01",
+      "category": "time_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Time complexity: ___",
+        "Complete the statement: Time complexity: ___"
+      ],
+      "answer": "O(n)",
+      "explanation": "Each element is pushed and popped once.",
+      "acceptedAnswers": [
+        "linear"
+      ]
+    },
+    {
+      "id": "ssm-space-01",
+      "category": "space_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Space complexity (excluding the input): ___",
+        "Complete the statement: Space complexity (excluding the input): ___"
+      ],
+      "answer": "O(n)",
+      "explanation": "The monotonic stack and span arrays.",
+      "acceptedAnswers": [
+        "linear"
+      ]
+    },
+    {
+      "id": "ssm-edge-01",
+      "category": "edge_case",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "What is the answer for [3, 1, 2, 4]?",
+        "Which element contributes the most?"
+      ],
+      "options": [
+        "17: 1 is the minimum of 6 subarrays, contributing 6",
+        "10: the sum of the array elements",
+        "12: only subarrays of length one and two count",
+        "20: the sum of all subarray sums"
+      ],
+      "answer": "17: 1 is the minimum of 6 subarrays, contributing 6",
+      "explanation": "3 + 1 + 2 + 4 (singles) plus minimums of longer subarrays = 17.",
+      "incorrectOptionExplanations": {
+        "10: the sum of the array elements": "That is not the sum of minimums.",
+        "12: only subarrays of length one and two count": "All lengths count.",
+        "20: the sum of all subarray sums": "That is a different quantity."
+      }
+    }
+  ],
+  "generatedAt": "2026-10-01T15:00:56Z"
+}

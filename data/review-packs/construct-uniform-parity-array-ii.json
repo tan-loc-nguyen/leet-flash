@@ -1,0 +1,139 @@
+{
+  "schemaVersion": 1,
+  "problemSlug": "construct-uniform-parity-array-ii",
+  "summary": "Can nums1 be turned into an array of all odd or all even values, where each element is kept or replaced by nums1[i] - nums1[j] (>= 1, j != i)?",
+  "patterns": [
+    "Math",
+    "Array / Hashing"
+  ],
+  "mainInsight": "Subtracting an odd number flips parity, subtracting an even keeps it. If all elements already share a parity the answer is true. Otherwise odd and even elements are both present. All-even is impossible because the smallest odd element can never be changed. All-odd works iff every even element has a smaller odd element: i.e. the smallest odd is smaller than the smallest even.",
+  "canonicalApproach": "Compare smallest odd and smallest even",
+  "approaches": [
+    {
+      "name": "Try both parities with brute force",
+      "summary": "Check each element against all others.",
+      "timeComplexity": "O(n^2)",
+      "spaceComplexity": "O(1)",
+      "strengths": [
+        "Direct"
+      ],
+      "weaknesses": [
+        "Too slow for 10^5"
+      ]
+    },
+    {
+      "name": "Compare smallest odd and smallest even",
+      "summary": "If both parities exist, return min_odd < min_even.",
+      "timeComplexity": "O(n)",
+      "spaceComplexity": "O(1)",
+      "strengths": [
+        "Linear"
+      ],
+      "weaknesses": [
+        "Needs the parity argument"
+      ],
+      "interviewRelevance": "The expected answer."
+    }
+  ],
+  "commonMistakes": [
+    "Forgetting that all-same-parity arrays are already valid",
+    "Comparing with the wrong minimum",
+    "Believing all-even is possible with mixed parities"
+  ],
+  "edgeCases": [
+    "Single element",
+    "All even or all odd",
+    "Mixed parities where the smallest element is odd"
+  ],
+  "cards": [
+    {
+      "id": "cup-pattern-01",
+      "category": "pattern",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "What effect does subtracting nums1[j] have on the parity of nums1[i]?",
+        "When does the parity flip?"
+      ],
+      "options": [
+        "Subtracting an odd value flips the parity; an even value keeps it",
+        "Subtracting always flips the parity of the number",
+        "Subtracting never changes the parity of the number",
+        "Parity depends only on the larger of the two numbers"
+      ],
+      "answer": "Subtracting an odd value flips the parity; an even value keeps it",
+      "explanation": "odd - odd = even, even - odd = odd.",
+      "incorrectOptionExplanations": {
+        "Subtracting always flips the parity of the number": "Only odd values flip it.",
+        "Subtracting never changes the parity of the number": "An odd value flips it.",
+        "Parity depends only on the larger of the two numbers": "It depends on the subtracted value."
+      }
+    },
+    {
+      "id": "cup-insight-01",
+      "category": "main_insight",
+      "type": "free_recall",
+      "promptVariants": [
+        "Why is 'all odd' feasible iff the smallest odd is smaller than the smallest even (when both exist)?",
+        "Why is 'all even' impossible then?"
+      ],
+      "answer": "Each even element e must be replaced by e - o for some odd o < e (to become odd); that exists for every even iff the smallest odd is below the smallest even. Making all even is impossible because the smallest odd number would need to subtract a smaller odd number, which does not exist. Odd numbers are unchanged for the all-odd target.",
+      "keyPoints": [
+        "Evens need a smaller odd",
+        "Smallest odd cannot be fixed for all-even",
+        "Check min_odd < min_even"
+      ],
+      "explanation": "If all numbers share a parity, return true immediately."
+    },
+    {
+      "id": "cup-time-01",
+      "category": "time_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Time complexity: ___",
+        "Complete the statement: Time complexity: ___"
+      ],
+      "answer": "O(n)",
+      "explanation": "One pass to find the minimum odd and minimum even.",
+      "acceptedAnswers": [
+        "linear"
+      ]
+    },
+    {
+      "id": "cup-space-01",
+      "category": "space_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Space complexity (excluding the input): ___",
+        "Complete the statement: Space complexity (excluding the input): ___"
+      ],
+      "answer": "O(1)",
+      "explanation": "Two minima.",
+      "acceptedAnswers": [
+        "constant"
+      ]
+    },
+    {
+      "id": "cup-edge-01",
+      "category": "edge_case",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "What is the answer for [2, 3]?",
+        "Why?"
+      ],
+      "options": [
+        "False: the only odd value 3 exceeds the even 2, so 2 cannot become odd",
+        "True: 3 - 2 = 1 would make both elements odd",
+        "True: keep both elements as they are, unchanged",
+        "False: a length-two array can never be valid at all"
+      ],
+      "answer": "False: the only odd value 3 exceeds the even 2, so 2 cannot become odd",
+      "explanation": "To make everything odd, 2 must be reduced by an odd value smaller than 2, which does not exist.",
+      "incorrectOptionExplanations": {
+        "True: 3 - 2 = 1 would make both elements odd": "The subtraction would change 3 into 1, but 2 stays even.",
+        "True: keep both elements as they are, unchanged": "They have different parities.",
+        "False: a length-two array can never be valid at all": "Length two can be valid, e.g. [4, 6]."
+      }
+    }
+  ],
+  "generatedAt": "2026-10-01T15:00:56Z"
+}

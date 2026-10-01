@@ -1,0 +1,139 @@
+{
+  "schemaVersion": 1,
+  "problemSlug": "implement-rand10-using-rand7",
+  "summary": "Implement rand10() uniformly using only rand7().",
+  "patterns": [
+    "Math"
+  ],
+  "mainInsight": "Rejection sampling: build a uniform number in 1..49 from two calls, idx = (rand7() - 1) * 7 + rand7(), reject idx > 40 and return 1 + (idx - 1) % 10. Every accepted value 1..40 maps to exactly four indices per output, so the result is uniform.",
+  "canonicalApproach": "Rejection sampling over 49 outcomes",
+  "approaches": [
+    {
+      "name": "Sum of two rand7",
+      "summary": "rand7() + rand7() mapped to 1..10.",
+      "timeComplexity": "O(1)",
+      "spaceComplexity": "O(1)",
+      "strengths": [
+        "Looks easy"
+      ],
+      "weaknesses": [
+        "Not uniform"
+      ]
+    },
+    {
+      "name": "Rejection sampling over 49 outcomes",
+      "summary": "Two calls give 1..49; accept 1..40.",
+      "timeComplexity": "O(1) expected",
+      "spaceComplexity": "O(1)",
+      "strengths": [
+        "Uniform"
+      ],
+      "weaknesses": [
+        "Unbounded worst case"
+      ],
+      "interviewRelevance": "The expected answer."
+    }
+  ],
+  "commonMistakes": [
+    "Using rand7() + rand7()",
+    "Rejecting too few or too many values",
+    "Mapping with idx % 10 and getting 0"
+  ],
+  "edgeCases": [
+    "Value 40 maps to 10",
+    "Value 41 rejected",
+    "Distribution must be uniform"
+  ],
+  "cards": [
+    {
+      "id": "r10-pattern-01",
+      "category": "pattern",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "How do two rand7() calls become a uniform value in 1..49?",
+        "Why can the sum of two rand7() calls not be used?"
+      ],
+      "options": [
+        "(rand7() - 1) * 7 + rand7(): each pair gives a unique value from 1 to 49",
+        "rand7() + rand7(): every sum from 2 to 14 is equally likely",
+        "rand7() * rand7(): products from 1 to 49 are equally likely",
+        "rand7() * 7: multiples of seven from 7 to 49"
+      ],
+      "answer": "(rand7() - 1) * 7 + rand7(): each pair gives a unique value from 1 to 49",
+      "explanation": "Base-7 digits: the first call is the high digit, the second the low digit.",
+      "incorrectOptionExplanations": {
+        "rand7() + rand7(): every sum from 2 to 14 is equally likely": "Sums are not uniform.",
+        "rand7() * rand7(): products from 1 to 49 are equally likely": "Products repeat and are not uniform.",
+        "rand7() * 7: multiples of seven from 7 to 49": "That has only seven outcomes."
+      }
+    },
+    {
+      "id": "r10-insight-01",
+      "category": "main_insight",
+      "type": "free_recall",
+      "promptVariants": [
+        "Why reject values above 40 and what is the expected number of loops?",
+        "What probability does one iteration succeed?"
+      ],
+      "answer": "40 is the largest multiple of 10 not exceeding 49, so the values 1..40 divide evenly into ten groups of four; values 41..49 are rejected and retried. The success probability is 40 / 49, so the expected number of iterations is 49 / 40 (about 1.225), each with two rand7() calls.",
+      "keyPoints": [
+        "Largest multiple of 10 <= 49 is 40",
+        "Reject 41..49",
+        "Success probability 40/49"
+      ],
+      "explanation": "Reusing the rejected remainder can reduce calls (follow-up)."
+    },
+    {
+      "id": "r10-time-01",
+      "category": "time_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Time complexity: ___",
+        "Complete the statement: Time complexity: ___"
+      ],
+      "answer": "O(1)",
+      "explanation": "Expected constant: about 2.45 rand7() calls per rand10().",
+      "acceptedAnswers": [
+        "constant",
+        "O(1) expected"
+      ]
+    },
+    {
+      "id": "r10-space-01",
+      "category": "space_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Space complexity (excluding the input): ___",
+        "Complete the statement: Space complexity (excluding the input): ___"
+      ],
+      "answer": "O(1)",
+      "explanation": "No extra storage.",
+      "acceptedAnswers": [
+        "constant"
+      ]
+    },
+    {
+      "id": "r10-edge-01",
+      "category": "edge_case",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "Which values are produced by index 21 and index 45?",
+        "How does the result map from the accepted index?"
+      ],
+      "options": [
+        "Index 21 maps to 1 + (21 - 1) % 10 = 1; index 45 is rejected and retried",
+        "Index 21 maps to 2; index 45 maps to 5 directly",
+        "Index 21 is rejected; index 45 maps to 10 directly",
+        "Both map to 1, since their index values are both odd"
+      ],
+      "answer": "Index 21 maps to 1 + (21 - 1) % 10 = 1; index 45 is rejected and retried",
+      "explanation": "idx > 40 loops again; otherwise the output is ((idx - 1) % 10) + 1.",
+      "incorrectOptionExplanations": {
+        "Index 21 maps to 2; index 45 maps to 5 directly": "21 - 1 = 20, 20 % 10 = 0, so the result is 1.",
+        "Index 21 is rejected; index 45 maps to 10 directly": "Only indices above 40 are rejected.",
+        "Both map to 1, since their index values are both odd": "Index 45 is above 40 and is retried."
+      }
+    }
+  ],
+  "generatedAt": "2026-10-01T14:57:59Z"
+}

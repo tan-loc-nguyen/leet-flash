@@ -1,0 +1,138 @@
+{
+  "schemaVersion": 1,
+  "problemSlug": "odd-even-linked-list",
+  "summary": "Group all odd-indexed nodes followed by all even-indexed nodes in place.",
+  "patterns": [
+    "Linked List"
+  ],
+  "mainInsight": "Keep two pointers, odd (starting at head) and even (starting at head.next), and remember even_head. Repeatedly link odd.next = even.next, advance odd, then even.next = odd.next and advance even. Finally append the even list: odd.next = even_head.",
+  "canonicalApproach": "Two pointers rewiring",
+  "approaches": [
+    {
+      "name": "Copy values into two lists",
+      "summary": "Rewrite values in the new order.",
+      "timeComplexity": "O(n)",
+      "spaceComplexity": "O(n)",
+      "strengths": [
+        "Simple"
+      ],
+      "weaknesses": [
+        "Extra memory"
+      ]
+    },
+    {
+      "name": "Two pointers rewiring",
+      "summary": "Weave out the odd and even sublists.",
+      "timeComplexity": "O(n)",
+      "spaceComplexity": "O(1)",
+      "strengths": [
+        "In place"
+      ],
+      "weaknesses": [
+        "Pointer care"
+      ],
+      "interviewRelevance": "The expected answer."
+    }
+  ],
+  "commonMistakes": [
+    "Losing the head of the even list",
+    "Using node values instead of positions",
+    "Not terminating the even list with None"
+  ],
+  "edgeCases": [
+    "Empty list",
+    "Two nodes",
+    "Odd and even lengths"
+  ],
+  "cards": [
+    {
+      "id": "oel-pattern-01",
+      "category": "pattern",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "Which pointers do you need to separate the odd and even nodes?",
+        "What must be saved before you start?"
+      ],
+      "options": [
+        "An odd pointer, an even pointer and the head of the even list",
+        "A slow pointer and a fast pointer from the head",
+        "A stack of the even nodes to reverse later",
+        "A dummy node and a previous pointer only"
+      ],
+      "answer": "An odd pointer, an even pointer and the head of the even list",
+      "explanation": "even_head is attached to the odd tail at the end.",
+      "incorrectOptionExplanations": {
+        "A slow pointer and a fast pointer from the head": "Those find the middle, not the odd/even split.",
+        "A stack of the even nodes to reverse later": "No reversal is required.",
+        "A dummy node and a previous pointer only": "That does not hold the even list head."
+      }
+    },
+    {
+      "id": "oel-insight-01",
+      "category": "main_insight",
+      "type": "free_recall",
+      "promptVariants": [
+        "Why is the loop condition `even and even.next`?",
+        "What happens at the end of the list?"
+      ],
+      "answer": "Each iteration reads even.next and then odd.next, so both even and even.next must exist. When it fails, odd points to the last odd node, so attaching even_head there completes the list.",
+      "keyPoints": [
+        "Needs even.next to rewire",
+        "Odd pointer is the last odd node",
+        "Attach even_head"
+      ],
+      "explanation": "Handles odd and even length lists."
+    },
+    {
+      "id": "oel-time-01",
+      "category": "time_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Time complexity: ___",
+        "Complete the statement: Time complexity: ___"
+      ],
+      "answer": "O(n)",
+      "explanation": "One pass.",
+      "acceptedAnswers": [
+        "linear"
+      ]
+    },
+    {
+      "id": "oel-space-01",
+      "category": "space_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Space complexity (excluding the input): ___",
+        "Complete the statement: Space complexity (excluding the input): ___"
+      ],
+      "answer": "O(1)",
+      "explanation": "Only a few pointers.",
+      "acceptedAnswers": [
+        "constant"
+      ]
+    },
+    {
+      "id": "oel-edge-01",
+      "category": "edge_case",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "What does the algorithm do for an empty list or a single node?",
+        "Why is a guard needed?"
+      ],
+      "options": [
+        "It returns the head unchanged; a guard avoids reading head.next of None",
+        "It creates a new empty even list and returns that",
+        "It raises an error since there are no even nodes",
+        "It reverses the single node and returns it again"
+      ],
+      "answer": "It returns the head unchanged; a guard avoids reading head.next of None",
+      "explanation": "if not head: return head.",
+      "incorrectOptionExplanations": {
+        "It creates a new empty even list and returns that": "Nothing needs to be created.",
+        "It raises an error since there are no even nodes": "It should simply return.",
+        "It reverses the single node and returns it again": "No reversal is performed."
+      }
+    }
+  ],
+  "generatedAt": "2026-10-01T15:00:56Z"
+}

@@ -1,0 +1,138 @@
+{
+  "schemaVersion": 1,
+  "problemSlug": "search-in-rotated-sorted-array",
+  "summary": "Find a target in a sorted array rotated at an unknown pivot, in O(log n).",
+  "patterns": [
+    "Binary Search"
+  ],
+  "mainInsight": "At every step at least one half of [lo, hi] is sorted. Identify the sorted half by comparing nums[lo] with nums[mid], check whether the target lies in that half, and discard the other half.",
+  "canonicalApproach": "Single modified binary search",
+  "approaches": [
+    {
+      "name": "Find pivot then binary search",
+      "summary": "Two binary searches.",
+      "timeComplexity": "O(log n)",
+      "spaceComplexity": "O(1)",
+      "strengths": [
+        "Conceptually clear"
+      ],
+      "weaknesses": [
+        "Two passes of logic"
+      ]
+    },
+    {
+      "name": "Single modified binary search",
+      "summary": "Decide which half is sorted and whether the target falls in it.",
+      "timeComplexity": "O(log n)",
+      "spaceComplexity": "O(1)",
+      "strengths": [
+        "One loop"
+      ],
+      "weaknesses": [
+        "Boundary conditions"
+      ],
+      "interviewRelevance": "The expected answer."
+    }
+  ],
+  "commonMistakes": [
+    "Using < instead of <= when comparing lo and mid",
+    "Wrong boundary for the target range test",
+    "Assuming the array has no rotation"
+  ],
+  "edgeCases": [
+    "Single element",
+    "Two elements rotated",
+    "Target absent"
+  ],
+  "cards": [
+    {
+      "id": "sr3-pattern-01",
+      "category": "pattern",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "How does binary search work on a rotated sorted array?",
+        "What do you decide at each step?"
+      ],
+      "options": [
+        "Find the sorted half, test the target against it, keep or drop that half",
+        "Sort the array first and then run a normal search",
+        "Always search the left half because it is larger",
+        "Compare the target with the first element, then scan"
+      ],
+      "answer": "Find the sorted half, test the target against it, keep or drop that half",
+      "explanation": "One of the two halves is always sorted, which gives a reliable range test.",
+      "incorrectOptionExplanations": {
+        "Sort the array first and then run a normal search": "Sorting costs O(n log n).",
+        "Always search the left half because it is larger": "Either half may hold the target.",
+        "Compare the target with the first element, then scan": "A linear scan is O(n)."
+      }
+    },
+    {
+      "id": "sr3-insight-01",
+      "category": "main_insight",
+      "type": "free_recall",
+      "promptVariants": [
+        "How do you know which half is sorted and when to go into it?",
+        "Why is the comparison `nums[lo] <= nums[mid]` used?"
+      ],
+      "answer": "If nums[lo] <= nums[mid] the left half [lo, mid] is sorted (the <= handles lo == mid). Then go left if nums[lo] <= target < nums[mid], otherwise right. Symmetrically, when the right half is sorted go right if nums[mid] < target <= nums[hi], else left.",
+      "keyPoints": [
+        "nums[lo] <= nums[mid] => left sorted",
+        "Range test on the sorted half",
+        "Else go to the other half"
+      ],
+      "explanation": "Duplicates break this (Search II)."
+    },
+    {
+      "id": "sr3-time-01",
+      "category": "time_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Time complexity: ___",
+        "Complete the statement: Time complexity: ___"
+      ],
+      "answer": "O(log n)",
+      "explanation": "Half of the range is discarded each step.",
+      "acceptedAnswers": [
+        "logarithmic"
+      ]
+    },
+    {
+      "id": "sr3-space-01",
+      "category": "space_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Space complexity (excluding the input): ___",
+        "Complete the statement: Space complexity (excluding the input): ___"
+      ],
+      "answer": "O(1)",
+      "explanation": "Only index variables.",
+      "acceptedAnswers": [
+        "constant"
+      ]
+    },
+    {
+      "id": "sr3-edge-01",
+      "category": "edge_case",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "What does the search return for nums = [3, 1] and target = 1?",
+        "Which half is sorted when lo == mid?"
+      ],
+      "options": [
+        "1: left half [3] is sorted and lacks the target, so the search moves right",
+        "-1: a two-element rotated array cannot be searched at all",
+        "0: the first element is always the one that is checked",
+        "2: the index just after the end of the array is returned"
+      ],
+      "answer": "1: left half [3] is sorted and lacks the target, so the search moves right",
+      "explanation": "Using `<` instead of `<=` for the sorted-half test breaks this case.",
+      "incorrectOptionExplanations": {
+        "-1: a two-element rotated array cannot be searched at all": "It can; the mid==lo case is handled by <=.",
+        "0: the first element is always the one that is checked": "nums[0] is 3, not the target.",
+        "2: the index just after the end of the array is returned": "Indices are within the array."
+      }
+    }
+  ],
+  "generatedAt": "2026-10-01T14:52:56Z"
+}

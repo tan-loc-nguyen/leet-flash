@@ -1,0 +1,139 @@
+{
+  "schemaVersion": 1,
+  "problemSlug": "perfect-number",
+  "summary": "Is a positive integer equal to the sum of its proper positive divisors?",
+  "patterns": [
+    "Math"
+  ],
+  "mainInsight": "Enumerate divisor pairs up to sqrt(n): for each d with n % d == 0 add d and n // d (once if equal) and exclude n itself. Compare the sum with n. For n = 1 the answer is false because it has no proper divisors.",
+  "canonicalApproach": "Divisor pairs up to sqrt(n)",
+  "approaches": [
+    {
+      "name": "Check every number below n",
+      "summary": "Sum all divisors by trial.",
+      "timeComplexity": "O(n)",
+      "spaceComplexity": "O(1)",
+      "strengths": [
+        "Simple"
+      ],
+      "weaknesses": [
+        "Slow for 10^8"
+      ]
+    },
+    {
+      "name": "Divisor pairs up to sqrt(n)",
+      "summary": "Add d and n // d.",
+      "timeComplexity": "O(sqrt n)",
+      "spaceComplexity": "O(1)",
+      "strengths": [
+        "Fast"
+      ],
+      "weaknesses": [
+        "Square and n = 1 care"
+      ],
+      "interviewRelevance": "The expected answer."
+    }
+  ],
+  "commonMistakes": [
+    "Including n in the sum",
+    "Double-counting sqrt(n)",
+    "Returning True for 1"
+  ],
+  "edgeCases": [
+    "n = 1",
+    "n = 6",
+    "n = 28 and n = 496"
+  ],
+  "cards": [
+    {
+      "id": "pn2-pattern-01",
+      "category": "pattern",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "How do you enumerate the divisors of n efficiently?",
+        "Why can you stop at sqrt(n)?"
+      ],
+      "options": [
+        "Every divisor d <= sqrt(n) pairs with n // d >= sqrt(n)",
+        "Every divisor of n is at most n / 2 so check up to n / 2",
+        "Only the prime divisors matter so factorise first",
+        "Divisors are always consecutive integers"
+      ],
+      "answer": "Every divisor d <= sqrt(n) pairs with n // d >= sqrt(n)",
+      "explanation": "Collecting both members of the pair finds all divisors in O(sqrt n).",
+      "incorrectOptionExplanations": {
+        "Every divisor of n is at most n / 2 so check up to n / 2": "That works but is O(n).",
+        "Only the prime divisors matter so factorise first": "All divisors, not only primes, are summed.",
+        "Divisors are always consecutive integers": "They are not consecutive."
+      }
+    },
+    {
+      "id": "pn2-insight-01",
+      "category": "main_insight",
+      "type": "free_recall",
+      "promptVariants": [
+        "What two special cases must be handled when summing divisor pairs?",
+        "Why is n = 1 special?"
+      ],
+      "answer": "n // d must be excluded when it equals n (that is not a proper divisor), and when d == n // d (a perfect square) it must be added only once. n = 1 has no proper divisors, so its divisor sum is 0 and it is not perfect.",
+      "keyPoints": [
+        "Exclude n itself",
+        "Add a square root only once",
+        "1 is not perfect"
+      ],
+      "explanation": "Return False for n <= 1."
+    },
+    {
+      "id": "pn2-time-01",
+      "category": "time_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Time complexity: ___",
+        "Complete the statement: Time complexity: ___"
+      ],
+      "answer": "O(sqrt n)",
+      "explanation": "The loop runs up to sqrt(n).",
+      "acceptedAnswers": [
+        "O(√n)",
+        "O(sqrt(n))"
+      ]
+    },
+    {
+      "id": "pn2-space-01",
+      "category": "space_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Space complexity (excluding the input): ___",
+        "Complete the statement: Space complexity (excluding the input): ___"
+      ],
+      "answer": "O(1)",
+      "explanation": "One accumulator.",
+      "acceptedAnswers": [
+        "constant"
+      ]
+    },
+    {
+      "id": "pn2-edge-01",
+      "category": "edge_case",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "Is 28 a perfect number?",
+        "Which divisors sum up?"
+      ],
+      "options": [
+        "Yes: 1 + 2 + 4 + 7 + 14 = 28",
+        "No: 1 + 2 + 4 + 7 + 14 + 28 = 56",
+        "No: the sum of its prime factors 2 + 7 = 9",
+        "Yes: 2 * 14 = 28 and 4 * 7 = 28"
+      ],
+      "answer": "Yes: 1 + 2 + 4 + 7 + 14 = 28",
+      "explanation": "Perfect numbers: 6, 28, 496, 8128.",
+      "incorrectOptionExplanations": {
+        "No: 1 + 2 + 4 + 7 + 14 + 28 = 56": "28 itself is not a proper divisor.",
+        "No: the sum of its prime factors 2 + 7 = 9": "All proper divisors are summed.",
+        "Yes: 2 * 14 = 28 and 4 * 7 = 28": "The divisors must be summed, not multiplied."
+      }
+    }
+  ],
+  "generatedAt": "2026-10-01T15:00:56Z"
+}

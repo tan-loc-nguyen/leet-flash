@@ -1,0 +1,142 @@
+{
+  "schemaVersion": 1,
+  "problemSlug": "reorganize-string",
+  "summary": "Rearrange a string so that no two adjacent characters are equal, or return '' if impossible.",
+  "patterns": [
+    "Greedy",
+    "Heap / Priority Queue"
+  ],
+  "mainInsight": "A valid arrangement exists iff the most frequent letter appears at most ceil(n / 2) times. Greedily place the most frequent letter that differs from the previous one (max-heap), or fill even indices first with the most frequent letter and then the remaining letters.",
+  "canonicalApproach": "Counting + even/odd fill",
+  "approaches": [
+    {
+      "name": "Max-heap greedy",
+      "summary": "Pop the most frequent letter not equal to the last placed; hold the previous one back until the next round.",
+      "timeComplexity": "O(n log k)",
+      "spaceComplexity": "O(k)",
+      "strengths": [
+        "Easy to reason about"
+      ],
+      "weaknesses": [
+        "Heap bookkeeping"
+      ],
+      "interviewRelevance": "Common solution."
+    },
+    {
+      "name": "Counting + even/odd fill",
+      "summary": "Place the most frequent letter at indices 0, 2, 4..., then the rest continuing through odd indices.",
+      "timeComplexity": "O(n)",
+      "spaceComplexity": "O(k)",
+      "strengths": [
+        "Linear, no heap"
+      ],
+      "weaknesses": [
+        "The index trick is subtle"
+      ],
+      "interviewRelevance": "Optimal and neat."
+    }
+  ],
+  "commonMistakes": [
+    "Not checking the max-frequency condition first",
+    "Pushing the same letter twice in a row with a heap",
+    "Forgetting to re-insert the previously used letter with its decremented count"
+  ],
+  "edgeCases": [
+    "Single character",
+    "All letters equal and n > 1",
+    "Exactly (n + 1) // 2 copies of the top letter"
+  ],
+  "cards": [
+    {
+      "id": "rs2-pattern-01",
+      "category": "pattern",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "How do you decide whether a valid rearrangement exists?",
+        "What is the feasibility condition for Reorganize String?"
+      ],
+      "options": [
+        "The max letter count must be at most (n + 1) // 2",
+        "The number of distinct letters must exceed 2",
+        "Every letter must appear at most twice",
+        "The string must already have no equal neighbours"
+      ],
+      "answer": "The max letter count must be at most (n + 1) // 2",
+      "explanation": "If one letter exceeds ceil(n / 2) there are not enough gaps to separate its copies.",
+      "incorrectOptionExplanations": {
+        "The number of distinct letters must exceed 2": "Two letters can alternate perfectly.",
+        "Every letter must appear at most twice": "Letters may repeat as long as they can be separated.",
+        "The string must already have no equal neighbours": "That is the goal, not a precondition."
+      }
+    },
+    {
+      "id": "rs2-insight-01",
+      "category": "main_insight",
+      "type": "free_recall",
+      "promptVariants": [
+        "Why does filling even indices first with the most frequent letter work?",
+        "What does placing the most frequent letter on indices 0, 2, 4... guarantee?"
+      ],
+      "answer": "Write the letters grouped by frequency (most frequent first) into slots 0, 2, 4, ... and then 1, 3, 5, .... The most frequent letter needs at most (n + 1) // 2 slots, so it lies entirely on even slots and never touches itself. Another letter can only touch itself if its run wraps from the even slots onto the odd slots and reaches back next to its own even slots, which needs at least ceil(n / 2) copies; only the first letter can have that many.",
+      "keyPoints": [
+        "Most frequent first on even indices",
+        "At most ceil(n/2) copies fit",
+        "Wrap to odd indices"
+      ],
+      "explanation": "Placing the most frequent letter first is essential."
+    },
+    {
+      "id": "rs2-time-01",
+      "category": "time_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Time complexity: ___",
+        "Complete the statement: Time complexity: ___"
+      ],
+      "answer": "O(n)",
+      "explanation": "Counting is O(n); with a heap it is O(n log k) where k <= 26 so effectively linear.",
+      "acceptedAnswers": [
+        "O(n log k)",
+        "linear"
+      ]
+    },
+    {
+      "id": "rs2-space-01",
+      "category": "space_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Space complexity (excluding the input): ___",
+        "Complete the statement: Space complexity (excluding the input): ___"
+      ],
+      "answer": "O(k)",
+      "explanation": "A frequency table of at most 26 letters (plus the output).",
+      "acceptedAnswers": [
+        "O(1)",
+        "O(26)"
+      ]
+    },
+    {
+      "id": "rs2-edge-01",
+      "category": "edge_case",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "What does 'aaab' return?",
+        "Can 'aaab' be reorganised?"
+      ],
+      "options": [
+        "'' (empty): 'a' occurs 3 times, more than (4 + 1) // 2 = 2",
+        "'abaa' - the extra a goes at the end of the string",
+        "'aaba' - swapping the last two letters of the input",
+        "'abab' - using the single b twice in the answer"
+      ],
+      "answer": "'' (empty): 'a' occurs 3 times, more than (4 + 1) // 2 = 2",
+      "explanation": "Three a's need three non-adjacent slots among four positions, which is impossible.",
+      "incorrectOptionExplanations": {
+        "'abaa' - the extra a goes at the end of the string": "That has two adjacent a's.",
+        "'aaba' - swapping the last two letters of the input": "That has adjacent a's too.",
+        "'abab' - using the single b twice in the answer": "There is only one b."
+      }
+    }
+  ],
+  "generatedAt": "2026-10-01T14:52:56Z"
+}

@@ -1,0 +1,150 @@
+{
+  "schemaVersion": 1,
+  "problemSlug": "maximum-subarray",
+  "summary": "Find the contiguous subarray with the largest sum.",
+  "patterns": [
+    "Dynamic Programming",
+    "Greedy"
+  ],
+  "mainInsight": "Kadane: let best_ending_here = max(x, best_ending_here + x). A negative running prefix only hurts, so it is dropped and a new subarray starts at x. Track the maximum over all positions.",
+  "canonicalApproach": "Kadane's algorithm",
+  "approaches": [
+    {
+      "name": "Brute force",
+      "summary": "Try all (i, j) pairs, or all prefix differences.",
+      "timeComplexity": "O(n^2)",
+      "spaceComplexity": "O(1)",
+      "strengths": [
+        "Easy"
+      ],
+      "weaknesses": [
+        "Too slow for 10^5"
+      ]
+    },
+    {
+      "name": "Kadane's algorithm",
+      "summary": "cur = max(x, cur + x); best = max(best, cur).",
+      "timeComplexity": "O(n)",
+      "spaceComplexity": "O(1)",
+      "strengths": [
+        "Linear, tiny"
+      ],
+      "weaknesses": [
+        "Must initialise with the first element for all-negative arrays"
+      ],
+      "interviewRelevance": "The expected answer."
+    },
+    {
+      "name": "Divide and conquer",
+      "summary": "max of left, right, and the best crossing sum.",
+      "timeComplexity": "O(n log n)",
+      "spaceComplexity": "O(log n)",
+      "strengths": [
+        "Follow-up asked sometimes"
+      ],
+      "weaknesses": [
+        "Slower than Kadane"
+      ]
+    }
+  ],
+  "commonMistakes": [
+    "Initialising best = 0 so all-negative arrays return 0",
+    "Resetting cur to 0 and forgetting to include x first",
+    "Returning indices without tracking start/end"
+  ],
+  "edgeCases": [
+    "All negative numbers",
+    "Single element",
+    "Mixed with zeros"
+  ],
+  "cards": [
+    {
+      "id": "ms4-pattern-01",
+      "category": "pattern",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "What recurrence defines Kadane's algorithm?",
+        "How do you maintain the best subarray ending at the current index?"
+      ],
+      "options": [
+        "cur = max(x, cur + x), then best = max(best, cur)",
+        "cur = max(cur, x), then best = cur + x",
+        "cur = cur + x, reset to 0 only at the end",
+        "cur = min(x, cur + x), then best = min(best, cur)"
+      ],
+      "answer": "cur = max(x, cur + x), then best = max(best, cur)",
+      "explanation": "Either extend the best subarray ending at the previous index or start fresh at x.",
+      "incorrectOptionExplanations": {
+        "cur = max(cur, x), then best = cur + x": "That loses the extension logic.",
+        "cur = cur + x, reset to 0 only at the end": "That never discards a harmful prefix.",
+        "cur = min(x, cur + x), then best = min(best, cur)": "That computes the minimum subarray."
+      }
+    },
+    {
+      "id": "ms4-insight-01",
+      "category": "main_insight",
+      "type": "free_recall",
+      "promptVariants": [
+        "Why can a negative running sum be discarded?",
+        "When does Kadane start a new subarray?"
+      ],
+      "answer": "A subarray that starts with a negative-sum prefix can always be improved by dropping that prefix, so whenever the running sum before x is negative (cur + x < x) a new subarray begins at x. The global best is the maximum of these per-index bests.",
+      "keyPoints": [
+        "Negative prefix only reduces sums",
+        "Restart at x when cur < 0"
+      ],
+      "explanation": "Equivalent to cur = max(cur, 0) + x."
+    },
+    {
+      "id": "ms4-time-01",
+      "category": "time_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Time complexity: ___",
+        "Complete the statement: Time complexity: ___"
+      ],
+      "answer": "O(n)",
+      "explanation": "One pass.",
+      "acceptedAnswers": [
+        "linear"
+      ]
+    },
+    {
+      "id": "ms4-space-01",
+      "category": "space_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Space complexity (excluding the input): ___",
+        "Complete the statement: Space complexity (excluding the input): ___"
+      ],
+      "answer": "O(1)",
+      "explanation": "Two numbers: cur and best.",
+      "acceptedAnswers": [
+        "constant"
+      ]
+    },
+    {
+      "id": "ms4-edge-01",
+      "category": "edge_case",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "What does Kadane return for [-3, -1, -2], and what initialisation does that require?",
+        "Why shouldn't best start at 0?"
+      ],
+      "options": [
+        "-1; initialise best (and cur) with the first element, not 0",
+        "0; the empty subarray is always allowed as an answer",
+        "-6; the whole array must be used as the subarray",
+        "-3; the first element must always be included"
+      ],
+      "answer": "-1; initialise best (and cur) with the first element, not 0",
+      "explanation": "Starting at 0 would wrongly report an empty subarray for all-negative inputs.",
+      "incorrectOptionExplanations": {
+        "0; the empty subarray is always allowed as an answer": "The subarray must be non-empty.",
+        "-6; the whole array must be used as the subarray": "A single element -1 is larger.",
+        "-3; the first element must always be included": "Any subarray may start anywhere."
+      }
+    }
+  ],
+  "generatedAt": "2026-10-01T14:52:56Z"
+}

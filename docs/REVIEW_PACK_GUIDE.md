@@ -85,6 +85,9 @@ Guidelines:
   1 alternative approach.
 * MCQ distractors must be *plausible* techniques/complexities a candidate might really confuse —
   no joke options. Vary which position holds the answer (the engine shuffles anyway).
+* Keep every MCQ option about the same length and shape as the answer — a noticeably longer,
+  more specific option is a giveaway. Shorten a verbose answer or lengthen the distractors (while
+  keeping them wrong for the stated reason) rather than leaving the tell in.
 * Write `incorrectOptionExplanations` for every distractor; they are the learning content.
 * Complexity cards should say *why*, not just the symbol (amortised analysis, alphabet-bounded space…).
 * Avoid trivial Python-syntax questions unless they carry interview reasoning (heap tuple ordering,

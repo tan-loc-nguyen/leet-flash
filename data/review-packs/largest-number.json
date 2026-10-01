@@ -1,0 +1,139 @@
+{
+  "schemaVersion": 1,
+  "problemSlug": "largest-number",
+  "summary": "Arrange non-negative integers so that their concatenation forms the largest possible number.",
+  "patterns": [
+    "Sorting",
+    "Greedy"
+  ],
+  "mainInsight": "Sort the numbers as strings with the custom order a before b iff a + b > b + a. This comparison is transitive and its sorted order maximises the concatenation. Special case: if the largest string is '0', the answer is '0'.",
+  "canonicalApproach": "Custom comparator a+b vs b+a",
+  "approaches": [
+    {
+      "name": "Sort by string value",
+      "summary": "Descending lexicographic order of the strings.",
+      "timeComplexity": "O(n log n)",
+      "spaceComplexity": "O(n)",
+      "strengths": [
+        "Simple"
+      ],
+      "weaknesses": [
+        "Wrong: '9' vs '34' vs '3' orderings fail"
+      ]
+    },
+    {
+      "name": "Custom comparator a+b vs b+a",
+      "summary": "cmp_to_key(lambda a, b: -1 if a + b > b + a else 1).",
+      "timeComplexity": "O(n log n * L)",
+      "spaceComplexity": "O(n)",
+      "strengths": [
+        "Correct and short"
+      ],
+      "weaknesses": [
+        "Needs the zero special case"
+      ],
+      "interviewRelevance": "The expected answer."
+    }
+  ],
+  "commonMistakes": [
+    "Sorting numerically or lexicographically",
+    "Forgetting the all-zeros case",
+    "Returning an int and losing leading structure"
+  ],
+  "edgeCases": [
+    "All zeros",
+    "Duplicates [10, 2, 10]",
+    "Single number"
+  ],
+  "cards": [
+    {
+      "id": "ln-pattern-01",
+      "category": "pattern",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "What comparison orders numbers so their concatenation is largest?",
+        "How do you compare '3' and '30' as the first to place?"
+      ],
+      "options": [
+        "Place a before b when a + b > b + a (as strings)",
+        "Place a before b when int(a) > int(b)",
+        "Place a before b when len(a) > len(b)",
+        "Place a before b when a[0] > b[0]"
+      ],
+      "answer": "Place a before b when a + b > b + a (as strings)",
+      "explanation": "'330' > '303', so '3' goes before '30'.",
+      "incorrectOptionExplanations": {
+        "Place a before b when int(a) > int(b)": "'3' vs '30' would be placed '30' first incorrectly.",
+        "Place a before b when len(a) > len(b)": "Length alone ignores the digits.",
+        "Place a before b when a[0] > b[0]": "Ties on the first digit need a full comparison."
+      }
+    },
+    {
+      "id": "ln-insight-01",
+      "category": "main_insight",
+      "type": "free_recall",
+      "promptVariants": [
+        "Why is the a+b vs b+a comparator transitive and why does sorting by it give the optimum?",
+        "How can you argue the ordering is consistent?"
+      ],
+      "answer": "Comparing a + b with b + a is the same as comparing a / (10^len(a) - 1) with b / (10^len(b) - 1), a fixed real number per string, so it is a total preorder (transitive). Any adjacent pair out of that order could be swapped to a larger concatenation, so the sorted order is optimal.",
+      "keyPoints": [
+        "Equivalent to comparing a real key",
+        "Adjacent swap argument"
+      ],
+      "explanation": "A proof-by-exchange is the usual interview explanation."
+    },
+    {
+      "id": "ln-time-01",
+      "category": "time_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Time complexity: ___",
+        "Complete the statement: Time complexity: ___"
+      ],
+      "answer": "O(n log n)",
+      "explanation": "Sorting with an O(L) comparison, L being the maximum digit length (at most 10).",
+      "acceptedAnswers": [
+        "O(n log n * L)",
+        "O(n log n)"
+      ]
+    },
+    {
+      "id": "ln-space-01",
+      "category": "space_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Space complexity (excluding the input): ___",
+        "Complete the statement: Space complexity (excluding the input): ___"
+      ],
+      "answer": "O(n)",
+      "explanation": "The list of strings and the joined result.",
+      "acceptedAnswers": [
+        "linear"
+      ]
+    },
+    {
+      "id": "ln-edge-01",
+      "category": "edge_case",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "What should the function return for [0, 0]?",
+        "What special case follows the sort?"
+      ],
+      "options": [
+        "'0', not '00': if the largest string after sorting is '0' return '0'",
+        "'00', the plain concatenation of the two numbers",
+        "'' (empty), because every value in the array is zero",
+        "'0' only if the array has a length of exactly one"
+      ],
+      "answer": "'0', not '00': if the largest string after sorting is '0' return '0'",
+      "explanation": "After sorting, a leading '0' means every number is zero.",
+      "incorrectOptionExplanations": {
+        "'00', the plain concatenation of the two numbers": "Leading zeros are not allowed in a number.",
+        "'' (empty), because every value in the array is zero": "The answer must be a non-empty digit string.",
+        "'0' only if the array has a length of exactly one": "It applies to any all-zero array."
+      }
+    }
+  ],
+  "generatedAt": "2026-10-01T14:52:56Z"
+}

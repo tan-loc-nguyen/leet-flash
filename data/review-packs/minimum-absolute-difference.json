@@ -1,0 +1,136 @@
+{
+  "schemaVersion": 1,
+  "problemSlug": "minimum-absolute-difference",
+  "summary": "List all pairs of elements with the minimum absolute difference.",
+  "patterns": [
+    "Sorting"
+  ],
+  "mainInsight": "After sorting, the minimum difference is always between adjacent elements. Do one pass to find the minimum adjacent difference and a second pass (or the same pass with reset) to collect all adjacent pairs with that difference.",
+  "canonicalApproach": "Sort and scan adjacent pairs",
+  "approaches": [
+    {
+      "name": "Compare all pairs",
+      "summary": "Check every pair.",
+      "timeComplexity": "O(n^2)",
+      "spaceComplexity": "O(1)",
+      "strengths": [
+        "Simple"
+      ],
+      "weaknesses": [
+        "Quadratic"
+      ]
+    },
+    {
+      "name": "Sort and scan adjacent pairs",
+      "summary": "Find min diff, then collect pairs.",
+      "timeComplexity": "O(n log n)",
+      "spaceComplexity": "O(n)",
+      "strengths": [
+        "Simple and fast"
+      ],
+      "interviewRelevance": "The expected answer."
+    }
+  ],
+  "commonMistakes": [
+    "Reporting only the first minimum pair",
+    "Not resetting the list on finding a smaller gap",
+    "Comparing non-adjacent elements"
+  ],
+  "edgeCases": [
+    "Two elements",
+    "Negative numbers",
+    "Many equal gaps"
+  ],
+  "cards": [
+    {
+      "id": "mad-pattern-01",
+      "category": "pattern",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "Why does sorting reduce the problem to adjacent elements?",
+        "Which pairs can have the minimum difference?"
+      ],
+      "options": [
+        "In sorted order the closest elements are neighbours",
+        "The largest and smallest elements are always the closest",
+        "Equal elements always come at the end",
+        "The median pair always has the minimum gap"
+      ],
+      "answer": "In sorted order the closest elements are neighbours",
+      "explanation": "Any non-adjacent pair has a larger gap than the pairs between them.",
+      "incorrectOptionExplanations": {
+        "The largest and smallest elements are always the closest": "They are the farthest apart.",
+        "Equal elements always come at the end": "Sorting does not place equals at the end.",
+        "The median pair always has the minimum gap": "The gap is unrelated to the median."
+      }
+    },
+    {
+      "id": "mad-insight-01",
+      "category": "main_insight",
+      "type": "free_recall",
+      "promptVariants": [
+        "Why can't a non-adjacent pair have the minimum difference unless some adjacent pair also does?",
+        "How do you collect all minimal pairs?"
+      ],
+      "answer": "If a < b < c in sorted order then c - a > b - a and c - a > c - b, so a non-adjacent pair is strictly farther than its inner adjacent pairs (equal only with duplicates, which are adjacent). Therefore it suffices to track the minimum adjacent gap and list every adjacent pair achieving it.",
+      "keyPoints": [
+        "Non-adjacent gaps are larger",
+        "Only adjacent pairs matter",
+        "Collect all ties"
+      ],
+      "explanation": "Reset the result list when a smaller gap is found."
+    },
+    {
+      "id": "mad-time-01",
+      "category": "time_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Time complexity: ___",
+        "Complete the statement: Time complexity: ___"
+      ],
+      "answer": "O(n log n)",
+      "explanation": "Sorting dominates.",
+      "acceptedAnswers": [
+        "O(n log n)"
+      ]
+    },
+    {
+      "id": "mad-space-01",
+      "category": "space_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Space complexity (excluding the input): ___",
+        "Complete the statement: Space complexity (excluding the input): ___"
+      ],
+      "answer": "O(n)",
+      "explanation": "The sorted copy and the output pairs (O(log n) auxiliary).",
+      "acceptedAnswers": [
+        "O(1)",
+        "O(log n)"
+      ]
+    },
+    {
+      "id": "mad-edge-01",
+      "category": "edge_case",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "What is returned for [4, 2, 1, 3]?",
+        "How many pairs share the minimum difference?"
+      ],
+      "options": [
+        "[[1, 2], [2, 3], [3, 4]]: the minimum difference is 1",
+        "[[1, 4]]: the extremes are the closest",
+        "[[1, 2]]: only the first pair is reported",
+        "[[2, 4], [1, 3]]: pairs with a difference of 2"
+      ],
+      "answer": "[[1, 2], [2, 3], [3, 4]]: the minimum difference is 1",
+      "explanation": "Pairs are reported in ascending order.",
+      "incorrectOptionExplanations": {
+        "[[1, 4]]: the extremes are the closest": "They are the farthest apart.",
+        "[[1, 2]]: only the first pair is reported": "All pairs with that gap must be reported.",
+        "[[2, 4], [1, 3]]: pairs with a difference of 2": "The minimum difference is 1."
+      }
+    }
+  ],
+  "generatedAt": "2026-10-01T14:57:58Z"
+}

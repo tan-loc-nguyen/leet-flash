@@ -1,0 +1,152 @@
+{
+  "schemaVersion": 1,
+  "problemSlug": "intersection-of-two-arrays",
+  "summary": "Return the unique elements that appear in both arrays.",
+  "patterns": [
+    "Array / Hashing"
+  ],
+  "mainInsight": "Put one array into a set and iterate over the other, collecting elements that are in the set; use a set for the result to remove duplicates. Alternatives: sort both and use two pointers, or binary search.",
+  "canonicalApproach": "Set intersection",
+  "approaches": [
+    {
+      "name": "Set intersection",
+      "summary": "set(a) & set(b).",
+      "timeComplexity": "O(m + n)",
+      "spaceComplexity": "O(m + n)",
+      "strengths": [
+        "Short"
+      ],
+      "weaknesses": [
+        "Extra memory"
+      ],
+      "interviewRelevance": "The expected answer."
+    },
+    {
+      "name": "Sort + two pointers",
+      "summary": "Walk both sorted arrays.",
+      "timeComplexity": "O((m + n) log(m + n))",
+      "spaceComplexity": "O(1)",
+      "strengths": [
+        "Little extra memory"
+      ],
+      "weaknesses": [
+        "Dedup logic"
+      ]
+    },
+    {
+      "name": "Binary search",
+      "summary": "Search each element of the smaller array in the sorted larger one.",
+      "timeComplexity": "O(m log n)",
+      "spaceComplexity": "O(1)",
+      "strengths": [
+        "Works in place"
+      ],
+      "weaknesses": [
+        "Slower"
+      ]
+    }
+  ],
+  "commonMistakes": [
+    "Returning duplicates",
+    "Assuming a sorted result is required",
+    "Mixing up with Intersection II (counts)"
+  ],
+  "edgeCases": [
+    "No common elements",
+    "One empty array",
+    "All elements equal"
+  ],
+  "cards": [
+    {
+      "id": "ita-pattern-01",
+      "category": "pattern",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "Which structure gives the unique common elements most simply?",
+        "Why a set?"
+      ],
+      "options": [
+        "Two sets: membership tests are O(1) and duplicates disappear automatically",
+        "Two sorted lists: the first match is always unique",
+        "A max-heap of both arrays merged into one heap",
+        "A stack: push one array and pop while it matches"
+      ],
+      "answer": "Two sets: membership tests are O(1) and duplicates disappear automatically",
+      "explanation": "The result must contain each element once.",
+      "incorrectOptionExplanations": {
+        "Two sorted lists: the first match is always unique": "Duplicates would still need removal.",
+        "A max-heap of both arrays merged into one heap": "Heaps do not detect common elements.",
+        "A stack: push one array and pop while it matches": "Stacks do not provide membership tests."
+      }
+    },
+    {
+      "id": "ita-insight-01",
+      "category": "main_insight",
+      "type": "free_recall",
+      "promptVariants": [
+        "How do you avoid duplicates in the result?",
+        "What does the two-pointer variant require?"
+      ],
+      "answer": "Collect results into a set (or skip equal neighbours when using sorted arrays). The two-pointer variant requires both arrays to be sorted, advancing the pointer with the smaller value and recording equal values once.",
+      "keyPoints": [
+        "Result stored in a set",
+        "Skip equal neighbours when sorted",
+        "Sort first for two pointers"
+      ],
+      "explanation": "Intersection II keeps duplicates by counting."
+    },
+    {
+      "id": "ita-time-01",
+      "category": "time_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Time complexity: ___",
+        "Complete the statement: Time complexity: ___"
+      ],
+      "answer": "O(m + n)",
+      "explanation": "Building both sets and checking membership is linear.",
+      "acceptedAnswers": [
+        "O(m+n)",
+        "linear"
+      ]
+    },
+    {
+      "id": "ita-space-01",
+      "category": "space_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Space complexity (excluding the input): ___",
+        "Complete the statement: Space complexity (excluding the input): ___"
+      ],
+      "answer": "O(m + n)",
+      "explanation": "The sets (and the result).",
+      "acceptedAnswers": [
+        "O(m+n)",
+        "linear"
+      ]
+    },
+    {
+      "id": "ita-edge-01",
+      "category": "edge_case",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "What is the result for [4, 9, 5] and [9, 4, 9, 8, 4]?",
+        "Is the order important?"
+      ],
+      "options": [
+        "[9, 4] in any order: each shared value appears once",
+        "[4, 9, 4, 9]: every shared occurrence is listed",
+        "[4, 9, 5]: the first array's values",
+        "[8]: only the value that appears once in the second array"
+      ],
+      "answer": "[9, 4] in any order: each shared value appears once",
+      "explanation": "The problem accepts any order.",
+      "incorrectOptionExplanations": {
+        "[4, 9, 4, 9]: every shared occurrence is listed": "That is the second variant (with duplicates).",
+        "[4, 9, 5]: the first array's values": "5 is not in the second array.",
+        "[8]: only the value that appears once in the second array": "8 is not in the first array."
+      }
+    }
+  ],
+  "generatedAt": "2026-10-01T15:00:56Z"
+}

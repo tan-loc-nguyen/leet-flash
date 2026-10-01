@@ -1,0 +1,139 @@
+{
+  "schemaVersion": 1,
+  "problemSlug": "capacity-to-ship-packages-within-d-days",
+  "summary": "Find the least ship capacity that delivers all packages in order within D days.",
+  "patterns": [
+    "Binary Search"
+  ],
+  "mainInsight": "Feasibility is monotone in the capacity: a larger ship never needs more days. Binary search the capacity in [max(weights), sum(weights)], and test each candidate with a greedy simulation that loads packages until the next would overflow.",
+  "canonicalApproach": "Binary search on the answer",
+  "approaches": [
+    {
+      "name": "Linear search on capacity",
+      "summary": "Try capacities from max(weights) upwards.",
+      "timeComplexity": "O(n * sum)",
+      "spaceComplexity": "O(1)",
+      "strengths": [
+        "Easy"
+      ],
+      "weaknesses": [
+        "Too slow"
+      ]
+    },
+    {
+      "name": "Binary search on the answer",
+      "summary": "Check feasibility with a greedy pass and shrink the range.",
+      "timeComplexity": "O(n log(sum))",
+      "spaceComplexity": "O(1)",
+      "strengths": [
+        "Efficient and generic"
+      ],
+      "weaknesses": [
+        "Need the right bounds"
+      ],
+      "interviewRelevance": "The expected answer."
+    }
+  ],
+  "commonMistakes": [
+    "Starting lo at 1 or 0",
+    "Reordering the packages",
+    "Using `<` vs `<=` incorrectly when starting a new day"
+  ],
+  "edgeCases": [
+    "D = 1 (answer is the sum)",
+    "D = len(weights) (answer is the max)",
+    "Single package"
+  ],
+  "cards": [
+    {
+      "id": "csp-pattern-01",
+      "category": "pattern",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "Which pattern solves 'smallest capacity so that the shipment finishes in D days'?",
+        "What makes binary search applicable here?"
+      ],
+      "options": [
+        "Binary search on the capacity with a greedy day-count check",
+        "Sliding window over the package weights in their order",
+        "A max-heap of the heaviest packages for each day",
+        "Prefix sums with a hash map of the running totals"
+      ],
+      "answer": "Binary search on the capacity with a greedy day-count check",
+      "explanation": "Feasible capacities form a suffix: if C works, C + 1 works.",
+      "incorrectOptionExplanations": {
+        "Sliding window over the package weights in their order": "The ship's capacity is not a window length.",
+        "A max-heap of the heaviest packages for each day": "Packages must ship in order.",
+        "Prefix sums with a hash map of the running totals": "That finds subarrays with an exact sum."
+      }
+    },
+    {
+      "id": "csp-insight-01",
+      "category": "main_insight",
+      "type": "free_recall",
+      "promptVariants": [
+        "What are the correct bounds for the capacity search and why?",
+        "Why is max(weights) the lower bound?"
+      ],
+      "answer": "The lower bound is max(weights) because every package must fit on the ship; the upper bound is sum(weights), which ships everything in one day. Between them feasibility is monotone, so binary search finds the minimum feasible capacity.",
+      "keyPoints": [
+        "lo = max(weights)",
+        "hi = sum(weights)",
+        "Monotone feasibility"
+      ],
+      "explanation": "Using lo = 1 would test impossible capacities."
+    },
+    {
+      "id": "csp-time-01",
+      "category": "time_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Time complexity: ___",
+        "Complete the statement: Time complexity: ___"
+      ],
+      "answer": "O(n log S)",
+      "explanation": "Each check is O(n); the capacity range has size about sum(weights), so log S iterations.",
+      "acceptedAnswers": [
+        "O(n log(sum))",
+        "O(n * log(sum))"
+      ]
+    },
+    {
+      "id": "csp-space-01",
+      "category": "space_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Space complexity (excluding the input): ___",
+        "Complete the statement: Space complexity (excluding the input): ___"
+      ],
+      "answer": "O(1)",
+      "explanation": "Only counters are kept.",
+      "acceptedAnswers": [
+        "constant"
+      ]
+    },
+    {
+      "id": "csp-edge-01",
+      "category": "edge_case",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "What happens if the lower bound is set to 1 instead of max(weights)?",
+        "Which capacities must the check reject?"
+      ],
+      "options": [
+        "Capacities below the heaviest package are never feasible, so the check must treat them as failures",
+        "Nothing changes; the greedy check handles tiny capacities",
+        "The search stops being monotone and may loop forever",
+        "The answer always becomes sum(weights) in that case"
+      ],
+      "answer": "Capacities below the heaviest package are never feasible, so the check must treat them as failures",
+      "explanation": "Without the bound, a package heavier than C could be 'loaded' by the simple counter and give a wrong day count.",
+      "incorrectOptionExplanations": {
+        "Nothing changes; the greedy check handles tiny capacities": "A heavy package would be loaded onto a too-small ship.",
+        "The search stops being monotone and may loop forever": "It stays monotone; it may just return a wrong value.",
+        "The answer always becomes sum(weights) in that case": "That is only the upper bound."
+      }
+    }
+  ],
+  "generatedAt": "2026-10-01T14:52:56Z"
+}

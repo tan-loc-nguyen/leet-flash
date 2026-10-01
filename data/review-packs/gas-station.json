@@ -1,0 +1,138 @@
+{
+  "schemaVersion": 1,
+  "problemSlug": "gas-station",
+  "summary": "Find the starting station index from which a circular trip is possible, or -1.",
+  "patterns": [
+    "Greedy"
+  ],
+  "mainInsight": "If total gas < total cost there is no solution. Otherwise scan once keeping the tank; whenever it drops below 0 at station i, no station between the current start and i can be the start, so reset the tank and set start = i + 1. The final start is the answer.",
+  "canonicalApproach": "One-pass greedy",
+  "approaches": [
+    {
+      "name": "Try every start",
+      "summary": "Simulate the loop from each station.",
+      "timeComplexity": "O(n^2)",
+      "spaceComplexity": "O(1)",
+      "strengths": [
+        "Easy"
+      ],
+      "weaknesses": [
+        "Quadratic"
+      ]
+    },
+    {
+      "name": "One-pass greedy",
+      "summary": "Reset the start when the tank goes negative.",
+      "timeComplexity": "O(n)",
+      "spaceComplexity": "O(1)",
+      "strengths": [
+        "Linear"
+      ],
+      "weaknesses": [
+        "Needs the proof"
+      ],
+      "interviewRelevance": "The expected answer."
+    }
+  ],
+  "commonMistakes": [
+    "Resetting the tank but not the start",
+    "Forgetting the total check",
+    "Using the cost array as the gain"
+  ],
+  "edgeCases": [
+    "Single station",
+    "Total exactly zero (valid)",
+    "Failing in the middle then recovering"
+  ],
+  "cards": [
+    {
+      "id": "gs-pattern-01",
+      "category": "pattern",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "How does the greedy approach choose the starting station?",
+        "What does a negative tank imply?"
+      ],
+      "options": [
+        "When the tank goes negative at i, the start moves to i + 1 and the tank resets",
+        "Always start at the station with the most gas",
+        "Start at the station with the smallest cost to the next",
+        "Start at station 0 and sum all net gains along the way"
+      ],
+      "answer": "When the tank goes negative at i, the start moves to i + 1 and the tank resets",
+      "explanation": "Any start between the old start and i fails at i.",
+      "incorrectOptionExplanations": {
+        "Always start at the station with the most gas": "The cost to the next station matters too.",
+        "Start at the station with the smallest cost to the next": "Net gas, not cost alone, decides.",
+        "Start at station 0 and sum all net gains along the way": "The sum only tells whether a solution exists."
+      }
+    },
+    {
+      "id": "gs-insight-01",
+      "category": "main_insight",
+      "type": "free_recall",
+      "promptVariants": [
+        "Why can stations before the failing point be skipped, and why is total >= 0 enough?",
+        "What is the role of the total check?"
+      ],
+      "answer": "If you start at s and run out of gas at i, any start in (s, i] arrives at i with no more gas than starting at s (the prefix before it was non-negative), so they also fail. If total gas >= total cost, the unique candidate after the last reset can complete the circle because the deficit before it is covered by the surplus after it.",
+      "keyPoints": [
+        "Prefix sums argument",
+        "Fail at i => skip s..i",
+        "Total net >= 0 guarantees a solution"
+      ],
+      "explanation": "The solution is unique when it exists."
+    },
+    {
+      "id": "gs-time-01",
+      "category": "time_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Time complexity: ___",
+        "Complete the statement: Time complexity: ___"
+      ],
+      "answer": "O(n)",
+      "explanation": "A single pass.",
+      "acceptedAnswers": [
+        "linear"
+      ]
+    },
+    {
+      "id": "gs-space-01",
+      "category": "space_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Space complexity (excluding the input): ___",
+        "Complete the statement: Space complexity (excluding the input): ___"
+      ],
+      "answer": "O(1)",
+      "explanation": "A few counters.",
+      "acceptedAnswers": [
+        "constant"
+      ]
+    },
+    {
+      "id": "gs-edge-01",
+      "category": "edge_case",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "What is returned when the total gas is less than the total cost?",
+        "Why?"
+      ],
+      "options": [
+        "-1: not enough fuel exists around the circle",
+        "0: start at the first station by default",
+        "n - 1: the last station is the best guess",
+        "The station with the most gas"
+      ],
+      "answer": "-1: not enough fuel exists around the circle",
+      "explanation": "Check total net gas first or at the end.",
+      "incorrectOptionExplanations": {
+        "0: start at the first station by default": "No start works.",
+        "n - 1: the last station is the best guess": "No start works.",
+        "The station with the most gas": "Having the most gas does not help overall."
+      }
+    }
+  ],
+  "generatedAt": "2026-10-01T15:00:56Z"
+}

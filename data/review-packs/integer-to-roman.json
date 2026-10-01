@@ -1,0 +1,136 @@
+{
+  "schemaVersion": 1,
+  "problemSlug": "integer-to-roman",
+  "summary": "Convert an integer in [1, 3999] to a Roman numeral.",
+  "patterns": [
+    "Math",
+    "Greedy"
+  ],
+  "mainInsight": "Use a descending table of values including the subtractive forms (1000 M, 900 CM, 500 D, 400 CD, 100 C, 90 XC, 50 L, 40 XL, 10 X, 9 IX, 5 V, 4 IV, 1 I). Greedily subtract the largest value that fits and append its symbol.",
+  "canonicalApproach": "Greedy over a value table",
+  "approaches": [
+    {
+      "name": "Digit-by-digit tables",
+      "summary": "Per decimal place lookup tables.",
+      "timeComplexity": "O(1)",
+      "spaceComplexity": "O(1)",
+      "strengths": [
+        "No loops"
+      ],
+      "weaknesses": [
+        "Four tables"
+      ]
+    },
+    {
+      "name": "Greedy over a value table",
+      "summary": "Repeat while num >= value.",
+      "timeComplexity": "O(1)",
+      "spaceComplexity": "O(1)",
+      "strengths": [
+        "Short and clear"
+      ],
+      "interviewRelevance": "The expected answer."
+    }
+  ],
+  "commonMistakes": [
+    "Missing a subtractive entry",
+    "Ordering the table ascending",
+    "Building the string with repeated concatenation in a nested loop"
+  ],
+  "edgeCases": [
+    "3999 (MMMCMXCIX)",
+    "4 and 9 (IV, IX)",
+    "1"
+  ],
+  "cards": [
+    {
+      "id": "i2r-pattern-01",
+      "category": "pattern",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "Why does a greedy over a descending value table work for Roman numerals?",
+        "Which entries must be in the table besides the seven base symbols?"
+      ],
+      "options": [
+        "The table includes the subtractive pairs (900, 400, 90, 40, 9, 4)",
+        "The table includes the powers of two (2, 4, 8, ...)",
+        "The table includes the repeats (II, XX, CC, ...)",
+        "The table includes the primes up to 3999"
+      ],
+      "answer": "The table includes the subtractive pairs (900, 400, 90, 40, 9, 4)",
+      "explanation": "With subtractive forms in the table, taking the largest value first gives the canonical form.",
+      "incorrectOptionExplanations": {
+        "The table includes the powers of two (2, 4, 8, ...)": "Roman numerals are decimal based.",
+        "The table includes the repeats (II, XX, CC, ...)": "Repeats come from repeated subtraction.",
+        "The table includes the primes up to 3999": "Primes play no role."
+      }
+    },
+    {
+      "id": "i2r-insight-01",
+      "category": "main_insight",
+      "type": "free_recall",
+      "promptVariants": [
+        "Why are the subtractive values (CM, CD, XC, XL, IX, IV) added to the table?",
+        "What goes wrong without them?"
+      ],
+      "answer": "Without them a greedy over the base symbols would produce 'VIIII' for 9 or 'DCCCC' for 900 instead of the canonical 'IX' and 'CM'. Putting each subtractive pair into the descending table lets the same greedy step emit it in the right place.",
+      "keyPoints": [
+        "Canonical form needs subtractive pairs",
+        "Otherwise VIIII / DCCCC"
+      ],
+      "explanation": "Table order must be strictly descending."
+    },
+    {
+      "id": "i2r-time-01",
+      "category": "time_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Time complexity: ___",
+        "Complete the statement: Time complexity: ___"
+      ],
+      "answer": "O(1)",
+      "explanation": "The input is bounded (at most 3999), so the output length is bounded; in general O(number of symbols).",
+      "acceptedAnswers": [
+        "constant",
+        "O(1)"
+      ]
+    },
+    {
+      "id": "i2r-space-01",
+      "category": "space_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Space complexity (excluding the input): ___",
+        "Complete the statement: Space complexity (excluding the input): ___"
+      ],
+      "answer": "O(1)",
+      "explanation": "A fixed 13-entry table and a short result.",
+      "acceptedAnswers": [
+        "constant"
+      ]
+    },
+    {
+      "id": "i2r-edge-01",
+      "category": "edge_case",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "What does 58 become?",
+        "Which table entries are used?"
+      ],
+      "options": [
+        "LVIII = 50 (L) + 5 (V) + 3 x 1 (III)",
+        "LIIX, using the subtractive IX with an extra I",
+        "VIIIL, placing the smaller symbol first",
+        "LVIIII, repeating I four times"
+      ],
+      "answer": "LVIII = 50 (L) + 5 (V) + 3 x 1 (III)",
+      "explanation": "58 -> L (50) -> V (5) -> III (3).",
+      "incorrectOptionExplanations": {
+        "LIIX, using the subtractive IX with an extra I": "That is not a valid numeral.",
+        "VIIIL, placing the smaller symbol first": "Symbols descend left to right.",
+        "LVIIII, repeating I four times": "Four repeats become IV or IX forms instead."
+      }
+    }
+  ],
+  "generatedAt": "2026-10-01T14:54:43Z"
+}

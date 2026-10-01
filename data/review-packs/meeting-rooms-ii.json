@@ -1,0 +1,139 @@
+{
+  "schemaVersion": 1,
+  "problemSlug": "meeting-rooms-ii",
+  "summary": "Minimum number of meeting rooms needed for a set of time intervals.",
+  "patterns": [
+    "Intervals",
+    "Heap / Priority Queue"
+  ],
+  "mainInsight": "Sort by start time and keep a min-heap of the end times of rooms in use. For each meeting, free the room whose end time is <= its start (pop), then push this meeting's end. The heap size at its maximum is the answer. Alternative: sort starts and ends separately and sweep.",
+  "canonicalApproach": "Min-heap of end times",
+  "approaches": [
+    {
+      "name": "Sweep line over sorted starts and ends",
+      "summary": "Two pointers over separately sorted starts/ends, counting active meetings.",
+      "timeComplexity": "O(n log n)",
+      "spaceComplexity": "O(n)",
+      "strengths": [
+        "No heap"
+      ],
+      "weaknesses": [
+        "Subtle tie handling"
+      ]
+    },
+    {
+      "name": "Min-heap of end times",
+      "summary": "Pop the earliest end if it is <= the start, push the new end.",
+      "timeComplexity": "O(n log n)",
+      "spaceComplexity": "O(n)",
+      "strengths": [
+        "Intuitive: rooms in use"
+      ],
+      "weaknesses": [
+        "Heap code"
+      ],
+      "interviewRelevance": "The expected answer."
+    }
+  ],
+  "commonMistakes": [
+    "Using < instead of <= when freeing a room",
+    "Not sorting the intervals",
+    "Returning the final heap size instead of the maximum"
+  ],
+  "edgeCases": [
+    "Single meeting",
+    "Identical meetings",
+    "Back-to-back meetings"
+  ],
+  "cards": [
+    {
+      "id": "mr2-pattern-01",
+      "category": "pattern",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "Which structure tracks the rooms currently in use?",
+        "What do you store in the heap?"
+      ],
+      "options": [
+        "A min-heap of end times, giving the room that frees up first",
+        "A max-heap of start times, giving the latest meeting",
+        "A stack of meetings, giving the latest started",
+        "A hash set of meeting lengths, to avoid duplicates"
+      ],
+      "answer": "A min-heap of end times, giving the room that frees up first",
+      "explanation": "If the earliest end is <= the new start, that room is reused.",
+      "incorrectOptionExplanations": {
+        "A max-heap of start times, giving the latest meeting": "The earliest ending room is what we reuse.",
+        "A stack of meetings, giving the latest started": "Rooms free up by end time, not by start order.",
+        "A hash set of meeting lengths, to avoid duplicates": "Lengths do not determine overlap."
+      }
+    },
+    {
+      "id": "mr2-insight-01",
+      "category": "main_insight",
+      "type": "free_recall",
+      "promptVariants": [
+        "Why is sorting by start time necessary?",
+        "What does the heap size represent after processing a meeting?"
+      ],
+      "answer": "Processing meetings in start order means each new meeting only has to compare with the room that frees up earliest (the heap root). After handling a meeting, the heap size is the number of rooms occupied at that start time, and the maximum over all meetings is the answer.",
+      "keyPoints": [
+        "Sort by start time",
+        "Compare with the earliest end",
+        "Heap size = rooms in use"
+      ],
+      "explanation": "Without sorting by start you cannot reuse rooms greedily."
+    },
+    {
+      "id": "mr2-time-01",
+      "category": "time_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Time complexity: ___",
+        "Complete the statement: Time complexity: ___"
+      ],
+      "answer": "O(n log n)",
+      "explanation": "Sorting plus heap operations.",
+      "acceptedAnswers": [
+        "O(n log n)"
+      ]
+    },
+    {
+      "id": "mr2-space-01",
+      "category": "space_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Space complexity (excluding the input): ___",
+        "Complete the statement: Space complexity (excluding the input): ___"
+      ],
+      "answer": "O(n)",
+      "explanation": "The heap can hold all end times.",
+      "acceptedAnswers": [
+        "linear"
+      ]
+    },
+    {
+      "id": "mr2-edge-01",
+      "category": "edge_case",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "How should a meeting that starts exactly when another ends be handled?",
+        "Is [0, 5] and [5, 10] one room or two?"
+      ],
+      "options": [
+        "One room: end <= start frees the room, so use `<=` when popping",
+        "Two rooms: the meetings overlap at the time 5",
+        "Two rooms: always add a room whenever times tie",
+        "It depends on the length of each meeting involved"
+      ],
+      "answer": "One room: end <= start frees the room, so use `<=` when popping",
+      "explanation": "Using `<` instead of `<=` would overcount.",
+      "incorrectOptionExplanations": {
+        "Two rooms: the meetings overlap at the time 5": "Intervals are half-open; they do not overlap.",
+        "Two rooms: always add a room whenever times tie": "A tie means the room is free.",
+        "It depends on the length of each meeting involved": "Length is irrelevant."
+      }
+    }
+  ],
+  "generatedAt": "2026-10-01T14:54:43Z"
+}

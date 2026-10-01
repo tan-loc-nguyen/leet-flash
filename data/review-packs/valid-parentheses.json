@@ -115,16 +115,16 @@
         "What does a counting solution get wrong?"
       ],
       "options": [
-        "Counters ignore nesting order: '([)]' is balanced by count but invalid",
+        "Counters ignore nesting order: '([)]' balances by count but is invalid",
         "Counters use more memory than a stack would",
-        "Counters cannot handle more than one bracket type",
+        "Counters cannot track more than one bracket type",
         "Counters are slower than a stack at every step"
       ],
-      "answer": "Counters ignore nesting order: '([)]' is balanced by count but invalid",
+      "answer": "Counters ignore nesting order: '([)]' balances by count but is invalid",
       "explanation": "Balanced counts are necessary but not sufficient; order and type interleaving matter.",
       "incorrectOptionExplanations": {
         "Counters use more memory than a stack would": "Counters use less memory, which is why they are tempting - but wrong.",
-        "Counters cannot handle more than one bracket type": "You can keep one counter per type; the problem is order.",
+        "Counters cannot track more than one bracket type": "You can keep one counter per type; the problem is order.",
         "Counters are slower than a stack at every step": "Speed is not the issue; correctness is."
       },
       "enabled": true

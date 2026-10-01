@@ -1,0 +1,152 @@
+{
+  "schemaVersion": 1,
+  "problemSlug": "maximum-white-tiles-covered-by-a-carpet",
+  "summary": "Place a carpet of length L over non-overlapping white tile intervals to cover the maximum number of white tiles.",
+  "patterns": [
+    "Sliding Window",
+    "Intervals"
+  ],
+  "mainInsight": "Sort the intervals. The optimal carpet can start at the left end of some tile interval. Use two pointers: for each left interval i, advance j while interval j is fully covered (r_j <= start + L - 1), keeping a covered total, then add the partial overlap with interval j.",
+  "canonicalApproach": "Sort + two pointers",
+  "approaches": [
+    {
+      "name": "Try every start position",
+      "summary": "Simulate each possible start.",
+      "timeComplexity": "O(n * range)",
+      "spaceComplexity": "O(1)",
+      "strengths": [
+        "Easy"
+      ],
+      "weaknesses": [
+        "Range can be 10^9"
+      ]
+    },
+    {
+      "name": "Sort + two pointers",
+      "summary": "Start at each interval's left end, extend j.",
+      "timeComplexity": "O(n log n)",
+      "spaceComplexity": "O(1)",
+      "strengths": [
+        "Efficient"
+      ],
+      "weaknesses": [
+        "Careful partial overlap"
+      ],
+      "interviewRelevance": "The expected answer."
+    },
+    {
+      "name": "Prefix sums + binary search",
+      "summary": "Prefix of covered tiles, binary search the end.",
+      "timeComplexity": "O(n log n)",
+      "spaceComplexity": "O(n)",
+      "strengths": [
+        "Clean"
+      ],
+      "weaknesses": [
+        "More code"
+      ]
+    }
+  ],
+  "commonMistakes": [
+    "Forgetting to sort intervals",
+    "Off-by-one in the carpet end",
+    "Starting the carpet only at integer 1"
+  ],
+  "edgeCases": [
+    "Single interval",
+    "Carpet shorter than every interval",
+    "Large gaps between intervals"
+  ],
+  "cards": [
+    {
+      "id": "mw2-pattern-01",
+      "category": "pattern",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "Where can an optimal carpet start?",
+        "Which starts do you need to try?"
+      ],
+      "options": [
+        "At the left end of a tile interval",
+        "At any integer position between the first and last tile",
+        "At the centre of the longest interval",
+        "At the right end of the final interval"
+      ],
+      "answer": "At the left end of a tile interval",
+      "explanation": "Moving the carpet left until it touches a white tile never reduces the cover.",
+      "incorrectOptionExplanations": {
+        "At any integer position between the first and last tile": "That range can be huge; only interval starts matter.",
+        "At the centre of the longest interval": "A shorter interval may give a better cover.",
+        "At the right end of the final interval": "That only covers the last tile run."
+      }
+    },
+    {
+      "id": "mw2-insight-01",
+      "category": "main_insight",
+      "type": "free_recall",
+      "promptVariants": [
+        "How do you count the partial overlap with the next interval?",
+        "What is the formula for the last, partially covered interval?"
+      ],
+      "answer": "With the carpet ending at end = start + L - 1, after fully covered intervals the next interval j contributes max(0, end - l_j + 1) tiles (its start up to the carpet end). The sum of full intervals plus this partial piece is the cover for that start.",
+      "keyPoints": [
+        "end = start + L - 1",
+        "Partial = max(0, end - l_j + 1)",
+        "Plus fully covered lengths"
+      ],
+      "explanation": "Both pointers only move forward, so the total work is linear after sorting."
+    },
+    {
+      "id": "mw2-time-01",
+      "category": "time_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Time complexity: ___",
+        "Complete the statement: Time complexity: ___"
+      ],
+      "answer": "O(n log n)",
+      "explanation": "Sorting dominates; the pointer sweep is linear.",
+      "acceptedAnswers": [
+        "O(n log n)"
+      ]
+    },
+    {
+      "id": "mw2-space-01",
+      "category": "space_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Space complexity (excluding the input): ___",
+        "Complete the statement: Space complexity (excluding the input): ___"
+      ],
+      "answer": "O(1)",
+      "explanation": "A few counters (besides the sort).",
+      "acceptedAnswers": [
+        "constant",
+        "O(n)"
+      ]
+    },
+    {
+      "id": "mw2-edge-01",
+      "category": "edge_case",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "What is the answer when the carpet is longer than all tiles combined?",
+        "How many tiles are covered?"
+      ],
+      "options": [
+        "All tiles: the carpet can start at the first interval and cover every one",
+        "Only the longest single interval can ever be covered",
+        "Zero: the carpet must match a tile run exactly",
+        "The carpet length, counting the gaps as white tiles too"
+      ],
+      "answer": "All tiles: the carpet can start at the first interval and cover every one",
+      "explanation": "The cover is the total white tile count.",
+      "incorrectOptionExplanations": {
+        "Only the longest single interval can ever be covered": "A long carpet can cover them all.",
+        "Zero: the carpet must match a tile run exactly": "A carpet may overlap many intervals.",
+        "The carpet length, counting the gaps as white tiles too": "Gaps are not white tiles."
+      }
+    }
+  ],
+  "generatedAt": "2026-10-01T14:56:24Z"
+}

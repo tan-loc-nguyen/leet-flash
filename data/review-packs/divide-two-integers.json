@@ -1,0 +1,141 @@
+{
+  "schemaVersion": 1,
+  "problemSlug": "divide-two-integers",
+  "summary": "Divide two 32-bit integers without using *, / or %, truncating toward zero.",
+  "patterns": [
+    "Bit Manipulation",
+    "Math"
+  ],
+  "mainInsight": "Work with absolute values. Repeatedly find the largest shift k such that divisor << k <= dividend, subtract it and add 1 << k to the quotient. Each outer iteration removes at least the top bit of the quotient, so it takes O(log^2 n) or O(log n) with doubling. Handle the single overflow case -2^31 / -1 by clamping to 2^31 - 1.",
+  "canonicalApproach": "Bit shifting (doubling)",
+  "approaches": [
+    {
+      "name": "Repeated subtraction",
+      "summary": "Subtract the divisor until the dividend is smaller.",
+      "timeComplexity": "O(n)",
+      "spaceComplexity": "O(1)",
+      "strengths": [
+        "Easy"
+      ],
+      "weaknesses": [
+        "Too slow for 2^31 / 1"
+      ]
+    },
+    {
+      "name": "Bit shifting (doubling)",
+      "summary": "Subtract the largest divisor << k that fits, accumulating 1 << k.",
+      "timeComplexity": "O(log^2 n)",
+      "spaceComplexity": "O(1)",
+      "strengths": [
+        "Fast"
+      ],
+      "weaknesses": [
+        "Overflow and sign handling"
+      ],
+      "interviewRelevance": "The expected answer."
+    }
+  ],
+  "commonMistakes": [
+    "Using Python's // on negative numbers",
+    "Not clamping -2^31 / -1",
+    "Overshooting with shifts that exceed the dividend"
+  ],
+  "edgeCases": [
+    "divisor = 1 or -1",
+    "dividend smaller than divisor",
+    "-2^31 / -1"
+  ],
+  "cards": [
+    {
+      "id": "d2i-pattern-01",
+      "category": "pattern",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "How do you divide quickly without the division operator?",
+        "What do you subtract on each step?"
+      ],
+      "options": [
+        "Subtract the largest divisor << k that fits; add 1 << k to the quotient",
+        "Subtract the divisor once and add 1 to the quotient",
+        "Multiply the dividend by the inverse of the divisor",
+        "Subtract the dividend from the divisor repeatedly"
+      ],
+      "answer": "Subtract the largest divisor << k that fits; add 1 << k to the quotient",
+      "explanation": "Doubling the divisor mimics long division in binary.",
+      "incorrectOptionExplanations": {
+        "Subtract the divisor once and add 1 to the quotient": "That is repeated subtraction, which is far too slow.",
+        "Multiply the dividend by the inverse of the divisor": "Inverses need division or floating point.",
+        "Subtract the dividend from the divisor repeatedly": "That divides the wrong way round."
+      }
+    },
+    {
+      "id": "d2i-insight-01",
+      "category": "main_insight",
+      "type": "free_recall",
+      "promptVariants": [
+        "Why is -2^31 / -1 a special case and how is the sign handled?",
+        "Which overflow must be clamped?"
+      ],
+      "answer": "The true quotient 2^31 does not fit in a 32-bit signed integer, so return 2^31 - 1. For the sign, compute with absolute values and negate the result when exactly one operand is negative; truncation toward zero follows from using the absolute quotient.",
+      "keyPoints": [
+        "-2^31 / -1 overflows",
+        "Clamp to 2^31 - 1",
+        "Track the sign separately"
+      ],
+      "explanation": "Python needs the clamp explicitly; other languages overflow."
+    },
+    {
+      "id": "d2i-time-01",
+      "category": "time_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Time complexity: ___",
+        "Complete the statement: Time complexity: ___"
+      ],
+      "answer": "O(log^2 n)",
+      "explanation": "Each of up to log n outer rounds does a log n doubling.",
+      "acceptedAnswers": [
+        "O(log^2 n)",
+        "O(log n)",
+        "O(log²n)"
+      ]
+    },
+    {
+      "id": "d2i-space-01",
+      "category": "space_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Space complexity (excluding the input): ___",
+        "Complete the statement: Space complexity (excluding the input): ___"
+      ],
+      "answer": "O(1)",
+      "explanation": "A few integers.",
+      "acceptedAnswers": [
+        "constant"
+      ]
+    },
+    {
+      "id": "d2i-edge-01",
+      "category": "edge_case",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "What does the function return for dividend = -7 and divisor = 2?",
+        "In which direction is the quotient truncated?"
+      ],
+      "options": [
+        "-3: the quotient truncates toward zero, not toward minus infinity",
+        "-4: the floor of -3.5, as Python's // would give",
+        "-3.5: the exact quotient without any truncation",
+        "3: the absolute quotient with the sign dropped"
+      ],
+      "answer": "-3: the quotient truncates toward zero, not toward minus infinity",
+      "explanation": "Python's // would give -4, so use absolute values.",
+      "incorrectOptionExplanations": {
+        "-4: the floor of -3.5, as Python's // would give": "The problem says to truncate toward zero.",
+        "-3.5: the exact quotient without any truncation": "The result is an integer.",
+        "3: the absolute quotient with the sign dropped": "The sign must be restored."
+      }
+    }
+  ],
+  "generatedAt": "2026-10-01T14:57:58Z"
+}

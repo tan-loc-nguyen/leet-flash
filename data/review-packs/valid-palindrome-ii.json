@@ -1,0 +1,136 @@
+{
+  "schemaVersion": 1,
+  "problemSlug": "valid-palindrome-ii",
+  "summary": "Can the string become a palindrome by deleting at most one character?",
+  "patterns": [
+    "Two Pointers",
+    "Greedy"
+  ],
+  "mainInsight": "Use two pointers from both ends. On the first mismatch, the answer is true iff the remaining substring is a palindrome after skipping either the left or the right character. Only one deletion is allowed, so only the first mismatch needs both branches.",
+  "canonicalApproach": "Two pointers with one skip",
+  "approaches": [
+    {
+      "name": "Try deleting every character",
+      "summary": "Check each resulting string.",
+      "timeComplexity": "O(n^2)",
+      "spaceComplexity": "O(n)",
+      "strengths": [
+        "Simple"
+      ],
+      "weaknesses": [
+        "Quadratic"
+      ]
+    },
+    {
+      "name": "Two pointers with one skip",
+      "summary": "On mismatch check s[l+1..r] and s[l..r-1].",
+      "timeComplexity": "O(n)",
+      "spaceComplexity": "O(1)",
+      "strengths": [
+        "Linear"
+      ],
+      "interviewRelevance": "The expected answer."
+    }
+  ],
+  "commonMistakes": [
+    "Branching at every mismatch",
+    "Allowing two deletions",
+    "Not re-checking the rest of the substring"
+  ],
+  "edgeCases": [
+    "Already a palindrome",
+    "Two-character mismatch",
+    "Empty or single character"
+  ],
+  "cards": [
+    {
+      "id": "vp2x-pattern-01",
+      "category": "pattern",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "What do you do at the first mismatch?",
+        "How is the single deletion handled?"
+      ],
+      "options": [
+        "Test whether skipping the left character or the right character leaves a palindrome",
+        "Delete both of the mismatching characters and continue",
+        "Return false at once, since it is not a palindrome",
+        "Restart the scan from the middle of the whole string"
+      ],
+      "answer": "Test whether skipping the left character or the right character leaves a palindrome",
+      "explanation": "Either mismatching character may be the one to remove.",
+      "incorrectOptionExplanations": {
+        "Delete both of the mismatching characters and continue": "That uses two deletions.",
+        "Return false at once, since it is not a palindrome": "One deletion may fix it.",
+        "Restart the scan from the middle of the whole string": "The mismatch location is what matters."
+      }
+    },
+    {
+      "id": "vp2x-insight-01",
+      "category": "main_insight",
+      "type": "free_recall",
+      "promptVariants": [
+        "Why is it enough to branch only at the first mismatch?",
+        "Why not at every mismatch?"
+      ],
+      "answer": "Only one deletion is allowed. Before the first mismatch the ends already match, so the deletion must involve one of the two mismatching characters; after skipping one, the rest must match exactly, with no further deletions.",
+      "keyPoints": [
+        "One deletion total",
+        "Delete one of the two mismatching characters",
+        "Rest must match exactly"
+      ],
+      "explanation": "That keeps the algorithm linear."
+    },
+    {
+      "id": "vp2x-time-01",
+      "category": "time_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Time complexity: ___",
+        "Complete the statement: Time complexity: ___"
+      ],
+      "answer": "O(n)",
+      "explanation": "Two passes at most, each linear.",
+      "acceptedAnswers": [
+        "linear"
+      ]
+    },
+    {
+      "id": "vp2x-space-01",
+      "category": "space_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Space complexity (excluding the input): ___",
+        "Complete the statement: Space complexity (excluding the input): ___"
+      ],
+      "answer": "O(1)",
+      "explanation": "Index pointers only.",
+      "acceptedAnswers": [
+        "constant"
+      ]
+    },
+    {
+      "id": "vp2x-edge-01",
+      "category": "edge_case",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "Is 'abca' a valid answer with one deletion?",
+        "Which character can be deleted?"
+      ],
+      "options": [
+        "Yes: delete 'b' or 'c' to get 'aca' or 'aba'",
+        "No: 'abca' has two mismatched pairs",
+        "Yes, but only by deleting 'a'",
+        "No: palindromes need odd length"
+      ],
+      "answer": "Yes: delete 'b' or 'c' to get 'aca' or 'aba'",
+      "explanation": "At the mismatch (b vs c), skipping either side gives a palindrome.",
+      "incorrectOptionExplanations": {
+        "No: 'abca' has two mismatched pairs": "It has only one mismatching pair.",
+        "Yes, but only by deleting 'a'": "Deleting an 'a' leaves 'bca' or 'abc'.",
+        "No: palindromes need odd length": "Even length palindromes exist."
+      }
+    }
+  ],
+  "generatedAt": "2026-10-01T14:56:24Z"
+}

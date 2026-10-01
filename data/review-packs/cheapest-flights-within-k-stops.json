@@ -1,0 +1,153 @@
+{
+  "schemaVersion": 1,
+  "problemSlug": "cheapest-flights-within-k-stops",
+  "summary": "Cheapest price from src to dst with at most k stops (k + 1 edges).",
+  "patterns": [
+    "Graph",
+    "Dynamic Programming"
+  ],
+  "mainInsight": "Bellman-Ford limited to k + 1 rounds: in each round relax every flight using a copy of the previous round's distances, so a path never uses more edges than the number of rounds. Dijkstra needs (node, stops) states because the cheapest path to a node may use too many stops.",
+  "canonicalApproach": "Bellman-Ford for k + 1 rounds",
+  "approaches": [
+    {
+      "name": "Plain Dijkstra",
+      "summary": "Pop the cheapest node first.",
+      "timeComplexity": "O(E log V)",
+      "spaceComplexity": "O(V)",
+      "strengths": [
+        "Fast"
+      ],
+      "weaknesses": [
+        "Ignores the stop limit; wrong"
+      ]
+    },
+    {
+      "name": "Bellman-Ford for k + 1 rounds",
+      "summary": "Relax all edges k + 1 times from a copied array.",
+      "timeComplexity": "O(k * E)",
+      "spaceComplexity": "O(V)",
+      "strengths": [
+        "Simple and correct"
+      ],
+      "weaknesses": [
+        "Needs the copy"
+      ],
+      "interviewRelevance": "The expected answer."
+    },
+    {
+      "name": "BFS / Dijkstra on (node, stops)",
+      "summary": "Track the cost and the stops used.",
+      "timeComplexity": "O(E log V)",
+      "spaceComplexity": "O(V * k)",
+      "strengths": [
+        "Correct"
+      ],
+      "weaknesses": [
+        "Bigger state"
+      ]
+    }
+  ],
+  "commonMistakes": [
+    "Updating the distance array in place",
+    "Using k rounds instead of k + 1",
+    "Using plain Dijkstra with a visited set"
+  ],
+  "edgeCases": [
+    "src == dst",
+    "k = 0 (direct flights only)",
+    "Unreachable destination"
+  ],
+  "cards": [
+    {
+      "id": "cf-pattern-01",
+      "category": "pattern",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "Why does the stop constraint break plain Dijkstra?",
+        "What additional state is needed?"
+      ],
+      "options": [
+        "The cheapest path may use too many stops, so stops must be in the state",
+        "Dijkstra cannot handle directed graphs with cycles at all",
+        "Flight prices may be negative, which Dijkstra forbids",
+        "The graph may contain parallel edges between two cities"
+      ],
+      "answer": "The cheapest path may use too many stops, so stops must be in the state",
+      "explanation": "A pricier path with fewer stops can be the only feasible one.",
+      "incorrectOptionExplanations": {
+        "Dijkstra cannot handle directed graphs with cycles at all": "It handles directed graphs.",
+        "Flight prices may be negative, which Dijkstra forbids": "Prices are non-negative.",
+        "The graph may contain parallel edges between two cities": "That does not break Dijkstra."
+      }
+    },
+    {
+      "id": "cf-insight-01",
+      "category": "main_insight",
+      "type": "free_recall",
+      "promptVariants": [
+        "Why must Bellman-Ford copy the distance array each round?",
+        "What goes wrong if you update in place?"
+      ],
+      "answer": "Round i must only extend paths found in round i - 1. Updating the same array in place lets an update in round i feed another edge in the same round, effectively using more than i edges and violating the k stops limit.",
+      "keyPoints": [
+        "Round i = paths with at most i edges",
+        "Use a copy of the previous distances"
+      ],
+      "explanation": "k stops means k + 1 edges."
+    },
+    {
+      "id": "cf-time-01",
+      "category": "time_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Time complexity: ___",
+        "Complete the statement: Time complexity: ___"
+      ],
+      "answer": "O(k * E)",
+      "explanation": "k + 1 rounds, each relaxing all E flights.",
+      "acceptedAnswers": [
+        "O((k+1) * E)",
+        "O(kE)",
+        "O(k*E)"
+      ]
+    },
+    {
+      "id": "cf-space-01",
+      "category": "space_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Space complexity (excluding the input): ___",
+        "Complete the statement: Space complexity (excluding the input): ___"
+      ],
+      "answer": "O(V)",
+      "explanation": "A distance array (and a copy).",
+      "acceptedAnswers": [
+        "O(n)",
+        "linear"
+      ]
+    },
+    {
+      "id": "cf-edge-01",
+      "category": "edge_case",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "What should be returned when dst cannot be reached within k stops?",
+        "How is the unreachable case detected?"
+      ],
+      "options": [
+        "-1: the distance is still infinity after k + 1 rounds",
+        "0: no money is spent when there is no route",
+        "The cheapest price ignoring the stop limit",
+        "k + 1: the number of rounds performed"
+      ],
+      "answer": "-1: the distance is still infinity after k + 1 rounds",
+      "explanation": "Map infinity back to -1.",
+      "incorrectOptionExplanations": {
+        "0: no money is spent when there is no route": "0 would mean a free route.",
+        "The cheapest price ignoring the stop limit": "That would violate the constraint.",
+        "k + 1: the number of rounds performed": "The answer is a price, not a round count."
+      }
+    }
+  ],
+  "generatedAt": "2026-10-01T14:56:24Z"
+}

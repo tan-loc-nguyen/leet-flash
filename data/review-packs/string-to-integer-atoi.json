@@ -1,0 +1,137 @@
+{
+  "schemaVersion": 1,
+  "problemSlug": "string-to-integer-atoi",
+  "summary": "Parse a string to a 32-bit signed integer following atoi's rules.",
+  "patterns": [
+    "Array / Hashing"
+  ],
+  "mainInsight": "A fixed pipeline: skip leading spaces, read an optional sign, read consecutive digits (stopping at the first non-digit), apply the sign, and clamp to [-2^31, 2^31 - 1]. Clamp as soon as the value exceeds the limit to keep the arithmetic bounded in languages without big integers.",
+  "canonicalApproach": "Manual state machine",
+  "approaches": [
+    {
+      "name": "Manual state machine",
+      "summary": "Index through whitespace, sign, digits.",
+      "timeComplexity": "O(n)",
+      "spaceComplexity": "O(1)",
+      "strengths": [
+        "Clear control flow"
+      ],
+      "weaknesses": [
+        "Many small cases"
+      ],
+      "interviewRelevance": "The expected answer."
+    },
+    {
+      "name": "Regular expression",
+      "summary": "re.match(r'\\s*[+-]?\\d+', s).",
+      "timeComplexity": "O(n)",
+      "spaceComplexity": "O(1)",
+      "strengths": [
+        "Short"
+      ],
+      "weaknesses": [
+        "Less transparent in an interview"
+      ]
+    }
+  ],
+  "commonMistakes": [
+    "Reading digits after the first non-digit",
+    "Treating '+-12' as valid",
+    "Not clamping on overflow"
+  ],
+  "edgeCases": [
+    "Only spaces",
+    "Sign without digits",
+    "Value beyond 32 bits"
+  ],
+  "cards": [
+    {
+      "id": "atoi-pattern-01",
+      "category": "pattern",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "What are the ordered steps of atoi?",
+        "What must be skipped or read first?"
+      ],
+      "options": [
+        "Skip spaces, read an optional sign, read digits until a non-digit, then clamp",
+        "Read digits, then the sign, then skip spaces and clamp",
+        "Strip every non-digit anywhere, then convert the rest",
+        "Split on spaces, then convert the first token found"
+      ],
+      "answer": "Skip spaces, read an optional sign, read digits until a non-digit, then clamp",
+      "explanation": "Each step has a precise place in the specification.",
+      "incorrectOptionExplanations": {
+        "Read digits, then the sign, then skip spaces and clamp": "The order of the steps matters.",
+        "Strip every non-digit anywhere, then convert the rest": "Parsing stops at the first invalid character.",
+        "Split on spaces, then convert the first token found": "A token such as '-42abc' would not convert."
+      }
+    },
+    {
+      "id": "atoi-insight-01",
+      "category": "main_insight",
+      "type": "free_recall",
+      "promptVariants": [
+        "How do you handle overflow and when do you clamp?",
+        "What values are returned for out-of-range numbers?"
+      ],
+      "answer": "After computing the signed value, return 2^31 - 1 if it exceeds that bound and -2^31 if it is below the lower bound. In languages with fixed width integers check before multiplying by 10 (compare against INT_MAX // 10); in Python simply clamp the final or running value.",
+      "keyPoints": [
+        "Clamp to [-2^31, 2^31 - 1]",
+        "Check before multiplying in fixed-width languages"
+      ],
+      "explanation": "Stop reading digits as soon as the clamp is certain."
+    },
+    {
+      "id": "atoi-time-01",
+      "category": "time_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Time complexity: ___",
+        "Complete the statement: Time complexity: ___"
+      ],
+      "answer": "O(n)",
+      "explanation": "One pass over the characters.",
+      "acceptedAnswers": [
+        "linear"
+      ]
+    },
+    {
+      "id": "atoi-space-01",
+      "category": "space_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Space complexity (excluding the input): ___",
+        "Complete the statement: Space complexity (excluding the input): ___"
+      ],
+      "answer": "O(1)",
+      "explanation": "A few variables.",
+      "acceptedAnswers": [
+        "constant"
+      ]
+    },
+    {
+      "id": "atoi-edge-01",
+      "category": "edge_case",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "What does '  -042abc' return, and what does 'words 42' return?",
+        "Where does parsing stop?"
+      ],
+      "options": [
+        "-42, and 0: 'words 42' does not start with a digit or sign",
+        "-42, and 42 because digits later in the string are read",
+        "-42abc, and 0 because letters are kept in the result",
+        "-4, and 0 because a leading zero ends the number"
+      ],
+      "answer": "-42, and 0: 'words 42' does not start with a digit or sign",
+      "explanation": "Leading zeros are fine; letters end the number.",
+      "incorrectOptionExplanations": {
+        "-42, and 42 because digits later in the string are read": "Parsing stops at the first invalid character.",
+        "-42abc, and 0 because letters are kept in the result": "The result is an integer.",
+        "-4, and 0 because a leading zero ends the number": "Leading zeros are skipped but do not stop parsing."
+      }
+    }
+  ],
+  "generatedAt": "2026-10-01T14:56:24Z"
+}

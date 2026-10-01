@@ -1,0 +1,164 @@
+{
+  "schemaVersion": 1,
+  "problemSlug": "longest-palindromic-substring",
+  "summary": "Find the longest contiguous palindromic substring of s.",
+  "patterns": [
+    "Two Pointers",
+    "Dynamic Programming"
+  ],
+  "mainInsight": "Every palindrome has a centre (a character or a gap between two). Expand outwards from each of the 2n - 1 centres while the two ends match and keep the longest span. This is O(n^2) time with O(1) space; Manacher's algorithm does it in O(n).",
+  "canonicalApproach": "Expand around centre",
+  "approaches": [
+    {
+      "name": "Brute force",
+      "summary": "Check every substring for being a palindrome.",
+      "timeComplexity": "O(n^3)",
+      "spaceComplexity": "O(1)",
+      "strengths": [
+        "Trivial"
+      ],
+      "weaknesses": [
+        "Far too slow for n = 1000"
+      ]
+    },
+    {
+      "name": "Expand around centre",
+      "summary": "For each index expand for odd and even length palindromes.",
+      "timeComplexity": "O(n^2)",
+      "spaceComplexity": "O(1)",
+      "strengths": [
+        "Simple, no table"
+      ],
+      "weaknesses": [
+        "Quadratic worst case"
+      ],
+      "interviewRelevance": "The expected interview answer."
+    },
+    {
+      "name": "2D DP",
+      "summary": "dp[i][j] is true if s[i..j] is a palindrome: s[i] == s[j] and dp[i+1][j-1].",
+      "timeComplexity": "O(n^2)",
+      "spaceComplexity": "O(n^2)",
+      "strengths": [
+        "Reusable idea"
+      ],
+      "weaknesses": [
+        "Needs a table"
+      ]
+    },
+    {
+      "name": "Manacher",
+      "summary": "Reuse palindrome radii mirrored around the rightmost centre.",
+      "timeComplexity": "O(n)",
+      "spaceComplexity": "O(n)",
+      "strengths": [
+        "Linear"
+      ],
+      "weaknesses": [
+        "Hard to derive in an interview"
+      ]
+    }
+  ],
+  "commonMistakes": [
+    "Forgetting even-length centres",
+    "Returning the length instead of the substring",
+    "Off-by-one when slicing after the expansion overshoots by one on each side"
+  ],
+  "edgeCases": [
+    "Single character",
+    "All characters equal",
+    "No repeated characters (answer is any single character)"
+  ],
+  "cards": [
+    {
+      "id": "lps-pattern-01",
+      "category": "pattern",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "Which technique gives O(n^2) time and O(1) space for the longest palindromic substring?",
+        "How do you enumerate all palindromes without testing every substring?"
+      ],
+      "options": [
+        "Expand outwards from each of the 2n - 1 centres",
+        "Sort the characters and pair equal letters",
+        "A sliding window that shrinks on mismatches",
+        "Binary search on the palindrome length"
+      ],
+      "answer": "Expand outwards from each of the 2n - 1 centres",
+      "explanation": "Each palindrome is determined by its centre; expanding while both ends match visits only real palindromes.",
+      "incorrectOptionExplanations": {
+        "Sort the characters and pair equal letters": "Sorting destroys the substring order.",
+        "A sliding window that shrinks on mismatches": "Windows do not preserve palindromic structure.",
+        "Binary search on the palindrome length": "Palindrome existence is not monotone in the length."
+      }
+    },
+    {
+      "id": "lps-insight-01",
+      "category": "main_insight",
+      "type": "free_recall",
+      "promptVariants": [
+        "Why must you try both odd and even centres?",
+        "What goes wrong if only single-character centres are expanded?"
+      ],
+      "answer": "Palindromes of even length (e.g. 'abba') have no single middle character; their centre is the gap between two equal letters. Expanding only from single characters would miss every even-length palindrome, so each index i is expanded as (i, i) and (i, i + 1).",
+      "keyPoints": [
+        "Even palindromes centre on a gap",
+        "Expand (i, i) and (i, i + 1)"
+      ],
+      "explanation": "Total 2n - 1 centres."
+    },
+    {
+      "id": "lps-time-01",
+      "category": "time_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Time complexity: ___",
+        "Complete the statement: Time complexity: ___"
+      ],
+      "answer": "O(n^2)",
+      "explanation": "n centres, each expansion can take O(n).",
+      "acceptedAnswers": [
+        "O(n²)",
+        "quadratic",
+        "n^2"
+      ]
+    },
+    {
+      "id": "lps-space-01",
+      "category": "space_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Space complexity (excluding the input): ___",
+        "Complete the statement: Space complexity (excluding the input): ___"
+      ],
+      "answer": "O(1)",
+      "explanation": "Only indices of the best palindrome are stored; the result is sliced once at the end.",
+      "acceptedAnswers": [
+        "constant"
+      ]
+    },
+    {
+      "id": "lps-edge-01",
+      "category": "edge_case",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "What should 'cbbd' return, and which kind of centre finds it?",
+        "Which centre type finds the longest palindrome of 'cbbd'?"
+      ],
+      "options": [
+        "'bb' - from the even centre between the two b's",
+        "'cbb' - an odd centre at the first b",
+        "'c' - the first character only",
+        "'bbd' - an odd centre at the last b"
+      ],
+      "answer": "'bb' - from the even centre between the two b's",
+      "explanation": "The even centre (1, 2) expands to 'bb' and then stops because 'c' != 'd'.",
+      "incorrectOptionExplanations": {
+        "'cbb' - an odd centre at the first b": "'cbb' is not a palindrome.",
+        "'c' - the first character only": "A longer palindrome 'bb' exists.",
+        "'bbd' - an odd centre at the last b": "'bbd' is not a palindrome."
+      }
+    }
+  ],
+  "generatedAt": "2026-10-01T14:52:56Z"
+}

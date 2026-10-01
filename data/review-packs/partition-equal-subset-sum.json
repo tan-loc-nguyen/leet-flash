@@ -1,0 +1,153 @@
+{
+  "schemaVersion": 1,
+  "problemSlug": "partition-equal-subset-sum",
+  "summary": "Can the array be split into two subsets with equal sums?",
+  "patterns": [
+    "Dynamic Programming"
+  ],
+  "mainInsight": "If the total is odd the answer is False. Otherwise it is the subset-sum problem with target total / 2: dp[s] is true if some subset sums to s. Iterate numbers and sums downwards so each number is used once: for s from target down to x, dp[s] |= dp[s - x].",
+  "canonicalApproach": "1D boolean DP (reverse loop)",
+  "approaches": [
+    {
+      "name": "Brute force subsets",
+      "summary": "Try all 2^n subsets.",
+      "timeComplexity": "O(2^n)",
+      "spaceComplexity": "O(n)",
+      "strengths": [
+        "Direct"
+      ],
+      "weaknesses": [
+        "Exponential"
+      ]
+    },
+    {
+      "name": "2D subset-sum DP",
+      "summary": "dp[i][s] over prefixes.",
+      "timeComplexity": "O(n * S)",
+      "spaceComplexity": "O(n * S)",
+      "strengths": [
+        "Clear"
+      ],
+      "weaknesses": [
+        "Memory"
+      ]
+    },
+    {
+      "name": "1D boolean DP (reverse loop)",
+      "summary": "Update sums downwards.",
+      "timeComplexity": "O(n * S)",
+      "spaceComplexity": "O(S)",
+      "strengths": [
+        "Memory-efficient"
+      ],
+      "weaknesses": [
+        "Loop direction matters"
+      ],
+      "interviewRelevance": "The expected answer."
+    }
+  ],
+  "commonMistakes": [
+    "Iterating sums upwards",
+    "Forgetting the odd total check",
+    "Using the full sum as the target"
+  ],
+  "edgeCases": [
+    "Odd total",
+    "Single element",
+    "Large element exceeding half"
+  ],
+  "cards": [
+    {
+      "id": "pes-pattern-01",
+      "category": "pattern",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "Why does the problem reduce to a subset-sum with target sum / 2?",
+        "What is the first check?"
+      ],
+      "options": [
+        "One subset summing to total / 2 leaves the other the same; odd totals fail",
+        "The two subsets must have equal sizes, so choose n / 2 items",
+        "The largest element must be at most half of the total",
+        "Every element of the array must be even to split it"
+      ],
+      "answer": "One subset summing to total / 2 leaves the other the same; odd totals fail",
+      "explanation": "target = total // 2.",
+      "incorrectOptionExplanations": {
+        "The two subsets must have equal sizes, so choose n / 2 items": "Only the sums must be equal.",
+        "The largest element must be at most half of the total": "That is necessary, not sufficient.",
+        "Every element of the array must be even to split it": "Odd numbers can still pair up."
+      }
+    },
+    {
+      "id": "pes-insight-01",
+      "category": "main_insight",
+      "type": "free_recall",
+      "promptVariants": [
+        "Why must the 1D DP iterate sums downwards?",
+        "What goes wrong when iterating upwards?"
+      ],
+      "answer": "Updating dp[s] from dp[s - x] in increasing order lets the same number x be used several times in one pass (dp[s - x] has already been updated with x), turning it into an unbounded knapsack. Iterating downwards reads only values from the previous item, so each number is used once.",
+      "keyPoints": [
+        "Downwards keeps 0/1 semantics",
+        "Upwards allows reuse",
+        "Reads the previous row"
+      ],
+      "explanation": "A Python int bitset (dp |= dp << x) is a neat alternative."
+    },
+    {
+      "id": "pes-time-01",
+      "category": "time_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Time complexity: ___",
+        "Complete the statement: Time complexity: ___"
+      ],
+      "answer": "O(n*S)",
+      "explanation": "For each number update up to S/2 sums.",
+      "acceptedAnswers": [
+        "O(n * S)",
+        "O(nS)",
+        "O(n * sum)"
+      ]
+    },
+    {
+      "id": "pes-space-01",
+      "category": "space_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Space complexity (excluding the input): ___",
+        "Complete the statement: Space complexity (excluding the input): ___"
+      ],
+      "answer": "O(S)",
+      "explanation": "A boolean array of size sum / 2 + 1.",
+      "acceptedAnswers": [
+        "O(sum)",
+        "O(S)"
+      ]
+    },
+    {
+      "id": "pes-edge-01",
+      "category": "edge_case",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "What does the algorithm return for [1, 5, 11, 5]?",
+        "Which subsets work?"
+      ],
+      "options": [
+        "True: [11] and [1, 5, 5] both sum to 11",
+        "False: the array contains a very large element",
+        "False: the total is odd",
+        "True: [1, 5] and [11, 5] both sum to 6 and 16"
+      ],
+      "answer": "True: [11] and [1, 5, 5] both sum to 11",
+      "explanation": "Target 11 is reachable.",
+      "incorrectOptionExplanations": {
+        "False: the array contains a very large element": "11 is exactly half.",
+        "False: the total is odd": "The total is 22, which is even.",
+        "True: [1, 5] and [11, 5] both sum to 6 and 16": "The two subsets must have equal sums."
+      }
+    }
+  ],
+  "generatedAt": "2026-10-01T15:00:56Z"
+}

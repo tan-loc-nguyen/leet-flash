@@ -1,0 +1,141 @@
+{
+  "schemaVersion": 1,
+  "problemSlug": "spiral-matrix",
+  "summary": "Return all matrix elements in clockwise spiral order.",
+  "patterns": [
+    "Matrix",
+    "Array / Hashing"
+  ],
+  "mainInsight": "Keep four boundaries (top, bottom, left, right). Walk top row left-to-right, right column top-to-bottom, bottom row right-to-left (if top <= bottom), left column bottom-to-top (if left <= right), shrinking the boundaries after each side. Check the boundary conditions before the last two sides to avoid duplicates for a single row or column.",
+  "canonicalApproach": "Shrinking boundaries",
+  "approaches": [
+    {
+      "name": "Visited matrix with direction changes",
+      "summary": "Turn right when the next cell is out of bounds or visited.",
+      "timeComplexity": "O(m * n)",
+      "spaceComplexity": "O(m * n)",
+      "strengths": [
+        "Intuitive"
+      ],
+      "weaknesses": [
+        "Extra memory"
+      ]
+    },
+    {
+      "name": "Shrinking boundaries",
+      "summary": "Four loops per layer.",
+      "timeComplexity": "O(m * n)",
+      "spaceComplexity": "O(1) extra",
+      "strengths": [
+        "No visited array"
+      ],
+      "weaknesses": [
+        "Boundary checks"
+      ],
+      "interviewRelevance": "The expected answer."
+    }
+  ],
+  "commonMistakes": [
+    "Duplicating elements in single row/column cases",
+    "Wrong boundary updates",
+    "Off-by-one in the ranges"
+  ],
+  "edgeCases": [
+    "Single row or column",
+    "1 x 1",
+    "Rectangular non-square matrix"
+  ],
+  "cards": [
+    {
+      "id": "spm-pattern-01",
+      "category": "pattern",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "How do the four boundaries move during a spiral traversal?",
+        "What happens after the top row is finished?"
+      ],
+      "options": [
+        "top moves down after the top row, right moves left after the right column, etc.",
+        "All four boundaries move inward by one after each single side",
+        "Only the top and bottom boundaries ever move inward",
+        "The boundaries stay fixed while a visited set is used"
+      ],
+      "answer": "top moves down after the top row, right moves left after the right column, etc.",
+      "explanation": "Each traversed side is removed from the remaining region.",
+      "incorrectOptionExplanations": {
+        "All four boundaries move inward by one after each single side": "Only the boundary just traversed moves.",
+        "Only the top and bottom boundaries ever move inward": "Left and right move too.",
+        "The boundaries stay fixed while a visited set is used": "That is the other approach."
+      }
+    },
+    {
+      "id": "spm-insight-01",
+      "category": "main_insight",
+      "type": "free_recall",
+      "promptVariants": [
+        "Why are checks needed before the bottom row and left column passes?",
+        "Which matrix shapes reveal the bug?"
+      ],
+      "answer": "After shrinking top and right, the region may be a single row or single column; traversing the bottom row (or left column) would then repeat elements. Guarding with `top <= bottom` and `left <= right` prevents duplicates for inputs like a 1 x n or m x 1 matrix.",
+      "keyPoints": [
+        "Region can collapse to a line",
+        "Guard bottom and left passes",
+        "1 x n and m x 1 inputs"
+      ],
+      "explanation": "Alternative: stop when the count equals m * n."
+    },
+    {
+      "id": "spm-time-01",
+      "category": "time_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Time complexity: ___",
+        "Complete the statement: Time complexity: ___"
+      ],
+      "answer": "O(m*n)",
+      "explanation": "Each cell is visited once.",
+      "acceptedAnswers": [
+        "O(mn)",
+        "O(m * n)"
+      ]
+    },
+    {
+      "id": "spm-space-01",
+      "category": "space_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Space complexity (excluding the input): ___",
+        "Complete the statement: Space complexity (excluding the input): ___"
+      ],
+      "answer": "O(1)",
+      "explanation": "Extra space beyond the output.",
+      "acceptedAnswers": [
+        "constant",
+        "O(m*n)"
+      ]
+    },
+    {
+      "id": "spm-edge-01",
+      "category": "edge_case",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "What does the spiral of [[1, 2, 3]] return?",
+        "What must the algorithm not do?"
+      ],
+      "options": [
+        "[1, 2, 3], without repeating elements on the way back",
+        "[1, 2, 3, 3, 2, 1]: the bottom row is traversed backwards",
+        "[1, 3, 2]: the right column is read first",
+        "[]: a single row has no spiral"
+      ],
+      "answer": "[1, 2, 3], without repeating elements on the way back",
+      "explanation": "Check top <= bottom before the bottom row.",
+      "incorrectOptionExplanations": {
+        "[1, 2, 3, 3, 2, 1]: the bottom row is traversed backwards": "A guard stops the bottom pass.",
+        "[1, 3, 2]: the right column is read first": "The top row is read left to right.",
+        "[]: a single row has no spiral": "The result contains all elements."
+      }
+    }
+  ],
+  "generatedAt": "2026-10-01T15:00:56Z"
+}

@@ -1,0 +1,139 @@
+{
+  "schemaVersion": 1,
+  "problemSlug": "validate-ip-address",
+  "summary": "Classify a string as a valid IPv4, valid IPv6 or neither.",
+  "patterns": [
+    "Array / Hashing"
+  ],
+  "mainInsight": "Split by '.' (4 parts) or ':' (8 parts) and validate each part: IPv4 parts are 1-3 digits, no leading zeros (except '0'), value 0..255; IPv6 parts are 1-4 hexadecimal digits (leading zeros allowed, case-insensitive). Reject empty parts and other characters.",
+  "canonicalApproach": "Split and validate parts",
+  "approaches": [
+    {
+      "name": "Split and validate parts",
+      "summary": "Check the separator, count and each part.",
+      "timeComplexity": "O(n)",
+      "spaceComplexity": "O(n)",
+      "strengths": [
+        "Clear"
+      ],
+      "weaknesses": [
+        "Many edge cases"
+      ],
+      "interviewRelevance": "The expected answer."
+    },
+    {
+      "name": "Regular expression",
+      "summary": "One regex per format.",
+      "timeComplexity": "O(n)",
+      "spaceComplexity": "O(1)",
+      "strengths": [
+        "Compact"
+      ],
+      "weaknesses": [
+        "Easy to get subtly wrong"
+      ]
+    }
+  ],
+  "commonMistakes": [
+    "Allowing leading zeros in IPv4",
+    "Using split() without a separator",
+    "Accepting values above 255 or hex digits in IPv4"
+  ],
+  "edgeCases": [
+    "Empty parts like '1..1.1'",
+    "Trailing separator",
+    "Uppercase hex in IPv6"
+  ],
+  "cards": [
+    {
+      "id": "vip-pattern-01",
+      "category": "pattern",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "How do the validity rules differ between IPv4 and IPv6 parts?",
+        "Which parts allow leading zeros?"
+      ],
+      "options": [
+        "IPv4: no leading zeros, 0..255; IPv6: 1-4 hex digits, zeros allowed",
+        "IPv4 allows hex digits; IPv6 allows only decimal digits",
+        "Both need exactly the same number of digits in each part",
+        "IPv6 forbids leading zeros; IPv4 allows them in a part"
+      ],
+      "answer": "IPv4: no leading zeros, 0..255; IPv6: 1-4 hex digits, zeros allowed",
+      "explanation": "'01' is invalid in IPv4, '0001' is valid in IPv6.",
+      "incorrectOptionExplanations": {
+        "IPv4 allows hex digits; IPv6 allows only decimal digits": "It is the other way round.",
+        "Both need exactly the same number of digits in each part": "The lengths differ.",
+        "IPv6 forbids leading zeros; IPv4 allows them in a part": "IPv4 forbids them (except '0')."
+      }
+    },
+    {
+      "id": "vip-insight-01",
+      "category": "main_insight",
+      "type": "free_recall",
+      "promptVariants": [
+        "Which empty or malformed inputs must be rejected?",
+        "How do you handle a trailing separator?"
+      ],
+      "answer": "A trailing or leading separator creates an empty part when split, and an empty part is invalid. Split with an explicit separator (not split() with no argument), count exactly 4 or 8 parts, and reject any part with non-allowed characters.",
+      "keyPoints": [
+        "Empty part => invalid",
+        "Exactly 4 or 8 parts",
+        "Only digits / hex digits"
+      ],
+      "explanation": "Python's str.isdigit also accepts some Unicode digits; check with an ASCII set."
+    },
+    {
+      "id": "vip-time-01",
+      "category": "time_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Time complexity: ___",
+        "Complete the statement: Time complexity: ___"
+      ],
+      "answer": "O(n)",
+      "explanation": "Each character is examined once.",
+      "acceptedAnswers": [
+        "linear"
+      ]
+    },
+    {
+      "id": "vip-space-01",
+      "category": "space_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Space complexity (excluding the input): ___",
+        "Complete the statement: Space complexity (excluding the input): ___"
+      ],
+      "answer": "O(n)",
+      "explanation": "The split parts.",
+      "acceptedAnswers": [
+        "linear",
+        "O(1)"
+      ]
+    },
+    {
+      "id": "vip-edge-01",
+      "category": "edge_case",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "Is '192.168.01.1' valid?",
+        "What is wrong with the third part?"
+      ],
+      "options": [
+        "No: '01' has a leading zero",
+        "Yes: IPv4 parts may be zero-padded",
+        "Yes: 01 is below 256",
+        "No: it has too many parts"
+      ],
+      "answer": "No: '01' has a leading zero",
+      "explanation": "Only '0' itself may start with zero.",
+      "incorrectOptionExplanations": {
+        "Yes: IPv4 parts may be zero-padded": "Leading zeros are not allowed.",
+        "Yes: 01 is below 256": "The range is not the only rule.",
+        "No: it has too many parts": "It has exactly four parts."
+      }
+    }
+  ],
+  "generatedAt": "2026-10-01T14:57:59Z"
+}

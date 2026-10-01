@@ -1,0 +1,151 @@
+{
+  "schemaVersion": 1,
+  "problemSlug": "find-the-duplicate-number",
+  "summary": "Find the single repeated number in an array of n + 1 values in [1, n] without modifying it and using O(1) space.",
+  "patterns": [
+    "Two Pointers",
+    "Binary Search"
+  ],
+  "mainInsight": "Treat the array as a function i -> nums[i]. Because there are n + 1 indices mapping into [1, n], a cycle exists and its entrance is the duplicate. Floyd's tortoise-and-hare finds the cycle, then restarting one pointer from the head finds its entrance.",
+  "canonicalApproach": "Floyd's cycle detection",
+  "approaches": [
+    {
+      "name": "Sort / set",
+      "summary": "Sort and compare neighbours, or store seen values in a set.",
+      "timeComplexity": "O(n log n) / O(n)",
+      "spaceComplexity": "O(1) / O(n)",
+      "strengths": [
+        "Simple"
+      ],
+      "weaknesses": [
+        "Violates the space or no-modify constraint"
+      ]
+    },
+    {
+      "name": "Binary search on values (pigeonhole)",
+      "summary": "Count elements <= mid; if more than mid, the duplicate is in [1, mid].",
+      "timeComplexity": "O(n log n)",
+      "spaceComplexity": "O(1)",
+      "strengths": [
+        "Easy to follow"
+      ],
+      "weaknesses": [
+        "Not linear"
+      ]
+    },
+    {
+      "name": "Floyd's cycle detection",
+      "summary": "Find the meeting point inside the cycle, then advance from the head and the meeting point at the same speed.",
+      "timeComplexity": "O(n)",
+      "spaceComplexity": "O(1)",
+      "strengths": [
+        "Linear, constant space"
+      ],
+      "weaknesses": [
+        "Hard to derive"
+      ],
+      "interviewRelevance": "The optimal interview answer."
+    }
+  ],
+  "commonMistakes": [
+    "Modifying the input",
+    "Starting the pointers at index 0 value and mixing indices with values",
+    "Forgetting the second phase after the pointers meet"
+  ],
+  "edgeCases": [
+    "Duplicate appears many times",
+    "Minimum array [1, 1]",
+    "Duplicate is n"
+  ],
+  "cards": [
+    {
+      "id": "fdn-pattern-01",
+      "category": "pattern",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "Why does Floyd's cycle-detection algorithm solve Find the Duplicate Number?",
+        "How is the array turned into a linked list?"
+      ],
+      "options": [
+        "Following i -> nums[i] creates a cycle whose entrance is the duplicated value",
+        "Equal values are adjacent after sorting, so a fast pointer finds them",
+        "Sorting the indices by value puts the duplicate next to its twin",
+        "Binary search halves the array so the duplicate is always the middle"
+      ],
+      "answer": "Following i -> nums[i] creates a cycle whose entrance is the duplicated value",
+      "explanation": "Two indices point to the same value, so some node has two predecessors, creating a cycle.",
+      "incorrectOptionExplanations": {
+        "Equal values are adjacent after sorting, so a fast pointer finds them": "The array is not sorted or modified.",
+        "Sorting the indices by value puts the duplicate next to its twin": "Sorting would modify the array and cost extra time.",
+        "Binary search halves the array so the duplicate is always the middle": "The duplicate is not necessarily in the middle."
+      }
+    },
+    {
+      "id": "fdn-insight-01",
+      "category": "main_insight",
+      "type": "free_recall",
+      "promptVariants": [
+        "Why does restarting a pointer from the start find the cycle's entrance?",
+        "What is the argument behind the second phase of Floyd's algorithm?"
+      ],
+      "answer": "If the head-to-entrance distance is a and the meeting point is b steps past the entrance in a cycle of length c, then the fast pointer travelled twice the slow one: 2(a + b) = a + b + kc, so a = kc - b. A pointer from the head and one from the meeting point, both moving one step at a time, meet exactly at the entrance after a steps.",
+      "keyPoints": [
+        "2(a+b) = a+b+kc",
+        "a = kc - b",
+        "Both pointers meet at the entrance"
+      ],
+      "explanation": "The entrance index value is the duplicate number."
+    },
+    {
+      "id": "fdn-time-01",
+      "category": "time_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Time complexity: ___",
+        "Complete the statement: Time complexity: ___"
+      ],
+      "answer": "O(n)",
+      "explanation": "Both phases take O(n).",
+      "acceptedAnswers": [
+        "linear"
+      ]
+    },
+    {
+      "id": "fdn-space-01",
+      "category": "space_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Space complexity (excluding the input): ___",
+        "Complete the statement: Space complexity (excluding the input): ___"
+      ],
+      "answer": "O(1)",
+      "explanation": "Only two pointers.",
+      "acceptedAnswers": [
+        "constant"
+      ]
+    },
+    {
+      "id": "fdn-edge-01",
+      "category": "edge_case",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "Why is the sort-and-compare approach not accepted here?",
+        "Which constraint does hashing violate?"
+      ],
+      "options": [
+        "It modifies the array (sort) or needs O(n) extra space (set)",
+        "Sorting is slower than O(n), so it exceeds the time limit",
+        "It fails when the duplicate appears more than twice",
+        "It cannot find a duplicate larger than n / 2 in size"
+      ],
+      "answer": "It modifies the array (sort) or needs O(n) extra space (set)",
+      "explanation": "The problem demands O(1) space and a read-only array.",
+      "incorrectOptionExplanations": {
+        "Sorting is slower than O(n), so it exceeds the time limit": "The time limit is not the issue; the constraints are.",
+        "It fails when the duplicate appears more than twice": "It handles repeats; the issue is the constraints.",
+        "It cannot find a duplicate larger than n / 2 in size": "Values are not restricted that way."
+      }
+    }
+  ],
+  "generatedAt": "2026-10-01T14:52:56Z"
+}

@@ -1,0 +1,141 @@
+{
+  "schemaVersion": 1,
+  "problemSlug": "task-scheduler",
+  "summary": "Minimum intervals to run all tasks when equal tasks must be at least n intervals apart.",
+  "patterns": [
+    "Greedy",
+    "Heap / Priority Queue"
+  ],
+  "mainInsight": "The most frequent task forces a frame structure: (max_count - 1) blocks of length n + 1, plus a final partial block with one slot for each task having the max count. Answer = max(len(tasks), (max_count - 1) * (n + 1) + num_with_max).",
+  "canonicalApproach": "Formula from max frequency",
+  "approaches": [
+    {
+      "name": "Max-heap simulation",
+      "summary": "Each cycle of n + 1 slots runs the most frequent available tasks.",
+      "timeComplexity": "O(T log k)",
+      "spaceComplexity": "O(k)",
+      "strengths": [
+        "Mimics the real schedule"
+      ],
+      "weaknesses": [
+        "Heap bookkeeping"
+      ]
+    },
+    {
+      "name": "Formula from max frequency",
+      "summary": "(maxCount - 1) * (n + 1) + numMax, at least len(tasks).",
+      "timeComplexity": "O(T)",
+      "spaceComplexity": "O(1)",
+      "strengths": [
+        "Linear, short"
+      ],
+      "weaknesses": [
+        "Needs the idle-slot argument"
+      ],
+      "interviewRelevance": "Optimal."
+    }
+  ],
+  "commonMistakes": [
+    "Forgetting the tie count in the last frame",
+    "Not taking max with len(tasks)",
+    "Using n instead of n + 1 for the frame length"
+  ],
+  "edgeCases": [
+    "n = 0 (answer is len(tasks))",
+    "All tasks distinct",
+    "Single task repeated"
+  ],
+  "cards": [
+    {
+      "id": "ts3-pattern-01",
+      "category": "pattern",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "How do you compute the minimum time from task frequencies?",
+        "What determines the idle time in Task Scheduler?"
+      ],
+      "options": [
+        "(maxCount - 1) frames of n + 1 slots, plus the tasks tied for the max",
+        "The sum of all frequencies multiplied by n",
+        "The number of distinct tasks multiplied by n + 1",
+        "The largest frequency plus the second largest frequency"
+      ],
+      "answer": "(maxCount - 1) frames of n + 1 slots, plus the tasks tied for the max",
+      "explanation": "Other tasks fill the idle slots; leftover idles are the only waste.",
+      "incorrectOptionExplanations": {
+        "The sum of all frequencies multiplied by n": "That ignores that other tasks fill the gaps.",
+        "The number of distinct tasks multiplied by n + 1": "Frequency, not variety, determines the frames.",
+        "The largest frequency plus the second largest frequency": "Every tied task must be counted in the last frame."
+      }
+    },
+    {
+      "id": "ts3-insight-01",
+      "category": "main_insight",
+      "type": "free_recall",
+      "promptVariants": [
+        "Why is the answer max(len(tasks), formula)?",
+        "When does the formula undercount?"
+      ],
+      "answer": "If there are enough distinct tasks to fill every gap, no idle slot is needed and the schedule simply takes len(tasks) intervals, which is larger than the frame formula. The formula counts only the frame skeleton, so the true answer is the maximum of the two.",
+      "keyPoints": [
+        "Enough distinct tasks => no idle",
+        "Formula is a lower bound for tight cases",
+        "Take the maximum"
+      ],
+      "explanation": "Example: tasks ABCDEF with n = 2."
+    },
+    {
+      "id": "ts3-time-01",
+      "category": "time_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Time complexity: ___",
+        "Complete the statement: Time complexity: ___"
+      ],
+      "answer": "O(T)",
+      "explanation": "One counting pass over the tasks (a heap would give O(T log 26)).",
+      "acceptedAnswers": [
+        "linear",
+        "O(T log k)"
+      ]
+    },
+    {
+      "id": "ts3-space-01",
+      "category": "space_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Space complexity (excluding the input): ___",
+        "Complete the statement: Space complexity (excluding the input): ___"
+      ],
+      "answer": "O(1)",
+      "explanation": "A 26-letter frequency table.",
+      "acceptedAnswers": [
+        "O(26)",
+        "constant"
+      ]
+    },
+    {
+      "id": "ts3-edge-01",
+      "category": "edge_case",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "What does AAABBB with n = 2 need?",
+        "How many idle slots are there?"
+      ],
+      "options": [
+        "8 intervals: A B _ A B _ A B (frames of 3, the last one short)",
+        "6 intervals: there is no idle time because the tasks alternate",
+        "9 intervals: three full frames of three slots each",
+        "7 intervals: A B _ A B _ A, leaving one B unscheduled"
+      ],
+      "answer": "8 intervals: A B _ A B _ A B (frames of 3, the last one short)",
+      "explanation": "(3 - 1) * 3 + 2 = 8.",
+      "incorrectOptionExplanations": {
+        "6 intervals: there is no idle time because the tasks alternate": "A B A B A B puts equal tasks only 2 apart.",
+        "9 intervals: three full frames of three slots each": "The last frame only needs the tied tasks.",
+        "7 intervals: A B _ A B _ A, leaving one B unscheduled": "B would still be left unscheduled."
+      }
+    }
+  ],
+  "generatedAt": "2026-10-01T14:54:43Z"
+}

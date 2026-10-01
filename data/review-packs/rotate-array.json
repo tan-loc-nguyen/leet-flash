@@ -1,0 +1,151 @@
+{
+  "schemaVersion": 1,
+  "problemSlug": "rotate-array",
+  "summary": "Rotate the array right by k steps in place.",
+  "patterns": [
+    "Two Pointers",
+    "Math"
+  ],
+  "mainInsight": "Reduce k modulo n. Reversing the whole array, then the first k elements, then the remaining n - k elements yields the rotation in O(n) time and O(1) space. A cyclic-replacement variant moves each element to (i + k) % n following cycles.",
+  "canonicalApproach": "Three reversals",
+  "approaches": [
+    {
+      "name": "Extra array",
+      "summary": "result[(i + k) % n] = nums[i], copy back.",
+      "timeComplexity": "O(n)",
+      "spaceComplexity": "O(n)",
+      "strengths": [
+        "Simple"
+      ],
+      "weaknesses": [
+        "Extra memory"
+      ]
+    },
+    {
+      "name": "Three reversals",
+      "summary": "Reverse all, then [0, k), then [k, n).",
+      "timeComplexity": "O(n)",
+      "spaceComplexity": "O(1)",
+      "strengths": [
+        "In place, short"
+      ],
+      "weaknesses": [
+        "Not obvious"
+      ],
+      "interviewRelevance": "The expected answer."
+    },
+    {
+      "name": "Cyclic replacement",
+      "summary": "Move elements along cycles of the i -> (i + k) % n permutation.",
+      "timeComplexity": "O(n)",
+      "spaceComplexity": "O(1)",
+      "strengths": [
+        "In place"
+      ],
+      "weaknesses": [
+        "Cycle bookkeeping is fiddly"
+      ]
+    }
+  ],
+  "commonMistakes": [
+    "Forgetting k %= n",
+    "Using the extra array when O(1) space is required",
+    "Rotating left instead of right"
+  ],
+  "edgeCases": [
+    "k = 0",
+    "k multiple of n",
+    "Single element"
+  ],
+  "cards": [
+    {
+      "id": "ra2-pattern-01",
+      "category": "pattern",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "Which sequence of operations rotates an array right by k in place?",
+        "How can reversals implement a rotation?"
+      ],
+      "options": [
+        "Reverse everything, then the first k elements and the last n - k",
+        "Reverse only the first k elements of the array",
+        "Sort the array and shift every element by k places",
+        "Swap element i with element i + k for each index i"
+      ],
+      "answer": "Reverse everything, then the first k elements and the last n - k",
+      "explanation": "Reversing all moves the last k to the front reversed; reversing each part restores their order.",
+      "incorrectOptionExplanations": {
+        "Reverse only the first k elements of the array": "That leaves the tail untouched.",
+        "Sort the array and shift every element by k places": "Sorting changes the order.",
+        "Swap element i with element i + k for each index i": "That is not a rotation and overflows the array."
+      }
+    },
+    {
+      "id": "ra2-insight-01",
+      "category": "main_insight",
+      "type": "free_recall",
+      "promptVariants": [
+        "Why must k be reduced modulo n, and what happens if it is not?",
+        "What does k >= n mean for a rotation?"
+      ],
+      "answer": "Rotating by n returns the original array, so only k mod n matters. Without the reduction the slice indices or reversal ranges go out of bounds (and `k = 0 mod n` must be a no-op).",
+      "keyPoints": [
+        "k % n",
+        "Rotation by n is identity",
+        "Avoid out of range"
+      ],
+      "explanation": "n = 1 also needs care."
+    },
+    {
+      "id": "ra2-time-01",
+      "category": "time_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Time complexity: ___",
+        "Complete the statement: Time complexity: ___"
+      ],
+      "answer": "O(n)",
+      "explanation": "Three reversals touch each element at most twice.",
+      "acceptedAnswers": [
+        "linear"
+      ]
+    },
+    {
+      "id": "ra2-space-01",
+      "category": "space_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Space complexity (excluding the input): ___",
+        "Complete the statement: Space complexity (excluding the input): ___"
+      ],
+      "answer": "O(1)",
+      "explanation": "In-place reversals using two indices.",
+      "acceptedAnswers": [
+        "constant"
+      ]
+    },
+    {
+      "id": "ra2-edge-01",
+      "category": "edge_case",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "What does the algorithm do for nums = [1, 2] and k = 3?",
+        "What is the effective rotation?"
+      ],
+      "options": [
+        "k becomes 3 % 2 = 1, giving [2, 1]",
+        "[1, 2]: rotating by more than n has no effect",
+        "[2, 1] after three full swaps",
+        "An error because k > n"
+      ],
+      "answer": "k becomes 3 % 2 = 1, giving [2, 1]",
+      "explanation": "Three single-step rotations of two elements equal one.",
+      "incorrectOptionExplanations": {
+        "[1, 2]: rotating by more than n has no effect": "Only multiples of n have no effect.",
+        "[2, 1] after three full swaps": "Each step is one position, not a swap.",
+        "An error because k > n": "The modulo handles it."
+      }
+    }
+  ],
+  "generatedAt": "2026-10-01T14:52:56Z"
+}

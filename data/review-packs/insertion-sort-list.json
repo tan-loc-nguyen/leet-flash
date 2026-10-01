@@ -1,0 +1,139 @@
+{
+  "schemaVersion": 1,
+  "problemSlug": "insertion-sort-list",
+  "summary": "Sort a singly linked list using insertion sort.",
+  "patterns": [
+    "Linked List",
+    "Sorting"
+  ],
+  "mainInsight": "Keep a sorted list built from a dummy head. For each node taken from the input, find its insertion point by scanning the sorted part from the dummy (optionally resetting from the dummy only when needed), splice it in, and continue with the saved next pointer.",
+  "canonicalApproach": "Insertion sort",
+  "approaches": [
+    {
+      "name": "Insertion sort",
+      "summary": "Insert each node into the sorted prefix.",
+      "timeComplexity": "O(n^2)",
+      "spaceComplexity": "O(1)",
+      "strengths": [
+        "As required by the title"
+      ],
+      "weaknesses": [
+        "Quadratic"
+      ],
+      "interviewRelevance": "The expected answer."
+    },
+    {
+      "name": "Merge sort",
+      "summary": "Divide at the middle and merge sorted halves.",
+      "timeComplexity": "O(n log n)",
+      "spaceComplexity": "O(log n)",
+      "strengths": [
+        "Faster"
+      ],
+      "weaknesses": [
+        "Not insertion sort"
+      ]
+    }
+  ],
+  "commonMistakes": [
+    "Losing the rest of the list by not saving next",
+    "Always scanning from the head even for ascending input (still correct)",
+    "Returning the dummy instead of dummy.next"
+  ],
+  "edgeCases": [
+    "Empty list",
+    "Single node",
+    "Duplicates (stable insertion)"
+  ],
+  "cards": [
+    {
+      "id": "isl-pattern-01",
+      "category": "pattern",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "Why use a dummy head when building the sorted list?",
+        "What problem does it solve?"
+      ],
+      "options": [
+        "A node may have to be inserted before the current head, and the dummy removes that special case",
+        "It stores the length of the sorted list built so far",
+        "It reverses the order of the already sorted nodes",
+        "It lets you compare each node with the tail in O(1)"
+      ],
+      "answer": "A node may have to be inserted before the current head, and the dummy removes that special case",
+      "explanation": "The dummy's next always points to the smallest node.",
+      "incorrectOptionExplanations": {
+        "It stores the length of the sorted list built so far": "The dummy does not store a length.",
+        "It reverses the order of the already sorted nodes": "Nothing needs reversing.",
+        "It lets you compare each node with the tail in O(1)": "The tail is not used for insertion."
+      }
+    },
+    {
+      "id": "isl-insight-01",
+      "category": "main_insight",
+      "type": "free_recall",
+      "promptVariants": [
+        "What must be saved before relinking a node into the sorted list?",
+        "Why?"
+      ],
+      "answer": "The next pointer of the node being inserted: inserting rewires node.next, so without saving it you would lose the rest of the unsorted list.",
+      "keyPoints": [
+        "Save next before splicing",
+        "Rewiring destroys the original link"
+      ],
+      "explanation": "Typical bug: infinite loop or truncated list."
+    },
+    {
+      "id": "isl-time-01",
+      "category": "time_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Time complexity: ___",
+        "Complete the statement: Time complexity: ___"
+      ],
+      "answer": "O(n^2)",
+      "explanation": "Each insertion may scan the whole sorted prefix.",
+      "acceptedAnswers": [
+        "O(n²)",
+        "quadratic"
+      ]
+    },
+    {
+      "id": "isl-space-01",
+      "category": "space_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Space complexity (excluding the input): ___",
+        "Complete the statement: Space complexity (excluding the input): ___"
+      ],
+      "answer": "O(1)",
+      "explanation": "Nodes are relinked in place.",
+      "acceptedAnswers": [
+        "constant"
+      ]
+    },
+    {
+      "id": "isl-edge-01",
+      "category": "edge_case",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "What does the algorithm return for an empty list or a single node?",
+        "Why is nothing special needed?"
+      ],
+      "options": [
+        "The input itself (None or the single node): the loop does nothing",
+        "An error: there is nothing to sort in the list",
+        "A new dummy node that points to None only",
+        "None, even when the list holds one single node"
+      ],
+      "answer": "The input itself (None or the single node): the loop does nothing",
+      "explanation": "dummy.next is returned in all cases.",
+      "incorrectOptionExplanations": {
+        "An error: there is nothing to sort in the list": "The loop simply does not run.",
+        "A new dummy node that points to None only": "The dummy's next is returned, which is the input.",
+        "None, even when the list holds one single node": "A single node is already sorted."
+      }
+    }
+  ],
+  "generatedAt": "2026-10-01T14:57:58Z"
+}

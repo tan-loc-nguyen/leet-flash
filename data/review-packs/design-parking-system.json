@@ -1,0 +1,136 @@
+{
+  "schemaVersion": 1,
+  "problemSlug": "design-parking-system",
+  "summary": "Design a parking system with big, medium and small slots; addCar(type) succeeds if a slot of that type is free.",
+  "patterns": [
+    "Design",
+    "Array / Hashing"
+  ],
+  "mainInsight": "Store the remaining capacity per type in a list indexed by carType - 1. addCar succeeds iff the remaining count is positive and then decrements it. All operations are O(1).",
+  "canonicalApproach": "Counters per type",
+  "approaches": [
+    {
+      "name": "Counters per type",
+      "summary": "slots[carType - 1] > 0 then decrement.",
+      "timeComplexity": "O(1)",
+      "spaceComplexity": "O(1)",
+      "strengths": [
+        "Trivial"
+      ],
+      "interviewRelevance": "The expected answer."
+    },
+    {
+      "name": "Simulate individual slots",
+      "summary": "A list of occupied flags per slot.",
+      "timeComplexity": "O(slots)",
+      "spaceComplexity": "O(slots)",
+      "strengths": [
+        "Matches the story"
+      ],
+      "weaknesses": [
+        "Unneeded"
+      ]
+    }
+  ],
+  "commonMistakes": [
+    "Indexing with carType instead of carType - 1",
+    "Allowing a car in a larger slot",
+    "Decrementing on failure"
+  ],
+  "edgeCases": [
+    "Zero capacity for a type",
+    "Many consecutive adds",
+    "Each type tested once"
+  ],
+  "cards": [
+    {
+      "id": "dps-pattern-01",
+      "category": "pattern",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "What state does the parking system need?",
+        "How can addCar be answered in constant time?"
+      ],
+      "options": [
+        "Only the remaining slot count for each car type",
+        "A list of every car's plate number and arrival time",
+        "A grid of slot positions for every parking level",
+        "A queue of waiting cars for each type"
+      ],
+      "answer": "Only the remaining slot count for each car type",
+      "explanation": "Capacity counters are sufficient.",
+      "incorrectOptionExplanations": {
+        "A list of every car's plate number and arrival time": "Cars are anonymous here.",
+        "A grid of slot positions for every parking level": "The layout is irrelevant.",
+        "A queue of waiting cars for each type": "There is no waiting."
+      }
+    },
+    {
+      "id": "dps-insight-01",
+      "category": "main_insight",
+      "type": "free_recall",
+      "promptVariants": [
+        "Why is no per-slot tracking needed?",
+        "What could be done if cars could leave?"
+      ],
+      "answer": "Cars are never removed and slots of the same type are interchangeable, so only how many are left matters. If departures were allowed you would add a removeCar that increments the counter (or track car ids if the same car could be double-counted).",
+      "keyPoints": [
+        "Slots of a type are interchangeable",
+        "No departures",
+        "Counters suffice"
+      ],
+      "explanation": "Out of scope here."
+    },
+    {
+      "id": "dps-time-01",
+      "category": "time_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Time complexity: ___",
+        "Complete the statement: Time complexity: ___"
+      ],
+      "answer": "O(1)",
+      "explanation": "Each addCar reads and updates one counter.",
+      "acceptedAnswers": [
+        "constant"
+      ]
+    },
+    {
+      "id": "dps-space-01",
+      "category": "space_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Space complexity (excluding the input): ___",
+        "Complete the statement: Space complexity (excluding the input): ___"
+      ],
+      "answer": "O(1)",
+      "explanation": "Three counters.",
+      "acceptedAnswers": [
+        "constant"
+      ]
+    },
+    {
+      "id": "dps-edge-01",
+      "category": "edge_case",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "What does addCar return when carType 1 has capacity 0?",
+        "How is the counter updated on success?"
+      ],
+      "options": [
+        "False: no slot of that type remains and nothing is changed",
+        "True: a larger slot can host a smaller car",
+        "False, and the counter becomes -1",
+        "An error is raised because the capacity is zero"
+      ],
+      "answer": "False: no slot of that type remains and nothing is changed",
+      "explanation": "Only successful additions decrement.",
+      "incorrectOptionExplanations": {
+        "True: a larger slot can host a smaller car": "The car must park in its own type.",
+        "False, and the counter becomes -1": "Counters must not go negative.",
+        "An error is raised because the capacity is zero": "A boolean is returned instead."
+      }
+    }
+  ],
+  "generatedAt": "2026-10-01T14:57:58Z"
+}

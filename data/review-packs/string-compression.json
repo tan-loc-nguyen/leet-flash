@@ -1,0 +1,138 @@
+{
+  "schemaVersion": 1,
+  "problemSlug": "string-compression",
+  "summary": "Compress a character array in place using run lengths; return the new length.",
+  "patterns": [
+    "Two Pointers"
+  ],
+  "mainInsight": "Use a read pointer to find each run and a write pointer for the output. Write the character, then the run length's digits (only if the run is longer than 1). The write position never overtakes the read position, so it is safe in place.",
+  "canonicalApproach": "Two pointers in place",
+  "approaches": [
+    {
+      "name": "Build a new string",
+      "summary": "Concatenate characters and counts then copy back.",
+      "timeComplexity": "O(n)",
+      "spaceComplexity": "O(n)",
+      "strengths": [
+        "Simple"
+      ],
+      "weaknesses": [
+        "Not in place"
+      ]
+    },
+    {
+      "name": "Two pointers in place",
+      "summary": "Read runs, write char and the digits of the count.",
+      "timeComplexity": "O(n)",
+      "spaceComplexity": "O(1)",
+      "strengths": [
+        "Meets the space requirement"
+      ],
+      "weaknesses": [
+        "Multi-digit counts"
+      ],
+      "interviewRelevance": "The expected answer."
+    }
+  ],
+  "commonMistakes": [
+    "Writing '1' for single characters",
+    "Writing multi-digit counts as one cell",
+    "Overwriting characters not yet read"
+  ],
+  "edgeCases": [
+    "Single character",
+    "Run of 10+",
+    "All distinct characters"
+  ],
+  "cards": [
+    {
+      "id": "scmp-pattern-01",
+      "category": "pattern",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "How do you compress the array in place?",
+        "Why can you write into the same array you read?"
+      ],
+      "options": [
+        "A read pointer scans runs; a write pointer that never passes it stores output",
+        "Sort the characters, then write each unique one once",
+        "Keep a hash map from character to count and overwrite",
+        "Build the answer backwards from the end of the array"
+      ],
+      "answer": "A read pointer scans runs; a write pointer that never passes it stores output",
+      "explanation": "The compressed form is never longer than the original run.",
+      "incorrectOptionExplanations": {
+        "Sort the characters, then write each unique one once": "Sorting changes the order.",
+        "Keep a hash map from character to count and overwrite": "Runs are about consecutive characters, not totals.",
+        "Build the answer backwards from the end of the array": "The output is written at the front."
+      }
+    },
+    {
+      "id": "scmp-insight-01",
+      "category": "main_insight",
+      "type": "free_recall",
+      "promptVariants": [
+        "How must run lengths of 10 or more be written?",
+        "Why is the write pointer safe?"
+      ],
+      "answer": "A count like 12 is written as separate digit characters '1', '2'. The write pointer is safe because for any run of length L >= 2 the output (1 char + digits of L) is not longer than L, and for L = 1 only the character is written, so write <= read always.",
+      "keyPoints": [
+        "Digits of the count are written individually",
+        "Run of 1 has no digits",
+        "write <= read"
+      ],
+      "explanation": "Convert the count with str(count) and write its characters."
+    },
+    {
+      "id": "scmp-time-01",
+      "category": "time_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Time complexity: ___",
+        "Complete the statement: Time complexity: ___"
+      ],
+      "answer": "O(n)",
+      "explanation": "Each element is read once and written at most once.",
+      "acceptedAnswers": [
+        "linear"
+      ]
+    },
+    {
+      "id": "scmp-space-01",
+      "category": "space_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Space complexity (excluding the input): ___",
+        "Complete the statement: Space complexity (excluding the input): ___"
+      ],
+      "answer": "O(1)",
+      "explanation": "Pointers and the count only (str(count) is at most a few digits).",
+      "acceptedAnswers": [
+        "constant"
+      ]
+    },
+    {
+      "id": "scmp-edge-01",
+      "category": "edge_case",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "What does ['a'] compress to, and what about 12 b's?",
+        "How are single characters and long runs written?"
+      ],
+      "options": [
+        "['a'] stays length 1; 12 b's become ['b', '1', '2'], length 3",
+        "['a', '1'] and ['b', '12'] because counts are always written",
+        "['a'] and ['b', '12'] with the 12 as one array element",
+        "['a', '1'] and ['b', '1', '2'] with a count for a single a"
+      ],
+      "answer": "['a'] stays length 1; 12 b's become ['b', '1', '2'], length 3",
+      "explanation": "Only runs longer than 1 get a count, each digit in its own cell.",
+      "incorrectOptionExplanations": {
+        "['a', '1'] and ['b', '12'] because counts are always written": "A single character omits the 1, and counts are split into digits.",
+        "['a'] and ['b', '12'] with the 12 as one array element": "Each element is one character.",
+        "['a', '1'] and ['b', '1', '2'] with a count for a single a": "A run of one has no count."
+      }
+    }
+  ],
+  "generatedAt": "2026-10-01T14:54:43Z"
+}

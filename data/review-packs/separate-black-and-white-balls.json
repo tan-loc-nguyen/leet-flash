@@ -1,0 +1,139 @@
+{
+  "schemaVersion": 1,
+  "problemSlug": "separate-black-and-white-balls",
+  "summary": "Minimum adjacent swaps to move all 1s (black) to the right and 0s (white) to the left.",
+  "patterns": [
+    "Greedy",
+    "Two Pointers"
+  ],
+  "mainInsight": "Each swap removes exactly one inversion (a 1 before a 0), so the answer is the number of (1, 0) pairs with the 1 left of the 0. Scan from the right counting zeros; at each 1 add the zero count.",
+  "canonicalApproach": "Count inversions in one pass",
+  "approaches": [
+    {
+      "name": "Bubble sort simulation",
+      "summary": "Swap adjacent 1 0 pairs until none remain.",
+      "timeComplexity": "O(n^2)",
+      "spaceComplexity": "O(1)",
+      "strengths": [
+        "Matches the statement"
+      ],
+      "weaknesses": [
+        "Too slow for 10^5"
+      ]
+    },
+    {
+      "name": "Count inversions in one pass",
+      "summary": "Track zeros seen to the right; add it at each 1.",
+      "timeComplexity": "O(n)",
+      "spaceComplexity": "O(1)",
+      "strengths": [
+        "Linear, tiny"
+      ],
+      "weaknesses": [
+        "Needs the inversion insight"
+      ],
+      "interviewRelevance": "Optimal."
+    }
+  ],
+  "commonMistakes": [
+    "Counting the zeros to the left of each 1",
+    "Using int overflow tricks (not needed in Python)",
+    "Simulating swaps"
+  ],
+  "edgeCases": [
+    "All zeros or all ones",
+    "Already sorted '0011'",
+    "Alternating '1010...'"
+  ],
+  "cards": [
+    {
+      "id": "sbw-pattern-01",
+      "category": "pattern",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "What does the minimum number of swaps equal?",
+        "Which pairs of balls must be swapped at least once?"
+      ],
+      "options": [
+        "The number of pairs where a 1 appears before a 0",
+        "The number of 1s in the string",
+        "The distance between the first and last 1",
+        "The number of 0s multiplied by the length"
+      ],
+      "answer": "The number of pairs where a 1 appears before a 0",
+      "explanation": "Each adjacent swap fixes exactly one such inversion.",
+      "incorrectOptionExplanations": {
+        "The number of 1s in the string": "Each 1 may cross several zeros.",
+        "The distance between the first and last 1": "Zeros in between are not counted correctly.",
+        "The number of 0s multiplied by the length": "That overcounts every pair."
+      }
+    },
+    {
+      "id": "sbw-insight-01",
+      "category": "main_insight",
+      "type": "free_recall",
+      "promptVariants": [
+        "Why does every adjacent swap remove exactly one inversion?",
+        "Why is the answer the inversion count?"
+      ],
+      "answer": "Swapping adjacent '1' and '0' changes only the relative order of that pair, so the inversion count drops by exactly 1; swapping any other adjacent pair never reduces it. The target (all 0s then all 1s) has zero inversions, so the number of swaps is at least, and with bubble-sort style swaps exactly, the initial inversion count.",
+      "keyPoints": [
+        "Adjacent swap fixes one pair",
+        "Target has zero inversions",
+        "Count (1, 0) pairs"
+      ],
+      "explanation": "Count with a running zero total from the right."
+    },
+    {
+      "id": "sbw-time-01",
+      "category": "time_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Time complexity: ___",
+        "Complete the statement: Time complexity: ___"
+      ],
+      "answer": "O(n)",
+      "explanation": "Single pass over the string.",
+      "acceptedAnswers": [
+        "linear"
+      ]
+    },
+    {
+      "id": "sbw-space-01",
+      "category": "space_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Space complexity (excluding the input): ___",
+        "Complete the statement: Space complexity (excluding the input): ___"
+      ],
+      "answer": "O(1)",
+      "explanation": "Two counters.",
+      "acceptedAnswers": [
+        "constant"
+      ]
+    },
+    {
+      "id": "sbw-edge-01",
+      "category": "edge_case",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "What is the answer for '100'?",
+        "How many (1, 0) pairs exist?"
+      ],
+      "options": [
+        "2: the 1 must cross both zeros",
+        "1: only one swap moves the 1 to the right",
+        "0: the 1 is already to the left of the zeros",
+        "3: every pair of balls must swap"
+      ],
+      "answer": "2: the 1 must cross both zeros",
+      "explanation": "'100' -> '010' -> '001'.",
+      "incorrectOptionExplanations": {
+        "1: only one swap moves the 1 to the right": "It must cross two zeros.",
+        "0: the 1 is already to the left of the zeros": "Ones must end on the right.",
+        "3: every pair of balls must swap": "Only inverted pairs swap."
+      }
+    }
+  ],
+  "generatedAt": "2026-10-01T14:54:43Z"
+}

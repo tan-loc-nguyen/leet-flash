@@ -1,0 +1,139 @@
+{
+  "schemaVersion": 1,
+  "problemSlug": "minimum-operations-to-reduce-x-to-zero",
+  "summary": "Minimum number of elements removed from either end so their sum is exactly x.",
+  "patterns": [
+    "Sliding Window",
+    "Prefix Sum"
+  ],
+  "mainInsight": "Removing a prefix and a suffix leaves a contiguous middle subarray. Its sum must be total - x, so the problem becomes: find the longest subarray with sum total - x (positive numbers => sliding window). The answer is n - longest, or -1 if none exists.",
+  "canonicalApproach": "Longest middle subarray with sum total - x",
+  "approaches": [
+    {
+      "name": "Try all prefix lengths with a hash map of suffix sums",
+      "summary": "Map suffix sums to their lengths and scan prefixes.",
+      "timeComplexity": "O(n)",
+      "spaceComplexity": "O(n)",
+      "strengths": [
+        "Direct"
+      ],
+      "weaknesses": [
+        "Extra memory"
+      ]
+    },
+    {
+      "name": "Longest middle subarray with sum total - x",
+      "summary": "Sliding window over positive values.",
+      "timeComplexity": "O(n)",
+      "spaceComplexity": "O(1)",
+      "strengths": [
+        "Linear, no extra memory"
+      ],
+      "weaknesses": [
+        "Needs the reformulation"
+      ],
+      "interviewRelevance": "The expected answer."
+    }
+  ],
+  "commonMistakes": [
+    "Searching for the shortest rather than the longest subarray",
+    "Forgetting the case total < x",
+    "Mishandling the empty middle (target 0)"
+  ],
+  "edgeCases": [
+    "x larger than the total",
+    "x equals the total",
+    "Window at the very start or end"
+  ],
+  "cards": [
+    {
+      "id": "mox-pattern-01",
+      "category": "pattern",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "How can you reformulate 'remove from both ends to reach x'?",
+        "What do you search for instead?"
+      ],
+      "options": [
+        "Find the longest contiguous subarray whose sum is total - x",
+        "Find the shortest subarray whose sum is at least x",
+        "Sort the array and remove the largest elements first",
+        "Find the longest increasing subarray of the array"
+      ],
+      "answer": "Find the longest contiguous subarray whose sum is total - x",
+      "explanation": "The elements that remain form a contiguous block in the middle.",
+      "incorrectOptionExplanations": {
+        "Find the shortest subarray whose sum is at least x": "That is a different problem.",
+        "Sort the array and remove the largest elements first": "Elements may only be removed from the ends.",
+        "Find the longest increasing subarray of the array": "Order of values is irrelevant to the sum."
+      }
+    },
+    {
+      "id": "mox-insight-01",
+      "category": "main_insight",
+      "type": "free_recall",
+      "promptVariants": [
+        "Why does a sliding window work here, and what is the answer when no window exists?",
+        "What is special about the values?"
+      ],
+      "answer": "All values are positive, so extending the window increases the sum and shrinking it decreases it, which makes two pointers valid. If total - x is negative or no window reaches it, return -1; otherwise return n minus the longest window length.",
+      "keyPoints": [
+        "Positive values => monotone sums",
+        "Target = total - x",
+        "Return n - longest or -1"
+      ],
+      "explanation": "With negatives you would need prefix sums and a hash map."
+    },
+    {
+      "id": "mox-time-01",
+      "category": "time_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Time complexity: ___",
+        "Complete the statement: Time complexity: ___"
+      ],
+      "answer": "O(n)",
+      "explanation": "Each pointer moves at most n times.",
+      "acceptedAnswers": [
+        "linear"
+      ]
+    },
+    {
+      "id": "mox-space-01",
+      "category": "space_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Space complexity (excluding the input): ___",
+        "Complete the statement: Space complexity (excluding the input): ___"
+      ],
+      "answer": "O(1)",
+      "explanation": "Two pointers and a running sum.",
+      "acceptedAnswers": [
+        "constant"
+      ]
+    },
+    {
+      "id": "mox-edge-01",
+      "category": "edge_case",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "What if x equals the total sum of the array?",
+        "What is the target of the window search in that case?"
+      ],
+      "options": [
+        "Target 0: the empty middle is allowed and the answer is n",
+        "-1: removing every element is not allowed by the rules",
+        "0: nothing needs to be removed to reach the target",
+        "1: removing a single element is always enough"
+      ],
+      "answer": "Target 0: the empty middle is allowed and the answer is n",
+      "explanation": "Handle the empty window explicitly.",
+      "incorrectOptionExplanations": {
+        "-1: removing every element is not allowed by the rules": "It is allowed.",
+        "0: nothing needs to be removed to reach the target": "Everything must be removed to reach x.",
+        "1: removing a single element is always enough": "The sum of the removed elements must equal x."
+      }
+    }
+  ],
+  "generatedAt": "2026-10-01T15:00:55Z"
+}
