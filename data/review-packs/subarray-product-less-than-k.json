@@ -42,7 +42,7 @@
     "timeComplexity": "O(n)",
     "spaceComplexity": "O(1)",
     "isOptimal": true,
-    "notes": "Right approach. Replace `product /= nums[l]` with `//=` to avoid float precision problems."
+    "notes": "Right approach and correct under the constraints. Prefer `//=` over `/=` so the product stays an exact integer."
   },
   "commonMistakes": [],
   "edgeCases": [],
@@ -118,14 +118,14 @@
       "category": "code_reasoning",
       "type": "code_question",
       "promptVariants": [
-        "Your code uses `product /= nums[l]`. What is the issue with `/` here and what should you use?",
+        "Your code uses `product /= nums[l]`. What is the risk with `/` here and what should you use?",
         "Why is the `l <= r` guard needed when k <= 1?"
       ],
       "code": "product = 1\nfor r in range(n):\n    product *= nums[r]\n    while product >= k and l <= r:\n        product /= nums[l]\n        l += 1\n    ans += r - l + 1",
-      "answer": "`/` is true division and produces a float, so for large products precision is lost and the comparison with k can be wrong. Use integer floor division `//=` (exact, because nums[l] divides the product). The `l <= r` guard prevents l passing r when even a single element is >= k (e.g. k <= 1), leaving an empty window with product 1.",
+      "answer": "`/` is true division and turns product into a float. Under this problem's constraints the product stays below about 10^9, so the float is still exact and the answer is correct, but it is a latent bug for bigger inputs (floats lose integer precision above 2^53). Use integer floor division `//=` (exact, because nums[l] divides the product). The `l <= r` guard prevents l passing r when even a single element is >= k (e.g. k <= 1), leaving an empty window with product 1.",
       "keyPoints": [
-        "Use // not /",
-        "Float precision for large products",
+        "Prefer // over /",
+        "Float exact here but fragile for large products",
         "Guard handles an empty window (k <= 1)"
       ],
       "explanation": "With k <= 1 return 0 up front to avoid the edge case."
@@ -153,5 +153,5 @@
       }
     }
   ],
-  "generatedAt": "2026-10-01T14:10:50Z"
+  "generatedAt": "2026-10-01T14:26:53Z"
 }

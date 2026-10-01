@@ -1,0 +1,131 @@
+{
+  "schemaVersion": 1,
+  "problemSlug": "remove-duplicates-from-sorted-list",
+  "summary": "Delete all duplicates from a sorted linked list so each value appears once.",
+  "patterns": [
+    "Linked List"
+  ],
+  "mainInsight": "Duplicates are adjacent in a sorted list, so for each node skip forward past all nodes with the same value and relink once.",
+  "canonicalApproach": "Single pass skipping equal nodes",
+  "approaches": [
+    {
+      "name": "Single pass skipping equal nodes",
+      "summary": "curr.next = first node with a different value.",
+      "timeComplexity": "O(n)",
+      "spaceComplexity": "O(1)",
+      "strengths": [
+        "Simple, in place"
+      ],
+      "interviewRelevance": "Your approach; the expected answer."
+    },
+    {
+      "name": "Hash set",
+      "summary": "Track seen values.",
+      "timeComplexity": "O(n)",
+      "spaceComplexity": "O(n)",
+      "weaknesses": [
+        "Unneeded because the list is sorted"
+      ]
+    }
+  ],
+  "personalSolution": {
+    "approach": "Single pass skipping equal nodes",
+    "timeComplexity": "O(n)",
+    "spaceComplexity": "O(1)",
+    "isOptimal": true,
+    "notes": "Optimal."
+  },
+  "commonMistakes": [],
+  "edgeCases": [],
+  "cards": [
+    {
+      "id": "rm-pattern-01",
+      "category": "pattern",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "What property makes in-place deduplication easy?",
+        "Why don't you need a hash set?"
+      ],
+      "options": [
+        "The list is sorted, so duplicates are adjacent",
+        "The list is doubly linked",
+        "The values are positive",
+        "The list has a sentinel"
+      ],
+      "answer": "The list is sorted, so duplicates are adjacent",
+      "explanation": "Comparing neighbours is enough to detect duplicates.",
+      "incorrectOptionExplanations": {
+        "The list is doubly linked": "It is singly linked.",
+        "The values are positive": "Irrelevant.",
+        "The list has a sentinel": "Not necessary."
+      }
+    },
+    {
+      "id": "rm-insight-01",
+      "category": "main_insight",
+      "type": "free_recall",
+      "promptVariants": [
+        "What does the inner `while tmp and tmp.val == curr.val` loop do?",
+        "Explain how the links are rewritten."
+      ],
+      "answer": "It advances tmp to the first node whose value differs from curr's; then curr.next = tmp unlinks the whole run of duplicates in one assignment and curr moves to tmp.",
+      "keyPoints": [
+        "Find the next different value",
+        "Unlink the run in one step",
+        "Advance curr"
+      ],
+      "explanation": "Each node is visited once overall."
+    },
+    {
+      "id": "rm-time-01",
+      "category": "time_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Time complexity: ___",
+        "Complete the statement: Time complexity: ___"
+      ],
+      "answer": "O(n)",
+      "explanation": "Every node is examined once.",
+      "acceptedAnswers": [
+        "linear"
+      ]
+    },
+    {
+      "id": "rm-space-01",
+      "category": "space_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Extra space: ___",
+        "Complete the statement: Extra space: ___"
+      ],
+      "answer": "O(1)",
+      "explanation": "Pointers only.",
+      "acceptedAnswers": [
+        "constant"
+      ]
+    },
+    {
+      "id": "rm-edge-01",
+      "category": "edge_case",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "Is a dummy node needed here?",
+        "Why can the head never be removed?"
+      ],
+      "options": [
+        "No: the first node of each value is always kept, so the head never changes",
+        "Yes, otherwise the head is lost",
+        "Only for duplicate heads",
+        "Only for empty lists"
+      ],
+      "answer": "No: the first node of each value is always kept, so the head never changes",
+      "explanation": "Only later duplicates are deleted, so head remains valid (an empty list is handled by the initial check).",
+      "incorrectOptionExplanations": {
+        "Yes, otherwise the head is lost": "That is true for Remove Duplicates II where the head may be removed.",
+        "Only for duplicate heads": "The first occurrence is kept.",
+        "Only for empty lists": "A null check suffices."
+      }
+    }
+  ],
+  "generatedAt": "2026-10-01T14:26:27Z"
+}

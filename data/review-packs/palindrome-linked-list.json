@@ -1,0 +1,155 @@
+{
+  "schemaVersion": 1,
+  "problemSlug": "palindrome-linked-list",
+  "summary": "Decide whether a singly linked list reads the same forwards and backwards in O(n) time and O(1) space.",
+  "patterns": [
+    "Linked List",
+    "Two Pointers"
+  ],
+  "mainInsight": "Find the middle with slow/fast pointers, reverse the second half in place, then compare it with the first half node by node.",
+  "canonicalApproach": "Middle + reverse second half + compare",
+  "approaches": [
+    {
+      "name": "Copy values to an array",
+      "summary": "Compare the array with its reverse.",
+      "timeComplexity": "O(n)",
+      "spaceComplexity": "O(n)",
+      "strengths": [
+        "Simple"
+      ],
+      "weaknesses": [
+        "Extra memory"
+      ]
+    },
+    {
+      "name": "Middle + reverse second half + compare",
+      "summary": "In-place reversal; compare halves.",
+      "timeComplexity": "O(n)",
+      "spaceComplexity": "O(1)",
+      "strengths": [
+        "Constant space"
+      ],
+      "weaknesses": [
+        "Mutates the list unless restored"
+      ],
+      "interviewRelevance": "Your approach; the expected answer."
+    }
+  ],
+  "personalSolution": {
+    "approach": "Middle + reverse second half + compare",
+    "timeComplexity": "O(n)",
+    "spaceComplexity": "O(1)",
+    "isOptimal": true,
+    "notes": "Optimal; the input list is left modified (second half reversed)."
+  },
+  "commonMistakes": [],
+  "edgeCases": [],
+  "cards": [
+    {
+      "id": "pl-pattern-01",
+      "category": "pattern",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "Which primitives solve Palindrome Linked List in O(1) space?",
+        "How do you compare the end of a singly linked list with its start?"
+      ],
+      "options": [
+        "Find the middle, reverse the second half, compare",
+        "Sort the list",
+        "Hash the nodes",
+        "Use binary search"
+      ],
+      "answer": "Find the middle, reverse the second half, compare",
+      "explanation": "Reversing the second half lets you traverse both halves forward.",
+      "incorrectOptionExplanations": {
+        "Sort the list": "Order matters.",
+        "Hash the nodes": "Does not check order.",
+        "Use binary search": "No random access."
+      }
+    },
+    {
+      "id": "pl-insight-01",
+      "category": "main_insight",
+      "type": "free_recall",
+      "promptVariants": [
+        "Why do you only need to compare until the shorter half ends?",
+        "How does an odd length affect the comparison?"
+      ],
+      "answer": "The reversed second half has length floor(n/2) (or the middle node is shared for odd n), so comparing while both pointers are non-null covers all mirrored pairs; the middle node of an odd list is its own mirror and always matches.",
+      "keyPoints": [
+        "Mirror pairs only",
+        "Odd middle matches itself",
+        "Stop when a half ends"
+      ],
+      "explanation": "In your code the reversed half includes the middle, which is harmless."
+    },
+    {
+      "id": "pl-time-01",
+      "category": "time_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Time complexity: ___",
+        "Complete the statement: Time complexity: ___"
+      ],
+      "answer": "O(n)",
+      "explanation": "Middle O(n/2) + reverse O(n/2) + compare O(n/2).",
+      "acceptedAnswers": [
+        "linear"
+      ]
+    },
+    {
+      "id": "pl-space-01",
+      "category": "space_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Extra space: ___",
+        "Complete the statement: Extra space: ___"
+      ],
+      "answer": "O(1)",
+      "explanation": "Pointers only.",
+      "acceptedAnswers": [
+        "constant"
+      ]
+    },
+    {
+      "id": "pl-code-01",
+      "category": "code_reasoning",
+      "type": "code_question",
+      "promptVariants": [
+        "Your solution never restores the second half. Why might that matter and how do you fix it?",
+        "What do `prev` and `head` iterate over in the comparison?"
+      ],
+      "code": "# reverse the second half\nprev = None\ncurr = slow\nwhile curr:\n    nextt = curr.next\n    curr.next = prev\n    prev = curr\n    curr = nextt\n# compare prev and head\nwhile prev and head:\n    if prev.val != head.val:\n        return False\n    prev = prev.next\n    head = head.next",
+      "answer": "The list is left modified (the second half stays reversed and the middle now points backwards). In a real system, or if the caller reuses the list, you should reverse the second half again after comparing. Compare walks the reversed half (from the tail) and the original head forward.",
+      "keyPoints": [
+        "Input is mutated",
+        "Re-reverse to restore",
+        "prev walks reversed half, head walks forward"
+      ],
+      "explanation": "State this trade-off in interviews."
+    },
+    {
+      "id": "pl-edge-01",
+      "category": "edge_case",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "What does the function return for a single node or an empty list?",
+        "Why?"
+      ],
+      "options": [
+        "True (trivially a palindrome)",
+        "False",
+        "An error",
+        "None"
+      ],
+      "answer": "True (trivially a palindrome)",
+      "explanation": "With 0 or 1 node there are no mismatching pairs.",
+      "incorrectOptionExplanations": {
+        "False": "A single element equals its reverse.",
+        "An error": "No invalid access.",
+        "None": "The function returns a boolean."
+      }
+    }
+  ],
+  "generatedAt": "2026-10-01T14:26:27Z"
+}

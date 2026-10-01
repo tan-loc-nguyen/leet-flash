@@ -1,0 +1,155 @@
+{
+  "schemaVersion": 1,
+  "problemSlug": "reorder-list",
+  "summary": "Reorder L0 -> L1 -> ... -> Ln into L0 -> Ln -> L1 -> Ln-1 -> ... in place.",
+  "patterns": [
+    "Linked List",
+    "Two Pointers"
+  ],
+  "mainInsight": "Split at the middle (slow/fast), reverse the second half, then interleave the two halves node by node. Each step is a standard linked-list primitive and the whole thing is O(n) time and O(1) space.",
+  "canonicalApproach": "Middle + reverse + merge",
+  "approaches": [
+    {
+      "name": "Array of nodes + two indices",
+      "summary": "Store nodes in a list and relink from both ends.",
+      "timeComplexity": "O(n)",
+      "spaceComplexity": "O(n)",
+      "strengths": [
+        "Simple"
+      ],
+      "weaknesses": [
+        "Extra memory"
+      ]
+    },
+    {
+      "name": "Middle + reverse + merge",
+      "summary": "Find the middle, reverse the second half, interleave.",
+      "timeComplexity": "O(n)",
+      "spaceComplexity": "O(1)",
+      "strengths": [
+        "In place"
+      ],
+      "weaknesses": [
+        "Three subroutines"
+      ],
+      "interviewRelevance": "Your approach; the expected answer."
+    }
+  ],
+  "personalSolution": {
+    "approach": "Middle + reverse + merge",
+    "timeComplexity": "O(n)",
+    "spaceComplexity": "O(1)",
+    "isOptimal": true,
+    "notes": "Optimal."
+  },
+  "commonMistakes": [],
+  "edgeCases": [],
+  "cards": [
+    {
+      "id": "ro-pattern-01",
+      "category": "pattern",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "Which three steps solve Reorder List in O(1) space?",
+        "What combination of primitives does it use?"
+      ],
+      "options": [
+        "Find the middle, reverse the second half, merge alternately",
+        "Sort the list",
+        "Use a stack for the whole list only",
+        "Binary search on positions"
+      ],
+      "answer": "Find the middle, reverse the second half, merge alternately",
+      "explanation": "The target order alternates the front with the reversed back half.",
+      "incorrectOptionExplanations": {
+        "Sort the list": "The order is positional, not by value.",
+        "Use a stack for the whole list only": "Works but uses O(n) space.",
+        "Binary search on positions": "Not applicable."
+      }
+    },
+    {
+      "id": "ro-insight-01",
+      "category": "main_insight",
+      "type": "free_recall",
+      "promptVariants": [
+        "Why reverse the second half?",
+        "How does the reversed half make the merge easy?"
+      ],
+      "answer": "The target order takes nodes from the end backwards, interleaved with nodes from the front. Reversing the second half turns the 'from the end' sequence into a normal forward traversal, so the two halves can be zipped together in one pass.",
+      "keyPoints": [
+        "Reverse gives backward traversal",
+        "Zip the two halves",
+        "O(1) extra space"
+      ],
+      "explanation": "Without reversal you would need random access or a stack."
+    },
+    {
+      "id": "ro-time-01",
+      "category": "time_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Time complexity: ___",
+        "Complete the statement: Time complexity: ___"
+      ],
+      "answer": "O(n)",
+      "explanation": "Three linear passes.",
+      "acceptedAnswers": [
+        "linear"
+      ]
+    },
+    {
+      "id": "ro-space-01",
+      "category": "space_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Extra space: ___",
+        "Complete the statement: Extra space: ___"
+      ],
+      "answer": "O(1)",
+      "explanation": "Pointers only; the list is rearranged in place.",
+      "acceptedAnswers": [
+        "constant"
+      ]
+    },
+    {
+      "id": "ro-code-01",
+      "category": "code_reasoning",
+      "type": "code_question",
+      "promptVariants": [
+        "Why is `slow.next = None` set before merging and which node is the split point for odd/even lengths?",
+        "How does the final merge loop interleave?"
+      ],
+      "code": "slow = fast = head\nwhile fast and fast.next:\n    slow = slow.next\n    fast = fast.next.next\nprev = None\ncur = slow.next\nwhile cur:\n    ...reverse...\nslow.next = None",
+      "answer": "slow ends at the end of the first half (the middle node for odd n, the n/2-th node for even n); the second half starts at slow.next. Setting slow.next = None cuts the first half off so it does not still point into the reversed half, preventing a cycle during the merge. The loop then alternates taking a node from l1 and l2.",
+      "keyPoints": [
+        "slow = last node of the first half",
+        "Cut first half with next = None",
+        "Alternate l1 / l2"
+      ],
+      "explanation": "For odd n the first half is one node longer."
+    },
+    {
+      "id": "ro-edge-01",
+      "category": "edge_case",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "What is the result for [1,2,3,4]? And [1,2,3]?",
+        "How do odd and even lengths differ?"
+      ],
+      "options": [
+        "[1,4,2,3] and [1,3,2]",
+        "[1,2,3,4] and [1,2,3]",
+        "[4,1,3,2] and [3,1,2]",
+        "[1,3,2,4] and [1,3,2]"
+      ],
+      "answer": "[1,4,2,3] and [1,3,2]",
+      "explanation": "Front, back, front, back...: 1,4,2,3 and 1,3,2.",
+      "incorrectOptionExplanations": {
+        "[1,2,3,4] and [1,2,3]": "That is the original order.",
+        "[4,1,3,2] and [3,1,2]": "Must start with the head.",
+        "[1,3,2,4] and [1,3,2]": "The first result is wrong (3 before 2 then 4)."
+      }
+    }
+  ],
+  "generatedAt": "2026-10-01T14:26:27Z"
+}

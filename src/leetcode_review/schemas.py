@@ -55,6 +55,9 @@ PATTERN_TAXONOMY = (
     "Math",
     "Matrix",
     "Design",
+    "Sorting",
+    "Divide and Conquer",
+    "Queue",
 )
 
 # LeetCode topic tag -> suggested review pattern (used only to seed scaffolds).
@@ -86,6 +89,9 @@ TAG_TO_PATTERN = {
     "Math": "Math",
     "Matrix": "Matrix",
     "Design": "Design",
+    "Sorting": "Sorting",
+    "Divide and Conquer": "Divide and Conquer",
+    "Queue": "Queue",
 }
 
 

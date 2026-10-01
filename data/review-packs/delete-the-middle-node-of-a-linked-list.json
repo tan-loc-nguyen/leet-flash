@@ -1,0 +1,149 @@
+{
+  "schemaVersion": 1,
+  "problemSlug": "delete-the-middle-node-of-a-linked-list",
+  "summary": "Delete the middle node (index floor(n/2)) of a linked list and return the head.",
+  "patterns": [
+    "Linked List",
+    "Two Pointers"
+  ],
+  "mainInsight": "To delete a node you need its predecessor, so make the slow pointer stop at the node BEFORE the middle by giving the fast pointer a head start of two nodes.",
+  "canonicalApproach": "Slow/fast with a head start",
+  "approaches": [
+    {
+      "name": "Count then delete",
+      "summary": "Compute n, walk to index n//2 - 1, relink.",
+      "timeComplexity": "O(n)",
+      "spaceComplexity": "O(1)",
+      "weaknesses": [
+        "Two passes"
+      ]
+    },
+    {
+      "name": "Slow/fast with a head start",
+      "summary": "fast = head.next.next so slow stops before the middle.",
+      "timeComplexity": "O(n)",
+      "spaceComplexity": "O(1)",
+      "strengths": [
+        "Single pass"
+      ],
+      "interviewRelevance": "Your approach; the expected answer."
+    }
+  ],
+  "personalSolution": {
+    "approach": "Slow/fast with a head start",
+    "timeComplexity": "O(n)",
+    "spaceComplexity": "O(1)",
+    "isOptimal": true,
+    "notes": "Optimal."
+  },
+  "commonMistakes": [],
+  "edgeCases": [],
+  "cards": [
+    {
+      "id": "dm-pattern-01",
+      "category": "pattern",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "Why does the fast pointer start two nodes ahead?",
+        "How do you stop before the middle node?"
+      ],
+      "options": [
+        "So slow ends on the node just before the middle, enabling deletion",
+        "To make the algorithm faster",
+        "To handle cycles",
+        "To skip the head"
+      ],
+      "answer": "So slow ends on the node just before the middle, enabling deletion",
+      "explanation": "Deleting requires the predecessor of the target, so slow must stop one node early.",
+      "incorrectOptionExplanations": {
+        "To make the algorithm faster": "The number of iterations is the same order.",
+        "To handle cycles": "No cycles here.",
+        "To skip the head": "Unrelated."
+      }
+    },
+    {
+      "id": "dm-insight-01",
+      "category": "main_insight",
+      "type": "free_recall",
+      "promptVariants": [
+        "Why is a single-node list a special case?",
+        "What do you return for it?"
+      ],
+      "answer": "With one node the middle is the head itself and there is no predecessor, so the list becomes empty: return None before using head.next.next.",
+      "keyPoints": [
+        "Middle = head",
+        "No predecessor",
+        "Return None"
+      ],
+      "explanation": "A dummy head would remove the special case."
+    },
+    {
+      "id": "dm-time-01",
+      "category": "time_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Time complexity: ___",
+        "Complete the statement: Time complexity: ___"
+      ],
+      "answer": "O(n)",
+      "explanation": "One pass.",
+      "acceptedAnswers": [
+        "linear"
+      ]
+    },
+    {
+      "id": "dm-space-01",
+      "category": "space_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Extra space: ___",
+        "Complete the statement: Extra space: ___"
+      ],
+      "answer": "O(1)",
+      "explanation": "Pointers only.",
+      "acceptedAnswers": [
+        "constant"
+      ]
+    },
+    {
+      "id": "dm-code-01",
+      "category": "code_reasoning",
+      "type": "code_question",
+      "promptVariants": [
+        "Why `slow, fast = head, head.next.next` and what does the loop condition `fast != None and fast.next != None` guarantee?",
+        "Which node does `slow.next = slow.next.next` remove?"
+      ],
+      "code": "if head.next is None:\n    return None\nslow, fast = head, head.next.next\nwhile fast != None and fast.next != None:\n    slow = slow.next\n    fast = fast.next.next\nslow.next = slow.next.next",
+      "answer": "Starting fast two nodes ahead makes slow stop at the node before the middle (index floor(n/2) - 1). The loop stops when fast reaches or passes the end. slow.next is then the middle node, and relinking to slow.next.next removes it.",
+      "keyPoints": [
+        "fast starts 2 ahead",
+        "slow = predecessor of the middle",
+        "Relink over the middle"
+      ],
+      "explanation": "For n = 2, slow is head and removes the second node."
+    },
+    {
+      "id": "dm-edge-01",
+      "category": "edge_case",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "What does the algorithm return for [2,1]?",
+        "Which node is the middle of a 2-node list?"
+      ],
+      "options": [
+        "[2] (index 1 is removed)",
+        "[1]",
+        "[]",
+        "[2,1]"
+      ],
+      "answer": "[2] (index 1 is removed)",
+      "explanation": "floor(2/2) = 1 is the middle index, so the second node is deleted.",
+      "incorrectOptionExplanations": {
+        "[1]": "That would delete the head (index 0).",
+        "[]": "Only a single-node list becomes empty.",
+        "[2,1]": "A node must be removed."
+      }
+    }
+  ],
+  "generatedAt": "2026-10-01T14:26:27Z"
+}

@@ -1,0 +1,155 @@
+{
+  "schemaVersion": 1,
+  "problemSlug": "linked-list-cycle-ii",
+  "summary": "Return the node where a cycle begins, or None if there is no cycle.",
+  "patterns": [
+    "Linked List",
+    "Two Pointers"
+  ],
+  "mainInsight": "Phase 1: Floyd's slow/fast find a meeting point inside the cycle. Phase 2: restart one pointer at the head and advance both one step at a time; they meet exactly at the cycle entrance.",
+  "canonicalApproach": "Floyd's two-phase algorithm",
+  "approaches": [
+    {
+      "name": "Hash set of visited nodes",
+      "summary": "The first revisited node is the entrance.",
+      "timeComplexity": "O(n)",
+      "spaceComplexity": "O(n)",
+      "strengths": [
+        "Simple"
+      ],
+      "weaknesses": [
+        "O(n) memory"
+      ]
+    },
+    {
+      "name": "Floyd's two-phase algorithm",
+      "summary": "Meet inside the cycle, then walk from head and meeting point together.",
+      "timeComplexity": "O(n)",
+      "spaceComplexity": "O(1)",
+      "strengths": [
+        "Constant space"
+      ],
+      "weaknesses": [
+        "Needs the distance argument"
+      ],
+      "interviewRelevance": "Your approach; the expected answer."
+    }
+  ],
+  "personalSolution": {
+    "approach": "Floyd's two-phase algorithm",
+    "timeComplexity": "O(n)",
+    "spaceComplexity": "O(1)",
+    "isOptimal": true,
+    "notes": "Optimal."
+  },
+  "commonMistakes": [],
+  "edgeCases": [],
+  "cards": [
+    {
+      "id": "lc3-pattern-01",
+      "category": "pattern",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "What is the second phase of Floyd's cycle-start algorithm?",
+        "How do you find the entrance after the pointers meet?"
+      ],
+      "options": [
+        "Reset one pointer to the head and move both one step at a time",
+        "Move both pointers two steps",
+        "Reverse the list",
+        "Count the cycle length only"
+      ],
+      "answer": "Reset one pointer to the head and move both one step at a time",
+      "explanation": "Their meeting point is exactly the cycle entrance.",
+      "incorrectOptionExplanations": {
+        "Move both pointers two steps": "That would not align them at the entrance.",
+        "Reverse the list": "Not needed.",
+        "Count the cycle length only": "Length alone does not give the entrance without a second pass (another valid but different method)."
+      }
+    },
+    {
+      "id": "lc3-insight-01",
+      "category": "main_insight",
+      "type": "free_recall",
+      "promptVariants": [
+        "Why do the pointers meet at the cycle entrance in phase 2?",
+        "Derive the distance equation."
+      ],
+      "answer": "Let a = distance from head to the entrance, b = distance from the entrance to the meeting point, c = remaining cycle length. At the meeting slow travelled a + b and fast 2(a + b) = a + b + k(b + c), so a = k(b + c) - b = (k - 1)(b + c) + c. Therefore walking a steps from the head and c steps from the meeting point lands on the entrance simultaneously.",
+      "keyPoints": [
+        "fast = 2 * slow",
+        "a = c + (k-1) * cycle",
+        "Equal steps from head and meeting point"
+      ],
+      "explanation": "That is why one pointer restarts at the head."
+    },
+    {
+      "id": "lc3-time-01",
+      "category": "time_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Time complexity: ___",
+        "Complete the statement: Time complexity: ___"
+      ],
+      "answer": "O(n)",
+      "explanation": "Two linear phases.",
+      "acceptedAnswers": [
+        "linear"
+      ]
+    },
+    {
+      "id": "lc3-space-01",
+      "category": "space_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Extra space: ___",
+        "Complete the statement: Extra space: ___"
+      ],
+      "answer": "O(1)",
+      "explanation": "Two pointers.",
+      "acceptedAnswers": [
+        "constant"
+      ]
+    },
+    {
+      "id": "lc3-code-01",
+      "category": "code_reasoning",
+      "type": "code_question",
+      "promptVariants": [
+        "Why does the loop `while fast and fast.next` use `meet` and what happens when there is no cycle?",
+        "What does the second loop compare?"
+      ],
+      "code": "meet = False\nwhile fast and fast.next:\n    slow = slow.next\n    fast = fast.next.next\n    if slow == fast:\n        meet = True\n        break\nif not meet:\n    return None\nfast = head\nwhile fast != slow:\n    fast = fast.next\n    slow = slow.next\nreturn fast",
+      "answer": "If fast reaches the end the list has no cycle, so meet stays False and None is returned. Otherwise, after resetting fast to the head, both pointers advance one step at a time until they are the same node - the cycle entrance.",
+      "keyPoints": [
+        "meet flag for the no-cycle case",
+        "Reset one pointer to head",
+        "Move both by one"
+      ],
+      "explanation": "Return either pointer at the end."
+    },
+    {
+      "id": "lc3-edge-01",
+      "category": "edge_case",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "What if the entire list is a cycle (tail points to the head)?",
+        "Where do the pointers meet in phase 2?"
+      ],
+      "options": [
+        "Immediately at the head (a = 0)",
+        "At the last node",
+        "Never",
+        "At the middle"
+      ],
+      "answer": "Immediately at the head (a = 0)",
+      "explanation": "With a = 0 the meeting point after phase 1 equals the head, so the second loop returns at once.",
+      "incorrectOptionExplanations": {
+        "At the last node": "The entrance is the head here.",
+        "Never": "They always meet.",
+        "At the middle": "Not a property of the algorithm."
+      }
+    }
+  ],
+  "generatedAt": "2026-10-01T14:26:27Z"
+}

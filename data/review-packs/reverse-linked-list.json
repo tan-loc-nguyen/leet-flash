@@ -1,0 +1,150 @@
+{
+  "schemaVersion": 1,
+  "problemSlug": "reverse-linked-list",
+  "summary": "Reverse a singly linked list.",
+  "patterns": [
+    "Linked List"
+  ],
+  "mainInsight": "Walk the list once and flip each node's next pointer to point at its predecessor, keeping the next node in a temporary variable before overwriting the pointer.",
+  "canonicalApproach": "Iterative three pointers",
+  "approaches": [
+    {
+      "name": "Recursive reversal",
+      "summary": "Reverse the rest, then attach the head at the end.",
+      "timeComplexity": "O(n)",
+      "spaceComplexity": "O(n) stack",
+      "strengths": [
+        "Elegant"
+      ],
+      "weaknesses": [
+        "Recursion depth"
+      ]
+    },
+    {
+      "name": "Iterative three pointers",
+      "summary": "prev, curr, next: flip curr.next = prev and advance.",
+      "timeComplexity": "O(n)",
+      "spaceComplexity": "O(1)",
+      "strengths": [
+        "Constant space"
+      ],
+      "interviewRelevance": "Your approach; the expected answer."
+    }
+  ],
+  "personalSolution": {
+    "approach": "Iterative three pointers",
+    "timeComplexity": "O(n)",
+    "spaceComplexity": "O(1)",
+    "isOptimal": true,
+    "notes": "Optimal."
+  },
+  "commonMistakes": [],
+  "edgeCases": [],
+  "cards": [
+    {
+      "id": "rll-pattern-01",
+      "category": "pattern",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "Which variables does iterative reversal use?",
+        "What is the loop's core step?"
+      ],
+      "options": [
+        "prev, curr and a saved next pointer",
+        "A stack of values",
+        "Two heaps",
+        "A hash map"
+      ],
+      "answer": "prev, curr and a saved next pointer",
+      "explanation": "Save curr.next, point curr to prev, then advance both.",
+      "incorrectOptionExplanations": {
+        "A stack of values": "Works but uses O(n) space.",
+        "Two heaps": "Irrelevant.",
+        "A hash map": "Irrelevant."
+      }
+    },
+    {
+      "id": "rll-invariant-01",
+      "category": "invariant",
+      "type": "free_recall",
+      "promptVariants": [
+        "What is true about prev and curr at the start of each iteration?",
+        "State the invariant."
+      ],
+      "answer": "prev is the head of the already-reversed prefix (initially None) and curr is the first node of the not-yet-reversed suffix. After flipping curr.next to prev, curr becomes the new head of the reversed part.",
+      "keyPoints": [
+        "prev = reversed prefix head",
+        "curr = rest of the list",
+        "Each node flipped once"
+      ],
+      "explanation": "At the end prev is the new head."
+    },
+    {
+      "id": "rll-time-01",
+      "category": "time_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Time complexity: ___",
+        "Complete the statement: Time complexity: ___"
+      ],
+      "answer": "O(n)",
+      "explanation": "One pass.",
+      "acceptedAnswers": [
+        "linear"
+      ]
+    },
+    {
+      "id": "rll-space-01",
+      "category": "space_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Extra space of the iterative version: ___",
+        "Complete the statement: Extra space of the iterative version: ___"
+      ],
+      "answer": "O(1)",
+      "explanation": "Three pointers.",
+      "acceptedAnswers": [
+        "constant"
+      ]
+    },
+    {
+      "id": "rll-code-01",
+      "category": "code_reasoning",
+      "type": "code_question",
+      "promptVariants": [
+        "Why must `nextt = curr.next` be saved before `curr.next = prev`?",
+        "What does the function return when the loop ends?"
+      ],
+      "code": "while curr:\n    nextt = curr.next\n    curr.next = prev\n    prev = curr\n    curr = nextt\nreturn prev",
+      "answer": "Overwriting curr.next would lose the rest of the list; the temporary keeps the way forward. When the loop ends curr is None and prev is the last original node, which is the head of the reversed list.",
+      "keyPoints": [
+        "Save next first",
+        "prev is the new head"
+      ],
+      "explanation": "The original head's next becomes None automatically."
+    },
+    {
+      "id": "rll-edge-01",
+      "category": "edge_case",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "What does the function return for an empty list?",
+        "How does a single node behave?"
+      ],
+      "options": [
+        "None for an empty list; a single node is returned unchanged",
+        "An error",
+        "A new empty node",
+        "The node pointing to itself"
+      ],
+      "answer": "None for an empty list; a single node is returned unchanged",
+      "explanation": "The loop is skipped for empty input and runs once for one node (its next becomes None).",
+      "incorrectOptionExplanations": {
+        "An error": "No special handling needed.",
+        "A new empty node": "No node is created.",
+        "The node pointing to itself": "Its next is set to prev = None."
+      }
+    }
+  ],
+  "generatedAt": "2026-10-01T14:26:27Z"
+}

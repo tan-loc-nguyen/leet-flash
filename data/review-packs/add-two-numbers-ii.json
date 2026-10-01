@@ -1,0 +1,169 @@
+{
+  "schemaVersion": 1,
+  "problemSlug": "add-two-numbers-ii",
+  "summary": "Add two numbers stored as linked lists with the most significant digit first.",
+  "patterns": [
+    "Linked List",
+    "Math"
+  ],
+  "mainInsight": "Addition must start from the least significant digit, which is at the end of each list. Reverse both lists (or use stacks), add with a carry, then reverse the result back.",
+  "canonicalApproach": "Reverse, add, reverse",
+  "approaches": [
+    {
+      "name": "Two stacks",
+      "summary": "Push digits onto stacks and pop to add from the end; build the result by prepending.",
+      "timeComplexity": "O(m + n)",
+      "spaceComplexity": "O(m + n)",
+      "strengths": [
+        "Does not modify inputs"
+      ],
+      "weaknesses": [
+        "Extra memory"
+      ]
+    },
+    {
+      "name": "Reverse, add, reverse",
+      "summary": "Reverse both lists, add as in Add Two Numbers I, reverse the result.",
+      "timeComplexity": "O(m + n)",
+      "spaceComplexity": "O(1) extra",
+      "strengths": [
+        "Constant extra space"
+      ],
+      "weaknesses": [
+        "Mutates the inputs"
+      ],
+      "interviewRelevance": "Your approach."
+    },
+    {
+      "name": "Recursion with padding",
+      "summary": "Pad the shorter list with zeros and recurse.",
+      "timeComplexity": "O(m + n)",
+      "spaceComplexity": "O(m + n) stack",
+      "strengths": [
+        "No mutation"
+      ],
+      "weaknesses": [
+        "Recursion depth"
+      ]
+    }
+  ],
+  "personalSolution": {
+    "approach": "Reverse both lists, add with carry, reverse the result",
+    "timeComplexity": "O(m + n)",
+    "spaceComplexity": "O(1) extra",
+    "isOptimal": true,
+    "notes": "Optimal; mutates the inputs. Stacks avoid mutation (the stated follow-up)."
+  },
+  "commonMistakes": [],
+  "edgeCases": [],
+  "cards": [
+    {
+      "id": "a2-pattern-01",
+      "category": "pattern",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "How do you add numbers whose digits are stored most significant first?",
+        "Which approach avoids modifying the inputs?"
+      ],
+      "options": [
+        "Use stacks (or recursion) to process digits from the end",
+        "Add from the head directly",
+        "Sort the digits",
+        "Convert to float"
+      ],
+      "answer": "Use stacks (or recursion) to process digits from the end",
+      "explanation": "Stacks reverse the traversal order without changing the lists.",
+      "incorrectOptionExplanations": {
+        "Add from the head directly": "The carry flows from the least significant digit.",
+        "Sort the digits": "Order matters.",
+        "Convert to float": "Precision loss."
+      }
+    },
+    {
+      "id": "a2-insight-01",
+      "category": "main_insight",
+      "type": "free_recall",
+      "promptVariants": [
+        "Why is a reversal (or stack) required here but not in Add Two Numbers I?",
+        "What is the relationship between the two problems?"
+      ],
+      "answer": "In version I the lists are already least-significant first, so carry flows in traversal order. In version II they are most-significant first, so you must process from the end: reverse the lists (O(1) extra space), or use stacks (no mutation), then reuse the same carry loop.",
+      "keyPoints": [
+        "MSD first => carry flows backwards",
+        "Reverse / stack / recursion",
+        "Reuse the I algorithm"
+      ],
+      "explanation": "Follow-up: do it without modifying the inputs."
+    },
+    {
+      "id": "a2-time-01",
+      "category": "time_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Time complexity: ___",
+        "Complete the statement: Time complexity: ___"
+      ],
+      "answer": "O(m+n)",
+      "explanation": "Reversals plus one addition pass, all linear.",
+      "acceptedAnswers": [
+        "O(m + n)",
+        "O(n+m)"
+      ]
+    },
+    {
+      "id": "a2-space-01",
+      "category": "space_complexity",
+      "type": "free_recall",
+      "promptVariants": [
+        "What are the extra-space differences between reversing and stacks?",
+        "What does your solution allocate?"
+      ],
+      "answer": "Reversing needs O(1) auxiliary space (plus the output) but mutates the inputs; stacks need O(m + n) but leave them intact. Yours reverses the inputs and the result.",
+      "keyPoints": [
+        "Reverse: O(1) but mutates",
+        "Stacks: O(m+n)"
+      ],
+      "explanation": "Mention the follow-up."
+    },
+    {
+      "id": "a2-code-01",
+      "category": "code_reasoning",
+      "type": "code_question",
+      "promptVariants": [
+        "Why is the result reversed at the end and what is `dummy.next`?",
+        "What happens to the original lists l1 and l2?"
+      ],
+      "code": "list1 = self.reverse(l1)\nlist2 = self.reverse(l2)\n...build result least-significant first...\ndummy = dummy.next\nreturn self.reverse(dummy)",
+      "answer": "The addition loop builds the result digit by digit starting from the least significant digit, so the list is in reverse order; one final reversal produces the required most-significant-first order. The helper reverse mutates l1 and l2 (they are left reversed), which is acceptable here but not if the caller needs the originals.",
+      "keyPoints": [
+        "Result built LSD first",
+        "Final reverse restores MSD first",
+        "Inputs are mutated"
+      ],
+      "explanation": "Stacks avoid the mutation."
+    },
+    {
+      "id": "a2-edge-01",
+      "category": "edge_case",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "What is [7,2,4,3] + [5,6,4]?",
+        "How does the carry propagate?"
+      ],
+      "options": [
+        "[7,8,0,7]",
+        "[7,8,0,6]",
+        "[1,2,0,7]",
+        "[7,7,0,7]"
+      ],
+      "answer": "[7,8,0,7]",
+      "explanation": "7243 + 564 = 7807.",
+      "incorrectOptionExplanations": {
+        "[7,8,0,6]": "Last digit 3 + 4 = 7.",
+        "[1,2,0,7]": "Wrong magnitude.",
+        "[7,7,0,7]": "Hundreds digit is 8 after the carry."
+      }
+    }
+  ],
+  "generatedAt": "2026-10-01T14:26:27Z"
+}

@@ -1,0 +1,167 @@
+{
+  "schemaVersion": 1,
+  "problemSlug": "linked-list-cycle",
+  "summary": "Detect whether a singly linked list contains a cycle.",
+  "patterns": [
+    "Linked List",
+    "Two Pointers"
+  ],
+  "mainInsight": "A slow pointer moving one step and a fast pointer moving two steps meet iff there is a cycle (Floyd's tortoise and hare): inside a cycle the fast pointer gains exactly one node per iteration, so the gap shrinks by 1 and cannot be skipped over.",
+  "canonicalApproach": "Floyd's slow (1) and fast (2) pointers",
+  "approaches": [
+    {
+      "name": "Hash set of visited nodes",
+      "summary": "Return true on a revisit.",
+      "timeComplexity": "O(n)",
+      "spaceComplexity": "O(n)",
+      "strengths": [
+        "Simple"
+      ],
+      "weaknesses": [
+        "O(n) memory"
+      ]
+    },
+    {
+      "name": "Floyd's slow (1) and fast (2) pointers",
+      "summary": "Advance slow by 1, fast by 2; meet => cycle; fast hits None => none.",
+      "timeComplexity": "O(n)",
+      "spaceComplexity": "O(1)",
+      "strengths": [
+        "Constant space",
+        "Meets within tail + cycle iterations"
+      ],
+      "interviewRelevance": "The expected answer."
+    },
+    {
+      "name": "Floyd with other speeds",
+      "summary": "Any two distinct speeds eventually coincide because both start at the head.",
+      "timeComplexity": "O(n)",
+      "spaceComplexity": "O(1)",
+      "strengths": [
+        "Also terminates"
+      ],
+      "weaknesses": [
+        "Harder to prove",
+        "Verbose guards"
+      ],
+      "interviewRelevance": "Works, but unconventional."
+    }
+  ],
+  "personalSolution": {
+    "approach": "Floyd's algorithm with slow = 2 steps and fast = 5 steps",
+    "timeComplexity": "O(n)",
+    "spaceComplexity": "O(1)",
+    "isOptimal": true,
+    "notes": "Correct (both pointers start at the head, so they meet) but unconventional: use slow = 1 step, fast = 2 steps with `while fast and fast.next`."
+  },
+  "commonMistakes": [],
+  "edgeCases": [],
+  "cards": [
+    {
+      "id": "lc2-pattern-01",
+      "category": "pattern",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "Which algorithm detects a cycle in O(1) space?",
+        "What is the standard pointer speed pair?"
+      ],
+      "options": [
+        "Floyd's: slow moves 1 step, fast moves 2 steps",
+        "Both pointers move one step per iteration",
+        "Binary search",
+        "Recursion"
+      ],
+      "answer": "Floyd's: slow moves 1 step, fast moves 2 steps",
+      "explanation": "The fast pointer gains one node per iteration, so inside a cycle the gap closes by exactly 1 and they must meet.",
+      "incorrectOptionExplanations": {
+        "Both pointers move one step per iteration": "They never get closer or farther apart, so they reveal nothing about a cycle.",
+        "Binary search": "No sorted structure or random access.",
+        "Recursion": "Uses O(n) stack."
+      }
+    },
+    {
+      "id": "lc2-insight-01",
+      "category": "main_insight",
+      "type": "free_recall",
+      "promptVariants": [
+        "Why does the 1-and-2 speed pair guarantee a meeting inside a cycle?",
+        "Why can fast not 'jump over' slow?"
+      ],
+      "answer": "Once both are in the cycle, fast gains exactly one node on slow per iteration, so the gap decreases by 1 each step and must reach 0 within the cycle length; because it changes by one it cannot skip the value 0. With other speed pairs the gap changes by larger steps, so the argument needs modular arithmetic (and both starting at the head) to see that a meeting still happens.",
+      "keyPoints": [
+        "Gap shrinks by exactly 1",
+        "Cannot skip 0",
+        "Meets within tail + cycle iterations"
+      ],
+      "explanation": "That simple argument is why 1 and 2 is the standard choice."
+    },
+    {
+      "id": "lc2-time-01",
+      "category": "time_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Time complexity of Floyd's algorithm: ___",
+        "Complete the statement: Time complexity of Floyd's algorithm: ___"
+      ],
+      "answer": "O(n)",
+      "explanation": "The pointers meet within a linear number of steps.",
+      "acceptedAnswers": [
+        "linear"
+      ]
+    },
+    {
+      "id": "lc2-space-01",
+      "category": "space_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Extra space of Floyd's algorithm: ___",
+        "Complete the statement: Extra space of Floyd's algorithm: ___"
+      ],
+      "answer": "O(1)",
+      "explanation": "Two pointers.",
+      "acceptedAnswers": [
+        "constant"
+      ]
+    },
+    {
+      "id": "lc2-code-01",
+      "category": "code_reasoning",
+      "type": "code_question",
+      "promptVariants": [
+        "Your loop moves slow 2 steps and fast 5 steps behind a long chain of `fast.next.next.next.next` checks. Does it terminate, and how would you simplify it?",
+        "Write the standard loop and explain why it is easier to defend."
+      ],
+      "code": "while fast and fast.next and fast.next.next and fast.next.next.next and fast.next.next.next.next:\n    slow = slow.next.next\n    fast = fast.next.next.next.next.next\n    if slow == fast:\n        return True",
+      "answer": "It does terminate: both pointers start at the head, so after k iterations their offsets differ by 3k, and once both are inside the cycle they coincide when 3k is a multiple of the cycle length (e.g. k = L). But the unusual speeds are harder to prove and the guard chain is brittle. The standard version: slow = fast = head; while fast and fast.next: slow = slow.next; fast = fast.next.next; if slow is fast: return True; return False.",
+      "keyPoints": [
+        "Terminates because both start at head",
+        "Offset 3k hits a multiple of L",
+        "Use 1 and 2 with `while fast and fast.next`"
+      ],
+      "explanation": "Prefer identity (`is`) when comparing node objects."
+    },
+    {
+      "id": "lc2-edge-01",
+      "category": "edge_case",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "What should be returned for an empty list or a single node without a cycle?",
+        "How does the standard loop behave?"
+      ],
+      "options": [
+        "False; the loop exits immediately because fast.next is None",
+        "True",
+        "An error",
+        "None"
+      ],
+      "answer": "False; the loop exits immediately because fast.next is None",
+      "explanation": "The condition `fast and fast.next` stops at the end of a non-cyclic list.",
+      "incorrectOptionExplanations": {
+        "True": "There is no cycle.",
+        "An error": "No invalid access occurs.",
+        "None": "The function returns a boolean."
+      }
+    }
+  ],
+  "generatedAt": "2026-10-01T14:26:27Z"
+}

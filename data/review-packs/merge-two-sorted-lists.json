@@ -1,0 +1,154 @@
+{
+  "schemaVersion": 1,
+  "problemSlug": "merge-two-sorted-lists",
+  "summary": "Merge two sorted linked lists into one sorted list by splicing their nodes.",
+  "patterns": [
+    "Linked List",
+    "Two Pointers"
+  ],
+  "mainInsight": "Walk both lists with one pointer each, always attaching the smaller head to the tail of the result; a dummy head removes the empty-result special case and the remaining tail is attached in one step.",
+  "canonicalApproach": "Iterative with a dummy head",
+  "approaches": [
+    {
+      "name": "Recursion",
+      "summary": "merge(l1, l2) picks the smaller head and recurses on the rest.",
+      "timeComplexity": "O(m + n)",
+      "spaceComplexity": "O(m + n) stack",
+      "strengths": [
+        "Concise"
+      ],
+      "weaknesses": [
+        "Recursion depth"
+      ]
+    },
+    {
+      "name": "Iterative with a dummy head",
+      "summary": "Splice nodes while both lists are non-empty; attach the leftover list.",
+      "timeComplexity": "O(m + n)",
+      "spaceComplexity": "O(1)",
+      "strengths": [
+        "No extra memory",
+        "No recursion"
+      ],
+      "interviewRelevance": "Your approach; the expected answer."
+    }
+  ],
+  "personalSolution": {
+    "approach": "Iterative with a dummy head",
+    "timeComplexity": "O(m + n)",
+    "spaceComplexity": "O(1)",
+    "isOptimal": true,
+    "notes": "Optimal."
+  },
+  "commonMistakes": [],
+  "edgeCases": [],
+  "cards": [
+    {
+      "id": "ml-pattern-01",
+      "category": "pattern",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "What does the dummy head simplify when merging lists?",
+        "Which pointer technique merges two sorted lists in place?"
+      ],
+      "options": [
+        "It removes the special case for the first result node",
+        "It sorts the nodes",
+        "It stores the length",
+        "It reverses the lists"
+      ],
+      "answer": "It removes the special case for the first result node",
+      "explanation": "The tail pointer always has a node to attach to; the answer is dummy.next.",
+      "incorrectOptionExplanations": {
+        "It sorts the nodes": "Sorting happens via comparisons.",
+        "It stores the length": "Unrelated.",
+        "It reverses the lists": "Not needed."
+      }
+    },
+    {
+      "id": "ml-insight-01",
+      "category": "main_insight",
+      "type": "free_recall",
+      "promptVariants": [
+        "Why can the leftover list be attached in one assignment?",
+        "What happens when one list is exhausted?"
+      ],
+      "answer": "Both inputs are sorted, so once one list is empty the remaining nodes of the other are already in order and all >= everything placed so far. Pointing the tail at the remainder finishes the merge without copying.",
+      "keyPoints": [
+        "Remaining list already sorted",
+        "All >= merged prefix",
+        "O(1) attach"
+      ],
+      "explanation": "Splicing nodes (not copying values) keeps O(1) extra space."
+    },
+    {
+      "id": "ml-time-01",
+      "category": "time_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Time complexity: ___",
+        "Merging lists of lengths m and n takes ___."
+      ],
+      "answer": "O(m+n)",
+      "explanation": "Each node is visited once.",
+      "acceptedAnswers": [
+        "O(m + n)",
+        "O(n+m)"
+      ]
+    },
+    {
+      "id": "ml-space-01",
+      "category": "space_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Extra space of the iterative merge: ___",
+        "Complete the statement: Extra space of the iterative merge: ___"
+      ],
+      "answer": "O(1)",
+      "explanation": "Only a dummy node and pointers; nodes are reused.",
+      "acceptedAnswers": [
+        "constant"
+      ]
+    },
+    {
+      "id": "ml-code-01",
+      "category": "code_reasoning",
+      "type": "code_question",
+      "promptVariants": [
+        "Why `if list1.val > list2.val` picks list2 and is that stable for equal values?",
+        "What does `p = p.next` do each iteration?"
+      ],
+      "code": "while list1 and list2:\n    if list1.val > list2.val:\n        p.next = list2\n        list2 = list2.next\n    else:\n        p.next = list1\n        list1 = list1.next\n    p = p.next",
+      "answer": "list2 is taken only when its value is strictly smaller; on ties list1 goes first, so equal elements keep their original relative order (stable). p always moves to the node just attached, so it is the tail of the merged list.",
+      "keyPoints": [
+        "Strict > => ties from list1",
+        "Stable merge",
+        "p tracks the merged tail"
+      ],
+      "explanation": "Same as the merge step of merge sort."
+    },
+    {
+      "id": "ml-edge-01",
+      "category": "edge_case",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "What is returned when one list is empty?",
+        "How do empty inputs behave with the dummy head?"
+      ],
+      "options": [
+        "The other list",
+        "An empty list",
+        "None regardless",
+        "An error"
+      ],
+      "answer": "The other list",
+      "explanation": "The loop is skipped and the leftover list is attached to the dummy (both empty returns None).",
+      "incorrectOptionExplanations": {
+        "An empty list": "Only if both are empty.",
+        "None regardless": "Only if both are empty.",
+        "An error": "No special handling needed."
+      }
+    }
+  ],
+  "generatedAt": "2026-10-01T14:26:27Z"
+}

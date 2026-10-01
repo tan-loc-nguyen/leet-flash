@@ -1,0 +1,154 @@
+{
+  "schemaVersion": 1,
+  "problemSlug": "reverse-linked-list-ii",
+  "summary": "Reverse the nodes of a linked list between positions left and right (1-indexed).",
+  "patterns": [
+    "Linked List"
+  ],
+  "mainInsight": "Walk to the node before position left, reverse exactly right - left + 1 nodes with the standard prev/curr/next loop, then reconnect the reversed segment to the part before and after it. A dummy head handles left = 1.",
+  "canonicalApproach": "In-place reversal of a segment",
+  "approaches": [
+    {
+      "name": "Copy to an array",
+      "summary": "Reverse a slice of values and rebuild.",
+      "timeComplexity": "O(n)",
+      "spaceComplexity": "O(n)",
+      "strengths": [
+        "Simple"
+      ],
+      "weaknesses": [
+        "Extra memory"
+      ]
+    },
+    {
+      "name": "In-place reversal of a segment",
+      "summary": "Reverse the sub-list pointers and relink the ends.",
+      "timeComplexity": "O(n)",
+      "spaceComplexity": "O(1)",
+      "strengths": [
+        "One pass, in place"
+      ],
+      "weaknesses": [
+        "Pointer bookkeeping"
+      ],
+      "interviewRelevance": "Your approach; the expected answer."
+    }
+  ],
+  "personalSolution": {
+    "approach": "In-place reversal of a segment with a dummy head",
+    "timeComplexity": "O(n)",
+    "spaceComplexity": "O(1)",
+    "isOptimal": true,
+    "notes": "Optimal; your comments show the array-based brute force."
+  },
+  "commonMistakes": [],
+  "edgeCases": [],
+  "cards": [
+    {
+      "id": "rr-pattern-01",
+      "category": "pattern",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "What technique reverses a sub-list in place?",
+        "Which pointers do you need to relink afterwards?"
+      ],
+      "options": [
+        "Standard 3-pointer reversal plus reconnecting the node before left and the node after right",
+        "Recursion on the whole list",
+        "Sorting",
+        "A stack of all nodes"
+      ],
+      "answer": "Standard 3-pointer reversal plus reconnecting the node before left and the node after right",
+      "explanation": "After reversing, the old left node must point to the node after the segment and the node before left must point to the new segment head.",
+      "incorrectOptionExplanations": {
+        "Recursion on the whole list": "Possible but unnecessary.",
+        "Sorting": "Order is specific, not sorted.",
+        "A stack of all nodes": "Uses O(n) space."
+      }
+    },
+    {
+      "id": "rr-invariant-01",
+      "category": "invariant",
+      "type": "free_recall",
+      "promptVariants": [
+        "After the reversal loop, what do `prev`, `curr` and `tail` point to?",
+        "Which nodes are used for the final relinking?"
+      ],
+      "answer": "prev is the new head of the reversed segment (the old right node), curr is the first node after the segment, and tail (the old left node) is now the segment's last node. So tail.next = curr and leftNode.next = prev reconnect everything.",
+      "keyPoints": [
+        "prev = reversed head",
+        "curr = node after the segment",
+        "tail = old left node"
+      ],
+      "explanation": "leftNode is the node before the segment (dummy if left = 1)."
+    },
+    {
+      "id": "rr-time-01",
+      "category": "time_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Time complexity: ___",
+        "Complete the statement: Time complexity: ___"
+      ],
+      "answer": "O(n)",
+      "explanation": "At most one pass to reach left and one over the segment.",
+      "acceptedAnswers": [
+        "linear"
+      ]
+    },
+    {
+      "id": "rr-space-01",
+      "category": "space_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Extra space: ___",
+        "Complete the statement: Extra space: ___"
+      ],
+      "answer": "O(1)",
+      "explanation": "A few pointers.",
+      "acceptedAnswers": [
+        "constant"
+      ]
+    },
+    {
+      "id": "rr-code-01",
+      "category": "code_reasoning",
+      "type": "code_question",
+      "promptVariants": [
+        "Why create `dummy = ListNode(0, head)` and what does the first for-loop do?",
+        "What if left == 1?"
+      ],
+      "code": "dummy = ListNode(0, head)\nleftNode = dummy\nfor _ in range(left - 1):\n    leftNode = leftNode.next\nprev = None\ncurr = leftNode.next\ntail = leftNode.next\nfor _ in range(right - left + 1):\n    nextt = curr.next\n    curr.next = prev\n    prev = curr\n    curr = nextt\ntail.next = curr\nleftNode.next = prev",
+      "answer": "The dummy gives a node before position 1, so leftNode.next = prev works uniformly even when the head itself is reversed. The first loop advances leftNode to the node just before position left.",
+      "keyPoints": [
+        "Dummy before the head",
+        "leftNode = node before the segment",
+        "Uniform relinking"
+      ],
+      "explanation": "Return dummy.next."
+    },
+    {
+      "id": "rr-edge-01",
+      "category": "edge_case",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "What if left == right?",
+        "Which input needs no changes?"
+      ],
+      "options": [
+        "Nothing changes (a single node reversed is itself)",
+        "The list is cleared",
+        "It must reverse the whole list",
+        "It raises an error"
+      ],
+      "answer": "Nothing changes (a single node reversed is itself)",
+      "explanation": "Reversing one node is a no-op; the early return handles it.",
+      "incorrectOptionExplanations": {
+        "The list is cleared": "No nodes are removed.",
+        "It must reverse the whole list": "Only [left, right].",
+        "It raises an error": "Valid input."
+      }
+    }
+  ],
+  "generatedAt": "2026-10-01T14:26:27Z"
+}

@@ -1,0 +1,131 @@
+{
+  "schemaVersion": 1,
+  "problemSlug": "middle-of-the-linked-list",
+  "summary": "Return the middle node of a linked list (the second middle if there are two).",
+  "patterns": [
+    "Linked List",
+    "Two Pointers"
+  ],
+  "mainInsight": "Slow and fast pointers: when fast reaches the end after moving two steps per slow's one, slow stands at the middle.",
+  "canonicalApproach": "Slow and fast pointers",
+  "approaches": [
+    {
+      "name": "Count then walk",
+      "summary": "Two passes: length, then n // 2 steps.",
+      "timeComplexity": "O(n)",
+      "spaceComplexity": "O(1)",
+      "weaknesses": [
+        "Two passes"
+      ]
+    },
+    {
+      "name": "Slow and fast pointers",
+      "summary": "One pass; slow ends at the middle.",
+      "timeComplexity": "O(n)",
+      "spaceComplexity": "O(1)",
+      "strengths": [
+        "Single pass"
+      ],
+      "interviewRelevance": "Your approach; the expected answer."
+    }
+  ],
+  "personalSolution": {
+    "approach": "Slow and fast pointers",
+    "timeComplexity": "O(n)",
+    "spaceComplexity": "O(1)",
+    "isOptimal": true,
+    "notes": "Optimal."
+  },
+  "commonMistakes": [],
+  "edgeCases": [],
+  "cards": [
+    {
+      "id": "mid-pattern-01",
+      "category": "pattern",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "Which technique finds the middle in one pass?",
+        "Why do two pointers at different speeds find the middle?"
+      ],
+      "options": [
+        "Slow and fast pointers",
+        "Binary search",
+        "Recursion on halves",
+        "Sorting"
+      ],
+      "answer": "Slow and fast pointers",
+      "explanation": "When the fast pointer has covered the whole list, the slow one has covered half.",
+      "incorrectOptionExplanations": {
+        "Binary search": "No random access in a linked list.",
+        "Recursion on halves": "Needs the length first.",
+        "Sorting": "Irrelevant."
+      }
+    },
+    {
+      "id": "mid-insight-01",
+      "category": "main_insight",
+      "type": "free_recall",
+      "promptVariants": [
+        "Which middle is returned for an even-length list and why?",
+        "How does the loop condition decide it?"
+      ],
+      "answer": "For even n the loop `while fast and fast.next` ends with fast = None after n/2 steps of slow, so slow is the second middle node (index n/2). Using `fast.next and fast.next.next` instead would stop one earlier and return the first middle.",
+      "keyPoints": [
+        "Second middle for even n",
+        "Loop condition controls the choice"
+      ],
+      "explanation": "The problem asks for the second middle."
+    },
+    {
+      "id": "mid-time-01",
+      "category": "time_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Time complexity: ___",
+        "Complete the statement: Time complexity: ___"
+      ],
+      "answer": "O(n)",
+      "explanation": "Fast traverses the list once.",
+      "acceptedAnswers": [
+        "linear"
+      ]
+    },
+    {
+      "id": "mid-space-01",
+      "category": "space_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Extra space: ___",
+        "Complete the statement: Extra space: ___"
+      ],
+      "answer": "O(1)",
+      "explanation": "Two pointers.",
+      "acceptedAnswers": [
+        "constant"
+      ]
+    },
+    {
+      "id": "mid-edge-01",
+      "category": "edge_case",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "What is returned for [1,2,3,4,5,6]?",
+        "Which node is the middle of an even list?"
+      ],
+      "options": [
+        "The node with value 4",
+        "The node with value 3",
+        "The node with value 5",
+        "None"
+      ],
+      "answer": "The node with value 4",
+      "explanation": "The second of the two middle nodes (3 and 4).",
+      "incorrectOptionExplanations": {
+        "The node with value 3": "That is the first middle.",
+        "The node with value 5": "Too far.",
+        "None": "A middle always exists."
+      }
+    }
+  ],
+  "generatedAt": "2026-10-01T14:26:27Z"
+}

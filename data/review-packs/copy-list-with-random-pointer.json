@@ -1,0 +1,157 @@
+{
+  "schemaVersion": 1,
+  "problemSlug": "copy-list-with-random-pointer",
+  "summary": "Deep-copy a linked list whose nodes also have a random pointer to any node (or null).",
+  "patterns": [
+    "Linked List",
+    "Array / Hashing"
+  ],
+  "mainInsight": "A deep copy needs a mapping original -> clone to wire random pointers. A hash map gives that directly (O(n) extra space); the interleaving trick places each clone right after its original so the mapping is implicit, using O(1) extra space.",
+  "canonicalApproach": "Interleave clones in the list",
+  "approaches": [
+    {
+      "name": "Hash map original -> clone",
+      "summary": "Two passes: create clones, then wire next/random via the map.",
+      "timeComplexity": "O(n)",
+      "spaceComplexity": "O(n)",
+      "strengths": [
+        "Easy to get right"
+      ],
+      "weaknesses": [
+        "Extra memory"
+      ]
+    },
+    {
+      "name": "Interleave clones in the list",
+      "summary": "Insert each clone after its original; set clone.random = original.random.next; then split the lists.",
+      "timeComplexity": "O(n)",
+      "spaceComplexity": "O(1) extra",
+      "strengths": [
+        "Constant extra space"
+      ],
+      "weaknesses": [
+        "Three passes, restores the input"
+      ],
+      "interviewRelevance": "Your approach."
+    }
+  ],
+  "personalSolution": {
+    "approach": "Interleave clones in the list (O(1) extra space)",
+    "timeComplexity": "O(n)",
+    "spaceComplexity": "O(1) extra",
+    "isOptimal": true,
+    "notes": "Optimal in space; the hash-map version is simpler to explain."
+  },
+  "commonMistakes": [],
+  "edgeCases": [],
+  "cards": [
+    {
+      "id": "cp-pattern-01",
+      "category": "pattern",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "How can you map originals to clones without a hash map?",
+        "What is the interleaving technique?"
+      ],
+      "options": [
+        "Insert each clone right after its original node",
+        "Sort the nodes",
+        "Reverse the list",
+        "Recursion with memoisation"
+      ],
+      "answer": "Insert each clone right after its original node",
+      "explanation": "Then original.random.next is exactly the clone of the random target.",
+      "incorrectOptionExplanations": {
+        "Sort the nodes": "Nodes have no natural order.",
+        "Reverse the list": "Does not create a mapping.",
+        "Recursion with memoisation": "Equivalent to a hash map (O(n) space)."
+      }
+    },
+    {
+      "id": "cp-insight-01",
+      "category": "main_insight",
+      "type": "free_recall",
+      "promptVariants": [
+        "Why is `clone.random = origin.random.next` correct after interleaving?",
+        "What is the three-pass structure?"
+      ],
+      "answer": "After interleaving, the clone of any node X is X.next. So if origin.random is R, the clone of R is R.next, which is what clone.random must point to. Passes: (1) insert clones, (2) set random pointers, (3) split the combined list back into the original and the copy.",
+      "keyPoints": [
+        "clone(X) = X.next",
+        "random target's clone = R.next",
+        "Insert / wire randoms / split"
+      ],
+      "explanation": "Wiring randoms must happen before splitting."
+    },
+    {
+      "id": "cp-time-01",
+      "category": "time_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Time complexity: ___",
+        "Complete the statement: Time complexity: ___"
+      ],
+      "answer": "O(n)",
+      "explanation": "Three linear passes.",
+      "acceptedAnswers": [
+        "linear"
+      ]
+    },
+    {
+      "id": "cp-space-01",
+      "category": "space_complexity",
+      "type": "free_recall",
+      "promptVariants": [
+        "What is the extra space compared with the hash map solution?",
+        "Is the original list restored?"
+      ],
+      "answer": "O(1) extra (the clones themselves are the output) versus O(n) for a hash map. The third pass restores the original list's next pointers.",
+      "keyPoints": [
+        "O(1) extra",
+        "Original restored",
+        "Hash map uses O(n)"
+      ],
+      "explanation": "Forgetting to restore would corrupt the input."
+    },
+    {
+      "id": "cp-code-01",
+      "category": "code_reasoning",
+      "type": "code_question",
+      "promptVariants": [
+        "Why must the random pointers be assigned in a separate pass after interleaving and before splitting?",
+        "What does the third loop do?"
+      ],
+      "code": "origin = head\nwhile origin:\n    clone = origin.next\n    clone.random = origin.random.next if origin.random else None\n    origin = clone.next",
+      "answer": "Every clone must exist before any random pointer is set (a node's random target may appear later in the list). Splitting before wiring would lose the adjacency that lets origin.random.next find the clone. The third loop unweaves the lists: origin.next = clone.next and cur.next = clone.",
+      "keyPoints": [
+        "All clones exist first",
+        "Wire before splitting",
+        "Third pass restores/extracts"
+      ],
+      "explanation": "random may be None."
+    },
+    {
+      "id": "cp-edge-01",
+      "category": "edge_case",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "What must happen when a node's random pointer is null?",
+        "How is an empty list handled?"
+      ],
+      "options": [
+        "clone.random = None; an empty list returns None immediately",
+        "Point to the head",
+        "Point to itself",
+        "Skip the node"
+      ],
+      "answer": "clone.random = None; an empty list returns None immediately",
+      "explanation": "The conditional expression keeps the null random and the initial check handles an empty list.",
+      "incorrectOptionExplanations": {
+        "Point to the head": "That changes the structure.",
+        "Point to itself": "Wrong structure.",
+        "Skip the node": "Every node must be copied."
+      }
+    }
+  ],
+  "generatedAt": "2026-10-01T14:26:27Z"
+}

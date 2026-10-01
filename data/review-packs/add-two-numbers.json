@@ -1,0 +1,155 @@
+{
+  "schemaVersion": 1,
+  "problemSlug": "add-two-numbers",
+  "summary": "Add two non-negative integers stored as linked lists with digits in reverse order and return the sum as a list.",
+  "patterns": [
+    "Linked List",
+    "Math"
+  ],
+  "mainInsight": "Digits are stored least-significant first, so walk both lists together adding digit by digit with a carry, exactly like grade-school addition, and build the result list as you go (a dummy head simplifies it).",
+  "canonicalApproach": "Digit-wise addition with carry",
+  "approaches": [
+    {
+      "name": "Convert to integers",
+      "summary": "Build both numbers, add, rebuild a list.",
+      "timeComplexity": "O(m + n)",
+      "spaceComplexity": "O(m + n)",
+      "strengths": [
+        "Easy in Python"
+      ],
+      "weaknesses": [
+        "Defeats the point; unbounded big ints"
+      ]
+    },
+    {
+      "name": "Digit-wise addition with carry",
+      "summary": "Loop while either list has nodes or a carry remains.",
+      "timeComplexity": "O(max(m, n))",
+      "spaceComplexity": "O(1) extra besides the output",
+      "strengths": [
+        "Optimal, general"
+      ],
+      "interviewRelevance": "Your approach; the expected answer."
+    }
+  ],
+  "personalSolution": {
+    "approach": "Digit-wise addition with carry and a dummy head",
+    "timeComplexity": "O(max(m, n))",
+    "spaceComplexity": "O(1) extra",
+    "isOptimal": true,
+    "notes": "Optimal."
+  },
+  "commonMistakes": [],
+  "edgeCases": [],
+  "cards": [
+    {
+      "id": "an-pattern-01",
+      "category": "pattern",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "Which technique implements Add Two Numbers?",
+        "How do you handle different list lengths and the final carry?"
+      ],
+      "options": [
+        "Simultaneous traversal with a carry and a dummy head",
+        "Reverse both lists first",
+        "Recursion over the longer list only",
+        "Sorting the digits"
+      ],
+      "answer": "Simultaneous traversal with a carry and a dummy head",
+      "explanation": "The least significant digits are at the heads, so addition proceeds from the start; treat an exhausted list as 0 and append a node for a final carry.",
+      "incorrectOptionExplanations": {
+        "Reverse both lists first": "They are already in reverse order; reversing is only needed for the 'II' version.",
+        "Recursion over the longer list only": "Possible but not required and risks depth.",
+        "Sorting the digits": "Digit order matters."
+      }
+    },
+    {
+      "id": "an-insight-01",
+      "category": "main_insight",
+      "type": "free_recall",
+      "promptVariants": [
+        "Why does the reverse-order storage make the problem easy?",
+        "What does the dummy node buy you?"
+      ],
+      "answer": "The heads hold the least significant digits, so you can add in the natural traversal order and carry forward without reversing anything. The dummy node avoids special-casing the first node of the result.",
+      "keyPoints": [
+        "LSD first => forward carry",
+        "Dummy head for the result",
+        "Carry may add a final node"
+      ],
+      "explanation": "Add Two Numbers II (MSD first) needs reversal or stacks."
+    },
+    {
+      "id": "an-time-01",
+      "category": "time_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Time complexity (lengths m and n): ___",
+        "Add Two Numbers visits each node once, so it runs in ___."
+      ],
+      "answer": "O(max(m, n))",
+      "explanation": "One pass over the longer list.",
+      "acceptedAnswers": [
+        "O(max(m,n))",
+        "O(m + n)",
+        "O(m+n)"
+      ]
+    },
+    {
+      "id": "an-space-01",
+      "category": "space_complexity",
+      "type": "free_recall",
+      "promptVariants": [
+        "What is the space complexity?",
+        "What does the algorithm allocate besides pointers?"
+      ],
+      "answer": "O(max(m, n)) for the result list (it is output); otherwise O(1) auxiliary space.",
+      "keyPoints": [
+        "Output size O(max(m,n))",
+        "O(1) auxiliary"
+      ],
+      "explanation": "No stack or array is used."
+    },
+    {
+      "id": "an-code-01",
+      "category": "code_reasoning",
+      "type": "code_question",
+      "promptVariants": [
+        "Why `while l1 or l2` plus a trailing `if carry`, and why carry = total // 10?",
+        "How is each result digit computed?"
+      ],
+      "code": "while l1 or l2:\n    total = carry\n    if l1:\n        total += l1.val; l1 = l1.next\n    if l2:\n        total += l2.val; l2 = l2.next\n    curr.next = ListNode(total % 10)\n    curr = curr.next\n    carry = total // 10\nif carry:\n    curr.next = ListNode(carry)",
+      "answer": "The loop continues while either list has digits (an exhausted list contributes 0). total includes the incoming carry; its last digit (total % 10) becomes the result digit and total // 10 (0 or 1) is the next carry. A carry left after both lists end needs one more node.",
+      "keyPoints": [
+        "Either list continues the loop",
+        "% 10 digit, // 10 carry",
+        "Trailing carry node"
+      ],
+      "explanation": "Maximum carry is 1."
+    },
+    {
+      "id": "an-edge-01",
+      "category": "edge_case",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "What is the result of [9,9,9,9] + [1]?",
+        "Which input produces a longer result list?"
+      ],
+      "options": [
+        "[0,0,0,0,1]",
+        "[0,0,0,0]",
+        "[1,0,0,0,0]",
+        "[9,9,9,9,1]"
+      ],
+      "answer": "[0,0,0,0,1]",
+      "explanation": "9999 + 1 = 10000, stored in reverse as [0,0,0,0,1]; the final carry creates the extra node.",
+      "incorrectOptionExplanations": {
+        "[0,0,0,0]": "That drops the carry.",
+        "[1,0,0,0,0]": "That is the non-reversed form.",
+        "[9,9,9,9,1]": "Not the sum."
+      }
+    }
+  ],
+  "generatedAt": "2026-10-01T14:26:27Z"
+}

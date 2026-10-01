@@ -1,0 +1,162 @@
+{
+  "schemaVersion": 1,
+  "problemSlug": "merge-k-sorted-lists",
+  "summary": "Merge k sorted linked lists into one sorted list.",
+  "patterns": [
+    "Heap / Priority Queue",
+    "Linked List",
+    "Divide and Conquer"
+  ],
+  "mainInsight": "At every step the next output node is the smallest of the k current heads. A min-heap of heads gives that in O(log k); alternatively merge the lists pairwise in a divide-and-conquer fashion.",
+  "canonicalApproach": "Min-heap of heads",
+  "approaches": [
+    {
+      "name": "Merge one by one",
+      "summary": "Fold lists into the result with a two-list merge.",
+      "timeComplexity": "O(N * k)",
+      "spaceComplexity": "O(1)",
+      "weaknesses": [
+        "Rescans the growing result"
+      ]
+    },
+    {
+      "name": "Min-heap of heads",
+      "summary": "Pop the smallest head, append it, push its next.",
+      "timeComplexity": "O(N log k)",
+      "spaceComplexity": "O(k)",
+      "strengths": [
+        "Simple, streaming"
+      ],
+      "interviewRelevance": "Your approach."
+    },
+    {
+      "name": "Divide and conquer pairwise merge",
+      "summary": "Merge lists in pairs, halving the count each round.",
+      "timeComplexity": "O(N log k)",
+      "spaceComplexity": "O(1) extra (or O(log k) stack)",
+      "strengths": [
+        "No heap, in-place splicing"
+      ],
+      "interviewRelevance": "Equally optimal."
+    }
+  ],
+  "personalSolution": {
+    "approach": "Min-heap of the current heads",
+    "timeComplexity": "O(N log k)",
+    "spaceComplexity": "O(k)",
+    "isOptimal": true,
+    "notes": "Optimal; divide-and-conquer merging achieves the same time with O(1) extra space."
+  },
+  "commonMistakes": [],
+  "edgeCases": [],
+  "cards": [
+    {
+      "id": "mk2-pattern-01",
+      "category": "pattern",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "Which structure gives the smallest of k list heads efficiently?",
+        "What pattern solves Merge k Sorted Lists in O(N log k)?"
+      ],
+      "options": [
+        "Min-heap of the current heads (or divide-and-conquer merging)",
+        "A stack",
+        "Sorting all values only",
+        "Binary search"
+      ],
+      "answer": "Min-heap of the current heads (or divide-and-conquer merging)",
+      "explanation": "The heap keeps k candidates; each pop/push is O(log k).",
+      "incorrectOptionExplanations": {
+        "A stack": "No ordering.",
+        "Sorting all values only": "Works in O(N log N) but ignores the sortedness and uses extra space.",
+        "Binary search": "No search involved."
+      }
+    },
+    {
+      "id": "mk2-insight-01",
+      "category": "main_insight",
+      "type": "free_recall",
+      "promptVariants": [
+        "Why does the heap need to hold only one node per list?",
+        "What is the invariant?"
+      ],
+      "answer": "Each list is already sorted, so its smallest unmerged element is its current head. The global minimum is therefore among the k heads; after popping it, only that list's next node can become a new candidate and is pushed.",
+      "keyPoints": [
+        "Head of each list = its minimum",
+        "Global min among k heads",
+        "Push only the popped node's next"
+      ],
+      "explanation": "Heap size never exceeds k."
+    },
+    {
+      "id": "mk2-time-01",
+      "category": "time_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Total time with N nodes and k lists: ___",
+        "Merge k Sorted Lists with a heap costs ___."
+      ],
+      "answer": "O(N log k)",
+      "explanation": "N pops/pushes on a heap of size at most k.",
+      "acceptedAnswers": [
+        "O(nlogk)",
+        "O(N log(k))"
+      ]
+    },
+    {
+      "id": "mk2-space-01",
+      "category": "space_complexity",
+      "type": "free_recall",
+      "promptVariants": [
+        "What is the space cost of the heap solution versus divide and conquer?",
+        "Compare the memory."
+      ],
+      "answer": "Heap: O(k) for the heap entries. Divide and conquer merging reuses the nodes and needs O(1) extra (O(log k) if recursive).",
+      "keyPoints": [
+        "Heap O(k)",
+        "D&C O(1)/O(log k)"
+      ],
+      "explanation": "The output nodes are the existing nodes."
+    },
+    {
+      "id": "mk2-code-01",
+      "category": "code_reasoning",
+      "type": "code_question",
+      "promptVariants": [
+        "Why is `ListNode.__lt__` patched in your solution and what is a safer alternative?",
+        "What breaks if two nodes have the same value?"
+      ],
+      "code": "ListNode.__lt__ = lambda self, other: self.val < other.val\nheap = [l for l in lists if l]\nheapify(heap)\nwhile heap:\n    node = heappop(heap)\n    cur.next = node\n    cur = cur.next\n    if node.next:\n        heappush(heap, node.next)",
+      "answer": "heapq compares items with <, and ListNode defines no ordering, so the patch lets nodes be compared by value. Without it, equal values would fall back to comparing nodes and raise TypeError. A safer alternative is pushing (val, index, node) tuples where the unique index breaks ties.",
+      "keyPoints": [
+        "heapq needs ordering",
+        "Patch __lt__ or use tuples",
+        "Tuple with a tie-breaker index"
+      ],
+      "explanation": "Mutating the class works in LeetCode but is a hack."
+    },
+    {
+      "id": "mk2-edge-01",
+      "category": "edge_case",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "Which inputs must be handled?",
+        "What does the code return for lists = [] or all empty lists?"
+      ],
+      "options": [
+        "None (nothing is pushed on the heap)",
+        "An empty ListNode",
+        "An error",
+        "The first list"
+      ],
+      "answer": "None (nothing is pushed on the heap)",
+      "explanation": "Only non-empty lists are pushed; an empty heap yields dummy.next = None.",
+      "incorrectOptionExplanations": {
+        "An empty ListNode": "A dummy is not returned.",
+        "An error": "The loop is skipped.",
+        "The first list": "There may be none."
+      }
+    }
+  ],
+  "generatedAt": "2026-10-01T14:26:27Z"
+}
