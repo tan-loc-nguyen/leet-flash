@@ -49,16 +49,16 @@
       ],
       "options": [
         "A frequency map; value == frequency",
-        "A sorted array only",
-        "A stack",
-        "Binary search"
+        "A sorted array scanned with binary search",
+        "A stack that stores every value seen so far",
+        "Binary search over the range of values"
       ],
       "answer": "A frequency map; value == frequency",
       "explanation": "Count each value, then test value == count.",
       "incorrectOptionExplanations": {
-        "A sorted array only": "Works with extra passes but a map is simpler.",
-        "A stack": "Irrelevant.",
-        "Binary search": "Irrelevant."
+        "A sorted array scanned with binary search": "Works with extra passes but a map is simpler.",
+        "A stack that stores every value seen so far": "Irrelevant.",
+        "Binary search over the range of values": "Irrelevant."
       }
     },
     {

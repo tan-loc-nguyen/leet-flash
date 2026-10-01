@@ -52,16 +52,16 @@
       ],
       "options": [
         "Dijkstra over an expanded state (node, current run length)",
-        "Plain Dijkstra on nodes",
-        "DFS over all paths",
-        "Topological sort"
+        "Plain Dijkstra on nodes only, ignoring the constraint",
+        "DFS over all paths, keeping the shortest valid one",
+        "Topological sort of the nodes, then relaxing the edges"
       ],
       "answer": "Dijkstra over an expanded state (node, current run length)",
       "explanation": "The constraint depends on the recent history (run length), so the history must be part of the state.",
       "incorrectOptionExplanations": {
-        "Plain Dijkstra on nodes": "It cannot know the current run length.",
-        "DFS over all paths": "Exponential.",
-        "Topological sort": "The graph may have cycles."
+        "Plain Dijkstra on nodes only, ignoring the constraint": "It cannot know the current run length.",
+        "DFS over all paths, keeping the shortest valid one": "Exponential.",
+        "Topological sort of the nodes, then relaxing the edges": "The graph may have cycles."
       }
     },
     {
@@ -138,16 +138,16 @@
       ],
       "options": [
         "-1; the edge between equal labels is not allowed",
-        "0",
-        "The unconstrained distance",
-        "Infinity"
+        "0, since the source is treated as the target",
+        "The unconstrained distance, ignoring the label rule",
+        "Infinity, returned as the final answer value"
       ],
       "answer": "-1; the edge between equal labels is not allowed",
       "explanation": "With k = 1 a run of two equal characters is forbidden, so such a transition is skipped; if no valid path exists the answer is -1.",
       "incorrectOptionExplanations": {
-        "0": "Only for n = 1.",
-        "The unconstrained distance": "The constraint must hold.",
-        "Infinity": "The problem specifies -1."
+        "0, since the source is treated as the target": "Only for n = 1.",
+        "The unconstrained distance, ignoring the label rule": "The constraint must hold.",
+        "Infinity, returned as the final answer value": "The problem specifies -1."
       }
     }
   ],

@@ -69,16 +69,16 @@
       ],
       "options": [
         "Two Sum (hash set) or Two Sum II (two pointers on the inorder array)",
-        "Knapsack",
-        "Longest increasing subsequence",
-        "Graph colouring"
+        "Knapsack over the node values and the target sum",
+        "Longest increasing subsequence on the inorder array",
+        "Graph colouring of the nodes by their values"
       ],
       "answer": "Two Sum (hash set) or Two Sum II (two pointers on the inorder array)",
       "explanation": "Inorder of a BST is a sorted array, so any Two Sum technique applies.",
       "incorrectOptionExplanations": {
-        "Knapsack": "Unrelated.",
-        "Longest increasing subsequence": "Unrelated.",
-        "Graph colouring": "Unrelated."
+        "Knapsack over the node values and the target sum": "Unrelated.",
+        "Longest increasing subsequence on the inorder array": "Unrelated.",
+        "Graph colouring of the nodes by their values": "Unrelated."
       }
     },
     {
@@ -152,17 +152,17 @@
         "What happens for k = 2 * val of a single-node tree?"
       ],
       "options": [
-        "No: the two values must come from two different nodes, so the single-node tree returns False",
-        "Yes",
-        "Only for the root",
-        "Only if val is 0"
+        "No: the values must come from two different nodes",
+        "Yes: a node may be paired with its own value",
+        "Only the root node may be paired with itself",
+        "Only if val is 0, since then x + x == x"
       ],
-      "answer": "No: the two values must come from two different nodes, so the single-node tree returns False",
+      "answer": "No: the values must come from two different nodes",
       "explanation": "Checking the complement before inserting guarantees distinct nodes.",
       "incorrectOptionExplanations": {
-        "Yes": "That would double count a node.",
-        "Only for the root": "No special case for the root.",
-        "Only if val is 0": "Not related to zero."
+        "Yes: a node may be paired with its own value": "That would double count a node.",
+        "Only the root node may be paired with itself": "No special case for the root.",
+        "Only if val is 0, since then x + x == x": "Not related to zero."
       }
     }
   ],

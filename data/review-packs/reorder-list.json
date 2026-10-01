@@ -55,16 +55,16 @@
       ],
       "options": [
         "Find the middle, reverse the second half, merge alternately",
-        "Sort the list",
-        "Use a stack for the whole list only",
-        "Binary search on positions"
+        "Sort the list values, then relink the nodes in order",
+        "Use a stack for the whole list only, then pop it back",
+        "Binary search on positions to pick the next node"
       ],
       "answer": "Find the middle, reverse the second half, merge alternately",
       "explanation": "The target order alternates the front with the reversed back half.",
       "incorrectOptionExplanations": {
-        "Sort the list": "The order is positional, not by value.",
-        "Use a stack for the whole list only": "Works but uses O(n) space.",
-        "Binary search on positions": "Not applicable."
+        "Sort the list values, then relink the nodes in order": "The order is positional, not by value.",
+        "Use a stack for the whole list only, then pop it back": "Works but uses O(n) space.",
+        "Binary search on positions to pick the next node": "Not applicable."
       }
     },
     {

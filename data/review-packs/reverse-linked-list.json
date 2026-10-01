@@ -51,16 +51,16 @@
       ],
       "options": [
         "prev, curr and a saved next pointer",
-        "A stack of values",
-        "Two heaps",
-        "A hash map"
+        "A stack of values pushed and popped in order",
+        "Two heaps holding the first and second halves",
+        "A hash map from each node to its next pointer"
       ],
       "answer": "prev, curr and a saved next pointer",
       "explanation": "Save curr.next, point curr to prev, then advance both.",
       "incorrectOptionExplanations": {
-        "A stack of values": "Works but uses O(n) space.",
-        "Two heaps": "Irrelevant.",
-        "A hash map": "Irrelevant."
+        "A stack of values pushed and popped in order": "Works but uses O(n) space.",
+        "Two heaps holding the first and second halves": "Irrelevant.",
+        "A hash map from each node to its next pointer": "Irrelevant."
       }
     },
     {
@@ -133,16 +133,16 @@
       ],
       "options": [
         "None for an empty list; a single node is returned unchanged",
-        "An error",
-        "A new empty node",
-        "The node pointing to itself"
+        "An error, since there is no head node to reverse",
+        "A new empty node that has no value or next pointer",
+        "The node pointing to itself as a one-node cycle"
       ],
       "answer": "None for an empty list; a single node is returned unchanged",
       "explanation": "The loop is skipped for empty input and runs once for one node (its next becomes None).",
       "incorrectOptionExplanations": {
-        "An error": "No special handling needed.",
-        "A new empty node": "No node is created.",
-        "The node pointing to itself": "Its next is set to prev = None."
+        "An error, since there is no head node to reverse": "No special handling needed.",
+        "A new empty node that has no value or next pointer": "No node is created.",
+        "The node pointing to itself as a one-node cycle": "Its next is set to prev = None."
       }
     }
   ],

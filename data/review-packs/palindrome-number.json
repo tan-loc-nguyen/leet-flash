@@ -67,16 +67,16 @@
       ],
       "options": [
         "Peel digits with % 10 and // 10 to build the reverse",
-        "Binary search on the value",
-        "Hash set of digits",
-        "Sort the digits"
+        "Binary search on the value and compare digit sums",
+        "Hash set of the digits seen so far in the number",
+        "Sort the digits and compare to the original order"
       ],
       "answer": "Peel digits with % 10 and // 10 to build the reverse",
       "explanation": "x % 10 gives the last digit and x // 10 drops it, so you can rebuild the reversed number arithmetically.",
       "incorrectOptionExplanations": {
-        "Binary search on the value": "Nothing is monotonic to search.",
-        "Hash set of digits": "Sets ignore digit order.",
-        "Sort the digits": "Sorting destroys the order you need to compare."
+        "Binary search on the value and compare digit sums": "Nothing is monotonic to search.",
+        "Hash set of the digits seen so far in the number": "Sets ignore digit order.",
+        "Sort the digits and compare to the original order": "Sorting destroys the order you need to compare."
       }
     },
     {
@@ -105,16 +105,16 @@
       ],
       "options": [
         "Negatives and non-zero numbers ending in 0 (like 10) are never palindromes",
-        "Only negatives need special care",
-        "Zero is not a palindrome",
-        "Numbers above 2^31 only"
+        "Only negatives need special care; trailing zeros are fine",
+        "Zero is not a palindrome, so it must be rejected up front",
+        "Numbers above 2^31 only, since they overflow the reverse"
       ],
       "answer": "Negatives and non-zero numbers ending in 0 (like 10) are never palindromes",
       "explanation": "'-121' reads '121-' backwards; 10 reverses to 01 = 1, which is not 10 (the full-reverse approach handles it naturally, the half-reverse approach needs an explicit check).",
       "incorrectOptionExplanations": {
-        "Only negatives need special care": "Trailing-zero numbers are another trap for half-reversal.",
-        "Zero is not a palindrome": "0 is a palindrome.",
-        "Numbers above 2^31 only": "Size is unrelated."
+        "Only negatives need special care; trailing zeros are fine": "Trailing-zero numbers are another trap for half-reversal.",
+        "Zero is not a palindrome, so it must be rejected up front": "0 is a palindrome.",
+        "Numbers above 2^31 only, since they overflow the reverse": "Size is unrelated."
       }
     },
     {

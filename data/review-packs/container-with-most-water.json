@@ -49,16 +49,16 @@
       ],
       "options": [
         "Two pointers converging from both ends",
-        "Sliding window of fixed size",
-        "Prefix sums",
-        "Dynamic programming"
+        "Sliding window of fixed size that moves across the heights array",
+        "Prefix sums of the heights to compute the water between two bars",
+        "Dynamic programming over every pair of left and right walls"
       ],
       "answer": "Two pointers converging from both ends",
       "explanation": "Starting with maximum width and shrinking while discarding provably worse candidates.",
       "incorrectOptionExplanations": {
-        "Sliding window of fixed size": "The window width varies.",
-        "Prefix sums": "No range sum is needed.",
-        "Dynamic programming": "No overlapping subproblems; greedy suffices."
+        "Sliding window of fixed size that moves across the heights array": "The window width varies.",
+        "Prefix sums of the heights to compute the water between two bars": "No range sum is needed.",
+        "Dynamic programming over every pair of left and right walls": "No overlapping subproblems; greedy suffices."
       }
     },
     {
@@ -87,16 +87,16 @@
       ],
       "options": [
         "Either may move; keeping both cannot beat the current area",
-        "Neither; stop",
-        "Both must move",
-        "The taller wall"
+        "Neither pointer moves, because the current area is already the best",
+        "Both pointers must move inwards together to avoid repeating a pair",
+        "Only the taller wall should move, since the shorter caps the area"
       ],
       "answer": "Either may move; keeping both cannot beat the current area",
       "explanation": "Any better container must exclude both walls because both cap the height equally; moving one (as your `>=` branch does) is enough since the other moves next iteration.",
       "incorrectOptionExplanations": {
-        "Neither; stop": "The search is not finished.",
-        "Both must move": "Not needed; moving one is safe.",
-        "The taller wall": "They are equal."
+        "Neither pointer moves, because the current area is already the best": "The search is not finished.",
+        "Both pointers must move inwards together to avoid repeating a pair": "Not needed; moving one is safe.",
+        "Only the taller wall should move, since the shorter caps the area": "They are equal."
       }
     },
     {

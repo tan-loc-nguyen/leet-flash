@@ -68,16 +68,16 @@
       ],
       "options": [
         "Flood fill from each unvisited land cell (DFS/BFS)",
-        "Sorting rows",
-        "Binary search",
-        "Dynamic programming over rows"
+        "Sorting the rows and then counting the distinct ones",
+        "Binary search over the row and column indices",
+        "Dynamic programming over rows, carrying a count along"
       ],
       "answer": "Flood fill from each unvisited land cell (DFS/BFS)",
       "explanation": "Each flood fill visits exactly one island, so the number of fills is the answer.",
       "incorrectOptionExplanations": {
-        "Sorting rows": "Irrelevant.",
-        "Binary search": "Irrelevant.",
-        "Dynamic programming over rows": "Islands can wind across rows, so DP is not natural."
+        "Sorting the rows and then counting the distinct ones": "Irrelevant.",
+        "Binary search over the row and column indices": "Irrelevant.",
+        "Dynamic programming over rows, carrying a count along": "Islands can wind across rows, so DP is not natural."
       }
     },
     {
@@ -155,16 +155,16 @@
       ],
       "options": [
         "No: only 4-directional neighbours connect; the answer is 2",
-        "Yes: the answer is 1",
-        "Only horizontally: the answer is 1",
-        "It depends on the grid size"
+        "Yes: diagonal cells connect, so the answer is 1",
+        "Only horizontally adjacent ones connect: the answer is 1",
+        "It depends on the grid size, not on the adjacency rule"
       ],
       "answer": "No: only 4-directional neighbours connect; the answer is 2",
       "explanation": "The problem defines islands by horizontal/vertical adjacency.",
       "incorrectOptionExplanations": {
-        "Yes: the answer is 1": "Diagonals do not connect.",
-        "Only horizontally: the answer is 1": "Vertical also connects but these cells are not adjacent.",
-        "It depends on the grid size": "The definition is fixed."
+        "Yes: diagonal cells connect, so the answer is 1": "Diagonals do not connect.",
+        "Only horizontally adjacent ones connect: the answer is 1": "Vertical also connects but these cells are not adjacent.",
+        "It depends on the grid size, not on the adjacency rule": "The definition is fixed."
       }
     }
   ],

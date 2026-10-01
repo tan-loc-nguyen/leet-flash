@@ -52,16 +52,16 @@
       ],
       "options": [
         "n > 0 and n & (n - 1) == 0",
-        "n % 3 == 0",
-        "n | (n - 1) == n",
-        "n >> 1 == n"
+        "Sort all the paths found and drop the duplicates",
+        "BFS with a set of visited nodes per path",
+        "Memoisation of each subtree's list of paths"
       ],
       "answer": "n > 0 and n & (n - 1) == 0",
       "explanation": "Exactly one set bit: removing it leaves 0.",
       "incorrectOptionExplanations": {
-        "n % 3 == 0": "Unrelated to powers of two.",
-        "n | (n - 1) == n": "True only for n = 1... not a general test.",
-        "n >> 1 == n": "Only true for 0."
+        "Sort all the paths found and drop the duplicates": "Unrelated to powers of two.",
+        "BFS with a set of visited nodes per path": "True only for n = 1... not a general test.",
+        "Memoisation of each subtree's list of paths": "Only true for 0."
       }
     },
     {
@@ -89,16 +89,16 @@
       ],
       "options": [
         "n = 0 (0 & -1 == 0) would wrongly pass",
-        "n = 1",
-        "n = 2",
-        "n = 2^31"
+        "n = 1, which is 2^0 and would wrongly fail",
+        "n = 2, since 2 & 1 == 0 makes it fail the test",
+        "n = 2^31, which overflows a 32-bit signed integer"
       ],
       "answer": "n = 0 (0 & -1 == 0) would wrongly pass",
       "explanation": "Zero has no set bit and is not a power of two; negatives are also excluded by the guard.",
       "incorrectOptionExplanations": {
-        "n = 1": "1 is 2^0, correctly accepted.",
-        "n = 2": "Correctly accepted.",
-        "n = 2^31": "Correctly accepted."
+        "n = 1, which is 2^0 and would wrongly fail": "1 is 2^0, correctly accepted.",
+        "n = 2, since 2 & 1 == 0 makes it fail the test": "Correctly accepted.",
+        "n = 2^31, which overflows a 32-bit signed integer": "Correctly accepted."
       }
     },
     {

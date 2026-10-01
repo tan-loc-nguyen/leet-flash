@@ -45,16 +45,16 @@
       ],
       "options": [
         "Sort + two pointers",
-        "Hash set lookup per pair",
-        "Sliding window",
-        "BFS"
+        "Hash set lookup of the needed complement for every pair of numbers",
+        "Variable-size sliding window over the sorted array of values",
+        "Breadth-first search over the states of partial sums"
       ],
       "answer": "Sort + two pointers",
       "explanation": "Same skeleton as 3Sum, but compare |target - total| instead of testing equality.",
       "incorrectOptionExplanations": {
-        "Hash set lookup per pair": "A set finds exact matches; closeness needs ordering.",
-        "Sliding window": "Triples are not contiguous.",
-        "BFS": "No graph."
+        "Hash set lookup of the needed complement for every pair of numbers": "A set finds exact matches; closeness needs ordering.",
+        "Variable-size sliding window over the sorted array of values": "Triples are not contiguous.",
+        "Breadth-first search over the states of partial sums": "No graph."
       }
     },
     {
@@ -129,16 +129,16 @@
       ],
       "options": [
         "Any real sum has a smaller distance than infinity, so the first sum replaces it",
-        "Infinity is required for sorting",
-        "It avoids integer overflow",
-        "It makes the loop run once"
+        "Infinity is required so that the array can be sorted in place first",
+        "It avoids an integer overflow when adding three large values",
+        "It makes the loop run exactly once for every starting index"
       ],
       "answer": "Any real sum has a smaller distance than infinity, so the first sum replaces it",
       "explanation": "abs(target - inf) is infinite, so the first evaluated total always becomes best. (With 3 elements the only triple is evaluated and returned.)",
       "incorrectOptionExplanations": {
-        "Infinity is required for sorting": "Unrelated.",
-        "It avoids integer overflow": "Python has no overflow.",
-        "It makes the loop run once": "No effect on iteration count."
+        "Infinity is required so that the array can be sorted in place first": "Unrelated.",
+        "It avoids an integer overflow when adding three large values": "Python has no overflow.",
+        "It makes the loop run exactly once for every starting index": "No effect on iteration count."
       }
     }
   ],

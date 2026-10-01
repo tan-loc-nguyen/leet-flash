@@ -60,16 +60,16 @@
       ],
       "options": [
         "'(' allowed while opens < n; ')' allowed while closes < opens",
-        "Any character any time",
-        "Only alternate '(' and ')'",
-        "')' first then '('"
+        "Any character any time, then filter at the end",
+        "Only alternating '(' and ')' characters",
+        "')' first and then '(' until both counts hit n"
       ],
       "answer": "'(' allowed while opens < n; ')' allowed while closes < opens",
       "explanation": "These constraints ensure every prefix can be extended to a valid string.",
       "incorrectOptionExplanations": {
-        "Any character any time": "That generates invalid strings.",
-        "Only alternate '(' and ')'": "Too restrictive, e.g. '((()))'.",
-        "')' first then '('": "A close can never come first."
+        "Any character any time, then filter at the end": "That generates invalid strings.",
+        "Only alternating '(' and ')' characters": "Too restrictive, e.g. '((()))'.",
+        "')' first and then '(' until both counts hit n": "A close can never come first."
       }
     },
     {

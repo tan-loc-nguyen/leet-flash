@@ -53,16 +53,16 @@
       ],
       "options": [
         "It removes the special case for the first result node",
-        "It sorts the nodes",
-        "It stores the length",
-        "It reverses the lists"
+        "It sorts the nodes of both lists as they are merged",
+        "It stores the length of the merged list so far",
+        "It reverses the lists before they are merged together"
       ],
       "answer": "It removes the special case for the first result node",
       "explanation": "The tail pointer always has a node to attach to; the answer is dummy.next.",
       "incorrectOptionExplanations": {
-        "It sorts the nodes": "Sorting happens via comparisons.",
-        "It stores the length": "Unrelated.",
-        "It reverses the lists": "Not needed."
+        "It sorts the nodes of both lists as they are merged": "Sorting happens via comparisons.",
+        "It stores the length of the merged list so far": "Unrelated.",
+        "It reverses the lists before they are merged together": "Not needed."
       }
     },
     {

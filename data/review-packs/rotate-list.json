@@ -61,16 +61,16 @@
       ],
       "options": [
         "Reduce k modulo the length and cut a circular list",
-        "Reverse the list twice",
-        "Sort the nodes",
-        "Use recursion k times"
+        "Reverse the list twice, once per half of the cut",
+        "Sort the nodes by position and relink them",
+        "Use recursion k times, rotating by a single node each time"
       ],
       "answer": "Reduce k modulo the length and cut a circular list",
       "explanation": "A rotation by n is the identity, so only k % n matters.",
       "incorrectOptionExplanations": {
-        "Reverse the list twice": "That returns the original order.",
-        "Sort the nodes": "Order must be preserved cyclically.",
-        "Use recursion k times": "O(k) work and stack."
+        "Reverse the list twice, once per half of the cut": "That returns the original order.",
+        "Sort the nodes by position and relink them": "Order must be preserved cyclically.",
+        "Use recursion k times, rotating by a single node each time": "O(k) work and stack."
       }
     },
     {
@@ -143,13 +143,13 @@
         "Why does k larger than n still work?"
       ],
       "options": [
-        "[4,5,1,2,3] (k mod 5 = 2)",
+        "[4,5,1,2,3]",
         "[1,2,3,4,5]",
         "[5,1,2,3,4]",
         "[3,4,5,1,2]"
       ],
-      "answer": "[4,5,1,2,3] (k mod 5 = 2)",
-      "explanation": "7 % 5 = 2: the last two nodes move to the front.",
+      "answer": "[4,5,1,2,3]",
+      "explanation": "7 % 5 = 2: the last two nodes move to the front. ([4,5,1,2,3]: k mod 5 = 2)",
       "incorrectOptionExplanations": {
         "[1,2,3,4,5]": "That would be k mod 5 = 0.",
         "[5,1,2,3,4]": "That is k = 1.",

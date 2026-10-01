@@ -58,16 +58,16 @@
       ],
       "options": [
         "XOR with a mask of ones covering the significant bits",
-        "AND with the number's complement",
-        "Left shift",
-        "Subtract from 2^32"
+        "AND with the complement of the number's own bit pattern",
+        "Left shift by the count of significant bits, then mask",
+        "Subtract the number from 2^32 and keep the low bits"
       ],
       "answer": "XOR with a mask of ones covering the significant bits",
       "explanation": "x ^ 1 flips a bit; a mask of ones as wide as the number flips all and only its significant bits.",
       "incorrectOptionExplanations": {
-        "AND with the number's complement": "That yields 0.",
-        "Left shift": "Does not flip bits.",
-        "Subtract from 2^32": "Would flip the leading zeros as well."
+        "AND with the complement of the number's own bit pattern": "That yields 0.",
+        "Left shift by the count of significant bits, then mask": "Does not flip bits.",
+        "Subtract the number from 2^32 and keep the low bits": "Would flip the leading zeros as well."
       }
     },
     {

@@ -68,16 +68,16 @@
       ],
       "options": [
         "dist = depth(p) + depth(q) - 2 * depth(lca)",
-        "dist = depth(p) - depth(q)",
-        "dist = |p - q|",
-        "dist = number of nodes in the tree"
+        "dist = depth(p) - depth(q) + 2 * depth(lca)",
+        "dist = |p - q| + depth(lca) - depth(root)",
+        "dist = number of nodes in the tree minus depth(lca)"
       ],
       "answer": "dist = depth(p) + depth(q) - 2 * depth(lca)",
       "explanation": "The path goes up from p to the LCA and down to q.",
       "incorrectOptionExplanations": {
-        "dist = depth(p) - depth(q)": "Ignores the divergence point.",
-        "dist = |p - q|": "Node values are not positions.",
-        "dist = number of nodes in the tree": "Unrelated."
+        "dist = depth(p) - depth(q) + 2 * depth(lca)": "Ignores the divergence point.",
+        "dist = |p - q| + depth(lca) - depth(root)": "Node values are not positions.",
+        "dist = number of nodes in the tree minus depth(lca)": "Unrelated."
       }
     },
     {

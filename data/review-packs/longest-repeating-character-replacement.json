@@ -60,16 +60,16 @@
       ],
       "options": [
         "Sliding window with a frequency map",
-        "Binary search on the string",
-        "Stack",
-        "Union find"
+        "Binary search on the string and a stack",
+        "A stack of the characters in the window",
+        "Union find merging equal neighbouring letters"
       ],
       "answer": "Sliding window with a frequency map",
       "explanation": "The window condition depends only on length and the most frequent character count.",
       "incorrectOptionExplanations": {
-        "Binary search on the string": "Possible on the answer length but needless.",
-        "Stack": "No nesting.",
-        "Union find": "No connectivity."
+        "Binary search on the string and a stack": "Possible on the answer length but needless.",
+        "A stack of the characters in the window": "No nesting.",
+        "Union find merging equal neighbouring letters": "No connectivity."
       }
     },
     {

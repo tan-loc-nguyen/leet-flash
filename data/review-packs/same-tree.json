@@ -58,16 +58,16 @@
       ],
       "options": [
         "Simultaneous recursion on matching children",
-        "Sort both trees",
-        "Inorder of one tree only",
-        "Count the nodes"
+        "Sort both trees by value and compare them",
+        "Inorder of one tree only, compared to the other",
+        "Count the nodes in each tree and compare the totals"
       ],
       "answer": "Simultaneous recursion on matching children",
       "explanation": "Equality is structural: roots, left subtrees and right subtrees must all match.",
       "incorrectOptionExplanations": {
-        "Sort both trees": "Trees are not sorted collections.",
-        "Inorder of one tree only": "Ignores the other tree.",
-        "Count the nodes": "Equal counts do not imply equal shape or values."
+        "Sort both trees by value and compare them": "Trees are not sorted collections.",
+        "Inorder of one tree only, compared to the other": "Ignores the other tree.",
+        "Count the nodes in each tree and compare the totals": "Equal counts do not imply equal shape or values."
       }
     },
     {

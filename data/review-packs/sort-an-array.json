@@ -165,16 +165,16 @@
       ],
       "options": [
         "It still performs O(n log n) work (single element returns immediately)",
-        "It becomes O(n)",
-        "It becomes O(n^2)",
-        "It fails"
+        "It becomes O(n) because the array is already sorted",
+        "It becomes O(n^2), the worst case of the sort",
+        "It fails because the input needs no sorting at all"
       ],
       "answer": "It still performs O(n log n) work (single element returns immediately)",
       "explanation": "Standard merge sort always splits and merges regardless of the input order.",
       "incorrectOptionExplanations": {
-        "It becomes O(n)": "Only natural/adaptive variants (Timsort) get O(n) on sorted input.",
-        "It becomes O(n^2)": "That is quicksort's worst case.",
-        "It fails": "No special case is needed."
+        "It becomes O(n) because the array is already sorted": "Only natural/adaptive variants (Timsort) get O(n) on sorted input.",
+        "It becomes O(n^2), the worst case of the sort": "That is quicksort's worst case.",
+        "It fails because the input needs no sorting at all": "No special case is needed."
       }
     }
   ],

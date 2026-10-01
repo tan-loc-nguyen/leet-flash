@@ -152,17 +152,17 @@
         "What happens to leading zeros in the input?"
       ],
       "options": [
-        "Leading zeros become trailing zeros of the output, so all 32 positions matter",
-        "They are dropped",
-        "They cause an overflow",
-        "They are irrelevant"
+        "Leading zeros become trailing zeros of the output, so all 32 bits matter",
+        "They are dropped, since leading zeros carry no value",
+        "They cause an overflow in the signed 32-bit result",
+        "They are irrelevant, since only set bits affect the output"
       ],
-      "answer": "Leading zeros become trailing zeros of the output, so all 32 positions matter",
+      "answer": "Leading zeros become trailing zeros of the output, so all 32 bits matter",
       "explanation": "e.g. n = 1 (bit 0 set) must become 2^31; stopping at the highest set bit would give 1.",
       "incorrectOptionExplanations": {
-        "They are dropped": "That would produce a different (shorter) number.",
-        "They cause an overflow": "Python ints do not overflow.",
-        "They are irrelevant": "They determine the high bits of the result."
+        "They are dropped, since leading zeros carry no value": "That would produce a different (shorter) number.",
+        "They cause an overflow in the signed 32-bit result": "Python ints do not overflow.",
+        "They are irrelevant, since only set bits affect the output": "They determine the high bits of the result."
       }
     }
   ],

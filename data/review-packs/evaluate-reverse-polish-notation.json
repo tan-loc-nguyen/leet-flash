@@ -88,13 +88,13 @@
         "In `a = pop(); b = pop()`, which expression is correct for subtraction?"
       ],
       "options": [
-        "b - a (the second pop is the left operand)",
+        "b - a",
         "a - b",
         "a + b",
         "-(a - b)"
       ],
-      "answer": "b - a (the second pop is the left operand)",
-      "explanation": "The first value pushed is the left operand, so it is popped second.",
+      "answer": "b - a",
+      "explanation": "The first value pushed is the left operand, so it is popped second. (b - a: the second pop is the left operand)",
       "incorrectOptionExplanations": {
         "a - b": "That reverses the operands.",
         "a + b": "That is addition.",

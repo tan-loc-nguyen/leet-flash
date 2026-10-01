@@ -50,13 +50,13 @@
         "Which parameter enforces a canonical order?"
       ],
       "options": [
-        "The start index (only pick larger numbers next)",
+        "The start index",
         "A set of results",
         "Sorting the result",
         "BFS"
       ],
-      "answer": "The start index (only pick larger numbers next)",
-      "explanation": "Each combination is built in increasing order exactly once.",
+      "answer": "The start index",
+      "explanation": "Each combination is built in increasing order exactly once. (The start index: only pick larger numbers next)",
       "incorrectOptionExplanations": {
         "A set of results": "Works but generates duplicates first.",
         "Sorting the result": "Also generates duplicates first.",
@@ -119,16 +119,16 @@
       ],
       "options": [
         "6; and a single combination [1..n]",
-        "4; and []",
-        "8; and [[1..n]]",
-        "12; and [[]]"
+        "4 combinations, and an empty list when k equals n",
+        "8 combinations, and a single combination [1..n] when k equals n",
+        "12 combinations, and [[]] when k equals n"
       ],
       "answer": "6; and a single combination [1..n]",
       "explanation": "C(4,2) = 6 and choosing all n numbers has one combination.",
       "incorrectOptionExplanations": {
-        "4; and []": "Counts are wrong.",
-        "8; and [[1..n]]": "C(4,2) is 6.",
-        "12; and [[]]": "That is the number of permutations of 2 from 4."
+        "4 combinations, and an empty list when k equals n": "Counts are wrong.",
+        "8 combinations, and a single combination [1..n] when k equals n": "C(4,2) is 6.",
+        "12 combinations, and [[]] when k equals n": "That is the number of permutations of 2 from 4."
       }
     }
   ],

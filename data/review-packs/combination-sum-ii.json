@@ -54,16 +54,16 @@
       ],
       "options": [
         "Sort, then skip c[i] when i > start and c[i] == c[i-1]",
-        "Skip when i == 0",
-        "Skip when c[i] > remaining only",
-        "Use a set of results"
+        "Skip c[i] whenever i == 0, since the first element is always repeated",
+        "Skip c[i] only when it is greater than the remaining sum",
+        "Collect every result and remove duplicates using a set at the end"
       ],
       "answer": "Sort, then skip c[i] when i > start and c[i] == c[i-1]",
       "explanation": "At a given level, trying the same value twice yields identical subtrees.",
       "incorrectOptionExplanations": {
-        "Skip when i == 0": "Unrelated.",
-        "Skip when c[i] > remaining only": "That is pruning, not de-duplication.",
-        "Use a set of results": "Works but does extra work."
+        "Skip c[i] whenever i == 0, since the first element is always repeated": "Unrelated.",
+        "Skip c[i] only when it is greater than the remaining sum": "That is pruning, not de-duplication.",
+        "Collect every result and remove duplicates using a set at the end": "Works but does extra work."
       }
     },
     {
@@ -138,13 +138,13 @@
         "Why is [1,2] listed only once?"
       ],
       "options": [
-        "[[1,2]] (the second 1 would repeat the same combination)",
+        "[[1,2]]",
         "[[1,2],[1,2]]",
         "[[1,1,1]]",
         "[]"
       ],
-      "answer": "[[1,2]] (the second 1 would repeat the same combination)",
-      "explanation": "Using either 1 gives the same multiset [1,2]; sibling skipping emits it once.",
+      "answer": "[[1,2]]",
+      "explanation": "Using either 1 gives the same multiset [1,2]; sibling skipping emits it once. ([[1,2]]: the second 1 would repeat the same combination)",
       "incorrectOptionExplanations": {
         "[[1,2],[1,2]]": "Duplicate combinations are not allowed.",
         "[[1,1,1]]": "There are only two 1s in the input, so three cannot be used.",

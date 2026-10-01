@@ -52,16 +52,16 @@
       ],
       "options": [
         "Running sum extended by one element (or prefix sums)",
-        "Sorting",
-        "Binary search",
-        "A heap"
+        "Sorting the array after every extension of the end",
+        "Binary search for the best end index each time",
+        "A heap of the elements currently in the subarray"
       ],
       "answer": "Running sum extended by one element (or prefix sums)",
       "explanation": "Extending the end by one adds a single element to the previous sum.",
       "incorrectOptionExplanations": {
-        "Sorting": "Subarrays must stay contiguous.",
-        "Binary search": "The sums are not monotone (values may be negative or zero).",
-        "A heap": "Not relevant."
+        "Sorting the array after every extension of the end": "Subarrays must stay contiguous.",
+        "Binary search for the best end index each time": "The sums are not monotone (values may be negative or zero).",
+        "A heap of the elements currently in the subarray": "Not relevant."
       }
     },
     {

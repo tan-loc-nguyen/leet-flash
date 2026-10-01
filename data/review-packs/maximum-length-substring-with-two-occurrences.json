@@ -45,16 +45,16 @@
       ],
       "options": [
         "Variable sliding window with counts (at most 2 occurrences)",
-        "Binary search",
-        "DP over prefixes",
-        "Trie"
+        "Binary search on the substring length with a check",
+        "Dynamic programming over prefixes with two states",
+        "A trie holding every substring seen so far"
       ],
       "answer": "Variable sliding window with counts (at most 2 occurrences)",
       "explanation": "Validity is local to the newly added character.",
       "incorrectOptionExplanations": {
-        "Binary search": "Not needed.",
-        "DP over prefixes": "No overlapping states.",
-        "Trie": "Not about prefixes."
+        "Binary search on the substring length with a check": "Not needed.",
+        "Dynamic programming over prefixes with two states": "No overlapping states.",
+        "A trie holding every substring seen so far": "Not about prefixes."
       }
     },
     {

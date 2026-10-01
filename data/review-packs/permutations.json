@@ -51,16 +51,16 @@
       ],
       "options": [
         "Which unused element goes in the next position; n! leaves",
-        "Include or exclude each element; 2^n leaves",
-        "Which pair to swap; n^2 leaves",
-        "A binary choice; 2n leaves"
+        "Include or exclude each element in turn; 2^n leaves",
+        "Which pair of elements to swap next; n^2 leaves",
+        "A binary choice at every level; 2n leaves in total"
       ],
       "answer": "Which unused element goes in the next position; n! leaves",
       "explanation": "The branching factor shrinks from n to 1 across the levels.",
       "incorrectOptionExplanations": {
-        "Include or exclude each element; 2^n leaves": "That is Subsets.",
-        "Which pair to swap; n^2 leaves": "Not the structure.",
-        "A binary choice; 2n leaves": "Wrong count."
+        "Include or exclude each element in turn; 2^n leaves": "That is Subsets.",
+        "Which pair of elements to swap next; n^2 leaves": "Not the structure.",
+        "A binary choice at every level; 2n leaves in total": "Wrong count."
       }
     },
     {
@@ -137,16 +137,16 @@
       ],
       "options": [
         "6; and [[x]] for one element",
-        "3; and [[x]]",
-        "6; and []",
-        "9; and [[x,x]]"
+        "3; and [[x]] for a one-element input",
+        "6; and [] for a one-element input",
+        "9; and [[x,x]] for a one-element input"
       ],
       "answer": "6; and [[x]] for one element",
       "explanation": "3! = 6 and a single element has exactly one permutation.",
       "incorrectOptionExplanations": {
-        "3; and [[x]]": "3 is n, not n!.",
-        "6; and []": "A single element has one permutation.",
-        "9; and [[x,x]]": "Wrong counts."
+        "3; and [[x]] for a one-element input": "3 is n, not n!.",
+        "6; and [] for a one-element input": "A single element has one permutation.",
+        "9; and [[x,x]] for a one-element input": "Wrong counts."
       }
     }
   ],

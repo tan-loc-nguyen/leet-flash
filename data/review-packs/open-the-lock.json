@@ -52,16 +52,16 @@
       ],
       "options": [
         "BFS over combinations, with 8 neighbours each",
-        "DFS",
-        "Dijkstra with weights",
-        "Sorting the deadends"
+        "DFS with a visited set over all lock states",
+        "Dijkstra with weights on every dial turn",
+        "Sorting the deadends and scanning them in order"
       ],
       "answer": "BFS over combinations, with 8 neighbours each",
       "explanation": "All moves cost one turn, so BFS gives shortest paths.",
       "incorrectOptionExplanations": {
-        "DFS": "Does not guarantee the shortest path.",
-        "Dijkstra with weights": "Unnecessary: all edges have weight 1.",
-        "Sorting the deadends": "Irrelevant."
+        "DFS with a visited set over all lock states": "Does not guarantee the shortest path.",
+        "Dijkstra with weights on every dial turn": "Unnecessary: all edges have weight 1.",
+        "Sorting the deadends and scanning them in order": "Irrelevant."
       }
     },
     {
@@ -138,16 +138,16 @@
       ],
       "options": [
         "-1 (deadends are never entered)",
-        "1",
-        "0",
-        "The distance ignoring deadends"
+        "1, since a single turn always reaches target",
+        "0, since the start is already at the target",
+        "The distance computed while ignoring the deadends"
       ],
       "answer": "-1 (deadends are never entered)",
       "explanation": "A deadend state is never added to the queue, so it is never reached.",
       "incorrectOptionExplanations": {
-        "1": "Not generally.",
-        "0": "Only if the target is '0000'.",
-        "The distance ignoring deadends": "Deadends are blocking."
+        "1, since a single turn always reaches target": "Not generally.",
+        "0, since the start is already at the target": "Only if the target is '0000'.",
+        "The distance computed while ignoring the deadends": "Deadends are blocking."
       }
     }
   ],

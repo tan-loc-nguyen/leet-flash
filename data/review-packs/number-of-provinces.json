@@ -66,16 +66,16 @@
       ],
       "options": [
         "Connected components via DFS/BFS or union-find",
-        "Shortest paths",
-        "Topological order",
-        "Minimum spanning tree"
+        "Shortest paths between each pair of provinces",
+        "Topological order of the cities in the graph",
+        "Minimum spanning tree of the connected cities"
       ],
       "answer": "Connected components via DFS/BFS or union-find",
       "explanation": "A province is a group of cities connected directly or indirectly.",
       "incorrectOptionExplanations": {
-        "Shortest paths": "No distances.",
-        "Topological order": "The graph is undirected.",
-        "Minimum spanning tree": "No weights."
+        "Shortest paths between each pair of provinces": "No distances.",
+        "Topological order of the cities in the graph": "The graph is undirected.",
+        "Minimum spanning tree of the connected cities": "No weights."
       }
     },
     {
@@ -151,13 +151,13 @@
         "How many provinces if no cities are connected?"
       ],
       "options": [
-        "3 (each city is its own province)",
+        "3",
         "1",
         "0",
         "9"
       ],
-      "answer": "3 (each city is its own province)",
-      "explanation": "With only the diagonal set every city is isolated.",
+      "answer": "3",
+      "explanation": "With only the diagonal set every city is isolated. (3: each city is its own province)",
       "incorrectOptionExplanations": {
         "1": "No connections exist.",
         "0": "There are cities.",

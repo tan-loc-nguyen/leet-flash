@@ -51,16 +51,16 @@
       ],
       "options": [
         "Min-heap of (value, index) tuples; the smaller index wins ties",
-        "Sorted list re-sorted every time",
-        "Max-heap",
-        "Stack"
+        "A sorted list that is re-sorted after every multiplication step",
+        "A max-heap of values, popping the largest element each time",
+        "A stack of indices, popping the most recent element each time"
       ],
       "answer": "Min-heap of (value, index) tuples; the smaller index wins ties",
       "explanation": "Python compares tuples lexicographically, so equal values are ordered by index.",
       "incorrectOptionExplanations": {
-        "Sorted list re-sorted every time": "O(n log n) per operation.",
-        "Max-heap": "You need the minimum.",
-        "Stack": "No ordering."
+        "A sorted list that is re-sorted after every multiplication step": "O(n log n) per operation.",
+        "A max-heap of values, popping the largest element each time": "You need the minimum.",
+        "A stack of indices, popping the most recent element each time": "No ordering."
       }
     },
     {

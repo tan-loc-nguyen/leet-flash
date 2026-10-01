@@ -52,16 +52,16 @@
       ],
       "options": [
         "Move from the input stack only when the output stack is empty",
-        "On every push",
-        "On every peek",
-        "Never"
+        "Move from the input stack to the output stack on every push",
+        "Move from the input stack to the output stack on every peek",
+        "Never move elements; keep both stacks separate and search them"
       ],
       "answer": "Move from the input stack only when the output stack is empty",
       "explanation": "Elements keep their relative reversed order in the output stack and each moves once.",
       "incorrectOptionExplanations": {
-        "On every push": "Makes push O(n).",
-        "On every peek": "Wasteful and can reverse order again.",
-        "Never": "The order would be LIFO."
+        "Move from the input stack to the output stack on every push": "Makes push O(n).",
+        "Move from the input stack to the output stack on every peek": "Wasteful and can reverse order again.",
+        "Never move elements; keep both stacks separate and search them": "The order would be LIFO."
       }
     },
     {

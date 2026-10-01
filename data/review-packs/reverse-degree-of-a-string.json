@@ -39,16 +39,16 @@
       ],
       "options": [
         "26 - (ord(c) - ord('a')); a = 26 and z = 1",
-        "ord(c)",
-        "ord(c) - ord('a')",
-        "27 - ord(c)"
+        "ord(c), the raw character code; a = 97 and z = 122",
+        "ord(c) - ord('a'); a = 0 and z = 25",
+        "27 - ord(c); gives negative numbers for every letter"
       ],
       "answer": "26 - (ord(c) - ord('a')); a = 26 and z = 1",
       "explanation": "The alphabet is reversed, so the first letter has the highest value.",
       "incorrectOptionExplanations": {
-        "ord(c)": "Raw code point.",
-        "ord(c) - ord('a')": "That is the normal 0-indexed position.",
-        "27 - ord(c)": "Missing the offset to 'a'."
+        "ord(c), the raw character code; a = 97 and z = 122": "Raw code point.",
+        "ord(c) - ord('a'); a = 0 and z = 25": "That is the normal 0-indexed position.",
+        "27 - ord(c); gives negative numbers for every letter": "Missing the offset to 'a'."
       }
     },
     {

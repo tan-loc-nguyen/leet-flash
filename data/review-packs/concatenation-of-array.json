@@ -49,16 +49,16 @@
       ],
       "options": [
         "ans[i + n] = ans[i] = nums[i]",
-        "ans[i + n] = nums[n - i]",
-        "ans[i + n] = 2 * nums[i]",
-        "ans[i + n] = i"
+        "ans[i + n] = nums[n - i], so the second half is the reverse",
+        "ans[i + n] = 2 * nums[i], so the second half doubles the values",
+        "ans[i + n] = i, so the second half holds the indices"
       ],
       "answer": "ans[i + n] = ans[i] = nums[i]",
       "explanation": "The second half repeats the first half in order.",
       "incorrectOptionExplanations": {
-        "ans[i + n] = nums[n - i]": "That would reverse the second half.",
-        "ans[i + n] = 2 * nums[i]": "Values are not doubled.",
-        "ans[i + n] = i": "Unrelated."
+        "ans[i + n] = nums[n - i], so the second half is the reverse": "That would reverse the second half.",
+        "ans[i + n] = 2 * nums[i], so the second half doubles the values": "Values are not doubled.",
+        "ans[i + n] = i, so the second half holds the indices": "Unrelated."
       }
     },
     {

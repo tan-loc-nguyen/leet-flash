@@ -57,16 +57,16 @@
       ],
       "options": [
         "Prefix sums stored in a hash map along the current path",
-        "Sorting node values",
-        "Binary search on the tree",
-        "Two stacks"
+        "Sorting the node values and binary searching each sum",
+        "Binary search on the tree for the matching sum values",
+        "Two stacks holding the sums along each path taken"
       ],
       "answer": "Prefix sums stored in a hash map along the current path",
       "explanation": "The sum of a path from ancestor a to v is prefix(v) - prefix(a), so we need how many ancestors have prefix(v) - target.",
       "incorrectOptionExplanations": {
-        "Sorting node values": "Paths must follow tree edges.",
-        "Binary search on the tree": "The tree is not a BST.",
-        "Two stacks": "Not helpful."
+        "Sorting the node values and binary searching each sum": "Paths must follow tree edges.",
+        "Binary search on the tree for the matching sum values": "The tree is not a BST.",
+        "Two stacks holding the sums along each path taken": "Not helpful."
       }
     },
     {
@@ -141,16 +141,16 @@
       ],
       "options": [
         "Paths that start at the root: prefix(v) - 0 == target",
-        "Empty trees",
-        "Negative targets",
-        "Leaves only"
+        "Empty trees, where the root is None and no path exists",
+        "Negative targets, which the prefix map cannot match",
+        "Leaves only, since paths must end at a leaf node"
       ],
       "answer": "Paths that start at the root: prefix(v) - 0 == target",
       "explanation": "Counting the empty prefix once lets a path beginning at the root be found as prefix(v) - 0.",
       "incorrectOptionExplanations": {
-        "Empty trees": "Handled by the null check.",
-        "Negative targets": "Not related.",
-        "Leaves only": "Paths may end anywhere."
+        "Empty trees, where the root is None and no path exists": "Handled by the null check.",
+        "Negative targets, which the prefix map cannot match": "Not related.",
+        "Leaves only, since paths must end at a leaf node": "Paths may end anywhere."
       }
     }
   ],

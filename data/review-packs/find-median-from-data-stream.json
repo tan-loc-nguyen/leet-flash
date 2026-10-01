@@ -68,16 +68,16 @@
       ],
       "options": [
         "A max-heap of the lower half and a min-heap of the upper half",
-        "A single min-heap",
-        "A hash map of counts",
-        "A stack"
+        "A single min-heap that stores every number added and pops the top",
+        "A hash map of counts keyed by value, scanned in sorted order per query",
+        "A stack kept in sorted order, with the median at the middle index"
       ],
       "answer": "A max-heap of the lower half and a min-heap of the upper half",
       "explanation": "The two heap roots are the middle elements of the sorted order.",
       "incorrectOptionExplanations": {
-        "A single min-heap": "Exposes only the minimum.",
-        "A hash map of counts": "Needs a scan to find the middle.",
-        "A stack": "No ordering."
+        "A single min-heap that stores every number added and pops the top": "Exposes only the minimum.",
+        "A hash map of counts keyed by value, scanned in sorted order per query": "Needs a scan to find the middle.",
+        "A stack kept in sorted order, with the median at the middle index": "No ordering."
       }
     },
     {
@@ -151,17 +151,17 @@
         "How do the heap sizes tell you which formula to use?"
       ],
       "options": [
-        "Equal sizes (even count) average both roots; otherwise the larger heap's root",
-        "Always average",
-        "Always the min-heap root",
-        "Always the max-heap root"
+        "Even count: average both roots; odd: the larger heap's root",
+        "Always average the two roots, whatever the sizes",
+        "Always the min-heap root, whatever the sizes",
+        "Always the max-heap root, whatever the sizes"
       ],
-      "answer": "Equal sizes (even count) average both roots; otherwise the larger heap's root",
+      "answer": "Even count: average both roots; odd: the larger heap's root",
       "explanation": "Even count means two middle elements; odd count has a single middle in the larger heap.",
       "incorrectOptionExplanations": {
-        "Always average": "Odd counts have one middle value.",
-        "Always the min-heap root": "Wrong for even counts.",
-        "Always the max-heap root": "In this design the extra element lives in the min-heap."
+        "Always average the two roots, whatever the sizes": "Odd counts have one middle value.",
+        "Always the min-heap root, whatever the sizes": "Wrong for even counts.",
+        "Always the max-heap root, whatever the sizes": "In this design the extra element lives in the min-heap."
       }
     }
   ],

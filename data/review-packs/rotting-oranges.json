@@ -50,16 +50,16 @@
       ],
       "options": [
         "Multi-source BFS; one level = one minute",
-        "DFS from the first rotten orange",
-        "Binary search on time",
-        "Sorting oranges"
+        "DFS from the first rotten orange found in the grid",
+        "Binary search on time with a check for each guess",
+        "Sorting oranges by distance and spreading in order"
       ],
       "answer": "Multi-source BFS; one level = one minute",
       "explanation": "All rotten oranges spread at the same time, so they start together in the queue.",
       "incorrectOptionExplanations": {
-        "DFS from the first rotten orange": "Spreading is simultaneous.",
-        "Binary search on time": "Unneeded.",
-        "Sorting oranges": "Irrelevant."
+        "DFS from the first rotten orange found in the grid": "Spreading is simultaneous.",
+        "Binary search on time with a check for each guess": "Unneeded.",
+        "Sorting oranges by distance and spreading in order": "Irrelevant."
       }
     },
     {

@@ -55,16 +55,16 @@
       ],
       "options": [
         "Hash map of unmatched values (Two Sum style)",
-        "Sliding window",
-        "Binary search on the answer",
-        "Monotonic stack"
+        "Sliding window over the sorted array with a running sum",
+        "Binary search on the answer, checking pair feasibility",
+        "Monotonic stack of the unmatched values seen so far"
       ],
       "answer": "Hash map of unmatched values (Two Sum style)",
       "explanation": "Each element needs its complement; a counter map consumes matches greedily.",
       "incorrectOptionExplanations": {
-        "Sliding window": "Elements need not be contiguous.",
-        "Binary search on the answer": "Not needed.",
-        "Monotonic stack": "No nearest-greater relation."
+        "Sliding window over the sorted array with a running sum": "Elements need not be contiguous.",
+        "Binary search on the answer, checking pair feasibility": "Not needed.",
+        "Monotonic stack of the unmatched values seen so far": "No nearest-greater relation."
       }
     },
     {

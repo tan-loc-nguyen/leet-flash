@@ -66,16 +66,16 @@
       ],
       "options": [
         "Digit-by-digit addition with a carry from the least significant end",
-        "Sorting both numbers",
-        "Sliding window",
-        "Binary search on the sum"
+        "Sort both numbers and then add them with a two-pointer merge",
+        "Sliding window across the digits keeping a running sum of the window",
+        "Binary search on the value of the sum, checking each candidate"
       ],
       "answer": "Digit-by-digit addition with a carry from the least significant end",
       "explanation": "Same as grade-school addition: sum column by column, carry to the next.",
       "incorrectOptionExplanations": {
-        "Sorting both numbers": "Digit order matters.",
-        "Sliding window": "No window.",
-        "Binary search on the sum": "The sum is computed directly."
+        "Sort both numbers and then add them with a two-pointer merge": "Digit order matters.",
+        "Sliding window across the digits keeping a running sum of the window": "No window.",
+        "Binary search on the value of the sum, checking each candidate": "The sum is computed directly."
       }
     },
     {
@@ -104,16 +104,16 @@
       ],
       "options": [
         "Result [1,0,0]: a final carry adds a digit",
-        "Result [0,0]",
-        "Result [1,0]",
-        "It overflows"
+        "Result [0,0] because the carry is discarded when it leaves the array",
+        "Result [1,0] because only one extra digit can ever be produced",
+        "It overflows because the sum cannot be stored in a list of digits"
       ],
       "answer": "Result [1,0,0]: a final carry adds a digit",
       "explanation": "99 + 1 = 100; the loop must emit the leftover carry. Likewise k can have more digits than num.",
       "incorrectOptionExplanations": {
-        "Result [0,0]": "Loses the carry.",
-        "Result [1,0]": "That is 10, not 100.",
-        "It overflows": "Python ints do not overflow and no int is built anyway."
+        "Result [0,0] because the carry is discarded when it leaves the array": "Loses the carry.",
+        "Result [1,0] because only one extra digit can ever be produced": "That is 10, not 100.",
+        "It overflows because the sum cannot be stored in a list of digits": "Python ints do not overflow and no int is built anyway."
       }
     },
     {

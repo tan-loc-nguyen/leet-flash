@@ -49,16 +49,16 @@
       ],
       "options": [
         "So slow ends on the node just before the middle, enabling deletion",
-        "To make the algorithm faster",
-        "To handle cycles",
-        "To skip the head"
+        "To make the algorithm finish faster by skipping the first nodes",
+        "To detect cycles that might exist inside the list",
+        "To skip the head so the loop never touches the first node"
       ],
       "answer": "So slow ends on the node just before the middle, enabling deletion",
       "explanation": "Deleting requires the predecessor of the target, so slow must stop one node early.",
       "incorrectOptionExplanations": {
-        "To make the algorithm faster": "The number of iterations is the same order.",
-        "To handle cycles": "No cycles here.",
-        "To skip the head": "Unrelated."
+        "To make the algorithm finish faster by skipping the first nodes": "The number of iterations is the same order.",
+        "To detect cycles that might exist inside the list": "No cycles here.",
+        "To skip the head so the loop never touches the first node": "Unrelated."
       }
     },
     {
@@ -131,13 +131,13 @@
         "Which node is the middle of a 2-node list?"
       ],
       "options": [
-        "[2] (index 1 is removed)",
+        "[2]",
         "[1]",
         "[]",
         "[2,1]"
       ],
-      "answer": "[2] (index 1 is removed)",
-      "explanation": "floor(2/2) = 1 is the middle index, so the second node is deleted.",
+      "answer": "[2]",
+      "explanation": "floor(2/2) = 1 is the middle index, so the second node is deleted. ([2]: index 1 is removed)",
       "incorrectOptionExplanations": {
         "[1]": "That would delete the head (index 0).",
         "[]": "Only a single-node list becomes empty.",

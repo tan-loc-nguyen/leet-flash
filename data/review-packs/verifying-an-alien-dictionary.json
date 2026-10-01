@@ -50,17 +50,17 @@
         "What do you precompute?"
       ],
       "options": [
-        "A map from each letter to its rank, compared at the first differing position",
-        "Sort the letters of each word",
-        "Reverse each word",
-        "Count the vowels"
+        "Map each letter to its rank and compare at the first difference",
+        "Sort the letters of each word, then compare the words",
+        "Reverse each word, then compare them in order",
+        "Count the vowels of each word and compare the counts"
       ],
-      "answer": "A map from each letter to its rank, compared at the first differing position",
+      "answer": "Map each letter to its rank and compare at the first difference",
       "explanation": "Lexicographic order is decided by the first differing character according to the given rank.",
       "incorrectOptionExplanations": {
-        "Sort the letters of each word": "Changes the words.",
-        "Reverse each word": "Not lexicographic order.",
-        "Count the vowels": "Irrelevant."
+        "Sort the letters of each word, then compare the words": "Changes the words.",
+        "Reverse each word, then compare them in order": "Not lexicographic order.",
+        "Count the vowels of each word and compare the counts": "Irrelevant."
       }
     },
     {
@@ -135,16 +135,16 @@
       ],
       "options": [
         "No: 'app' is a prefix of 'apple' and must come first",
-        "Yes",
-        "Only if the alphabet is reversed",
-        "It depends on the letters"
+        "Yes: 'app' is shorter, so it may come after",
+        "Only if the alphabet is reversed, like zyx...",
+        "It depends on which letters the words contain"
       ],
       "answer": "No: 'app' is a prefix of 'apple' and must come first",
       "explanation": "A prefix sorts before any longer word that starts with it.",
       "incorrectOptionExplanations": {
-        "Yes": "The longer word comes first.",
-        "Only if the alphabet is reversed": "The prefix rule holds for any alphabet.",
-        "It depends on the letters": "The rule is independent of the order."
+        "Yes: 'app' is shorter, so it may come after": "The longer word comes first.",
+        "Only if the alphabet is reversed, like zyx...": "The prefix rule holds for any alphabet.",
+        "It depends on which letters the words contain": "The rule is independent of the order."
       }
     }
   ],

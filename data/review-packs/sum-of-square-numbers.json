@@ -71,16 +71,16 @@
       ],
       "options": [
         "Two pointers over 0..sqrt(c) (Two Sum II on squares)",
-        "Sliding window",
-        "Dynamic programming",
-        "Union find"
+        "Sliding window over the values 0..c in order",
+        "Dynamic programming over the squares up to c",
+        "Union find merging the squares that share a sum"
       ],
       "answer": "Two pointers over 0..sqrt(c) (Two Sum II on squares)",
       "explanation": "The candidate values a and b range over a sorted list and a^2 + b^2 is monotone in each.",
       "incorrectOptionExplanations": {
-        "Sliding window": "Not contiguous subarrays.",
-        "Dynamic programming": "Overkill.",
-        "Union find": "No connectivity."
+        "Sliding window over the values 0..c in order": "Not contiguous subarrays.",
+        "Dynamic programming over the squares up to c": "Overkill.",
+        "Union find merging the squares that share a sum": "No connectivity."
       }
     },
     {

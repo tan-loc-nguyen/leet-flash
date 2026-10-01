@@ -51,16 +51,16 @@
       ],
       "options": [
         "Two write indices stepping by 2",
-        "Sorting by absolute value",
-        "Binary search",
-        "Stack"
+        "Sorting by absolute value, then splitting by sign",
+        "Binary search for the next positive or negative value",
+        "A stack that holds the values of the opposite sign"
       ],
       "answer": "Two write indices stepping by 2",
       "explanation": "Positives occupy indices 0,2,4,... and negatives 1,3,5,..., both in original order.",
       "incorrectOptionExplanations": {
-        "Sorting by absolute value": "Would break the required relative order.",
-        "Binary search": "No searching.",
-        "Stack": "Not needed."
+        "Sorting by absolute value, then splitting by sign": "Would break the required relative order.",
+        "Binary search for the next positive or negative value": "No searching.",
+        "A stack that holds the values of the opposite sign": "Not needed."
       }
     },
     {

@@ -74,16 +74,16 @@
       ],
       "options": [
         "Overlapping subproblems are recomputed many times",
-        "Integer overflow",
-        "Stack usage only",
-        "Sorting"
+        "Integer overflow, which memoisation prevents by storing small values",
+        "Stack usage only, because each call needs its own frame",
+        "Sorting, because the results must be produced in order"
       ],
       "answer": "Overlapping subproblems are recomputed many times",
       "explanation": "fib(n-2) is computed again inside fib(n-1), and so on, giving about 2^n calls.",
       "incorrectOptionExplanations": {
-        "Integer overflow": "Not the issue (Python integers are unbounded).",
-        "Stack usage only": "Stack depth is only n.",
-        "Sorting": "Unrelated."
+        "Integer overflow, which memoisation prevents by storing small values": "Not the issue (Python integers are unbounded).",
+        "Stack usage only, because each call needs its own frame": "Stack depth is only n.",
+        "Sorting, because the results must be produced in order": "Unrelated."
       }
     },
     {

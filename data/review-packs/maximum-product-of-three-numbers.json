@@ -62,16 +62,16 @@
       ],
       "options": [
         "Three largest, and two smallest times the largest",
-        "Three smallest",
-        "Largest times two middle values",
-        "Sum of the three largest"
+        "The three smallest numbers multiplied together only",
+        "Largest times the two middle values of the sorted array",
+        "Sum of the three largest numbers in the array"
       ],
       "answer": "Three largest, and two smallest times the largest",
       "explanation": "Two large negatives multiply to a large positive.",
       "incorrectOptionExplanations": {
-        "Three smallest": "Three negatives give a negative product.",
-        "Largest times two middle values": "Not a candidate.",
-        "Sum of the three largest": "Sums are not products."
+        "The three smallest numbers multiplied together only": "Three negatives give a negative product.",
+        "Largest times the two middle values of the sorted array": "Not a candidate.",
+        "Sum of the three largest numbers in the array": "Sums are not products."
       }
     },
     {
@@ -127,13 +127,13 @@
         "Why not 5*2*(-10)?"
       ],
       "options": [
-        "500 (-10 * -10 * 5)",
+        "500",
         "100",
         "-100",
         "50"
       ],
-      "answer": "500 (-10 * -10 * 5)",
-      "explanation": "Two negatives give +100 and times 5 gives 500, larger than 5 * 2 * (-10).",
+      "answer": "500",
+      "explanation": "Two negatives give +100 and times 5 gives 500, larger than 5 * 2 * (-10). (500: -10 * -10 * 5)",
       "incorrectOptionExplanations": {
         "100": "Missing the factor 5.",
         "-100": "Negative product.",

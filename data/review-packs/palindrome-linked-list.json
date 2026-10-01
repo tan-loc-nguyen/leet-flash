@@ -55,16 +55,16 @@
       ],
       "options": [
         "Find the middle, reverse the second half, compare",
-        "Sort the list",
-        "Hash the nodes",
-        "Use binary search"
+        "Sort the list values and compare with the original",
+        "Hash the nodes into a set and compare by value",
+        "Use binary search on the node positions in the list"
       ],
       "answer": "Find the middle, reverse the second half, compare",
       "explanation": "Reversing the second half lets you traverse both halves forward.",
       "incorrectOptionExplanations": {
-        "Sort the list": "Order matters.",
-        "Hash the nodes": "Does not check order.",
-        "Use binary search": "No random access."
+        "Sort the list values and compare with the original": "Order matters.",
+        "Hash the nodes into a set and compare by value": "Does not check order.",
+        "Use binary search on the node positions in the list": "No random access."
       }
     },
     {
@@ -137,13 +137,13 @@
         "Why?"
       ],
       "options": [
-        "True (trivially a palindrome)",
+        "True",
         "False",
         "An error",
         "None"
       ],
-      "answer": "True (trivially a palindrome)",
-      "explanation": "With 0 or 1 node there are no mismatching pairs.",
+      "answer": "True",
+      "explanation": "With 0 or 1 node there are no mismatching pairs. (True: trivially a palindrome)",
       "incorrectOptionExplanations": {
         "False": "A single element equals its reverse.",
         "An error": "No invalid access.",

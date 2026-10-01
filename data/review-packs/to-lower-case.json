@@ -65,13 +65,13 @@
         "Which constant converts 'A'..'Z' to lowercase?"
       ],
       "options": [
-        "They differ by 32 (the 0x20 bit)",
+        "They differ by 32",
         "They differ by 26",
         "They differ by 10",
         "They are the same code point"
       ],
-      "answer": "They differ by 32 (the 0x20 bit)",
-      "explanation": "'A' is 65 and 'a' is 97; every pair differs by 32.",
+      "answer": "They differ by 32",
+      "explanation": "'A' is 65 and 'a' is 97; every pair differs by 32. (They differ by 32: the 0x20 bit)",
       "incorrectOptionExplanations": {
         "They differ by 26": "26 is the alphabet length, not the case offset.",
         "They differ by 10": "No such relation.",
@@ -131,13 +131,13 @@
         "Which characters change?"
       ],
       "options": [
-        "'hello, world 1' (only A-Z change)",
+        "'hello, world 1'",
         "'HELLO, WORLD 1'",
         "'hello, world !'",
         "An error"
       ],
-      "answer": "'hello, world 1' (only A-Z change)",
-      "explanation": "Letters become lowercase; comma, space and digit are unchanged.",
+      "answer": "'hello, world 1'",
+      "explanation": "Letters become lowercase; comma, space and digit are unchanged. ('hello, world 1': only A-Z change)",
       "incorrectOptionExplanations": {
         "'HELLO, WORLD 1'": "That is upper-casing.",
         "'hello, world !'": "The digit must not change.",

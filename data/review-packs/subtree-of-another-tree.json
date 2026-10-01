@@ -64,16 +64,16 @@
       ],
       "options": [
         "DFS over root and Same Tree at each node",
-        "Binary search tree insertion",
-        "BFS only",
-        "Sorting both trees"
+        "Binary search tree insertion of the subtree's values",
+        "BFS only, comparing node values level by level",
+        "Sorting both trees and comparing the sorted lists"
       ],
       "answer": "DFS over root and Same Tree at each node",
       "explanation": "A subtree match must be rooted at some node of root, so try each node as the candidate root.",
       "incorrectOptionExplanations": {
-        "Binary search tree insertion": "Not applicable.",
-        "BFS only": "A traversal alone finds candidates but still needs the equality test.",
-        "Sorting both trees": "Trees are not sortable that way."
+        "Binary search tree insertion of the subtree's values": "Not applicable.",
+        "BFS only, comparing node values level by level": "A traversal alone finds candidates but still needs the equality test.",
+        "Sorting both trees and comparing the sorted lists": "Trees are not sortable that way."
       }
     },
     {
@@ -149,17 +149,17 @@
         "Why not?"
       ],
       "options": [
-        "No: the node 2 has an extra child 0 in root, so the subtree rooted at 4 is not identical",
-        "Yes",
-        "Only if values are unique",
-        "Cannot tell"
+        "No: node 2 has an extra child 0 in root, so the subtree at 4 differs",
+        "Yes: the values of 4, 1 and 2 all match the subRoot",
+        "Only if values are unique, which they are not here",
+        "Cannot tell without checking the tree's height first"
       ],
-      "answer": "No: the node 2 has an extra child 0 in root, so the subtree rooted at 4 is not identical",
+      "answer": "No: node 2 has an extra child 0 in root, so the subtree at 4 differs",
       "explanation": "A subtree must include ALL descendants of the matched node, not just a prefix of them.",
       "incorrectOptionExplanations": {
-        "Yes": "The extra descendant breaks the match.",
-        "Only if values are unique": "Irrelevant.",
-        "Cannot tell": "It can be decided by comparison."
+        "Yes: the values of 4, 1 and 2 all match the subRoot": "The extra descendant breaks the match.",
+        "Only if values are unique, which they are not here": "Irrelevant.",
+        "Cannot tell without checking the tree's height first": "It can be decided by comparison."
       }
     }
   ],

@@ -53,17 +53,17 @@
         "Which pointers do you need to relink afterwards?"
       ],
       "options": [
-        "Standard 3-pointer reversal plus reconnecting the node before left and the node after right",
-        "Recursion on the whole list",
-        "Sorting",
-        "A stack of all nodes"
+        "3-pointer reversal, then reconnect the node before left and after right",
+        "Recursion on the whole list, reversing every node",
+        "Sorting the values of the sub-list and relinking them",
+        "A stack of all the list's nodes, popped to relink them"
       ],
-      "answer": "Standard 3-pointer reversal plus reconnecting the node before left and the node after right",
+      "answer": "3-pointer reversal, then reconnect the node before left and after right",
       "explanation": "After reversing, the old left node must point to the node after the segment and the node before left must point to the new segment head.",
       "incorrectOptionExplanations": {
-        "Recursion on the whole list": "Possible but unnecessary.",
-        "Sorting": "Order is specific, not sorted.",
-        "A stack of all nodes": "Uses O(n) space."
+        "Recursion on the whole list, reversing every node": "Possible but unnecessary.",
+        "Sorting the values of the sub-list and relinking them": "Order is specific, not sorted.",
+        "A stack of all the list's nodes, popped to relink them": "Uses O(n) space."
       }
     },
     {
@@ -136,13 +136,13 @@
         "Which input needs no changes?"
       ],
       "options": [
-        "Nothing changes (a single node reversed is itself)",
+        "Nothing changes",
         "The list is cleared",
         "It must reverse the whole list",
         "It raises an error"
       ],
-      "answer": "Nothing changes (a single node reversed is itself)",
-      "explanation": "Reversing one node is a no-op; the early return handles it.",
+      "answer": "Nothing changes",
+      "explanation": "Reversing one node is a no-op; the early return handles it. (Nothing changes: a single node reversed is itself)",
       "incorrectOptionExplanations": {
         "The list is cleared": "No nodes are removed.",
         "It must reverse the whole list": "Only [left, right].",

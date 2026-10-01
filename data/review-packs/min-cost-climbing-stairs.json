@@ -61,16 +61,16 @@
       ],
       "options": [
         "finish(i) = cost[i] + min(finish(i+1), finish(i+2))",
-        "finish(i) = cost[i] * 2",
-        "finish(i) = max(...)",
-        "finish(i) = cost[i] + cost[i+1]"
+        "finish(i) = cost[i] * 2, doubling the cost at each step",
+        "finish(i) = max(finish(i+1), finish(i+2)) + cost[i]",
+        "finish(i) = cost[i] + cost[i+1] with no further recursion"
       ],
       "answer": "finish(i) = cost[i] + min(finish(i+1), finish(i+2))",
       "explanation": "From stair i you pay cost[i] and move to i+1 or i+2; choose the cheaper continuation.",
       "incorrectOptionExplanations": {
-        "finish(i) = cost[i] * 2": "Unrelated.",
-        "finish(i) = max(...)": "You minimise the cost.",
-        "finish(i) = cost[i] + cost[i+1]": "Ignores the choice."
+        "finish(i) = cost[i] * 2, doubling the cost at each step": "Unrelated.",
+        "finish(i) = max(finish(i+1), finish(i+2)) + cost[i]": "You minimise the cost.",
+        "finish(i) = cost[i] + cost[i+1] with no further recursion": "Ignores the choice."
       }
     },
     {
@@ -144,13 +144,13 @@
         "Which stairs are used?"
       ],
       "options": [
-        "15 (start at index 1, jump to the top)",
+        "15",
         "25",
         "30",
         "10"
       ],
-      "answer": "15 (start at index 1, jump to the top)",
-      "explanation": "Starting on stair 1 you pay 15 and can climb 2 to reach the top.",
+      "answer": "15",
+      "explanation": "Starting on stair 1 you pay 15 and can climb 2 to reach the top. (15: start at index 1, jump to the top)",
       "incorrectOptionExplanations": {
         "25": "10 + 15 is not needed.",
         "30": "Not minimal.",

@@ -50,16 +50,16 @@
       ],
       "options": [
         "Multi-source BFS starting from all gates at once",
-        "BFS from each room",
-        "DFS from each gate",
-        "Dynamic programming over rows only"
+        "BFS from each room that looks for the nearest gate",
+        "DFS from each gate, keeping the minimum distance",
+        "Dynamic programming over the rows of the grid only"
       ],
       "answer": "Multi-source BFS starting from all gates at once",
       "explanation": "All sources at distance 0 are processed together, so each room gets the minimum over gates automatically.",
       "incorrectOptionExplanations": {
-        "BFS from each room": "O((mn)^2).",
-        "DFS from each gate": "DFS does not give shortest paths.",
-        "Dynamic programming over rows only": "Paths wind around walls."
+        "BFS from each room that looks for the nearest gate": "O((mn)^2).",
+        "DFS from each gate, keeping the minimum distance": "DFS does not give shortest paths.",
+        "Dynamic programming over the rows of the grid only": "Paths wind around walls."
       }
     },
     {
@@ -134,13 +134,13 @@
         "What value should it keep?"
       ],
       "options": [
-        "It stays INF (unchanged)",
+        "It stays INF",
         "-1",
         "0",
         "The grid size"
       ],
-      "answer": "It stays INF (unchanged)",
-      "explanation": "The BFS never reaches it, so it keeps its initial INF.",
+      "answer": "It stays INF",
+      "explanation": "The BFS never reaches it, so it keeps its initial INF. (It stays INF: unchanged)",
       "incorrectOptionExplanations": {
         "-1": "That marks a wall.",
         "0": "That marks a gate.",

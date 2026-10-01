@@ -51,17 +51,17 @@
         "How do you minimise it lexicographically?"
       ],
       "options": [
-        "Its first half; make the first half as small as possible (alphabetical)",
-        "Its last letter only",
-        "Its length",
-        "Its middle letter"
+        "Its first half; make that half alphabetically smallest",
+        "Its last letter only, mirrored to the first position",
+        "Its length, which fixes every letter in turn",
+        "Its middle letter, which fixes the rest around it"
       ],
-      "answer": "Its first half; make the first half as small as possible (alphabetical)",
+      "answer": "Its first half; make that half alphabetically smallest",
       "explanation": "The second half mirrors the first, so lexicographic order is decided by the first half.",
       "incorrectOptionExplanations": {
-        "Its last letter only": "The last letter mirrors the first.",
-        "Its length": "Length is fixed.",
-        "Its middle letter": "The middle is a single character (and forced by the counts)."
+        "Its last letter only, mirrored to the first position": "The last letter mirrors the first.",
+        "Its length, which fixes every letter in turn": "Length is fixed.",
+        "Its middle letter, which fixes the rest around it": "The middle is a single character (and forced by the counts)."
       }
     },
     {

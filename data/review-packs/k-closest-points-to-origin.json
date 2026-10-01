@@ -66,13 +66,13 @@
         "Why a MAX-heap for the k smallest distances?"
       ],
       "options": [
-        "Max-heap of size k (evict the farthest)",
+        "Max-heap of size k",
         "Min-heap of all points",
         "Stack",
         "Queue"
       ],
-      "answer": "Max-heap of size k (evict the farthest)",
-      "explanation": "The farthest of the current k candidates sits at the root and is the one to discard.",
+      "answer": "Max-heap of size k",
+      "explanation": "The farthest of the current k candidates sits at the root and is the one to discard. (Max-heap of size k: evict the farthest)",
       "incorrectOptionExplanations": {
         "Min-heap of all points": "Extracting k items costs O(k log n) after an O(n) build; works but stores everything.",
         "Stack": "No ordering by distance.",
@@ -153,16 +153,16 @@
       ],
       "options": [
         "All points; nothing is ever popped",
-        "An empty list",
-        "Only the closest point",
-        "An error"
+        "An empty list, because everything gets popped",
+        "Only the single closest point of the input",
+        "An error, since k must be smaller than n"
       ],
       "answer": "All points; nothing is ever popped",
       "explanation": "The heap never exceeds k, so every point stays.",
       "incorrectOptionExplanations": {
-        "An empty list": "All points are retained.",
-        "Only the closest point": "That would be k = 1.",
-        "An error": "No invalid operation occurs."
+        "An empty list, because everything gets popped": "All points are retained.",
+        "Only the single closest point of the input": "That would be k = 1.",
+        "An error, since k must be smaller than n": "No invalid operation occurs."
       }
     }
   ],

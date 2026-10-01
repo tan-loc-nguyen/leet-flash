@@ -155,13 +155,13 @@
         "How does the code detect absence?"
       ],
       "options": [
-        "[-1, -1] (first = 1, last = 0)",
+        "[-1, -1]",
         "[1, 1]",
         "[0, 0]",
         "[2, 3]"
       ],
-      "answer": "[-1, -1] (first = 1, last = 0)",
-      "explanation": "Both bounds point at index 1 (first value > 6), so last - 1 = 0 < first = 1.",
+      "answer": "[-1, -1]",
+      "explanation": "Both bounds point at index 1 (first value > 6), so last - 1 = 0 < first = 1. ([-1, -1]: first = 1, last = 0)",
       "incorrectOptionExplanations": {
         "[1, 1]": "6 is not in the array.",
         "[0, 0]": "5 is not the target.",

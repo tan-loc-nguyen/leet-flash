@@ -78,16 +78,16 @@
       ],
       "options": [
         "Compare column by column across all strings (vertical scan)",
-        "Binary search on string length only",
-        "Sliding window",
-        "Dynamic programming"
+        "Binary search on the string length only",
+        "Sliding window over the concatenated strings",
+        "Dynamic programming over the string pairs"
       ],
       "answer": "Compare column by column across all strings (vertical scan)",
       "explanation": "The first mismatching column ends the prefix, so you never read past it.",
       "incorrectOptionExplanations": {
-        "Binary search on string length only": "Valid (prefix property is monotone) but unnecessary extra complexity.",
-        "Sliding window": "No window being maintained.",
-        "Dynamic programming": "No overlapping subproblems."
+        "Binary search on the string length only": "Valid (prefix property is monotone) but unnecessary extra complexity.",
+        "Sliding window over the concatenated strings": "No window being maintained.",
+        "Dynamic programming over the string pairs": "No overlapping subproblems."
       }
     },
     {
@@ -146,16 +146,16 @@
       ],
       "options": [
         "That i is still inside every string (`i >= len(strs[j])`)",
-        "That strings are sorted",
-        "That characters are lowercase",
-        "That strs[0] is the longest"
+        "That the strings are sorted lexicographically",
+        "That every character is a lowercase letter",
+        "That strs[0] is the longest string of all"
       ],
       "answer": "That i is still inside every string (`i >= len(strs[j])`)",
       "explanation": "A shorter string than strs[0] ends the prefix; indexing past it would raise IndexError.",
       "incorrectOptionExplanations": {
-        "That strings are sorted": "Not required.",
-        "That characters are lowercase": "Irrelevant to indexing.",
-        "That strs[0] is the longest": "The reverse: strs[0] may be longer, which is why the check exists."
+        "That the strings are sorted lexicographically": "Not required.",
+        "That every character is a lowercase letter": "Irrelevant to indexing.",
+        "That strs[0] is the longest string of all": "The reverse: strs[0] may be longer, which is why the check exists."
       }
     },
     {

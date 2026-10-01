@@ -61,16 +61,16 @@
       ],
       "options": [
         "Sort + sliding window with cost tracking",
-        "Heap of frequencies",
-        "Dynamic programming over values",
-        "Two stacks"
+        "Heap of frequencies with lazy deletions",
+        "Dynamic programming over the sorted values",
+        "Two stacks tracking the window extremes"
       ],
       "answer": "Sort + sliding window with cost tracking",
       "explanation": "Sorted order makes the cost of a window monotone: adding a larger element or removing a smaller one changes it predictably.",
       "incorrectOptionExplanations": {
-        "Heap of frequencies": "Counts are not the issue; increments are.",
-        "Dynamic programming over values": "No overlapping subproblems.",
-        "Two stacks": "No LIFO structure."
+        "Heap of frequencies with lazy deletions": "Counts are not the issue; increments are.",
+        "Dynamic programming over the sorted values": "No overlapping subproblems.",
+        "Two stacks tracking the window extremes": "No LIFO structure."
       }
     },
     {

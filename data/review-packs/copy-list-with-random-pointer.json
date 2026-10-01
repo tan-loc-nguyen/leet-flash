@@ -55,16 +55,16 @@
       ],
       "options": [
         "Insert each clone right after its original node",
-        "Sort the nodes",
-        "Reverse the list",
-        "Recursion with memoisation"
+        "Sort the nodes by their value so originals and clones line up",
+        "Reverse the list so that each clone appears before its original",
+        "Recursion with memoisation, which stores every result in a table"
       ],
       "answer": "Insert each clone right after its original node",
       "explanation": "Then original.random.next is exactly the clone of the random target.",
       "incorrectOptionExplanations": {
-        "Sort the nodes": "Nodes have no natural order.",
-        "Reverse the list": "Does not create a mapping.",
-        "Recursion with memoisation": "Equivalent to a hash map (O(n) space)."
+        "Sort the nodes by their value so originals and clones line up": "Nodes have no natural order.",
+        "Reverse the list so that each clone appears before its original": "Does not create a mapping.",
+        "Recursion with memoisation, which stores every result in a table": "Equivalent to a hash map (O(n) space)."
       }
     },
     {
@@ -140,16 +140,16 @@
       ],
       "options": [
         "clone.random = None; an empty list returns None immediately",
-        "Point to the head",
-        "Point to itself",
-        "Skip the node"
+        "Point it to the head, which acts as the default random target",
+        "Point it to the node itself, so every node has a valid target",
+        "Skip the node entirely and leave its clone out of the copy"
       ],
       "answer": "clone.random = None; an empty list returns None immediately",
       "explanation": "The conditional expression keeps the null random and the initial check handles an empty list.",
       "incorrectOptionExplanations": {
-        "Point to the head": "That changes the structure.",
-        "Point to itself": "Wrong structure.",
-        "Skip the node": "Every node must be copied."
+        "Point it to the head, which acts as the default random target": "That changes the structure.",
+        "Point it to the node itself, so every node has a valid target": "Wrong structure.",
+        "Skip the node entirely and leave its clone out of the copy": "Every node must be copied."
       }
     }
   ],

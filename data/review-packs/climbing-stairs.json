@@ -75,16 +75,16 @@
       ],
       "options": [
         "ways(n) = ways(n-1) + ways(n-2): Fibonacci",
-        "ways(n) = 2 * ways(n-1)",
-        "ways(n) = ways(n-1) * ways(n-2)",
-        "ways(n) = n!"
+        "ways(n) = 2 * ways(n-1), because every step doubles the choices",
+        "ways(n) = ways(n-1) * ways(n-2), multiplying the two earlier counts",
+        "ways(n) = n!, counting every ordering of the steps"
       ],
       "answer": "ways(n) = ways(n-1) + ways(n-2): Fibonacci",
       "explanation": "The last move is either 1 step (from n-1) or 2 steps (from n-2).",
       "incorrectOptionExplanations": {
-        "ways(n) = 2 * ways(n-1)": "That would allow arbitrary step choices at each stair independent of position.",
-        "ways(n) = ways(n-1) * ways(n-2)": "Counts add, they do not multiply.",
-        "ways(n) = n!": "Not related."
+        "ways(n) = 2 * ways(n-1), because every step doubles the choices": "That would allow arbitrary step choices at each stair independent of position.",
+        "ways(n) = ways(n-1) * ways(n-2), multiplying the two earlier counts": "Counts add, they do not multiply.",
+        "ways(n) = n!, counting every ordering of the steps": "Not related."
       }
     },
     {

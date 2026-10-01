@@ -61,16 +61,16 @@
       ],
       "options": [
         "Variable-size sliding window because all values are positive",
-        "Binary search over indices of the original array",
-        "Dynamic programming",
-        "Hash map of prefix sums"
+        "Binary search over indices of the original unsorted array",
+        "Dynamic programming over every start and end index pair",
+        "Hash map of prefix sums with exact-sum lookups only"
       ],
       "answer": "Variable-size sliding window because all values are positive",
       "explanation": "Positivity makes the sum monotone in both ends, so shrinking never skips a better window.",
       "incorrectOptionExplanations": {
-        "Binary search over indices of the original array": "Possible on prefix sums only, giving O(n log n).",
-        "Dynamic programming": "Not needed.",
-        "Hash map of prefix sums": "Used for exact-sum subarrays with negatives, not for minimum length with >= target."
+        "Binary search over indices of the original unsorted array": "Possible on prefix sums only, giving O(n log n).",
+        "Dynamic programming over every start and end index pair": "Not needed.",
+        "Hash map of prefix sums with exact-sum lookups only": "Used for exact-sum subarrays with negatives, not for minimum length with >= target."
       }
     },
     {

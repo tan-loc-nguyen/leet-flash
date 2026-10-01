@@ -53,16 +53,16 @@
       ],
       "options": [
         "Level-order BFS: the first leaf met is the shallowest",
-        "Preorder DFS",
-        "Inorder DFS",
-        "Postorder DFS"
+        "Preorder DFS: the first leaf met is the shallowest",
+        "Inorder DFS: the first leaf met is the shallowest",
+        "Postorder DFS: the first leaf met is the shallowest"
       ],
       "answer": "Level-order BFS: the first leaf met is the shallowest",
       "explanation": "BFS visits nodes by increasing depth, so it can stop at the first leaf.",
       "incorrectOptionExplanations": {
-        "Preorder DFS": "May explore deep branches before finding a shallow leaf.",
-        "Inorder DFS": "Same issue.",
-        "Postorder DFS": "Same issue; it visits everything."
+        "Preorder DFS: the first leaf met is the shallowest": "May explore deep branches before finding a shallow leaf.",
+        "Inorder DFS: the first leaf met is the shallowest": "Same issue.",
+        "Postorder DFS: the first leaf met is the shallowest": "Same issue; it visits everything."
       }
     },
     {
@@ -136,13 +136,13 @@
         "Why is it 3 and not 1?"
       ],
       "options": [
-        "3 (the only leaf is at depth 3)",
+        "3",
         "1",
         "2",
         "0"
       ],
-      "answer": "3 (the only leaf is at depth 3)",
-      "explanation": "Node 2 is not a leaf because it has a child, so the path must continue to the leaf 4.",
+      "answer": "3",
+      "explanation": "Node 2 is not a leaf because it has a child, so the path must continue to the leaf 4. (3: the only leaf is at depth 3)",
       "incorrectOptionExplanations": {
         "1": "The root is not a leaf.",
         "2": "Node 3 still has a child.",

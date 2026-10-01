@@ -49,16 +49,16 @@
       ],
       "options": [
         "Enqueue every child with queue.extend(node.children)",
-        "Use a stack",
-        "Sort the children",
-        "Binary search the children"
+        "Use a stack and pop the children in reverse order",
+        "Sort the children of each node before the traversal",
+        "Binary search the children list for the next node"
       ],
       "answer": "Enqueue every child with queue.extend(node.children)",
       "explanation": "The level-snapshot structure is identical.",
       "incorrectOptionExplanations": {
-        "Use a stack": "A stack would give DFS order.",
-        "Sort the children": "Order is given.",
-        "Binary search the children": "Not a search problem."
+        "Use a stack and pop the children in reverse order": "A stack would give DFS order.",
+        "Sort the children of each node before the traversal": "Order is given.",
+        "Binary search the children list for the next node": "Not a search problem."
       }
     },
     {
@@ -116,16 +116,16 @@
       ],
       "options": [
         "[] for a null root; children is an empty list so extend adds nothing",
-        "[[]]",
-        "None",
-        "An error"
+        "[[]] (one empty level), because a root level always exists",
+        "None, since a null root has no result list to return",
+        "An error, since a null root has no children attribute"
       ],
       "answer": "[] for a null root; children is an empty list so extend adds nothing",
       "explanation": "The queue starts with None, which is skipped, and no level is added.",
       "incorrectOptionExplanations": {
-        "[[]]": "No level exists.",
-        "None": "The function returns a list.",
-        "An error": "extend on [] is fine."
+        "[[]] (one empty level), because a root level always exists": "No level exists.",
+        "None, since a null root has no result list to return": "The function returns a list.",
+        "An error, since a null root has no children attribute": "extend on [] is fine."
       }
     }
   ],

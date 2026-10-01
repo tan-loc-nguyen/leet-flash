@@ -51,16 +51,16 @@
       ],
       "options": [
         "Sort + two pointers with range counting",
-        "Hash map of pair sums",
-        "Prefix sums only",
-        "Backtracking"
+        "Hash map of all pair sums, looked up for every third element",
+        "Prefix sums over the array to count qualifying contiguous ranges",
+        "Full backtracking over every triplet while pruning on the sum"
       ],
       "answer": "Sort + two pointers with range counting",
       "explanation": "Sorted order lets a single successful pair certify a whole range of valid partners.",
       "incorrectOptionExplanations": {
-        "Hash map of pair sums": "Inequalities need order, not equality lookup.",
-        "Prefix sums only": "Triplets are not contiguous.",
-        "Backtracking": "Enumerating all triplets is O(n^3)."
+        "Hash map of all pair sums, looked up for every third element": "Inequalities need order, not equality lookup.",
+        "Prefix sums over the array to count qualifying contiguous ranges": "Triplets are not contiguous.",
+        "Full backtracking over every triplet while pruning on the sum": "Enumerating all triplets is O(n^3)."
       }
     },
     {
@@ -136,16 +136,16 @@
       ],
       "options": [
         "Only the multiset of values matters for the sum, so sorting preserves the count",
-        "Sorting changes the answer but we correct it later",
-        "It is not allowed",
-        "Only for distinct values"
+        "Sorting changes the answer, so the count is corrected afterwards by a mapping",
+        "It is not allowed because the problem is defined on original indices",
+        "Only for arrays whose values are all distinct from each other"
       ],
       "answer": "Only the multiset of values matters for the sum, so sorting preserves the count",
       "explanation": "Any triplet of indices maps to a triplet of values; reordering the array merely relabels indices, so the number of qualifying triplets is unchanged.",
       "incorrectOptionExplanations": {
-        "Sorting changes the answer but we correct it later": "It does not change the count.",
-        "It is not allowed": "It is the standard technique.",
-        "Only for distinct values": "Duplicates are counted per index triplet and still work."
+        "Sorting changes the answer, so the count is corrected afterwards by a mapping": "It does not change the count.",
+        "It is not allowed because the problem is defined on original indices": "It is the standard technique.",
+        "Only for arrays whose values are all distinct from each other": "Duplicates are counted per index triplet and still work."
       }
     }
   ],

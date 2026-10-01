@@ -51,16 +51,16 @@
       ],
       "options": [
         "Convert to seconds since midnight; 3723",
-        "Compare strings only",
-        "Subtract the hour parts",
-        "86400"
+        "Compare the time strings only, as plain text; 3600",
+        "Subtract only the hour parts of the two times; 3",
+        "Convert to a fraction of a day; 86400 seconds"
       ],
       "answer": "Convert to seconds since midnight; 3723",
       "explanation": "1 * 3600 + 2 * 60 + 3 = 3723.",
       "incorrectOptionExplanations": {
-        "Compare strings only": "Subtraction needs numbers.",
-        "Subtract the hour parts": "Ignores minutes and seconds.",
-        "86400": "That is one day."
+        "Compare the time strings only, as plain text; 3600": "Subtraction needs numbers.",
+        "Subtract only the hour parts of the two times; 3": "Ignores minutes and seconds.",
+        "Convert to a fraction of a day; 86400 seconds": "That is one day."
       }
     },
     {

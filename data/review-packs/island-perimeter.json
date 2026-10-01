@@ -57,16 +57,16 @@
       ],
       "options": [
         "4 * land cells - 2 * (number of shared edges)",
-        "Number of land cells",
-        "Rows + columns",
-        "Area squared"
+        "Number of land cells, because every cell adds exactly one unit",
+        "Rows plus columns of the grid, since the island fills the bounding box",
+        "Area squared, because the perimeter grows with the square of the area"
       ],
       "answer": "4 * land cells - 2 * (number of shared edges)",
-      "explanation": "Every shared edge hides two cell sides (one from each cell).",
+      "explanation": "Every shared edge hides two cell sides (one from each cell). (4 * land cells - 2 *: number of shared edges)",
       "incorrectOptionExplanations": {
-        "Number of land cells": "That is the area.",
-        "Rows + columns": "Unrelated.",
-        "Area squared": "Unrelated."
+        "Number of land cells, because every cell adds exactly one unit": "That is the area.",
+        "Rows plus columns of the grid, since the island fills the bounding box": "Unrelated.",
+        "Area squared, because the perimeter grows with the square of the area": "Unrelated."
       }
     },
     {

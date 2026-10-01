@@ -66,16 +66,16 @@
       ],
       "options": [
         "Inorder traversal, counting visited nodes",
-        "Preorder traversal",
-        "Level order",
-        "Postorder"
+        "Preorder traversal, counting visited nodes",
+        "Level order traversal, counting visited nodes",
+        "Postorder traversal, counting visited nodes"
       ],
       "answer": "Inorder traversal, counting visited nodes",
       "explanation": "The k-th node visited by inorder is the k-th smallest.",
       "incorrectOptionExplanations": {
-        "Preorder traversal": "Not sorted.",
-        "Level order": "Not sorted.",
-        "Postorder": "Not sorted."
+        "Preorder traversal, counting visited nodes": "Not sorted.",
+        "Level order traversal, counting visited nodes": "Not sorted.",
+        "Postorder traversal, counting visited nodes": "Not sorted."
       }
     },
     {
@@ -148,12 +148,12 @@
         "Where is the smallest value found?"
       ],
       "options": [
-        "1 (the leftmost node)",
+        "1",
         "2",
         "3",
         "4"
       ],
-      "answer": "1 (the leftmost node)",
+      "answer": "1",
       "explanation": "Inorder starts at the leftmost node, which holds the minimum.",
       "incorrectOptionExplanations": {
         "2": "That is the 2nd smallest.",

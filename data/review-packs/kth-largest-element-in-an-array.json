@@ -80,16 +80,16 @@
       ],
       "options": [
         "Quickselect (partition-based selection)",
-        "Binary search on the array",
-        "Two pointers",
-        "Prefix sums"
+        "Binary search directly on the unsorted array",
+        "Two pointers moving in from both array ends",
+        "Prefix sums followed by a range lookup"
       ],
       "answer": "Quickselect (partition-based selection)",
       "explanation": "Partitioning discards one side each step, giving an expected linear total.",
       "incorrectOptionExplanations": {
-        "Binary search on the array": "The array is unsorted.",
-        "Two pointers": "No sorted structure.",
-        "Prefix sums": "Not a range query."
+        "Binary search directly on the unsorted array": "The array is unsorted.",
+        "Two pointers moving in from both array ends": "No sorted structure.",
+        "Prefix sums followed by a range lookup": "Not a range query."
       }
     },
     {
@@ -164,13 +164,13 @@
         "Do duplicates count separately?"
       ],
       "options": [
-        "5 (the array has two 5s)",
+        "5",
         "6",
         "4",
         "3"
       ],
-      "answer": "5 (the array has two 5s)",
-      "explanation": "Sorted descending: 6,5,5,4,... so the 2nd largest element (not distinct) is 5.",
+      "answer": "5",
+      "explanation": "Sorted descending: 6,5,5,4,... so the 2nd largest element (not distinct) is 5. (5: the array has two 5s)",
       "incorrectOptionExplanations": {
         "6": "That is the 1st largest.",
         "4": "That would be the 'distinct' 3rd largest.",

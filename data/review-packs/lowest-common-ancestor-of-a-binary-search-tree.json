@@ -50,16 +50,16 @@
       ],
       "options": [
         "When p and q lie on different sides (or one equals the node)",
-        "When both are in the left subtree",
-        "When it is the root only",
-        "When it has two children"
+        "When both p and q lie in the left subtree of the node",
+        "When the node is the root of the whole tree and nothing else",
+        "When the node has two children below it in the tree"
       ],
       "answer": "When p and q lie on different sides (or one equals the node)",
       "explanation": "If they diverge here, no deeper node can be an ancestor of both.",
       "incorrectOptionExplanations": {
-        "When both are in the left subtree": "Then the LCA is deeper, in the left subtree.",
-        "When it is the root only": "Only if they diverge at the root.",
-        "When it has two children": "Unrelated."
+        "When both p and q lie in the left subtree of the node": "Then the LCA is deeper, in the left subtree.",
+        "When the node is the root of the whole tree and nothing else": "Only if they diverge at the root.",
+        "When the node has two children below it in the tree": "Unrelated."
       }
     },
     {
@@ -117,17 +117,17 @@
         "How does the code return it?"
       ],
       "options": [
-        "The ancestor itself, since the node neither lies strictly left nor right of both",
-        "The parent of the ancestor",
-        "None",
-        "The root"
+        "The ancestor itself, since it is not strictly left or right of both",
+        "The parent of the ancestor node, one level above it",
+        "None, because the nodes are not on different sides of it",
+        "The root, whatever the positions of p and q in the tree"
       ],
-      "answer": "The ancestor itself, since the node neither lies strictly left nor right of both",
+      "answer": "The ancestor itself, since it is not strictly left or right of both",
       "explanation": "A node can be a descendant of itself, so the LCA of a node and its descendant is the node.",
       "incorrectOptionExplanations": {
-        "The parent of the ancestor": "Too high.",
-        "None": "A LCA exists.",
-        "The root": "Only if it is the split point."
+        "The parent of the ancestor node, one level above it": "Too high.",
+        "None, because the nodes are not on different sides of it": "A LCA exists.",
+        "The root, whatever the positions of p and q in the tree": "Only if it is the split point."
       }
     }
   ],

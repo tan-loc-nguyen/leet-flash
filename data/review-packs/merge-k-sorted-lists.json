@@ -60,16 +60,16 @@
       ],
       "options": [
         "Min-heap of the current heads (or divide-and-conquer merging)",
-        "A stack",
-        "Sorting all values only",
-        "Binary search"
+        "A stack holding the current heads of all the lists",
+        "Sorting all the values together and rebuilding the list",
+        "Binary search on the values over all the lists' range"
       ],
       "answer": "Min-heap of the current heads (or divide-and-conquer merging)",
       "explanation": "The heap keeps k candidates; each pop/push is O(log k).",
       "incorrectOptionExplanations": {
-        "A stack": "No ordering.",
-        "Sorting all values only": "Works in O(N log N) but ignores the sortedness and uses extra space.",
-        "Binary search": "No search involved."
+        "A stack holding the current heads of all the lists": "No ordering.",
+        "Sorting all the values together and rebuilding the list": "Works in O(N log N) but ignores the sortedness and uses extra space.",
+        "Binary search on the values over all the lists' range": "No search involved."
       }
     },
     {
@@ -145,16 +145,16 @@
       ],
       "options": [
         "None (nothing is pushed on the heap)",
-        "An empty ListNode",
-        "An error",
-        "The first list"
+        "An empty ListNode (a dummy with a value of zero)",
+        "An error (the heap raises on empty input)",
+        "The first list only (the rest are ignored)"
       ],
       "answer": "None (nothing is pushed on the heap)",
       "explanation": "Only non-empty lists are pushed; an empty heap yields dummy.next = None.",
       "incorrectOptionExplanations": {
-        "An empty ListNode": "A dummy is not returned.",
-        "An error": "The loop is skipped.",
-        "The first list": "There may be none."
+        "An empty ListNode (a dummy with a value of zero)": "A dummy is not returned.",
+        "An error (the heap raises on empty input)": "The loop is skipped.",
+        "The first list only (the rest are ignored)": "There may be none."
       }
     }
   ],

@@ -53,16 +53,16 @@
       ],
       "options": [
         "The directed graph must be acyclic (topological sort / Kahn's)",
-        "The graph must be connected",
-        "The graph must be a tree",
-        "The graph must be bipartite"
+        "The graph must be connected so every course can reach every other",
+        "The graph must be a tree with exactly one prerequisite per course",
+        "The graph must be bipartite so courses split into two semesters"
       ],
       "answer": "The directed graph must be acyclic (topological sort / Kahn's)",
       "explanation": "A cycle of prerequisites can never be satisfied.",
       "incorrectOptionExplanations": {
-        "The graph must be connected": "Courses may be independent.",
-        "The graph must be a tree": "Not required.",
-        "The graph must be bipartite": "Irrelevant."
+        "The graph must be connected so every course can reach every other": "Courses may be independent.",
+        "The graph must be a tree with exactly one prerequisite per course": "Not required.",
+        "The graph must be bipartite so courses split into two semesters": "Irrelevant."
       }
     },
     {
@@ -139,16 +139,16 @@
       ],
       "options": [
         "No (a cycle); yes with no prerequisites",
-        "Yes; yes",
-        "No; no",
-        "Yes; no"
+        "Yes, and also yes when there are no prerequisites at all",
+        "No (a cycle), and also no when there are no prerequisites",
+        "Yes (no cycle exists), but no when there are no prerequisites"
       ],
       "answer": "No (a cycle); yes with no prerequisites",
       "explanation": "0 requires 1 and 1 requires 0 - a cycle. With no prerequisites any order works.",
       "incorrectOptionExplanations": {
-        "Yes; yes": "The first pair is a cycle.",
-        "No; no": "No prerequisites is trivially fine.",
-        "Yes; no": "Reversed."
+        "Yes, and also yes when there are no prerequisites at all": "The first pair is a cycle.",
+        "No (a cycle), and also no when there are no prerequisites": "No prerequisites is trivially fine.",
+        "Yes (no cycle exists), but no when there are no prerequisites": "Reversed."
       }
     }
   ],

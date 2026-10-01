@@ -53,16 +53,16 @@
       ],
       "options": [
         "The order in which indegree-0 nodes are dequeued (or [] if a cycle exists)",
-        "The reverse of the input",
-        "Sorted course numbers",
-        "Any permutation"
+        "The reverse of the prerequisite input list, taken pair by pair",
+        "The course numbers sorted in ascending order regardless of prerequisites",
+        "Any permutation of the courses, because order does not matter"
       ],
       "answer": "The order in which indegree-0 nodes are dequeued (or [] if a cycle exists)",
       "explanation": "A course is dequeued only after all its prerequisites, giving a valid topological order.",
       "incorrectOptionExplanations": {
-        "The reverse of the input": "Unrelated.",
-        "Sorted course numbers": "Ignores prerequisites.",
-        "Any permutation": "Must respect prerequisites."
+        "The reverse of the prerequisite input list, taken pair by pair": "Unrelated.",
+        "The course numbers sorted in ascending order regardless of prerequisites": "Ignores prerequisites.",
+        "Any permutation of the courses, because order does not matter": "Must respect prerequisites."
       }
     },
     {
@@ -135,17 +135,17 @@
         "How many orders exist for 2 independent courses?"
       ],
       "options": [
-        "[0]; two orders ([0,1] or [1,0])",
-        "[]; one",
-        "[0]; one",
-        "[1]; two"
+        "[0]; two orders",
+        "[], and exactly one valid order exists for independent courses",
+        "[0], and exactly one valid order exists for independent courses",
+        "[1], and two valid orders exist for independent courses"
       ],
-      "answer": "[0]; two orders ([0,1] or [1,0])",
-      "explanation": "A single course is trivially orderable and independent courses can appear in either order.",
+      "answer": "[0]; two orders",
+      "explanation": "A single course is trivially orderable and independent courses can appear in either order. ([0]; two orders: [0,1] or [1,0])",
       "incorrectOptionExplanations": {
-        "[]; one": "A single course is schedulable.",
-        "[0]; one": "Independent courses have two valid orders.",
-        "[1]; two": "Course 0 is the only course for n = 1."
+        "[], and exactly one valid order exists for independent courses": "A single course is schedulable.",
+        "[0], and exactly one valid order exists for independent courses": "Independent courses have two valid orders.",
+        "[1], and two valid orders exist for independent courses": "Course 0 is the only course for n = 1."
       }
     }
   ],

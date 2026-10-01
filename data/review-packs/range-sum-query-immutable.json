@@ -126,13 +126,13 @@
         "Which prefix indices are used?"
       ],
       "options": [
-        "1 (prefix[3] - prefix[0] = 1 - 0)",
+        "1",
         "-2",
         "3",
         "0"
       ],
-      "answer": "1 (prefix[3] - prefix[0] = 1 - 0)",
-      "explanation": "-2 + 0 + 3 = 1.",
+      "answer": "1",
+      "explanation": "-2 + 0 + 3 = 1. (1: prefix[3] - prefix[0] = 1 - 0)",
       "incorrectOptionExplanations": {
         "-2": "That is only the first element.",
         "3": "That is the third element.",

@@ -64,13 +64,13 @@
         "What is the name of the three-pointer partition used for Sort Colors?"
       ],
       "options": [
-        "Dutch national flag (three-way partition)",
+        "Dutch national flag",
         "Binary search",
         "Merge sort",
         "Heap sort"
       ],
-      "answer": "Dutch national flag (three-way partition)",
-      "explanation": "Three regions (0s, 1s, 2s) are grown in place by low/mid/high.",
+      "answer": "Dutch national flag",
+      "explanation": "Three regions (0s, 1s, 2s) are grown in place by low/mid/high. (Dutch national flag: three-way partition)",
       "incorrectOptionExplanations": {
         "Binary search": "No searching.",
         "Merge sort": "O(n log n) and extra space.",

@@ -53,16 +53,16 @@
       ],
       "options": [
         "1 plus the sizes returned for the four neighbours",
-        "The row index",
-        "The number of islands",
-        "The perimeter"
+        "The row index of the current cell plus 1",
+        "The number of islands found so far",
+        "The perimeter of the island being visited"
       ],
       "answer": "1 plus the sizes returned for the four neighbours",
       "explanation": "Each cell counts itself once and delegates its unvisited neighbours.",
       "incorrectOptionExplanations": {
-        "The row index": "Irrelevant.",
-        "The number of islands": "That is Number of Islands.",
-        "The perimeter": "That is Island Perimeter."
+        "The row index of the current cell plus 1": "Irrelevant.",
+        "The number of islands found so far": "That is Number of Islands.",
+        "The perimeter of the island being visited": "That is Island Perimeter."
       }
     },
     {

@@ -58,16 +58,16 @@
       ],
       "options": [
         "Longest subarray with at most 2 distinct values (sliding window)",
-        "Knapsack",
-        "Interval scheduling",
-        "Topological sort"
+        "Knapsack over the fruit types, with each basket as a capacity",
+        "Interval scheduling over the tree positions and the baskets",
+        "Topological sort over the fruit types and their basket order"
       ],
       "answer": "Longest subarray with at most 2 distinct values (sliding window)",
       "explanation": "Two baskets = two distinct types; contiguous picking = subarray.",
       "incorrectOptionExplanations": {
-        "Knapsack": "No weights or capacities.",
-        "Interval scheduling": "No intervals.",
-        "Topological sort": "No dependencies."
+        "Knapsack over the fruit types, with each basket as a capacity": "No weights or capacities.",
+        "Interval scheduling over the tree positions and the baskets": "No intervals.",
+        "Topological sort over the fruit types and their basket order": "No dependencies."
       }
     },
     {
@@ -140,12 +140,12 @@
         "Which window is the best?"
       ],
       "options": [
-        "4 ([2,3,2,2])",
+        "4",
         "3",
         "5",
         "2"
       ],
-      "answer": "4 ([2,3,2,2])",
+      "answer": "4",
       "explanation": "[1,2] has 2 types, but the longest valid window is [2,3,2,2] (types 2 and 3).",
       "incorrectOptionExplanations": {
         "3": "Shorter than [2,3,2,2].",

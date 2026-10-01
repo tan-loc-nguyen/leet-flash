@@ -137,16 +137,16 @@
       ],
       "options": [
         "1: nums[mid] <= nums[hi] always, so hi shrinks to 0",
-        "5",
-        "It cannot handle unrotated arrays",
-        "-1"
+        "5: nums[mid] > nums[hi] always, so lo moves right",
+        "It cannot handle unrotated arrays at all",
+        "-1, because no rotation point exists in the array"
       ],
       "answer": "1: nums[mid] <= nums[hi] always, so hi shrinks to 0",
       "explanation": "In a sorted array every mid is <= nums[hi]; the search keeps moving hi = mid toward the first element.",
       "incorrectOptionExplanations": {
-        "5": "That is the maximum.",
-        "It cannot handle unrotated arrays": "Comparing with nums[hi] handles it.",
-        "-1": "The array is non-empty."
+        "5: nums[mid] > nums[hi] always, so lo moves right": "That is the maximum.",
+        "It cannot handle unrotated arrays at all": "Comparing with nums[hi] handles it.",
+        "-1, because no rotation point exists in the array": "The array is non-empty."
       }
     }
   ],

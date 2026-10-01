@@ -48,16 +48,16 @@
       ],
       "options": [
         "a1 < b2 and a2 < b1, checked on both axes",
-        "a1 == a2",
-        "b1 > b2",
-        "Only the x axis matters"
+        "a1 == a2, i.e. both rectangles start at the same point",
+        "b1 > b2, i.e. the first rectangle ends later than the second",
+        "Only the x axis matters, so skip the y axis entirely"
       ],
       "answer": "a1 < b2 and a2 < b1, checked on both axes",
       "explanation": "Each axis projection must overlap; both conditions are required.",
       "incorrectOptionExplanations": {
-        "a1 == a2": "Equal starts is not required.",
-        "b1 > b2": "Only one ordering.",
-        "Only the x axis matters": "Both axes matter."
+        "a1 == a2, i.e. both rectangles start at the same point": "Equal starts is not required.",
+        "b1 > b2, i.e. the first rectangle ends later than the second": "Only one ordering.",
+        "Only the x axis matters, so skip the y axis entirely": "Both axes matter."
       }
     },
     {

@@ -53,16 +53,16 @@
       ],
       "options": [
         "Append the node, recurse, then pop it",
-        "Sort all paths",
-        "BFS with sets",
-        "Memoisation"
+        "Sort all the paths found and drop the duplicates",
+        "BFS with a set of visited nodes per path",
+        "Memoisation of each subtree's list of paths"
       ],
       "answer": "Append the node, recurse, then pop it",
       "explanation": "The shared list always holds the current root-to-node path.",
       "incorrectOptionExplanations": {
-        "Sort all paths": "Not required.",
-        "BFS with sets": "Paths need ordered lists.",
-        "Memoisation": "There are no repeated subproblems."
+        "Sort all the paths found and drop the duplicates": "Not required.",
+        "BFS with a set of visited nodes per path": "Paths need ordered lists.",
+        "Memoisation of each subtree's list of paths": "There are no repeated subproblems."
       }
     },
     {
@@ -138,16 +138,16 @@
       ],
       "options": [
         "An empty list",
-        "[[]]",
-        "None",
-        "An error"
+        "n = 1, which is 2^0 and would wrongly fail",
+        "n = 2, since 2 & 1 == 0 makes it fail the test",
+        "n = 2^31, which overflows a 32-bit signed integer"
       ],
       "answer": "An empty list",
       "explanation": "There are no root-to-leaf paths, so the result list is empty.",
       "incorrectOptionExplanations": {
-        "[[]]": "That would claim an empty path exists.",
-        "None": "The function returns a list.",
-        "An error": "The guard handles it."
+        "n = 1, which is 2^0 and would wrongly fail": "That would claim an empty path exists.",
+        "n = 2, since 2 & 1 == 0 makes it fail the test": "The function returns a list.",
+        "n = 2^31, which overflows a 32-bit signed integer": "The guard handles it."
       }
     }
   ],

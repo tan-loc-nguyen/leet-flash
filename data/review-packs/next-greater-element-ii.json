@@ -45,16 +45,16 @@
       ],
       "options": [
         "Iterate twice over the array (i % n) with a monotonic stack",
-        "Sort the array",
-        "Reverse the array",
-        "Binary search the maximum"
+        "Sort the array first, then walk it in circular order",
+        "Reverse the array and run the same single pass over it",
+        "Binary search the maximum for each position in turn"
       ],
       "answer": "Iterate twice over the array (i % n) with a monotonic stack",
       "explanation": "Two laps make every element see all other elements to its right, including the wrapped ones.",
       "incorrectOptionExplanations": {
-        "Sort the array": "Loses positions.",
-        "Reverse the array": "Does not address wraparound.",
-        "Binary search the maximum": "The maximum has no answer; the rest need positional search."
+        "Sort the array first, then walk it in circular order": "Loses positions.",
+        "Reverse the array and run the same single pass over it": "Does not address wraparound.",
+        "Binary search the maximum for each position in turn": "The maximum has no answer; the rest need positional search."
       }
     },
     {

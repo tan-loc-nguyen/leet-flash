@@ -52,16 +52,16 @@
       ],
       "options": [
         "Sum all positive day-to-day price increases",
-        "Buy at the global minimum and sell at the global maximum",
-        "Sell every day",
-        "Buy only on the first day"
+        "Buy at the global minimum price and sell at the global maximum price",
+        "Sell on every single day regardless of the earlier prices",
+        "Buy only on the first day and sell on the last day"
       ],
       "answer": "Sum all positive day-to-day price increases",
       "explanation": "A rise from a to c through b equals (b - a) + (c - b), so adding each positive step captures the whole rise.",
       "incorrectOptionExplanations": {
-        "Buy at the global minimum and sell at the global maximum": "The maximum may come before the minimum and multiple swings are possible.",
-        "Sell every day": "Not valid without buying.",
-        "Buy only on the first day": "Misses later opportunities."
+        "Buy at the global minimum price and sell at the global maximum price": "The maximum may come before the minimum and multiple swings are possible.",
+        "Sell on every single day regardless of the earlier prices": "Not valid without buying.",
+        "Buy only on the first day and sell on the last day": "Misses later opportunities."
       }
     },
     {

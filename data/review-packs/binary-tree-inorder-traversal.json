@@ -69,16 +69,16 @@
       ],
       "options": [
         "Left subtree, node, right subtree; sorted values for a BST",
-        "Node, left, right",
-        "Left, right, node",
-        "Level by level"
+        "Node, then left subtree, then right subtree; mirrors the copying order",
+        "Left subtree, then right subtree, then node; children before parents",
+        "Level by level from the root, left to right across each level"
       ],
       "answer": "Left subtree, node, right subtree; sorted values for a BST",
       "explanation": "On a BST the node is greater than everything on its left and smaller than everything on its right.",
       "incorrectOptionExplanations": {
-        "Node, left, right": "That is preorder.",
-        "Left, right, node": "That is postorder.",
-        "Level by level": "That is BFS/level order."
+        "Node, then left subtree, then right subtree; mirrors the copying order": "That is preorder.",
+        "Left subtree, then right subtree, then node; children before parents": "That is postorder.",
+        "Level by level from the root, left to right across each level": "That is BFS/level order."
       }
     },
     {

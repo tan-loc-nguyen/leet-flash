@@ -62,16 +62,16 @@
       ],
       "options": [
         "Largest Rectangle in Histogram (monotonic stack)",
-        "Kadane's maximum subarray",
-        "Sliding window maximum",
-        "Longest increasing subsequence"
+        "Kadane's maximum subarray (running sum with reset)",
+        "Sliding window maximum (monotonic deque of indices)",
+        "Longest increasing subsequence (patience sorting)"
       ],
       "answer": "Largest Rectangle in Histogram (monotonic stack)",
       "explanation": "min(subarray) * length is the rectangle area when the minimum bar determines the height; k must lie inside it.",
       "incorrectOptionExplanations": {
-        "Kadane's maximum subarray": "That maximises a sum, not min x length.",
-        "Sliding window maximum": "Fixed-size windows; unrelated objective.",
-        "Longest increasing subsequence": "Unrelated."
+        "Kadane's maximum subarray (running sum with reset)": "That maximises a sum, not min x length.",
+        "Sliding window maximum (monotonic deque of indices)": "Fixed-size windows; unrelated objective.",
+        "Longest increasing subsequence (patience sorting)": "Unrelated."
       }
     },
     {
@@ -162,13 +162,13 @@
         "Which subarray achieves it?"
       ],
       "options": [
-        "15 (nums[1..5] = [4,3,7,4,5], min 3 x 5)",
+        "15",
         "14",
         "20",
         "7"
       ],
-      "answer": "15 (nums[1..5] = [4,3,7,4,5], min 3 x 5)",
-      "explanation": "Min 3 with width 5 gives 15; narrower windows with a larger min score less.",
+      "answer": "15",
+      "explanation": "Min 3 with width 5 gives 15; narrower windows with a larger min score less. (15: nums[1..5] = [4,3,7,4,5], min 3 x 5)",
       "incorrectOptionExplanations": {
         "14": "Not achievable.",
         "20": "Would require a larger min and width.",

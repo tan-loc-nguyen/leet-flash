@@ -137,17 +137,17 @@
         "What does the tuple ordering accomplish?"
       ],
       "options": [
-        "Heap orders by the first element, so frequency decides eviction and num rides along",
-        "Tuples make the heap O(1)",
-        "It sorts by num first",
-        "It removes duplicates"
+        "Heap orders by the first element: frequency decides eviction",
+        "Tuples make every heap operation O(1) instead of O(log k)",
+        "Tuples sort by num first, then by the frequency",
+        "Tuples remove duplicate numbers from the heap"
       ],
-      "answer": "Heap orders by the first element, so frequency decides eviction and num rides along",
+      "answer": "Heap orders by the first element: frequency decides eviction",
       "explanation": "Python compares tuples lexicographically; frequency first, value only breaks ties.",
       "incorrectOptionExplanations": {
-        "Tuples make the heap O(1)": "Push/pop stay O(log k).",
-        "It sorts by num first": "frequency is first.",
-        "It removes duplicates": "Counter already deduplicates."
+        "Tuples make every heap operation O(1) instead of O(log k)": "Push/pop stay O(log k).",
+        "Tuples sort by num first, then by the frequency": "frequency is first.",
+        "Tuples remove duplicate numbers from the heap": "Counter already deduplicates."
       }
     },
     {

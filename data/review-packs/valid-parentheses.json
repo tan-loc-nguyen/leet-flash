@@ -115,17 +115,17 @@
         "What does a counting solution get wrong?"
       ],
       "options": [
-        "Counters ignore nesting order, e.g. '([)]' has balanced counts but is invalid",
-        "Counters use more memory than a stack",
+        "Counters ignore nesting order: '([)]' is balanced by count but invalid",
+        "Counters use more memory than a stack would",
         "Counters cannot handle more than one bracket type",
-        "Counters are slower than a stack"
+        "Counters are slower than a stack at every step"
       ],
-      "answer": "Counters ignore nesting order, e.g. '([)]' has balanced counts but is invalid",
+      "answer": "Counters ignore nesting order: '([)]' is balanced by count but invalid",
       "explanation": "Balanced counts are necessary but not sufficient; order and type interleaving matter.",
       "incorrectOptionExplanations": {
-        "Counters use more memory than a stack": "Counters use less memory, which is why they are tempting - but wrong.",
+        "Counters use more memory than a stack would": "Counters use less memory, which is why they are tempting - but wrong.",
         "Counters cannot handle more than one bracket type": "You can keep one counter per type; the problem is order.",
-        "Counters are slower than a stack": "Speed is not the issue; correctness is."
+        "Counters are slower than a stack at every step": "Speed is not the issue; correctness is."
       },
       "enabled": true
     },
@@ -231,17 +231,17 @@
         "What does a closer-keyed dict give you for free?"
       ],
       "options": [
-        "Membership in the dict identifies a closer and its value is the opener to compare with the top",
+        "Being a key identifies a closer; its value is the opener to match the top",
         "It makes lookups O(1) while the other direction is O(n)",
-        "Openers cannot be dictionary keys",
-        "It lets you avoid the stack"
+        "Openers cannot be used as dictionary keys at all",
+        "It lets you avoid the stack for matching the brackets"
       ],
-      "answer": "Membership in the dict identifies a closer and its value is the opener to compare with the top",
+      "answer": "Being a key identifies a closer; its value is the opener to match the top",
       "explanation": "Keyed by closer, `ch in pairs` is both the 'is this a closer?' test and the lookup of the expected opener.",
       "incorrectOptionExplanations": {
         "It makes lookups O(1) while the other direction is O(n)": "Both directions are O(1) hash lookups.",
-        "Openers cannot be dictionary keys": "They can; it would simply be less convenient here.",
-        "It lets you avoid the stack": "The stack is still required to remember unmatched openers."
+        "Openers cannot be used as dictionary keys at all": "They can; it would simply be less convenient here.",
+        "It lets you avoid the stack for matching the brackets": "The stack is still required to remember unmatched openers."
       },
       "enabled": true
     },

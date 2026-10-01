@@ -68,16 +68,16 @@
       ],
       "options": [
         "Floyd's tortoise and hare (slow/fast pointers)",
-        "Binary search",
-        "Sliding window",
-        "Prefix sums"
+        "Binary search on the answer range of sums",
+        "Sliding window over the digit sequence",
+        "Prefix sums over the squared digits"
       ],
       "answer": "Floyd's tortoise and hare (slow/fast pointers)",
       "explanation": "The next-value function defines an implicit linked list; if it never reaches 1 it cycles, which slow/fast pointers detect.",
       "incorrectOptionExplanations": {
-        "Binary search": "No sorted structure.",
-        "Sliding window": "No window.",
-        "Prefix sums": "Not a range query."
+        "Binary search on the answer range of sums": "No sorted structure.",
+        "Sliding window over the digit sequence": "No window.",
+        "Prefix sums over the squared digits": "Not a range query."
       }
     },
     {

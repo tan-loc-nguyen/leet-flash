@@ -53,16 +53,16 @@
       ],
       "options": [
         "Right-to-left pass carrying overflow",
-        "Left-to-right pass with a stack",
-        "Binary search",
-        "Sorting"
+        "Left-to-right pass with a stack for the digits",
+        "Binary search for the digit position to increment",
+        "Sorting the digits and adding one to the largest"
       ],
       "answer": "Right-to-left pass carrying overflow",
       "explanation": "Addition proceeds from the least significant digit, which is at the end of the array.",
       "incorrectOptionExplanations": {
-        "Left-to-right pass with a stack": "Unnecessary; the carry flows right to left.",
-        "Binary search": "Not a search problem.",
-        "Sorting": "Order of digits is meaningful."
+        "Left-to-right pass with a stack for the digits": "Unnecessary; the carry flows right to left.",
+        "Binary search for the digit position to increment": "Not a search problem.",
+        "Sorting the digits and adding one to the largest": "Order of digits is meaningful."
       }
     },
     {

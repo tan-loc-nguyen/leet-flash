@@ -114,13 +114,13 @@
         "What happens when the pick is 1?"
       ],
       "options": [
-        "n = 1 (the first guess is correct)",
+        "n = 1",
         "n = 2 only",
         "Any n",
         "n = 0"
       ],
-      "answer": "n = 1 (the first guess is correct)",
-      "explanation": "With one candidate, mid = 1 is the pick.",
+      "answer": "n = 1",
+      "explanation": "With one candidate, mid = 1 is the pick. (n = 1: the first guess is correct)",
       "incorrectOptionExplanations": {
         "n = 2 only": "Might need two guesses.",
         "Any n": "Depends on the pick.",

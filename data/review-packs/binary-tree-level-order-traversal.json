@@ -49,16 +49,16 @@
       ],
       "options": [
         "A queue; take len(queue) nodes per level",
-        "A stack",
-        "A heap",
-        "Recursion without depth"
+        "A stack, pushing children so that deeper nodes come out first",
+        "A heap ordered by node value, popping the smallest first",
+        "Plain recursion without tracking the depth of each node"
       ],
       "answer": "A queue; take len(queue) nodes per level",
       "explanation": "At the start of a level the queue holds exactly that level's nodes.",
       "incorrectOptionExplanations": {
-        "A stack": "A stack gives depth-first order.",
-        "A heap": "Not needed.",
-        "Recursion without depth": "Cannot tell the level."
+        "A stack, pushing children so that deeper nodes come out first": "A stack gives depth-first order.",
+        "A heap ordered by node value, popping the smallest first": "Not needed.",
+        "Plain recursion without tracking the depth of each node": "Cannot tell the level."
       }
     },
     {
@@ -134,16 +134,16 @@
       ],
       "options": [
         "[] for an empty tree and [[val]] for a single node",
-        "[[]]",
-        "None",
-        "An error"
+        "[[]] for an empty tree because there is one level with no nodes",
+        "None for both cases since a level list cannot be built from nothing",
+        "An error is raised because the queue starts with a null node"
       ],
       "answer": "[] for an empty tree and [[val]] for a single node",
       "explanation": "No levels exist for an empty tree; a single node forms one level.",
       "incorrectOptionExplanations": {
-        "[[]]": "That would claim a level with no nodes.",
-        "None": "The function returns a list.",
-        "An error": "Handled."
+        "[[]] for an empty tree because there is one level with no nodes": "That would claim a level with no nodes.",
+        "None for both cases since a level list cannot be built from nothing": "The function returns a list.",
+        "An error is raised because the queue starts with a null node": "Handled."
       }
     }
   ],

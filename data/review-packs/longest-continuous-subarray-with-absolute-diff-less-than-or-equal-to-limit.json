@@ -61,16 +61,16 @@
       ],
       "options": [
         "Sliding window with two monotonic deques",
-        "A single stack",
-        "Prefix sums",
-        "Binary search on the limit"
+        "A single stack storing every window value",
+        "Prefix sums over the window's elements",
+        "Binary search on the limit for each window"
       ],
       "answer": "Sliding window with two monotonic deques",
       "explanation": "One deque tracks the maximum, the other the minimum of the current window.",
       "incorrectOptionExplanations": {
-        "A single stack": "A stack cannot expire the oldest element.",
-        "Prefix sums": "No sums are involved.",
-        "Binary search on the limit": "The limit is given."
+        "A single stack storing every window value": "A stack cannot expire the oldest element.",
+        "Prefix sums over the window's elements": "No sums are involved.",
+        "Binary search on the limit for each window": "The limit is given."
       }
     },
     {
@@ -159,12 +159,12 @@
         "Which window is best?"
       ],
       "options": [
-        "4 ([2,4,7,2])",
+        "4",
         "3",
         "5",
         "6"
       ],
-      "answer": "4 ([2,4,7,2])",
+      "answer": "4",
       "explanation": "[2,4,7,2] has max 7 and min 2 (difference 5 <= 5); extending left to 1 makes the difference 6.",
       "incorrectOptionExplanations": {
         "3": "Shorter than [2,4,7,2].",

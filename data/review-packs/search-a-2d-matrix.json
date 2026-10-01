@@ -61,16 +61,16 @@
       ],
       "options": [
         "Map the index with row = mid // n and col = mid % n",
-        "Scan each row linearly",
-        "Sort every column",
-        "Use two pointers from the top-right corner"
+        "Scan each row linearly, one row after another",
+        "Sort every column and then search each of them",
+        "Use two pointers starting from the top-right corner"
       ],
       "answer": "Map the index with row = mid // n and col = mid % n",
       "explanation": "The row-major order is globally sorted for this matrix.",
       "incorrectOptionExplanations": {
-        "Scan each row linearly": "That is O(mn).",
-        "Sort every column": "Unnecessary and costly.",
-        "Use two pointers from the top-right corner": "That is the Search a 2D Matrix II technique (O(m + n)), needed when only rows and columns are sorted separately."
+        "Scan each row linearly, one row after another": "That is O(mn).",
+        "Sort every column and then search each of them": "Unnecessary and costly.",
+        "Use two pointers starting from the top-right corner": "That is the Search a 2D Matrix II technique (O(m + n)), needed when only rows and columns are sorted separately."
       }
     },
     {
@@ -146,16 +146,16 @@
       ],
       "options": [
         "low = high = 0; it compares the single element",
-        "It returns False without looking",
-        "It raises an index error",
-        "It needs special casing"
+        "It returns False without looking at the single element",
+        "It raises an index error when the loop starts",
+        "It needs special casing before the search begins"
       ],
       "answer": "low = high = 0; it compares the single element",
       "explanation": "The loop runs once with mid = 0.",
       "incorrectOptionExplanations": {
-        "It returns False without looking": "The element may equal the target.",
-        "It raises an index error": "mid // n and mid % n are 0.",
-        "It needs special casing": "The general loop handles it."
+        "It returns False without looking at the single element": "The element may equal the target.",
+        "It raises an index error when the loop starts": "mid // n and mid % n are 0.",
+        "It needs special casing before the search begins": "The general loop handles it."
       }
     }
   ],

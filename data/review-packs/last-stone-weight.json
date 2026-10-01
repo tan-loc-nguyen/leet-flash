@@ -50,13 +50,13 @@
         "What pattern fits 'repeatedly take the max and reinsert'?"
       ],
       "options": [
-        "Max-heap (priority queue)",
+        "Max-heap",
         "Stack",
         "Queue",
         "Hash map"
       ],
-      "answer": "Max-heap (priority queue)",
-      "explanation": "Each extraction and insertion is O(log n).",
+      "answer": "Max-heap",
+      "explanation": "Each extraction and insertion is O(log n). (Max-heap: priority queue)",
       "incorrectOptionExplanations": {
         "Stack": "Order is not by weight.",
         "Queue": "FIFO ignores weights.",

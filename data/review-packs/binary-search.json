@@ -128,16 +128,16 @@
       ],
       "options": [
         "It avoids integer overflow of lo + hi in fixed-width languages",
-        "It rounds mid up instead of down",
-        "It is faster to compute",
-        "It guarantees mid is never equal to lo"
+        "It rounds mid up instead of down so the range always shrinks",
+        "It is faster to compute than the sum of the two bounds divided by two",
+        "It guarantees mid is never equal to lo, avoiding an infinite loop"
       ],
       "answer": "It avoids integer overflow of lo + hi in fixed-width languages",
       "explanation": "lo + hi can exceed the int range in C++/Java. Python has big ints so it is harmless, but it is the standard idiom to mention.",
       "incorrectOptionExplanations": {
-        "It rounds mid up instead of down": "Both forms round down (floor division).",
-        "It is faster to compute": "There is no meaningful speed difference.",
-        "It guarantees mid is never equal to lo": "mid == lo whenever hi - lo is 0 or 1."
+        "It rounds mid up instead of down so the range always shrinks": "Both forms round down (floor division).",
+        "It is faster to compute than the sum of the two bounds divided by two": "There is no meaningful speed difference.",
+        "It guarantees mid is never equal to lo, avoiding an infinite loop": "mid == lo whenever hi - lo is 0 or 1."
       },
       "enabled": true
     },
@@ -186,16 +186,16 @@
       ],
       "options": [
         "Iterative O(1); recursive O(log n) call stack",
-        "Iterative O(log n); recursive O(1)",
-        "Both O(1)",
-        "Iterative O(n); recursive O(n)"
+        "Iterative O(log n) because of the loop; recursive O(1) because nothing is stored",
+        "Both versions use O(1) since the array is never copied or sliced",
+        "Iterative O(n) for a stored copy; recursive O(n) for the call stack"
       ],
       "answer": "Iterative O(1); recursive O(log n) call stack",
       "explanation": "The iterative version keeps three integers; recursion adds one stack frame per halving, i.e. log n frames.",
       "incorrectOptionExplanations": {
-        "Iterative O(log n); recursive O(1)": "Reversed: recursion is the one that uses the stack.",
-        "Both O(1)": "Python does not eliminate tail recursion, so recursion uses O(log n) stack.",
-        "Iterative O(n); recursive O(n)": "Neither copies the array if you pass indices instead of slices."
+        "Iterative O(log n) because of the loop; recursive O(1) because nothing is stored": "Reversed: recursion is the one that uses the stack.",
+        "Both versions use O(1) since the array is never copied or sliced": "Python does not eliminate tail recursion, so recursion uses O(log n) stack.",
+        "Iterative O(n) for a stored copy; recursive O(n) for the call stack": "Neither copies the array if you pass indices instead of slices."
       },
       "enabled": true
     },

@@ -55,16 +55,16 @@
       ],
       "options": [
         "3s, because 3^k beats alternatives of the same sum",
-        "5s",
-        "1s",
-        "Equal halves only"
+        "5s, because 5^k beats alternatives of the same sum",
+        "1s, because 1^k keeps every part small",
+        "Equal halves only, because that always maximises"
       ],
       "answer": "3s, because 3^k beats alternatives of the same sum",
       "explanation": "For a fixed sum, splitting into 3s maximises the product (6 = 3 + 3 gives 9 vs 2+2+2 = 8).",
       "incorrectOptionExplanations": {
-        "5s": "5 splits into 2 + 3 = 6 > 5.",
-        "1s": "A factor of 1 wastes sum.",
-        "Equal halves only": "Not generally optimal."
+        "5s, because 5^k beats alternatives of the same sum": "5 splits into 2 + 3 = 6 > 5.",
+        "1s, because 1^k keeps every part small": "A factor of 1 wastes sum.",
+        "Equal halves only, because that always maximises": "Not generally optimal."
       }
     },
     {
@@ -139,13 +139,13 @@
         "Why not 2 and 3?"
       ],
       "options": [
-        "1 and 2 (at least two parts are required)",
+        "1 and 2",
         "2 and 3",
         "1 and 3",
         "2 and 2"
       ],
-      "answer": "1 and 2 (at least two parts are required)",
-      "explanation": "2 = 1 + 1 gives 1; 3 = 1 + 2 gives 2.",
+      "answer": "1 and 2",
+      "explanation": "2 = 1 + 1 gives 1; 3 = 1 + 2 gives 2. (1 and 2: at least two parts are required)",
       "incorrectOptionExplanations": {
         "2 and 3": "Keeping n whole is not allowed.",
         "1 and 3": "3 must be split.",

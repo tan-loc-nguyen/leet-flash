@@ -39,16 +39,16 @@
       ],
       "options": [
         "Give a 10 and a 5 if possible because 5s are more versatile",
-        "Always give three 5s",
-        "Always give two 10s",
-        "Give a 20"
+        "Always give three 5s because they are smaller",
+        "Always give two 10s because that is fewer bills",
+        "Give a 20 back because it matches the bill paid"
       ],
       "answer": "Give a 10 and a 5 if possible because 5s are more versatile",
       "explanation": "A 5 can serve both 10 and 20 customers; a 10 can only help a 20, so spend 10s first.",
       "incorrectOptionExplanations": {
-        "Always give three 5s": "That wastes the scarce 5s.",
-        "Always give two 10s": "That equals $20 which is more than $15.",
-        "Give a 20": "The customer gave a 20."
+        "Always give three 5s because they are smaller": "That wastes the scarce 5s.",
+        "Always give two 10s because that is fewer bills": "That equals $20 which is more than $15.",
+        "Give a 20 back because it matches the bill paid": "The customer gave a 20."
       }
     },
     {
@@ -120,17 +120,17 @@
         "Why does it fail?"
       ],
       "options": [
-        "No: by the last 20 no 5-dollar bill is left, so $15 of change cannot be made",
-        "Yes",
-        "Yes with two 10s",
-        "Only if the first bill is 20"
+        "No: at the last 20 no $5 bill is left, so $15 of change fails",
+        "Yes: every 10 has a 5 available to give back as change",
+        "Yes, by giving two 10s as the change for the final 20 bill",
+        "Only if the first customer in line pays with a 20 bill"
       ],
-      "answer": "No: by the last 20 no 5-dollar bill is left, so $15 of change cannot be made",
+      "answer": "No: at the last 20 no $5 bill is left, so $15 of change fails",
       "explanation": "Trace the counts: after 5,5 you hold two 5s; the first 10 leaves one 5 and one 10; the second 10 needs a 5 and leaves zero 5s and two 10s. The 20 then needs change of 15 = one 10 + one 5 (or three 5s), but no 5 remains, so it fails.",
       "incorrectOptionExplanations": {
-        "Yes": "The required 5 is missing.",
-        "Yes with two 10s": "Two 10s give $20, not $15.",
-        "Only if the first bill is 20": "A first 20 can never be served."
+        "Yes: every 10 has a 5 available to give back as change": "The required 5 is missing.",
+        "Yes, by giving two 10s as the change for the final 20 bill": "Two 10s give $20, not $15.",
+        "Only if the first customer in line pays with a 20 bill": "A first 20 can never be served."
       }
     }
   ],

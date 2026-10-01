@@ -58,16 +58,16 @@
       ],
       "options": [
         "Sliding window set of the last k elements",
-        "Sorting the array",
-        "Two stacks",
-        "Binary search"
+        "Sorting the array first so that equal values become adjacent",
+        "Two stacks that keep the most recent and the oldest elements",
+        "Binary search over the array for the nearest equal element"
       ],
       "answer": "Sliding window set of the last k elements",
       "explanation": "Only elements within distance k matter, so older ones are evicted.",
       "incorrectOptionExplanations": {
-        "Sorting the array": "Loses original positions.",
-        "Two stacks": "Not relevant.",
-        "Binary search": "No sorted structure by index."
+        "Sorting the array first so that equal values become adjacent": "Loses original positions.",
+        "Two stacks that keep the most recent and the oldest elements": "Not relevant.",
+        "Binary search over the array for the nearest equal element": "No sorted structure by index."
       }
     },
     {
@@ -141,16 +141,16 @@
       ],
       "options": [
         "False (the 1s are 3 apart)",
-        "True",
-        "Only if k = 3",
-        "It depends on sorting"
+        "True, because the value 1 appears twice in the array somewhere",
+        "Only if k is raised to 3, otherwise the answer is always false",
+        "It depends on sorting the array before comparing the indices"
       ],
       "answer": "False (the 1s are 3 apart)",
       "explanation": "Indices 0 and 3 differ by 3 > 2, so no pair qualifies; with k = 3 it would be True.",
       "incorrectOptionExplanations": {
-        "True": "The distance 3 exceeds k = 2.",
-        "Only if k = 3": "True for k >= 3, but the question has k = 2.",
-        "It depends on sorting": "Sorting is irrelevant."
+        "True, because the value 1 appears twice in the array somewhere": "The distance 3 exceeds k = 2.",
+        "Only if k is raised to 3, otherwise the answer is always false": "True for k >= 3, but the question has k = 2.",
+        "It depends on sorting the array before comparing the indices": "Sorting is irrelevant."
       }
     }
   ],

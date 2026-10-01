@@ -66,17 +66,17 @@
         "How do you model the browser tabs' history efficiently?"
       ],
       "options": [
-        "Array with a cursor (clamped moves)",
-        "Priority queue",
-        "Hash set",
-        "Trie"
+        "Array with a cursor",
+        "A priority queue ordered by the time each page was visited",
+        "A hash set of visited pages with their visit counts",
+        "A trie of the page addresses to find the previous and next pages"
       ],
-      "answer": "Array with a cursor (clamped moves)",
-      "explanation": "Index arithmetic jumps any number of steps at once.",
+      "answer": "Array with a cursor",
+      "explanation": "Index arithmetic jumps any number of steps at once. (Array with a cursor: clamped moves)",
       "incorrectOptionExplanations": {
-        "Priority queue": "No ordering by priority.",
-        "Hash set": "Order matters.",
-        "Trie": "Not a prefix problem."
+        "A priority queue ordered by the time each page was visited": "No ordering by priority.",
+        "A hash set of visited pages with their visit counts": "Order matters.",
+        "A trie of the page addresses to find the previous and next pages": "Not a prefix problem."
       }
     },
     {
@@ -150,17 +150,17 @@
         "What happens to b?"
       ],
       "options": [
-        "It stays on c (the forward history was discarded)",
-        "b",
-        "a",
-        "It raises an error"
+        "It stays on c",
+        "It returns b, because b is still stored right after the cursor",
+        "It returns a, because forward moves back to the older page",
+        "It raises an error because forward history is empty"
       ],
-      "answer": "It stays on c (the forward history was discarded)",
-      "explanation": "Visiting c from a clears the forward history, so forward(1) cannot move and returns c.",
+      "answer": "It stays on c",
+      "explanation": "Visiting c from a clears the forward history, so forward(1) cannot move and returns c. (It stays on c: the forward history was discarded)",
       "incorrectOptionExplanations": {
-        "b": "b was discarded when visiting c.",
-        "a": "forward does not move backwards.",
-        "It raises an error": "Forward is clamped, not an error."
+        "It returns b, because b is still stored right after the cursor": "b was discarded when visiting c.",
+        "It returns a, because forward moves back to the older page": "forward does not move backwards.",
+        "It raises an error because forward history is empty": "Forward is clamped, not an error."
       }
     }
   ],

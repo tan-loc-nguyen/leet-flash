@@ -48,16 +48,16 @@
       ],
       "options": [
         "Binary search that records the candidate and keeps searching left",
-        "Linear scan",
-        "Two pointers",
-        "Hashing"
+        "Linear scan from the left until the predicate flips to True",
+        "Two pointers closing in from both ends of the range each step",
+        "Hashing each index into a lookup table of predicate results"
       ],
       "answer": "Binary search that records the candidate and keeps searching left",
       "explanation": "The predicate flips once from False to True, so bisection locates the flip.",
       "incorrectOptionExplanations": {
-        "Linear scan": "O(n) API calls.",
-        "Two pointers": "No second pointer needed.",
-        "Hashing": "No lookups."
+        "Linear scan from the left until the predicate flips to True": "O(n) API calls.",
+        "Two pointers closing in from both ends of the range each step": "No second pointer needed.",
+        "Hashing each index into a lookup table of predicate results": "No lookups."
       }
     },
     {

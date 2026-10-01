@@ -64,16 +64,16 @@
       ],
       "options": [
         "Level-order BFS with alternate levels reversed",
-        "Inorder DFS",
-        "A heap of nodes",
-        "Two stacks only with no level tracking"
+        "Inorder DFS that flips the output every time it visits a new node",
+        "A heap of nodes that orders them by depth parity and value",
+        "Two stacks used with no explicit tracking of where each level ends"
       ],
       "answer": "Level-order BFS with alternate levels reversed",
       "explanation": "The set of nodes per level is the same as normal level order; only the order within alternate levels changes.",
       "incorrectOptionExplanations": {
-        "Inorder DFS": "Not level based.",
-        "A heap of nodes": "No ordering by value.",
-        "Two stacks only with no level tracking": "Two stacks do work but must be paired with level separation."
+        "Inorder DFS that flips the output every time it visits a new node": "Not level based.",
+        "A heap of nodes that orders them by depth parity and value": "No ordering by value.",
+        "Two stacks used with no explicit tracking of where each level ends": "Two stacks do work but must be paired with level separation."
       }
     },
     {

@@ -50,17 +50,17 @@
         "Why is a running maximum valid?"
       ],
       "options": [
-        "The maximum frequency of a vowel and of a consonant, since counts only increase",
-        "The first vowel",
-        "The sorted letters",
-        "The number of distinct letters"
+        "Max vowel frequency and max consonant frequency; counts only increase",
+        "The first vowel and the first consonant seen, keeping only their indices",
+        "The sorted letters of the string, with vowels first and then consonants",
+        "The number of distinct letters in each category, summed at the end"
       ],
-      "answer": "The maximum frequency of a vowel and of a consonant, since counts only increase",
+      "answer": "Max vowel frequency and max consonant frequency; counts only increase",
       "explanation": "Counts never decrease, so the maximum after each increment is the true maximum so far.",
       "incorrectOptionExplanations": {
-        "The first vowel": "Irrelevant.",
-        "The sorted letters": "Unneeded.",
-        "The number of distinct letters": "Not the quantity asked."
+        "The first vowel and the first consonant seen, keeping only their indices": "Irrelevant.",
+        "The sorted letters of the string, with vowels first and then consonants": "Unneeded.",
+        "The number of distinct letters in each category, summed at the end": "Not the quantity asked."
       }
     },
     {
@@ -116,16 +116,16 @@
       ],
       "options": [
         "3 (a appears 3 times, no consonant), and 3",
-        "7 and 3",
-        "3 and 0",
-        "1 and 3"
+        "7 (all letters are vowels), and 3",
+        "3 (a appears 3 times), and 0 (no vowels in 'bbb')",
+        "1 (one distinct vowel), and 3"
       ],
       "answer": "3 (a appears 3 times, no consonant), and 3",
       "explanation": "Vowels: a = 3 is the maximum; there is no consonant so the sum is 3. 'bbb' has consonant maximum 3 and no vowels.",
       "incorrectOptionExplanations": {
-        "7 and 3": "Not the sum of frequencies of all vowels.",
-        "3 and 0": "'bbb' has consonants.",
-        "1 and 3": "The first has a maximum vowel frequency of 3."
+        "7 (all letters are vowels), and 3": "Not the sum of frequencies of all vowels.",
+        "3 (a appears 3 times), and 0 (no vowels in 'bbb')": "'bbb' has consonants.",
+        "1 (one distinct vowel), and 3": "The first has a maximum vowel frequency of 3."
       }
     }
   ],

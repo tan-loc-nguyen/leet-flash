@@ -52,16 +52,16 @@
       ],
       "options": [
         "Postorder: return the height and check balance on the way up",
-        "Preorder with a height helper at each node",
-        "BFS",
-        "Inorder only"
+        "Preorder traversal that calls a separate height helper at every node",
+        "Breadth-first traversal that compares the sizes of consecutive levels",
+        "Inorder traversal that checks the sorted order of the visited node values"
       ],
       "answer": "Postorder: return the height and check balance on the way up",
       "explanation": "Children heights are available when the parent is processed, so each node's check is O(1).",
       "incorrectOptionExplanations": {
-        "Preorder with a height helper at each node": "That is the O(n^2) top-down approach.",
-        "BFS": "Level order does not give subtree heights directly.",
-        "Inorder only": "Does not provide subtree heights at the node."
+        "Preorder traversal that calls a separate height helper at every node": "That is the O(n^2) top-down approach.",
+        "Breadth-first traversal that compares the sizes of consecutive levels": "Level order does not give subtree heights directly.",
+        "Inorder traversal that checks the sorted order of the visited node values": "Does not provide subtree heights at the node."
       }
     },
     {
@@ -135,16 +135,16 @@
       ],
       "options": [
         "Not necessarily: balance compares the two child heights at every node, not only at the root",
-        "Yes always",
-        "Only the root matters",
-        "Only the leaves matter"
+        "Yes always, because a missing sibling can never make a node unbalanced",
+        "Only the root matters, so the subtrees below do not need to be checked",
+        "Only the leaves matter, because they carry all the height information"
       ],
       "answer": "Not necessarily: balance compares the two child heights at every node, not only at the root",
       "explanation": "A deep imbalance anywhere in the tree makes it unbalanced.",
       "incorrectOptionExplanations": {
-        "Yes always": "Local imbalances matter.",
-        "Only the root matters": "Every node is checked.",
-        "Only the leaves matter": "Leaves always have balanced (empty) children."
+        "Yes always, because a missing sibling can never make a node unbalanced": "Local imbalances matter.",
+        "Only the root matters, so the subtrees below do not need to be checked": "Every node is checked.",
+        "Only the leaves matter, because they carry all the height information": "Leaves always have balanced (empty) children."
       }
     }
   ],

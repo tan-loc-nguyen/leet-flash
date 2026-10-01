@@ -55,16 +55,16 @@
       ],
       "options": [
         "Only the total sum: m = ceil(total / k) - 1",
-        "The largest element",
-        "The number of elements",
-        "The first element"
+        "The largest element in the array, divided by k",
+        "The number of elements, with no regard to the sum",
+        "The first element of the array and its remainder"
       ],
       "answer": "Only the total sum: m = ceil(total / k) - 1",
       "explanation": "Resources are added only when needed, so the final shortage equals total - k, covered by ceil((total - k) / k) operations.",
       "incorrectOptionExplanations": {
-        "The largest element": "Elements are consumed over time, not at once.",
-        "The number of elements": "Magnitudes matter.",
-        "The first element": "Irrelevant."
+        "The largest element in the array, divided by k": "Elements are consumed over time, not at once.",
+        "The number of elements, with no regard to the sum": "Magnitudes matter.",
+        "The first element of the array and its remainder": "Irrelevant."
       }
     },
     {
@@ -138,13 +138,13 @@
         "How many operations are needed?"
       ],
       "options": [
-        "3 (two operations costing 1 + 2)",
+        "3",
         "6",
         "1",
         "0"
       ],
-      "answer": "3 (two operations costing 1 + 2)",
-      "explanation": "total = 10, ceil(10/4) - 1 = 2 operations costing 1 + 2 = 3.",
+      "answer": "3",
+      "explanation": "total = 10, ceil(10/4) - 1 = 2 operations costing 1 + 2 = 3. (3: two operations costing 1 + 2)",
       "incorrectOptionExplanations": {
         "6": "That would be three operations.",
         "1": "One operation is not enough.",

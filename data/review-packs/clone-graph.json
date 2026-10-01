@@ -66,16 +66,16 @@
       ],
       "options": [
         "A hash map from each original node to its clone",
-        "A sorted list",
-        "A stack of values",
-        "A heap"
+        "A sorted list of node values that is searched for each neighbour",
+        "A stack of node values that is popped to find each clone",
+        "A heap of node values keyed by the number of neighbours"
       ],
       "answer": "A hash map from each original node to its clone",
       "explanation": "Neighbours can be reached by several paths and cycles exist; the map ensures each node is cloned exactly once and reused.",
       "incorrectOptionExplanations": {
-        "A sorted list": "No ordering is needed.",
-        "A stack of values": "Values are not unique identifiers.",
-        "A heap": "No priority."
+        "A sorted list of node values that is searched for each neighbour": "No ordering is needed.",
+        "A stack of node values that is popped to find each clone": "Values are not unique identifiers.",
+        "A heap of node values keyed by the number of neighbours": "No priority."
       }
     },
     {
@@ -151,16 +151,16 @@
       ],
       "options": [
         "None for null; a single node is cloned with an empty neighbour list",
-        "An empty node",
-        "An error",
-        "The original node"
+        "An empty node with no value, as a placeholder for the missing graph",
+        "An error is raised because the traversal dereferences a null node",
+        "The original node itself, since nothing needs to be copied"
       ],
       "answer": "None for null; a single node is cloned with an empty neighbour list",
       "explanation": "The null guard returns None and a lone node produces a new node with no neighbours.",
       "incorrectOptionExplanations": {
-        "An empty node": "Null input should return None.",
-        "An error": "Handled by a guard.",
-        "The original node": "A deep copy must be a different object."
+        "An empty node with no value, as a placeholder for the missing graph": "Null input should return None.",
+        "An error is raised because the traversal dereferences a null node": "Handled by a guard.",
+        "The original node itself, since nothing needs to be copied": "A deep copy must be a different object."
       }
     }
   ],

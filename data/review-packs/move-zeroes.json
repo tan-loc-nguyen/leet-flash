@@ -146,16 +146,16 @@
       ],
       "options": [
         "Unchanged for no zeros; [1,0,0] for [0,0,1]",
-        "[0,0,1] unchanged",
-        "[0,1,0]",
-        "It raises an error"
+        "[0,0,1] stays unchanged because zeros are already first",
+        "[0,1,0] with the single 1 pulled into the middle",
+        "It raises an error because no zero is found to swap with"
       ],
       "answer": "Unchanged for no zeros; [1,0,0] for [0,0,1]",
       "explanation": "With no zeros i and j move together (self-swaps); with leading zeros the first non-zero is swapped to the front.",
       "incorrectOptionExplanations": {
-        "[0,0,1] unchanged": "The zeros must end up last.",
-        "[0,1,0]": "Not fully moved.",
-        "It raises an error": "No indexing issue."
+        "[0,0,1] stays unchanged because zeros are already first": "The zeros must end up last.",
+        "[0,1,0] with the single 1 pulled into the middle": "Not fully moved.",
+        "It raises an error because no zero is found to swap with": "No indexing issue."
       }
     }
   ],

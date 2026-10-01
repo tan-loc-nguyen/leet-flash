@@ -45,16 +45,16 @@
       ],
       "options": [
         "Single pass: extend the matching run and reset the other",
-        "Sort the array",
-        "Sliding window with a heap",
-        "Binary search"
+        "Sort the array and compare the neighbours",
+        "Sliding window with a heap of run lengths",
+        "Binary search on the run length required"
       ],
       "answer": "Single pass: extend the matching run and reset the other",
       "explanation": "A comparison with the previous element either extends or breaks each run.",
       "incorrectOptionExplanations": {
-        "Sort the array": "Destroys adjacency.",
-        "Sliding window with a heap": "Overkill.",
-        "Binary search": "Irrelevant."
+        "Sort the array and compare the neighbours": "Destroys adjacency.",
+        "Sliding window with a heap of run lengths": "Overkill.",
+        "Binary search on the run length required": "Irrelevant."
       }
     },
     {

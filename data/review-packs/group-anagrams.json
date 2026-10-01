@@ -65,16 +65,16 @@
       ],
       "options": [
         "Hash map keyed by a canonical signature",
-        "Sliding window",
-        "Trie",
-        "Union find"
+        "Sliding window over the sorted word list",
+        "Trie of all words with shared prefixes",
+        "Union find merging words with equal length"
       ],
       "answer": "Hash map keyed by a canonical signature",
       "explanation": "Equivalent items share a canonical form, which becomes the dictionary key.",
       "incorrectOptionExplanations": {
-        "Sliding window": "No contiguous range is involved.",
-        "Trie": "A trie groups by prefix, not by letter multiset.",
-        "Union find": "Possible but needless; hashing a signature groups directly."
+        "Sliding window over the sorted word list": "No contiguous range is involved.",
+        "Trie of all words with shared prefixes": "A trie groups by prefix, not by letter multiset.",
+        "Union find merging words with equal length": "Possible but needless; hashing a signature groups directly."
       }
     },
     {
@@ -102,16 +102,16 @@
       ],
       "options": [
         "Lists are mutable and unhashable; tuples are hashable",
-        "Tuples are faster to compare",
-        "Lists cannot contain integers",
-        "dicts only accept sorted keys"
+        "Tuples are faster to compare than lists",
+        "Lists cannot contain integer elements at all",
+        "dicts only accept keys that are already sorted"
       ],
       "answer": "Lists are mutable and unhashable; tuples are hashable",
       "explanation": "Dict keys must be hashable; Python raises TypeError for lists.",
       "incorrectOptionExplanations": {
-        "Tuples are faster to compare": "Not the reason; hashability is.",
-        "Lists cannot contain integers": "They can.",
-        "dicts only accept sorted keys": "No ordering requirement."
+        "Tuples are faster to compare than lists": "Not the reason; hashability is.",
+        "Lists cannot contain integer elements at all": "They can.",
+        "dicts only accept keys that are already sorted": "No ordering requirement."
       }
     },
     {

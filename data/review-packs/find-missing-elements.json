@@ -51,16 +51,16 @@
       ],
       "options": [
         "A hash set; ascending order from scanning the range",
-        "A heap; arbitrary order",
-        "A stack; descending order",
-        "Binary search; unsorted order"
+        "A heap; arbitrary order from popping",
+        "A stack; descending order from popping",
+        "Binary search; unsorted order from probing"
       ],
       "answer": "A hash set; ascending order from scanning the range",
       "explanation": "Walking from min to max produces ascending output.",
       "incorrectOptionExplanations": {
-        "A heap; arbitrary order": "Not needed.",
-        "A stack; descending order": "Irrelevant.",
-        "Binary search; unsorted order": "Irrelevant."
+        "A heap; arbitrary order from popping": "Not needed.",
+        "A stack; descending order from popping": "Irrelevant.",
+        "Binary search; unsorted order from probing": "Irrelevant."
       }
     },
     {

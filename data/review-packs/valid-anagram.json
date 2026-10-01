@@ -135,17 +135,17 @@
         "What does the early length check buy you?"
       ],
       "options": [
-        "Different lengths can never be anagrams, so it saves work and avoids index errors in the paired loop",
-        "It makes the solution O(1)",
-        "It is required for correctness of the count array only",
-        "It handles Unicode"
+        "Different lengths can never be anagrams, so it saves work and index errors",
+        "It makes the whole solution O(1) in time and space",
+        "It is required only for the count array's correctness",
+        "It handles Unicode strings that the loop would miss"
       ],
-      "answer": "Different lengths can never be anagrams, so it saves work and avoids index errors in the paired loop",
+      "answer": "Different lengths can never be anagrams, so it saves work and index errors",
       "explanation": "The paired loop indexes t[i] for every i in s, so unequal lengths would break it.",
       "incorrectOptionExplanations": {
-        "It makes the solution O(1)": "Still O(n).",
-        "It is required for correctness of the count array only": "It is also an early exit; it is mainly required for the paired loop.",
-        "It handles Unicode": "Unrelated."
+        "It makes the whole solution O(1) in time and space": "Still O(n).",
+        "It is required only for the count array's correctness": "It is also an early exit; it is mainly required for the paired loop.",
+        "It handles Unicode strings that the loop would miss": "Unrelated."
       }
     },
     {

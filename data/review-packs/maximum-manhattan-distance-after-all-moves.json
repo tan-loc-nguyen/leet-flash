@@ -48,16 +48,16 @@
       ],
       "options": [
         "All in the direction that increases the distance: |x| + |y| + wildcards",
-        "Randomly",
-        "Half in x and half in y",
-        "Always 'U'"
+        "Assign them randomly between the four directions",
+        "Half in x and half in y to keep the walk balanced",
+        "Always 'U', since up is the first direction listed"
       ],
       "answer": "All in the direction that increases the distance: |x| + |y| + wildcards",
       "explanation": "Each wildcard can add exactly 1 to |x| or |y| in an increasing direction (choose the sign matching the current displacement).",
       "incorrectOptionExplanations": {
-        "Randomly": "Not optimal.",
-        "Half in x and half in y": "Not needed.",
-        "Always 'U'": "May reduce the distance."
+        "Assign them randomly between the four directions": "Not optimal.",
+        "Half in x and half in y to keep the walk balanced": "Not needed.",
+        "Always 'U', since up is the first direction listed": "May reduce the distance."
       }
     },
     {

@@ -65,16 +65,16 @@
       ],
       "options": [
         "Hash map of counts with complement lookups",
-        "Binary search tree",
-        "Heap of all numbers",
-        "Trie"
+        "Binary search tree storing every number added",
+        "Heap of all numbers, scanned for the target",
+        "Trie of the digits of every number added"
       ],
       "answer": "Hash map of counts with complement lookups",
       "explanation": "Counts allow detecting a self-pair (x + x) and give O(1) complement checks.",
       "incorrectOptionExplanations": {
-        "Binary search tree": "O(log n) add, but no better find for pair-sum.",
-        "Heap of all numbers": "Cannot search pairs efficiently.",
-        "Trie": "Not applicable."
+        "Binary search tree storing every number added": "O(log n) add, but no better find for pair-sum.",
+        "Heap of all numbers, scanned for the target": "Cannot search pairs efficiently.",
+        "Trie of the digits of every number added": "Not applicable."
       }
     },
     {

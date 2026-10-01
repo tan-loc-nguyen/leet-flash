@@ -45,16 +45,16 @@
       ],
       "options": [
         "Sliding window with a character-count map",
-        "Dynamic programming over prefixes",
-        "Binary search on k",
-        "Trie"
+        "Dynamic programming over the string prefixes",
+        "Binary search on k plus a feasibility check",
+        "A trie holding every substring of the input"
       ],
       "answer": "Sliding window with a character-count map",
       "explanation": "Distinct count = number of keys in the map; shrink until it is <= k.",
       "incorrectOptionExplanations": {
-        "Dynamic programming over prefixes": "Unnecessary state.",
-        "Binary search on k": "k is given.",
-        "Trie": "Not about prefixes."
+        "Dynamic programming over the string prefixes": "Unnecessary state.",
+        "Binary search on k plus a feasibility check": "k is given.",
+        "A trie holding every substring of the input": "Not about prefixes."
       }
     },
     {
@@ -128,12 +128,12 @@
         "How long is the best window?"
       ],
       "options": [
-        "3 ('ece')",
+        "3",
         "4",
         "2",
         "5"
       ],
-      "answer": "3 ('ece')",
+      "answer": "3",
       "explanation": "Windows with <= 2 distinct characters: 'ece' (3) is the longest; 'eceb' has 3 distinct.",
       "incorrectOptionExplanations": {
         "4": "'eceb' has e, c, b = 3 distinct.",

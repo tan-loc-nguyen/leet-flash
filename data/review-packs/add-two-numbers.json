@@ -52,16 +52,16 @@
       ],
       "options": [
         "Simultaneous traversal with a carry and a dummy head",
-        "Reverse both lists first",
-        "Recursion over the longer list only",
-        "Sorting the digits"
+        "Reverse both lists first and then add them from the new heads",
+        "Recursion over the longer list only, ignoring the shorter one's digits",
+        "Sorting the digits of both lists before adding them pairwise"
       ],
       "answer": "Simultaneous traversal with a carry and a dummy head",
       "explanation": "The least significant digits are at the heads, so addition proceeds from the start; treat an exhausted list as 0 and append a node for a final carry.",
       "incorrectOptionExplanations": {
-        "Reverse both lists first": "They are already in reverse order; reversing is only needed for the 'II' version.",
-        "Recursion over the longer list only": "Possible but not required and risks depth.",
-        "Sorting the digits": "Digit order matters."
+        "Reverse both lists first and then add them from the new heads": "They are already in reverse order; reversing is only needed for the 'II' version.",
+        "Recursion over the longer list only, ignoring the shorter one's digits": "Possible but not required and risks depth.",
+        "Sorting the digits of both lists before adding them pairwise": "Digit order matters."
       }
     },
     {

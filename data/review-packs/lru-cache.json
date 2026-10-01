@@ -167,16 +167,16 @@
       ],
       "options": [
         "Yes: update the value and move the node to the most-recent position",
-        "No: only update the value",
-        "It must evict the tail",
-        "It creates a duplicate node"
+        "No: only the value changes, the position stays",
+        "It must evict the tail node first, then insert",
+        "It creates a duplicate node next to the old one"
       ],
       "answer": "Yes: update the value and move the node to the most-recent position",
       "explanation": "Both get and put count as uses of the key.",
       "incorrectOptionExplanations": {
-        "No: only update the value": "That would let a frequently written key be evicted.",
-        "It must evict the tail": "Only when inserting a new key over capacity.",
-        "It creates a duplicate node": "The key must map to a single node."
+        "No: only the value changes, the position stays": "That would let a frequently written key be evicted.",
+        "It must evict the tail node first, then insert": "Only when inserting a new key over capacity.",
+        "It creates a duplicate node next to the old one": "The key must map to a single node."
       }
     }
   ],

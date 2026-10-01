@@ -53,16 +53,16 @@
       ],
       "options": [
         "Outdegree 0 and indegree n - 1; net score in - out = n - 1",
-        "Indegree 0 and outdegree n - 1",
-        "Highest outdegree",
-        "Equal in and out degree"
+        "Indegree 0 and outdegree n - 1; net score out - in = n - 1",
+        "The highest outdegree in the whole graph, always",
+        "Equal in-degree and out-degree for everyone else"
       ],
       "answer": "Outdegree 0 and indegree n - 1; net score in - out = n - 1",
       "explanation": "The judge trusts nobody and everyone else trusts the judge.",
       "incorrectOptionExplanations": {
-        "Indegree 0 and outdegree n - 1": "That describes the opposite (a person who trusts everyone).",
-        "Highest outdegree": "The judge has outdegree 0.",
-        "Equal in and out degree": "Not the definition."
+        "Indegree 0 and outdegree n - 1; net score out - in = n - 1": "That describes the opposite (a person who trusts everyone).",
+        "The highest outdegree in the whole graph, always": "The judge has outdegree 0.",
+        "Equal in-degree and out-degree for everyone else": "Not the definition."
       }
     },
     {
@@ -121,13 +121,13 @@
         "Who is the judge when there is one person?"
       ],
       "options": [
-        "1 (the lone person trusts nobody and everyone else, i.e. nobody, trusts them)",
+        "1",
         "-1",
         "0",
         "2"
       ],
-      "answer": "1 (the lone person trusts nobody and everyone else, i.e. nobody, trusts them)",
-      "explanation": "outdegree 0 and indegree n - 1 = 0 hold for the only person.",
+      "answer": "1",
+      "explanation": "outdegree 0 and indegree n - 1 = 0 hold for the only person. (1: the lone person trusts nobody and everyone else, i.e. nobody, trusts them)",
       "incorrectOptionExplanations": {
         "-1": "The conditions are satisfied.",
         "0": "People are numbered from 1.",

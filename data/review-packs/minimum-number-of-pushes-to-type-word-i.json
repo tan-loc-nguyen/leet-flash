@@ -49,16 +49,16 @@
       ],
       "options": [
         "i // 8 + 1 pushes (0-indexed): groups of 8 per push level",
-        "Always 1",
-        "i pushes",
-        "2 pushes"
+        "Always 1 push, no matter how many letters there are",
+        "i pushes, one more for each earlier letter",
+        "2 pushes for every letter once past the first eight"
       ],
       "answer": "i // 8 + 1 pushes (0-indexed): groups of 8 per push level",
       "explanation": "Eight letters share the first press position, eight the second, and so on.",
       "incorrectOptionExplanations": {
-        "Always 1": "Only the first 8 letters.",
-        "i pushes": "Too many.",
-        "2 pushes": "Only the second group."
+        "Always 1 push, no matter how many letters there are": "Only the first 8 letters.",
+        "i pushes, one more for each earlier letter": "Too many.",
+        "2 pushes for every letter once past the first eight": "Only the second group."
       }
     },
     {

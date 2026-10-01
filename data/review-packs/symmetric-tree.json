@@ -48,17 +48,17 @@
         "How do you test symmetry recursively?"
       ],
       "options": [
-        "Outer pair (left.left, right.right) and inner pair (left.right, right.left)",
-        "Left with left and right with right",
-        "Only the roots",
-        "Inorder traversal equals reversed preorder"
+        "Outer pair (l.left, r.right) and inner pair (l.right, r.left)",
+        "Left with left and right with right, like Same Tree",
+        "Only the two roots and nothing below them",
+        "Inorder traversal equals the reversed preorder"
       ],
-      "answer": "Outer pair (left.left, right.right) and inner pair (left.right, right.left)",
+      "answer": "Outer pair (l.left, r.right) and inner pair (l.right, r.left)",
       "explanation": "A mirror crosses the children: the outer nodes face each other and the inner nodes face each other.",
       "incorrectOptionExplanations": {
-        "Left with left and right with right": "That is Same Tree.",
-        "Only the roots": "Ignores the structure.",
-        "Inorder traversal equals reversed preorder": "Not a valid test."
+        "Left with left and right with right, like Same Tree": "That is Same Tree.",
+        "Only the two roots and nothing below them": "Ignores the structure.",
+        "Inorder traversal equals the reversed preorder": "Not a valid test."
       }
     },
     {
@@ -132,17 +132,17 @@
         "Why not?"
       ],
       "options": [
-        "No: both 2s have only a right child (3 and 3), which are not mirrored",
-        "Yes",
-        "Only if values are sorted",
-        "Cannot tell"
+        "No: both 2s have only a right child (3 and 3), not mirrored",
+        "Yes: both 2s hold a 3, so the tree is symmetric",
+        "Only if all the values in the tree are sorted",
+        "Cannot tell without the full tree shape drawn"
       ],
-      "answer": "No: both 2s have only a right child (3 and 3), which are not mirrored",
+      "answer": "No: both 2s have only a right child (3 and 3), not mirrored",
       "explanation": "Mirrors need the left 2's right child to match the right 2's left child, but the right 2 has none.",
       "incorrectOptionExplanations": {
-        "Yes": "The structure is not mirrored.",
-        "Only if values are sorted": "Sortedness is irrelevant.",
-        "Cannot tell": "It can be decided."
+        "Yes: both 2s hold a 3, so the tree is symmetric": "The structure is not mirrored.",
+        "Only if all the values in the tree are sorted": "Sortedness is irrelevant.",
+        "Cannot tell without the full tree shape drawn": "It can be decided."
       }
     }
   ],

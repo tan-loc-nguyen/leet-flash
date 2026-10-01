@@ -52,15 +52,15 @@
       "options": [
         "Lower bound: the first index with nums[i] >= target",
         "Upper bound: the first index with nums[i] > target",
-        "The midpoint of the array",
-        "The last index <= target"
+        "The midpoint of the array, wherever the target falls",
+        "The last index with nums[i] <= target"
       ],
       "answer": "Lower bound: the first index with nums[i] >= target",
       "explanation": "Inserting before the first element that is >= target keeps the array sorted (and returns the existing index for a match).",
       "incorrectOptionExplanations": {
         "Upper bound: the first index with nums[i] > target": "That would insert after equal elements.",
-        "The midpoint of the array": "Unrelated to the target.",
-        "The last index <= target": "That is one less than the upper bound."
+        "The midpoint of the array, wherever the target falls": "Unrelated to the target.",
+        "The last index with nums[i] <= target": "That is one less than the upper bound."
       }
     },
     {
@@ -119,13 +119,13 @@
         "Where is a value larger than all elements inserted?"
       ],
       "options": [
-        "4 (at the end)",
+        "4",
         "3",
         "0",
         "-1"
       ],
-      "answer": "4 (at the end)",
-      "explanation": "No element is >= 7, so the insertion point is n = 4.",
+      "answer": "4",
+      "explanation": "No element is >= 7, so the insertion point is n = 4. (4: at the end)",
       "incorrectOptionExplanations": {
         "3": "That would insert before 6.",
         "0": "That is for a value smaller than all.",

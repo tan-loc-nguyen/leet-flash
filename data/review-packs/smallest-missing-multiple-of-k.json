@@ -52,16 +52,16 @@
       ],
       "options": [
         "A set of the values, testing k, 2k, 3k in turn",
-        "Sorting and binary search for each multiple",
-        "A stack",
-        "A heap"
+        "Sorting and binary search for each multiple of k",
+        "A stack of the values, popped while they match",
+        "A heap of the values, popped while they match k"
       ],
       "answer": "A set of the values, testing k, 2k, 3k in turn",
       "explanation": "The first multiple not in the set is the answer; at most n + 1 are tested.",
       "incorrectOptionExplanations": {
-        "Sorting and binary search for each multiple": "Works but is slower.",
-        "A stack": "Irrelevant.",
-        "A heap": "Irrelevant."
+        "Sorting and binary search for each multiple of k": "Works but is slower.",
+        "A stack of the values, popped while they match": "Irrelevant.",
+        "A heap of the values, popped while they match k": "Irrelevant."
       }
     },
     {

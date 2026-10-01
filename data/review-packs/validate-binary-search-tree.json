@@ -54,16 +54,16 @@
       ],
       "options": [
         "Inorder traversal is strictly increasing",
-        "Preorder is sorted",
-        "Postorder is sorted",
-        "Level order is sorted"
+        "Preorder traversal is strictly increasing",
+        "Postorder traversal is strictly increasing",
+        "Level order traversal is strictly increasing"
       ],
       "answer": "Inorder traversal is strictly increasing",
       "explanation": "Left subtree < node < right subtree implies sorted inorder.",
       "incorrectOptionExplanations": {
-        "Preorder is sorted": "Not in general.",
-        "Postorder is sorted": "Not in general.",
-        "Level order is sorted": "Not in general."
+        "Preorder traversal is strictly increasing": "Not in general.",
+        "Postorder traversal is strictly increasing": "Not in general.",
+        "Level order traversal is strictly increasing": "Not in general."
       }
     },
     {
@@ -137,16 +137,16 @@
       ],
       "options": [
         "No: values must be strictly increasing in inorder",
-        "Yes",
-        "Only if sorted descending",
-        "Depends on the height"
+        "Yes: equal values are allowed on either side",
+        "Only if the values are sorted in descending order",
+        "It depends on the height of the tree"
       ],
       "answer": "No: values must be strictly increasing in inorder",
       "explanation": "LeetCode's BST definition forbids equal keys on either side.",
       "incorrectOptionExplanations": {
-        "Yes": "Duplicates violate strictness.",
-        "Only if sorted descending": "Not a rule.",
-        "Depends on the height": "Not related."
+        "Yes: equal values are allowed on either side": "Duplicates violate strictness.",
+        "Only if the values are sorted in descending order": "Not a rule.",
+        "It depends on the height of the tree": "Not related."
       }
     }
   ],

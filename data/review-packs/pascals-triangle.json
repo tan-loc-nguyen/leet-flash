@@ -52,16 +52,16 @@
       ],
       "options": [
         "The sum of the two entries above it; both ends are 1",
-        "The product of the two entries above",
-        "The average of the row above",
-        "The row index"
+        "The product of the two entries above it; ends are 1",
+        "The average of the row above it; both ends are 1",
+        "The row index of the entry; both ends are 1"
       ],
       "answer": "The sum of the two entries above it; both ends are 1",
       "explanation": "That is the defining recurrence C(n, k) = C(n-1, k-1) + C(n-1, k).",
       "incorrectOptionExplanations": {
-        "The product of the two entries above": "Sums, not products.",
-        "The average of the row above": "Not the rule.",
-        "The row index": "Only the second entry equals the row index."
+        "The product of the two entries above it; ends are 1": "Sums, not products.",
+        "The average of the row above it; both ends are 1": "Not the rule.",
+        "The row index of the entry; both ends are 1": "Only the second entry equals the row index."
       }
     },
     {

@@ -58,16 +58,16 @@
       ],
       "options": [
         "Rotate the queue so the newest element is at the front",
-        "Sort the queue",
-        "Reverse by recursion only",
-        "Use a heap"
+        "Sort the queue by insertion time after every push call",
+        "Reverse the queue by recursion on each pop call only",
+        "Use a heap ordered by insertion time to pop the newest first"
       ],
       "answer": "Rotate the queue so the newest element is at the front",
       "explanation": "Moving the previous elements behind the new one reverses their relative order to LIFO.",
       "incorrectOptionExplanations": {
-        "Sort the queue": "Values are not ordered.",
-        "Reverse by recursion only": "Recursion needs a stack frame, which defeats the purpose.",
-        "Use a heap": "Not a queue operation."
+        "Sort the queue by insertion time after every push call": "Values are not ordered.",
+        "Reverse the queue by recursion on each pop call only": "Recursion needs a stack frame, which defeats the purpose.",
+        "Use a heap ordered by insertion time to pop the newest first": "Not a queue operation."
       }
     },
     {
@@ -141,17 +141,17 @@
         "How does your code treat it?"
       ],
       "options": [
-        "The constraints guarantee non-empty pops/tops; the guard is a safety net",
-        "It must raise an exception",
-        "It must return -1",
-        "It should rebuild the queue"
+        "Constraints guarantee non-empty top/pop; the guard is only a safety net",
+        "It must raise an exception when the stack is empty on top",
+        "It must return -1 as a sentinel when the stack is empty",
+        "It should rebuild the queue from scratch before returning"
       ],
-      "answer": "The constraints guarantee non-empty pops/tops; the guard is a safety net",
+      "answer": "Constraints guarantee non-empty top/pop; the guard is only a safety net",
       "explanation": "LeetCode only calls pop/top on non-empty stacks, so any guard value is arbitrary.",
       "incorrectOptionExplanations": {
-        "It must raise an exception": "Not specified.",
-        "It must return -1": "Not specified.",
-        "It should rebuild the queue": "Nothing to rebuild."
+        "It must raise an exception when the stack is empty on top": "Not specified.",
+        "It must return -1 as a sentinel when the stack is empty": "Not specified.",
+        "It should rebuild the queue from scratch before returning": "Nothing to rebuild."
       }
     }
   ],

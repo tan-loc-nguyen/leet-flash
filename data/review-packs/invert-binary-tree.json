@@ -65,16 +65,16 @@
       ],
       "options": [
         "Swap left and right children at every node (any full traversal)",
-        "Reverse the inorder sequence only",
-        "Sort the children",
-        "Rotate the tree"
+        "Reverse the inorder sequence of node values and rebuild the tree",
+        "Sort the children of every node by value before recursing",
+        "Rotate the whole tree once around its root node pointer"
       ],
       "answer": "Swap left and right children at every node (any full traversal)",
       "explanation": "The mirrored tree is exactly the tree with every node's children exchanged, and order of visiting does not matter.",
       "incorrectOptionExplanations": {
-        "Reverse the inorder sequence only": "That describes the effect on values but not how to restructure the tree.",
-        "Sort the children": "Values are not compared.",
-        "Rotate the tree": "Rotation is a different operation."
+        "Reverse the inorder sequence of node values and rebuild the tree": "That describes the effect on values but not how to restructure the tree.",
+        "Sort the children of every node by value before recursing": "Values are not compared.",
+        "Rotate the whole tree once around its root node pointer": "Rotation is a different operation."
       }
     },
     {
@@ -149,16 +149,16 @@
       ],
       "options": [
         "None for an empty tree; a single node is unchanged",
-        "An error",
-        "A new empty node",
-        "The node with swapped value"
+        "An error, since there is no node to invert",
+        "A new empty node object replacing the tree",
+        "The root node with its value swapped to zero"
       ],
       "answer": "None for an empty tree; a single node is unchanged",
       "explanation": "The null check returns None and a leaf swaps two null children (a no-op).",
       "incorrectOptionExplanations": {
-        "An error": "Handled by the guard.",
-        "A new empty node": "No node is created.",
-        "The node with swapped value": "Values are never swapped, only children."
+        "An error, since there is no node to invert": "Handled by the guard.",
+        "A new empty node object replacing the tree": "No node is created.",
+        "The root node with its value swapped to zero": "Values are never swapped, only children."
       }
     }
   ],

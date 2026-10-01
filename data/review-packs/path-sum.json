@@ -49,16 +49,16 @@
       ],
       "options": [
         "Pass down the remaining target (target - node.val)",
-        "Sum all values first",
-        "Use a heap",
-        "Sort the path"
+        "Sum all the values first, then compare with target",
+        "Use a heap of the partial sums along each path",
+        "Sort the path values and compare with the target"
       ],
       "answer": "Pass down the remaining target (target - node.val)",
       "explanation": "A leaf succeeds iff the remaining value is exactly 0 after subtracting its value.",
       "incorrectOptionExplanations": {
-        "Sum all values first": "Paths differ per leaf.",
-        "Use a heap": "No ordering needed.",
-        "Sort the path": "Order is fixed by the tree."
+        "Sum all the values first, then compare with target": "Paths differ per leaf.",
+        "Use a heap of the partial sums along each path": "No ordering needed.",
+        "Sort the path values and compare with the target": "Order is fixed by the tree."
       }
     },
     {
@@ -115,16 +115,16 @@
       ],
       "options": [
         "False (there is no root-to-leaf path)",
-        "True because the sum is 0",
-        "An error",
-        "None"
+        "True, because the sum 0 is matched by an empty path",
+        "An error, since the root node is missing here",
+        "None, since there is no path to evaluate at all"
       ],
       "answer": "False (there is no root-to-leaf path)",
       "explanation": "An empty tree has no paths at all, even when the target is 0.",
       "incorrectOptionExplanations": {
-        "True because the sum is 0": "A path must exist.",
-        "An error": "Handled by the base case.",
-        "None": "The function returns a boolean."
+        "True, because the sum 0 is matched by an empty path": "A path must exist.",
+        "An error, since the root node is missing here": "Handled by the base case.",
+        "None, since there is no path to evaluate at all": "The function returns a boolean."
       }
     }
   ],

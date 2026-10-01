@@ -51,17 +51,17 @@
         "What does the function return from each call?"
       ],
       "options": [
-        "The node where p and q are found in different subtrees (or the node is one of them)",
-        "The deepest node",
-        "The root always",
-        "The node with the smallest value"
+        "The node where p and q fall in different subtrees (or is one of them)",
+        "The deepest node that is visited during the whole search",
+        "The root always, whatever the positions of p and q",
+        "The node with the smallest value among both subtrees' nodes"
       ],
-      "answer": "The node where p and q are found in different subtrees (or the node is one of them)",
+      "answer": "The node where p and q fall in different subtrees (or is one of them)",
       "explanation": "If left and right searches both return non-null, p and q are on different sides of this node.",
       "incorrectOptionExplanations": {
-        "The deepest node": "Unrelated.",
-        "The root always": "Only if they diverge at the root.",
-        "The node with the smallest value": "Values are not ordered."
+        "The deepest node that is visited during the whole search": "Unrelated.",
+        "The root always, whatever the positions of p and q": "Only if they diverge at the root.",
+        "The node with the smallest value among both subtrees' nodes": "Values are not ordered."
       }
     },
     {
@@ -133,13 +133,13 @@
         "Why?"
       ],
       "options": [
-        "5 (node 4 is a descendant of 5)",
+        "5",
         "3",
         "2",
         "6"
       ],
-      "answer": "5 (node 4 is a descendant of 5)",
-      "explanation": "4 lies below 5, and a node counts as its own ancestor.",
+      "answer": "5",
+      "explanation": "4 lies below 5, and a node counts as its own ancestor. (5: node 4 is a descendant of 5)",
       "incorrectOptionExplanations": {
         "3": "The root is a common ancestor but not the lowest.",
         "2": "2 is the parent of 4 but is not an ancestor of 5.",

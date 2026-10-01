@@ -74,16 +74,16 @@
       ],
       "options": [
         "Sorting + two pointers",
-        "Prefix sum",
-        "BFS",
-        "Monotonic stack"
+        "Prefix sums combined with a hash map of previously seen totals",
+        "Breadth-first search over partial triples of indices and sums",
+        "Monotonic stack that tracks the nearest greater element for each index"
       ],
       "answer": "Sorting + two pointers",
       "explanation": "Sorting enables a linear two-pointer search for each fixed first element: O(n log n) + O(n^2) = O(n^2).",
       "incorrectOptionExplanations": {
-        "Prefix sum": "Prefix sums answer contiguous-subarray queries; triplets are not contiguous.",
-        "BFS": "There is no graph or level structure.",
-        "Monotonic stack": "There is no nearest-greater / smaller relation to exploit."
+        "Prefix sums combined with a hash map of previously seen totals": "Prefix sums answer contiguous-subarray queries; triplets are not contiguous.",
+        "Breadth-first search over partial triples of indices and sums": "There is no graph or level structure.",
+        "Monotonic stack that tracks the nearest greater element for each index": "There is no nearest-greater / smaller relation to exploit."
       },
       "enabled": true
     },
@@ -165,16 +165,16 @@
       ],
       "options": [
         "O(1) beyond the sort itself (Python's sort uses up to O(n))",
-        "O(n) for a hash set",
-        "O(n^2) for storing all pairs",
-        "O(log n) for recursion"
+        "O(n) for a hash set that stores every value for the inner lookup",
+        "O(n^2) for a table that stores all pair sums of the array",
+        "O(log n) for the recursion stack of a divide-and-conquer sort"
       ],
       "answer": "O(1) beyond the sort itself (Python's sort uses up to O(n))",
       "explanation": "Two pointers need only a few integers; any extra space comes from the sort implementation. The result list is excluded from the analysis.",
       "incorrectOptionExplanations": {
-        "O(n) for a hash set": "That is the hash-set alternative, not the two-pointer solution.",
-        "O(n^2) for storing all pairs": "No pair table is ever built.",
-        "O(log n) for recursion": "The algorithm is iterative."
+        "O(n) for a hash set that stores every value for the inner lookup": "That is the hash-set alternative, not the two-pointer solution.",
+        "O(n^2) for a table that stores all pair sums of the array": "No pair table is ever built.",
+        "O(log n) for the recursion stack of a divide-and-conquer sort": "The algorithm is iterative."
       },
       "enabled": true
     },

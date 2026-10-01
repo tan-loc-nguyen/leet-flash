@@ -38,17 +38,17 @@
         "What do you need to compute them?"
       ],
       "options": [
-        "All from the front, all from the back, or front for one and back for the other, using the two indices",
-        "Sort the array first",
-        "Delete the middle",
-        "Use a heap"
+        "All from the front, all from the back, or some from each end",
+        "Sort the array first, then drop the smallest items",
+        "Delete the middle elements, then shift the rest over",
+        "Use a heap to pick the cheapest elements to delete"
       ],
-      "answer": "All from the front, all from the back, or front for one and back for the other, using the two indices",
+      "answer": "All from the front, all from the back, or some from each end",
       "explanation": "Deletions only happen at the ends, so the set of removed elements is a prefix plus a suffix.",
       "incorrectOptionExplanations": {
-        "Sort the array first": "Positions matter, sorting destroys them.",
-        "Delete the middle": "Not allowed.",
-        "Use a heap": "Unnecessary."
+        "Sort the array first, then drop the smallest items": "Positions matter, sorting destroys them.",
+        "Delete the middle elements, then shift the rest over": "Not allowed.",
+        "Use a heap to pick the cheapest elements to delete": "Unnecessary."
       }
     },
     {
@@ -121,13 +121,13 @@
         "How many deletions are needed when min and max are the same element?"
       ],
       "options": [
-        "1 (one deletion removes the only element)",
+        "1",
         "0",
         "2",
         "-1"
       ],
-      "answer": "1 (one deletion removes the only element)",
-      "explanation": "The single element is both the minimum and the maximum, and deleting it takes one operation.",
+      "answer": "1",
+      "explanation": "The single element is both the minimum and the maximum, and deleting it takes one operation. (1: one deletion removes the only element)",
       "incorrectOptionExplanations": {
         "0": "It must still be deleted.",
         "2": "Only one element exists.",

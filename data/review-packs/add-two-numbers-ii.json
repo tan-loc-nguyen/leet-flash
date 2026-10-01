@@ -67,16 +67,16 @@
       ],
       "options": [
         "Use stacks (or recursion) to process digits from the end",
-        "Add from the head directly",
-        "Sort the digits",
-        "Convert to float"
+        "Add directly from the head of both lists, carrying to the next node",
+        "Sort the digits of both lists and add the two sorted sequences",
+        "Convert both lists to floating-point numbers and add them there"
       ],
       "answer": "Use stacks (or recursion) to process digits from the end",
       "explanation": "Stacks reverse the traversal order without changing the lists.",
       "incorrectOptionExplanations": {
-        "Add from the head directly": "The carry flows from the least significant digit.",
-        "Sort the digits": "Order matters.",
-        "Convert to float": "Precision loss."
+        "Add directly from the head of both lists, carrying to the next node": "The carry flows from the least significant digit.",
+        "Sort the digits of both lists and add the two sorted sequences": "Order matters.",
+        "Convert both lists to floating-point numbers and add them there": "Precision loss."
       }
     },
     {

@@ -58,16 +58,16 @@
       ],
       "options": [
         "Sliding window on the number of ones",
-        "Binary search",
-        "Stack",
-        "Union find"
+        "Binary search on the position of each one",
+        "A stack holding the positions of every one seen",
+        "Union find merging neighbouring ones into groups"
       ],
       "answer": "Sliding window on the number of ones",
       "explanation": "Adding a one increases the count; shrinking from the left reduces it.",
       "incorrectOptionExplanations": {
-        "Binary search": "No sorted structure.",
-        "Stack": "No nesting.",
-        "Union find": "No merging."
+        "Binary search on the position of each one": "No sorted structure.",
+        "A stack holding the positions of every one seen": "No nesting.",
+        "Union find merging neighbouring ones into groups": "No merging."
       }
     },
     {

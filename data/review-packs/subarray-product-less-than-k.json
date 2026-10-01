@@ -56,13 +56,13 @@
         "Why does a sliding window apply?"
       ],
       "options": [
-        "Sliding window (all numbers positive => monotone product)",
+        "Sliding window",
         "Binary search on the array",
         "Monotonic stack",
         "Hash map of prefix products"
       ],
-      "answer": "Sliding window (all numbers positive => monotone product)",
-      "explanation": "Positivity makes the product monotone in both window ends.",
+      "answer": "Sliding window",
+      "explanation": "Positivity makes the product monotone in both window ends. (Sliding window: all numbers positive => monotone product)",
       "incorrectOptionExplanations": {
         "Binary search on the array": "Subarray products are not searched in a sorted array.",
         "Monotonic stack": "No nearest-greater relation.",
@@ -140,16 +140,16 @@
       ],
       "options": [
         "0, since no non-empty product is < 1",
-        "n",
-        "The array length squared",
-        "1"
+        "n, since every single-element subarray counts",
+        "The array length squared, counting every pair",
+        "1, for the empty product only"
       ],
       "answer": "0, since no non-empty product is < 1",
       "explanation": "Every product is at least 1, so none is strictly below k <= 1; the window empties and r - l + 1 is 0 each time.",
       "incorrectOptionExplanations": {
-        "n": "Single elements are not < 1.",
-        "The array length squared": "Not applicable.",
-        "1": "Not generally true."
+        "n, since every single-element subarray counts": "Single elements are not < 1.",
+        "The array length squared, counting every pair": "Not applicable.",
+        "1, for the empty product only": "Not generally true."
       }
     }
   ],

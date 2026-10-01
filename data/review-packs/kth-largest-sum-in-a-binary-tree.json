@@ -53,16 +53,16 @@
       ],
       "options": [
         "Compute sums by BFS, then a size-k min-heap (or a sort)",
-        "A max-heap of all nodes",
-        "DFS only",
-        "A stack"
+        "A max-heap holding all of the nodes' values",
+        "DFS only, with a running sum per node",
+        "A stack of the level sums in visit order"
       ],
       "answer": "Compute sums by BFS, then a size-k min-heap (or a sort)",
       "explanation": "The heap root is the k-th largest sum seen.",
       "incorrectOptionExplanations": {
-        "A max-heap of all nodes": "Nodes are not the quantity ranked.",
-        "DFS only": "Level sums are natural with BFS.",
-        "A stack": "No ordering."
+        "A max-heap holding all of the nodes' values": "Nodes are not the quantity ranked.",
+        "DFS only, with a running sum per node": "Level sums are natural with BFS.",
+        "A stack of the level sums in visit order": "No ordering."
       }
     },
     {
@@ -137,16 +137,16 @@
       ],
       "options": [
         "-1, because the heap has fewer than k sums",
-        "0",
-        "The smallest level sum",
-        "An error"
+        "0, because the missing levels sum to zero",
+        "The smallest level sum found in the tree",
+        "An error because k exceeds the tree height"
       ],
       "answer": "-1, because the heap has fewer than k sums",
       "explanation": "Only L < k sums exist, so there is no k-th largest.",
       "incorrectOptionExplanations": {
-        "0": "The problem specifies -1.",
-        "The smallest level sum": "That ignores the requirement.",
-        "An error": "The function returns -1."
+        "0, because the missing levels sum to zero": "The problem specifies -1.",
+        "The smallest level sum found in the tree": "That ignores the requirement.",
+        "An error because k exceeds the tree height": "The function returns -1."
       }
     }
   ],

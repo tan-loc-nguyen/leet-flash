@@ -54,16 +54,16 @@
       ],
       "options": [
         "Subtract an odd element from each even element (even - odd = odd)",
-        "Add 1 to every element",
-        "Multiply by 3",
-        "It cannot be done"
+        "Add 1 to every element, which flips the parity of all of them",
+        "Multiply every element by 3 so that the parity becomes odd",
+        "It cannot be done because the allowed operations preserve parity"
       ],
       "answer": "Subtract an odd element from each even element (even - odd = odd)",
       "explanation": "Odd elements stay as they are; each even element becomes odd after subtracting any odd element.",
       "incorrectOptionExplanations": {
-        "Add 1 to every element": "Only the two allowed operations exist.",
-        "Multiply by 3": "Not allowed.",
-        "It cannot be done": "It always can."
+        "Add 1 to every element, which flips the parity of all of them": "Only the two allowed operations exist.",
+        "Multiply every element by 3 so that the parity becomes odd": "Not allowed.",
+        "It cannot be done because the allowed operations preserve parity": "It always can."
       }
     },
     {
@@ -106,16 +106,16 @@
       ],
       "options": [
         "True: one element always has one parity",
-        "False",
-        "It depends on the value",
-        "An error"
+        "False because a single element has no partner to compare against",
+        "It depends on whether the single value is odd or even",
+        "An error is raised because the subtraction needs a second index"
       ],
       "answer": "True: one element always has one parity",
       "explanation": "A one-element array is uniform without any operation.",
       "incorrectOptionExplanations": {
-        "False": "Uniform trivially holds.",
-        "It depends on the value": "Parity does not matter for a single element.",
-        "An error": "No error."
+        "False because a single element has no partner to compare against": "Uniform trivially holds.",
+        "It depends on whether the single value is odd or even": "Parity does not matter for a single element.",
+        "An error is raised because the subtraction needs a second index": "No error."
       }
     }
   ],

@@ -66,16 +66,16 @@
       ],
       "options": [
         "Increment indices modulo the capacity",
-        "Shift all elements left on dequeue",
-        "Reallocate a bigger array",
-        "Sort the array"
+        "Shift all remaining elements left on every dequeue operation",
+        "Reallocate a bigger array whenever the tail reaches the end",
+        "Sort the array after each enqueue so free slots come first"
       ],
       "answer": "Increment indices modulo the capacity",
       "explanation": "Wrapping with % cap lets head/tail cycle without moving elements.",
       "incorrectOptionExplanations": {
-        "Shift all elements left on dequeue": "That makes dequeue O(n).",
-        "Reallocate a bigger array": "The capacity is fixed.",
-        "Sort the array": "Order is FIFO, not sorted."
+        "Shift all remaining elements left on every dequeue operation": "That makes dequeue O(n).",
+        "Reallocate a bigger array whenever the tail reaches the end": "The capacity is fixed.",
+        "Sort the array after each enqueue so free slots come first": "Order is FIFO, not sorted."
       }
     },
     {
@@ -149,16 +149,16 @@
       ],
       "options": [
         "enQueue returns False without changing state; deQueue on empty returns False",
-        "It overwrites the oldest element",
-        "It raises an exception",
-        "It grows the buffer"
+        "It overwrites the oldest element and returns True for the new value",
+        "It raises an exception that the caller must handle",
+        "It grows the buffer and then stores the new value as usual"
       ],
       "answer": "enQueue returns False without changing state; deQueue on empty returns False",
       "explanation": "The API reports failure via booleans and leaves the queue unchanged.",
       "incorrectOptionExplanations": {
-        "It overwrites the oldest element": "That would be a different (overwriting) ring buffer.",
-        "It raises an exception": "The interface uses return values.",
-        "It grows the buffer": "Capacity is fixed."
+        "It overwrites the oldest element and returns True for the new value": "That would be a different (overwriting) ring buffer.",
+        "It raises an exception that the caller must handle": "The interface uses return values.",
+        "It grows the buffer and then stores the new value as usual": "Capacity is fixed."
       }
     }
   ],

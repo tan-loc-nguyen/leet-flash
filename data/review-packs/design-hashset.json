@@ -65,16 +65,16 @@
       ],
       "options": [
         "Chaining (a list per bucket) or open addressing",
-        "Ignore collisions",
-        "Sort the table",
-        "Use recursion"
+        "Ignore collisions, since two keys can never share the same slot",
+        "Sort the whole table after each insertion to separate colliding keys",
+        "Use recursion to rehash the colliding key until it finds a free slot"
       ],
       "answer": "Chaining (a list per bucket) or open addressing",
       "explanation": "Distinct keys can share hash % size, so each bucket must store multiple keys or probe for another slot.",
       "incorrectOptionExplanations": {
-        "Ignore collisions": "That would lose or confuse keys.",
-        "Sort the table": "Not a collision strategy.",
-        "Use recursion": "Not relevant."
+        "Ignore collisions, since two keys can never share the same slot": "That would lose or confuse keys.",
+        "Sort the whole table after each insertion to separate colliding keys": "Not a collision strategy.",
+        "Use recursion to rehash the colliding key until it finds a free slot": "Not relevant."
       }
     },
     {

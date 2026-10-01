@@ -71,16 +71,16 @@
       ],
       "options": [
         "Indices of unmatched characters, with -1 as the initial base",
-        "The characters themselves",
-        "Counts of '('",
-        "Lengths of valid substrings"
+        "The characters themselves, popped on a match",
+        "Counts of '(' seen so far in the string",
+        "Lengths of the valid substrings found so far"
       ],
       "answer": "Indices of unmatched characters, with -1 as the initial base",
       "explanation": "The index below the top marks where the current valid run begins; -1 handles a valid prefix starting at index 0.",
       "incorrectOptionExplanations": {
-        "The characters themselves": "Lengths need positions.",
-        "Counts of '('": "Counts lose positions.",
-        "Lengths of valid substrings": "That is the DP approach."
+        "The characters themselves, popped on a match": "Lengths need positions.",
+        "Counts of '(' seen so far in the string": "Counts lose positions.",
+        "Lengths of the valid substrings found so far": "That is the DP approach."
       }
     },
     {
@@ -154,12 +154,12 @@
         "Which substring is the longest valid?"
       ],
       "options": [
-        "4 ('()()')",
+        "4",
         "2",
         "6",
         "0"
       ],
-      "answer": "4 ('()()')",
+      "answer": "4",
       "explanation": "The first ')' is unmatched, the next four characters form '()()', and the last ')' is unmatched.",
       "incorrectOptionExplanations": {
         "2": "Two adjacent pairs give 4.",

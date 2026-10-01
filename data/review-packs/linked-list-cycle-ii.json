@@ -55,16 +55,16 @@
       ],
       "options": [
         "Reset one pointer to the head and move both one step at a time",
-        "Move both pointers two steps",
-        "Reverse the list",
-        "Count the cycle length only"
+        "Move both pointers two steps per iteration until they meet",
+        "Reverse the list and compare both halves for equal values",
+        "Count the cycle length only, then stop without a second pass"
       ],
       "answer": "Reset one pointer to the head and move both one step at a time",
       "explanation": "Their meeting point is exactly the cycle entrance.",
       "incorrectOptionExplanations": {
-        "Move both pointers two steps": "That would not align them at the entrance.",
-        "Reverse the list": "Not needed.",
-        "Count the cycle length only": "Length alone does not give the entrance without a second pass (another valid but different method)."
+        "Move both pointers two steps per iteration until they meet": "That would not align them at the entrance.",
+        "Reverse the list and compare both halves for equal values": "Not needed.",
+        "Count the cycle length only, then stop without a second pass": "Length alone does not give the entrance without a second pass (another valid but different method)."
       }
     },
     {
@@ -137,12 +137,12 @@
         "Where do the pointers meet in phase 2?"
       ],
       "options": [
-        "Immediately at the head (a = 0)",
+        "Immediately at the head",
         "At the last node",
         "Never",
         "At the middle"
       ],
-      "answer": "Immediately at the head (a = 0)",
+      "answer": "Immediately at the head",
       "explanation": "With a = 0 the meeting point after phase 1 equals the head, so the second loop returns at once.",
       "incorrectOptionExplanations": {
         "At the last node": "The entrance is the head here.",

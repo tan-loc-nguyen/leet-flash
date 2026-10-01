@@ -77,16 +77,16 @@
       ],
       "options": [
         "Store the running minimum alongside each element",
-        "Keep the stack sorted",
-        "Use a heap for all elements",
-        "Scan on each getMin"
+        "Keep the whole stack sorted after every single push",
+        "Use a heap for all elements instead of a stack",
+        "Scan every element on each getMin call to find it"
       ],
       "answer": "Store the running minimum alongside each element",
       "explanation": "Each state of the stack has a fixed minimum, so recording it per position gives O(1) retrieval after any pop.",
       "incorrectOptionExplanations": {
-        "Keep the stack sorted": "Would destroy LIFO order.",
-        "Use a heap for all elements": "Heap operations are O(log n) and removal of arbitrary elements is awkward.",
-        "Scan on each getMin": "That is O(n)."
+        "Keep the whole stack sorted after every single push": "Would destroy LIFO order.",
+        "Use a heap for all elements instead of a stack": "Heap operations are O(log n) and removal of arbitrary elements is awkward.",
+        "Scan every element on each getMin call to find it": "That is O(n)."
       }
     },
     {

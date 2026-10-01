@@ -68,15 +68,15 @@
       "options": [
         "Floyd's: slow moves 1 step, fast moves 2 steps",
         "Both pointers move one step per iteration",
-        "Binary search",
-        "Recursion"
+        "Binary search on the node positions",
+        "Recursion with a visited set of nodes"
       ],
       "answer": "Floyd's: slow moves 1 step, fast moves 2 steps",
       "explanation": "The fast pointer gains one node per iteration, so inside a cycle the gap closes by exactly 1 and they must meet.",
       "incorrectOptionExplanations": {
         "Both pointers move one step per iteration": "They never get closer or farther apart, so they reveal nothing about a cycle.",
-        "Binary search": "No sorted structure or random access.",
-        "Recursion": "Uses O(n) stack."
+        "Binary search on the node positions": "No sorted structure or random access.",
+        "Recursion with a visited set of nodes": "Uses O(n) stack."
       }
     },
     {
@@ -150,16 +150,16 @@
       ],
       "options": [
         "False; the loop exits immediately because fast.next is None",
-        "True",
-        "An error",
-        "None"
+        "True; the loop never exits for short lists",
+        "An error, since the list has no cycle at all",
+        "None; the function never reaches a return"
       ],
       "answer": "False; the loop exits immediately because fast.next is None",
       "explanation": "The condition `fast and fast.next` stops at the end of a non-cyclic list.",
       "incorrectOptionExplanations": {
-        "True": "There is no cycle.",
-        "An error": "No invalid access occurs.",
-        "None": "The function returns a boolean."
+        "True; the loop never exits for short lists": "There is no cycle.",
+        "An error, since the list has no cycle at all": "No invalid access occurs.",
+        "None; the function never reaches a return": "The function returns a boolean."
       }
     }
   ],

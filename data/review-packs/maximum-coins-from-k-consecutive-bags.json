@@ -62,16 +62,16 @@
       ],
       "options": [
         "Windows that start at a segment's left end or end at a segment's right end",
-        "Every integer start position",
-        "Only windows centred on the largest segment",
-        "Windows starting at index 0"
+        "Every integer start position between the first and last segment",
+        "Only windows centred on the largest segment in the array",
+        "Windows starting at index 0 and ending at the last cell"
       ],
       "answer": "Windows that start at a segment's left end or end at a segment's right end",
       "explanation": "If neither end is aligned with a segment boundary, sliding the window one step either way changes the total linearly, so one direction is never worse until an end aligns.",
       "incorrectOptionExplanations": {
-        "Every integer start position": "Far too many (up to 10^9 positions).",
-        "Only windows centred on the largest segment": "Not necessarily optimal.",
-        "Windows starting at index 0": "Ignores where the coins are."
+        "Every integer start position between the first and last segment": "Far too many (up to 10^9 positions).",
+        "Only windows centred on the largest segment in the array": "Not necessarily optimal.",
+        "Windows starting at index 0 and ending at the last cell": "Ignores where the coins are."
       }
     },
     {
@@ -148,16 +148,16 @@
       ],
       "options": [
         "The optimum may start at a left boundary or end at a right boundary",
-        "The array may not be sorted",
-        "To handle overlapping segments",
-        "To avoid integer overflow"
+        "The array may not be sorted, so both orders are required",
+        "To handle overlapping segments by merging them first",
+        "To avoid integer overflow in the running window total"
       ],
       "answer": "The optimum may start at a left boundary or end at a right boundary",
       "explanation": "A window ending at a right boundary is not necessarily starting at any left boundary, so both orientations must be tried.",
       "incorrectOptionExplanations": {
-        "The array may not be sorted": "Sorting is done up front.",
-        "To handle overlapping segments": "Segments are guaranteed non-overlapping.",
-        "To avoid integer overflow": "Python ints do not overflow."
+        "The array may not be sorted, so both orders are required": "Sorting is done up front.",
+        "To handle overlapping segments by merging them first": "Segments are guaranteed non-overlapping.",
+        "To avoid integer overflow in the running window total": "Python ints do not overflow."
       }
     }
   ],

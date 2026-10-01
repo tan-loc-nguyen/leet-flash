@@ -45,16 +45,16 @@
       ],
       "options": [
         "total ^ x = XOR of the rest, so removing a non-zero x leaves x (non-zero)",
-        "XOR is not associative",
-        "XOR of equal numbers is non-zero",
-        "XOR ignores order only for sorted arrays"
+        "XOR is not associative, so the order of the operands matters",
+        "XOR of equal numbers is non-zero, so pairs never cancel out",
+        "XOR ignores operand order only for sorted arrays of numbers"
       ],
       "answer": "total ^ x = XOR of the rest, so removing a non-zero x leaves x (non-zero)",
       "explanation": "If the total XOR is 0, the XOR of the other elements equals the removed element.",
       "incorrectOptionExplanations": {
-        "XOR is not associative": "It is associative and commutative.",
-        "XOR of equal numbers is non-zero": "x ^ x = 0.",
-        "XOR ignores order only for sorted arrays": "XOR ignores order always."
+        "XOR is not associative, so the order of the operands matters": "It is associative and commutative.",
+        "XOR of equal numbers is non-zero, so pairs never cancel out": "x ^ x = 0.",
+        "XOR ignores operand order only for sorted arrays of numbers": "XOR ignores order always."
       }
     },
     {

@@ -150,17 +150,17 @@
         "What assumption does Boyer-Moore rely on?"
       ],
       "options": [
-        "When no element has a count > n/2 (a second verification pass is then needed)",
-        "When the array contains negatives",
-        "When n is odd",
-        "When values repeat"
+        "When no element has a count > n/2 (needs a verification pass)",
+        "When the array contains negative numbers or zeros mixed in",
+        "When n is odd, so that no tie between counts is possible",
+        "When some values in the array are repeated many times"
       ],
-      "answer": "When no element has a count > n/2 (a second verification pass is then needed)",
+      "answer": "When no element has a count > n/2 (needs a verification pass)",
       "explanation": "The algorithm only returns the right answer if a majority exists; otherwise verify the candidate with a counting pass.",
       "incorrectOptionExplanations": {
-        "When the array contains negatives": "Values are compared only for equality.",
-        "When n is odd": "Parity is irrelevant.",
-        "When values repeat": "Repeats are the point."
+        "When the array contains negative numbers or zeros mixed in": "Values are compared only for equality.",
+        "When n is odd, so that no tie between counts is possible": "Parity is irrelevant.",
+        "When some values in the array are repeated many times": "Repeats are the point."
       }
     },
     {

@@ -58,16 +58,16 @@
       ],
       "options": [
         "Queue (deque) of timestamps",
-        "Heap",
-        "Stack",
-        "Hash set"
+        "Heap of timestamps ordered by value",
+        "Stack of timestamps popped newest-first",
+        "Hash set of timestamps with no order"
       ],
       "answer": "Queue (deque) of timestamps",
       "explanation": "Oldest timestamps leave from the front, newest enter at the back.",
       "incorrectOptionExplanations": {
-        "Heap": "Not needed since arrival order equals time order.",
-        "Stack": "LIFO would remove the newest.",
-        "Hash set": "Loses ordering."
+        "Heap of timestamps ordered by value": "Not needed since arrival order equals time order.",
+        "Stack of timestamps popped newest-first": "LIFO would remove the newest.",
+        "Hash set of timestamps with no order": "Loses ordering."
       }
     },
     {

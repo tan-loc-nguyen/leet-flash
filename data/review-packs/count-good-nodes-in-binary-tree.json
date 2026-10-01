@@ -49,16 +49,16 @@
       ],
       "options": [
         "The maximum value on the path from the root",
-        "The depth of the node",
-        "The sum of the path",
-        "The number of children"
+        "The depth of the node from the root of the tree",
+        "The sum of all values on the path from the root",
+        "The number of children each node on the path has"
       ],
       "answer": "The maximum value on the path from the root",
       "explanation": "A node is good iff no ancestor is larger, i.e. node.val >= path maximum.",
       "incorrectOptionExplanations": {
-        "The depth of the node": "Depth is irrelevant.",
-        "The sum of the path": "The sum does not decide goodness.",
-        "The number of children": "Irrelevant."
+        "The depth of the node from the root of the tree": "Depth is irrelevant.",
+        "The sum of all values on the path from the root": "The sum does not decide goodness.",
+        "The number of children each node on the path has": "Irrelevant."
       }
     },
     {
@@ -131,13 +131,13 @@
         "Which nodes are good?"
       ],
       "options": [
-        "2 (3 and 4)",
+        "2",
         "3",
         "1",
         "4"
       ],
-      "answer": "2 (3 and 4)",
-      "explanation": "3 (root) and 4 are not smaller than their ancestors; 1 and the last 3 (< 4) are not good.",
+      "answer": "2",
+      "explanation": "3 (root) and 4 are not smaller than their ancestors; 1 and the last 3 (< 4) are not good. (2: 3 and 4)",
       "incorrectOptionExplanations": {
         "3": "The last 3 has ancestor 4 > 3.",
         "1": "Both 3 and 4 qualify.",

@@ -150,16 +150,16 @@
       ],
       "options": [
         "Nothing (no layers); one layer plus a fixed centre",
-        "It swaps the element with itself",
-        "It raises an error",
-        "Two layers"
+        "It swaps the element with itself in a four-way rotation",
+        "It raises an error since there is no second row or column",
+        "Two layers, an outer ring and an inner ring"
       ],
       "answer": "Nothing (no layers); one layer plus a fixed centre",
       "explanation": "n // 2 = 0 layers for 1x1 and 1 layer for 3x3 (the centre stays).",
       "incorrectOptionExplanations": {
-        "It swaps the element with itself": "The loop never runs.",
-        "It raises an error": "No indexing occurs.",
-        "Two layers": "n // 2 = 1."
+        "It swaps the element with itself in a four-way rotation": "The loop never runs.",
+        "It raises an error since there is no second row or column": "No indexing occurs.",
+        "Two layers, an outer ring and an inner ring": "n // 2 = 1."
       }
     }
   ],

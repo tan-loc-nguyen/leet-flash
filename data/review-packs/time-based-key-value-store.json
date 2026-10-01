@@ -49,16 +49,16 @@
       ],
       "options": [
         "Binary search over the key's timestamps",
-        "Hash lookup by timestamp",
-        "Heap",
-        "Linear scan from the start"
+        "Hash lookup by the exact timestamp requested",
+        "A heap of the key's timestamps, popped in order",
+        "Linear scan from the start of the stored values"
       ],
       "answer": "Binary search over the key's timestamps",
       "explanation": "Timestamps are increasing, so the last timestamp <= t is found by bisection.",
       "incorrectOptionExplanations": {
-        "Hash lookup by timestamp": "Only exact matches; we need the nearest earlier one.",
-        "Heap": "Not needed since sets arrive in order.",
-        "Linear scan from the start": "O(n)."
+        "Hash lookup by the exact timestamp requested": "Only exact matches; we need the nearest earlier one.",
+        "A heap of the key's timestamps, popped in order": "Not needed since sets arrive in order.",
+        "Linear scan from the start of the stored values": "O(n)."
       }
     },
     {

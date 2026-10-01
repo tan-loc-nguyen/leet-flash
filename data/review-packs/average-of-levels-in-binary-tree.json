@@ -49,16 +49,16 @@
       ],
       "options": [
         "BFS with a level snapshot (sum and count)",
-        "Inorder DFS",
-        "Heap",
-        "Binary search"
+        "Inorder DFS that appends each visited value to a per-depth list",
+        "Heap that keeps the largest values of each level on top",
+        "Binary search over the levels to find where each one ends"
       ],
       "answer": "BFS with a level snapshot (sum and count)",
       "explanation": "n = len(queue) is the level size and the sum is accumulated while popping them.",
       "incorrectOptionExplanations": {
-        "Inorder DFS": "Level boundaries are lost.",
-        "Heap": "Not needed.",
-        "Binary search": "Not a search."
+        "Inorder DFS that appends each visited value to a per-depth list": "Level boundaries are lost.",
+        "Heap that keeps the largest values of each level on top": "Not needed.",
+        "Binary search over the levels to find where each one ends": "Not a search."
       }
     },
     {

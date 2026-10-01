@@ -135,13 +135,13 @@
         "How does a k larger than the string behave?"
       ],
       "options": [
-        "'dcba' (the whole string is reversed)",
+        "'dcba'",
         "'abcd'",
         "'bcda'",
         "An error"
       ],
-      "answer": "'dcba' (the whole string is reversed)",
-      "explanation": "Fewer than k characters remain, so the entire (only) block is reversed.",
+      "answer": "'dcba'",
+      "explanation": "Fewer than k characters remain, so the entire (only) block is reversed. ('dcba': the whole string is reversed)",
       "incorrectOptionExplanations": {
         "'abcd'": "Nothing would be reversed.",
         "'bcda'": "That is a rotation.",

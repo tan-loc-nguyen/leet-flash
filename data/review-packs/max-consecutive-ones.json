@@ -51,16 +51,16 @@
       ],
       "options": [
         "One pass with a running counter that resets on 0",
-        "Binary search",
-        "Sorting",
-        "Hash map"
+        "Binary search on the run length required",
+        "Sorting the array and counting equal blocks",
+        "A hash map from each index to its run length"
       ],
       "answer": "One pass with a running counter that resets on 0",
       "explanation": "Runs are contiguous, so a streak counter is enough.",
       "incorrectOptionExplanations": {
-        "Binary search": "Not sorted.",
-        "Sorting": "Destroys contiguity.",
-        "Hash map": "No lookups needed."
+        "Binary search on the run length required": "Not sorted.",
+        "Sorting the array and counting equal blocks": "Destroys contiguity.",
+        "A hash map from each index to its run length": "No lookups needed."
       }
     },
     {
@@ -117,16 +117,16 @@
       ],
       "options": [
         "[1,1,1] - a run that ends at the array's end",
-        "[0,0,0]",
-        "[]",
-        "[0,1,0]"
+        "[0,0,0] - a run of zeros with no ones",
+        "[] - an empty array with no runs at all",
+        "[0,1,0] - a run followed by a trailing zero"
       ],
       "answer": "[1,1,1] - a run that ends at the array's end",
       "explanation": "No trailing zero ever triggers the update, so the run would be missed.",
       "incorrectOptionExplanations": {
-        "[0,0,0]": "Answer 0 either way.",
-        "[]": "Not allowed / trivial.",
-        "[0,1,0]": "A zero follows the run, so it would be caught."
+        "[0,0,0] - a run of zeros with no ones": "Answer 0 either way.",
+        "[] - an empty array with no runs at all": "Not allowed / trivial.",
+        "[0,1,0] - a run followed by a trailing zero": "A zero follows the run, so it would be caught."
       }
     }
   ],

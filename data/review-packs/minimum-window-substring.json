@@ -62,16 +62,16 @@
       ],
       "options": [
         "Variable-size sliding window with counters",
-        "Binary search on the answer length",
-        "Dynamic programming",
-        "Trie"
+        "Binary search on the answer length with a check",
+        "Dynamic programming over every substring of s",
+        "A trie of every substring of s, queried for t"
       ],
       "answer": "Variable-size sliding window with counters",
       "explanation": "Expand to reach validity, shrink to minimise: both pointers only move forward.",
       "incorrectOptionExplanations": {
-        "Binary search on the answer length": "Feasibility is monotone so it works, but it costs O(n log n).",
-        "Dynamic programming": "No overlapping-subproblem structure.",
-        "Trie": "Not about prefixes."
+        "Binary search on the answer length with a check": "Feasibility is monotone so it works, but it costs O(n log n).",
+        "Dynamic programming over every substring of s": "No overlapping-subproblem structure.",
+        "A trie of every substring of s, queried for t": "Not about prefixes."
       }
     },
     {
@@ -163,17 +163,17 @@
         "Which inputs expose duplicate-handling mistakes?"
       ],
       "options": [
-        "The empty string; and t with repeated letters needs counts, not just presence",
-        "None",
-        "The whole string",
-        "-1"
+        "The empty string; repeated letters in t need counts, not presence",
+        "None, since the function must always return a string",
+        "The whole string s, as the largest possible window",
+        "-1, the usual sentinel for a failed search result"
       ],
-      "answer": "The empty string; and t with repeated letters needs counts, not just presence",
+      "answer": "The empty string; repeated letters in t need counts, not presence",
       "explanation": "e.g. s = 'a', t = 'aa' has no valid window; checking only 'is the character present' would wrongly accept it.",
       "incorrectOptionExplanations": {
-        "None": "The function returns a string.",
-        "The whole string": "Only if it actually covers t.",
-        "-1": "Not an integer result."
+        "None, since the function must always return a string": "The function returns a string.",
+        "The whole string s, as the largest possible window": "Only if it actually covers t.",
+        "-1, the usual sentinel for a failed search result": "Not an integer result."
       }
     }
   ],

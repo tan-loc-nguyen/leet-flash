@@ -51,13 +51,13 @@
         "What do you track while scanning?"
       ],
       "options": [
-        "The two largest digits (including duplicates)",
+        "The two largest digits",
         "The largest and smallest",
         "The first two digits",
         "The last two digits"
       ],
-      "answer": "The two largest digits (including duplicates)",
-      "explanation": "All digits are non-negative so a larger factor never decreases the product.",
+      "answer": "The two largest digits",
+      "explanation": "All digits are non-negative so a larger factor never decreases the product. (The two largest digits: including duplicates)",
       "incorrectOptionExplanations": {
         "The largest and smallest": "The smallest digit minimises the product.",
         "The first two digits": "Order is irrelevant.",

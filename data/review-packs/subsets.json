@@ -60,13 +60,13 @@
         "What does each recursive call record?"
       ],
       "options": [
-        "2^n; the current path (every node is a subset)",
+        "2^n; the current path",
         "n!; only leaves",
         "n^2; the pairs",
         "C(n, k) only"
       ],
-      "answer": "2^n; the current path (every node is a subset)",
-      "explanation": "Unlike permutations/combinations, the answer includes partial paths too.",
+      "answer": "2^n; the current path",
+      "explanation": "Unlike permutations/combinations, the answer includes partial paths too. (2^n; the current path: every node is a subset)",
       "incorrectOptionExplanations": {
         "n!; only leaves": "That is permutations.",
         "n^2; the pairs": "Wrong count.",

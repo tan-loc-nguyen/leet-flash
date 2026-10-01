@@ -55,16 +55,16 @@
       ],
       "options": [
         "Sentinel nodes remove special cases for empty lists and ends",
-        "They make indexing O(1)",
-        "They sort the list",
-        "They save memory"
+        "They make indexing O(1) because positions are stored in the sentinels",
+        "They sort the list so insertion points are always found quickly",
+        "They save memory because the real nodes need no next pointers"
       ],
       "answer": "Sentinel nodes remove special cases for empty lists and ends",
       "explanation": "Every real node always has a prev and next, so the same pointer-update code works everywhere.",
       "incorrectOptionExplanations": {
-        "They make indexing O(1)": "Indexing still requires traversal.",
-        "They sort the list": "Unrelated.",
-        "They save memory": "They use two extra nodes."
+        "They make indexing O(1) because positions are stored in the sentinels": "Indexing still requires traversal.",
+        "They sort the list so insertion points are always found quickly": "Unrelated.",
+        "They save memory because the real nodes need no next pointers": "They use two extra nodes."
       }
     },
     {
@@ -139,16 +139,16 @@
       ],
       "options": [
         "index == size appends; index > size does nothing",
-        "Both append",
-        "Both raise errors",
-        "index == size does nothing"
+        "Both append to the end, regardless of how large the index is",
+        "Both raise errors because the index must be strictly below the size",
+        "index == size does nothing; index > size appends at the end"
       ],
       "answer": "index == size appends; index > size does nothing",
       "explanation": "The specification allows insertion at the end but ignores larger indices.",
       "incorrectOptionExplanations": {
-        "Both append": "Indices beyond size are invalid and ignored.",
-        "Both raise errors": "The API uses silent no-ops/-1.",
-        "index == size does nothing": "Appending at size is valid."
+        "Both append to the end, regardless of how large the index is": "Indices beyond size are invalid and ignored.",
+        "Both raise errors because the index must be strictly below the size": "The API uses silent no-ops/-1.",
+        "index == size does nothing; index > size appends at the end": "Appending at size is valid."
       }
     }
   ],

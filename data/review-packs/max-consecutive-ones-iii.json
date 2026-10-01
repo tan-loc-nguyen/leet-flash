@@ -128,16 +128,16 @@
       ],
       "options": [
         "The longest run of consecutive 1s",
-        "0",
-        "The array length",
-        "k"
+        "0, because no flips means no ones can count",
+        "The array length, since every position counts",
+        "k, the number of flips allowed in total"
       ],
       "answer": "The longest run of consecutive 1s",
       "explanation": "No flips are allowed, so the window can contain no zeros.",
       "incorrectOptionExplanations": {
-        "0": "Only if there are no 1s.",
-        "The array length": "Only if there are no zeros.",
-        "k": "Unrelated to the run length."
+        "0, because no flips means no ones can count": "Only if there are no 1s.",
+        "The array length, since every position counts": "Only if there are no zeros.",
+        "k, the number of flips allowed in total": "Unrelated to the run length."
       }
     }
   ],

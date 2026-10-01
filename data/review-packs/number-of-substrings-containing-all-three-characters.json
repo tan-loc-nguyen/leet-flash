@@ -55,16 +55,16 @@
       ],
       "options": [
         "Sliding window counting extensions to the right",
-        "Dynamic programming over all substrings",
-        "Trie",
-        "Binary search on the substring length"
+        "Dynamic programming over every start/end substring pair",
+        "A trie of all the substrings of the string",
+        "Binary search on the substring length with a check"
       ],
       "answer": "Sliding window counting extensions to the right",
       "explanation": "Each minimal valid left boundary contributes n - r substrings.",
       "incorrectOptionExplanations": {
-        "Dynamic programming over all substrings": "O(n^2) states.",
-        "Trie": "Not about prefixes.",
-        "Binary search on the substring length": "Counting needs every valid substring, not just a length."
+        "Dynamic programming over every start/end substring pair": "O(n^2) states.",
+        "A trie of all the substrings of the string": "Not about prefixes.",
+        "Binary search on the substring length with a check": "Counting needs every valid substring, not just a length."
       }
     },
     {

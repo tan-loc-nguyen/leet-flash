@@ -144,16 +144,16 @@
       ],
       "options": [
         "The problem asks for 1-based indices, so add 1 to each",
-        "Indices must be sorted descending",
-        "Duplicates must be removed",
-        "The pair must be adjacent"
+        "Indices must be sorted in descending order here",
+        "Duplicates must be removed from the result pair",
+        "The pair must be adjacent in the input array"
       ],
       "answer": "The problem asks for 1-based indices, so add 1 to each",
       "explanation": "Returning [l, r] is a classic off-by-one.",
       "incorrectOptionExplanations": {
-        "Indices must be sorted descending": "Ascending order l < r already holds.",
-        "Duplicates must be removed": "Duplicate values are fine.",
-        "The pair must be adjacent": "Any two indices may be used."
+        "Indices must be sorted in descending order here": "Ascending order l < r already holds.",
+        "Duplicates must be removed from the result pair": "Duplicate values are fine.",
+        "The pair must be adjacent in the input array": "Any two indices may be used."
       }
     }
   ],

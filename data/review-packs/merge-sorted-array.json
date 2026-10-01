@@ -139,16 +139,16 @@
       ],
       "options": [
         "nums2 is copied wholesale into nums1; i is -1 immediately",
-        "Nothing to do",
-        "It raises IndexError",
-        "nums1 is cleared"
+        "Nothing to do, since nums1 already holds the result",
+        "It raises IndexError when i is negative at the start",
+        "nums1 is cleared before nums2 is written into it"
       ],
       "answer": "nums2 is copied wholesale into nums1; i is -1 immediately",
       "explanation": "With m = 0 the guard `i >= 0` fails so every iteration takes the nums2 branch.",
       "incorrectOptionExplanations": {
-        "Nothing to do": "nums2 values must still be written.",
-        "It raises IndexError": "The guard prevents indexing nums1[-1].",
-        "nums1 is cleared": "It is filled."
+        "Nothing to do, since nums1 already holds the result": "nums2 values must still be written.",
+        "It raises IndexError when i is negative at the start": "The guard prevents indexing nums1[-1].",
+        "nums1 is cleared before nums2 is written into it": "It is filled."
       }
     }
   ],

@@ -51,16 +51,16 @@
       ],
       "options": [
         "One level per digit, branching over that digit's letters (backtracking)",
-        "A single level with all letters",
-        "Binary choice include/exclude",
-        "Dynamic programming over prefixes"
+        "A single level that holds all letters of all digits at once",
+        "A binary include/exclude choice per digit, giving 2^n leaves",
+        "Dynamic programming over digit prefixes with memoised results"
       ],
       "answer": "One level per digit, branching over that digit's letters (backtracking)",
       "explanation": "Every complete path picks exactly one letter for each digit.",
       "incorrectOptionExplanations": {
-        "A single level with all letters": "That would mix letters of different digits.",
-        "Binary choice include/exclude": "That is the subsets pattern.",
-        "Dynamic programming over prefixes": "There are no overlapping subproblems."
+        "A single level that holds all letters of all digits at once": "That would mix letters of different digits.",
+        "A binary include/exclude choice per digit, giving 2^n leaves": "That is the subsets pattern.",
+        "Dynamic programming over digit prefixes with memoised results": "There are no overlapping subproblems."
       }
     },
     {
@@ -137,16 +137,16 @@
       ],
       "options": [
         "[] (the problem asks for no combinations for empty input)",
-        "[\"\"]",
-        "None",
-        "An error"
+        "[\"\"] (a list holding one empty combination)",
+        "None (the function has nothing to return)",
+        "An error (the empty input is invalid)"
       ],
       "answer": "[] (the problem asks for no combinations for empty input)",
       "explanation": "Special-case the empty string; otherwise the base case would immediately append the empty string.",
       "incorrectOptionExplanations": {
-        "[\"\"]": "That would be one empty combination.",
-        "None": "Return a list.",
-        "An error": "No exception is needed."
+        "[\"\"] (a list holding one empty combination)": "That would be one empty combination.",
+        "None (the function has nothing to return)": "Return a list.",
+        "An error (the empty input is invalid)": "No exception is needed."
       }
     }
   ],

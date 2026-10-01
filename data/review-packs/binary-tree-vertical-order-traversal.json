@@ -56,16 +56,16 @@
       ],
       "options": [
         "BFS carrying each node's column index",
-        "Inorder DFS",
-        "Postorder DFS",
-        "A heap of values"
+        "Inorder DFS, which already lists the nodes of each column in order",
+        "Postorder DFS, since children are always output before parents",
+        "A heap of values that always pops the smallest value first"
       ],
       "answer": "BFS carrying each node's column index",
       "explanation": "BFS visits by increasing depth, so values land in each column in top-to-bottom order.",
       "incorrectOptionExplanations": {
-        "Inorder DFS": "Depth order is not preserved.",
-        "Postorder DFS": "Depth order is not preserved.",
-        "A heap of values": "Values are not what orders the output."
+        "Inorder DFS, which already lists the nodes of each column in order": "Depth order is not preserved.",
+        "Postorder DFS, since children are always output before parents": "Depth order is not preserved.",
+        "A heap of values that always pops the smallest value first": "Values are not what orders the output."
       }
     },
     {

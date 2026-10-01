@@ -47,16 +47,16 @@
       ],
       "options": [
         "Postorder DP: ignore negative gains (clamp to 0) and record the bent path globally",
-        "Add all values",
-        "Sort the values",
-        "BFS level sums"
+        "Add all node values on the longest root-to-leaf path and return that sum",
+        "Sort every node value and add the largest few that form a valid path",
+        "BFS over levels, choosing the largest level sum as the path sum"
       ],
       "answer": "Postorder DP: ignore negative gains (clamp to 0) and record the bent path globally",
       "explanation": "A negative branch only reduces the sum, so the path should not extend into it.",
       "incorrectOptionExplanations": {
-        "Add all values": "Negative nodes would reduce the sum.",
-        "Sort the values": "A path must follow tree edges.",
-        "BFS level sums": "Level sums are unrelated to paths."
+        "Add all node values on the longest root-to-leaf path and return that sum": "Negative nodes would reduce the sum.",
+        "Sort every node value and add the largest few that form a valid path": "A path must follow tree edges.",
+        "BFS over levels, choosing the largest level sum as the path sum": "Level sums are unrelated to paths."
       }
     },
     {
@@ -129,13 +129,13 @@
         "What about [-10,9,20,null,null,15,7]?"
       ],
       "options": [
-        "-3, and 42 (15 + 20 + 7)",
+        "-3, and 42",
         "0 and 42",
         "-3 and 25",
         "0 and 29"
       ],
-      "answer": "-3, and 42 (15 + 20 + 7)",
-      "explanation": "A one-node path must be taken for the single node; the second tree's best path 15 -> 20 -> 7 sums to 42.",
+      "answer": "-3, and 42",
+      "explanation": "A one-node path must be taken for the single node; the second tree's best path 15 -> 20 -> 7 sums to 42. (-3, and 42: 15 + 20 + 7)",
       "incorrectOptionExplanations": {
         "0 and 42": "The empty path is not allowed.",
         "-3 and 25": "25 omits the left child 7 or 15.",

@@ -46,16 +46,16 @@
       ],
       "options": [
         "Sliding window with a frequency map",
-        "Sorting + binary search",
-        "Monotonic stack",
-        "Prefix sums"
+        "Sorting + binary search over the sorted array",
+        "Monotonic stack of the element counts so far",
+        "Prefix sums over the element counts directly"
       ],
       "answer": "Sliding window with a frequency map",
       "explanation": "Counts only change by one element per step, so validity is easy to maintain.",
       "incorrectOptionExplanations": {
-        "Sorting + binary search": "Destroys the contiguity of subarrays.",
-        "Monotonic stack": "No nearest-greater structure.",
-        "Prefix sums": "Sums are not the constraint."
+        "Sorting + binary search over the sorted array": "Destroys the contiguity of subarrays.",
+        "Monotonic stack of the element counts so far": "No nearest-greater structure.",
+        "Prefix sums over the element counts directly": "Sums are not the constraint."
       }
     },
     {

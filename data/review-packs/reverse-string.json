@@ -51,16 +51,16 @@
       ],
       "options": [
         "Two pointers moving inward",
-        "Sliding window",
-        "Binary search",
-        "Stack"
+        "Sliding window over the array from the left",
+        "Binary search for the swap positions in the array",
+        "A stack that pops the elements back in reverse"
       ],
       "answer": "Two pointers moving inward",
       "explanation": "Mirrored indices are swapped until the pointers meet.",
       "incorrectOptionExplanations": {
-        "Sliding window": "No window.",
-        "Binary search": "No search.",
-        "Stack": "Would require O(n) extra space."
+        "Sliding window over the array from the left": "No window.",
+        "Binary search for the swap positions in the array": "No search.",
+        "A stack that pops the elements back in reverse": "Would require O(n) extra space."
       }
     },
     {
@@ -118,16 +118,16 @@
       ],
       "options": [
         "No real swap; the middle element stays",
-        "It raises an error",
-        "It deletes the character",
-        "It needs special casing"
+        "It raises an error since there is no pair to swap",
+        "It deletes the character from the array entirely",
+        "It needs special casing before the loop starts"
       ],
       "answer": "No real swap; the middle element stays",
       "explanation": "The pointers coincide immediately, so at most a self-swap occurs.",
       "incorrectOptionExplanations": {
-        "It raises an error": "No out-of-range index.",
-        "It deletes the character": "Nothing is removed.",
-        "It needs special casing": "The loop handles it."
+        "It raises an error since there is no pair to swap": "No out-of-range index.",
+        "It deletes the character from the array entirely": "Nothing is removed.",
+        "It needs special casing before the loop starts": "The loop handles it."
       }
     }
   ],

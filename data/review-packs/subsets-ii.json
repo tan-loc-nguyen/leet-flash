@@ -65,16 +65,16 @@
       ],
       "options": [
         "Taking nums[i] equal to nums[i-1] without taking nums[i-1]",
-        "Taking any element twice",
-        "Taking the largest element",
-        "Taking an empty subset"
+        "Taking any element twice in the same subset",
+        "Taking the largest element before all the others",
+        "Taking an empty subset at every recursion level"
       ],
       "answer": "Taking nums[i] equal to nums[i-1] without taking nums[i-1]",
       "explanation": "The copies are interchangeable, so one canonical choice is to take them from the left: use the second copy only if the first is used.",
       "incorrectOptionExplanations": {
-        "Taking any element twice": "Elements are used at most once.",
-        "Taking the largest element": "Irrelevant.",
-        "Taking an empty subset": "The empty set appears once."
+        "Taking any element twice in the same subset": "Elements are used at most once.",
+        "Taking the largest element before all the others": "Irrelevant.",
+        "Taking an empty subset at every recursion level": "The empty set appears once."
       }
     },
     {

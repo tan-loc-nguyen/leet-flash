@@ -52,16 +52,16 @@
       ],
       "options": [
         "The last node of the level (BFS) / first node seen at that depth in a right-first DFS",
-        "The first node of the level",
-        "The largest value of the level",
-        "The deepest leaf"
+        "The first node of the level, because it is closest to the root's left",
+        "The node with the largest value of the level, wherever it sits",
+        "The deepest leaf of the whole tree, which is always visible"
       ],
       "answer": "The last node of the level (BFS) / first node seen at that depth in a right-first DFS",
       "explanation": "The right view contains the rightmost node of every level.",
       "incorrectOptionExplanations": {
-        "The first node of the level": "That is the left view.",
-        "The largest value of the level": "Values are irrelevant.",
-        "The deepest leaf": "Only one node, not one per level."
+        "The first node of the level, because it is closest to the root's left": "That is the left view.",
+        "The node with the largest value of the level, wherever it sits": "Values are irrelevant.",
+        "The deepest leaf of the whole tree, which is always visible": "Only one node, not one per level."
       }
     },
     {

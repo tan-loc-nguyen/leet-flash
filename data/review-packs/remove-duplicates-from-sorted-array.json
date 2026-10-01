@@ -47,13 +47,13 @@
         "What technique uses one pointer to read and another to write?"
       ],
       "options": [
-        "Read/write two pointers (fast/slow)",
+        "Read/write two pointers",
         "Binary search",
         "Sliding window maximum",
         "Hash set"
       ],
-      "answer": "Read/write two pointers (fast/slow)",
-      "explanation": "The write index trails the read index and only advances on new values.",
+      "answer": "Read/write two pointers",
+      "explanation": "The write index trails the read index and only advances on new values. (Read/write two pointers: fast/slow)",
       "incorrectOptionExplanations": {
         "Binary search": "No searching.",
         "Sliding window maximum": "Unrelated.",
@@ -129,16 +129,16 @@
       ],
       "options": [
         "1 (j stays 0, return j + 1)",
-        "0",
-        "2",
-        "It errors on a single element"
+        "0 (an empty array has no unique value to return)",
+        "2 (the loop starts at index 1 and returns j + 1)",
+        "It errors on a single element since nums[1] is missing"
       ],
       "answer": "1 (j stays 0, return j + 1)",
       "explanation": "With one element nothing is written and the count is 1.",
       "incorrectOptionExplanations": {
-        "0": "The array is non-empty so at least one element remains.",
-        "2": "Too many.",
-        "It errors on a single element": "The index j + 1 is only touched when a new value is found."
+        "0 (an empty array has no unique value to return)": "The array is non-empty so at least one element remains.",
+        "2 (the loop starts at index 1 and returns j + 1)": "Too many.",
+        "It errors on a single element since nums[1] is missing": "The index j + 1 is only touched when a new value is found."
       }
     }
   ],

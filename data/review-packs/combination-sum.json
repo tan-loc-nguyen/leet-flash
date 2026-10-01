@@ -48,16 +48,16 @@
       ],
       "options": [
         "Only consider candidates at index >= start (non-decreasing choice order)",
-        "Sort the result at the end",
-        "Use a set of tuples at the end",
-        "Use BFS"
+        "Generate every ordering and then sort the final list of results",
+        "Store each combination as a tuple in a set and de-duplicate at the end",
+        "Use BFS over partial combinations so duplicate orders merge"
       ],
       "answer": "Only consider candidates at index >= start (non-decreasing choice order)",
       "explanation": "A combination is built in a canonical index order, so [2,3] and [3,2] are not both generated.",
       "incorrectOptionExplanations": {
-        "Sort the result at the end": "Works but wastes time generating duplicates.",
-        "Use a set of tuples at the end": "Also wasteful.",
-        "Use BFS": "Does not remove ordering duplicates."
+        "Generate every ordering and then sort the final list of results": "Works but wastes time generating duplicates.",
+        "Store each combination as a tuple in a set and de-duplicate at the end": "Also wasteful.",
+        "Use BFS over partial combinations so duplicate orders merge": "Does not remove ordering duplicates."
       }
     },
     {
@@ -133,16 +133,16 @@
       ],
       "options": [
         "[] (an empty list of combinations)",
-        "[[]]",
-        "None",
-        "An error"
+        "[[]] because the empty combination has a sum of zero",
+        "None because there is no valid combination to return",
+        "An error is raised because the target is smaller than every candidate"
       ],
       "answer": "[] (an empty list of combinations)",
       "explanation": "No combination sums to 1, so no path is ever recorded.",
       "incorrectOptionExplanations": {
-        "[[]]": "That would claim the empty combination sums to 1.",
-        "None": "The function returns a list.",
-        "An error": "No exception."
+        "[[]] because the empty combination has a sum of zero": "That would claim the empty combination sums to 1.",
+        "None because there is no valid combination to return": "The function returns a list.",
+        "An error is raised because the target is smaller than every candidate": "No exception."
       }
     }
   ],

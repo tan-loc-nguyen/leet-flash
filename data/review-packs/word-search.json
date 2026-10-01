@@ -66,16 +66,16 @@
       ],
       "options": [
         "Backtracking DFS over the 4 neighbours with a visited marker",
-        "BFS from every cell",
-        "Dynamic programming over the board",
-        "Binary search"
+        "BFS from every cell that matches the first letter",
+        "Dynamic programming over the board's cell pairs",
+        "Binary search over the board's rows and columns"
       ],
       "answer": "Backtracking DFS over the 4 neighbours with a visited marker",
       "explanation": "The path must not reuse cells, so the visited state must be undone when backtracking.",
       "incorrectOptionExplanations": {
-        "BFS from every cell": "BFS cannot easily forbid cell reuse per path.",
-        "Dynamic programming over the board": "The path-dependent visited state prevents standard DP.",
-        "Binary search": "Not a search problem."
+        "BFS from every cell that matches the first letter": "BFS cannot easily forbid cell reuse per path.",
+        "Dynamic programming over the board's cell pairs": "The path-dependent visited state prevents standard DP.",
+        "Binary search over the board's rows and columns": "Not a search problem."
       }
     },
     {
@@ -153,16 +153,16 @@
       ],
       "options": [
         "No: the result is False because a cell can be used only once",
-        "Yes: True",
-        "Only for the first letter",
-        "Depends on the direction"
+        "Yes: the result is True because 'A' matches twice",
+        "Only for the first letter of the word, not later",
+        "It depends on the direction of the search path"
       ],
       "answer": "No: the result is False because a cell can be used only once",
       "explanation": "The path must consist of distinct cells.",
       "incorrectOptionExplanations": {
-        "Yes: True": "That would reuse the cell.",
-        "Only for the first letter": "No exceptions.",
-        "Depends on the direction": "Direction is irrelevant."
+        "Yes: the result is True because 'A' matches twice": "That would reuse the cell.",
+        "Only for the first letter of the word, not later": "No exceptions.",
+        "It depends on the direction of the search path": "Direction is irrelevant."
       }
     }
   ],

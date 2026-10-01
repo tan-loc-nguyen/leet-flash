@@ -48,16 +48,16 @@
       ],
       "options": [
         "One loop up to min length, then append the remaining tail",
-        "Binary search",
-        "Recursion on halves",
-        "Stack"
+        "Binary search on the position of each next element",
+        "Recursion on halves, merging each pair of halves",
+        "A stack holding the elements of both sequences"
       ],
       "answer": "One loop up to min length, then append the remaining tail",
       "explanation": "The common prefix of positions is interleaved; only one string can have a tail.",
       "incorrectOptionExplanations": {
-        "Binary search": "Not applicable.",
-        "Recursion on halves": "No divide-and-conquer needed.",
-        "Stack": "No LIFO behaviour."
+        "Binary search on the position of each next element": "Not applicable.",
+        "Recursion on halves, merging each pair of halves": "No divide-and-conquer needed.",
+        "A stack holding the elements of both sequences": "No LIFO behaviour."
       }
     },
     {

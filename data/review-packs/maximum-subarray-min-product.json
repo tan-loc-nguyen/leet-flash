@@ -130,13 +130,13 @@
         "Which subarray achieves it?"
       ],
       "options": [
-        "14 ([2,3,2], min 2 x sum 7)",
+        "14",
         "12",
         "10",
         "8"
       ],
-      "answer": "14 ([2,3,2], min 2 x sum 7)",
-      "explanation": "min 2 x sum 7 = 14; the whole array gives 1 x 8 = 8.",
+      "answer": "14",
+      "explanation": "min 2 x sum 7 = 14; the whole array gives 1 x 8 = 8. (14: [2,3,2], min 2 x sum 7)",
       "incorrectOptionExplanations": {
         "12": "Not achievable.",
         "10": "Not the maximum.",
