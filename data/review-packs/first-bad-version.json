@@ -1,0 +1,148 @@
+{
+  "schemaVersion": 1,
+  "problemSlug": "first-bad-version",
+  "summary": "Find the first bad version using the fewest calls to isBadVersion.",
+  "patterns": [
+    "Binary Search"
+  ],
+  "mainInsight": "Versions go good...good, bad...bad, so 'is bad' is monotone; binary search for the first true value, recording each bad mid and moving left.",
+  "canonicalApproach": "Binary search (first true)",
+  "approaches": [
+    {
+      "name": "Linear scan",
+      "summary": "Call isBadVersion from 1 upward.",
+      "timeComplexity": "O(n) calls",
+      "spaceComplexity": "O(1)",
+      "weaknesses": [
+        "Too many API calls"
+      ]
+    },
+    {
+      "name": "Binary search (first true)",
+      "summary": "If bad, ans = mid and search left; else search right.",
+      "timeComplexity": "O(log n) calls",
+      "spaceComplexity": "O(1)",
+      "strengths": [
+        "Minimises API calls"
+      ],
+      "interviewRelevance": "Your approach."
+    }
+  ],
+  "personalSolution": {
+    "approach": "Binary search (first true)",
+    "timeComplexity": "O(log n) calls",
+    "spaceComplexity": "O(1)",
+    "isOptimal": true,
+    "notes": "Optimal."
+  },
+  "commonMistakes": [],
+  "edgeCases": [],
+  "cards": [
+    {
+      "id": "fb2-pattern-01",
+      "category": "pattern",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "Which template finds the first True of a monotone predicate?",
+        "What pattern fits 'find the first bad version'?"
+      ],
+      "options": [
+        "Binary search that records the candidate and keeps searching left",
+        "Linear scan",
+        "Two pointers",
+        "Hashing"
+      ],
+      "answer": "Binary search that records the candidate and keeps searching left",
+      "explanation": "The predicate flips once from False to True, so bisection locates the flip.",
+      "incorrectOptionExplanations": {
+        "Linear scan": "O(n) API calls.",
+        "Two pointers": "No second pointer needed.",
+        "Hashing": "No lookups."
+      }
+    },
+    {
+      "id": "fb2-insight-01",
+      "category": "main_insight",
+      "type": "free_recall",
+      "promptVariants": [
+        "Why is binary search valid here and what is the invariant?",
+        "What do low/high/ans represent?"
+      ],
+      "answer": "Once a version is bad every later version is bad, so isBadVersion is monotone. Invariant: the first bad version lies in [low, ans] where ans is the smallest bad version seen so far (or within [low, high] if none yet).",
+      "keyPoints": [
+        "Monotone predicate",
+        "ans = smallest bad seen",
+        "Search shrinks toward the boundary"
+      ],
+      "explanation": "Same structure as lower_bound."
+    },
+    {
+      "id": "fb2-time-01",
+      "category": "time_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Number of isBadVersion calls: ___",
+        "Binary search makes ___ calls."
+      ],
+      "answer": "O(log n)",
+      "explanation": "The range halves every call.",
+      "acceptedAnswers": [
+        "O(logn)"
+      ]
+    },
+    {
+      "id": "fb2-space-01",
+      "category": "space_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Extra space: ___",
+        "Complete the statement: Extra space: ___"
+      ],
+      "answer": "O(1)",
+      "explanation": "Indices only.",
+      "acceptedAnswers": [
+        "constant"
+      ]
+    },
+    {
+      "id": "fb2-code-01",
+      "category": "code_reasoning",
+      "type": "code_question",
+      "promptVariants": [
+        "Why `mid = low + (high - low) // 2` and why initialise ans = 1?",
+        "What is returned when the first version is already bad?"
+      ],
+      "code": "low, high = 1, n\nans = 1\nwhile low <= high:\n    mid = low + (high - low) // 2\n    if isBadVersion(mid):\n        ans = mid\n        high = mid - 1\n    else:\n        low = mid + 1\nreturn ans",
+      "answer": "low + (high - low) // 2 avoids overflow in fixed-width languages. The problem guarantees at least one bad version, so the loop always records some bad mid; ans = 1 is only a default (if version 1 is bad the loop converges to it).",
+      "keyPoints": [
+        "Overflow-safe midpoint",
+        "At least one bad version guaranteed",
+        "ans is overwritten by the boundary"
+      ],
+      "explanation": "Alternative template: while low < high with high = mid."
+    },
+    {
+      "id": "fb2-edge-01",
+      "category": "edge_case",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "What happens for n = 1 and version 1 bad?",
+        "How many calls are made?"
+      ],
+      "options": [
+        "One call, returns 1",
+        "Zero calls, returns 1",
+        "An error",
+        "Two calls"
+      ],
+      "answer": "One call, returns 1",
+      "explanation": "low = high = 1: mid = 1 is bad so ans = 1.",
+      "incorrectOptionExplanations": {
+        "Zero calls, returns 1": "The loop still calls isBadVersion(1).",
+        "An error": "No invalid index.",
+        "Two calls": "The loop ends after one iteration."
+      }
+    }
+  ],
+  "generatedAt": "2026-10-01T14:21:49Z"
+}

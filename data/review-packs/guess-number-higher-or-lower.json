@@ -1,0 +1,132 @@
+{
+  "schemaVersion": 1,
+  "problemSlug": "guess-number-higher-or-lower",
+  "summary": "Find the picked number in 1..n using the guess API (returns -1 if your guess is too high, 1 if too low, 0 if correct).",
+  "patterns": [
+    "Binary Search"
+  ],
+  "mainInsight": "Each guess tells you which half to discard, so bisect: guess the middle, then move low or high accordingly.",
+  "canonicalApproach": "Binary search",
+  "approaches": [
+    {
+      "name": "Linear guessing",
+      "summary": "Try 1, 2, 3, ...",
+      "timeComplexity": "O(n)",
+      "spaceComplexity": "O(1)",
+      "weaknesses": [
+        "Too many API calls"
+      ]
+    },
+    {
+      "name": "Binary search",
+      "summary": "Guess mid; discard the half indicated.",
+      "timeComplexity": "O(log n)",
+      "spaceComplexity": "O(1)",
+      "strengths": [
+        "Optimal"
+      ],
+      "interviewRelevance": "Your approach."
+    }
+  ],
+  "personalSolution": {
+    "approach": "Binary search (guess called twice per step)",
+    "timeComplexity": "O(log n) calls (up to 2x)",
+    "spaceComplexity": "O(1)",
+    "isOptimal": false,
+    "notes": "Store the guess() result in a variable so each step makes exactly one API call."
+  },
+  "commonMistakes": [],
+  "edgeCases": [],
+  "cards": [
+    {
+      "id": "gn-pattern-01",
+      "category": "pattern",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "Which technique finds the number with O(log n) guesses?",
+        "What does a higher/lower oracle suggest?"
+      ],
+      "options": [
+        "Binary search",
+        "Hash map",
+        "Sorting",
+        "Two pointers from both ends"
+      ],
+      "answer": "Binary search",
+      "explanation": "Each answer halves the candidate range.",
+      "incorrectOptionExplanations": {
+        "Hash map": "No keys to look up.",
+        "Sorting": "Nothing to sort.",
+        "Two pointers from both ends": "The pointers would move one step at a time."
+      }
+    },
+    {
+      "id": "gn-insight-01",
+      "category": "main_insight",
+      "type": "free_recall",
+      "promptVariants": [
+        "The API returns -1 when your guess is too HIGH. Which pointer moves?",
+        "Explain the direction convention."
+      ],
+      "answer": "guess(mid) == -1 means mid is higher than the pick, so the answer is below mid: set high = mid - 1. guess(mid) == 1 means mid is too low: set low = mid + 1.",
+      "keyPoints": [
+        "-1 => guess too high => high = mid - 1",
+        "1 => guess too low => low = mid + 1"
+      ],
+      "explanation": "The sign refers to the pick relative to your guess in the opposite sense of intuition - read the spec."
+    },
+    {
+      "id": "gn-time-01",
+      "category": "time_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Number of guess calls: ___",
+        "Complete the statement: Number of guess calls: ___"
+      ],
+      "answer": "O(log n)",
+      "explanation": "The range halves each time.",
+      "acceptedAnswers": [
+        "O(logn)"
+      ]
+    },
+    {
+      "id": "gn-code-01",
+      "category": "code_reasoning",
+      "type": "code_question",
+      "promptVariants": [
+        "Your loop calls guess(mid) twice per iteration. Why is that a problem and how do you fix it?",
+        "What should be stored in a variable?"
+      ],
+      "code": "while low <= high:\n    mid = (low + high) // 2\n    if guess(mid) == 0:\n        return mid\n    elif guess(mid) == 1:\n        low = mid + 1\n    else:\n        high = mid - 1",
+      "answer": "Each guess is an API call (potentially expensive and counted). Store the result once: `res = guess(mid)` and branch on it. Calling twice can double the call count and would break if the oracle were non-idempotent.",
+      "keyPoints": [
+        "Store res = guess(mid)",
+        "Avoid duplicate API calls"
+      ],
+      "explanation": "Also use low + (high - low) // 2 for overflow safety in fixed-width languages."
+    },
+    {
+      "id": "gn-edge-01",
+      "category": "edge_case",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "Which values of n make the loop run exactly once?",
+        "What happens when the pick is 1?"
+      ],
+      "options": [
+        "n = 1 (the first guess is correct)",
+        "n = 2 only",
+        "Any n",
+        "n = 0"
+      ],
+      "answer": "n = 1 (the first guess is correct)",
+      "explanation": "With one candidate, mid = 1 is the pick.",
+      "incorrectOptionExplanations": {
+        "n = 2 only": "Might need two guesses.",
+        "Any n": "Depends on the pick.",
+        "n = 0": "Out of constraints."
+      }
+    }
+  ],
+  "generatedAt": "2026-10-01T14:21:49Z"
+}

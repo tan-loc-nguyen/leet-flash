@@ -1,0 +1,150 @@
+{
+  "schemaVersion": 1,
+  "problemSlug": "koko-eating-bananas",
+  "summary": "Find the minimum eating speed k so that all piles are finished within h hours.",
+  "patterns": [
+    "Binary Search"
+  ],
+  "mainInsight": "The time needed is monotone decreasing in the speed, so binary search the smallest speed whose total hours (sum of ceil(pile / speed)) is <= h; the answer lies in [1, max(piles)].",
+  "canonicalApproach": "Binary search on the speed",
+  "approaches": [
+    {
+      "name": "Try every speed",
+      "summary": "Test speeds 1..max(piles).",
+      "timeComplexity": "O(n * max)",
+      "spaceComplexity": "O(1)",
+      "weaknesses": [
+        "Too slow"
+      ]
+    },
+    {
+      "name": "Binary search on the speed",
+      "summary": "Feasible speeds form a suffix; find the smallest.",
+      "timeComplexity": "O(n log max)",
+      "spaceComplexity": "O(1)",
+      "strengths": [
+        "Optimal"
+      ],
+      "interviewRelevance": "Your approach; the expected answer."
+    }
+  ],
+  "personalSolution": {
+    "approach": "Binary search on the speed",
+    "timeComplexity": "O(n log M)",
+    "spaceComplexity": "O(1)",
+    "isOptimal": true,
+    "notes": "Optimal. Use integer ceil (p + speed - 1) // speed instead of float division."
+  },
+  "commonMistakes": [],
+  "edgeCases": [],
+  "cards": [
+    {
+      "id": "kb-pattern-01",
+      "category": "pattern",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "Which pattern solves 'minimum speed so that the task finishes in h hours'?",
+        "What is the search space of Koko Eating Bananas?"
+      ],
+      "options": [
+        "Binary search on the answer (speed in [1, max(piles)])",
+        "Sliding window",
+        "Greedy sorting of piles",
+        "Heap simulation"
+      ],
+      "answer": "Binary search on the answer (speed in [1, max(piles)])",
+      "explanation": "Feasibility is monotone in the speed: if k works, any larger k works too.",
+      "incorrectOptionExplanations": {
+        "Sliding window": "No subarray.",
+        "Greedy sorting of piles": "Order of piles does not matter for the time calculation.",
+        "Heap simulation": "Unneeded and slower."
+      }
+    },
+    {
+      "id": "kb-insight-01",
+      "category": "main_insight",
+      "type": "free_recall",
+      "promptVariants": [
+        "Why is binary search valid on the speed and what are its bounds?",
+        "How do you choose low and high?"
+      ],
+      "answer": "Total hours is non-increasing in the speed, so 'can finish within h' is false for small speeds and true for large ones. low = 1 (slowest) and high = max(piles) (eating one whole pile per hour is the fastest useful speed; faster does not reduce the ceil-sum).",
+      "keyPoints": [
+        "Monotone feasibility",
+        "low = 1, high = max(piles)",
+        "Find the first feasible speed"
+      ],
+      "explanation": "A tighter low bound is ceil(sum(piles) / h)."
+    },
+    {
+      "id": "kb-time-01",
+      "category": "time_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Time complexity (n piles, max pile M): ___",
+        "Each of log M iterations scans all piles, giving ___."
+      ],
+      "answer": "O(n log M)",
+      "explanation": "log2(M) feasibility checks of O(n) each.",
+      "acceptedAnswers": [
+        "O(n log max)",
+        "O(n log(max(piles)))",
+        "O(n log m)"
+      ]
+    },
+    {
+      "id": "kb-space-01",
+      "category": "space_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Extra space: ___",
+        "Complete the statement: Extra space: ___"
+      ],
+      "answer": "O(1)",
+      "explanation": "Only a few variables.",
+      "acceptedAnswers": [
+        "constant"
+      ]
+    },
+    {
+      "id": "kb-code-01",
+      "category": "code_reasoning",
+      "type": "code_question",
+      "promptVariants": [
+        "Why is `ceil(p / speed)` summed, and what is a safer integer form?",
+        "What happens when time <= h?"
+      ],
+      "code": "time = 0\nfor p in piles:\n    time += ceil(p / speed)\nif time <= h:\n    ans = speed\n    high = speed - 1\nelse:\n    low = speed + 1",
+      "answer": "Koko finishes a pile in ceil(p / speed) hours because she cannot move to the next pile within the same hour. Float division can be imprecise for large values; use (p + speed - 1) // speed. When time <= h the speed is feasible, so record it and try slower speeds (high = speed - 1).",
+      "keyPoints": [
+        "Per-pile ceil",
+        "(p + speed - 1) // speed",
+        "Feasible => try smaller"
+      ],
+      "explanation": "Record the answer on feasible speeds."
+    },
+    {
+      "id": "kb-edge-01",
+      "category": "edge_case",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "What is the answer when h equals the number of piles?",
+        "How fast must Koko eat if she gets one hour per pile?"
+      ],
+      "options": [
+        "max(piles)",
+        "1",
+        "sum(piles)",
+        "min(piles)"
+      ],
+      "answer": "max(piles)",
+      "explanation": "She needs one hour per pile, so the speed must finish the largest pile in one hour.",
+      "incorrectOptionExplanations": {
+        "1": "Only if all piles have size 1.",
+        "sum(piles)": "Unnecessarily large.",
+        "min(piles)": "Too slow for bigger piles."
+      }
+    }
+  ],
+  "generatedAt": "2026-10-01T14:21:49Z"
+}

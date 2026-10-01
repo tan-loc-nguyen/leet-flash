@@ -1,0 +1,152 @@
+{
+  "schemaVersion": 1,
+  "problemSlug": "merge-intervals",
+  "summary": "Merge all overlapping intervals into a minimal set of disjoint intervals.",
+  "patterns": [
+    "Intervals"
+  ],
+  "mainInsight": "After sorting by start, overlapping intervals are adjacent: an interval overlaps the last merged one iff its start <= that interval's end, in which case extend the end with max(end, end'); otherwise start a new interval.",
+  "canonicalApproach": "Sort by start + linear sweep",
+  "approaches": [
+    {
+      "name": "Compare all pairs",
+      "summary": "Repeatedly merge any overlapping pair.",
+      "timeComplexity": "O(n^2)",
+      "spaceComplexity": "O(n)",
+      "weaknesses": [
+        "Slow"
+      ]
+    },
+    {
+      "name": "Sort by start + linear sweep",
+      "summary": "Maintain the last merged interval and extend or append.",
+      "timeComplexity": "O(n log n)",
+      "spaceComplexity": "O(n)",
+      "strengths": [
+        "Optimal",
+        "Simple"
+      ],
+      "interviewRelevance": "Your approach; the expected answer."
+    }
+  ],
+  "personalSolution": {
+    "approach": "Sort by start + linear sweep",
+    "timeComplexity": "O(n log n)",
+    "spaceComplexity": "O(n)",
+    "isOptimal": true,
+    "notes": "Optimal. Note the aliasing with the input's inner lists."
+  },
+  "commonMistakes": [],
+  "edgeCases": [],
+  "cards": [
+    {
+      "id": "mi-pattern-01",
+      "category": "pattern",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "What is the first step of Merge Intervals and why?",
+        "Which preprocessing makes overlaps adjacent?"
+      ],
+      "options": [
+        "Sort by start time",
+        "Sort by end time",
+        "Build a graph",
+        "Use a heap of ends"
+      ],
+      "answer": "Sort by start time",
+      "explanation": "After sorting by start, an interval can only overlap the most recent merged interval.",
+      "incorrectOptionExplanations": {
+        "Sort by end time": "Possible for other problems (e.g. non-overlapping intervals) but not the standard merge approach.",
+        "Build a graph": "Overkill (connected components of overlaps).",
+        "Use a heap of ends": "Used for meeting-room style counting, not merging."
+      }
+    },
+    {
+      "id": "mi-insight-01",
+      "category": "main_insight",
+      "type": "free_recall",
+      "promptVariants": [
+        "Why is it enough to compare each interval only with the last merged one?",
+        "When are two intervals mergeable?"
+      ],
+      "answer": "Sorted by start, if an interval does not overlap the last merged interval then it starts after that interval's end and therefore after every earlier interval's end, so it cannot overlap any earlier one. Two intervals overlap iff the later one's start <= the earlier one's end.",
+      "keyPoints": [
+        "Sorted by start",
+        "Only the last merged interval can overlap",
+        "start <= last end => merge"
+      ],
+      "explanation": "The merged end is max(end, new end)."
+    },
+    {
+      "id": "mi-time-01",
+      "category": "time_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Time complexity (sorting dominates): ___",
+        "Merge Intervals runs in ___ time."
+      ],
+      "answer": "O(n log n)",
+      "explanation": "Sort O(n log n), sweep O(n).",
+      "acceptedAnswers": [
+        "O(nlogn)",
+        "O(n log(n))"
+      ]
+    },
+    {
+      "id": "mi-space-01",
+      "category": "space_complexity",
+      "type": "free_recall",
+      "promptVariants": [
+        "What is the extra space and what does `ans.append(intervals[i])` imply about aliasing?",
+        "Do you modify the input?"
+      ],
+      "answer": "O(n) for the output (plus sort space). Appending the input's inner list and then mutating ans[-1][1] also mutates the caller's interval object; copy the interval (e.g. list(intervals[i])) if the input must stay unchanged.",
+      "keyPoints": [
+        "O(n) output",
+        "Shares inner lists with the input",
+        "Copy to avoid mutation"
+      ],
+      "explanation": "The in-place sort also reorders the input list."
+    },
+    {
+      "id": "mi-code-01",
+      "category": "code_reasoning",
+      "type": "code_question",
+      "promptVariants": [
+        "Why is the condition `ans[-1][1] < intervals[i][0]` (strict) the 'no overlap' test, and what about touching intervals like [1,4],[4,5]?",
+        "Why use max when merging?"
+      ],
+      "code": "for i in range(len(intervals)):\n    if i == 0 or ans[-1][1] < intervals[i][0]:\n        ans.append(intervals[i])\n    else:\n        ans[-1][1] = max(ans[-1][1], intervals[i][1])",
+      "answer": "A new interval is separate only if it starts strictly after the previous end; touching intervals ([1,4] and [4,5]) share the point 4 and are merged by the problem's definition. The merged end must be the maximum because the new interval may be fully contained in the previous one (e.g. [1,10] and [2,3]).",
+      "keyPoints": [
+        "Strict < = disjoint",
+        "Touching intervals merge",
+        "max handles containment"
+      ],
+      "explanation": "Always sort by start first."
+    },
+    {
+      "id": "mi-edge-01",
+      "category": "edge_case",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "What is the result for [[1,4],[4,5]]?",
+        "How do touching intervals behave?"
+      ],
+      "options": [
+        "[[1,5]]",
+        "[[1,4],[4,5]]",
+        "[[1,4]]",
+        "[[4,5]]"
+      ],
+      "answer": "[[1,5]]",
+      "explanation": "They share the endpoint 4, so they overlap and merge into [1,5].",
+      "incorrectOptionExplanations": {
+        "[[1,4],[4,5]]": "Touching counts as overlapping.",
+        "[[1,4]]": "That drops [4,5].",
+        "[[4,5]]": "That drops [1,4]."
+      }
+    }
+  ],
+  "generatedAt": "2026-10-01T14:22:47Z"
+}

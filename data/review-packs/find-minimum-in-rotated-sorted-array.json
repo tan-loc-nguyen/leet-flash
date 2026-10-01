@@ -1,0 +1,154 @@
+{
+  "schemaVersion": 1,
+  "problemSlug": "find-minimum-in-rotated-sorted-array",
+  "summary": "Find the minimum element of a rotated sorted array of distinct values in O(log n).",
+  "patterns": [
+    "Binary Search"
+  ],
+  "mainInsight": "In a rotated sorted array one half around mid is always sorted. Compare nums[mid] with nums[right]: if nums[mid] > nums[right] the minimum lies in the right half (mid + 1 .. right); otherwise it lies in the left half including mid.",
+  "canonicalApproach": "Binary search comparing mid with right",
+  "approaches": [
+    {
+      "name": "Linear scan / min()",
+      "summary": "Take the minimum of the array.",
+      "timeComplexity": "O(n)",
+      "spaceComplexity": "O(1)",
+      "strengths": [
+        "One line"
+      ],
+      "weaknesses": [
+        "Ignores the sorted structure; fails the O(log n) requirement"
+      ],
+      "interviewRelevance": "Your accepted solution."
+    },
+    {
+      "name": "Binary search comparing mid with right",
+      "summary": "Shrink toward the pivot using nums[mid] vs nums[right].",
+      "timeComplexity": "O(log n)",
+      "spaceComplexity": "O(1)",
+      "strengths": [
+        "Required optimal solution"
+      ],
+      "weaknesses": [
+        "Careful boundary updates"
+      ],
+      "interviewRelevance": "The expected answer."
+    }
+  ],
+  "personalSolution": {
+    "approach": "min(nums)",
+    "timeComplexity": "O(n)",
+    "spaceComplexity": "O(1)",
+    "isOptimal": false,
+    "notes": "Passes the judge but does not satisfy the O(log n) requirement. Learn and be ready to write the binary search."
+  },
+  "commonMistakes": [],
+  "edgeCases": [],
+  "cards": [
+    {
+      "id": "fm2-pattern-01",
+      "category": "pattern",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "How do you find the rotation pivot in O(log n)?",
+        "Which comparison decides the search direction?"
+      ],
+      "options": [
+        "Compare nums[mid] with nums[right]",
+        "Compare nums[mid] with nums[0] only",
+        "Linear scan",
+        "Hash the values"
+      ],
+      "answer": "Compare nums[mid] with nums[right]",
+      "explanation": "If nums[mid] > nums[right] the pivot (minimum) is to the right of mid; otherwise it is at mid or to its left.",
+      "incorrectOptionExplanations": {
+        "Compare nums[mid] with nums[0] only": "Works for some cases but is error-prone without the right-end comparison (all elements may be >= nums[0] in an unrotated array).",
+        "Linear scan": "O(n).",
+        "Hash the values": "Does not find the minimum faster."
+      }
+    },
+    {
+      "id": "fm2-insight-01",
+      "category": "main_insight",
+      "type": "free_recall",
+      "promptVariants": [
+        "Why is the minimum in the right half when nums[mid] > nums[right]?",
+        "Why do we keep mid when nums[mid] <= nums[right]?"
+      ],
+      "answer": "If nums[mid] > nums[right] the sequence must descend somewhere between mid and right (the pivot), so the minimum lies strictly right of mid. Otherwise the segment mid..right is sorted ascending, so the minimum is at mid or in the left part; mid itself could be the minimum, so keep it (right = mid).",
+      "keyPoints": [
+        "mid > right => pivot to the right",
+        "Else segment mid..right sorted",
+        "Keep mid as a candidate"
+      ],
+      "explanation": "Distinct values avoid the ambiguous equality case."
+    },
+    {
+      "id": "fm2-code-01",
+      "category": "code_reasoning",
+      "type": "free_recall",
+      "promptVariants": [
+        "Your solution is `return min(nums)`. What is its complexity and what would an interviewer expect?",
+        "Write the binary-search loop conditions."
+      ],
+      "answer": "min(nums) is O(n) time and ignores the rotation property; the problem requires O(log n). Expected: lo, hi = 0, n - 1; while lo < hi: mid = (lo + hi) // 2; if nums[mid] > nums[hi]: lo = mid + 1 else: hi = mid; return nums[lo].",
+      "keyPoints": [
+        "min() is O(n)",
+        "while lo < hi",
+        "mid > hi => lo = mid + 1 else hi = mid"
+      ],
+      "explanation": "This is a common trap: the shortcut passes LeetCode but fails the interview."
+    },
+    {
+      "id": "fm2-time-01",
+      "category": "time_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Time complexity of the required solution: ___",
+        "Binary search on the rotated array takes ___."
+      ],
+      "answer": "O(log n)",
+      "explanation": "The search range halves each step.",
+      "acceptedAnswers": [
+        "O(logn)"
+      ]
+    },
+    {
+      "id": "fm2-space-01",
+      "category": "space_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Extra space of the binary search: ___",
+        "Complete the statement: Extra space of the binary search: ___"
+      ],
+      "answer": "O(1)",
+      "explanation": "Three indices.",
+      "acceptedAnswers": [
+        "constant"
+      ]
+    },
+    {
+      "id": "fm2-edge-01",
+      "category": "edge_case",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "Which input is already sorted (rotation by 0) and how does the search behave?",
+        "What does the algorithm return for [1,2,3,4,5]?"
+      ],
+      "options": [
+        "1: nums[mid] <= nums[hi] always, so hi shrinks to 0",
+        "5",
+        "It cannot handle unrotated arrays",
+        "-1"
+      ],
+      "answer": "1: nums[mid] <= nums[hi] always, so hi shrinks to 0",
+      "explanation": "In a sorted array every mid is <= nums[hi]; the search keeps moving hi = mid toward the first element.",
+      "incorrectOptionExplanations": {
+        "5": "That is the maximum.",
+        "It cannot handle unrotated arrays": "Comparing with nums[hi] handles it.",
+        "-1": "The array is non-empty."
+      }
+    }
+  ],
+  "generatedAt": "2026-10-01T14:21:49Z"
+}

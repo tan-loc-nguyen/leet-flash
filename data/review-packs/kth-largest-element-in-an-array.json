@@ -1,0 +1,182 @@
+{
+  "schemaVersion": 1,
+  "problemSlug": "kth-largest-element-in-an-array",
+  "summary": "Return the k-th largest element of an unsorted array (not necessarily distinct).",
+  "patterns": [
+    "Heap / Priority Queue",
+    "Array / Hashing"
+  ],
+  "mainInsight": "You do not need a full sort: a size-k min-heap gives O(n log k), quickselect gives O(n) on average, and when values lie in a small bounded range a counting array gives O(n + range).",
+  "canonicalApproach": "Quickselect",
+  "approaches": [
+    {
+      "name": "Sort",
+      "summary": "Sort descending and index k - 1.",
+      "timeComplexity": "O(n log n)",
+      "spaceComplexity": "O(1) to O(n)",
+      "strengths": [
+        "One line"
+      ],
+      "weaknesses": [
+        "Does more work than necessary"
+      ]
+    },
+    {
+      "name": "Min-heap of size k",
+      "summary": "Keep the k largest; the root is the answer.",
+      "timeComplexity": "O(n log k)",
+      "spaceComplexity": "O(k)",
+      "strengths": [
+        "Streams, simple"
+      ],
+      "weaknesses": [
+        "log k factor"
+      ]
+    },
+    {
+      "name": "Quickselect",
+      "summary": "Partition around a pivot, recursing into one side.",
+      "timeComplexity": "O(n) average, O(n^2) worst",
+      "spaceComplexity": "O(1)",
+      "strengths": [
+        "Fastest on average"
+      ],
+      "weaknesses": [
+        "Worst case, mutation"
+      ],
+      "interviewRelevance": "The expected optimal-time answer."
+    },
+    {
+      "name": "Counting array over the value range",
+      "summary": "Count occurrences per value and walk from the largest.",
+      "timeComplexity": "O(n + R)",
+      "spaceComplexity": "O(R)",
+      "strengths": [
+        "Linear when the range R is small"
+      ],
+      "weaknesses": [
+        "Fails for huge value ranges"
+      ],
+      "interviewRelevance": "Your approach: valid under the constraints."
+    }
+  ],
+  "personalSolution": {
+    "approach": "Counting array over the value range",
+    "timeComplexity": "O(n + R)",
+    "spaceComplexity": "O(R)",
+    "isOptimal": false,
+    "notes": "Valid because values are bounded. In general use a size-k min-heap (O(n log k)) or quickselect (O(n) average)."
+  },
+  "commonMistakes": [],
+  "edgeCases": [],
+  "cards": [
+    {
+      "id": "kt-pattern-01",
+      "category": "pattern",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "Which techniques avoid a full sort for the k-th largest?",
+        "What gives O(n) average time?"
+      ],
+      "options": [
+        "Quickselect (partition-based selection)",
+        "Binary search on the array",
+        "Two pointers",
+        "Prefix sums"
+      ],
+      "answer": "Quickselect (partition-based selection)",
+      "explanation": "Partitioning discards one side each step, giving an expected linear total.",
+      "incorrectOptionExplanations": {
+        "Binary search on the array": "The array is unsorted.",
+        "Two pointers": "No sorted structure.",
+        "Prefix sums": "Not a range query."
+      }
+    },
+    {
+      "id": "kt-insight-01",
+      "category": "main_insight",
+      "type": "free_recall",
+      "promptVariants": [
+        "Why is the k-th largest equal to the root of a size-k min-heap of the largest values?",
+        "Why does a counting array work in your solution and when does it not?"
+      ],
+      "answer": "A size-k min-heap keeps the k largest seen; its root is the smallest of them, which is exactly the k-th largest. Your counting array works because the value range is bounded (about 2*10^4 wide), so counts can be scanned from the top; with a huge range the array would be too large.",
+      "keyPoints": [
+        "Heap root = k-th largest",
+        "Counting needs a bounded range",
+        "Range = max - min + 1"
+      ],
+      "explanation": "Choose by constraints."
+    },
+    {
+      "id": "kt-time-01",
+      "category": "time_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Average time of quickselect: ___",
+        "Finding the k-th largest by partitioning takes ___ on average."
+      ],
+      "answer": "O(n)",
+      "explanation": "Each partition halves the expected remaining work.",
+      "acceptedAnswers": [
+        "linear"
+      ]
+    },
+    {
+      "id": "kt-space-01",
+      "category": "space_complexity",
+      "type": "free_recall",
+      "promptVariants": [
+        "What is the space cost of your counting-array solution and of the heap solution?",
+        "Compare the memory of counting vs heap vs quickselect."
+      ],
+      "answer": "Counting: O(R) where R = max - min + 1. Heap: O(k). Quickselect: O(1) extra (in place) with O(log n) recursion if recursive.",
+      "keyPoints": [
+        "Counting O(R)",
+        "Heap O(k)",
+        "Quickselect O(1) extra"
+      ],
+      "explanation": "R must be bounded for counting."
+    },
+    {
+      "id": "kt-code-01",
+      "category": "code_reasoning",
+      "type": "code_question",
+      "promptVariants": [
+        "Walk through the descending scan `k -= arr[i]; if k <= 0: return i + low` and explain the offset `low`.",
+        "Why does the scan return the k-th largest including duplicates?"
+      ],
+      "code": "low, high = min(nums), max(nums)\narr = [0] * (high - low + 1)\nfor num in nums:\n    arr[num - low] += 1\nfor i in range(len(arr) - 1, -1, -1):\n    k -= arr[i]\n    if k <= 0:\n        return i + low",
+      "answer": "Counts are stored at index value - low so negatives fit. Scanning from the largest value downward, subtracting each value's count from k counts how many elements are >= the current value; when k reaches 0 or below, the k-th largest (counting duplicates) lies at this value, which is i + low.",
+      "keyPoints": [
+        "Offset by low for negatives",
+        "Walk values from largest to smallest",
+        "k <= 0 => found, duplicates counted"
+      ],
+      "explanation": "Counts handle repeated values naturally."
+    },
+    {
+      "id": "kt-edge-01",
+      "category": "edge_case",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "What is the 2nd largest of [3,2,3,1,2,4,5,5,6]?",
+        "Do duplicates count separately?"
+      ],
+      "options": [
+        "5 (the array has two 5s)",
+        "6",
+        "4",
+        "3"
+      ],
+      "answer": "5 (the array has two 5s)",
+      "explanation": "Sorted descending: 6,5,5,4,... so the 2nd largest element (not distinct) is 5.",
+      "incorrectOptionExplanations": {
+        "6": "That is the 1st largest.",
+        "4": "That would be the 'distinct' 3rd largest.",
+        "3": "Too small."
+      }
+    }
+  ],
+  "generatedAt": "2026-10-01T14:22:47Z"
+}

@@ -1,0 +1,152 @@
+{
+  "schemaVersion": 1,
+  "problemSlug": "time-based-key-value-store",
+  "summary": "Design a map that stores multiple timestamped values per key and returns the latest value at or before a given timestamp.",
+  "patterns": [
+    "Binary Search",
+    "Design"
+  ],
+  "mainInsight": "Timestamps for a key are set in increasing order, so each key's history is a sorted list; get is a binary search for the last timestamp <= the query (an upper-bound search minus one).",
+  "canonicalApproach": "Dict of sorted lists + binary search",
+  "approaches": [
+    {
+      "name": "Linear scan per get",
+      "summary": "Scan the key's history backwards.",
+      "timeComplexity": "O(n) per get",
+      "spaceComplexity": "O(n)",
+      "weaknesses": [
+        "Slow"
+      ]
+    },
+    {
+      "name": "Dict of sorted lists + binary search",
+      "summary": "Append on set; bisect on get.",
+      "timeComplexity": "set O(1), get O(log n)",
+      "spaceComplexity": "O(n)",
+      "strengths": [
+        "Optimal"
+      ],
+      "interviewRelevance": "Your approach."
+    }
+  ],
+  "personalSolution": {
+    "approach": "Dict of sorted lists + upper-bound binary search",
+    "timeComplexity": "set O(1), get O(log n)",
+    "spaceComplexity": "O(N)",
+    "isOptimal": true,
+    "notes": "Optimal. Use store.get(key, []) to avoid creating empty lists on reads."
+  },
+  "commonMistakes": [],
+  "edgeCases": [],
+  "cards": [
+    {
+      "id": "tm-pattern-01",
+      "category": "pattern",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "Which technique finds the latest value at or before a timestamp?",
+        "What does the sorted history enable?"
+      ],
+      "options": [
+        "Binary search over the key's timestamps",
+        "Hash lookup by timestamp",
+        "Heap",
+        "Linear scan from the start"
+      ],
+      "answer": "Binary search over the key's timestamps",
+      "explanation": "Timestamps are increasing, so the last timestamp <= t is found by bisection.",
+      "incorrectOptionExplanations": {
+        "Hash lookup by timestamp": "Only exact matches; we need the nearest earlier one.",
+        "Heap": "Not needed since sets arrive in order.",
+        "Linear scan from the start": "O(n)."
+      }
+    },
+    {
+      "id": "tm-insight-01",
+      "category": "main_insight",
+      "type": "free_recall",
+      "promptVariants": [
+        "Why is it valid to keep each key's values in a plain list?",
+        "What guarantee makes the history sorted?"
+      ],
+      "answer": "set calls come with strictly increasing timestamps, so appending keeps each key's list sorted by timestamp without any extra sorting. That sortedness is what makes binary search valid.",
+      "keyPoints": [
+        "Timestamps increase per key",
+        "Append keeps order",
+        "Sorted => binary search"
+      ],
+      "explanation": "Otherwise you would need a sorted container."
+    },
+    {
+      "id": "tm-time-01",
+      "category": "time_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Time of get with a binary search over the key's history: ___",
+        "Complete the statement: Time of get with a binary search over the key's history: ___"
+      ],
+      "answer": "O(log n)",
+      "explanation": "n is the number of values stored for the key.",
+      "acceptedAnswers": [
+        "O(logn)",
+        "O(log m)"
+      ]
+    },
+    {
+      "id": "tm-space-01",
+      "category": "space_complexity",
+      "type": "free_recall",
+      "promptVariants": [
+        "What is the total space?",
+        "How much memory does the TimeMap use?"
+      ],
+      "answer": "O(N) for all stored (timestamp, value) pairs across all keys.",
+      "keyPoints": [
+        "One entry per set call",
+        "O(N) total"
+      ],
+      "explanation": "No pruning of old versions is required."
+    },
+    {
+      "id": "tm-code-01",
+      "category": "code_reasoning",
+      "type": "code_question",
+      "promptVariants": [
+        "Explain `t` and `items[t - 1][1] if t > 0 else ''`, and a subtle issue with `self.store[key]` on a missing key.",
+        "What does the upper-bound search return?"
+      ],
+      "code": "items = self.store[key]\nlow, high = 0, len(items) - 1\nt = high + 1\nwhile low <= high:\n    mid = low + (high - low) // 2\n    if items[mid][0] > timestamp:\n        t = mid\n        high = mid - 1\n    else:\n        low = mid + 1\nreturn items[t - 1][1] if t > 0 else ''",
+      "answer": "t is the first index whose timestamp is greater than the query, so t - 1 is the latest entry at or before it; t == 0 means every entry is later (return ''). Using self.store[key] with a defaultdict inserts an empty list for unknown keys on every get (a mild memory leak) - prefer self.store.get(key, []).",
+      "keyPoints": [
+        "t = first timestamp > query",
+        "t - 1 = latest <= query",
+        "t == 0 => ''",
+        "defaultdict inserts on read"
+      ],
+      "explanation": "Equivalent to bisect_right(timestamps, ts) - 1."
+    },
+    {
+      "id": "tm-edge-01",
+      "category": "edge_case",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "What does get return when the query timestamp is earlier than every stored timestamp for the key?",
+        "How does the code handle an unknown key?"
+      ],
+      "options": [
+        "The empty string",
+        "The first stored value",
+        "None",
+        "An error"
+      ],
+      "answer": "The empty string",
+      "explanation": "There is no value at or before that time, so the problem specifies ''.",
+      "incorrectOptionExplanations": {
+        "The first stored value": "That value is later than the query.",
+        "None": "The function returns a string.",
+        "An error": "An empty history is handled by t == 0."
+      }
+    }
+  ],
+  "generatedAt": "2026-10-01T14:21:49Z"
+}

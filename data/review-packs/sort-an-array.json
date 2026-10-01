@@ -1,0 +1,182 @@
+{
+  "schemaVersion": 1,
+  "problemSlug": "sort-an-array",
+  "summary": "Sort an integer array in O(n log n) time without built-in sort functions.",
+  "patterns": [
+    "Divide and Conquer"
+  ],
+  "mainInsight": "Divide and conquer: split in halves, sort each recursively and merge the sorted halves in linear time (merge sort) - a guaranteed O(n log n) stable sort. Heap sort gives O(1) extra space and quicksort is fast on average.",
+  "canonicalApproach": "Merge sort",
+  "approaches": [
+    {
+      "name": "Merge sort",
+      "summary": "Recursively sort halves and merge.",
+      "timeComplexity": "O(n log n)",
+      "spaceComplexity": "O(n)",
+      "strengths": [
+        "Stable, guaranteed bound"
+      ],
+      "weaknesses": [
+        "Extra memory"
+      ],
+      "interviewRelevance": "Your approach."
+    },
+    {
+      "name": "Heap sort",
+      "summary": "Build a max-heap and extract repeatedly.",
+      "timeComplexity": "O(n log n)",
+      "spaceComplexity": "O(1)",
+      "strengths": [
+        "In place"
+      ],
+      "weaknesses": [
+        "Not stable, cache-unfriendly"
+      ]
+    },
+    {
+      "name": "Quicksort (randomised pivot)",
+      "summary": "Partition around a pivot and recurse.",
+      "timeComplexity": "O(n log n) average, O(n^2) worst",
+      "spaceComplexity": "O(log n)",
+      "strengths": [
+        "Fast in practice"
+      ],
+      "weaknesses": [
+        "Worst case with bad pivots"
+      ]
+    },
+    {
+      "name": "Counting sort",
+      "summary": "Count values in a bounded range.",
+      "timeComplexity": "O(n + R)",
+      "spaceComplexity": "O(R)",
+      "strengths": [
+        "Linear for small ranges"
+      ],
+      "weaknesses": [
+        "Needs bounded range"
+      ]
+    }
+  ],
+  "personalSolution": {
+    "approach": "Top-down merge sort with slicing",
+    "timeComplexity": "O(n log n)",
+    "spaceComplexity": "O(n)",
+    "isOptimal": true,
+    "notes": "Optimal time. Note the strict < makes the merge unstable and slices copy data; fine for integers."
+  },
+  "commonMistakes": [],
+  "edgeCases": [],
+  "cards": [
+    {
+      "id": "sa-pattern-01",
+      "category": "pattern",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "Which algorithm gives a guaranteed O(n log n) bound and is stable?",
+        "Which divide-and-conquer sort always splits evenly?"
+      ],
+      "options": [
+        "Merge sort",
+        "Quicksort",
+        "Bubble sort",
+        "Selection sort"
+      ],
+      "answer": "Merge sort",
+      "explanation": "It always splits at the midpoint, so the recursion depth is log n and each level does O(n) merging.",
+      "incorrectOptionExplanations": {
+        "Quicksort": "Worst case O(n^2) with bad pivots, and not stable.",
+        "Bubble sort": "O(n^2).",
+        "Selection sort": "O(n^2)."
+      }
+    },
+    {
+      "id": "sa-insight-01",
+      "category": "main_insight",
+      "type": "free_recall",
+      "promptVariants": [
+        "Why is merging two sorted halves linear and why does that give O(n log n)?",
+        "Derive the complexity of merge sort."
+      ],
+      "answer": "Merging uses one pointer per half and always takes the smaller front element, touching each element once: O(n). The recursion has log2(n) levels, each doing O(n) total merging work, giving O(n log n).",
+      "keyPoints": [
+        "Two-pointer merge is O(n)",
+        "log n levels",
+        "O(n) per level"
+      ],
+      "explanation": "T(n) = 2T(n/2) + O(n)."
+    },
+    {
+      "id": "sa-time-01",
+      "category": "time_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Time complexity of merge sort: ___",
+        "Merge sort always runs in ___ time."
+      ],
+      "answer": "O(n log n)",
+      "explanation": "T(n) = 2T(n/2) + O(n).",
+      "acceptedAnswers": [
+        "O(nlogn)",
+        "O(n log(n))"
+      ]
+    },
+    {
+      "id": "sa-space-01",
+      "category": "space_complexity",
+      "type": "free_recall",
+      "promptVariants": [
+        "What is the space of your merge sort and what do the slices add?",
+        "How can merge sort's memory be reduced?"
+      ],
+      "answer": "O(n) for merged arrays, plus the recursion stack O(log n); your list slices (nums[0:mid]) copy data at every level, allocating O(n) per level over time. Passing index ranges and using one auxiliary buffer keeps allocations at O(n) total.",
+      "keyPoints": [
+        "O(n) auxiliary",
+        "Slices copy",
+        "Use indices + one buffer"
+      ],
+      "explanation": "Heap sort sorts in place with O(1) extra."
+    },
+    {
+      "id": "sa-code-01",
+      "category": "code_reasoning",
+      "type": "code_question",
+      "promptVariants": [
+        "Why does the merge use `left[i] < right[j]` (strict) and what does that mean for stability? Why are there two trailing while loops?",
+        "What are the base case and the split?"
+      ],
+      "code": "while i < m and j < n:\n    if left[i] < right[j]:\n        ans[curr] = left[i]; i += 1\n    else:\n        ans[curr] = right[j]; j += 1\n    curr += 1\nwhile i < m: ...\nwhile j < n: ...",
+      "answer": "With `<`, equal elements are taken from the RIGHT half first, which reverses the order of equal elements from left vs right and makes the sort unstable; use `<=` (take from the left on ties) to be stable. After the main loop one half may have leftovers, which are already sorted and are copied by the trailing loops. The base case is n == 1; the split is at n // 2.",
+      "keyPoints": [
+        "< picks right on ties => unstable",
+        "<= keeps stability",
+        "Leftover tails copied",
+        "Base case n == 1"
+      ],
+      "explanation": "Stability does not matter for integers but is a common interview question."
+    },
+    {
+      "id": "sa-edge-01",
+      "category": "edge_case",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "What happens for an array with one element or already sorted input?",
+        "Is merge sort's running time input-dependent?"
+      ],
+      "options": [
+        "It still performs O(n log n) work (single element returns immediately)",
+        "It becomes O(n)",
+        "It becomes O(n^2)",
+        "It fails"
+      ],
+      "answer": "It still performs O(n log n) work (single element returns immediately)",
+      "explanation": "Standard merge sort always splits and merges regardless of the input order.",
+      "incorrectOptionExplanations": {
+        "It becomes O(n)": "Only natural/adaptive variants (Timsort) get O(n) on sorted input.",
+        "It becomes O(n^2)": "That is quicksort's worst case.",
+        "It fails": "No special case is needed."
+      }
+    }
+  ],
+  "generatedAt": "2026-10-01T14:22:47Z"
+}

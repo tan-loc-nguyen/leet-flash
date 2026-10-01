@@ -1,0 +1,137 @@
+{
+  "schemaVersion": 1,
+  "problemSlug": "search-insert-position",
+  "summary": "Return the index of the target in a sorted array or where it would be inserted to keep order, in O(log n).",
+  "patterns": [
+    "Binary Search"
+  ],
+  "mainInsight": "The insertion point is the lower bound: the first index whose value is >= target. A binary search that discards half the range each step (mid +/- 1) finds it in O(log n).",
+  "canonicalApproach": "Binary search (lower bound)",
+  "approaches": [
+    {
+      "name": "Linear scan",
+      "summary": "Return the first index with nums[i] >= target.",
+      "timeComplexity": "O(n)",
+      "spaceComplexity": "O(1)",
+      "strengths": [
+        "Simple"
+      ],
+      "weaknesses": [
+        "Not logarithmic"
+      ]
+    },
+    {
+      "name": "Binary search (lower bound)",
+      "summary": "On nums[mid] >= target set the candidate and move hi = mid - 1; otherwise lo = mid + 1.",
+      "timeComplexity": "O(log n)",
+      "spaceComplexity": "O(1)",
+      "strengths": [
+        "Optimal"
+      ],
+      "interviewRelevance": "The expected answer."
+    }
+  ],
+  "personalSolution": {
+    "approach": "Lower-bound search that steps by one (r -= 1, l += 1)",
+    "timeComplexity": "O(n) worst case (as written)",
+    "spaceComplexity": "O(1)",
+    "isOptimal": false,
+    "notes": "Correct answer but not O(log n): the pointers move one step at a time. Use r = mid - 1 / l = mid + 1."
+  },
+  "commonMistakes": [],
+  "edgeCases": [],
+  "cards": [
+    {
+      "id": "si-pattern-01",
+      "category": "pattern",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "What is the insertion index in terms of binary search?",
+        "Which boundary does Search Insert Position compute?"
+      ],
+      "options": [
+        "Lower bound: the first index with nums[i] >= target",
+        "Upper bound: the first index with nums[i] > target",
+        "The midpoint of the array",
+        "The last index <= target"
+      ],
+      "answer": "Lower bound: the first index with nums[i] >= target",
+      "explanation": "Inserting before the first element that is >= target keeps the array sorted (and returns the existing index for a match).",
+      "incorrectOptionExplanations": {
+        "Upper bound: the first index with nums[i] > target": "That would insert after equal elements.",
+        "The midpoint of the array": "Unrelated to the target.",
+        "The last index <= target": "That is one less than the upper bound."
+      }
+    },
+    {
+      "id": "si-insight-01",
+      "category": "main_insight",
+      "type": "free_recall",
+      "promptVariants": [
+        "Why do you record the candidate `ans = mid` when nums[mid] >= target and keep searching left?",
+        "Why initialise ans to n?"
+      ],
+      "answer": "Any index with nums[mid] >= target is a valid insertion point candidate, but a smaller one may exist to its left, so we keep it and search the left half. If no element is >= target, the insertion point is n (the end), hence ans starts at n.",
+      "keyPoints": [
+        "Candidate then search left",
+        "ans = n if none",
+        "Converges on the first >= target"
+      ],
+      "explanation": "This is exactly bisect_left."
+    },
+    {
+      "id": "si-code-01",
+      "category": "code_reasoning",
+      "type": "code_question",
+      "promptVariants": [
+        "Your loop moves with `r -= 1` and `l += 1`. What is the effect on the running time and what is the fix?",
+        "Why is your search effectively linear?"
+      ],
+      "code": "while l <= r:\n    mid = (l + r) // 2\n    if nums[mid] >= target:\n        ans = mid\n        r -= 1\n    else:\n        l += 1",
+      "answer": "Shrinking the range by only one element per iteration makes the loop run O(n) times in the worst case (the answer is still right, but it is a linear scan in disguise). The fix is to discard half the range: `r = mid - 1` in the first branch and `l = mid + 1` in the second.",
+      "keyPoints": [
+        "Only removes one element per step",
+        "O(n) worst case",
+        "Use r = mid - 1 and l = mid + 1"
+      ],
+      "explanation": "Always assert that the search space halves."
+    },
+    {
+      "id": "si-time-01",
+      "category": "time_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Time complexity of a correct binary search here: ___",
+        "Search Insert Position should run in ___ time."
+      ],
+      "answer": "O(log n)",
+      "explanation": "The range halves every iteration.",
+      "acceptedAnswers": [
+        "O(logn)"
+      ]
+    },
+    {
+      "id": "si-edge-01",
+      "category": "edge_case",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "What is the result for nums = [1,3,5,6], target = 7?",
+        "Where is a value larger than all elements inserted?"
+      ],
+      "options": [
+        "4 (at the end)",
+        "3",
+        "0",
+        "-1"
+      ],
+      "answer": "4 (at the end)",
+      "explanation": "No element is >= 7, so the insertion point is n = 4.",
+      "incorrectOptionExplanations": {
+        "3": "That would insert before 6.",
+        "0": "That is for a value smaller than all.",
+        "-1": "Insertion indices are never negative."
+      }
+    }
+  ],
+  "generatedAt": "2026-10-01T14:21:49Z"
+}

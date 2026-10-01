@@ -1,0 +1,151 @@
+{
+  "schemaVersion": 1,
+  "problemSlug": "reveal-cards-in-increasing-order",
+  "summary": "Order a deck so that repeatedly revealing the top card and moving the next top card to the bottom reveals the cards in increasing order.",
+  "patterns": [
+    "Queue",
+    "Greedy"
+  ],
+  "mainInsight": "Simulate the revealing process on card POSITIONS: use a queue of indices, and assign the sorted cards to positions in the order they will be revealed (reveal index, then move the next index to the back).",
+  "canonicalApproach": "Simulate on indices with a queue",
+  "approaches": [
+    {
+      "name": "Simulate on indices with a queue",
+      "summary": "Sort the deck; for each smallest card take the next position from the queue, then rotate.",
+      "timeComplexity": "O(n log n)",
+      "spaceComplexity": "O(n)",
+      "strengths": [
+        "Direct simulation"
+      ],
+      "interviewRelevance": "Your approach; the expected answer."
+    },
+    {
+      "name": "Work backwards",
+      "summary": "Start from the largest card and reverse the operations with a deque.",
+      "timeComplexity": "O(n log n)",
+      "spaceComplexity": "O(n)",
+      "strengths": [
+        "Elegant"
+      ],
+      "weaknesses": [
+        "Reverse-thinking required"
+      ]
+    }
+  ],
+  "personalSolution": {
+    "approach": "Simulate on indices with a queue",
+    "timeComplexity": "O(n log n)",
+    "spaceComplexity": "O(n)",
+    "isOptimal": true,
+    "notes": "Optimal."
+  },
+  "commonMistakes": [],
+  "edgeCases": [],
+  "cards": [
+    {
+      "id": "rv-pattern-01",
+      "category": "pattern",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "What technique fixes card positions for a known reveal process?",
+        "How do you decide where each sorted card goes?"
+      ],
+      "options": [
+        "Simulate the process on indices with a queue and assign sorted cards in reveal order",
+        "Sort the deck in place",
+        "Binary search for each card",
+        "Use a heap of positions"
+      ],
+      "answer": "Simulate the process on indices with a queue and assign sorted cards in reveal order",
+      "explanation": "The i-th revealed position must receive the i-th smallest card.",
+      "incorrectOptionExplanations": {
+        "Sort the deck in place": "Sorted order is the reveal order, not the deck order.",
+        "Binary search for each card": "No search needed.",
+        "Use a heap of positions": "The order of positions is determined by a fixed rotation, not by priority."
+      }
+    },
+    {
+      "id": "rv-insight-01",
+      "category": "main_insight",
+      "type": "free_recall",
+      "promptVariants": [
+        "Why do the positions get revealed in the order produced by the queue simulation?",
+        "Explain the roles of popleft and the rotate step."
+      ],
+      "answer": "The queue holds deck positions in the current top-to-bottom order. Revealing takes the front position (it receives the next smallest card); then the new top is moved to the bottom by popleft+append. Repeating gives exactly the reveal order of positions.",
+      "keyPoints": [
+        "Queue = current deck order of positions",
+        "Front is revealed",
+        "Next top moves to the bottom"
+      ],
+      "explanation": "The final assignment ans[pos] = card yields the required deck order."
+    },
+    {
+      "id": "rv-time-01",
+      "category": "time_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Time complexity (sorting dominates): ___",
+        "Complete the statement: Time complexity (sorting dominates): ___"
+      ],
+      "answer": "O(n log n)",
+      "explanation": "Sort O(n log n) plus an O(n) queue simulation.",
+      "acceptedAnswers": [
+        "O(nlogn)"
+      ]
+    },
+    {
+      "id": "rv-space-01",
+      "category": "space_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Extra space: ___ (queue + answer)",
+        "Complete the statement: Extra space: ___ (queue + answer)"
+      ],
+      "answer": "O(n)",
+      "explanation": "A queue of n indices and the answer array.",
+      "acceptedAnswers": [
+        "linear"
+      ]
+    },
+    {
+      "id": "rv-code-01",
+      "category": "code_reasoning",
+      "type": "code_question",
+      "promptVariants": [
+        "Why `if queue:` before rotating, and why the answer is indexed by the popped position?",
+        "What does `ans[queue.popleft()] = card` do?"
+      ],
+      "code": "for card in deck:\n    ans[queue.popleft()] = card\n    if queue:\n        queue.append(queue.popleft())",
+      "answer": "popleft gives the deck position that will be revealed next, so the current (smallest remaining) card must be placed there. The rotate step moves the next top card to the bottom; when no cards remain the queue is empty and rotating would error, hence the guard.",
+      "keyPoints": [
+        "Position revealed next gets the smallest card",
+        "Rotate only if queue is non-empty"
+      ],
+      "explanation": "Using deque.rotate(-1) is an alternative."
+    },
+    {
+      "id": "rv-edge-01",
+      "category": "edge_case",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "What is the result for deck = [17,13,11,2,3,5,7]?",
+        "How are the positions revealed?"
+      ],
+      "options": [
+        "[2,13,3,11,5,17,7]",
+        "[2,3,5,7,11,13,17]",
+        "[17,13,11,7,5,3,2]",
+        "[2,13,3,17,5,11,7]"
+      ],
+      "answer": "[2,13,3,11,5,17,7]",
+      "explanation": "Revealing the result gives 2,3,5,7,11,13,17 in order.",
+      "incorrectOptionExplanations": {
+        "[2,3,5,7,11,13,17]": "That is just the sorted deck, which would reveal 2,5,11,... not increasing order.",
+        "[17,13,11,7,5,3,2]": "Descending order cannot reveal increasing values.",
+        "[2,13,3,17,5,11,7]": "Reveals 2,3,5,7,11,... check: 17 and 11 are swapped relative to the true order."
+      }
+    }
+  ],
+  "generatedAt": "2026-10-01T14:22:47Z"
+}

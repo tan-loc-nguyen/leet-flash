@@ -1,0 +1,163 @@
+{
+  "schemaVersion": 1,
+  "problemSlug": "search-a-2d-matrix",
+  "summary": "Search a target in a matrix whose rows are sorted and whose first element of each row exceeds the previous row's last.",
+  "patterns": [
+    "Binary Search",
+    "Matrix"
+  ],
+  "mainInsight": "Because each row starts above the previous row's end, the matrix read row by row is one sorted array of length m*n: binary search the virtual index and convert it with row = mid // n, col = mid % n.",
+  "canonicalApproach": "Single binary search on the flattened index",
+  "approaches": [
+    {
+      "name": "Hash set of all values",
+      "summary": "Flatten into a set.",
+      "timeComplexity": "O(mn)",
+      "spaceComplexity": "O(mn)",
+      "weaknesses": [
+        "Ignores sortedness"
+      ]
+    },
+    {
+      "name": "Binary search rows then the row",
+      "summary": "Search the row whose range contains the target, then search inside it.",
+      "timeComplexity": "O(log m + log n)",
+      "spaceComplexity": "O(1)",
+      "strengths": [
+        "Two simple searches"
+      ],
+      "weaknesses": [
+        "Two phases"
+      ]
+    },
+    {
+      "name": "Single binary search on the flattened index",
+      "summary": "mid -> (mid // n, mid % n).",
+      "timeComplexity": "O(log(m*n))",
+      "spaceComplexity": "O(1)",
+      "strengths": [
+        "One loop"
+      ],
+      "interviewRelevance": "Your approach; the expected answer."
+    }
+  ],
+  "personalSolution": {
+    "approach": "Single binary search on the flattened index",
+    "timeComplexity": "O(log(m*n))",
+    "spaceComplexity": "O(1)",
+    "isOptimal": true,
+    "notes": "Optimal; your hash-map idea is in the comments as the O(mn) baseline."
+  },
+  "commonMistakes": [],
+  "edgeCases": [],
+  "cards": [
+    {
+      "id": "sm3-pattern-01",
+      "category": "pattern",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "How can a fully sorted matrix be searched with one binary search?",
+        "What trick treats a 2D matrix as a 1D array?"
+      ],
+      "options": [
+        "Map the index with row = mid // n and col = mid % n",
+        "Scan each row linearly",
+        "Sort every column",
+        "Use two pointers from the top-right corner"
+      ],
+      "answer": "Map the index with row = mid // n and col = mid % n",
+      "explanation": "The row-major order is globally sorted for this matrix.",
+      "incorrectOptionExplanations": {
+        "Scan each row linearly": "That is O(mn).",
+        "Sort every column": "Unnecessary and costly.",
+        "Use two pointers from the top-right corner": "That is the Search a 2D Matrix II technique (O(m + n)), needed when only rows and columns are sorted separately."
+      }
+    },
+    {
+      "id": "sm3-insight-01",
+      "category": "main_insight",
+      "type": "free_recall",
+      "promptVariants": [
+        "Why does the flattening trick require the 'first element of each row > last element of the previous row' condition?",
+        "What would break without it?"
+      ],
+      "answer": "That condition makes the row-major concatenation of all rows one globally sorted sequence, so a single binary search on indices is valid. If rows were only individually sorted, the concatenation would not be sorted and binary search over it would be wrong (use the staircase search instead).",
+      "keyPoints": [
+        "Concatenation is globally sorted",
+        "Else only row-wise sorted",
+        "Staircase search for the weaker property"
+      ],
+      "explanation": "This is the difference between problems I and II."
+    },
+    {
+      "id": "sm3-time-01",
+      "category": "time_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Time complexity (m rows, n columns): ___",
+        "Binary search over m*n elements takes ___ time."
+      ],
+      "answer": "O(log(m*n))",
+      "explanation": "log2(mn) iterations.",
+      "acceptedAnswers": [
+        "O(log(mn))",
+        "O(log m + log n)",
+        "O(log mn)"
+      ]
+    },
+    {
+      "id": "sm3-space-01",
+      "category": "space_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Extra space: ___",
+        "Complete the statement: Extra space: ___"
+      ],
+      "answer": "O(1)",
+      "explanation": "Only indices; the matrix is never copied.",
+      "acceptedAnswers": [
+        "constant"
+      ]
+    },
+    {
+      "id": "sm3-code-01",
+      "category": "code_reasoning",
+      "type": "code_question",
+      "promptVariants": [
+        "Explain `row, col = mid // n, mid % n` and why n (columns) is used.",
+        "What goes wrong if you use m (rows) instead?"
+      ],
+      "code": "m, n = len(matrix), len(matrix[0])\nlow, high = 0, m * n - 1\nwhile low <= high:\n    mid = low + (high - low) // 2\n    row, col = mid // n, mid % n\n    if matrix[row][col] == target:\n        return True",
+      "answer": "Row-major order places n elements per row, so integer division by n gives the row and the remainder is the column. Using m would mis-map indices whenever the matrix is not square.",
+      "keyPoints": [
+        "n elements per row",
+        "// n = row",
+        "% n = column"
+      ],
+      "explanation": "Only the matrix shape changes the mapping."
+    },
+    {
+      "id": "sm3-edge-01",
+      "category": "edge_case",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "What does the algorithm do for a 1x1 matrix?",
+        "Which input checks the loop bounds?"
+      ],
+      "options": [
+        "low = high = 0; it compares the single element",
+        "It returns False without looking",
+        "It raises an index error",
+        "It needs special casing"
+      ],
+      "answer": "low = high = 0; it compares the single element",
+      "explanation": "The loop runs once with mid = 0.",
+      "incorrectOptionExplanations": {
+        "It returns False without looking": "The element may equal the target.",
+        "It raises an index error": "mid // n and mid % n are 0.",
+        "It needs special casing": "The general loop handles it."
+      }
+    }
+  ],
+  "generatedAt": "2026-10-01T14:21:49Z"
+}

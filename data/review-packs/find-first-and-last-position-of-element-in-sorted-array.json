@@ -1,0 +1,173 @@
+{
+  "schemaVersion": 1,
+  "problemSlug": "find-first-and-last-position-of-element-in-sorted-array",
+  "summary": "Return the first and last index of a target in a sorted array in O(log n), or [-1, -1].",
+  "patterns": [
+    "Binary Search"
+  ],
+  "mainInsight": "Run two boundary binary searches: the first index with nums[i] >= target (lower bound) and the first index with nums[i] > target (upper bound); the answer is [lower, upper - 1] if the target exists.",
+  "canonicalApproach": "Two boundary binary searches",
+  "approaches": [
+    {
+      "name": "Linear scan",
+      "summary": "Find the first and last occurrence by scanning.",
+      "timeComplexity": "O(n)",
+      "spaceComplexity": "O(1)",
+      "weaknesses": [
+        "Not logarithmic"
+      ]
+    },
+    {
+      "name": "Binary search + expand",
+      "summary": "Find any occurrence then expand left/right.",
+      "timeComplexity": "O(n) worst",
+      "spaceComplexity": "O(1)",
+      "weaknesses": [
+        "Degenerates when all elements equal the target"
+      ]
+    },
+    {
+      "name": "Two boundary binary searches",
+      "summary": "Lower bound for the first index; upper bound minus one for the last.",
+      "timeComplexity": "O(log n)",
+      "spaceComplexity": "O(1)",
+      "strengths": [
+        "Always logarithmic"
+      ],
+      "interviewRelevance": "Your approach; the expected answer."
+    }
+  ],
+  "personalSolution": {
+    "approach": "Two boundary binary searches",
+    "timeComplexity": "O(log n)",
+    "spaceComplexity": "O(1)",
+    "isOptimal": true,
+    "notes": "Optimal."
+  },
+  "commonMistakes": [],
+  "edgeCases": [],
+  "cards": [
+    {
+      "id": "fl-pattern-01",
+      "category": "pattern",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "Which technique finds the first and last occurrence in O(log n)?",
+        "What two searches give the range of equal values?"
+      ],
+      "options": [
+        "Lower-bound and upper-bound binary searches",
+        "One binary search then a linear expansion",
+        "Hash map of indices",
+        "Two pointers from both ends"
+      ],
+      "answer": "Lower-bound and upper-bound binary searches",
+      "explanation": "Lower bound is the first index >= target; upper bound is the first index > target.",
+      "incorrectOptionExplanations": {
+        "One binary search then a linear expansion": "Degenerates to O(n) when many duplicates exist.",
+        "Hash map of indices": "Uses O(n) extra space and ignores sortedness.",
+        "Two pointers from both ends": "That is O(n)."
+      }
+    },
+    {
+      "id": "fl-insight-01",
+      "category": "main_insight",
+      "type": "free_recall",
+      "promptVariants": [
+        "Why does binary search not stop at the first match here?",
+        "How does a boundary search differ from a plain search?"
+      ],
+      "answer": "A match only tells you that some occurrence exists; to find the extreme one you keep searching one side (e.g. high = mid - 1 after recording mid) so the search converges on the boundary. The recorded candidate is the leftmost index with nums[i] >= target.",
+      "keyPoints": [
+        "Record candidate and keep narrowing",
+        "Converges to the boundary",
+        "Left side for first, right side for last"
+      ],
+      "explanation": "The last position is (first index > target) - 1."
+    },
+    {
+      "id": "fl-invariant-01",
+      "category": "invariant",
+      "type": "free_recall",
+      "promptVariants": [
+        "What do `first` and `last` hold in your code during and after the searches?",
+        "State the meaning of the candidate variables."
+      ],
+      "answer": "After the first search `first` is the smallest index with nums[i] >= target (n if none); after the second search `last` is the smallest index with nums[i] > target (n if none) and the answer's right end is last - 1. If first > last - 1 the target is absent.",
+      "keyPoints": [
+        "first = lower bound",
+        "last = upper bound (minus 1 at the end)",
+        "first <= last - 1 means present"
+      ],
+      "explanation": "Initialising with n handles 'greater than everything'."
+    },
+    {
+      "id": "fl-time-01",
+      "category": "time_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Time complexity: ___",
+        "Two binary searches take ___."
+      ],
+      "answer": "O(log n)",
+      "explanation": "Each search halves the range.",
+      "acceptedAnswers": [
+        "O(logn)"
+      ]
+    },
+    {
+      "id": "fl-space-01",
+      "category": "space_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Extra space: ___",
+        "Complete the statement: Extra space: ___"
+      ],
+      "answer": "O(1)",
+      "explanation": "A few indices.",
+      "acceptedAnswers": [
+        "constant"
+      ]
+    },
+    {
+      "id": "fl-code-01",
+      "category": "code_reasoning",
+      "type": "code_question",
+      "promptVariants": [
+        "Why does the second search use `>` instead of `>=` and why is `last -= 1` applied?",
+        "What does [first, last] mean when first > last?"
+      ],
+      "code": "while low <= high:\n    mid = (low + high) // 2\n    if nums[mid] > target:\n        last = mid\n        high = mid - 1\n    else:\n        low = mid + 1\nlast -= 1\nreturn [first, last] if first <= last else [-1, -1]",
+      "answer": "Using `>` finds the first index strictly beyond the target block (the upper bound); the last occurrence is one before it, hence `last -= 1`. If the target is absent the two bounds coincide, so first == last + 1 (first > last) and the function returns [-1, -1].",
+      "keyPoints": [
+        "> gives the upper bound",
+        "last = upper bound - 1",
+        "first > last => not present"
+      ],
+      "explanation": "Same pair of searches as bisect_left / bisect_right."
+    },
+    {
+      "id": "fl-edge-01",
+      "category": "edge_case",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "What is the result for nums = [5,7,7,8,8,10], target = 6?",
+        "How does the code detect absence?"
+      ],
+      "options": [
+        "[-1, -1] (first = 1, last = 0)",
+        "[1, 1]",
+        "[0, 0]",
+        "[2, 3]"
+      ],
+      "answer": "[-1, -1] (first = 1, last = 0)",
+      "explanation": "Both bounds point at index 1 (first value > 6), so last - 1 = 0 < first = 1.",
+      "incorrectOptionExplanations": {
+        "[1, 1]": "6 is not in the array.",
+        "[0, 0]": "5 is not the target.",
+        "[2, 3]": "Those are the indices of 7."
+      }
+    }
+  ],
+  "generatedAt": "2026-10-01T14:21:49Z"
+}

@@ -1,0 +1,175 @@
+{
+  "schemaVersion": 1,
+  "problemSlug": "sqrtx",
+  "summary": "Return the integer part of the square root of x without using a built-in power/sqrt.",
+  "patterns": [
+    "Binary Search",
+    "Math"
+  ],
+  "mainInsight": "The function mid^2 is monotone, so binary search the largest integer whose square is <= x (the floor of the square root) over the range [0, x].",
+  "canonicalApproach": "Binary search on the answer",
+  "approaches": [
+    {
+      "name": "Linear search",
+      "summary": "Increment i until i*i > x.",
+      "timeComplexity": "O(sqrt(x))",
+      "spaceComplexity": "O(1)",
+      "weaknesses": [
+        "Slow for large x"
+      ]
+    },
+    {
+      "name": "Binary search on the answer",
+      "summary": "Find the largest mid with mid * mid <= x.",
+      "timeComplexity": "O(log x)",
+      "spaceComplexity": "O(1)",
+      "strengths": [
+        "Simple, exact with integers"
+      ],
+      "interviewRelevance": "Your approach."
+    },
+    {
+      "name": "Newton's method",
+      "summary": "r = (r + x // r) // 2 until stable.",
+      "timeComplexity": "O(log log x) iterations",
+      "spaceComplexity": "O(1)",
+      "strengths": [
+        "Fastest"
+      ],
+      "weaknesses": [
+        "Convergence argument"
+      ],
+      "interviewRelevance": "A good bonus answer."
+    },
+    {
+      "name": "math.isqrt",
+      "summary": "Built-in exact integer square root.",
+      "timeComplexity": "O(1)-ish",
+      "spaceComplexity": "O(1)",
+      "strengths": [
+        "One line"
+      ],
+      "weaknesses": [
+        "Not allowed in the interview"
+      ]
+    }
+  ],
+  "personalSolution": {
+    "approach": "Binary search on the answer",
+    "timeComplexity": "O(log x)",
+    "spaceComplexity": "O(1)",
+    "isOptimal": true,
+    "notes": "Optimal for the binary-search family; Newton's method converges faster."
+  },
+  "commonMistakes": [],
+  "edgeCases": [],
+  "cards": [
+    {
+      "id": "sx-pattern-01",
+      "category": "pattern",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "Which technique finds floor(sqrt(x)) in O(log x)?",
+        "What pattern applies when the answer is the largest value satisfying a monotone predicate?"
+      ],
+      "options": [
+        "Binary search on the answer",
+        "Dynamic programming",
+        "Sliding window",
+        "Two pointers on a sorted array"
+      ],
+      "answer": "Binary search on the answer",
+      "explanation": "mid^2 <= x is true for small mid and false for large mid, so the largest true value can be found by bisection.",
+      "incorrectOptionExplanations": {
+        "Dynamic programming": "No subproblem structure.",
+        "Sliding window": "Not a subarray problem.",
+        "Two pointers on a sorted array": "There is no array."
+      }
+    },
+    {
+      "id": "sx-insight-01",
+      "category": "main_insight",
+      "type": "free_recall",
+      "promptVariants": [
+        "Why is the answer the last mid that satisfies mid^2 < x (tracked in `res`)?",
+        "What does `res` represent?"
+      ],
+      "answer": "The predicate mid^2 <= x is monotone. Each time mid^2 < x we record mid as a feasible candidate and look for a larger one; when mid^2 > x we go lower. The last recorded candidate is the greatest integer whose square does not exceed x (floor of the root). An exact match returns immediately.",
+      "keyPoints": [
+        "Monotone predicate",
+        "Record feasible candidate and go higher",
+        "Largest feasible = floor"
+      ],
+      "explanation": "Exactly the 'last true' template."
+    },
+    {
+      "id": "sx-time-01",
+      "category": "time_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Time complexity of binary search over [0, x]: ___",
+        "Complete the statement: Time complexity of binary search over [0, x]: ___"
+      ],
+      "answer": "O(log x)",
+      "explanation": "The search range halves each step.",
+      "acceptedAnswers": [
+        "O(logx)",
+        "O(log n)"
+      ]
+    },
+    {
+      "id": "sx-space-01",
+      "category": "space_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Extra space: ___",
+        "Complete the statement: Extra space: ___"
+      ],
+      "answer": "O(1)",
+      "explanation": "Three integers.",
+      "acceptedAnswers": [
+        "constant"
+      ]
+    },
+    {
+      "id": "sx-code-01",
+      "category": "code_reasoning",
+      "type": "code_question",
+      "promptVariants": [
+        "What are the edge cases x = 0 and x = 1 for your code and how can the upper bound be tightened?",
+        "Why is `high = x` wasteful?"
+      ],
+      "code": "low, high = 0, x\nres = 0\nwhile low <= high:\n    mid = low + (high - low) // 2\n    if mid ** 2 == x:\n        return mid\n    elif mid ** 2 > x:\n        high = mid - 1\n    else:\n        low = mid + 1\n        res = mid",
+      "answer": "For x = 0 the first mid = 0 gives 0^2 == 0 and returns 0; for x = 1, mid = 0 is below and then mid = 1 matches. The root never exceeds x // 2 + 1 (for x >= 2), so high = x // 2 + 1 halves the range once; with log-time search it saves only one iteration, but avoids huge squares in languages with overflow.",
+      "keyPoints": [
+        "x = 0 and 1 handled by the loop",
+        "Upper bound x // 2 + 1",
+        "mid ** 2 can overflow in fixed-width languages"
+      ],
+      "explanation": "Use mid <= x // mid to avoid overflow."
+    },
+    {
+      "id": "sx-edge-01",
+      "category": "edge_case",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "What does the function return for x = 8?",
+        "Why is the result 2 and not 3?"
+      ],
+      "options": [
+        "2 (floor of 2.828)",
+        "3",
+        "2.83",
+        "4"
+      ],
+      "answer": "2 (floor of 2.828)",
+      "explanation": "3^2 = 9 exceeds 8, so the greatest integer square not exceeding 8 is 2^2 = 4.",
+      "incorrectOptionExplanations": {
+        "3": "9 > 8.",
+        "2.83": "The result must be an integer.",
+        "4": "That is the square, not the root."
+      }
+    }
+  ],
+  "generatedAt": "2026-10-01T14:21:49Z"
+}

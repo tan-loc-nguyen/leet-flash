@@ -1,0 +1,170 @@
+{
+  "schemaVersion": 1,
+  "problemSlug": "k-closest-points-to-origin",
+  "summary": "Return the k points closest to the origin.",
+  "patterns": [
+    "Heap / Priority Queue"
+  ],
+  "mainInsight": "You only need the k smallest distances: keep a max-heap of size k (largest distance on top) and evict the farthest whenever it exceeds k. Compare squared distances - the square root is unnecessary.",
+  "canonicalApproach": "Quickselect",
+  "approaches": [
+    {
+      "name": "Sort by distance",
+      "summary": "Sort all points and take k.",
+      "timeComplexity": "O(n log n)",
+      "spaceComplexity": "O(n)",
+      "strengths": [
+        "Simple"
+      ],
+      "weaknesses": [
+        "Sorts more than needed"
+      ]
+    },
+    {
+      "name": "Max-heap of size k",
+      "summary": "Push (-dist, point); pop when size > k.",
+      "timeComplexity": "O(n log k)",
+      "spaceComplexity": "O(k)",
+      "strengths": [
+        "Good for streams"
+      ],
+      "weaknesses": [
+        "log k factor"
+      ],
+      "interviewRelevance": "Your approach."
+    },
+    {
+      "name": "Quickselect",
+      "summary": "Partition by distance until the k-th smallest is in place.",
+      "timeComplexity": "O(n) average",
+      "spaceComplexity": "O(1)",
+      "strengths": [
+        "Best average time"
+      ],
+      "weaknesses": [
+        "Worst case, mutation"
+      ],
+      "interviewRelevance": "The optimal-time answer."
+    }
+  ],
+  "personalSolution": {
+    "approach": "Max-heap of size k with floating-point distances",
+    "timeComplexity": "O(n log k)",
+    "spaceComplexity": "O(k)",
+    "isOptimal": false,
+    "notes": "Correct. Use squared distances (no sqrt); quickselect gives O(n) average."
+  },
+  "commonMistakes": [],
+  "edgeCases": [],
+  "cards": [
+    {
+      "id": "kc-pattern-01",
+      "category": "pattern",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "Which structure keeps the k closest points as you scan?",
+        "Why a MAX-heap for the k smallest distances?"
+      ],
+      "options": [
+        "Max-heap of size k (evict the farthest)",
+        "Min-heap of all points",
+        "Stack",
+        "Queue"
+      ],
+      "answer": "Max-heap of size k (evict the farthest)",
+      "explanation": "The farthest of the current k candidates sits at the root and is the one to discard.",
+      "incorrectOptionExplanations": {
+        "Min-heap of all points": "Extracting k items costs O(k log n) after an O(n) build; works but stores everything.",
+        "Stack": "No ordering by distance.",
+        "Queue": "No ordering by distance."
+      }
+    },
+    {
+      "id": "kc-insight-01",
+      "category": "main_insight",
+      "type": "free_recall",
+      "promptVariants": [
+        "Why can you compare squared distances instead of distances?",
+        "What does skipping the sqrt change?"
+      ],
+      "answer": "Squaring is monotone for non-negative values, so x^2 + y^2 orders points exactly as sqrt(x^2 + y^2) does. Using squared distances avoids floating-point work and precision problems.",
+      "keyPoints": [
+        "Monotone transform",
+        "Same ordering",
+        "Avoids floats"
+      ],
+      "explanation": "Your code uses **0.5, which is unnecessary."
+    },
+    {
+      "id": "kc-time-01",
+      "category": "time_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Time complexity with a size-k heap: ___",
+        "Complete the statement: Time complexity with a size-k heap: ___"
+      ],
+      "answer": "O(n log k)",
+      "explanation": "n pushes/pops on a heap bounded by k.",
+      "acceptedAnswers": [
+        "O(nlogk)",
+        "O(n log(k))"
+      ]
+    },
+    {
+      "id": "kc-space-01",
+      "category": "space_complexity",
+      "type": "free_recall",
+      "promptVariants": [
+        "What is the space cost and how does it compare with sorting?",
+        "How much memory does the heap approach use?"
+      ],
+      "answer": "O(k) for the heap (plus the output), versus O(n) for sorting a copy; quickselect works in place with O(1) extra.",
+      "keyPoints": [
+        "Heap O(k)",
+        "Sort O(n)",
+        "Quickselect O(1)"
+      ],
+      "explanation": "Choose by n and k."
+    },
+    {
+      "id": "kc-code-01",
+      "category": "code_reasoning",
+      "type": "code_question",
+      "promptVariants": [
+        "Why is the distance negated and what happens on ties when comparing `(-dis, [x, y])` tuples?",
+        "What does the final list comprehension return?"
+      ],
+      "code": "heap = []\nfor x, y in points:\n    dis = (x**2 + y**2)**0.5\n    heapq.heappush(heap, (-dis, [x, y]))\n    if len(heap) > k:\n        heapq.heappop(heap)\nreturn [p for _, p in heap]",
+      "answer": "heapq is a min-heap; negating the distance makes the farthest point the smallest tuple so heappop evicts it. On equal distances Python compares the lists [x, y] lexicographically, which is fine but unnecessary - ties never need ordering. The result lists the k remaining points in arbitrary order.",
+      "keyPoints": [
+        "Negate for a max-heap",
+        "Tie falls back to comparing lists",
+        "Result order arbitrary"
+      ],
+      "explanation": "Use -(x*x + y*y) to drop the float."
+    },
+    {
+      "id": "kc-edge-01",
+      "category": "edge_case",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "What does the algorithm return when k equals the number of points?",
+        "How does the heap behave then?"
+      ],
+      "options": [
+        "All points; nothing is ever popped",
+        "An empty list",
+        "Only the closest point",
+        "An error"
+      ],
+      "answer": "All points; nothing is ever popped",
+      "explanation": "The heap never exceeds k, so every point stays.",
+      "incorrectOptionExplanations": {
+        "An empty list": "All points are retained.",
+        "Only the closest point": "That would be k = 1.",
+        "An error": "No invalid operation occurs."
+      }
+    }
+  ],
+  "generatedAt": "2026-10-01T14:22:47Z"
+}
