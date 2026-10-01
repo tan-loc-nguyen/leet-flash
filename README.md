@@ -38,7 +38,7 @@ Import my LeetCode problems.            Start today's review.
 Sync LeetCode.                          Give me 10 problems today.
 Generate review packs for new problems. Quiz me on my weak problems.
 Review Dynamic Programming and Graph.   Interview mode: 8 Medium problems.
-Cram Blind 75.                          What am I weakest at?
+Cram my solved list.                          What am I weakest at?
 Add a note to 3Sum: ...                 Add this card to Minimum Window Substring: ...
 ```
 
@@ -54,7 +54,7 @@ Add a note to 3Sum: ...                 Add this card to Minimum Window Substrin
 | `review.py start/next/answer/reveal/hint/forgot/skip/status/abort/plan` | session driver used by the agent |
 | `stats.py [--json]` | accuracy by pattern/category, mastery, due, weak problems |
 | `query_problems.py` | filter problems (tag, pattern, list, level, due, pack…) |
-| `add_note.py`, `add_card.py` | notes and manual cards |
+| `add_note.py`, `add_card.py`, `add_list.py` | notes, manual cards, your own problem lists |
 | `rebuild_state.py [--dry-run]` | rebuild `review-state.json` from history |
 | `set_credentials.py` | store credentials locally |
 
@@ -65,7 +65,7 @@ All run as `uv run python scripts/<name>.py`.
 ```
 data/problems/<slug>.json        one file per problem (statement, tags, latest Python solution, notes)
 data/review-packs/<slug>.json    generated review cards;  custom/<slug>.json = manual cards
-data/lists/*.json                blind-75, neetcode-150
+data/lists/*.json                "solved" (Solved list, auto-maintained by sync) + lists you add (scripts/add_list.py)
 data/state/review-state.json     current mastery / next review / weak categories
 data/state/review-history.jsonl  append-only audit log of every answer
 data/state/sessions.json         active/finished sessions (resume after interruptions)

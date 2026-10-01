@@ -26,7 +26,7 @@ def add_filter_args(p: argparse.ArgumentParser) -> None:
     g.add_argument("--tag", action="append", default=[], help="imported LeetCode tag only")
     g.add_argument("--pattern", action="append", default=[], help="review-pack pattern only")
     g.add_argument("--difficulty", action="append", default=[], help="Easy / Medium / Hard (repeatable)")
-    g.add_argument("--list", dest="lists", action="append", default=[], help="list name, e.g. blind-75")
+    g.add_argument("--list", dest="lists", action="append", default=[], help="list name, e.g. solved")
     g.add_argument("--status", choices=["solved", "unsolved"])
     g.add_argument("--slug", action="append", default=[])
     g.add_argument("--id", dest="ids", action="append", default=[], help="LeetCode frontend id")

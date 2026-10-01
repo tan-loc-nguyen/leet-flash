@@ -150,3 +150,24 @@ def test_seed_problems_get_real_statement_on_first_sync(paths, fake, creds, now)
     real = store.get("two-sum")
     assert real.source == "leetcode" and real.problem_statement.startswith("Statement.")
     assert real.constraints == ["1 <= n <= 10"] and real.status == "solved"
+
+
+def test_acceptance_rate_drift_does_not_cause_updates_but_real_change_does(paths, fake, creds, now):
+    do_sync(paths, fake, creds, now)
+    fake.solved[0]["acRate"] = 50.13          # +0.007 drift
+    assert do_sync(paths, fake, creds, now).updated == 0
+    fake.solved[0]["acRate"] = 53.0
+    assert do_sync(paths, fake, creds, now).updated == 1
+
+
+def test_sync_maintains_solved_list_without_dropping_entries(paths, fake, creds, now):
+    from leetcode_review.content.loader import load_lists, save_list
+    save_list(paths, "solved", "Solved list", ["legacy-problem"])
+    do_sync(paths, fake, creds, now)
+    lst = load_lists(paths)["solved"]
+    assert lst["name"] == "Solved list"
+    assert lst["problems"] == ["legacy-problem", "two-sum", "valid-parentheses", "lonely-cpp"] or \
+        set(lst["problems"]) == {"legacy-problem", "two-sum", "valid-parentheses", "lonely-cpp"}
+    before = (paths.lists / "solved.json").read_bytes()
+    do_sync(paths, fake, creds, now)
+    assert (paths.lists / "solved.json").read_bytes() == before

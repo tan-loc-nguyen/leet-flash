@@ -11,6 +11,7 @@ from collections.abc import Callable
 from dataclasses import dataclass, field
 from datetime import datetime
 
+from .content.loader import refresh_solved_list
 from .leetcode.graphql import CredentialsExpiredError, CredentialsMissingError, LeetCodeAPIError
 from .leetcode.normalize import ProblemDetails, SolvedSummary
 from .leetcode.provider import LeetCodeProvider
@@ -73,7 +74,9 @@ def merge_problem(
     prob.difficulty = summary.difficulty or prob.difficulty
     prob.premium = summary.premium
     prob.tags = summary.tags or prob.tags
-    prob.ac_rate = summary.ac_rate if summary.ac_rate is not None else prob.ac_rate
+    # acRate drifts a little on every request; only record meaningful changes so syncs stay no-ops.
+    if summary.ac_rate is not None and (prob.ac_rate is None or abs(summary.ac_rate - prob.ac_rate) >= 1.0):
+        prob.ac_rate = summary.ac_rate
     prob.status = "solved"
     prob.source = "manual" if existing and existing.source == "manual" else "leetcode"
     if details:
@@ -145,6 +148,8 @@ async def sync_problems(
             report.python_unavailable += 1
         if progress:
             progress(f"[{i}/{len(solved)}] {slug}")
+    ordered = sorted(solved, key=lambda x: (int(x.leetcode_id) if (x.leetcode_id or "").isdigit() else 10**9, x.slug))
+    refresh_solved_list(store.paths, [x.slug for x in ordered])
     return report
 
 

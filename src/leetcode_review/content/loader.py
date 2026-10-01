@@ -73,3 +73,27 @@ def load_lists(paths: Paths) -> dict[str, dict]:
         data = read_json(f)
         out[f.stem] = {"name": data.get("name", f.stem), "problems": list(data.get("problems", []))}
     return out
+
+
+SOLVED_LIST_SLUG = "solved"
+
+
+def save_list(paths: Paths, slug: str, name: str, problems: list[str], description: str = "") -> None:
+    """Write data/lists/<slug>.json (order preserved, duplicates removed)."""
+    unique = list(dict.fromkeys(problems))
+    atomic_write_json(paths.lists / f"{slug}.json",
+                      {"name": name, "slug": slug, "description": description, "problems": unique})
+
+
+def refresh_solved_list(paths: Paths, solved_slugs_in_order: list[str]) -> bool:
+    """Keep data/lists/solved.json ("Solved list") = every problem ever seen as solved.
+
+    Only ever adds problems (a sync must not drop anything). Returns True if the file changed.
+    """
+    existing = load_lists(paths).get(SOLVED_LIST_SLUG, {}).get("problems", [])
+    merged = list(dict.fromkeys([*existing, *solved_slugs_in_order]))
+    if merged == existing and (paths.lists / f"{SOLVED_LIST_SLUG}.json").exists():
+        return False
+    save_list(paths, SOLVED_LIST_SLUG, "Solved list", merged,
+              "Every problem solved on LeetCode (maintained automatically by sync).")
+    return True

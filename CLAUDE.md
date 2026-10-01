@@ -25,7 +25,7 @@ Python only (I interview in Python). Run everything with `uv run python scripts/
 | "Start today's review" / "Give me 10 problems" | `review.py plan`, then `review.py start --mode daily [--target N] [--all-due]` |
 | "Quiz me on my weak problems" | `review.py start --mode weak` (optionally `--focus-category space_complexity`) |
 | "Review Graph and DP problems" | `review.py start --mode filtered --topic graph --topic dp` |
-| "Cram Blind 75" | `review.py start --mode cram --list blind-75 --target 20` (cram ignores due dates; still records) |
+| "Cram my solved list" | `review.py start --mode cram --list solved --target 20` (cram ignores due dates; still records) |
 | "Interview mode: 8 Medium problems" | `review.py start --mode interview --difficulty Medium --target 8` |
 | "Show my stats" / "What am I weakest at?" | `scripts/stats.py` (add `--json` if you need to reason over it) |
 | "Add this card to X: …" | `scripts/add_card.py <slug> "<question>" --answer "…" --category …` (or `--json`) |
