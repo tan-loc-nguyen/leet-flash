@@ -1,0 +1,165 @@
+{
+  "schemaVersion": 1,
+  "problemSlug": "two-sum-iii-data-structure-design",
+  "summary": "Design a structure supporting add(number) and find(value) (is there a pair summing to value).",
+  "patterns": [
+    "Design",
+    "Array / Hashing"
+  ],
+  "mainInsight": "Choose which operation to optimise: store counts in a hash map so find is a single O(n) scan with complement lookups (add O(1)), or keep a sorted list so find is a two-pointer pass but add costs O(n).",
+  "canonicalApproach": "Counter map",
+  "approaches": [
+    {
+      "name": "List + rebuild a set on each find",
+      "summary": "Append on add; find builds a set while scanning.",
+      "timeComplexity": "add O(1), find O(n)",
+      "spaceComplexity": "O(n) extra per find",
+      "strengths": [
+        "Simple"
+      ],
+      "weaknesses": [
+        "Rebuilds a hash each call"
+      ],
+      "interviewRelevance": "Your approach."
+    },
+    {
+      "name": "Counter map",
+      "summary": "Maintain counts; find loops over distinct numbers checking complement (count >= 2 if complement == number).",
+      "timeComplexity": "add O(1), find O(n)",
+      "spaceComplexity": "O(n)",
+      "strengths": [
+        "No rebuild; handles duplicates via counts"
+      ],
+      "interviewRelevance": "Standard answer."
+    },
+    {
+      "name": "Sorted list + two pointers",
+      "summary": "Insert in sorted position; find uses two pointers.",
+      "timeComplexity": "add O(n), find O(n)",
+      "spaceComplexity": "O(n)",
+      "strengths": [
+        "Good for many finds on a stable set"
+      ],
+      "weaknesses": [
+        "Slow add"
+      ]
+    }
+  ],
+  "personalSolution": {
+    "approach": "List + per-call hash set scan",
+    "timeComplexity": "add O(1), find O(n)",
+    "spaceComplexity": "O(n)",
+    "isOptimal": false,
+    "notes": "Correct. A persistent counter avoids rebuilding the dict on every find."
+  },
+  "commonMistakes": [],
+  "edgeCases": [],
+  "cards": [
+    {
+      "id": "t3-pattern-01",
+      "category": "pattern",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "What is the usual design for Two Sum III?",
+        "How can add stay O(1) while find stays O(n)?"
+      ],
+      "options": [
+        "Hash map of counts with complement lookups",
+        "Binary search tree",
+        "Heap of all numbers",
+        "Trie"
+      ],
+      "answer": "Hash map of counts with complement lookups",
+      "explanation": "Counts allow detecting a self-pair (x + x) and give O(1) complement checks.",
+      "incorrectOptionExplanations": {
+        "Binary search tree": "O(log n) add, but no better find for pair-sum.",
+        "Heap of all numbers": "Cannot search pairs efficiently.",
+        "Trie": "Not applicable."
+      }
+    },
+    {
+      "id": "t3-insight-01",
+      "category": "main_insight",
+      "type": "free_recall",
+      "promptVariants": [
+        "Why is a counter needed instead of a plain set?",
+        "How do you handle value = 2*x when x appears once vs twice?"
+      ],
+      "answer": "A pair may use the same number twice only if it was added at least twice. With counts you accept complement == number only when count >= 2; a plain set cannot distinguish one copy from two.",
+      "keyPoints": [
+        "Duplicates matter",
+        "complement == number needs count >= 2"
+      ],
+      "explanation": "Your per-call dict avoids the issue by checking before inserting."
+    },
+    {
+      "id": "t3-time-01",
+      "category": "time_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Time of find with n stored numbers: ___",
+        "Complete the statement: Time of find with n stored numbers: ___"
+      ],
+      "answer": "O(n)",
+      "explanation": "One scan with O(1) hash lookups.",
+      "acceptedAnswers": [
+        "linear"
+      ]
+    },
+    {
+      "id": "t3-space-01",
+      "category": "space_complexity",
+      "type": "free_recall",
+      "promptVariants": [
+        "Your find builds a new dict each call. What does that cost and how can you avoid it?",
+        "How would a persistent counter change the memory profile?"
+      ],
+      "answer": "Each find allocates a dict of up to n entries (O(n) temporary space and allocation time). A persistent Counter updated in add stores each distinct value once and find needs no rebuild.",
+      "keyPoints": [
+        "O(n) temporary dict per find",
+        "Persistent counter updated in add"
+      ],
+      "explanation": "Total memory stays O(n)."
+    },
+    {
+      "id": "t3-code-01",
+      "category": "code_reasoning",
+      "type": "code_question",
+      "promptVariants": [
+        "Why does the lookup happen before `hmap[num] = True` in find, and why does this handle a pair of equal numbers?",
+        "Why must the complement be checked before inserting the current number in the find loop?"
+      ],
+      "code": "for num in self.nums:\n    complement = value - num\n    if complement in hmap:\n        return True\n    hmap[num] = True\nreturn False",
+      "answer": "Checking before inserting means the current number is never matched with itself; a pair of equal numbers is found only when a second copy appears after the first has been inserted, which is exactly the 'added twice' requirement.",
+      "keyPoints": [
+        "Check, then insert",
+        "No self-pairing",
+        "Equal pair needs two copies"
+      ],
+      "explanation": "Same trick as Two Sum."
+    },
+    {
+      "id": "t3-edge-01",
+      "category": "edge_case",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "After add(3) once, what does find(6) return?",
+        "How are single copies handled?"
+      ],
+      "options": [
+        "False (only one 3)",
+        "True",
+        "It depends on sorting",
+        "An error"
+      ],
+      "answer": "False (only one 3)",
+      "explanation": "3 + 3 requires two numbers.",
+      "incorrectOptionExplanations": {
+        "True": "A single element cannot pair with itself.",
+        "It depends on sorting": "Order is irrelevant.",
+        "An error": "No exception occurs."
+      }
+    }
+  ],
+  "generatedAt": "2026-10-01T14:19:52Z"
+}

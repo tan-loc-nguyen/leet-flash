@@ -1,0 +1,153 @@
+{
+  "schemaVersion": 1,
+  "problemSlug": "last-stone-weight",
+  "summary": "Repeatedly smash the two heaviest stones and return the weight of the last remaining stone (or 0).",
+  "patterns": [
+    "Heap / Priority Queue"
+  ],
+  "mainInsight": "Each step needs the two largest elements and then possibly inserts a new one - exactly the operations of a max-heap. Python's heapq is a min-heap, so store negated weights.",
+  "canonicalApproach": "Max-heap (negated min-heap)",
+  "approaches": [
+    {
+      "name": "Sort every round",
+      "summary": "Sort the list each time and pick the last two.",
+      "timeComplexity": "O(n^2 log n)",
+      "spaceComplexity": "O(1)",
+      "strengths": [
+        "Easy"
+      ],
+      "weaknesses": [
+        "Repeated sorting"
+      ]
+    },
+    {
+      "name": "Max-heap (negated min-heap)",
+      "summary": "Pop two largest, push the difference if non-zero.",
+      "timeComplexity": "O(n log n)",
+      "spaceComplexity": "O(n)",
+      "strengths": [
+        "Optimal"
+      ],
+      "interviewRelevance": "Your approach."
+    }
+  ],
+  "personalSolution": {
+    "approach": "Max-heap via negated min-heap",
+    "timeComplexity": "O(n log n)",
+    "spaceComplexity": "O(n)",
+    "isOptimal": true,
+    "notes": "Optimal."
+  },
+  "commonMistakes": [],
+  "edgeCases": [],
+  "cards": [
+    {
+      "id": "ls-pattern-01",
+      "category": "pattern",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "Which structure repeatedly gives the two largest elements efficiently?",
+        "What pattern fits 'repeatedly take the max and reinsert'?"
+      ],
+      "options": [
+        "Max-heap (priority queue)",
+        "Stack",
+        "Queue",
+        "Hash map"
+      ],
+      "answer": "Max-heap (priority queue)",
+      "explanation": "Each extraction and insertion is O(log n).",
+      "incorrectOptionExplanations": {
+        "Stack": "Order is not by weight.",
+        "Queue": "FIFO ignores weights.",
+        "Hash map": "Cannot find the max quickly."
+      }
+    },
+    {
+      "id": "ls-insight-01",
+      "category": "main_insight",
+      "type": "free_recall",
+      "promptVariants": [
+        "Why do you store negative weights in Python's heapq?",
+        "How is a max-heap simulated?"
+      ],
+      "answer": "heapq implements a min-heap; negating the values makes the smallest negative number correspond to the largest weight, so heappop returns the heaviest stone.",
+      "keyPoints": [
+        "heapq is a min-heap",
+        "Negate to get a max-heap",
+        "Negate again when reading"
+      ],
+      "explanation": "Alternative: store (-weight) tuples or write a custom comparator."
+    },
+    {
+      "id": "ls-time-01",
+      "category": "time_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Time complexity with a heap: ___",
+        "Each of up to n rounds does O(log n) heap work, giving ___."
+      ],
+      "answer": "O(n log n)",
+      "explanation": "Heapify O(n) plus up to n rounds of O(log n) pops/pushes.",
+      "acceptedAnswers": [
+        "O(nlogn)",
+        "O(n log(n))"
+      ]
+    },
+    {
+      "id": "ls-space-01",
+      "category": "space_complexity",
+      "type": "free_recall",
+      "promptVariants": [
+        "What extra space does the heap approach use?",
+        "Can it be done in place?"
+      ],
+      "answer": "O(n) for the negated list (or O(1) extra if you heapify the input list in place after negating). The sort-based approach is O(1) extra but slower.",
+      "keyPoints": [
+        "O(n) heap",
+        "In-place heapify possible"
+      ],
+      "explanation": "Trade clarity vs memory."
+    },
+    {
+      "id": "ls-code-01",
+      "category": "code_reasoning",
+      "type": "code_question",
+      "promptVariants": [
+        "Why `continue` when a == b and why push `-abs(a - b)`?",
+        "How do you get the final answer?"
+      ],
+      "code": "while len(heap) > 1:\n    a = heapq.heappop(heap)\n    b = heapq.heappop(heap)\n    if a == b:\n        continue\n    heapq.heappush(heap, -abs(a - b))\nreturn 0 if not heap else -heap[0]",
+      "answer": "Equal stones destroy each other, so nothing is pushed. Otherwise the remainder has weight |a - b| (a and b are negated, so abs gives the positive difference) and is pushed back negated. When the loop ends at most one stone remains: its weight is -heap[0], or 0 if none.",
+      "keyPoints": [
+        "Equal stones vanish",
+        "Push the negated difference",
+        "Result is -heap[0] or 0"
+      ],
+      "explanation": "The answer is the last stone's weight."
+    },
+    {
+      "id": "ls-edge-01",
+      "category": "edge_case",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "What is returned for [2,2]?",
+        "What happens when all stones cancel?"
+      ],
+      "options": [
+        "0",
+        "2",
+        "4",
+        "1"
+      ],
+      "answer": "0",
+      "explanation": "The stones are equal and destroy each other, leaving no stones.",
+      "incorrectOptionExplanations": {
+        "2": "Equal stones do not leave a remainder.",
+        "4": "Weights are not added.",
+        "1": "No remainder exists."
+      }
+    }
+  ],
+  "generatedAt": "2026-10-01T14:19:52Z"
+}

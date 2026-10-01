@@ -1,0 +1,140 @@
+{
+  "schemaVersion": 1,
+  "problemSlug": "design-hashmap",
+  "summary": "Implement a hash map (put, get, remove) without built-in hash tables.",
+  "patterns": [
+    "Design",
+    "Array / Hashing"
+  ],
+  "mainInsight": "With bounded integer keys a direct-address table works (value or sentinel per key); the general solution uses hashed buckets of (key, value) pairs with chaining and resizing.",
+  "canonicalApproach": "Bucket array with chaining",
+  "approaches": [
+    {
+      "name": "Direct-address array with sentinel",
+      "summary": "map[key] = value; -1 means absent.",
+      "timeComplexity": "O(1)",
+      "spaceComplexity": "O(U)",
+      "strengths": [
+        "Trivial"
+      ],
+      "weaknesses": [
+        "Needs a sentinel that cannot be a real value",
+        "Memory proportional to the key range"
+      ],
+      "interviewRelevance": "Your approach."
+    },
+    {
+      "name": "Bucket array with chaining",
+      "summary": "buckets[key % m] is a list of (key, value) pairs.",
+      "timeComplexity": "O(1) average",
+      "spaceComplexity": "O(n + m)",
+      "strengths": [
+        "Memory scales with stored keys"
+      ],
+      "weaknesses": [
+        "Resizing and updates inside buckets"
+      ],
+      "interviewRelevance": "The general answer."
+    }
+  ],
+  "personalSolution": {
+    "approach": "Direct-address array with -1 sentinel",
+    "timeComplexity": "O(1)",
+    "spaceComplexity": "O(U)",
+    "isOptimal": false,
+    "notes": "Fine under the stated constraints; know the chaining design."
+  },
+  "commonMistakes": [],
+  "edgeCases": [],
+  "cards": [
+    {
+      "id": "hm-pattern-01",
+      "category": "pattern",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "What is needed beyond a set when implementing a hash map?",
+        "What does a bucket store in a chained hash map?"
+      ],
+      "options": [
+        "Key-value pairs (the key is needed to resolve collisions)",
+        "Only values",
+        "Only keys",
+        "Sorted values"
+      ],
+      "answer": "Key-value pairs (the key is needed to resolve collisions)",
+      "explanation": "Different keys land in the same bucket, so the stored key identifies the correct entry.",
+      "incorrectOptionExplanations": {
+        "Only values": "You could not tell which key a value belongs to.",
+        "Only keys": "A map must return a value.",
+        "Sorted values": "Not needed."
+      }
+    },
+    {
+      "id": "hm-insight-01",
+      "category": "main_insight",
+      "type": "free_recall",
+      "promptVariants": [
+        "What assumption allows the sentinel -1 for 'absent' in your solution?",
+        "When would a sentinel design fail?"
+      ],
+      "answer": "The problem guarantees values are non-negative, so -1 can never be a real value and safely means 'no mapping'. If -1 (or any sentinel) could be a legal value you would need a separate presence marker (e.g. None or a parallel boolean array).",
+      "keyPoints": [
+        "Values >= 0",
+        "Sentinel cannot collide with real data"
+      ],
+      "explanation": "State assumptions before using sentinels."
+    },
+    {
+      "id": "hm-time-01",
+      "category": "time_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Time of put/get/remove with direct addressing: ___",
+        "Complete the statement: Time of put/get/remove with direct addressing: ___"
+      ],
+      "answer": "O(1)",
+      "explanation": "Direct indexing.",
+      "acceptedAnswers": [
+        "constant"
+      ]
+    },
+    {
+      "id": "hm-space-01",
+      "category": "space_complexity",
+      "type": "free_recall",
+      "promptVariants": [
+        "What does your table cost and when is chaining better?",
+        "Compare the space of direct addressing and chaining."
+      ],
+      "answer": "Direct addressing uses O(U) memory (about 10^6 slots) regardless of the number of entries; chaining uses memory proportional to the stored entries (plus bucket array) and is better when the key range is large or sparse.",
+      "keyPoints": [
+        "O(U) vs O(n + m)",
+        "Sparse/large key ranges favour chaining"
+      ],
+      "explanation": "Python's dict is the practical answer."
+    },
+    {
+      "id": "hm-edge-01",
+      "category": "edge_case",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "What should put do for an existing key?",
+        "How are overwrites handled?"
+      ],
+      "options": [
+        "Overwrite the value for that key",
+        "Insert a second entry",
+        "Ignore the update",
+        "Raise an error"
+      ],
+      "answer": "Overwrite the value for that key",
+      "explanation": "A map holds at most one value per key.",
+      "incorrectOptionExplanations": {
+        "Insert a second entry": "That would violate the map invariant.",
+        "Ignore the update": "put must update.",
+        "Raise an error": "No such rule."
+      }
+    }
+  ],
+  "generatedAt": "2026-10-01T14:19:52Z"
+}

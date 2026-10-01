@@ -1,0 +1,184 @@
+{
+  "schemaVersion": 1,
+  "problemSlug": "lru-cache",
+  "summary": "Design a cache with O(1) get and put that evicts the least recently used entry when full.",
+  "patterns": [
+    "Design",
+    "Linked List",
+    "Array / Hashing"
+  ],
+  "mainInsight": "A hash map gives O(1) lookup by key; a doubly linked list orders entries by recency with O(1) insert/removal at known nodes. The map stores key -> node, so touching an entry means unlinking its node and re-inserting it at the head; eviction removes the tail.",
+  "canonicalApproach": "Hash map + doubly linked list",
+  "approaches": [
+    {
+      "name": "Array/list scan",
+      "summary": "Keep a list ordered by recency.",
+      "timeComplexity": "O(n) per op",
+      "spaceComplexity": "O(n)",
+      "weaknesses": [
+        "Too slow"
+      ]
+    },
+    {
+      "name": "OrderedDict",
+      "summary": "move_to_end on access, popitem(last=False) on eviction.",
+      "timeComplexity": "O(1)",
+      "spaceComplexity": "O(n)",
+      "strengths": [
+        "Short, idiomatic Python"
+      ],
+      "weaknesses": [
+        "Hides the data-structure design interviewers want to see"
+      ],
+      "interviewRelevance": "Mention it, then implement the manual version if asked."
+    },
+    {
+      "name": "Hash map + doubly linked list",
+      "summary": "Map key -> node; list head = most recent, tail = least recent; sentinels simplify edges.",
+      "timeComplexity": "O(1) get/put",
+      "spaceComplexity": "O(capacity)",
+      "strengths": [
+        "Optimal, explicit"
+      ],
+      "weaknesses": [
+        "More code"
+      ],
+      "interviewRelevance": "Your approach; the expected answer."
+    }
+  ],
+  "personalSolution": {
+    "approach": "Hash map + doubly linked list with sentinels",
+    "timeComplexity": "O(1) get/put",
+    "spaceComplexity": "O(capacity)",
+    "isOptimal": true,
+    "notes": "Optimal and cleanly structured."
+  },
+  "commonMistakes": [],
+  "edgeCases": [],
+  "cards": [
+    {
+      "id": "lru-pattern-01",
+      "category": "pattern",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "Which two structures combine to give O(1) LRU operations?",
+        "What is the standard design for an LRU cache?"
+      ],
+      "options": [
+        "Hash map + doubly linked list",
+        "Array + binary search",
+        "Min-heap + hash set",
+        "Stack + queue"
+      ],
+      "answer": "Hash map + doubly linked list",
+      "explanation": "The map finds the node in O(1); the doubly linked list reorders and evicts in O(1).",
+      "incorrectOptionExplanations": {
+        "Array + binary search": "Insertions/removals are O(n).",
+        "Min-heap + hash set": "Updating recency in a heap is O(log n) and awkward.",
+        "Stack + queue": "Cannot remove from the middle in O(1)."
+      }
+    },
+    {
+      "id": "lru-insight-01",
+      "category": "main_insight",
+      "type": "free_recall",
+      "promptVariants": [
+        "Why must the list be doubly linked and why does the map store nodes rather than values?",
+        "Explain how get/put achieve O(1)."
+      ],
+      "answer": "To move an accessed entry to the front you must unlink it from the middle, which needs its prev and next pointers (doubly linked) and direct access to the node (the map stores node references). Everything else is pointer rewiring at the head/tail in O(1).",
+      "keyPoints": [
+        "Doubly linked => O(1) unlink",
+        "Map key -> node",
+        "Head = most recent, tail = LRU"
+      ],
+      "explanation": "A singly linked list would need O(n) to find the predecessor."
+    },
+    {
+      "id": "lru-invariant-01",
+      "category": "invariant",
+      "type": "free_recall",
+      "promptVariants": [
+        "What invariants hold between the hash map and the list after every operation?",
+        "State the consistency conditions of the LRU cache."
+      ],
+      "answer": "The map contains exactly the keys present in the list; list order runs from most recent (after head) to least recent (before tail); the size never exceeds capacity after put returns (eviction removes the tail node and deletes its key from the map).",
+      "keyPoints": [
+        "Map keys == list nodes",
+        "Order = recency",
+        "size <= capacity after put"
+      ],
+      "explanation": "Nodes store their key so eviction can delete the map entry."
+    },
+    {
+      "id": "lru-time-01",
+      "category": "time_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Time complexity of get and put: ___",
+        "Both operations on the hash-map + linked-list LRU run in ___."
+      ],
+      "answer": "O(1)",
+      "explanation": "Hash lookups and pointer updates only.",
+      "acceptedAnswers": [
+        "constant",
+        "O(1) average"
+      ]
+    },
+    {
+      "id": "lru-space-01",
+      "category": "space_complexity",
+      "type": "free_recall",
+      "promptVariants": [
+        "What is the space complexity and what does each entry cost?",
+        "What bounds the memory of the LRU cache?"
+      ],
+      "answer": "O(capacity): one map entry and one list node per cached item (plus two sentinels).",
+      "keyPoints": [
+        "O(capacity)",
+        "Map entry + node per item"
+      ],
+      "explanation": "Eviction keeps the size bounded."
+    },
+    {
+      "id": "lru-code-01",
+      "category": "code_reasoning",
+      "type": "code_question",
+      "promptVariants": [
+        "Why does the node store its key and why is eviction done after inserting?",
+        "What do the sentinel head/tail nodes simplify?"
+      ],
+      "code": "def evict(self):\n    removedNode = self.list.removeTail()\n    del self.hashmap[removedNode.key]\n\ndef put(self, key, value):\n    if key not in self.hashmap:\n        self.hashmap[key] = Node(key, value)\n        self.list.addHead(self.hashmap[key])\n    else:\n        ...\n    if self.size() > self.cap:\n        self.evict()",
+      "answer": "When the tail node is removed we only have the node, so it must carry its key to delete the matching map entry. Inserting first then evicting when size exceeds capacity keeps the logic uniform (and works even for capacity 1). Sentinel head/tail nodes mean insert/remove never need special cases for an empty list or the ends.",
+      "keyPoints": [
+        "Node.key needed to delete from the map",
+        "Insert then evict if over capacity",
+        "Sentinels remove edge cases"
+      ],
+      "explanation": "Updating an existing key must also refresh recency but not change the size."
+    },
+    {
+      "id": "lru-edge-01",
+      "category": "edge_case",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "Does put on an existing key count as a 'use'?",
+        "What must put(existing_key, new_value) do?"
+      ],
+      "options": [
+        "Yes: update the value and move the node to the most-recent position",
+        "No: only update the value",
+        "It must evict the tail",
+        "It creates a duplicate node"
+      ],
+      "answer": "Yes: update the value and move the node to the most-recent position",
+      "explanation": "Both get and put count as uses of the key.",
+      "incorrectOptionExplanations": {
+        "No: only update the value": "That would let a frequently written key be evicted.",
+        "It must evict the tail": "Only when inserting a new key over capacity.",
+        "It creates a duplicate node": "The key must map to a single node."
+      }
+    }
+  ],
+  "generatedAt": "2026-10-01T14:19:52Z"
+}

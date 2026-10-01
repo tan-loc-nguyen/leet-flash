@@ -1,0 +1,167 @@
+{
+  "schemaVersion": 1,
+  "problemSlug": "random-pick-with-weight",
+  "summary": "Pick an index at random with probability proportional to its weight.",
+  "patterns": [
+    "Binary Search",
+    "Prefix Sum"
+  ],
+  "mainInsight": "Lay the weights out as consecutive intervals on a number line using prefix sums; a uniform random integer in [0, total) lands in index i's interval with probability w[i]/total, and binary search finds the interval in O(log n).",
+  "canonicalApproach": "Prefix sums + binary search",
+  "approaches": [
+    {
+      "name": "Expand by weight",
+      "summary": "Build an array with index i repeated w[i] times and pick uniformly.",
+      "timeComplexity": "O(1) pick",
+      "spaceComplexity": "O(sum of weights)",
+      "strengths": [
+        "Trivial"
+      ],
+      "weaknesses": [
+        "Memory explodes for large weights"
+      ]
+    },
+    {
+      "name": "Prefix sums + binary search",
+      "summary": "Random target in [0, total); binary search the first prefix > target.",
+      "timeComplexity": "O(n) build, O(log n) pick",
+      "spaceComplexity": "O(n)",
+      "strengths": [
+        "Memory O(n)"
+      ],
+      "interviewRelevance": "Your approach; the expected answer."
+    },
+    {
+      "name": "Alias method",
+      "summary": "Precompute probability/alias tables for O(1) picks.",
+      "timeComplexity": "O(n) build, O(1) pick",
+      "spaceComplexity": "O(n)",
+      "strengths": [
+        "Constant-time sampling"
+      ],
+      "weaknesses": [
+        "Complex to implement"
+      ],
+      "interviewRelevance": "Advanced follow-up."
+    }
+  ],
+  "personalSolution": {
+    "approach": "Prefix sums + binary search (upper bound)",
+    "timeComplexity": "O(n) build, O(log n) pick",
+    "spaceComplexity": "O(n)",
+    "isOptimal": true,
+    "notes": "Optimal for the standard problem; the alias method gives O(1) picks."
+  },
+  "commonMistakes": [],
+  "edgeCases": [],
+  "cards": [
+    {
+      "id": "rw-pattern-01",
+      "category": "pattern",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "Which two techniques implement weighted random choice?",
+        "What combination gives O(log n) pickIndex?"
+      ],
+      "options": [
+        "Prefix sums + binary search",
+        "Sorting + two pointers",
+        "Heap + hash map",
+        "Union find + DFS"
+      ],
+      "answer": "Prefix sums + binary search",
+      "explanation": "Prefix sums map weights to disjoint intervals; binary search finds the interval containing a random target.",
+      "incorrectOptionExplanations": {
+        "Sorting + two pointers": "Not relevant to sampling.",
+        "Heap + hash map": "No ordering by weight is needed.",
+        "Union find + DFS": "No connectivity."
+      }
+    },
+    {
+      "id": "rw-insight-01",
+      "category": "main_insight",
+      "type": "free_recall",
+      "promptVariants": [
+        "Why does a uniform random integer over the total weight give the right probabilities?",
+        "Explain the number-line model."
+      ],
+      "answer": "Index i owns w[i] consecutive integers (its interval). A uniform integer in [0, total) lands in index i's interval with probability w[i]/total, exactly the desired probability. Prefix sums define the interval boundaries.",
+      "keyPoints": [
+        "Intervals of length w[i]",
+        "Uniform target over total",
+        "P(i) = w[i] / total"
+      ],
+      "explanation": "Binary search maps the target back to the owner."
+    },
+    {
+      "id": "rw-time-01",
+      "category": "time_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Time of pickIndex: ___",
+        "Each pick performs a binary search, costing ___."
+      ],
+      "answer": "O(log n)",
+      "explanation": "Binary search over the prefix array.",
+      "acceptedAnswers": [
+        "O(logn)",
+        "O(log(n))"
+      ]
+    },
+    {
+      "id": "rw-space-01",
+      "category": "space_complexity",
+      "type": "free_recall",
+      "promptVariants": [
+        "What do you store and how does it compare with expanding weights into an array?",
+        "Why is the prefix array better than repeating indices?"
+      ],
+      "answer": "O(n) for the prefix sums, independent of the weight values; expanding each index w[i] times would use O(sum of weights) memory which can be huge.",
+      "keyPoints": [
+        "Prefix array O(n)",
+        "Expansion is O(sum(w))"
+      ],
+      "explanation": "Weights are large in the constraints."
+    },
+    {
+      "id": "rw-code-01",
+      "category": "code_reasoning",
+      "type": "code_question",
+      "promptVariants": [
+        "Your binary search finds the first prefix value greater than pick. Why return idx - 1 and why randrange(0, total)?",
+        "What is the invariant of the search?"
+      ],
+      "code": "pick = random.randrange(0, self.prefix[-1])\nlow, high = 0, len(self.prefix) - 1\nidx = -1\nwhile low <= high:\n    mid = low + (high - low) // 2\n    if self.prefix[mid] > pick:\n        idx = mid\n        high = mid - 1\n    else:\n        low = mid + 1\nreturn idx - 1",
+      "answer": "prefix[0] = 0 and prefix[i+1] = sum of w[0..i], so index i owns targets in [prefix[i], prefix[i+1]). The first prefix entry strictly greater than pick is prefix[i+1], hence the answer is idx - 1. randrange(0, total) excludes total, matching the half-open intervals. This is an upper-bound search (bisect_right).",
+      "keyPoints": [
+        "Half-open intervals [prefix[i], prefix[i+1])",
+        "First prefix > pick",
+        "answer = idx - 1"
+      ],
+      "explanation": "bisect.bisect_right(prefix, pick) - 1 does the same."
+    },
+    {
+      "id": "rw-edge-01",
+      "category": "edge_case",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "What happens with a single weight w = [5]?",
+        "Which index is returned for any pick?"
+      ],
+      "options": [
+        "Always index 0",
+        "Index 1",
+        "It depends on the random value",
+        "An error"
+      ],
+      "answer": "Always index 0",
+      "explanation": "All targets 0..4 lie in the only interval [0, 5).",
+      "incorrectOptionExplanations": {
+        "Index 1": "Only one index exists.",
+        "It depends on the random value": "Only one interval exists.",
+        "An error": "The search always finds an interval."
+      }
+    }
+  ],
+  "generatedAt": "2026-10-01T14:19:52Z"
+}

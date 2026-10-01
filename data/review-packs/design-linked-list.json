@@ -1,0 +1,156 @@
+{
+  "schemaVersion": 1,
+  "problemSlug": "design-linked-list",
+  "summary": "Implement a doubly linked list with get, addAtHead, addAtTail, addAtIndex and deleteAtIndex.",
+  "patterns": [
+    "Linked List",
+    "Design"
+  ],
+  "mainInsight": "Use a doubly linked list with sentinel head and tail nodes plus a size counter: sentinels eliminate empty-list and boundary special cases, and the size lets you walk from whichever end is closer to the index.",
+  "canonicalApproach": "Doubly linked with sentinels",
+  "approaches": [
+    {
+      "name": "Singly linked list",
+      "summary": "Head pointer only.",
+      "timeComplexity": "O(n) tail operations",
+      "spaceComplexity": "O(n)",
+      "strengths": [
+        "Simplest"
+      ],
+      "weaknesses": [
+        "No O(1) tail append"
+      ]
+    },
+    {
+      "name": "Doubly linked with sentinels",
+      "summary": "prev/next pointers, dummy head and tail, size counter.",
+      "timeComplexity": "O(1) at ends, O(min(i, n-i)) by index",
+      "spaceComplexity": "O(n)",
+      "strengths": [
+        "Uniform insert/delete code"
+      ],
+      "weaknesses": [
+        "More pointers to update"
+      ],
+      "interviewRelevance": "Your approach."
+    }
+  ],
+  "personalSolution": {
+    "approach": "Doubly linked list with sentinels and size",
+    "timeComplexity": "O(1) ends, O(min(i, n-i)) index",
+    "spaceComplexity": "O(n)",
+    "isOptimal": true,
+    "notes": "Good design: sentinels plus walking from the nearer end."
+  },
+  "commonMistakes": [],
+  "edgeCases": [],
+  "cards": [
+    {
+      "id": "dl-pattern-01",
+      "category": "pattern",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "What simplifies insertion/deletion at the list boundaries?",
+        "Why use dummy head and tail nodes?"
+      ],
+      "options": [
+        "Sentinel nodes remove special cases for empty lists and ends",
+        "They make indexing O(1)",
+        "They sort the list",
+        "They save memory"
+      ],
+      "answer": "Sentinel nodes remove special cases for empty lists and ends",
+      "explanation": "Every real node always has a prev and next, so the same pointer-update code works everywhere.",
+      "incorrectOptionExplanations": {
+        "They make indexing O(1)": "Indexing still requires traversal.",
+        "They sort the list": "Unrelated.",
+        "They save memory": "They use two extra nodes."
+      }
+    },
+    {
+      "id": "dl-insight-01",
+      "category": "main_insight",
+      "type": "free_recall",
+      "promptVariants": [
+        "Why do you walk from the tail when the index is in the second half?",
+        "What does the size counter enable?"
+      ],
+      "answer": "With prev pointers you can traverse backwards from the tail, so any index is reachable in at most about size/2 steps (O(min(i, n - i)) instead of O(i)). The size field tells you which end is closer and validates indices in O(1).",
+      "keyPoints": [
+        "Doubly linked => bidirectional walk",
+        "Choose the closer end",
+        "size gives bounds checks"
+      ],
+      "explanation": "Constant factor improvement, same worst-case O(n)."
+    },
+    {
+      "id": "dl-time-01",
+      "category": "time_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Time of addAtHead / addAtTail: ___",
+        "Complete the statement: Time of addAtHead / addAtTail: ___"
+      ],
+      "answer": "O(1)",
+      "explanation": "Sentinels give direct access to both ends.",
+      "acceptedAnswers": [
+        "constant"
+      ]
+    },
+    {
+      "id": "dl-space-01",
+      "category": "space_complexity",
+      "type": "free_recall",
+      "promptVariants": [
+        "What is the space cost and what do prev pointers add?",
+        "What does a doubly linked list cost in memory compared with a singly linked list?"
+      ],
+      "answer": "O(n) nodes (plus two sentinels); each node stores an extra prev pointer compared with a singly linked list.",
+      "keyPoints": [
+        "O(n)",
+        "Extra prev pointer per node"
+      ],
+      "explanation": "Trade extra memory for bidirectional traversal."
+    },
+    {
+      "id": "dl-code-01",
+      "category": "code_reasoning",
+      "type": "code_question",
+      "promptVariants": [
+        "In addAtIndex, why does the step count differ between walking from the head and from the tail?",
+        "Which node does `curr` end at?"
+      ],
+      "code": "curr = self.head\nsteps = index\nif not is_close_to_head:\n    curr = self.tail\n    steps = self.size - index + 1\nfor _ in range(steps):\n    curr = curr.next if is_close_to_head else curr.prev\nnew_node = Node(val)\nnext_node = curr.next",
+      "answer": "We want curr to be the node BEFORE the insertion position (the predecessor of index). From the head sentinel (position -1) that is `index` steps; from the tail sentinel (position size) it is size - index + 1 steps backwards. Then new_node is linked between curr and curr.next.",
+      "keyPoints": [
+        "curr = predecessor of the target index",
+        "head: index steps",
+        "tail: size - index + 1 steps"
+      ],
+      "explanation": "Off-by-one errors are the main risk."
+    },
+    {
+      "id": "dl-edge-01",
+      "category": "edge_case",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "What should addAtIndex(index == size, val) do and addAtIndex(index > size, val)?",
+        "How are out-of-range indices handled?"
+      ],
+      "options": [
+        "index == size appends; index > size does nothing",
+        "Both append",
+        "Both raise errors",
+        "index == size does nothing"
+      ],
+      "answer": "index == size appends; index > size does nothing",
+      "explanation": "The specification allows insertion at the end but ignores larger indices.",
+      "incorrectOptionExplanations": {
+        "Both append": "Indices beyond size are invalid and ignored.",
+        "Both raise errors": "The API uses silent no-ops/-1.",
+        "index == size does nothing": "Appending at size is valid."
+      }
+    }
+  ],
+  "generatedAt": "2026-10-01T14:19:52Z"
+}

@@ -1,0 +1,160 @@
+{
+  "schemaVersion": 1,
+  "problemSlug": "number-of-recent-calls",
+  "summary": "Count the number of requests in the last 3000 ms for each new ping(t) (times strictly increasing).",
+  "patterns": [
+    "Design",
+    "Sliding Window"
+  ],
+  "mainInsight": "Requests arrive in increasing time order, so a queue works as a sliding window: append t, drop timestamps older than t - 3000 from the front, and the queue length is the answer.",
+  "canonicalApproach": "Queue as sliding window",
+  "approaches": [
+    {
+      "name": "Store all and count",
+      "summary": "Scan the whole history.",
+      "timeComplexity": "O(n)",
+      "spaceComplexity": "O(n)",
+      "weaknesses": [
+        "Slow, unbounded memory"
+      ]
+    },
+    {
+      "name": "Queue as sliding window",
+      "summary": "Append t; popleft while front < t - 3000.",
+      "timeComplexity": "Amortised O(1)",
+      "spaceComplexity": "O(window)",
+      "strengths": [
+        "Optimal"
+      ],
+      "interviewRelevance": "Your approach."
+    },
+    {
+      "name": "List + binary search",
+      "summary": "Binary search the first timestamp >= t - 3000.",
+      "timeComplexity": "O(log n)",
+      "spaceComplexity": "O(n)",
+      "weaknesses": [
+        "Keeps all history"
+      ]
+    }
+  ],
+  "personalSolution": {
+    "approach": "Queue as sliding window",
+    "timeComplexity": "O(1) amortised",
+    "spaceComplexity": "O(window)",
+    "isOptimal": true,
+    "notes": "Optimal."
+  },
+  "commonMistakes": [],
+  "edgeCases": [],
+  "cards": [
+    {
+      "id": "rc-pattern-01",
+      "category": "pattern",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "Which structure models a time-ordered sliding window?",
+        "What data structure does Number of Recent Calls need?"
+      ],
+      "options": [
+        "Queue (deque) of timestamps",
+        "Heap",
+        "Stack",
+        "Hash set"
+      ],
+      "answer": "Queue (deque) of timestamps",
+      "explanation": "Oldest timestamps leave from the front, newest enter at the back.",
+      "incorrectOptionExplanations": {
+        "Heap": "Not needed since arrival order equals time order.",
+        "Stack": "LIFO would remove the newest.",
+        "Hash set": "Loses ordering."
+      }
+    },
+    {
+      "id": "rc-insight-01",
+      "category": "main_insight",
+      "type": "free_recall",
+      "promptVariants": [
+        "Why can you discard old timestamps permanently?",
+        "Why is the pop loop amortised O(1)?"
+      ],
+      "answer": "Times strictly increase, so a timestamp that is older than t - 3000 is also too old for every future ping. Each timestamp is appended once and removed once, so total work is O(n) over n calls.",
+      "keyPoints": [
+        "Time only moves forward",
+        "Old entries never count again",
+        "Each entry enters/leaves once"
+      ],
+      "explanation": "The queue length is the count in the window [t - 3000, t]."
+    },
+    {
+      "id": "rc-time-01",
+      "category": "time_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Amortised time of ping: ___",
+        "Complete the statement: Amortised time of ping: ___"
+      ],
+      "answer": "O(1)",
+      "explanation": "Each timestamp is added and removed once.",
+      "acceptedAnswers": [
+        "constant",
+        "amortized O(1)"
+      ]
+    },
+    {
+      "id": "rc-space-01",
+      "category": "space_complexity",
+      "type": "free_recall",
+      "promptVariants": [
+        "What bounds the queue size?",
+        "Why does the queue never grow unbounded?"
+      ],
+      "answer": "At most 3001 timestamps can be in the window because times are strictly increasing integers, so the space is O(window size) = constant (bounded by the time window).",
+      "keyPoints": [
+        "Window of 3001 ms",
+        "Strictly increasing integers"
+      ],
+      "explanation": "Old entries are removed each call."
+    },
+    {
+      "id": "rc-code-01",
+      "category": "code_reasoning",
+      "type": "code_question",
+      "promptVariants": [
+        "Why is the condition `queue[0] < t - 3000` (strict) and not `<=`?",
+        "Which timestamps count as recent?"
+      ],
+      "code": "self.queue.append(t)\nwhile self.queue and self.queue[0] < t - 3000:\n    self.queue.popleft()\nreturn len(self.queue)",
+      "answer": "Recent calls are those with timestamp in the closed interval [t - 3000, t]; a call exactly at t - 3000 still counts, so only timestamps strictly less than t - 3000 are removed.",
+      "keyPoints": [
+        "Window is [t - 3000, t]",
+        "Boundary is inclusive",
+        "Strict < pops older only"
+      ],
+      "explanation": "Appending t first guarantees the queue is non-empty."
+    },
+    {
+      "id": "rc-edge-01",
+      "category": "edge_case",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "For pings 1, 100, 3001, 3002 what are the returned counts?",
+        "How does the inclusive boundary at t - 3000 behave?"
+      ],
+      "options": [
+        "1, 2, 3, 3",
+        "1, 2, 3, 4",
+        "1, 2, 2, 3",
+        "1, 1, 1, 1"
+      ],
+      "answer": "1, 2, 3, 3",
+      "explanation": "ping(3001) keeps t = 1 because 1 is not < 3001 - 3000 = 1, giving 3; ping(3002) drops t = 1 (1 < 2), leaving 100, 3001, 3002 = 3.",
+      "incorrectOptionExplanations": {
+        "1, 2, 3, 4": "At 3002 the call at t = 1 is out of the window.",
+        "1, 2, 2, 3": "At 3001 the call at t = 1 is still inside the window.",
+        "1, 1, 1, 1": "Earlier calls inside the window are counted."
+      }
+    }
+  ],
+  "generatedAt": "2026-10-01T14:19:52Z"
+}

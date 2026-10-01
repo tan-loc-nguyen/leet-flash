@@ -1,0 +1,169 @@
+{
+  "schemaVersion": 1,
+  "problemSlug": "find-median-from-data-stream",
+  "summary": "Support addNum and findMedian on a growing stream.",
+  "patterns": [
+    "Heap / Priority Queue",
+    "Design"
+  ],
+  "mainInsight": "Split the numbers into a lower half (max-heap) and an upper half (min-heap) of balanced sizes; the median is the top of one heap or the average of both tops. Each insertion rebalances in O(log n).",
+  "canonicalApproach": "Two heaps",
+  "approaches": [
+    {
+      "name": "Sorted list insertion",
+      "summary": "Insert with bisect.insort; read the middle.",
+      "timeComplexity": "add O(n), median O(1)",
+      "spaceComplexity": "O(n)",
+      "strengths": [
+        "Simple"
+      ],
+      "weaknesses": [
+        "Insertion shifts elements"
+      ]
+    },
+    {
+      "name": "Two heaps",
+      "summary": "max-heap for the lower half, min-heap for the upper half, sizes differ by at most 1.",
+      "timeComplexity": "add O(log n), median O(1)",
+      "spaceComplexity": "O(n)",
+      "strengths": [
+        "Optimal for general streams"
+      ],
+      "weaknesses": [
+        "Rebalancing logic"
+      ],
+      "interviewRelevance": "Your approach; the expected answer."
+    },
+    {
+      "name": "Counting array / buckets",
+      "summary": "When values are bounded, count occurrences and walk the counts.",
+      "timeComplexity": "add O(1), median O(range)",
+      "spaceComplexity": "O(range)",
+      "strengths": [
+        "Great for small ranges"
+      ],
+      "weaknesses": [
+        "Needs bounded values"
+      ],
+      "interviewRelevance": "Follow-up when numbers are in 0..100."
+    }
+  ],
+  "personalSolution": {
+    "approach": "Two heaps (max-heap lower half, min-heap upper half)",
+    "timeComplexity": "add O(log n), median O(1)",
+    "spaceComplexity": "O(n)",
+    "isOptimal": true,
+    "notes": "Optimal."
+  },
+  "commonMistakes": [],
+  "edgeCases": [],
+  "cards": [
+    {
+      "id": "fmd-pattern-01",
+      "category": "pattern",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "Which structure combination gives O(log n) insert and O(1) median?",
+        "How do you track the median of a stream?"
+      ],
+      "options": [
+        "A max-heap of the lower half and a min-heap of the upper half",
+        "A single min-heap",
+        "A hash map of counts",
+        "A stack"
+      ],
+      "answer": "A max-heap of the lower half and a min-heap of the upper half",
+      "explanation": "The two heap roots are the middle elements of the sorted order.",
+      "incorrectOptionExplanations": {
+        "A single min-heap": "Exposes only the minimum.",
+        "A hash map of counts": "Needs a scan to find the middle.",
+        "A stack": "No ordering."
+      }
+    },
+    {
+      "id": "fmd-invariant-01",
+      "category": "invariant",
+      "type": "free_recall",
+      "promptVariants": [
+        "State the two-heap invariants.",
+        "What must always hold between the heaps?"
+      ],
+      "answer": "Every element of the lower half (max-heap) is <= every element of the upper half (min-heap), and their sizes differ by at most one (in your code the min-heap holds the extra element). Then the median is the min-heap root or the average of both roots.",
+      "keyPoints": [
+        "max(lower) <= min(upper)",
+        "Sizes differ by <= 1",
+        "Median from the roots"
+      ],
+      "explanation": "Rebalancing after each insert restores both invariants."
+    },
+    {
+      "id": "fmd-time-01",
+      "category": "time_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Time of addNum with two heaps: ___",
+        "Complete the statement: Time of addNum with two heaps: ___"
+      ],
+      "answer": "O(log n)",
+      "explanation": "A constant number of heap pushes/pops.",
+      "acceptedAnswers": [
+        "O(logn)"
+      ]
+    },
+    {
+      "id": "fmd-space-01",
+      "category": "space_complexity",
+      "type": "free_recall",
+      "promptVariants": [
+        "How much memory do the heaps use and what is the cost of findMedian?",
+        "State space and median time."
+      ],
+      "answer": "O(n) total across both heaps; findMedian only reads the roots, O(1).",
+      "keyPoints": [
+        "O(n)",
+        "Median O(1)"
+      ],
+      "explanation": "All numbers must be stored because any may become the median."
+    },
+    {
+      "id": "fmd-code-01",
+      "category": "code_reasoning",
+      "type": "code_question",
+      "promptVariants": [
+        "Trace addNum(num): why push to the min-heap, pop it into the max-heap, then rebalance?",
+        "What does this three-step dance guarantee?"
+      ],
+      "code": "heappush(self.minHeap, num)\nval = heappop(self.minHeap)\nheappush(self.maxHeap, -val)\nif len(self.maxHeap) > len(self.minHeap):\n    val = heappop(self.maxHeap)\n    heappush(self.minHeap, -val)",
+      "answer": "Pushing into the upper half and popping its smallest hands the max-heap the smallest of the upper half including num, so every lower element stays <= every upper element. Then, if the lower half got bigger, its largest is moved back to the upper half, keeping the size relationship (min-heap has the extra element).",
+      "keyPoints": [
+        "Route through the upper half to keep ordering",
+        "Rebalance sizes",
+        "Min-heap holds the extra element"
+      ],
+      "explanation": "Max-heap is simulated by negating values."
+    },
+    {
+      "id": "fmd-edge-01",
+      "category": "edge_case",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "When is the median the average of the two heap roots, and when a single root?",
+        "How do the heap sizes tell you which formula to use?"
+      ],
+      "options": [
+        "Equal sizes (even count) average both roots; otherwise the larger heap's root",
+        "Always average",
+        "Always the min-heap root",
+        "Always the max-heap root"
+      ],
+      "answer": "Equal sizes (even count) average both roots; otherwise the larger heap's root",
+      "explanation": "Even count means two middle elements; odd count has a single middle in the larger heap.",
+      "incorrectOptionExplanations": {
+        "Always average": "Odd counts have one middle value.",
+        "Always the min-heap root": "Wrong for even counts.",
+        "Always the max-heap root": "In this design the extra element lives in the min-heap."
+      }
+    }
+  ],
+  "generatedAt": "2026-10-01T14:19:52Z"
+}

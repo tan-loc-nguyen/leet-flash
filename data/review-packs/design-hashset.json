@@ -1,0 +1,145 @@
+{
+  "schemaVersion": 1,
+  "problemSlug": "design-hashset",
+  "summary": "Implement a hash set (add, remove, contains) without built-in hash tables.",
+  "patterns": [
+    "Design",
+    "Array / Hashing"
+  ],
+  "mainInsight": "With a bounded key range (0..10^6) a direct-address table (boolean array) is trivial and O(1); the general solution is an array of buckets indexed by hash(key) % size, resolving collisions with chaining or probing and resizing by load factor.",
+  "canonicalApproach": "Bucket array with chaining",
+  "approaches": [
+    {
+      "name": "Direct-address boolean array",
+      "summary": "One slot per possible key.",
+      "timeComplexity": "O(1)",
+      "spaceComplexity": "O(U) for universe size U",
+      "strengths": [
+        "Trivial, no collisions"
+      ],
+      "weaknesses": [
+        "Memory proportional to the key range, not the number of keys"
+      ],
+      "interviewRelevance": "Your approach: fine for the stated constraints."
+    },
+    {
+      "name": "Bucket array with chaining",
+      "summary": "buckets[hash(key) % m] holds a list; scan the bucket.",
+      "timeComplexity": "O(1) average, O(n) worst",
+      "spaceComplexity": "O(n + m)",
+      "strengths": [
+        "Memory proportional to stored keys"
+      ],
+      "weaknesses": [
+        "Needs a hash function and resizing"
+      ],
+      "interviewRelevance": "The interview 'real' answer."
+    },
+    {
+      "name": "Open addressing",
+      "summary": "Probe for the next free slot on collision.",
+      "timeComplexity": "O(1) average",
+      "spaceComplexity": "O(m)",
+      "weaknesses": [
+        "Deletion needs tombstones"
+      ]
+    }
+  ],
+  "personalSolution": {
+    "approach": "Direct-address boolean array",
+    "timeComplexity": "O(1)",
+    "spaceComplexity": "O(U)",
+    "isOptimal": false,
+    "notes": "Valid under the 0..10^6 constraint. Be ready to describe chaining and resizing."
+  },
+  "commonMistakes": [],
+  "edgeCases": [],
+  "cards": [
+    {
+      "id": "hs-pattern-01",
+      "category": "pattern",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "How do real hash tables handle keys that map to the same slot?",
+        "What is the standard collision strategy for a hash set implementation?"
+      ],
+      "options": [
+        "Chaining (a list per bucket) or open addressing",
+        "Ignore collisions",
+        "Sort the table",
+        "Use recursion"
+      ],
+      "answer": "Chaining (a list per bucket) or open addressing",
+      "explanation": "Distinct keys can share hash % size, so each bucket must store multiple keys or probe for another slot.",
+      "incorrectOptionExplanations": {
+        "Ignore collisions": "That would lose or confuse keys.",
+        "Sort the table": "Not a collision strategy.",
+        "Use recursion": "Not relevant."
+      }
+    },
+    {
+      "id": "hs-insight-01",
+      "category": "main_insight",
+      "type": "free_recall",
+      "promptVariants": [
+        "Why is a boolean array acceptable here but not in general?",
+        "What constraint makes direct addressing possible?"
+      ],
+      "answer": "Keys are bounded (0 <= key <= 10^6), so one slot per possible key costs a fixed ~1 MB and gives collision-free O(1) operations. For an unbounded or sparse key space the memory would be proportional to the range, so a hash function plus buckets is required.",
+      "keyPoints": [
+        "Bounded key range",
+        "Memory O(range)",
+        "General case needs hashing + buckets"
+      ],
+      "explanation": "Always state this trade-off explicitly."
+    },
+    {
+      "id": "hs-time-01",
+      "category": "time_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Time of add/remove/contains in a direct-address table: ___",
+        "Complete the statement: Time of add/remove/contains in a direct-address table: ___"
+      ],
+      "answer": "O(1)",
+      "explanation": "Direct indexing.",
+      "acceptedAnswers": [
+        "constant"
+      ]
+    },
+    {
+      "id": "hs-space-01",
+      "category": "space_complexity",
+      "type": "free_recall",
+      "promptVariants": [
+        "What is the space of your solution and how does chaining improve it?",
+        "Compare the memory of the boolean table and a bucket-based set."
+      ],
+      "answer": "Your table uses O(U) = ~10^6 slots regardless of how many keys are stored. A bucket array with chaining uses memory proportional to the number of stored keys (plus the bucket array), and resizes as it grows.",
+      "keyPoints": [
+        "O(U) fixed",
+        "Chaining O(n + buckets)",
+        "Resizing by load factor"
+      ],
+      "explanation": "Python's built-in set is the real-world solution."
+    },
+    {
+      "id": "hs-code-01",
+      "category": "code_reasoning",
+      "type": "code_question",
+      "promptVariants": [
+        "Sketch a bucket-based add(key) and explain the role of the load factor.",
+        "How would you implement add with chaining?"
+      ],
+      "code": "def add(self, key):\n    self.map[key] = True   # direct address",
+      "answer": "Compute idx = key % num_buckets, scan buckets[idx] and append key only if it is absent. As n / num_buckets (the load factor) grows, chains lengthen and operations slow, so the table is resized (e.g. doubled) and keys rehashed when the load factor passes a threshold such as 0.75.",
+      "keyPoints": [
+        "idx = key % buckets",
+        "Check membership in the bucket",
+        "Resize on load factor"
+      ],
+      "explanation": "Average O(1) relies on keeping chains short."
+    }
+  ],
+  "generatedAt": "2026-10-01T14:19:52Z"
+}

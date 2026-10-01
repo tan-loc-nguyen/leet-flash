@@ -1,0 +1,166 @@
+{
+  "schemaVersion": 1,
+  "problemSlug": "design-circular-queue",
+  "summary": "Implement a fixed-capacity circular queue (ring buffer) with O(1) operations.",
+  "patterns": [
+    "Design"
+  ],
+  "mainInsight": "Use a fixed array with head and tail indices that wrap modulo capacity; track the size (or leave one slot empty) so full and empty states are distinguishable.",
+  "canonicalApproach": "Array with head/tail/size",
+  "approaches": [
+    {
+      "name": "Array with head/tail/size",
+      "summary": "Write at tail, read at head, wrap with % cap; size disambiguates full vs empty.",
+      "timeComplexity": "O(1)",
+      "spaceComplexity": "O(k)",
+      "strengths": [
+        "Simple and unambiguous"
+      ],
+      "weaknesses": [
+        "One extra field"
+      ],
+      "interviewRelevance": "Your approach."
+    },
+    {
+      "name": "Array with a wasted slot",
+      "summary": "Capacity k+1; full when (tail+1) % cap == head.",
+      "timeComplexity": "O(1)",
+      "spaceComplexity": "O(k+1)",
+      "strengths": [
+        "No size field"
+      ],
+      "weaknesses": [
+        "Off-by-one confusion"
+      ]
+    },
+    {
+      "name": "Linked list",
+      "summary": "Nodes with head/tail pointers and a count.",
+      "timeComplexity": "O(1)",
+      "spaceComplexity": "O(k)",
+      "strengths": [
+        "Dynamic nodes"
+      ],
+      "weaknesses": [
+        "Pointer overhead"
+      ]
+    }
+  ],
+  "personalSolution": {
+    "approach": "Array with head/tail/size",
+    "timeComplexity": "O(1) per operation",
+    "spaceComplexity": "O(k)",
+    "isOptimal": true,
+    "notes": "Optimal."
+  },
+  "commonMistakes": [],
+  "edgeCases": [],
+  "cards": [
+    {
+      "id": "cq3-pattern-01",
+      "category": "pattern",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "What technique makes the array queue reuse freed slots?",
+        "How do head and tail move in a circular queue?"
+      ],
+      "options": [
+        "Increment indices modulo the capacity",
+        "Shift all elements left on dequeue",
+        "Reallocate a bigger array",
+        "Sort the array"
+      ],
+      "answer": "Increment indices modulo the capacity",
+      "explanation": "Wrapping with % cap lets head/tail cycle without moving elements.",
+      "incorrectOptionExplanations": {
+        "Shift all elements left on dequeue": "That makes dequeue O(n).",
+        "Reallocate a bigger array": "The capacity is fixed.",
+        "Sort the array": "Order is FIFO, not sorted."
+      }
+    },
+    {
+      "id": "cq3-insight-01",
+      "category": "main_insight",
+      "type": "free_recall",
+      "promptVariants": [
+        "Why do you need either a size counter or a wasted slot?",
+        "How do you tell a full queue from an empty one when head == tail?"
+      ],
+      "answer": "When head == tail the queue could be completely empty or completely full. Tracking size (or reserving one empty slot) removes the ambiguity: empty = size 0, full = size == capacity.",
+      "keyPoints": [
+        "head == tail is ambiguous",
+        "Use a size counter",
+        "Or leave one slot unused"
+      ],
+      "explanation": "Your size field makes isEmpty/isFull trivial."
+    },
+    {
+      "id": "cq3-time-01",
+      "category": "time_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Time of every operation: ___",
+        "Complete the statement: Time of every operation: ___"
+      ],
+      "answer": "O(1)",
+      "explanation": "Index arithmetic and array access.",
+      "acceptedAnswers": [
+        "constant"
+      ]
+    },
+    {
+      "id": "cq3-space-01",
+      "category": "space_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Space used by the ring buffer of capacity k: ___",
+        "Complete the statement: Space used by the ring buffer of capacity k: ___"
+      ],
+      "answer": "O(k)",
+      "explanation": "A fixed array of k slots.",
+      "acceptedAnswers": [
+        "O(capacity)"
+      ]
+    },
+    {
+      "id": "cq3-code-01",
+      "category": "code_reasoning",
+      "type": "code_question",
+      "promptVariants": [
+        "Why does Rear() use `self.queue[self.tail - 1]` and what happens when tail == 0?",
+        "Rewrite Rear() without relying on negative indexing."
+      ],
+      "code": "def Rear(self):\n    if self.isEmpty():\n        return -1\n    return self.queue[self.tail - 1]",
+      "answer": "tail points to the NEXT write position, so the last element is at tail - 1. When tail == 0 (after wrapping) tail - 1 is -1, which Python resolves to the last array slot - correct but implicit. An explicit version is `self.queue[(self.tail - 1) % self.cap]`.",
+      "keyPoints": [
+        "tail = next write slot",
+        "Rear = tail - 1",
+        "-1 index wraps in Python; use % cap in other languages"
+      ],
+      "explanation": "Alternatively store head and size and compute (head + size - 1) % cap."
+    },
+    {
+      "id": "cq3-edge-01",
+      "category": "edge_case",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "After enQueue to a full queue what happens?",
+        "What do enQueue/deQueue return on full/empty?"
+      ],
+      "options": [
+        "enQueue returns False without changing state; deQueue on empty returns False",
+        "It overwrites the oldest element",
+        "It raises an exception",
+        "It grows the buffer"
+      ],
+      "answer": "enQueue returns False without changing state; deQueue on empty returns False",
+      "explanation": "The API reports failure via booleans and leaves the queue unchanged.",
+      "incorrectOptionExplanations": {
+        "It overwrites the oldest element": "That would be a different (overwriting) ring buffer.",
+        "It raises an exception": "The interface uses return values.",
+        "It grows the buffer": "Capacity is fixed."
+      }
+    }
+  ],
+  "generatedAt": "2026-10-01T14:19:52Z"
+}

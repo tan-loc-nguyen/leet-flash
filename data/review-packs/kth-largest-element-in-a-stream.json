@@ -1,0 +1,163 @@
+{
+  "schemaVersion": 1,
+  "problemSlug": "kth-largest-element-in-a-stream",
+  "summary": "Maintain the k-th largest element as numbers stream in.",
+  "patterns": [
+    "Heap / Priority Queue",
+    "Design"
+  ],
+  "mainInsight": "You only ever need the k largest values: keep them in a min-heap of size k whose root is the k-th largest; a new value matters only if it beats the root.",
+  "canonicalApproach": "Min-heap of size k",
+  "approaches": [
+    {
+      "name": "Sort on every add",
+      "summary": "Append and sort, read index -k.",
+      "timeComplexity": "O(n log n) per add (O(n) on nearly sorted)",
+      "spaceComplexity": "O(n)",
+      "strengths": [
+        "Trivial"
+      ],
+      "weaknesses": [
+        "Slow, stores everything"
+      ],
+      "interviewRelevance": "Your approach: correct but not optimal."
+    },
+    {
+      "name": "Sorted list + insort",
+      "summary": "Insert in order with bisect.insort.",
+      "timeComplexity": "O(n) per add",
+      "spaceComplexity": "O(n)",
+      "weaknesses": [
+        "Shifting elements"
+      ]
+    },
+    {
+      "name": "Min-heap of size k",
+      "summary": "Push, pop when size > k; root = k-th largest.",
+      "timeComplexity": "O(log k) per add",
+      "spaceComplexity": "O(k)",
+      "strengths": [
+        "Optimal"
+      ],
+      "interviewRelevance": "The expected answer."
+    }
+  ],
+  "personalSolution": {
+    "approach": "Append and sort on every add",
+    "timeComplexity": "O(n log n) per add",
+    "spaceComplexity": "O(n)",
+    "isOptimal": false,
+    "notes": "Correct but slow. Use a min-heap of size k for O(log k) updates."
+  },
+  "commonMistakes": [],
+  "edgeCases": [],
+  "cards": [
+    {
+      "id": "kl-pattern-01",
+      "category": "pattern",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "Which structure maintains the k-th largest of a stream?",
+        "What data structure gives O(log k) per update?"
+      ],
+      "options": [
+        "Min-heap of size k",
+        "Max-heap of all elements",
+        "Sorted array",
+        "Stack"
+      ],
+      "answer": "Min-heap of size k",
+      "explanation": "The root of a size-k min-heap is the smallest of the k largest, i.e. the k-th largest.",
+      "incorrectOptionExplanations": {
+        "Max-heap of all elements": "Extracting the k-th largest would take k pops.",
+        "Sorted array": "Insertion costs O(n).",
+        "Stack": "No ordering."
+      }
+    },
+    {
+      "id": "kl-insight-01",
+      "category": "main_insight",
+      "type": "free_recall",
+      "promptVariants": [
+        "Why is a MIN-heap used to track the k LARGEST elements?",
+        "Why can everything below the k-th largest be discarded?"
+      ],
+      "answer": "The element that would be displaced next is the smallest of the current top k, so it must be at the root. Elements smaller than the k-th largest can never become the k-th largest later (new values only push the threshold up), so they can be discarded.",
+      "keyPoints": [
+        "Root = smallest of the top k",
+        "Threshold only increases",
+        "Discard smaller elements"
+      ],
+      "explanation": "Hence O(k) memory."
+    },
+    {
+      "id": "kl-time-01",
+      "category": "time_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Time of add with a size-k min-heap: ___",
+        "Complete the statement: Time of add with a size-k min-heap: ___"
+      ],
+      "answer": "O(log k)",
+      "explanation": "One push and possibly one pop on a heap of size k.",
+      "acceptedAnswers": [
+        "O(logk)"
+      ]
+    },
+    {
+      "id": "kl-space-01",
+      "category": "space_complexity",
+      "type": "free_recall",
+      "promptVariants": [
+        "Your solution keeps all numbers. What does the heap version store and why is it enough?",
+        "Compare the memory of the two approaches."
+      ],
+      "answer": "Yours stores every number O(n) and re-sorts on each add. The heap keeps only the k largest, O(k), which is sufficient because no smaller number can ever be the k-th largest again.",
+      "keyPoints": [
+        "O(n) vs O(k)",
+        "Smaller values can never matter again"
+      ],
+      "explanation": "The constructor must heapify then trim to size k."
+    },
+    {
+      "id": "kl-code-01",
+      "category": "code_reasoning",
+      "type": "code_question",
+      "promptVariants": [
+        "Your add appends and sorts the whole list. What is the cost and how would a size-k heap change `__init__` and `add`?",
+        "Rewrite add with heapq."
+      ],
+      "code": "def add(self, val):\n    self.heap.append(val)\n    self.heap.sort()\n    return self.heap[-self.k]",
+      "answer": "Sorting costs O(n log n) per call (Timsort is nearly linear on almost-sorted data but still O(n)). With a heap: __init__ heapifies and pops until size <= k; add does heappush(val) and, if len > k, heappop(), then returns heap[0].",
+      "keyPoints": [
+        "Sort per add is O(n log n)",
+        "Heapify + trim to k",
+        "push, pop if > k, return heap[0]"
+      ],
+      "explanation": "The list called `heap` is not actually a heap in your code - naming matters."
+    },
+    {
+      "id": "kl-edge-01",
+      "category": "edge_case",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "What if the initial array has fewer than k elements?",
+        "How does the heap version behave until k elements exist?"
+      ],
+      "options": [
+        "The heap holds all elements; the k-th largest exists once k values are present (guaranteed by the problem at query time)",
+        "It raises an error",
+        "It returns 0",
+        "It requires padding with -inf"
+      ],
+      "answer": "The heap holds all elements; the k-th largest exists once k values are present (guaranteed by the problem at query time)",
+      "explanation": "The problem guarantees at least k elements when add is called, so heap[0] is valid; before that nothing is popped.",
+      "incorrectOptionExplanations": {
+        "It raises an error": "Not with the constraints given.",
+        "It returns 0": "No such rule.",
+        "It requires padding with -inf": "Unnecessary under the guarantee."
+      }
+    }
+  ],
+  "generatedAt": "2026-10-01T14:19:52Z"
+}
