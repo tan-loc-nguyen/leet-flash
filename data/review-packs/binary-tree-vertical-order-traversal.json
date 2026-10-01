@@ -1,0 +1,158 @@
+{
+  "schemaVersion": 1,
+  "problemSlug": "binary-tree-vertical-order-traversal",
+  "summary": "Return node values grouped by column (left to right), top to bottom within a column.",
+  "patterns": [
+    "Tree",
+    "BFS",
+    "Array / Hashing"
+  ],
+  "mainInsight": "Assign each node a column (root 0, left -1, right +1) and a row (depth). Group by column; within a column order by row then by left-to-right order. BFS visits nodes in exactly that order, so a column map filled during BFS needs no sorting of values.",
+  "canonicalApproach": "BFS with a column map",
+  "approaches": [
+    {
+      "name": "DFS + sort by (col, row)",
+      "summary": "Store values by (col, row) and sort the keys.",
+      "timeComplexity": "O(n log n)",
+      "spaceComplexity": "O(n)",
+      "strengths": [
+        "Simple"
+      ],
+      "weaknesses": [
+        "Sorting cost",
+        "Relies on DFS order for ties"
+      ],
+      "interviewRelevance": "Your approach."
+    },
+    {
+      "name": "BFS with a column map",
+      "summary": "Queue of (node, col); append to columns[col]; track min/max col.",
+      "timeComplexity": "O(n)",
+      "spaceComplexity": "O(n)",
+      "strengths": [
+        "No value sorting",
+        "Natural top-to-bottom order"
+      ],
+      "interviewRelevance": "The usual optimal answer."
+    }
+  ],
+  "personalSolution": {
+    "approach": "DFS storing by (col, row) then sorting",
+    "timeComplexity": "O(n log n)",
+    "spaceComplexity": "O(n)",
+    "isOptimal": false,
+    "notes": "Correct. BFS with a column map and min/max tracking is O(n) and avoids magic column bounds."
+  },
+  "commonMistakes": [],
+  "edgeCases": [],
+  "cards": [
+    {
+      "id": "vo-pattern-01",
+      "category": "pattern",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "Which traversal gives top-to-bottom order within a column without sorting?",
+        "What do you track along with each node?"
+      ],
+      "options": [
+        "BFS carrying each node's column index",
+        "Inorder DFS",
+        "Postorder DFS",
+        "A heap of values"
+      ],
+      "answer": "BFS carrying each node's column index",
+      "explanation": "BFS visits by increasing depth, so values land in each column in top-to-bottom order.",
+      "incorrectOptionExplanations": {
+        "Inorder DFS": "Depth order is not preserved.",
+        "Postorder DFS": "Depth order is not preserved.",
+        "A heap of values": "Values are not what orders the output."
+      }
+    },
+    {
+      "id": "vo-insight-01",
+      "category": "main_insight",
+      "type": "free_recall",
+      "promptVariants": [
+        "Why do the columns form a contiguous integer range and how do you output them in order?",
+        "How do you avoid sorting the column keys?"
+      ],
+      "answer": "Columns are consecutive integers because moving to a child changes the column by exactly 1, so the set of columns spans [minCol, maxCol] without gaps. Track min and max while traversing and output columns from minCol to maxCol, avoiding any sort.",
+      "keyPoints": [
+        "Columns are contiguous",
+        "Track min/max column",
+        "Iterate minCol..maxCol"
+      ],
+      "explanation": "A dict keyed by column plus min/max replaces sorting."
+    },
+    {
+      "id": "vo-time-01",
+      "category": "time_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Time complexity of your DFS + sort approach: ___",
+        "Sorting the (col, row) keys makes it ___."
+      ],
+      "answer": "O(n log n)",
+      "explanation": "Visiting is O(n); sorting up to n keys is O(n log n).",
+      "acceptedAnswers": [
+        "O(nlogn)"
+      ]
+    },
+    {
+      "id": "vo-space-01",
+      "category": "space_complexity",
+      "type": "free_recall",
+      "promptVariants": [
+        "What is the space cost and what does the hard-coded minCol = 100 assume?",
+        "How would you remove the magic bounds?"
+      ],
+      "answer": "O(n) for the stored values. minCol = 100 / maxCol = -100 assume at most 100 nodes (constraint-dependent) - initialise with the first key or use float('inf')/-inf instead.",
+      "keyPoints": [
+        "O(n) storage",
+        "Magic bounds assume the constraints",
+        "Use inf/-inf or the first key"
+      ],
+      "explanation": "Magic numbers make code fragile."
+    },
+    {
+      "id": "vo-code-01",
+      "category": "code_reasoning",
+      "type": "code_question",
+      "promptVariants": [
+        "Why are ties in (col, row) resolved correctly by DFS order here?",
+        "What goes in `store[(col, row)]`?"
+      ],
+      "code": "def dfs(root, col, row):\n    store[(col, row)].append(root.val)\n    dfs(root.left, col - 1, row + 1)\n    dfs(root.right, col + 1, row + 1)",
+      "answer": "Nodes sharing both column and row are appended in DFS preorder, and the left subtree is explored before the right subtree, so a left-side node is appended before a right-side node at the same position - matching the required left-to-right tie-break. store[(col, row)] collects all values at that grid position.",
+      "keyPoints": [
+        "Left subtree explored first",
+        "Ties keep left-to-right order",
+        "Key = (column, row)"
+      ],
+      "explanation": "BFS gives the same order naturally."
+    },
+    {
+      "id": "vo-edge-01",
+      "category": "edge_case",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "What is the result for [3,9,20,null,null,15,7]?",
+        "How are columns ordered?"
+      ],
+      "options": [
+        "[[9],[3,15],[20],[7]]",
+        "[[3],[9,20],[15,7]]",
+        "[[9],[3],[15],[20],[7]]",
+        "[[9,3],[15,20,7]]"
+      ],
+      "answer": "[[9],[3,15],[20],[7]]",
+      "explanation": "Columns -1..2: 9 | 3 and 15 (15 is deeper) | 20 | 7.",
+      "incorrectOptionExplanations": {
+        "[[3],[9,20],[15,7]]": "That is level order.",
+        "[[9],[3],[15],[20],[7]]": "3 and 15 share column 0.",
+        "[[9,3],[15,20,7]]": "Not grouped by column."
+      }
+    }
+  ],
+  "generatedAt": "2026-10-01T14:32:31Z"
+}

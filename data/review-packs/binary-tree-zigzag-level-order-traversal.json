@@ -1,0 +1,148 @@
+{
+  "schemaVersion": 1,
+  "problemSlug": "binary-tree-zigzag-level-order-traversal",
+  "summary": "Level-order traversal where the direction alternates each level (left-to-right, then right-to-left).",
+  "patterns": [
+    "Tree",
+    "BFS"
+  ],
+  "mainInsight": "Do a normal BFS and reverse every other level's values. Your deque variant instead pops from alternating ends and prepends children in mirrored order so the deque is always in the right order for the next level.",
+  "canonicalApproach": "BFS + reverse alternate levels",
+  "approaches": [
+    {
+      "name": "BFS + reverse alternate levels",
+      "summary": "Collect each level normally; reverse it when the direction flag is right-to-left.",
+      "timeComplexity": "O(n)",
+      "spaceComplexity": "O(w)",
+      "strengths": [
+        "Simple and clear"
+      ],
+      "weaknesses": [
+        "Reversal costs O(level)"
+      ]
+    },
+    {
+      "name": "BFS with a deque popping from alternating ends",
+      "summary": "Pop from the left and append children to the right on L-to-R levels; pop from the right and appendleft on R-to-L levels.",
+      "timeComplexity": "O(n)",
+      "spaceComplexity": "O(w)",
+      "strengths": [
+        "No explicit reversal"
+      ],
+      "weaknesses": [
+        "Subtle ordering"
+      ],
+      "interviewRelevance": "Your approach."
+    },
+    {
+      "name": "DFS with a deque per level",
+      "summary": "Append left or appendleft depending on level parity.",
+      "timeComplexity": "O(n)",
+      "spaceComplexity": "O(h)",
+      "strengths": [
+        "O(h) stack"
+      ]
+    }
+  ],
+  "personalSolution": {
+    "approach": "BFS with a deque popping from alternating ends",
+    "timeComplexity": "O(n)",
+    "spaceComplexity": "O(w)",
+    "isOptimal": true,
+    "notes": "Correct and O(n). The reverse-alternate-levels version is easier to explain."
+  },
+  "commonMistakes": [],
+  "edgeCases": [],
+  "cards": [
+    {
+      "id": "zz-pattern-01",
+      "category": "pattern",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "What is the simplest way to implement zigzag order?",
+        "Which standard traversal is modified?"
+      ],
+      "options": [
+        "Level-order BFS with alternate levels reversed",
+        "Inorder DFS",
+        "A heap of nodes",
+        "Two stacks only with no level tracking"
+      ],
+      "answer": "Level-order BFS with alternate levels reversed",
+      "explanation": "The set of nodes per level is the same as normal level order; only the order within alternate levels changes.",
+      "incorrectOptionExplanations": {
+        "Inorder DFS": "Not level based.",
+        "A heap of nodes": "No ordering by value.",
+        "Two stacks only with no level tracking": "Two stacks do work but must be paired with level separation."
+      }
+    },
+    {
+      "id": "zz-insight-01",
+      "category": "main_insight",
+      "type": "free_recall",
+      "promptVariants": [
+        "Why does popping from the right and prepending children (right then left) keep the next level correctly ordered?",
+        "Explain the deque trick."
+      ],
+      "answer": "On a right-to-left level the nodes are consumed from the right end; their children are put on the left end with appendleft(right child) then appendleft(left child), so after the level the deque holds the next level in left-to-right order again (the next pop-from-left level). The mirrored handling on the other parity keeps the invariant that the deque is always in the order the next level will be consumed.",
+      "keyPoints": [
+        "Consume from alternating ends",
+        "Mirror the insertion side/order",
+        "Deque order = consumption order"
+      ],
+      "explanation": "A flag-and-reverse solution is easier to defend."
+    },
+    {
+      "id": "zz-time-01",
+      "category": "time_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Time complexity: ___",
+        "Complete the statement: Time complexity: ___"
+      ],
+      "answer": "O(n)",
+      "explanation": "Each node is processed once.",
+      "acceptedAnswers": [
+        "linear"
+      ]
+    },
+    {
+      "id": "zz-space-01",
+      "category": "space_complexity",
+      "type": "free_recall",
+      "promptVariants": [
+        "What is the queue space and what does Python's deque give you?",
+        "Why is a deque (not a list) used?"
+      ],
+      "answer": "O(w) for the widest level. A deque offers O(1) appends/pops at both ends; with a plain list popleft/insert(0) would be O(n).",
+      "keyPoints": [
+        "O(width)",
+        "deque O(1) at both ends"
+      ],
+      "explanation": "Same as plain level order."
+    },
+    {
+      "id": "zz-edge-01",
+      "category": "edge_case",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "What is the zigzag traversal of [3,9,20,null,null,15,7]?",
+        "Which level is reversed?"
+      ],
+      "options": [
+        "[[3],[20,9],[15,7]]",
+        "[[3],[9,20],[7,15]]",
+        "[[3],[20,9],[7,15]]",
+        "[[3],[9,20],[15,7]]"
+      ],
+      "answer": "[[3],[20,9],[15,7]]",
+      "explanation": "Level 1 (0-based) is right-to-left: 20, 9; levels 0 and 2 are left-to-right.",
+      "incorrectOptionExplanations": {
+        "[[3],[9,20],[7,15]]": "The directions are swapped.",
+        "[[3],[20,9],[7,15]]": "Level 2 should be left-to-right.",
+        "[[3],[9,20],[15,7]]": "Level 1 is not reversed."
+      }
+    }
+  ],
+  "generatedAt": "2026-10-01T14:32:31Z"
+}

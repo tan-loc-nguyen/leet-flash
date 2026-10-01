@@ -1,0 +1,170 @@
+{
+  "schemaVersion": 1,
+  "problemSlug": "two-sum-iv-input-is-a-bst",
+  "summary": "Is there a pair of nodes in the BST whose values sum to k?",
+  "patterns": [
+    "BST",
+    "Tree",
+    "Array / Hashing"
+  ],
+  "mainInsight": "Two Sum on a tree: traverse and keep a set of values seen; for each node check whether k - val was already seen. With the BST property you can also do inorder + two pointers, or use two BST iterators for O(h) space.",
+  "canonicalApproach": "Traverse with a hash set",
+  "approaches": [
+    {
+      "name": "Traverse with a hash set",
+      "summary": "Check complement before inserting.",
+      "timeComplexity": "O(n)",
+      "spaceComplexity": "O(n)",
+      "strengths": [
+        "Simple, works on any tree"
+      ],
+      "weaknesses": [
+        "O(n) memory"
+      ],
+      "interviewRelevance": "Your approach."
+    },
+    {
+      "name": "Inorder array + two pointers",
+      "summary": "Sorted values; converge from both ends.",
+      "timeComplexity": "O(n)",
+      "spaceComplexity": "O(n)",
+      "strengths": [
+        "Classic Two Sum II"
+      ],
+      "weaknesses": [
+        "Array of n values"
+      ]
+    },
+    {
+      "name": "Two BST iterators (forward and reverse)",
+      "summary": "Smallest-next and largest-next iterators converge.",
+      "timeComplexity": "O(n)",
+      "spaceComplexity": "O(h)",
+      "strengths": [
+        "O(h) space"
+      ],
+      "weaknesses": [
+        "More code"
+      ],
+      "interviewRelevance": "The space-optimal follow-up."
+    }
+  ],
+  "personalSolution": {
+    "approach": "Traverse with a hash set (inorder DFS)",
+    "timeComplexity": "O(n)",
+    "spaceComplexity": "O(n)",
+    "isOptimal": false,
+    "notes": "Correct. Use a set, propagate a boolean to stop early; two iterators give O(h) space."
+  },
+  "commonMistakes": [],
+  "edgeCases": [],
+  "cards": [
+    {
+      "id": "tb-pattern-01",
+      "category": "pattern",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "Which classic problem does this reduce to?",
+        "How do you exploit sorted inorder order?"
+      ],
+      "options": [
+        "Two Sum (hash set) or Two Sum II (two pointers on the inorder array)",
+        "Knapsack",
+        "Longest increasing subsequence",
+        "Graph colouring"
+      ],
+      "answer": "Two Sum (hash set) or Two Sum II (two pointers on the inorder array)",
+      "explanation": "Inorder of a BST is a sorted array, so any Two Sum technique applies.",
+      "incorrectOptionExplanations": {
+        "Knapsack": "Unrelated.",
+        "Longest increasing subsequence": "Unrelated.",
+        "Graph colouring": "Unrelated."
+      }
+    },
+    {
+      "id": "tb-insight-01",
+      "category": "main_insight",
+      "type": "free_recall",
+      "promptVariants": [
+        "Why check the complement before inserting the current value?",
+        "What does the BST property add beyond the hash-set approach?"
+      ],
+      "answer": "Checking before inserting prevents pairing a node with itself (k = 2 * val). The BST property additionally makes the inorder sequence sorted, enabling a two-pointer search with only O(h) memory via two iterators instead of an O(n) set.",
+      "keyPoints": [
+        "Avoid self-pairing",
+        "Inorder is sorted",
+        "Two iterators => O(h) space"
+      ],
+      "explanation": "Same ordering trick as Two Sum."
+    },
+    {
+      "id": "tb-time-01",
+      "category": "time_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Time complexity: ___",
+        "Complete the statement: Time complexity: ___"
+      ],
+      "answer": "O(n)",
+      "explanation": "Each node is visited once with O(1) set operations.",
+      "acceptedAnswers": [
+        "linear"
+      ]
+    },
+    {
+      "id": "tb-space-01",
+      "category": "space_complexity",
+      "type": "free_recall",
+      "promptVariants": [
+        "What is the extra space of the set approach versus two iterators?",
+        "Compare the extra memory of the hash-set method and the two-iterator method for Two Sum IV."
+      ],
+      "answer": "The set uses O(n) plus O(h) recursion; two BST iterators need only O(h).",
+      "keyPoints": [
+        "Set O(n)",
+        "Iterators O(h)"
+      ],
+      "explanation": "State the trade-off."
+    },
+    {
+      "id": "tb-code-01",
+      "category": "code_reasoning",
+      "type": "code_question",
+      "promptVariants": [
+        "Your dfs sets `ans = True` and returns, but do the callers stop? Why does `hmap[root.val] = complement` store a value that is never used?",
+        "How would you short-circuit?"
+      ],
+      "code": "dfs(root.left)\ncomplement = k - root.val\nif complement in hmap:\n    ans = True\n    return\nhmap[root.val] = complement\ndfs(root.right)",
+      "answer": "`return` only exits the current frame; the parent frames continue (and may keep exploring) because there is no propagated stop flag, so the traversal still visits other nodes (still O(n)). The map value is unused: a set is enough. A recursive `return dfs(left) or ... ` pattern short-circuits cleanly.",
+      "keyPoints": [
+        "Return exits only one frame",
+        "Use a set, not a dict",
+        "Propagate a boolean to stop early"
+      ],
+      "explanation": "Inorder order is irrelevant for the set approach."
+    },
+    {
+      "id": "tb-edge-01",
+      "category": "edge_case",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "Can a node be paired with itself?",
+        "What happens for k = 2 * val of a single-node tree?"
+      ],
+      "options": [
+        "No: the two values must come from two different nodes, so the single-node tree returns False",
+        "Yes",
+        "Only for the root",
+        "Only if val is 0"
+      ],
+      "answer": "No: the two values must come from two different nodes, so the single-node tree returns False",
+      "explanation": "Checking the complement before inserting guarantees distinct nodes.",
+      "incorrectOptionExplanations": {
+        "Yes": "That would double count a node.",
+        "Only for the root": "No special case for the root.",
+        "Only if val is 0": "Not related to zero."
+      }
+    }
+  ],
+  "generatedAt": "2026-10-01T14:32:31Z"
+}

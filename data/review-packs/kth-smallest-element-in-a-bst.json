@@ -1,0 +1,166 @@
+{
+  "schemaVersion": 1,
+  "problemSlug": "kth-smallest-element-in-a-bst",
+  "summary": "Return the k-th smallest value in a BST.",
+  "patterns": [
+    "BST",
+    "Tree",
+    "DFS"
+  ],
+  "mainInsight": "Inorder traversal visits BST values in ascending order, so the k-th visited node is the answer; counting down k and stopping at 0 avoids visiting the rest of the tree.",
+  "canonicalApproach": "Inorder with a counter and early stop",
+  "approaches": [
+    {
+      "name": "Inorder to a list",
+      "summary": "Collect all values and index k - 1.",
+      "timeComplexity": "O(n)",
+      "spaceComplexity": "O(n)",
+      "strengths": [
+        "Simplest"
+      ],
+      "weaknesses": [
+        "Visits everything"
+      ]
+    },
+    {
+      "name": "Inorder with a counter and early stop",
+      "summary": "Decrement k per visited node; record at 0 and stop.",
+      "timeComplexity": "O(h + k)",
+      "spaceComplexity": "O(h)",
+      "strengths": [
+        "Stops early"
+      ],
+      "interviewRelevance": "Your approach."
+    },
+    {
+      "name": "Augment nodes with subtree sizes",
+      "summary": "Use size counts to descend in O(h).",
+      "timeComplexity": "O(h) per query",
+      "spaceComplexity": "O(n) extra",
+      "strengths": [
+        "Great for repeated queries on a modified tree"
+      ],
+      "weaknesses": [
+        "Maintenance cost"
+      ],
+      "interviewRelevance": "The follow-up answer."
+    }
+  ],
+  "personalSolution": {
+    "approach": "Inorder with a counter and early stop",
+    "timeComplexity": "O(h + k)",
+    "spaceComplexity": "O(h)",
+    "isOptimal": true,
+    "notes": "Optimal for a single query."
+  },
+  "commonMistakes": [],
+  "edgeCases": [],
+  "cards": [
+    {
+      "id": "ks-pattern-01",
+      "category": "pattern",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "Which traversal gives sorted order on a BST?",
+        "How do you find the k-th smallest without sorting?"
+      ],
+      "options": [
+        "Inorder traversal, counting visited nodes",
+        "Preorder traversal",
+        "Level order",
+        "Postorder"
+      ],
+      "answer": "Inorder traversal, counting visited nodes",
+      "explanation": "The k-th node visited by inorder is the k-th smallest.",
+      "incorrectOptionExplanations": {
+        "Preorder traversal": "Not sorted.",
+        "Level order": "Not sorted.",
+        "Postorder": "Not sorted."
+      }
+    },
+    {
+      "id": "ks-insight-01",
+      "category": "main_insight",
+      "type": "free_recall",
+      "promptVariants": [
+        "Why can the traversal stop once the k-th node is reached?",
+        "How does your `k <= 0` guard prune?"
+      ],
+      "answer": "Inorder yields values in increasing order, so after visiting k nodes the k-th smallest is known; nothing later can change it. The guard `if not root or k <= 0: return` stops all further recursion once k hits 0 (including the right subtree of the answer node).",
+      "keyPoints": [
+        "Sorted order => stop at k",
+        "Guard prunes remaining calls"
+      ],
+      "explanation": "Time is O(h + k) instead of O(n)."
+    },
+    {
+      "id": "ks-time-01",
+      "category": "time_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Time complexity of the early-stopping inorder: ___",
+        "Reaching the k-th node costs ___ (h = height)."
+      ],
+      "answer": "O(h + k)",
+      "explanation": "Descend to the leftmost node (h) and then visit k nodes.",
+      "acceptedAnswers": [
+        "O(k + h)"
+      ]
+    },
+    {
+      "id": "ks-space-01",
+      "category": "space_complexity",
+      "type": "free_recall",
+      "promptVariants": [
+        "What is the recursion stack space?",
+        "How would a balanced vs skewed tree differ?"
+      ],
+      "answer": "O(h): about log n for balanced trees and n for skewed trees.",
+      "keyPoints": [
+        "O(h)",
+        "log n vs n"
+      ],
+      "explanation": "Same as the other inorder variants."
+    },
+    {
+      "id": "ks-code-01",
+      "category": "code_reasoning",
+      "type": "code_question",
+      "promptVariants": [
+        "Why decrement k after the left call and why check `ans == None`?",
+        "What is the follow-up when the BST is modified often?"
+      ],
+      "code": "def dfs(root):\n    nonlocal k, ans\n    if not root or k <= 0:\n        return\n    dfs(root.left)\n    k -= 1\n    if k == 0 and ans == None:\n        ans = root.val\n    dfs(root.right)",
+      "answer": "The decrement happens at the 'visit' position of inorder (after the left subtree), so k counts nodes in sorted order. The `ans == None` check is redundant because k reaches 0 only once. For frequent inserts/deletes with many queries, store subtree sizes in each node (an order-statistic tree) so each query is O(h).",
+      "keyPoints": [
+        "Decrement at the visit step",
+        "k hits 0 only once",
+        "Order-statistic tree for the follow-up"
+      ],
+      "explanation": "Use `is None` for None checks."
+    },
+    {
+      "id": "ks-edge-01",
+      "category": "edge_case",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "What is the 1st smallest of [3,1,4,null,2]?",
+        "Where is the smallest value found?"
+      ],
+      "options": [
+        "1 (the leftmost node)",
+        "2",
+        "3",
+        "4"
+      ],
+      "answer": "1 (the leftmost node)",
+      "explanation": "Inorder starts at the leftmost node, which holds the minimum.",
+      "incorrectOptionExplanations": {
+        "2": "That is the 2nd smallest.",
+        "3": "That is the 3rd.",
+        "4": "That is the 4th."
+      }
+    }
+  ],
+  "generatedAt": "2026-10-01T14:32:31Z"
+}

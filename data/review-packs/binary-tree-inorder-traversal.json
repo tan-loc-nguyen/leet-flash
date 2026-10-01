@@ -1,0 +1,170 @@
+{
+  "schemaVersion": 1,
+  "problemSlug": "binary-tree-inorder-traversal",
+  "summary": "Return the inorder traversal (left, node, right) of a binary tree.",
+  "patterns": [
+    "Tree",
+    "DFS"
+  ],
+  "mainInsight": "Inorder visits the left subtree, then the node, then the right subtree. Recursion expresses this directly; an explicit stack simulates it iteratively by pushing the left spine and popping to visit.",
+  "canonicalApproach": "Recursive DFS",
+  "approaches": [
+    {
+      "name": "Recursive DFS",
+      "summary": "dfs(left), visit, dfs(right).",
+      "timeComplexity": "O(n)",
+      "spaceComplexity": "O(h)",
+      "strengths": [
+        "Shortest"
+      ],
+      "weaknesses": [
+        "Recursion depth on skewed trees"
+      ],
+      "interviewRelevance": "Your approach."
+    },
+    {
+      "name": "Iterative with a stack",
+      "summary": "Push the left spine; pop, visit, then go right.",
+      "timeComplexity": "O(n)",
+      "spaceComplexity": "O(h)",
+      "strengths": [
+        "No recursion limit"
+      ],
+      "weaknesses": [
+        "More code"
+      ]
+    },
+    {
+      "name": "Morris traversal",
+      "summary": "Thread the predecessor's right pointer to avoid a stack.",
+      "timeComplexity": "O(n)",
+      "spaceComplexity": "O(1)",
+      "strengths": [
+        "Constant extra space"
+      ],
+      "weaknesses": [
+        "Temporarily mutates the tree",
+        "Tricky"
+      ],
+      "interviewRelevance": "The follow-up answer."
+    }
+  ],
+  "personalSolution": {
+    "approach": "Recursive DFS",
+    "timeComplexity": "O(n)",
+    "spaceComplexity": "O(h)",
+    "isOptimal": true,
+    "notes": "Optimal; know the iterative stack version and Morris traversal as follow-ups."
+  },
+  "commonMistakes": [],
+  "edgeCases": [],
+  "cards": [
+    {
+      "id": "io-pattern-01",
+      "category": "pattern",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "In what order does inorder traversal visit nodes?",
+        "What does inorder produce on a binary search tree?"
+      ],
+      "options": [
+        "Left subtree, node, right subtree; sorted values for a BST",
+        "Node, left, right",
+        "Left, right, node",
+        "Level by level"
+      ],
+      "answer": "Left subtree, node, right subtree; sorted values for a BST",
+      "explanation": "On a BST the node is greater than everything on its left and smaller than everything on its right.",
+      "incorrectOptionExplanations": {
+        "Node, left, right": "That is preorder.",
+        "Left, right, node": "That is postorder.",
+        "Level by level": "That is BFS/level order."
+      }
+    },
+    {
+      "id": "io-insight-01",
+      "category": "main_insight",
+      "type": "free_recall",
+      "promptVariants": [
+        "Why is inorder traversal important for BSTs?",
+        "What property does it give you?"
+      ],
+      "answer": "Visiting left, node, right yields the keys of a BST in strictly increasing order, so inorder underlies Validate BST, Kth Smallest and Two Sum IV.",
+      "keyPoints": [
+        "Sorted output for a BST",
+        "Basis for validate / kth smallest"
+      ],
+      "explanation": "Preorder and postorder have other uses (serialisation, deletion)."
+    },
+    {
+      "id": "io-time-01",
+      "category": "time_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Time complexity: ___",
+        "Complete the statement: Time complexity: ___"
+      ],
+      "answer": "O(n)",
+      "explanation": "Every node is visited once.",
+      "acceptedAnswers": [
+        "linear"
+      ]
+    },
+    {
+      "id": "io-space-01",
+      "category": "space_complexity",
+      "type": "free_recall",
+      "promptVariants": [
+        "What is the stack space of recursive inorder and how can it be reduced?",
+        "How much memory does inorder use in the best and worst case?"
+      ],
+      "answer": "O(h) for the recursion stack: about log n for a balanced tree and n for a skewed one. An iterative version with an explicit stack uses the same O(h); Morris traversal gets inorder down to O(1) extra space by temporarily threading the tree.",
+      "keyPoints": [
+        "O(h)",
+        "log n balanced, n skewed",
+        "Morris is O(1)"
+      ],
+      "explanation": "The output list is O(n) anyway."
+    },
+    {
+      "id": "io-code-01",
+      "category": "code_reasoning",
+      "type": "code_question",
+      "promptVariants": [
+        "Where does the node's value get appended and how do the other orders differ?",
+        "Change one line to get preorder and postorder."
+      ],
+      "code": "def dfs(root):\n    if not root:\n        return\n    dfs(root.left)\n    ans.append(root.val)\n    dfs(root.right)",
+      "answer": "The append sits between the two recursive calls: left, node, right. Moving it before both calls gives preorder (node, left, right); moving it after both gives postorder (left, right, node).",
+      "keyPoints": [
+        "Append between the calls",
+        "Before = preorder",
+        "After = postorder"
+      ],
+      "explanation": "The three orders differ only in where the visit happens."
+    },
+    {
+      "id": "io-edge-01",
+      "category": "edge_case",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "What is the inorder traversal of [1,null,2,3]?",
+        "How does a right-only chain behave?"
+      ],
+      "options": [
+        "[1,3,2]",
+        "[1,2,3]",
+        "[3,2,1]",
+        "[2,1,3]"
+      ],
+      "answer": "[1,3,2]",
+      "explanation": "1 has no left child; its right child 2 has left child 3: visit 1, then 3 (left of 2), then 2.",
+      "incorrectOptionExplanations": {
+        "[1,2,3]": "That ignores that 3 is the left child of 2.",
+        "[3,2,1]": "That is reverse order.",
+        "[2,1,3]": "Wrong nesting."
+      }
+    }
+  ],
+  "generatedAt": "2026-10-01T14:32:31Z"
+}

@@ -1,0 +1,135 @@
+{
+  "schemaVersion": 1,
+  "problemSlug": "lowest-common-ancestor-of-a-binary-search-tree",
+  "summary": "Find the lowest common ancestor of two nodes in a BST.",
+  "patterns": [
+    "BST",
+    "Tree"
+  ],
+  "mainInsight": "In a BST the LCA is the first node whose value lies between p and q (inclusive): if both are larger go right, if both are smaller go left, otherwise this node is the split point.",
+  "canonicalApproach": "Walk down using the BST order",
+  "approaches": [
+    {
+      "name": "Generic tree LCA",
+      "summary": "Postorder search for p and q in both subtrees.",
+      "timeComplexity": "O(n)",
+      "spaceComplexity": "O(h)",
+      "weaknesses": [
+        "Ignores the BST property"
+      ]
+    },
+    {
+      "name": "Walk down using the BST order",
+      "summary": "Move left or right until p and q are separated.",
+      "timeComplexity": "O(h)",
+      "spaceComplexity": "O(h) recursive / O(1) iterative",
+      "strengths": [
+        "Uses ordering",
+        "O(1) space iteratively"
+      ],
+      "interviewRelevance": "Your approach (recursive); the expected answer."
+    }
+  ],
+  "personalSolution": {
+    "approach": "Walk down using the BST order (recursive)",
+    "timeComplexity": "O(h)",
+    "spaceComplexity": "O(h)",
+    "isOptimal": true,
+    "notes": "Optimal; an iterative loop gives O(1) space."
+  },
+  "commonMistakes": [],
+  "edgeCases": [],
+  "cards": [
+    {
+      "id": "lb-pattern-01",
+      "category": "pattern",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "How does the BST property simplify the LCA?",
+        "When is the current node the LCA?"
+      ],
+      "options": [
+        "When p and q lie on different sides (or one equals the node)",
+        "When both are in the left subtree",
+        "When it is the root only",
+        "When it has two children"
+      ],
+      "answer": "When p and q lie on different sides (or one equals the node)",
+      "explanation": "If they diverge here, no deeper node can be an ancestor of both.",
+      "incorrectOptionExplanations": {
+        "When both are in the left subtree": "Then the LCA is deeper, in the left subtree.",
+        "When it is the root only": "Only if they diverge at the root.",
+        "When it has two children": "Unrelated."
+      }
+    },
+    {
+      "id": "lb-insight-01",
+      "category": "main_insight",
+      "type": "free_recall",
+      "promptVariants": [
+        "Why can you ignore one subtree at every step?",
+        "What does `root.val < p.val and root.val < q.val` mean?"
+      ],
+      "answer": "If both p and q are greater than the current node, both lie in the right subtree (BST order), so the LCA is in the right subtree; symmetrically for smaller. Once they are not on the same side, the current node separates them and is the lowest common ancestor.",
+      "keyPoints": [
+        "Both greater => go right",
+        "Both smaller => go left",
+        "Otherwise the split point is the LCA"
+      ],
+      "explanation": "A node may be its own ancestor."
+    },
+    {
+      "id": "lb-time-01",
+      "category": "time_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Time complexity (h = height): ___",
+        "Complete the statement: Time complexity (h = height): ___"
+      ],
+      "answer": "O(h)",
+      "explanation": "One root-to-node descent.",
+      "acceptedAnswers": [
+        "O(height)",
+        "O(log n) balanced"
+      ]
+    },
+    {
+      "id": "lb-space-01",
+      "category": "space_complexity",
+      "type": "free_recall",
+      "promptVariants": [
+        "Recursive vs iterative space?",
+        "How can you make it O(1)?"
+      ],
+      "answer": "Recursion uses O(h) stack; an iterative loop that moves the `root` pointer uses O(1) extra space.",
+      "keyPoints": [
+        "Recursion O(h)",
+        "Iterative O(1)"
+      ],
+      "explanation": "Easy to convert since it is tail recursion."
+    },
+    {
+      "id": "lb-edge-01",
+      "category": "edge_case",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "What is the LCA when one node is an ancestor of the other?",
+        "How does the code return it?"
+      ],
+      "options": [
+        "The ancestor itself, since the node neither lies strictly left nor right of both",
+        "The parent of the ancestor",
+        "None",
+        "The root"
+      ],
+      "answer": "The ancestor itself, since the node neither lies strictly left nor right of both",
+      "explanation": "A node can be a descendant of itself, so the LCA of a node and its descendant is the node.",
+      "incorrectOptionExplanations": {
+        "The parent of the ancestor": "Too high.",
+        "None": "A LCA exists.",
+        "The root": "Only if it is the split point."
+      }
+    }
+  ],
+  "generatedAt": "2026-10-01T14:32:31Z"
+}

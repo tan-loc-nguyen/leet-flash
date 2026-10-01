@@ -1,0 +1,149 @@
+{
+  "schemaVersion": 1,
+  "problemSlug": "average-of-levels-in-binary-tree",
+  "summary": "Return the average of the node values on each level.",
+  "patterns": [
+    "Tree",
+    "BFS"
+  ],
+  "mainInsight": "Level-order BFS: sum the n values of each level and divide by n.",
+  "canonicalApproach": "BFS with level sums",
+  "approaches": [
+    {
+      "name": "BFS with level sums",
+      "summary": "Process len(queue) nodes per level, total / n.",
+      "timeComplexity": "O(n)",
+      "spaceComplexity": "O(w)",
+      "strengths": [
+        "Direct"
+      ],
+      "interviewRelevance": "Your approach; the expected answer."
+    },
+    {
+      "name": "DFS with per-depth sums and counts",
+      "summary": "Accumulate sum and count per depth in two lists.",
+      "timeComplexity": "O(n)",
+      "spaceComplexity": "O(h)",
+      "strengths": [
+        "O(h) stack"
+      ]
+    }
+  ],
+  "personalSolution": {
+    "approach": "BFS with level sums",
+    "timeComplexity": "O(n)",
+    "spaceComplexity": "O(w)",
+    "isOptimal": true,
+    "notes": "Optimal; tidy the redundant `if node` guard."
+  },
+  "commonMistakes": [],
+  "edgeCases": [],
+  "cards": [
+    {
+      "id": "al-pattern-01",
+      "category": "pattern",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "Which traversal computes per-level statistics?",
+        "What do you track per level?"
+      ],
+      "options": [
+        "BFS with a level snapshot (sum and count)",
+        "Inorder DFS",
+        "Heap",
+        "Binary search"
+      ],
+      "answer": "BFS with a level snapshot (sum and count)",
+      "explanation": "n = len(queue) is the level size and the sum is accumulated while popping them.",
+      "incorrectOptionExplanations": {
+        "Inorder DFS": "Level boundaries are lost.",
+        "Heap": "Not needed.",
+        "Binary search": "Not a search."
+      }
+    },
+    {
+      "id": "al-insight-01",
+      "category": "main_insight",
+      "type": "free_recall",
+      "promptVariants": [
+        "Why is n = len(queue) the denominator?",
+        "What does it represent?"
+      ],
+      "answer": "At the start of the iteration the queue holds exactly the nodes of the current level, so its length is the number of values summed for that level's average.",
+      "keyPoints": [
+        "Queue length = level size",
+        "Average = sum / n"
+      ],
+      "explanation": "Use float division."
+    },
+    {
+      "id": "al-time-01",
+      "category": "time_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Time complexity: ___",
+        "Complete the statement: Time complexity: ___"
+      ],
+      "answer": "O(n)",
+      "explanation": "Each node is visited once.",
+      "acceptedAnswers": [
+        "linear"
+      ]
+    },
+    {
+      "id": "al-space-01",
+      "category": "space_complexity",
+      "type": "free_recall",
+      "promptVariants": [
+        "What is the extra space?",
+        "How much memory does the level-averages BFS use besides the answer?"
+      ],
+      "answer": "O(w) for the queue (the widest level) plus O(depth) for the answer list.",
+      "keyPoints": [
+        "O(width)",
+        "Answer O(levels)"
+      ],
+      "explanation": "DFS needs O(h) for the recursion."
+    },
+    {
+      "id": "al-code-01",
+      "category": "code_reasoning",
+      "type": "code_question",
+      "promptVariants": [
+        "The code has `if node: total += node.val` and then `if node.left:` outside the guard. Why is it still safe and how would you tidy it?",
+        "Which values can the queue contain?"
+      ],
+      "code": "node = queue.popleft()\nif node:\n    total += node.val\nif node.left:\n    queue.append(node.left)\nif node.right:\n    queue.append(node.right)",
+      "answer": "Only real nodes are ever enqueued (the initial root is non-null by the constraints), so `node` is never None and the first `if node` is redundant; the later checks would crash on a None, so the guard cannot be relied on. Remove it and handle a null root explicitly.",
+      "keyPoints": [
+        "Queue contains only real nodes",
+        "The guard is inconsistent",
+        "Handle the null root up front"
+      ],
+      "explanation": "Inconsistent guards are a code smell."
+    },
+    {
+      "id": "al-edge-01",
+      "category": "edge_case",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "What are the averages for [3,9,20,null,null,15,7]?",
+        "Which values are averaged at the last level?"
+      ],
+      "options": [
+        "[3.0, 14.5, 11.0]",
+        "[3.0, 29.0, 22.0]",
+        "[3.0, 14.5, 22.0]",
+        "[3.0, 9.0, 15.0]"
+      ],
+      "answer": "[3.0, 14.5, 11.0]",
+      "explanation": "Level 1: (9 + 20)/2 = 14.5; level 2: (15 + 7)/2 = 11.0.",
+      "incorrectOptionExplanations": {
+        "[3.0, 29.0, 22.0]": "Those are sums.",
+        "[3.0, 14.5, 22.0]": "Level 2 is averaged over 2 nodes.",
+        "[3.0, 9.0, 15.0]": "Only the first node per level."
+      }
+    }
+  ],
+  "generatedAt": "2026-10-01T14:32:31Z"
+}

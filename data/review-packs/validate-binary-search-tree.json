@@ -1,0 +1,154 @@
+{
+  "schemaVersion": 1,
+  "problemSlug": "validate-binary-search-tree",
+  "summary": "Check whether a binary tree is a valid BST (strictly: left < node < right for the whole subtrees).",
+  "patterns": [
+    "BST",
+    "Tree",
+    "DFS"
+  ],
+  "mainInsight": "A BST's inorder traversal is strictly increasing. Either run an inorder traversal while keeping the previous value, or pass down (low, high) bounds so every node lies strictly between the bounds inherited from its ancestors.",
+  "canonicalApproach": "Inorder with previous value",
+  "approaches": [
+    {
+      "name": "Inorder with previous value",
+      "summary": "Check that each visited value exceeds the previous one.",
+      "timeComplexity": "O(n)",
+      "spaceComplexity": "O(h)",
+      "strengths": [
+        "Simple, no bounds"
+      ],
+      "interviewRelevance": "Your approach."
+    },
+    {
+      "name": "Recursive bounds (low, high)",
+      "summary": "Each node must satisfy low < val < high; narrow bounds per child.",
+      "timeComplexity": "O(n)",
+      "spaceComplexity": "O(h)",
+      "strengths": [
+        "Early failure, explicit logic"
+      ],
+      "weaknesses": [
+        "Bounds with ints; handle extremes"
+      ],
+      "interviewRelevance": "Equally standard."
+    }
+  ],
+  "personalSolution": {
+    "approach": "Inorder with previous value",
+    "timeComplexity": "O(n)",
+    "spaceComplexity": "O(h)",
+    "isOptimal": true,
+    "notes": "Optimal; add an early return after the left-subtree check."
+  },
+  "commonMistakes": [],
+  "edgeCases": [],
+  "cards": [
+    {
+      "id": "vb-pattern-01",
+      "category": "pattern",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "What property of a BST do you exploit to validate it?",
+        "Which traversal gives a sorted sequence for a valid BST?"
+      ],
+      "options": [
+        "Inorder traversal is strictly increasing",
+        "Preorder is sorted",
+        "Postorder is sorted",
+        "Level order is sorted"
+      ],
+      "answer": "Inorder traversal is strictly increasing",
+      "explanation": "Left subtree < node < right subtree implies sorted inorder.",
+      "incorrectOptionExplanations": {
+        "Preorder is sorted": "Not in general.",
+        "Postorder is sorted": "Not in general.",
+        "Level order is sorted": "Not in general."
+      }
+    },
+    {
+      "id": "vb-insight-01",
+      "category": "main_insight",
+      "type": "free_recall",
+      "promptVariants": [
+        "Why is comparing a node only with its direct children not enough?",
+        "Give a counterexample."
+      ],
+      "answer": "BST rules apply to the entire subtree: every node in the left subtree must be smaller than the node, not just the left child. Example: root 5 with right child 6 whose left child is 4 satisfies local parent-child comparisons but 4 < 5 sits in the right subtree, so the tree is invalid. Inorder (or inherited bounds) catches this.",
+      "keyPoints": [
+        "Constraints apply to whole subtrees",
+        "Counterexample 5 -> 6 -> left 4",
+        "Use inorder or bounds"
+      ],
+      "explanation": "Local checks are a classic wrong answer."
+    },
+    {
+      "id": "vb-time-01",
+      "category": "time_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Time complexity: ___",
+        "Complete the statement: Time complexity: ___"
+      ],
+      "answer": "O(n)",
+      "explanation": "Each node is visited once.",
+      "acceptedAnswers": [
+        "linear"
+      ]
+    },
+    {
+      "id": "vb-space-01",
+      "category": "space_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Recursion stack space: ___",
+        "Complete the statement: Recursion stack space: ___"
+      ],
+      "answer": "O(h)",
+      "explanation": "Depth of the recursion.",
+      "acceptedAnswers": [
+        "O(height)"
+      ]
+    },
+    {
+      "id": "vb-code-01",
+      "category": "code_reasoning",
+      "type": "code_question",
+      "promptVariants": [
+        "Why `root.val <= self.prev` (not `<`) and why your code still visits the right subtree after a failure?",
+        "How would you return early?"
+      ],
+      "code": "left = dfs(root.left)\nif root.val <= self.prev:\n    return False\nself.prev = root.val\nright = dfs(root.right)\nreturn left and right",
+      "answer": "Duplicates are not allowed in a valid BST, so the sequence must be strictly increasing and equality is a failure (`<=`). Your code stores `left` and does not short-circuit, so it can still traverse the right subtree when the left side already failed; checking `if not left: return False` right after the left call stops early.",
+      "keyPoints": [
+        "Strict increase => <=",
+        "Early return on left failure",
+        "Same big-O, faster in practice"
+      ],
+      "explanation": "Initialise prev to -inf."
+    },
+    {
+      "id": "vb-edge-01",
+      "category": "edge_case",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "Is [2,2,2] a valid BST?",
+        "Why do duplicates matter?"
+      ],
+      "options": [
+        "No: values must be strictly increasing in inorder",
+        "Yes",
+        "Only if sorted descending",
+        "Depends on the height"
+      ],
+      "answer": "No: values must be strictly increasing in inorder",
+      "explanation": "LeetCode's BST definition forbids equal keys on either side.",
+      "incorrectOptionExplanations": {
+        "Yes": "Duplicates violate strictness.",
+        "Only if sorted descending": "Not a rule.",
+        "Depends on the height": "Not related."
+      }
+    }
+  ],
+  "generatedAt": "2026-10-01T14:32:31Z"
+}

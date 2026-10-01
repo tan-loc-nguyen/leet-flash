@@ -1,0 +1,119 @@
+{
+  "schemaVersion": 1,
+  "problemSlug": "n-ary-tree-postorder-traversal",
+  "summary": "Return the postorder traversal of an N-ary tree.",
+  "patterns": [
+    "Tree",
+    "DFS"
+  ],
+  "mainInsight": "Recursively visit every child first, then the node itself.",
+  "canonicalApproach": "Recursive DFS",
+  "approaches": [
+    {
+      "name": "Recursive DFS",
+      "summary": "Recurse into each child, then append the node.",
+      "timeComplexity": "O(n)",
+      "spaceComplexity": "O(h)",
+      "strengths": [
+        "Shortest"
+      ],
+      "interviewRelevance": "Your approach."
+    },
+    {
+      "name": "Iterative: reversed modified preorder",
+      "summary": "Preorder with children in normal order on a stack, then reverse the output.",
+      "timeComplexity": "O(n)",
+      "spaceComplexity": "O(h)",
+      "strengths": [
+        "No recursion"
+      ],
+      "weaknesses": [
+        "Needs a final reverse"
+      ]
+    }
+  ],
+  "personalSolution": {
+    "approach": "Recursive DFS",
+    "timeComplexity": "O(n)",
+    "spaceComplexity": "O(h)",
+    "isOptimal": true,
+    "notes": "Optimal."
+  },
+  "commonMistakes": [],
+  "edgeCases": [],
+  "cards": [
+    {
+      "id": "nq-pattern-01",
+      "category": "pattern",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "What is the order of postorder on an N-ary tree?",
+        "When is the node visited?"
+      ],
+      "options": [
+        "After all of its children",
+        "Before all of its children",
+        "Between its first and second child",
+        "Level by level"
+      ],
+      "answer": "After all of its children",
+      "explanation": "Postorder processes all child subtrees first, then the node.",
+      "incorrectOptionExplanations": {
+        "Before all of its children": "That is preorder.",
+        "Between its first and second child": "That has no standard meaning for N-ary trees.",
+        "Level by level": "That is BFS."
+      }
+    },
+    {
+      "id": "nq-time-01",
+      "category": "time_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Time complexity: ___",
+        "Complete the statement: Time complexity: ___"
+      ],
+      "answer": "O(n)",
+      "explanation": "One visit per node.",
+      "acceptedAnswers": [
+        "linear"
+      ]
+    },
+    {
+      "id": "nq-space-01",
+      "category": "space_complexity",
+      "type": "free_recall",
+      "promptVariants": [
+        "What bounds the stack space?",
+        "How much stack does an N-ary postorder traversal use in the worst case?"
+      ],
+      "answer": "The tree height h: O(h) for recursion or an explicit stack (n for a degenerate chain).",
+      "keyPoints": [
+        "O(h)"
+      ],
+      "explanation": "Output O(n)."
+    },
+    {
+      "id": "nq-edge-01",
+      "category": "edge_case",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "What is the postorder of a root with children 3, 2, 4 where 3 has children 5 and 6?",
+        "Where does the root appear?"
+      ],
+      "options": [
+        "[5,6,3,2,4,1] with root 1 last",
+        "[1,3,5,6,2,4]",
+        "[5,6,3,2,4] without the root",
+        "[1,5,6,3,2,4]"
+      ],
+      "answer": "[5,6,3,2,4,1] with root 1 last",
+      "explanation": "Children subtrees in order (3's subtree: 5, 6, 3; then 2; then 4), then the root.",
+      "incorrectOptionExplanations": {
+        "[1,3,5,6,2,4]": "That is preorder.",
+        "[5,6,3,2,4] without the root": "The root must be included.",
+        "[1,5,6,3,2,4]": "The root is not first in postorder."
+      }
+    }
+  ],
+  "generatedAt": "2026-10-01T14:32:31Z"
+}

@@ -1,0 +1,151 @@
+{
+  "schemaVersion": 1,
+  "problemSlug": "lowest-common-ancestor-of-a-binary-tree",
+  "summary": "Find the lowest common ancestor of two nodes in a general binary tree.",
+  "patterns": [
+    "Tree",
+    "DFS"
+  ],
+  "mainInsight": "Search both subtrees: a call returns a node if it is p or q or if a target was found below it. A node that receives non-null results from BOTH sides is the LCA; otherwise pass up whichever side found something.",
+  "canonicalApproach": "Postorder recursion",
+  "approaches": [
+    {
+      "name": "Store parent pointers + ancestor set",
+      "summary": "Build parents, collect p's ancestors, walk up from q.",
+      "timeComplexity": "O(n)",
+      "spaceComplexity": "O(n)",
+      "strengths": [
+        "Easy to explain"
+      ],
+      "weaknesses": [
+        "Extra memory"
+      ]
+    },
+    {
+      "name": "Postorder recursion",
+      "summary": "Return root if root is p or q; combine left and right results.",
+      "timeComplexity": "O(n)",
+      "spaceComplexity": "O(h)",
+      "strengths": [
+        "Concise, O(h) space"
+      ],
+      "interviewRelevance": "Your approach; the expected answer."
+    }
+  ],
+  "personalSolution": {
+    "approach": "Postorder recursion",
+    "timeComplexity": "O(n)",
+    "spaceComplexity": "O(h)",
+    "isOptimal": true,
+    "notes": "Optimal."
+  },
+  "commonMistakes": [],
+  "edgeCases": [],
+  "cards": [
+    {
+      "id": "lt-pattern-01",
+      "category": "pattern",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "How do you detect the LCA in a recursive search?",
+        "What does the function return from each call?"
+      ],
+      "options": [
+        "The node where p and q are found in different subtrees (or the node is one of them)",
+        "The deepest node",
+        "The root always",
+        "The node with the smallest value"
+      ],
+      "answer": "The node where p and q are found in different subtrees (or the node is one of them)",
+      "explanation": "If left and right searches both return non-null, p and q are on different sides of this node.",
+      "incorrectOptionExplanations": {
+        "The deepest node": "Unrelated.",
+        "The root always": "Only if they diverge at the root.",
+        "The node with the smallest value": "Values are not ordered."
+      }
+    },
+    {
+      "id": "lt-insight-01",
+      "category": "main_insight",
+      "type": "free_recall",
+      "promptVariants": [
+        "Why return the node itself when `root == p or root == q`?",
+        "What if the other target is below it?"
+      ],
+      "answer": "If the current node is p or q, then either the other target is below it (so this node is the LCA) or elsewhere (then this node is reported upward and the true LCA is higher). Returning the node immediately without searching below is correct because the problem guarantees both nodes exist.",
+      "keyPoints": [
+        "A node is its own ancestor",
+        "Guaranteed existence",
+        "Report upward to be combined"
+      ],
+      "explanation": "Without the guarantee you would need to verify both were found."
+    },
+    {
+      "id": "lt-time-01",
+      "category": "time_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Time complexity: ___",
+        "Complete the statement: Time complexity: ___"
+      ],
+      "answer": "O(n)",
+      "explanation": "In the worst case every node is visited once.",
+      "acceptedAnswers": [
+        "linear"
+      ]
+    },
+    {
+      "id": "lt-space-01",
+      "category": "space_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Recursion stack space: ___",
+        "Complete the statement: Recursion stack space: ___"
+      ],
+      "answer": "O(h)",
+      "explanation": "Depth of the recursion.",
+      "acceptedAnswers": [
+        "O(height)"
+      ]
+    },
+    {
+      "id": "lt-code-01",
+      "category": "code_reasoning",
+      "type": "code_question",
+      "promptVariants": [
+        "Explain `if left and right: return root` and `return left or right`.",
+        "What do the two lines mean?"
+      ],
+      "code": "left = self.lowestCommonAncestor(root.left, p, q)\nright = self.lowestCommonAncestor(root.right, p, q)\nif left and right:\n    return root\nreturn left or right",
+      "answer": "Non-null results from both sides mean p and q were found in different subtrees, so this node is the lowest common ancestor. If only one side found something (or neither), that result is passed up unchanged: it is either the LCA found deeper or one of the targets awaiting its partner.",
+      "keyPoints": [
+        "Both sides non-null => LCA",
+        "Otherwise pass up the non-null one"
+      ],
+      "explanation": "None propagates when neither target is below."
+    },
+    {
+      "id": "lt-edge-01",
+      "category": "edge_case",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "What is the LCA of nodes 5 and 4 in [3,5,1,6,2,0,8,null,null,7,4]?",
+        "Why?"
+      ],
+      "options": [
+        "5 (node 4 is a descendant of 5)",
+        "3",
+        "2",
+        "6"
+      ],
+      "answer": "5 (node 4 is a descendant of 5)",
+      "explanation": "4 lies below 5, and a node counts as its own ancestor.",
+      "incorrectOptionExplanations": {
+        "3": "The root is a common ancestor but not the lowest.",
+        "2": "2 is the parent of 4 but is not an ancestor of 5.",
+        "6": "Unrelated branch."
+      }
+    }
+  ],
+  "generatedAt": "2026-10-01T14:32:31Z"
+}

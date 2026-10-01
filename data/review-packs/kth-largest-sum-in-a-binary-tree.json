@@ -1,0 +1,154 @@
+{
+  "schemaVersion": 1,
+  "problemSlug": "kth-largest-sum-in-a-binary-tree",
+  "summary": "Return the k-th largest sum of node values over complete levels, or -1 if fewer than k levels.",
+  "patterns": [
+    "Tree",
+    "BFS",
+    "Heap / Priority Queue"
+  ],
+  "mainInsight": "Compute each level's sum with a BFS, then pick the k-th largest: keep a min-heap of size k (root = k-th largest) or sort the sums.",
+  "canonicalApproach": "BFS + min-heap of size k",
+  "approaches": [
+    {
+      "name": "BFS + sort the level sums",
+      "summary": "Collect sums, sort descending, take index k - 1.",
+      "timeComplexity": "O(n + L log L)",
+      "spaceComplexity": "O(L)",
+      "strengths": [
+        "Simple"
+      ],
+      "weaknesses": [
+        "Sorts all levels"
+      ]
+    },
+    {
+      "name": "BFS + min-heap of size k",
+      "summary": "Push each sum; pop when size > k.",
+      "timeComplexity": "O(n + L log k)",
+      "spaceComplexity": "O(k)",
+      "strengths": [
+        "Bounded memory"
+      ],
+      "interviewRelevance": "Your approach."
+    }
+  ],
+  "personalSolution": {
+    "approach": "BFS + min-heap of size k",
+    "timeComplexity": "O(n + L log k)",
+    "spaceComplexity": "O(w + k)",
+    "isOptimal": true,
+    "notes": "Optimal; return heap[0] for clarity."
+  },
+  "commonMistakes": [],
+  "edgeCases": [],
+  "cards": [
+    {
+      "id": "kl2-pattern-01",
+      "category": "pattern",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "Which structure keeps the k largest level sums?",
+        "How do you combine BFS with selection?"
+      ],
+      "options": [
+        "Compute sums by BFS, then a size-k min-heap (or a sort)",
+        "A max-heap of all nodes",
+        "DFS only",
+        "A stack"
+      ],
+      "answer": "Compute sums by BFS, then a size-k min-heap (or a sort)",
+      "explanation": "The heap root is the k-th largest sum seen.",
+      "incorrectOptionExplanations": {
+        "A max-heap of all nodes": "Nodes are not the quantity ranked.",
+        "DFS only": "Level sums are natural with BFS.",
+        "A stack": "No ordering."
+      }
+    },
+    {
+      "id": "kl2-insight-01",
+      "category": "main_insight",
+      "type": "free_recall",
+      "promptVariants": [
+        "Why is the answer -1 when there are fewer than k levels?",
+        "How does the heap size reveal that?"
+      ],
+      "answer": "There must be at least k level sums to have a k-th largest; if the heap holds fewer than k sums after processing all levels, no k-th exists and -1 is returned.",
+      "keyPoints": [
+        "Need k sums",
+        "len(heap) < k => -1"
+      ],
+      "explanation": "Compare len(heap) with k at the end."
+    },
+    {
+      "id": "kl2-time-01",
+      "category": "time_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Time complexity with L levels (BFS O(n) + heap): ___",
+        "Complete the statement: Time complexity with L levels (BFS O(n) + heap): ___"
+      ],
+      "answer": "O(n + L log k)",
+      "explanation": "BFS visits n nodes; each of L sums costs O(log k) on the heap.",
+      "acceptedAnswers": [
+        "O(n + L log(k))",
+        "O(n)"
+      ]
+    },
+    {
+      "id": "kl2-space-01",
+      "category": "space_complexity",
+      "type": "free_recall",
+      "promptVariants": [
+        "What do the queue and the heap cost?",
+        "State the memory used by the BFS queue and by the min-heap of level sums."
+      ],
+      "answer": "Queue O(w) for the widest level, heap O(k).",
+      "keyPoints": [
+        "Queue O(width)",
+        "Heap O(k)"
+      ],
+      "explanation": "Sorting all sums would need O(L)."
+    },
+    {
+      "id": "kl2-code-01",
+      "category": "code_reasoning",
+      "type": "code_question",
+      "promptVariants": [
+        "Why does `heap[-k]` work after the loop (len(heap) == k) and what is the clearer expression? What is risky about `if levelSum:`?",
+        "What does `heap[0]` hold?"
+      ],
+      "code": "if levelSum:\n    heapq.heappush(heap, levelSum)\nif len(heap) > k:\n    heapq.heappop(heap)\nif len(heap) < k:\n    return -1\nreturn heap[-k]",
+      "answer": "At that point the heap has exactly k elements, so heap[-k] is index 0 - the root, the k-th largest. Writing heap[0] is clearer (a heap list is not sorted, so heap[-k] is misleading in general). `if levelSum:` skips levels whose sum is 0, which is only valid because node values are positive; an explicit empty-level check is safer.",
+      "keyPoints": [
+        "len == k => heap[-k] is heap[0]",
+        "Prefer heap[0]",
+        "Zero-sum skip relies on positive values"
+      ],
+      "explanation": "A heap list is not in sorted order."
+    },
+    {
+      "id": "kl2-edge-01",
+      "category": "edge_case",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "What is returned when the tree has fewer than k levels?",
+        "How is that detected?"
+      ],
+      "options": [
+        "-1, because the heap has fewer than k sums",
+        "0",
+        "The smallest level sum",
+        "An error"
+      ],
+      "answer": "-1, because the heap has fewer than k sums",
+      "explanation": "Only L < k sums exist, so there is no k-th largest.",
+      "incorrectOptionExplanations": {
+        "0": "The problem specifies -1.",
+        "The smallest level sum": "That ignores the requirement.",
+        "An error": "The function returns -1."
+      }
+    }
+  ],
+  "generatedAt": "2026-10-01T14:32:31Z"
+}

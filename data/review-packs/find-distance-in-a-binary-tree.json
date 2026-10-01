@@ -1,0 +1,169 @@
+{
+  "schemaVersion": 1,
+  "problemSlug": "find-distance-in-a-binary-tree",
+  "summary": "Return the number of edges on the path between two nodes (given by value) in a binary tree.",
+  "patterns": [
+    "Tree",
+    "DFS",
+    "BFS"
+  ],
+  "mainInsight": "distance(p, q) = depth(p) + depth(q) - 2 * depth(lca). Find the LCA, then measure each node's depth from the LCA - or compute both distances in one DFS.",
+  "canonicalApproach": "LCA + depths from the LCA",
+  "approaches": [
+    {
+      "name": "Build a graph and BFS",
+      "summary": "Add parent edges and run BFS from p.",
+      "timeComplexity": "O(n)",
+      "spaceComplexity": "O(n)",
+      "strengths": [
+        "Works for any pair"
+      ],
+      "weaknesses": [
+        "Extra memory"
+      ]
+    },
+    {
+      "name": "LCA + depths from the LCA",
+      "summary": "dist = d(lca, p) + d(lca, q).",
+      "timeComplexity": "O(n)",
+      "spaceComplexity": "O(h)",
+      "strengths": [
+        "Direct, small memory"
+      ],
+      "weaknesses": [
+        "Two traversals"
+      ],
+      "interviewRelevance": "Your approach."
+    },
+    {
+      "name": "Single DFS returning distances",
+      "summary": "Return the distance to p or q (or -1) and combine at the LCA.",
+      "timeComplexity": "O(n)",
+      "spaceComplexity": "O(h)",
+      "strengths": [
+        "One pass"
+      ],
+      "weaknesses": [
+        "More subtle"
+      ]
+    }
+  ],
+  "personalSolution": {
+    "approach": "LCA, then BFS depths from the LCA",
+    "timeComplexity": "O(n)",
+    "spaceComplexity": "O(h + w)",
+    "isOptimal": true,
+    "notes": "Optimal; only enqueue non-null children."
+  },
+  "commonMistakes": [],
+  "edgeCases": [],
+  "cards": [
+    {
+      "id": "fd-pattern-01",
+      "category": "pattern",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "What identity gives the distance between two nodes?",
+        "How does the LCA help?"
+      ],
+      "options": [
+        "dist = depth(p) + depth(q) - 2 * depth(lca)",
+        "dist = depth(p) - depth(q)",
+        "dist = |p - q|",
+        "dist = number of nodes in the tree"
+      ],
+      "answer": "dist = depth(p) + depth(q) - 2 * depth(lca)",
+      "explanation": "The path goes up from p to the LCA and down to q.",
+      "incorrectOptionExplanations": {
+        "dist = depth(p) - depth(q)": "Ignores the divergence point.",
+        "dist = |p - q|": "Node values are not positions.",
+        "dist = number of nodes in the tree": "Unrelated."
+      }
+    },
+    {
+      "id": "fd-insight-01",
+      "category": "main_insight",
+      "type": "free_recall",
+      "promptVariants": [
+        "Why is the shortest path between two tree nodes unique and through the LCA?",
+        "What are the two segments of the path?"
+      ],
+      "answer": "A tree has exactly one simple path between any two nodes. It climbs from p up to their lowest common ancestor and then descends to q, so its length is (depth of p below the LCA) + (depth of q below the LCA).",
+      "keyPoints": [
+        "Unique simple path",
+        "Up to the LCA then down",
+        "Sum of the two depths below the LCA"
+      ],
+      "explanation": "If p == q the distance is 0."
+    },
+    {
+      "id": "fd-time-01",
+      "category": "time_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Time complexity: ___",
+        "Complete the statement: Time complexity: ___"
+      ],
+      "answer": "O(n)",
+      "explanation": "A constant number of traversals.",
+      "acceptedAnswers": [
+        "linear"
+      ]
+    },
+    {
+      "id": "fd-space-01",
+      "category": "space_complexity",
+      "type": "free_recall",
+      "promptVariants": [
+        "What do the LCA recursion and the BFS use?",
+        "How much memory do the LCA recursion and the BFS from the LCA each need?"
+      ],
+      "answer": "O(h) for the LCA recursion and O(w) for the BFS queue below the LCA.",
+      "keyPoints": [
+        "Recursion O(h)",
+        "BFS O(width)"
+      ],
+      "explanation": "A graph-based BFS would cost O(n)."
+    },
+    {
+      "id": "fd-code-01",
+      "category": "code_reasoning",
+      "type": "code_question",
+      "promptVariants": [
+        "Why does the BFS from the LCA record the depth when it meets p or q and why does p == q still work?",
+        "What do p_dep and q_dep default to?"
+      ],
+      "code": "lca = self.lca(root, p, q)\nqueue = deque([lca])\ncur_dep, p_dep, q_dep = 0, 0, 0\nwhile queue:\n    n = len(queue)\n    for _ in range(n):\n        node = queue.popleft()\n        if node:\n            if node.val == p:\n                p_dep = cur_dep\n            if node.val == q:\n                q_dep = cur_dep\n            queue.append(node.left)\n            queue.append(node.right)\n    cur_dep += 1\nreturn p_dep + q_dep",
+      "answer": "BFS from the LCA numbers levels relative to the LCA, so the level at which p (or q) is found is its distance from the LCA. If p == q the LCA is that node, found at level 0, giving 0 + 0 = 0. The defaults of 0 are overwritten when the node is found (the LCA itself being p or q gives 0).",
+      "keyPoints": [
+        "Levels relative to the LCA",
+        "p == q => 0",
+        "Sum of the two depths"
+      ],
+      "explanation": "Only enqueue non-null children to avoid walking Nones."
+    },
+    {
+      "id": "fd-edge-01",
+      "category": "edge_case",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "What is the distance when p == q?",
+        "What is the distance when p is an ancestor of q?"
+      ],
+      "options": [
+        "0, and depth of q below p",
+        "1, and 1",
+        "0 and 0",
+        "depth(p), depth(q)"
+      ],
+      "answer": "0, and depth of q below p",
+      "explanation": "Same node: no edges. Ancestor: the LCA is p, so the distance is q's depth below p.",
+      "incorrectOptionExplanations": {
+        "1, and 1": "Not generally.",
+        "0 and 0": "The ancestor case is non-zero.",
+        "depth(p), depth(q)": "Distances are measured relative to the LCA."
+      }
+    }
+  ],
+  "generatedAt": "2026-10-01T14:32:31Z"
+}

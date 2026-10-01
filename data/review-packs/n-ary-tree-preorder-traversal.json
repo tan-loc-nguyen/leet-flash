@@ -1,0 +1,120 @@
+{
+  "schemaVersion": 1,
+  "problemSlug": "n-ary-tree-preorder-traversal",
+  "summary": "Return the preorder traversal of an N-ary tree.",
+  "patterns": [
+    "Tree",
+    "DFS"
+  ],
+  "mainInsight": "Visit the node, then recursively visit each child in order.",
+  "canonicalApproach": "Recursive DFS",
+  "approaches": [
+    {
+      "name": "Recursive DFS",
+      "summary": "Append the node, then recurse into every child.",
+      "timeComplexity": "O(n)",
+      "spaceComplexity": "O(h)",
+      "strengths": [
+        "Shortest"
+      ],
+      "interviewRelevance": "Your approach."
+    },
+    {
+      "name": "Iterative with a stack",
+      "summary": "Pop, visit, push children in reverse order.",
+      "timeComplexity": "O(n)",
+      "spaceComplexity": "O(h)",
+      "strengths": [
+        "No recursion"
+      ],
+      "weaknesses": [
+        "Children must be pushed reversed"
+      ]
+    }
+  ],
+  "personalSolution": {
+    "approach": "Recursive DFS",
+    "timeComplexity": "O(n)",
+    "spaceComplexity": "O(h)",
+    "isOptimal": true,
+    "notes": "Optimal."
+  },
+  "commonMistakes": [],
+  "edgeCases": [],
+  "cards": [
+    {
+      "id": "np-pattern-01",
+      "category": "pattern",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "How do you generalise binary preorder to N children?",
+        "In what order must children be pushed in an iterative version?"
+      ],
+      "options": [
+        "Loop over the children; push them in reverse order on a stack",
+        "Push them in order",
+        "Sort them",
+        "Skip the stack"
+      ],
+      "answer": "Loop over the children; push them in reverse order on a stack",
+      "explanation": "A stack pops the last pushed child first, so pushing in reverse visits the first child first.",
+      "incorrectOptionExplanations": {
+        "Push them in order": "That would visit the last child first.",
+        "Sort them": "Order is given.",
+        "Skip the stack": "Needed for iterative DFS."
+      }
+    },
+    {
+      "id": "np-time-01",
+      "category": "time_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Time complexity: ___",
+        "Complete the statement: Time complexity: ___"
+      ],
+      "answer": "O(n)",
+      "explanation": "One visit per node.",
+      "acceptedAnswers": [
+        "linear"
+      ]
+    },
+    {
+      "id": "np-space-01",
+      "category": "space_complexity",
+      "type": "free_recall",
+      "promptVariants": [
+        "What is the extra space of preorder traversal?",
+        "What determines the memory use of an N-ary preorder traversal?"
+      ],
+      "answer": "O(h): the recursion/explicit stack depth (n for a degenerate chain, about log_k n for a full k-ary tree).",
+      "keyPoints": [
+        "O(h)",
+        "n for a chain"
+      ],
+      "explanation": "Result list O(n)."
+    },
+    {
+      "id": "np-edge-01",
+      "category": "edge_case",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "What is returned for an empty tree?",
+        "How is a leaf's children field handled?"
+      ],
+      "options": [
+        "[] ; a leaf has an empty children list so the loop does nothing",
+        "None",
+        "[[]]",
+        "An error"
+      ],
+      "answer": "[] ; a leaf has an empty children list so the loop does nothing",
+      "explanation": "The null check returns early and an empty list iterates zero times.",
+      "incorrectOptionExplanations": {
+        "None": "The function returns a list.",
+        "[[]]": "Result is flat.",
+        "An error": "No exception occurs."
+      }
+    }
+  ],
+  "generatedAt": "2026-10-01T14:32:31Z"
+}

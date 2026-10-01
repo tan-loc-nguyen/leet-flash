@@ -1,0 +1,151 @@
+{
+  "schemaVersion": 1,
+  "problemSlug": "binary-tree-level-order-traversal",
+  "summary": "Return the node values level by level, from left to right.",
+  "patterns": [
+    "Tree",
+    "BFS"
+  ],
+  "mainInsight": "Use a queue and process one level at a time: take len(queue) nodes, record their values, and enqueue their children for the next level.",
+  "canonicalApproach": "BFS with a queue (level snapshot)",
+  "approaches": [
+    {
+      "name": "BFS with a queue (level snapshot)",
+      "summary": "For each level pop exactly len(queue) nodes.",
+      "timeComplexity": "O(n)",
+      "spaceComplexity": "O(w)",
+      "strengths": [
+        "Natural level boundaries"
+      ],
+      "interviewRelevance": "Your approach; the expected answer."
+    },
+    {
+      "name": "DFS with a depth parameter",
+      "summary": "Append to result[depth], creating lists on demand.",
+      "timeComplexity": "O(n)",
+      "spaceComplexity": "O(h)",
+      "strengths": [
+        "Recursion, O(h) space"
+      ]
+    }
+  ],
+  "personalSolution": {
+    "approach": "BFS with a queue (level snapshot)",
+    "timeComplexity": "O(n)",
+    "spaceComplexity": "O(w)",
+    "isOptimal": true,
+    "notes": "Optimal; enqueue only non-null children."
+  },
+  "commonMistakes": [],
+  "edgeCases": [],
+  "cards": [
+    {
+      "id": "lo-pattern-01",
+      "category": "pattern",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "Which structure gives level-order traversal?",
+        "How do you know where a level ends?"
+      ],
+      "options": [
+        "A queue; take len(queue) nodes per level",
+        "A stack",
+        "A heap",
+        "Recursion without depth"
+      ],
+      "answer": "A queue; take len(queue) nodes per level",
+      "explanation": "At the start of a level the queue holds exactly that level's nodes.",
+      "incorrectOptionExplanations": {
+        "A stack": "A stack gives depth-first order.",
+        "A heap": "Not needed.",
+        "Recursion without depth": "Cannot tell the level."
+      }
+    },
+    {
+      "id": "lo-insight-01",
+      "category": "main_insight",
+      "type": "free_recall",
+      "promptVariants": [
+        "Why does snapshotting `n = len(queue)` separate the levels?",
+        "What does the queue contain at the start of each outer iteration?"
+      ],
+      "answer": "At the beginning of an outer iteration the queue contains only the nodes of the current level (all of the previous level's children have been enqueued, nothing of the next level beyond that). Processing exactly n nodes consumes the level while the children enqueued meanwhile form the next level.",
+      "keyPoints": [
+        "Queue = one full level at loop start",
+        "n = size of the level",
+        "Children enqueued form the next level"
+      ],
+      "explanation": "FIFO order keeps left-to-right order."
+    },
+    {
+      "id": "lo-time-01",
+      "category": "time_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Time complexity: ___",
+        "Complete the statement: Time complexity: ___"
+      ],
+      "answer": "O(n)",
+      "explanation": "Each node is enqueued and dequeued once.",
+      "acceptedAnswers": [
+        "linear"
+      ]
+    },
+    {
+      "id": "lo-space-01",
+      "category": "space_complexity",
+      "type": "free_recall",
+      "promptVariants": [
+        "What is the queue's maximum size?",
+        "When is BFS memory worse than DFS?"
+      ],
+      "answer": "O(w), the maximum width of the tree, which can be about n/2 (a complete tree's last level). DFS recursion uses O(h), which is smaller for balanced trees.",
+      "keyPoints": [
+        "O(width)",
+        "Up to n/2",
+        "DFS O(height)"
+      ],
+      "explanation": "Choose by tree shape."
+    },
+    {
+      "id": "lo-code-01",
+      "category": "code_reasoning",
+      "type": "code_question",
+      "promptVariants": [
+        "Your queue also holds None children. Why is `if level:` needed and how would you avoid enqueuing Nones?",
+        "What does the last-level behaviour look like?"
+      ],
+      "code": "queue = deque([root])\nwhile queue:\n    n = len(queue)\n    level = []\n    for _ in range(n):\n        node = queue.popleft()\n        if node:\n            level.append(node.val)\n            queue.append(node.left)\n            queue.append(node.right)\n    if level:\n        ans.append(level)",
+      "answer": "Enqueuing None children means the final iteration processes only Nones, producing an empty level that must be skipped by `if level`. Cleaner: only enqueue existing children (`if node.left: queue.append(node.left)`) and return [] up front for an empty root.",
+      "keyPoints": [
+        "Nones create a trailing empty level",
+        "Enqueue only real nodes",
+        "Guard the empty tree"
+      ],
+      "explanation": "Same pattern for right-side view, zigzag and averages."
+    },
+    {
+      "id": "lo-edge-01",
+      "category": "edge_case",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "What is returned for an empty tree?",
+        "How does a single node behave?"
+      ],
+      "options": [
+        "[] for an empty tree and [[val]] for a single node",
+        "[[]]",
+        "None",
+        "An error"
+      ],
+      "answer": "[] for an empty tree and [[val]] for a single node",
+      "explanation": "No levels exist for an empty tree; a single node forms one level.",
+      "incorrectOptionExplanations": {
+        "[[]]": "That would claim a level with no nodes.",
+        "None": "The function returns a list.",
+        "An error": "Handled."
+      }
+    }
+  ],
+  "generatedAt": "2026-10-01T14:32:31Z"
+}
