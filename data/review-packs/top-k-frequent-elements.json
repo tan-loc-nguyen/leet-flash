@@ -1,0 +1,186 @@
+{
+  "schemaVersion": 1,
+  "problemSlug": "top-k-frequent-elements",
+  "summary": "Return the k most frequent values in the array.",
+  "patterns": [
+    "Heap / Priority Queue",
+    "Array / Hashing"
+  ],
+  "mainInsight": "Count frequencies, then keep only the k best: a size-k min-heap discards the least frequent as soon as it exceeds k (O(n log k)); bucketing by frequency gives O(n).",
+  "canonicalApproach": "Bucket sort by frequency",
+  "approaches": [
+    {
+      "name": "Count + full sort",
+      "summary": "Sort distinct values by frequency and take k.",
+      "timeComplexity": "O(n log n)",
+      "spaceComplexity": "O(n)",
+      "strengths": [
+        "Simple"
+      ],
+      "weaknesses": [
+        "Sorts more than needed"
+      ]
+    },
+    {
+      "name": "Count + size-k min-heap",
+      "summary": "Push (freq, value); pop when size > k; the heap holds the top k.",
+      "timeComplexity": "O(n log k)",
+      "spaceComplexity": "O(n + k)",
+      "strengths": [
+        "Good when k is small",
+        "Streams well"
+      ],
+      "weaknesses": [
+        "log factor"
+      ],
+      "interviewRelevance": "Very common accepted answer."
+    },
+    {
+      "name": "Bucket sort by frequency",
+      "summary": "freq in [1, n]: bucket[f] = values with that frequency; scan from high to low.",
+      "timeComplexity": "O(n)",
+      "spaceComplexity": "O(n)",
+      "strengths": [
+        "Linear time"
+      ],
+      "weaknesses": [
+        "Extra buckets"
+      ],
+      "interviewRelevance": "The optimal answer."
+    }
+  ],
+  "personalSolution": {
+    "approach": "Counter + size-k min-heap",
+    "timeComplexity": "O(n log k)",
+    "spaceComplexity": "O(n)",
+    "isOptimal": false,
+    "notes": "Standard accepted solution. Bucket sort achieves O(n); know both."
+  },
+  "commonMistakes": [],
+  "edgeCases": [],
+  "cards": [
+    {
+      "id": "tk-pattern-01",
+      "category": "pattern",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "What pattern solves 'top k by some score'?",
+        "Which structure keeps only the k best items seen so far?"
+      ],
+      "options": [
+        "Heap of size k",
+        "Stack",
+        "Two pointers",
+        "Union find"
+      ],
+      "answer": "Heap of size k",
+      "explanation": "A min-heap of size k always exposes the weakest of the current top k, which is evicted when a better item arrives.",
+      "incorrectOptionExplanations": {
+        "Stack": "A stack has no ordering by score.",
+        "Two pointers": "Not applicable to unsorted frequencies.",
+        "Union find": "No connectivity merging."
+      }
+    },
+    {
+      "id": "tk-insight-01",
+      "category": "main_insight",
+      "type": "free_recall",
+      "promptVariants": [
+        "Why a MIN-heap (not a max-heap) of size k for the k LARGEST?",
+        "Why evict the smallest element to keep the top k?"
+      ],
+      "answer": "The element that could be displaced next is the smallest of the current top k, so the heap root must be the minimum. Each new item is compared against it in O(log k); anything not larger than the root cannot be in the top k.",
+      "keyPoints": [
+        "Root = weakest of current top k",
+        "Pop min when size exceeds k",
+        "O(log k) per operation"
+      ],
+      "explanation": "A max-heap would require storing all n items."
+    },
+    {
+      "id": "tk-time-01",
+      "category": "time_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Time complexity of the size-k heap solution: ___",
+        "Counting + a heap of size k costs ___."
+      ],
+      "answer": "O(n log k)",
+      "explanation": "n pushes/pops on a heap bounded by k.",
+      "acceptedAnswers": [
+        "O(n log(k))",
+        "O(nlogk)"
+      ]
+    },
+    {
+      "id": "tk-alt-01",
+      "category": "alternative_approach",
+      "type": "free_recall",
+      "promptVariants": [
+        "How does bucket sort beat the heap, and what is the catch?",
+        "How can you find the top k frequent elements in O(n) without a heap?"
+      ],
+      "answer": "Frequencies are integers in [1, n], so place each value in bucket[freq] and scan from the highest frequency down collecting k values: O(n) time, O(n) space. The catch is the extra O(n) bucket array.",
+      "keyPoints": [
+        "Frequency bounded by n",
+        "bucket[freq] lists",
+        "O(n) time"
+      ],
+      "explanation": "Interviewers often ask for better than O(n log n); both heap and bucket qualify."
+    },
+    {
+      "id": "tk-ds-01",
+      "category": "data_structure",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "Why push tuples `(freq, num)` onto the heap?",
+        "What does the tuple ordering accomplish?"
+      ],
+      "options": [
+        "Heap orders by the first element, so frequency decides eviction and num rides along",
+        "Tuples make the heap O(1)",
+        "It sorts by num first",
+        "It removes duplicates"
+      ],
+      "answer": "Heap orders by the first element, so frequency decides eviction and num rides along",
+      "explanation": "Python compares tuples lexicographically; frequency first, value only breaks ties.",
+      "incorrectOptionExplanations": {
+        "Tuples make the heap O(1)": "Push/pop stay O(log k).",
+        "It sorts by num first": "frequency is first.",
+        "It removes duplicates": "Counter already deduplicates."
+      }
+    },
+    {
+      "id": "tk-space-01",
+      "category": "space_complexity",
+      "type": "free_recall",
+      "promptVariants": [
+        "What is the extra space of Counter + size-k heap?",
+        "What does the heap solution store, and how large can each structure get?"
+      ],
+      "answer": "O(n) for the frequency map (up to n distinct values) plus O(k) for the heap.",
+      "keyPoints": [
+        "Counter O(n)",
+        "Heap O(k)"
+      ],
+      "explanation": "Overall O(n)."
+    },
+    {
+      "id": "tk-code-01",
+      "category": "code_reasoning",
+      "type": "code_question",
+      "promptVariants": [
+        "Why is it safe to `heappop` immediately after pushing when len > k?",
+        "Explain the invariant behind pushing then popping when the heap exceeds size k."
+      ],
+      "code": "count = Counter(nums)\nminHeap = []\nfor num, freq in count.items():\n    heappush(minHeap, (freq, num))\n    if len(minHeap) > k:\n        heappop(minHeap)\nreturn [num for _, num in minHeap]",
+      "answer": "After the push the heap has k+1 items; the minimum frequency among them can never belong to the top k, so removing it restores size k with the best k kept. The result list is unordered, which the problem allows.",
+      "keyPoints": [
+        "Pop the minimum of k+1 candidates",
+        "Invariant: heap = best k so far"
+      ],
+      "explanation": "Pop-after-push keeps the heap bounded at k."
+    }
+  ],
+  "generatedAt": "2026-10-01T14:01:51Z"
+}

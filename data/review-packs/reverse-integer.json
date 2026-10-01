@@ -1,0 +1,157 @@
+{
+  "schemaVersion": 1,
+  "problemSlug": "reverse-integer",
+  "summary": "Reverse the decimal digits of a signed 32-bit integer; return 0 if the result overflows.",
+  "patterns": [
+    "Math"
+  ],
+  "mainInsight": "Pop the last digit with % 10 and push it onto the result with *10 + digit; the only subtlety is detecting 32-bit overflow (before it happens in fixed-width languages).",
+  "canonicalApproach": "Digit pop/push",
+  "approaches": [
+    {
+      "name": "String reversal",
+      "summary": "Reverse str(abs(x)) and restore the sign.",
+      "timeComplexity": "O(d)",
+      "spaceComplexity": "O(d)",
+      "strengths": [
+        "Short"
+      ],
+      "weaknesses": [
+        "Extra string; overflow check still needed"
+      ]
+    },
+    {
+      "name": "Digit pop/push",
+      "summary": "Loop: digit = x % 10; result = result*10 + digit; x //= 10, then range-check.",
+      "timeComplexity": "O(log x)",
+      "spaceComplexity": "O(1)",
+      "strengths": [
+        "No string",
+        "Simple"
+      ],
+      "weaknesses": [
+        "In C++/Java the overflow check must happen before the multiply"
+      ],
+      "interviewRelevance": "The expected answer."
+    }
+  ],
+  "personalSolution": {
+    "approach": "Digit pop/push on abs(x) with a final range check",
+    "timeComplexity": "O(log x)",
+    "spaceComplexity": "O(1)",
+    "isOptimal": true,
+    "notes": "Correct for Python. In an interview mention the pre-multiplication overflow check required in fixed-width languages."
+  },
+  "commonMistakes": [],
+  "edgeCases": [],
+  "cards": [
+    {
+      "id": "ri-pattern-01",
+      "category": "pattern",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "What is the standard approach for reversing the digits of an integer?",
+        "Which operations drive Reverse Integer?"
+      ],
+      "options": [
+        "Repeated % 10 and // 10 (pop/push digits)",
+        "Two pointers on the digit array",
+        "Recursion with memoisation",
+        "Binary search on the answer"
+      ],
+      "answer": "Repeated % 10 and // 10 (pop/push digits)",
+      "explanation": "Modulo extracts the last digit, integer division removes it, and result*10 + digit appends it.",
+      "incorrectOptionExplanations": {
+        "Two pointers on the digit array": "Possible after converting to a list but unnecessary.",
+        "Recursion with memoisation": "No overlapping subproblems.",
+        "Binary search on the answer": "Not a search problem."
+      }
+    },
+    {
+      "id": "ri-edge-01",
+      "category": "edge_case",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "What makes this problem tricky in an interview?",
+        "Which edge case must be handled for a 32-bit signed result?"
+      ],
+      "options": [
+        "The reversed value can exceed the 32-bit range and must return 0",
+        "Negative zero",
+        "Division by zero",
+        "Leading zeros in the input"
+      ],
+      "answer": "The reversed value can exceed the 32-bit range and must return 0",
+      "explanation": "e.g. 1534236469 reverses to 9646324351 > 2^31 - 1. In fixed-width languages you must test before multiplying; Python's big ints let you test at the end.",
+      "incorrectOptionExplanations": {
+        "Negative zero": "Integers have no negative zero.",
+        "Division by zero": "Only dividing by 10 is used.",
+        "Leading zeros in the input": "Integers have none; trailing zeros vanish naturally (120 -> 21)."
+      }
+    },
+    {
+      "id": "ri-insight-01",
+      "category": "main_insight",
+      "type": "free_recall",
+      "promptVariants": [
+        "How do you handle the sign, and why do your digit operations work on abs(x)?",
+        "Why does the solution take abs(x) and reapply the sign at the end?"
+      ],
+      "answer": "Python's % and // round toward negative infinity, so negative numbers give surprising digits. Working on abs(x) keeps the arithmetic simple and the sign is reapplied at the end.",
+      "keyPoints": [
+        "Python modulo/floor-division on negatives",
+        "Work on abs(x), reapply sign"
+      ],
+      "explanation": "In C/Java x % 10 keeps the sign, so no abs is needed there."
+    },
+    {
+      "id": "ri-time-01",
+      "category": "time_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Time complexity (value x): ___",
+        "Reverse Integer runs in ___ time."
+      ],
+      "answer": "O(log x)",
+      "explanation": "One loop iteration per decimal digit.",
+      "acceptedAnswers": [
+        "O(d)",
+        "O(log10 x)",
+        "O(log n)"
+      ]
+    },
+    {
+      "id": "ri-space-01",
+      "category": "space_complexity",
+      "type": "free_recall",
+      "promptVariants": [
+        "What is the space complexity, and what is a pitfall of the string approach?",
+        "What is the space cost of digit pop/push versus converting to a string?"
+      ],
+      "answer": "O(1) for digit arithmetic; the string approach allocates O(d). Neither stores more than a few values besides that.",
+      "keyPoints": [
+        "O(1)",
+        "String approach O(d)"
+      ],
+      "explanation": "The overflow check is the real interview point, not memory."
+    },
+    {
+      "id": "ri-code-01",
+      "category": "code_reasoning",
+      "type": "code_question",
+      "promptVariants": [
+        "Your overflow check happens after the loop. Why is that fine in Python but dangerous in C++/Java, and how would you fix it there?",
+        "Where should the 32-bit overflow check go in C++/Java, and why is checking at the end fine in Python?"
+      ],
+      "code": "reversed_x = 0\nwhile x > 0:\n    last_digit = x % 10\n    reversed_x = reversed_x * 10 + last_digit\n    x //= 10\nif not (-2**31 <= reversed_x <= 2**31 - 1):\n    return 0",
+      "answer": "Python integers are arbitrary precision, so reversed_x can temporarily exceed 32 bits and be tested afterwards. In fixed-width languages the multiply would overflow first (undefined/wrapped behaviour), so check before pushing: if result > INT_MAX/10 (or == INT_MAX/10 and digit > 7) return 0.",
+      "keyPoints": [
+        "Python bigint is safe",
+        "Fixed width: check before *10 + digit",
+        "Compare against INT_MAX/10"
+      ],
+      "explanation": "A classic follow-up: 'do it without 64-bit integers'."
+    }
+  ],
+  "generatedAt": "2026-10-01T14:04:28Z"
+}

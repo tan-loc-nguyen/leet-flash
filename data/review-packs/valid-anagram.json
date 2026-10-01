@@ -1,0 +1,184 @@
+{
+  "schemaVersion": 1,
+  "problemSlug": "valid-anagram",
+  "summary": "Decide whether t is a rearrangement of the letters of s.",
+  "patterns": [
+    "Array / Hashing"
+  ],
+  "mainInsight": "Two strings are anagrams iff every character appears the same number of times in both. Counting characters (array of 26 or a hash map) gets this in one pass instead of sorting.",
+  "canonicalApproach": "Single 26-slot count array",
+  "approaches": [
+    {
+      "name": "Sort both strings",
+      "summary": "Anagrams are equal after sorting.",
+      "timeComplexity": "O(n log n)",
+      "spaceComplexity": "O(n)",
+      "strengths": [
+        "One line"
+      ],
+      "weaknesses": [
+        "Slower"
+      ],
+      "interviewRelevance": "Fine as a first answer."
+    },
+    {
+      "name": "Two hash maps / Counter",
+      "summary": "Compare character-count maps.",
+      "timeComplexity": "O(n)",
+      "spaceComplexity": "O(k) distinct chars",
+      "strengths": [
+        "Works for any alphabet incl. Unicode"
+      ],
+      "weaknesses": [
+        "Hash overhead"
+      ],
+      "interviewRelevance": "The answer to the Unicode follow-up."
+    },
+    {
+      "name": "Single 26-slot count array",
+      "summary": "Increment for s[i], decrement for t[i]; all slots must end at 0.",
+      "timeComplexity": "O(n)",
+      "spaceComplexity": "O(1)",
+      "strengths": [
+        "Constant space",
+        "Single pass"
+      ],
+      "weaknesses": [
+        "Only fixed alphabet (lowercase a-z)"
+      ],
+      "interviewRelevance": "The expected answer for lowercase letters."
+    }
+  ],
+  "personalSolution": {
+    "approach": "Single 26-slot count array with +1/-1",
+    "timeComplexity": "O(n)",
+    "spaceComplexity": "O(1)",
+    "isOptimal": true,
+    "notes": "Optimal for lowercase letters. Remember the Counter/hash-map version for the Unicode follow-up."
+  },
+  "commonMistakes": [],
+  "edgeCases": [],
+  "cards": [
+    {
+      "id": "va-pattern-01",
+      "category": "pattern",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "What approach checks an anagram in O(n)?",
+        "Which technique fits 'same multiset of characters'?"
+      ],
+      "options": [
+        "Character frequency counting",
+        "Two pointers from both ends",
+        "Sliding window",
+        "Binary search"
+      ],
+      "answer": "Character frequency counting",
+      "explanation": "Anagram = identical character counts.",
+      "incorrectOptionExplanations": {
+        "Two pointers from both ends": "That checks palindromes, not multiset equality.",
+        "Sliding window": "No contiguous window constraint (that is the 'find anagrams in a string' variant).",
+        "Binary search": "Nothing is sorted/monotonic."
+      }
+    },
+    {
+      "id": "va-insight-01",
+      "category": "main_insight",
+      "type": "free_recall",
+      "promptVariants": [
+        "Why does one count array with +1/-1 work?",
+        "Explain how the single-array increment/decrement trick proves an anagram."
+      ],
+      "answer": "Each position adds 1 for s's letter and subtracts 1 for t's letter. If the multisets are equal every count cancels to 0; any non-zero slot means some letter appears more in one string. The length check guarantees no leftover letters.",
+      "keyPoints": [
+        "Net count per letter",
+        "All zeros iff equal multisets",
+        "Length check first"
+      ],
+      "explanation": "It merges two count tables into one."
+    },
+    {
+      "id": "va-time-01",
+      "category": "time_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Time complexity of the count-array solution: ___",
+        "Valid Anagram with counting is ___ time."
+      ],
+      "answer": "O(n)",
+      "explanation": "One pass over the strings plus a 26-step check.",
+      "acceptedAnswers": [
+        "linear"
+      ]
+    },
+    {
+      "id": "va-space-01",
+      "category": "space_complexity",
+      "type": "free_recall",
+      "promptVariants": [
+        "Why is the space O(1) for lowercase letters but not in general?",
+        "What changes if the strings can contain Unicode?"
+      ],
+      "answer": "The array has a fixed 26 slots independent of n, so O(1). For Unicode the alphabet is large/unbounded, so use a hash map (O(k) distinct characters) instead of a fixed array.",
+      "keyPoints": [
+        "Fixed alphabet => O(1)",
+        "Unicode => hash map, O(k)"
+      ],
+      "explanation": "The follow-up question interviewers ask."
+    },
+    {
+      "id": "va-edge-01",
+      "category": "edge_case",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "Why is `len(s) != len(t) -> False` worth checking first?",
+        "What does the early length check buy you?"
+      ],
+      "options": [
+        "Different lengths can never be anagrams, so it saves work and avoids index errors in the paired loop",
+        "It makes the solution O(1)",
+        "It is required for correctness of the count array only",
+        "It handles Unicode"
+      ],
+      "answer": "Different lengths can never be anagrams, so it saves work and avoids index errors in the paired loop",
+      "explanation": "The paired loop indexes t[i] for every i in s, so unequal lengths would break it.",
+      "incorrectOptionExplanations": {
+        "It makes the solution O(1)": "Still O(n).",
+        "It is required for correctness of the count array only": "It is also an early exit; it is mainly required for the paired loop.",
+        "It handles Unicode": "Unrelated."
+      }
+    },
+    {
+      "id": "va-code-01",
+      "category": "code_reasoning",
+      "type": "code_question",
+      "promptVariants": [
+        "Why does your final loop only need to check `arr[i] != 0`, and what would a positive/negative value indicate?",
+        "In the count-array solution, what do positive and negative leftovers mean and why is checking for non-zero enough?"
+      ],
+      "code": "arr = [0] * 26\nfor i in range(len(s)):\n    arr[ord(s[i]) - ord('a')] += 1\n    arr[ord(t[i]) - ord('a')] -= 1\nfor check in arr:\n    if check != 0:\n        return False\nreturn True",
+      "answer": "Since lengths are equal, the counts sum to 0, so any non-zero entry implies some other entry is non-zero with the opposite sign. A positive value means s has more of that letter; negative means t has more. Any non-zero => not an anagram.",
+      "keyPoints": [
+        "Net count per letter",
+        "Positive: s has more; negative: t has more"
+      ],
+      "explanation": "Equal lengths guarantee a deficit somewhere if there is a surplus."
+    },
+    {
+      "id": "va-alt-01",
+      "category": "alternative_approach",
+      "type": "free_recall",
+      "promptVariants": [
+        "How would you solve it for Unicode input, and what is the cost?",
+        "What changes in Valid Anagram if the inputs may contain arbitrary Unicode characters?"
+      ],
+      "answer": "Use collections.Counter (hash maps) for s and t and compare, or increment/decrement a single dict and check all zero. O(n) time, O(k) space for k distinct characters.",
+      "keyPoints": [
+        "Hash map instead of fixed array",
+        "O(k) space"
+      ],
+      "explanation": "Sorting also works (O(n log n))."
+    }
+  ],
+  "generatedAt": "2026-10-01T14:01:51Z"
+}

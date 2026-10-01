@@ -1,0 +1,189 @@
+{
+  "schemaVersion": 1,
+  "problemSlug": "product-of-array-except-self",
+  "summary": "For each index return the product of all other elements, without using division.",
+  "patterns": [
+    "Prefix Sum",
+    "Array / Hashing"
+  ],
+  "mainInsight": "Product except self = (product of everything to the left) x (product of everything to the right). Precompute prefix and suffix products so no division is needed and zeros cause no trouble.",
+  "canonicalApproach": "Prefix pass + running suffix",
+  "approaches": [
+    {
+      "name": "Brute force",
+      "summary": "For each i multiply all other elements.",
+      "timeComplexity": "O(n^2)",
+      "spaceComplexity": "O(1)"
+    },
+    {
+      "name": "Division by total product",
+      "summary": "total / nums[i].",
+      "timeComplexity": "O(n)",
+      "spaceComplexity": "O(1)",
+      "weaknesses": [
+        "Forbidden here; breaks with zeros"
+      ],
+      "interviewRelevance": "Mention why it fails."
+    },
+    {
+      "name": "Prefix and suffix arrays",
+      "summary": "prefix[i] * suffix[i+1] computed from two passes.",
+      "timeComplexity": "O(n)",
+      "spaceComplexity": "O(n)",
+      "strengths": [
+        "Easy to reason about"
+      ],
+      "weaknesses": [
+        "Two extra arrays"
+      ],
+      "interviewRelevance": "Good first optimal answer."
+    },
+    {
+      "name": "Prefix pass + running suffix",
+      "summary": "Write prefix products into the output, then multiply by a running suffix from the right.",
+      "timeComplexity": "O(n)",
+      "spaceComplexity": "O(1) extra (output excluded)",
+      "strengths": [
+        "Constant extra space"
+      ],
+      "weaknesses": [
+        "Slightly trickier"
+      ],
+      "interviewRelevance": "The optimal answer."
+    }
+  ],
+  "personalSolution": {
+    "approach": "Prefix and suffix arrays",
+    "timeComplexity": "O(n)",
+    "spaceComplexity": "O(n)",
+    "isOptimal": false,
+    "notes": "Optimal time. Improve space to O(1) extra by reusing the output array and a running suffix variable; also avoid mutating the input."
+  },
+  "commonMistakes": [],
+  "edgeCases": [],
+  "cards": [
+    {
+      "id": "pe-pattern-01",
+      "category": "pattern",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "Which technique solves Product Except Self in O(n) without division?",
+        "What pattern fits 'combine everything to the left and right of i'?"
+      ],
+      "options": [
+        "Prefix/suffix products",
+        "Sliding window",
+        "Binary search",
+        "Monotonic stack"
+      ],
+      "answer": "Prefix/suffix products",
+      "explanation": "The product excluding i factors into left-product x right-product, each computable cumulatively.",
+      "incorrectOptionExplanations": {
+        "Sliding window": "No contiguous window is being maintained.",
+        "Binary search": "Nothing is sorted/monotonic.",
+        "Monotonic stack": "No nearest-greater relation."
+      }
+    },
+    {
+      "id": "pe-insight-01",
+      "category": "main_insight",
+      "type": "free_recall",
+      "promptVariants": [
+        "Why do prefix and suffix products avoid division and handle zeros?",
+        "Explain the factorisation behind the solution."
+      ],
+      "answer": "answer[i] = (nums[0..i-1] product) x (nums[i+1..n-1] product). Both partial products are built cumulatively with multiplication only, so zeros simply propagate to the correct positions instead of causing divide-by-zero.",
+      "keyPoints": [
+        "Left product x right product",
+        "Multiplication only",
+        "Zeros handled naturally"
+      ],
+      "explanation": "Division would fail or need special zero cases."
+    },
+    {
+      "id": "pe-invariant-01",
+      "category": "invariant",
+      "type": "free_recall",
+      "promptVariants": [
+        "In your prefix array, what does prefix[i] represent?",
+        "Define prefix[i] and suffix[i] in your solution."
+      ],
+      "answer": "prefix[i] is the product of the first i elements (indices 0..i-1); suffix[i] is the product of the last i elements. Thus answer[i] = prefix[i] * suffix[n-1-i].",
+      "keyPoints": [
+        "prefix[i] = product of first i elements",
+        "Both start with 1 (empty product)"
+      ],
+      "explanation": "The leading 1 is the empty product."
+    },
+    {
+      "id": "pe-time-01",
+      "category": "time_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Time complexity: ___",
+        "Product Except Self runs in ___ time with prefix/suffix products."
+      ],
+      "answer": "O(n)",
+      "explanation": "Two linear passes.",
+      "acceptedAnswers": [
+        "linear"
+      ]
+    },
+    {
+      "id": "pe-space-01",
+      "category": "space_complexity",
+      "type": "free_recall",
+      "promptVariants": [
+        "How can the extra space be reduced from O(n) to O(1)?",
+        "What is the follow-up trick to get O(1) extra space for Product Except Self?"
+      ],
+      "answer": "Store prefix products directly in the output array, then sweep from the right keeping a running suffix product and multiply it into the output. Only a couple of scalars are extra.",
+      "keyPoints": [
+        "Reuse output as prefix array",
+        "Running suffix variable",
+        "O(1) extra besides output"
+      ],
+      "explanation": "This is the follow-up the problem statement hints at."
+    },
+    {
+      "id": "pe-code-01",
+      "category": "code_reasoning",
+      "type": "code_question",
+      "promptVariants": [
+        "Why is the answer `prefix[i] * suffix[n - i - 1]` and not `suffix[i]`?",
+        "Explain the index arithmetic suffix[n - i - 1] in the final loop."
+      ],
+      "code": "prefix = [1]; suffix = [1]; n = len(nums)\nfor i in range(n):\n    prefix.append(prefix[-1] * nums[i])\n    suffix.append(suffix[-1] * nums[n - i - 1])\nfor i in range(n):\n    nums[i] = prefix[i] * suffix[n - i - 1]",
+      "answer": "suffix was built from the right end, so suffix[j] is the product of the last j elements. The elements to the right of i are the last n-1-i elements, hence suffix[n-1-i]. Also note this overwrites nums, mutating the caller's input.",
+      "keyPoints": [
+        "suffix built backward",
+        "Right of i = last n-1-i elements",
+        "Overwrites input"
+      ],
+      "explanation": "Prefix of length i covers elements before i."
+    },
+    {
+      "id": "pe-edge-01",
+      "category": "edge_case",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "For nums = [1,2,0,4] what does the answer look like?",
+        "How do two zeros affect the output?"
+      ],
+      "options": [
+        "[0,0,8,0]",
+        "[0,0,0,0]",
+        "[8,4,0,2]",
+        "[24,12,0,6]"
+      ],
+      "answer": "[0,0,8,0]",
+      "explanation": "Only index 2 (the zero) excludes the zero factor: 1*2*4 = 8; every other index multiplies by 0. With two zeros the whole output is 0.",
+      "incorrectOptionExplanations": {
+        "[0,0,0,0]": "That is the result with two zeros, not one.",
+        "[8,4,0,2]": "Division by the total would give nonsense here.",
+        "[24,12,0,6]": "Wrong: that ignores the zero element."
+      }
+    }
+  ],
+  "generatedAt": "2026-10-01T14:01:51Z"
+}

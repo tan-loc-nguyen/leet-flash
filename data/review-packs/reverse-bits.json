@@ -1,0 +1,170 @@
+{
+  "schemaVersion": 1,
+  "problemSlug": "reverse-bits",
+  "summary": "Reverse the bits of a 32-bit unsigned integer.",
+  "patterns": [
+    "Bit Manipulation"
+  ],
+  "mainInsight": "Bit i of the input must become bit 31-i of the output: swap mirrored bit pairs (or build the result by shifting), a two-pointer idea on bit positions.",
+  "canonicalApproach": "Divide and conquer masks",
+  "approaches": [
+    {
+      "name": "Shift-build",
+      "summary": "For 32 iterations: result = (result << 1) | (n & 1); n >>= 1.",
+      "timeComplexity": "O(32)",
+      "spaceComplexity": "O(1)",
+      "strengths": [
+        "Simple"
+      ],
+      "weaknesses": [
+        "Always 32 iterations"
+      ]
+    },
+    {
+      "name": "Swap mirrored bits (two pointers)",
+      "summary": "For l, r moving inward, XOR-flip both bits only if they differ.",
+      "timeComplexity": "O(16)",
+      "spaceComplexity": "O(1)",
+      "strengths": [
+        "Half the iterations",
+        "In-place"
+      ],
+      "weaknesses": [
+        "More subtle"
+      ],
+      "interviewRelevance": "Your approach."
+    },
+    {
+      "name": "Divide and conquer masks",
+      "summary": "Swap halves, then bytes, nibbles, pairs and single bits with masks.",
+      "timeComplexity": "O(log 32) = O(5)",
+      "spaceComplexity": "O(1)",
+      "strengths": [
+        "Constant, branch-free"
+      ],
+      "weaknesses": [
+        "Magic constants"
+      ],
+      "interviewRelevance": "Optimal; also good for repeated calls with a cache of bytes."
+    }
+  ],
+  "personalSolution": {
+    "approach": "Swap mirrored bits with XOR (two pointers)",
+    "timeComplexity": "O(1) (16 iterations)",
+    "spaceComplexity": "O(1)",
+    "isOptimal": true,
+    "notes": "Good. Know the shift-build and mask versions too."
+  },
+  "commonMistakes": [],
+  "edgeCases": [],
+  "cards": [
+    {
+      "id": "rb-pattern-01",
+      "category": "pattern",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "What is the pattern behind swapping bit i with bit 31-i?",
+        "Which general technique does your solution reuse on bits?"
+      ],
+      "options": [
+        "Two pointers moving inward",
+        "Sliding window",
+        "Monotonic stack",
+        "Hashing"
+      ],
+      "answer": "Two pointers moving inward",
+      "explanation": "Mirrored positions are processed from both ends, exactly like reversing an array.",
+      "incorrectOptionExplanations": {
+        "Sliding window": "No window.",
+        "Monotonic stack": "Not relevant.",
+        "Hashing": "No lookups."
+      }
+    },
+    {
+      "id": "rb-insight-01",
+      "category": "main_insight",
+      "type": "free_recall",
+      "promptVariants": [
+        "Why do you only flip bits when they differ?",
+        "How does XOR-flipping implement a swap of two bits?"
+      ],
+      "answer": "If the two bits are equal, swapping changes nothing. If they differ, swapping equals flipping both, and `n ^ (1 << pos)` flips a single bit.",
+      "keyPoints": [
+        "Equal bits: no change",
+        "Different bits: flip both",
+        "XOR with a one-bit mask flips"
+      ],
+      "explanation": "Saves branches/writes."
+    },
+    {
+      "id": "rb-time-01",
+      "category": "time_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Time complexity for a 32-bit input: ___",
+        "Your loop runs 16 times, so reverse bits is ___ time."
+      ],
+      "answer": "O(1)",
+      "explanation": "The word size is fixed, so the number of iterations is constant.",
+      "acceptedAnswers": [
+        "constant",
+        "O(32)",
+        "O(16)"
+      ]
+    },
+    {
+      "id": "rb-alt-01",
+      "category": "alternative_approach",
+      "type": "free_recall",
+      "promptVariants": [
+        "If reverseBits is called millions of times, how would you speed it up?",
+        "What techniques make reverseBits fast when it is called very many times?"
+      ],
+      "answer": "Precompute (cache) the reversal of every byte (256 entries) and combine four lookups, or use the divide-and-conquer mask method (5 steps).",
+      "keyPoints": [
+        "Lookup table per byte",
+        "Mask-swap in 5 steps"
+      ],
+      "explanation": "A standard follow-up question."
+    },
+    {
+      "id": "rb-code-01",
+      "category": "code_reasoning",
+      "type": "code_question",
+      "promptVariants": [
+        "Why does `n = n ^ (1 << l)` followed by `n = n ^ (1 << r)` swap two different bits?",
+        "Why do the two XOR-with-mask lines exchange a pair of bits that differ?"
+      ],
+      "code": "while l < r:\n    leftBit = (n >> l) & 1\n    rightBit = (n >> r) & 1\n    if leftBit != rightBit:\n        n = n ^ (1 << l)\n        n = n ^ (1 << r)\n    l += 1\n    r -= 1",
+      "answer": "When the bits differ, one is 0 and the other 1; flipping both exchanges them (0->1 at one position, 1->0 at the other). Each XOR with a single-bit mask toggles exactly that bit.",
+      "keyPoints": [
+        "Flip both = swap when different",
+        "Mask isolates one bit"
+      ],
+      "explanation": "Python ints are unbounded, so the fixed 32 positions are explicit."
+    },
+    {
+      "id": "rb-edge-01",
+      "category": "edge_case",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "Why must the loop use 32 positions even when n has fewer significant bits?",
+        "What happens to leading zeros in the input?"
+      ],
+      "options": [
+        "Leading zeros become trailing zeros of the output, so all 32 positions matter",
+        "They are dropped",
+        "They cause an overflow",
+        "They are irrelevant"
+      ],
+      "answer": "Leading zeros become trailing zeros of the output, so all 32 positions matter",
+      "explanation": "e.g. n = 1 (bit 0 set) must become 2^31; stopping at the highest set bit would give 1.",
+      "incorrectOptionExplanations": {
+        "They are dropped": "That would produce a different (shorter) number.",
+        "They cause an overflow": "Python ints do not overflow.",
+        "They are irrelevant": "They determine the high bits of the result."
+      }
+    }
+  ],
+  "generatedAt": "2026-10-01T14:04:28Z"
+}

@@ -1,0 +1,136 @@
+{
+  "schemaVersion": 1,
+  "problemSlug": "power-of-two",
+  "summary": "Decide whether an integer is a power of two.",
+  "patterns": [
+    "Bit Manipulation",
+    "Math"
+  ],
+  "mainInsight": "A power of two has exactly one set bit, so n & (n - 1) (which clears the lowest set bit) must be 0 - as long as n is positive.",
+  "canonicalApproach": "n & (n - 1) == 0",
+  "approaches": [
+    {
+      "name": "Divide by 2 loop",
+      "summary": "Keep halving while divisible; end at 1.",
+      "timeComplexity": "O(log n)",
+      "spaceComplexity": "O(1)"
+    },
+    {
+      "name": "Count bits",
+      "summary": "bin(n).count('1') == 1 for n > 0.",
+      "timeComplexity": "O(log n)",
+      "spaceComplexity": "O(log n)"
+    },
+    {
+      "name": "n & (n - 1) == 0",
+      "summary": "Positive n with a single set bit.",
+      "timeComplexity": "O(1)",
+      "spaceComplexity": "O(1)",
+      "strengths": [
+        "Constant time"
+      ],
+      "interviewRelevance": "The expected answer."
+    }
+  ],
+  "personalSolution": {
+    "approach": "n & (n - 1) == 0 with n > 0 guard",
+    "timeComplexity": "O(1)",
+    "spaceComplexity": "O(1)",
+    "isOptimal": true,
+    "notes": "Optimal."
+  },
+  "commonMistakes": [],
+  "edgeCases": [],
+  "cards": [
+    {
+      "id": "p2-pattern-01",
+      "category": "pattern",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "Which expression tests a power of two in O(1)?",
+        "What identity characterises powers of two in binary?"
+      ],
+      "options": [
+        "n > 0 and n & (n - 1) == 0",
+        "n % 3 == 0",
+        "n | (n - 1) == n",
+        "n >> 1 == n"
+      ],
+      "answer": "n > 0 and n & (n - 1) == 0",
+      "explanation": "Exactly one set bit: removing it leaves 0.",
+      "incorrectOptionExplanations": {
+        "n % 3 == 0": "Unrelated to powers of two.",
+        "n | (n - 1) == n": "True only for n = 1... not a general test.",
+        "n >> 1 == n": "Only true for 0."
+      }
+    },
+    {
+      "id": "p2-insight-01",
+      "category": "main_insight",
+      "type": "free_recall",
+      "promptVariants": [
+        "Why does n & (n - 1) == 0 imply a power of two?",
+        "What happens to the bits of n when you compute n - 1, and why does that reveal a power of two?"
+      ],
+      "answer": "n - 1 flips the lowest set bit to 0 and all the lower zeros to 1. AND with n therefore clears that bit; the result is 0 only when it was the only set bit, i.e. n = 2^k.",
+      "keyPoints": [
+        "Clears lowest set bit",
+        "Zero => single set bit"
+      ],
+      "explanation": "Same trick as counting bits."
+    },
+    {
+      "id": "p2-edge-01",
+      "category": "edge_case",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "Why is the `n <= 0` guard required?",
+        "Which input falsely passes n & (n - 1) == 0 without the guard?"
+      ],
+      "options": [
+        "n = 0 (0 & -1 == 0) would wrongly pass",
+        "n = 1",
+        "n = 2",
+        "n = 2^31"
+      ],
+      "answer": "n = 0 (0 & -1 == 0) would wrongly pass",
+      "explanation": "Zero has no set bit and is not a power of two; negatives are also excluded by the guard.",
+      "incorrectOptionExplanations": {
+        "n = 1": "1 is 2^0, correctly accepted.",
+        "n = 2": "Correctly accepted.",
+        "n = 2^31": "Correctly accepted."
+      }
+    },
+    {
+      "id": "p2-time-01",
+      "category": "time_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Time complexity of the bit trick: ___",
+        "Checking a power of two with n & (n - 1) is ___ time."
+      ],
+      "answer": "O(1)",
+      "explanation": "A fixed number of word operations.",
+      "acceptedAnswers": [
+        "constant"
+      ]
+    },
+    {
+      "id": "p2-alt-01",
+      "category": "alternative_approach",
+      "type": "free_recall",
+      "promptVariants": [
+        "Name two other ways to check for a power of two and compare them to the bit trick.",
+        "Besides n & (n - 1), how else can you test whether n is a power of two?"
+      ],
+      "answer": "Repeated division by 2 (O(log n)); counting set bits == 1; n & -n == n (lowest set bit equals n). The n & (n-1) test is O(1) and branch-free.",
+      "keyPoints": [
+        "Loop dividing by 2",
+        "popcount == 1",
+        "n & -n == n"
+      ],
+      "explanation": "All require n > 0."
+    }
+  ],
+  "generatedAt": "2026-10-01T14:04:28Z"
+}

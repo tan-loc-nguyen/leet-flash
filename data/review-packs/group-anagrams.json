@@ -1,0 +1,203 @@
+{
+  "schemaVersion": 1,
+  "problemSlug": "group-anagrams",
+  "summary": "Group the words that are anagrams of each other.",
+  "patterns": [
+    "Array / Hashing"
+  ],
+  "mainInsight": "Anagrams share a canonical signature (sorted letters or a 26-count tuple). Use that signature as a hash-map key and append each word to its bucket.",
+  "canonicalApproach": "26-count tuple key",
+  "approaches": [
+    {
+      "name": "Compare every pair",
+      "summary": "Check anagram-ness between all pairs and merge groups.",
+      "timeComplexity": "O(n^2 * k)",
+      "spaceComplexity": "O(n k)",
+      "weaknesses": [
+        "Far too slow"
+      ],
+      "interviewRelevance": "Mention then dismiss."
+    },
+    {
+      "name": "Sorted-string key",
+      "summary": "key = ''.join(sorted(word)).",
+      "timeComplexity": "O(n * k log k)",
+      "spaceComplexity": "O(n k)",
+      "strengths": [
+        "Simple"
+      ],
+      "weaknesses": [
+        "Sorting each word costs k log k"
+      ],
+      "interviewRelevance": "Common, accepted."
+    },
+    {
+      "name": "26-count tuple key",
+      "summary": "key = tuple of letter counts.",
+      "timeComplexity": "O(n * k)",
+      "spaceComplexity": "O(n k)",
+      "strengths": [
+        "Linear in word length"
+      ],
+      "weaknesses": [
+        "Only for lowercase letters; larger key"
+      ],
+      "interviewRelevance": "The optimal answer."
+    }
+  ],
+  "personalSolution": {
+    "approach": "26-count tuple key with defaultdict",
+    "timeComplexity": "O(n*k)",
+    "spaceComplexity": "O(n*k)",
+    "isOptimal": true,
+    "notes": "Optimal for lowercase letters. Rename the loop variable `str`."
+  },
+  "commonMistakes": [],
+  "edgeCases": [],
+  "cards": [
+    {
+      "id": "ga-pattern-01",
+      "category": "pattern",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "What is the core technique for Group Anagrams?",
+        "How do you group items that are 'equal up to rearrangement'?"
+      ],
+      "options": [
+        "Hash map keyed by a canonical signature",
+        "Sliding window",
+        "Trie",
+        "Union find"
+      ],
+      "answer": "Hash map keyed by a canonical signature",
+      "explanation": "Equivalent items share a canonical form, which becomes the dictionary key.",
+      "incorrectOptionExplanations": {
+        "Sliding window": "No contiguous range is involved.",
+        "Trie": "A trie groups by prefix, not by letter multiset.",
+        "Union find": "Possible but needless; hashing a signature groups directly."
+      }
+    },
+    {
+      "id": "ga-insight-01",
+      "category": "main_insight",
+      "type": "free_recall",
+      "promptVariants": [
+        "Why must the key be canonical, and what are two valid keys?",
+        "What properties must a grouping key have?"
+      ],
+      "answer": "All anagrams must map to the same key and non-anagrams to different keys. Valid keys: the sorted letters of the word, or a 26-length count tuple.",
+      "keyPoints": [
+        "Same for all anagrams, different otherwise",
+        "Sorted string or count tuple"
+      ],
+      "explanation": "The key encodes the multiset of letters."
+    },
+    {
+      "id": "ga-ds-01",
+      "category": "data_structure",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "Why must you convert the count list to a tuple before using it as a dict key?",
+        "What breaks if you use the list `alpha` directly as the key?"
+      ],
+      "options": [
+        "Lists are mutable and unhashable; tuples are hashable",
+        "Tuples are faster to compare",
+        "Lists cannot contain integers",
+        "dicts only accept sorted keys"
+      ],
+      "answer": "Lists are mutable and unhashable; tuples are hashable",
+      "explanation": "Dict keys must be hashable; Python raises TypeError for lists.",
+      "incorrectOptionExplanations": {
+        "Tuples are faster to compare": "Not the reason; hashability is.",
+        "Lists cannot contain integers": "They can.",
+        "dicts only accept sorted keys": "No ordering requirement."
+      }
+    },
+    {
+      "id": "ga-time-01",
+      "category": "time_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "With n words of max length k, the count-tuple solution runs in ___ time.",
+        "Group Anagrams with count-tuple keys costs ___ time (n words, max length k)."
+      ],
+      "answer": "O(n*k)",
+      "explanation": "Each word is scanned once to build its 26-count key (hashing the tuple is O(26)).",
+      "acceptedAnswers": [
+        "O(nk)",
+        "O(n k)",
+        "O(n * k)"
+      ]
+    },
+    {
+      "id": "ga-time-02",
+      "category": "alternative_approach",
+      "type": "free_recall",
+      "promptVariants": [
+        "Compare the sorted-string key with the count-tuple key.",
+        "What is the cost difference between sorting each word and counting its letters as the key?"
+      ],
+      "answer": "Sorted key costs O(k log k) per word -> O(n k log k) total; the count tuple costs O(k) per word -> O(n k) but only works for a fixed small alphabet. Both use O(n k) space.",
+      "keyPoints": [
+        "O(k log k) vs O(k)",
+        "Count tuple needs a fixed alphabet"
+      ],
+      "explanation": "Pick the count tuple for lowercase-only inputs."
+    },
+    {
+      "id": "ga-space-01",
+      "category": "space_complexity",
+      "type": "free_recall",
+      "promptVariants": [
+        "What is the space complexity and what dominates it?",
+        "What dominates the memory use of Group Anagrams?"
+      ],
+      "answer": "O(n k): the map stores every word (total characters n*k) plus keys.",
+      "keyPoints": [
+        "Stores all words",
+        "Keys add O(26) per group"
+      ],
+      "explanation": "The output itself is of this size."
+    },
+    {
+      "id": "ga-code-01",
+      "category": "code_reasoning",
+      "type": "code_question",
+      "promptVariants": [
+        "Why does `hmap[tuple(alpha)].append(str)` work without checking whether the key exists?",
+        "What does defaultdict(list) save you from doing in the grouping loop, and what style issue does the variable name `str` have?"
+      ],
+      "code": "hmap = collections.defaultdict(list)\nfor str in strs:\n    alpha = [0] * 26\n    for ch in str:\n        alpha[ord(ch) - ord('a')] += 1\n    hmap[tuple(alpha)].append(str)\nreturn list(hmap.values())",
+      "answer": "defaultdict(list) creates an empty list on first access of a missing key, so append always works. Note the loop variable `str` shadows the built-in `str` - rename it (e.g. `word`).",
+      "keyPoints": [
+        "defaultdict creates the bucket",
+        "Avoid shadowing built-in str"
+      ],
+      "explanation": "Style point worth fixing before an interview."
+    },
+    {
+      "id": "ga-edge-01",
+      "category": "edge_case",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "What does the algorithm return for the input [\"\"]?",
+        "How are empty strings handled?"
+      ],
+      "options": [
+        "[[\"\"]]",
+        "[]",
+        "[[]]",
+        "An error"
+      ],
+      "answer": "[[\"\"]]",
+      "explanation": "The empty string has an all-zero key, forming one group containing it.",
+      "incorrectOptionExplanations": {
+        "[]": "The input has one element, so one group exists.",
+        "[[]]": "The group contains the empty string itself.",
+        "An error": "No indexing occurs for an empty string."
+      }
+    }
+  ],
+  "generatedAt": "2026-10-01T14:01:51Z"
+}

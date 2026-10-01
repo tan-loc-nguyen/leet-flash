@@ -1,0 +1,154 @@
+{
+  "schemaVersion": 1,
+  "problemSlug": "valid-palindrome",
+  "summary": "Check whether a string reads the same forwards and backwards after lowercasing and ignoring non-alphanumeric characters.",
+  "patterns": [
+    "Two Pointers"
+  ],
+  "mainInsight": "A palindrome mirrors around its centre, so compare from both ends moving inward, skipping characters that do not count; there is no need to build a cleaned copy.",
+  "canonicalApproach": "Two pointers in place",
+  "approaches": [
+    {
+      "name": "Clean then reverse",
+      "summary": "Filter to alphanumerics, lowercase, compare with its reverse.",
+      "timeComplexity": "O(n)",
+      "spaceComplexity": "O(n)",
+      "strengths": [
+        "Very short"
+      ],
+      "weaknesses": [
+        "Extra memory"
+      ]
+    },
+    {
+      "name": "Two pointers in place",
+      "summary": "l and r move inward, skipping non-alphanumerics, comparing lowercase characters.",
+      "timeComplexity": "O(n)",
+      "spaceComplexity": "O(1) extra",
+      "strengths": [
+        "Constant space"
+      ],
+      "weaknesses": [
+        "Skip logic needs care"
+      ],
+      "interviewRelevance": "The expected answer."
+    }
+  ],
+  "personalSolution": {
+    "approach": "Two pointers (with a lowercased copy)",
+    "timeComplexity": "O(n)",
+    "spaceComplexity": "O(n)",
+    "isOptimal": false,
+    "notes": "Pointer logic is right. Lowercase per character to get true O(1) extra space."
+  },
+  "commonMistakes": [],
+  "edgeCases": [],
+  "cards": [
+    {
+      "id": "vp2-pattern-01",
+      "category": "pattern",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "Which technique checks a palindrome in O(1) extra space?",
+        "What pattern does 'mirror comparison' suggest?"
+      ],
+      "options": [
+        "Two pointers from both ends",
+        "Sliding window",
+        "Hash map of counts",
+        "Recursion with memoisation"
+      ],
+      "answer": "Two pointers from both ends",
+      "explanation": "Position i must match position n-1-i; two converging pointers do exactly that.",
+      "incorrectOptionExplanations": {
+        "Sliding window": "No expanding/shrinking window.",
+        "Hash map of counts": "Counts ignore order (that tests rearrangeability, not palindromes).",
+        "Recursion with memoisation": "No overlapping subproblems."
+      }
+    },
+    {
+      "id": "vp2-invariant-01",
+      "category": "invariant",
+      "type": "free_recall",
+      "promptVariants": [
+        "What is true about s[0..l-1] and s[r+1..n-1] at every step?",
+        "What has already been verified outside the [l, r] range at each iteration?"
+      ],
+      "answer": "Every alphanumeric character in the already-processed prefix and suffix has been matched against its mirror, so everything outside [l, r] is verified.",
+      "keyPoints": [
+        "Outside the pointers is verified",
+        "Skipped characters are non-alphanumeric"
+      ],
+      "explanation": "Termination when l crosses r means every pair matched."
+    },
+    {
+      "id": "vp2-time-01",
+      "category": "time_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Time complexity of the two-pointer solution: ___",
+        "Valid Palindrome with two pointers runs in ___ time."
+      ],
+      "answer": "O(n)",
+      "explanation": "Each pointer moves at most n steps in total.",
+      "acceptedAnswers": [
+        "linear"
+      ]
+    },
+    {
+      "id": "vp2-space-01",
+      "category": "space_complexity",
+      "type": "free_recall",
+      "promptVariants": [
+        "Your solution calls s.lower(). What does that do to space, and how could you avoid it?",
+        "How could you make your Valid Palindrome solution truly O(1) extra space?"
+      ],
+      "answer": "s.lower() builds a new string, so extra space is O(n). To get O(1), keep s and call .lower() on the individual characters during comparison (or compare c.lower()).",
+      "keyPoints": [
+        "lower() allocates a copy",
+        "Lowercase per character instead"
+      ],
+      "explanation": "Time is unchanged."
+    },
+    {
+      "id": "vp2-code-01",
+      "category": "code_reasoning",
+      "type": "code_question",
+      "promptVariants": [
+        "Why does the loop skip with `elif`s in this order, and why `while l <= r` vs `l < r`?",
+        "How does the two-pointer loop handle punctuation, and what happens when l == r?"
+      ],
+      "code": "l, r = 0, len(s) - 1\nlowercase = s.lower()\nwhile l <= r:\n    if not lowercase[l].isalnum():\n        l += 1\n    elif not lowercase[r].isalnum():\n        r -= 1\n    elif lowercase[l] == lowercase[r]:\n        l += 1\n        r -= 1\n    else:\n        return False\nreturn True",
+      "answer": "Non-alphanumerics are skipped one pointer at a time until both point at real characters, then compared. `l <= r` is harmless (a single middle character always matches itself); `l < r` is equivalent and slightly tighter.",
+      "keyPoints": [
+        "Skip one side until both valid",
+        "Compare only alphanumerics",
+        "l == r is a trivially valid middle"
+      ],
+      "explanation": "The order of branches does not change correctness."
+    },
+    {
+      "id": "vp2-edge-01",
+      "category": "edge_case",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "What should the function return for the string \" \" or \".,\"?",
+        "How should a string with no alphanumerics be treated?"
+      ],
+      "options": [
+        "True - the cleaned string is empty",
+        "False - nothing to compare",
+        "It raises an error",
+        "Depends on the length"
+      ],
+      "answer": "True - the cleaned string is empty",
+      "explanation": "An empty cleaned string reads the same forwards and backwards.",
+      "incorrectOptionExplanations": {
+        "False - nothing to compare": "The empty string is a palindrome by definition.",
+        "It raises an error": "The pointers just cross without indexing errors.",
+        "Depends on the length": "No - all punctuation-only inputs are palindromes."
+      }
+    }
+  ],
+  "generatedAt": "2026-10-01T14:01:51Z"
+}

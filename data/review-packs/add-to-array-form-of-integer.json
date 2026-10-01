@@ -1,0 +1,169 @@
+{
+  "schemaVersion": 1,
+  "problemSlug": "add-to-array-form-of-integer",
+  "summary": "Add an integer k to a number given as an array of digits and return the digits of the sum.",
+  "patterns": [
+    "Math",
+    "Array / Hashing"
+  ],
+  "mainInsight": "Digit-by-digit addition with a carry, consuming k's digits with % 10 and // 10 as you walk the array from the least significant end; no need to build a second digit array.",
+  "canonicalApproach": "Add k's digits as you go",
+  "approaches": [
+    {
+      "name": "Convert to int",
+      "summary": "int(''.join(...)) + k, then split into digits.",
+      "timeComplexity": "O(n)",
+      "spaceComplexity": "O(n)",
+      "strengths": [
+        "Easy in Python"
+      ],
+      "weaknesses": [
+        "Not portable; hides the algorithm"
+      ]
+    },
+    {
+      "name": "Add k's digits as you go",
+      "summary": "Walk the array from the end: k += digit; digit = k % 10; k //= 10. Prepend remaining digits of k.",
+      "timeComplexity": "O(max(n, log k))",
+      "spaceComplexity": "O(1) extra besides output",
+      "strengths": [
+        "No second array",
+        "Short"
+      ],
+      "interviewRelevance": "The optimal and cleanest form."
+    },
+    {
+      "name": "Two digit arrays + carry",
+      "summary": "Convert k to a digit array, then add the two arrays with a carry.",
+      "timeComplexity": "O(max(n, log k))",
+      "spaceComplexity": "O(max(n, log k))",
+      "strengths": [
+        "Mirrors Add Two Numbers"
+      ],
+      "weaknesses": [
+        "Extra array"
+      ],
+      "interviewRelevance": "Valid and clear."
+    }
+  ],
+  "personalSolution": {
+    "approach": "Convert k to a digit array, then add with a carry",
+    "timeComplexity": "O(max(n, log k))",
+    "spaceComplexity": "O(max(n, log k))",
+    "isOptimal": false,
+    "notes": "Correct and clear. The version where k acts as the carry avoids the extra array."
+  },
+  "commonMistakes": [],
+  "edgeCases": [],
+  "cards": [
+    {
+      "id": "aa-pattern-01",
+      "category": "pattern",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "What approach adds an array-form number and an integer?",
+        "Which standard technique implements Add to Array-Form of Integer?"
+      ],
+      "options": [
+        "Digit-by-digit addition with a carry from the least significant end",
+        "Sorting both numbers",
+        "Sliding window",
+        "Binary search on the sum"
+      ],
+      "answer": "Digit-by-digit addition with a carry from the least significant end",
+      "explanation": "Same as grade-school addition: sum column by column, carry to the next.",
+      "incorrectOptionExplanations": {
+        "Sorting both numbers": "Digit order matters.",
+        "Sliding window": "No window.",
+        "Binary search on the sum": "The sum is computed directly."
+      }
+    },
+    {
+      "id": "aa-insight-01",
+      "category": "main_insight",
+      "type": "free_recall",
+      "promptVariants": [
+        "How can you avoid creating the digit array for k?",
+        "How can k itself act as the carry?"
+      ],
+      "answer": "Add k to the current digit, take % 10 as the new digit and // 10 as the remaining value; that remainder (the carry plus the unprocessed higher digits of k) becomes the new k. After the array ends, keep emitting k's remaining digits.",
+      "keyPoints": [
+        "k doubles as carry",
+        "digit = k % 10; k //= 10",
+        "Emit leftover digits of k"
+      ],
+      "explanation": "Handles k longer than the array automatically."
+    },
+    {
+      "id": "aa-edge-01",
+      "category": "edge_case",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "Which input shows that the result can be longer than the array?",
+        "What happens for num = [9,9], k = 1?"
+      ],
+      "options": [
+        "Result [1,0,0]: a final carry adds a digit",
+        "Result [0,0]",
+        "Result [1,0]",
+        "It overflows"
+      ],
+      "answer": "Result [1,0,0]: a final carry adds a digit",
+      "explanation": "99 + 1 = 100; the loop must emit the leftover carry. Likewise k can have more digits than num.",
+      "incorrectOptionExplanations": {
+        "Result [0,0]": "Loses the carry.",
+        "Result [1,0]": "That is 10, not 100.",
+        "It overflows": "Python ints do not overflow and no int is built anyway."
+      }
+    },
+    {
+      "id": "aa-time-01",
+      "category": "time_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Time complexity with n = len(num): ___ (also depends on the digits of k).",
+        "Adding an integer k to an n-digit array-form number takes ___ time."
+      ],
+      "answer": "O(max(n, log k))",
+      "explanation": "One step per digit of whichever operand is longer.",
+      "acceptedAnswers": [
+        "O(n + log k)",
+        "O(max(n, log10 k))",
+        "O(n)"
+      ]
+    },
+    {
+      "id": "aa-space-01",
+      "category": "space_complexity",
+      "type": "free_recall",
+      "promptVariants": [
+        "How does your solution's space compare with the in-place variant?",
+        "What extra memory does your solution use compared with a version that adds k's digits in place?"
+      ],
+      "answer": "Yours uses an extra digit array for k plus the answer list, O(max(n, log k)). The in-place variant only needs the output list (O(1) extra besides output).",
+      "keyPoints": [
+        "Extra digit array for k",
+        "Output list is unavoidable"
+      ],
+      "explanation": "Minor optimisation; clarity matters more."
+    },
+    {
+      "id": "aa-code-01",
+      "category": "code_reasoning",
+      "type": "code_question",
+      "promptVariants": [
+        "Why does your loop condition use `while i >= 0 or j >= 0`, and what happens to the carry after it?",
+        "Explain how the loop handles numbers of different lengths and what happens after it ends."
+      ],
+      "code": "i, j = len(num) - 1, len(num2) - 1\ncarry = 0\nans = []\nwhile i >= 0 or j >= 0:\n    total = carry\n    if i >= 0:\n        total += num[i]; i -= 1\n    if j >= 0:\n        total += num2[j]; j -= 1\n    ans.append(total % 10)\n    carry = total // 10\nif carry:\n    ans.append(carry)\nans.reverse()",
+      "answer": "`or` continues while either number still has digits, treating the exhausted one as 0. A final carry (at most 1) is appended after the loop. Digits are produced least-significant first, hence the final reverse.",
+      "keyPoints": [
+        "Continue while either has digits",
+        "Final carry appended",
+        "Reverse at the end"
+      ],
+      "explanation": "Same skeleton as Add Two Numbers / Add Strings."
+    }
+  ],
+  "generatedAt": "2026-10-01T14:04:28Z"
+}

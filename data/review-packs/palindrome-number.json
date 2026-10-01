@@ -1,0 +1,171 @@
+{
+  "schemaVersion": 1,
+  "problemSlug": "palindrome-number",
+  "summary": "Decide whether an integer reads the same forwards and backwards (negatives are never palindromes).",
+  "patterns": [
+    "Math"
+  ],
+  "mainInsight": "Extract digits with % 10 and // 10 instead of converting to a string; reversing the digits (or only the second half) and comparing is O(log n) time and O(1) space.",
+  "canonicalApproach": "Reverse only half the digits",
+  "approaches": [
+    {
+      "name": "Convert to string",
+      "summary": "Compare str(x) with its reverse.",
+      "timeComplexity": "O(d)",
+      "spaceComplexity": "O(d)",
+      "strengths": [
+        "One line"
+      ],
+      "weaknesses": [
+        "Uses extra string memory (often disallowed as a follow-up)"
+      ]
+    },
+    {
+      "name": "Reverse the whole number",
+      "summary": "Build the reversed integer digit by digit and compare with the original.",
+      "timeComplexity": "O(log10 x)",
+      "spaceComplexity": "O(1)",
+      "strengths": [
+        "No string"
+      ],
+      "weaknesses": [
+        "Overflow concern in fixed-width languages"
+      ]
+    },
+    {
+      "name": "Reverse only half the digits",
+      "summary": "Stop when the reversed half >= the remaining half, then compare (handle odd length by //10).",
+      "timeComplexity": "O(log10 x)",
+      "spaceComplexity": "O(1)",
+      "strengths": [
+        "Half the work",
+        "No overflow"
+      ],
+      "weaknesses": [
+        "Fiddlier for odd length and trailing zeros"
+      ],
+      "interviewRelevance": "The optimal / follow-up answer."
+    }
+  ],
+  "personalSolution": {
+    "approach": "Reverse the whole number",
+    "timeComplexity": "O(log x)",
+    "spaceComplexity": "O(1)",
+    "isOptimal": true,
+    "notes": "Correct and optimal asymptotically. Half-reversal is the common follow-up (and avoids overflow in fixed-width languages)."
+  },
+  "commonMistakes": [],
+  "edgeCases": [],
+  "cards": [
+    {
+      "id": "pn-pattern-01",
+      "category": "pattern",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "How do you test a palindrome integer without converting it to a string?",
+        "Which digit-manipulation technique solves Palindrome Number in O(1) space?"
+      ],
+      "options": [
+        "Peel digits with % 10 and // 10 to build the reverse",
+        "Binary search on the value",
+        "Hash set of digits",
+        "Sort the digits"
+      ],
+      "answer": "Peel digits with % 10 and // 10 to build the reverse",
+      "explanation": "x % 10 gives the last digit and x // 10 drops it, so you can rebuild the reversed number arithmetically.",
+      "incorrectOptionExplanations": {
+        "Binary search on the value": "Nothing is monotonic to search.",
+        "Hash set of digits": "Sets ignore digit order.",
+        "Sort the digits": "Sorting destroys the order you need to compare."
+      }
+    },
+    {
+      "id": "pn-insight-01",
+      "category": "main_insight",
+      "type": "free_recall",
+      "promptVariants": [
+        "Why is it enough to reverse only half of the number?",
+        "Explain the half-reversal optimisation."
+      ],
+      "answer": "A palindrome's second half mirrors the first. Reverse digits from the end until the reversed part is >= the remaining prefix, then compare (dropping the middle digit for odd length). This halves the work and avoids overflow.",
+      "keyPoints": [
+        "Second half mirrors first",
+        "Stop when reversed >= remaining",
+        "Odd length: ignore middle digit"
+      ],
+      "explanation": "You never need the full reverse."
+    },
+    {
+      "id": "pn-edge-01",
+      "category": "edge_case",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "Which inputs are rejected up front or need special care?",
+        "Which edge case do negative numbers and trailing zeros illustrate?"
+      ],
+      "options": [
+        "Negatives and non-zero numbers ending in 0 (like 10) are never palindromes",
+        "Only negatives need special care",
+        "Zero is not a palindrome",
+        "Numbers above 2^31 only"
+      ],
+      "answer": "Negatives and non-zero numbers ending in 0 (like 10) are never palindromes",
+      "explanation": "'-121' reads '121-' backwards; 10 reverses to 01 = 1, which is not 10 (the full-reverse approach handles it naturally, the half-reverse approach needs an explicit check).",
+      "incorrectOptionExplanations": {
+        "Only negatives need special care": "Trailing-zero numbers are another trap for half-reversal.",
+        "Zero is not a palindrome": "0 is a palindrome.",
+        "Numbers above 2^31 only": "Size is unrelated."
+      }
+    },
+    {
+      "id": "pn-time-01",
+      "category": "time_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Time complexity (d = number of digits): ___",
+        "Reversing the digits of x takes ___ time in terms of the value x."
+      ],
+      "answer": "O(log x)",
+      "explanation": "One iteration per decimal digit, and the digit count is about log10(x).",
+      "acceptedAnswers": [
+        "O(d)",
+        "O(log n)",
+        "O(log10 x)",
+        "O(log10(x))"
+      ]
+    },
+    {
+      "id": "pn-space-01",
+      "category": "space_complexity",
+      "type": "free_recall",
+      "promptVariants": [
+        "What is the space complexity of your solution, and why is that a benefit over str(x)?",
+        "Why does reversing digits arithmetically beat converting to a string in terms of memory?"
+      ],
+      "answer": "O(1): only a few integer variables. The string approach allocates O(d) characters.",
+      "keyPoints": [
+        "O(1) integers only",
+        "str() allocates O(d)"
+      ],
+      "explanation": "The 'without converting to string' follow-up targets exactly this."
+    },
+    {
+      "id": "pn-code-01",
+      "category": "code_reasoning",
+      "type": "code_question",
+      "promptVariants": [
+        "Walk through why `reversed_x = reversed_x * 10 + last_digit` rebuilds the reverse.",
+        "What do the three lines in the loop do to `tmp` and `reversed_x`?"
+      ],
+      "code": "while tmp > 0:\n    last_digit = tmp % 10\n    reversed_x = reversed_x * 10 + last_digit\n    tmp //= 10",
+      "answer": "Each iteration moves the last digit of tmp onto the end of reversed_x: multiplying by 10 shifts existing digits left, adding last_digit appends it, and tmp //= 10 discards that digit. After all digits are consumed reversed_x is x written backwards.",
+      "keyPoints": [
+        "Shift left by *10",
+        "Append last digit",
+        "Drop it from tmp with //10"
+      ],
+      "explanation": "Example: 123 -> 3, 32, 321."
+    }
+  ],
+  "generatedAt": "2026-10-01T14:04:28Z"
+}

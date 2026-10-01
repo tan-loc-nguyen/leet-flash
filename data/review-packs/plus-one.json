@@ -1,0 +1,153 @@
+{
+  "schemaVersion": 1,
+  "problemSlug": "plus-one",
+  "summary": "Add one to a number represented as a list of digits (most significant first).",
+  "patterns": [
+    "Array / Hashing",
+    "Math"
+  ],
+  "mainInsight": "Add the 1 as an initial carry at the least significant digit and propagate it leftwards while digits overflow from 9 to 0; only if the carry survives past the front do you need a new leading 1.",
+  "canonicalApproach": "Right-to-left carry",
+  "approaches": [
+    {
+      "name": "Convert to int",
+      "summary": "Join digits, add 1, split again.",
+      "timeComplexity": "O(n)",
+      "spaceComplexity": "O(n)",
+      "strengths": [
+        "Trivial in Python"
+      ],
+      "weaknesses": [
+        "Defeats the point; breaks in fixed-width languages"
+      ]
+    },
+    {
+      "name": "Right-to-left carry",
+      "summary": "Add the carry from the end; digit becomes total % 10, carry total // 10; prepend 1 if carry remains.",
+      "timeComplexity": "O(n)",
+      "spaceComplexity": "O(1) extra",
+      "strengths": [
+        "Handles any length",
+        "Stops early once carry is 0"
+      ],
+      "interviewRelevance": "The expected answer."
+    }
+  ],
+  "personalSolution": {
+    "approach": "Right-to-left carry",
+    "timeComplexity": "O(n)",
+    "spaceComplexity": "O(1)",
+    "isOptimal": true,
+    "notes": "Optimal. Mutates the input list (usually fine)."
+  },
+  "commonMistakes": [],
+  "edgeCases": [],
+  "cards": [
+    {
+      "id": "po-pattern-01",
+      "category": "pattern",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "What technique implements Plus One?",
+        "How should the +1 be propagated across the digit array?"
+      ],
+      "options": [
+        "Right-to-left pass carrying overflow",
+        "Left-to-right pass with a stack",
+        "Binary search",
+        "Sorting"
+      ],
+      "answer": "Right-to-left pass carrying overflow",
+      "explanation": "Addition proceeds from the least significant digit, which is at the end of the array.",
+      "incorrectOptionExplanations": {
+        "Left-to-right pass with a stack": "Unnecessary; the carry flows right to left.",
+        "Binary search": "Not a search problem.",
+        "Sorting": "Order of digits is meaningful."
+      }
+    },
+    {
+      "id": "po-insight-01",
+      "category": "main_insight",
+      "type": "free_recall",
+      "promptVariants": [
+        "When can the loop stop early, and what is the only case that grows the array?",
+        "Which input forces a new leading digit?"
+      ],
+      "answer": "As soon as a digit becomes <= 8 after adding the carry there is no further carry, so the rest stays untouched. The array only grows when every digit was 9 (e.g. 999 -> 1000), leaving a carry after the first digit.",
+      "keyPoints": [
+        "Stop when carry becomes 0",
+        "All 9s => prepend 1"
+      ],
+      "explanation": "Most inputs finish in O(1) steps in practice."
+    },
+    {
+      "id": "po-edge-01",
+      "category": "edge_case",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "Which input needs a new most significant digit?",
+        "What is the result for [9,9,9]?"
+      ],
+      "options": [
+        "[9,9,9] -> [1,0,0,0]",
+        "[9,9,9] -> [0,0,0]",
+        "[1,9,9] -> [2,0,0,0]",
+        "[0] -> [0,1]"
+      ],
+      "answer": "[9,9,9] -> [1,0,0,0]",
+      "explanation": "Every 9 becomes 0 with a carry, and the final carry becomes a new leading 1.",
+      "incorrectOptionExplanations": {
+        "[9,9,9] -> [0,0,0]": "That loses the carry.",
+        "[1,9,9] -> [2,0,0,0]": "Correct is [2,0,0] (no extra digit).",
+        "[0] -> [0,1]": "Correct is [1]."
+      }
+    },
+    {
+      "id": "po-time-01",
+      "category": "time_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Worst-case time of Plus One: ___",
+        "Plus One touches each digit at most once, so it is ___ time."
+      ],
+      "answer": "O(n)",
+      "explanation": "At most one pass over the digits (all 9s).",
+      "acceptedAnswers": [
+        "linear"
+      ]
+    },
+    {
+      "id": "po-space-01",
+      "category": "space_complexity",
+      "type": "free_recall",
+      "promptVariants": [
+        "What is the space complexity, and when is it not O(1)?",
+        "Is Plus One really O(1) space? When does it allocate?"
+      ],
+      "answer": "O(1) extra since digits are updated in place; in the all-9s case you allocate a new list of length n+1, which is O(n).",
+      "keyPoints": [
+        "In-place O(1)",
+        "All-9s allocates n+1"
+      ],
+      "explanation": "Mutating the input may or may not be acceptable."
+    },
+    {
+      "id": "po-code-01",
+      "category": "code_reasoning",
+      "type": "code_question",
+      "promptVariants": [
+        "Why initialise carry = 1 and loop `while i >= 0 and carry`?",
+        "How does starting with carry = 1 replace special-casing the +1?"
+      ],
+      "code": "i = len(digits) - 1\ncarry = 1\nwhile i >= 0 and carry:\n    total = digits[i] + carry\n    digits[i] = total % 10\n    carry = total // 10\n    i -= 1\nif carry:\n    return [1] + digits\nreturn digits",
+      "answer": "Treating the +1 as an initial carry makes the first step identical to every later step, so no special case is needed. The loop ends when the carry disappears or the digits run out; a leftover carry means all digits were 9.",
+      "keyPoints": [
+        "+1 modelled as carry",
+        "Loop ends when carry == 0",
+        "Leftover carry => prepend 1"
+      ],
+      "explanation": "Uniform handling of every position."
+    }
+  ],
+  "generatedAt": "2026-10-01T14:04:28Z"
+}

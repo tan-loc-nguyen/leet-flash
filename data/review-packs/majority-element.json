@@ -1,0 +1,186 @@
+{
+  "schemaVersion": 1,
+  "problemSlug": "majority-element",
+  "summary": "Return the element that appears more than n/2 times (guaranteed to exist).",
+  "patterns": [
+    "Array / Hashing"
+  ],
+  "mainInsight": "Because the majority element occupies more than half of the array, it survives pairwise cancellation against all other values: Boyer-Moore voting finds it in one pass with O(1) space.",
+  "canonicalApproach": "Boyer-Moore voting",
+  "approaches": [
+    {
+      "name": "Hash map count",
+      "summary": "Count occurrences and return the one with count > n/2.",
+      "timeComplexity": "O(n)",
+      "spaceComplexity": "O(n)",
+      "strengths": [
+        "Simple"
+      ],
+      "weaknesses": [
+        "O(n) memory"
+      ]
+    },
+    {
+      "name": "Sort and take the middle",
+      "summary": "The majority element must occupy index n // 2 after sorting.",
+      "timeComplexity": "O(n log n)",
+      "spaceComplexity": "O(1) extra (in-place)",
+      "strengths": [
+        "One-liner"
+      ],
+      "weaknesses": [
+        "Slower; mutates input"
+      ],
+      "interviewRelevance": "A neat observation worth stating."
+    },
+    {
+      "name": "Boyer-Moore voting",
+      "summary": "Keep a candidate and a counter; matching increments, non-matching decrements; when the counter hits 0 pick the current element.",
+      "timeComplexity": "O(n)",
+      "spaceComplexity": "O(1)",
+      "strengths": [
+        "Optimal time and space"
+      ],
+      "weaknesses": [
+        "Needs the guarantee that a majority exists"
+      ],
+      "interviewRelevance": "The expected optimal answer."
+    }
+  ],
+  "personalSolution": {
+    "approach": "Sort and take the middle element",
+    "timeComplexity": "O(n log n)",
+    "spaceComplexity": "O(1)",
+    "isOptimal": false,
+    "notes": "Correct and elegant. Boyer-Moore voting gets O(n) time with O(1) space; your hash-map version is in your comments."
+  },
+  "commonMistakes": [],
+  "edgeCases": [],
+  "cards": [
+    {
+      "id": "me-pattern-01",
+      "category": "pattern",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "Which algorithm finds the majority element in O(n) time and O(1) space?",
+        "What named technique solves Majority Element optimally?"
+      ],
+      "options": [
+        "Boyer-Moore voting",
+        "Sliding window",
+        "Binary search",
+        "Heap of size k"
+      ],
+      "answer": "Boyer-Moore voting",
+      "explanation": "Pairing off different elements cannot eliminate a value that occurs more than n/2 times.",
+      "incorrectOptionExplanations": {
+        "Sliding window": "No contiguous window.",
+        "Binary search": "The array is unsorted.",
+        "Heap of size k": "Would work for top-k but costs O(n log k) and extra space."
+      }
+    },
+    {
+      "id": "me-insight-01",
+      "category": "main_insight",
+      "type": "free_recall",
+      "promptVariants": [
+        "Why does sorting put the majority element at index n // 2?",
+        "Explain why the middle element of the sorted array is the majority."
+      ],
+      "answer": "The majority element occupies more than half of the positions. In sorted order its block of > n/2 equal elements must cover the middle index, whichever end it starts from.",
+      "keyPoints": [
+        "> n/2 copies",
+        "Contiguous block covers the middle"
+      ],
+      "explanation": "That is why your sorted solution is correct."
+    },
+    {
+      "id": "me-insight-02",
+      "category": "invariant",
+      "type": "free_recall",
+      "promptVariants": [
+        "Describe the Boyer-Moore invariant.",
+        "Why does cancelling pairs of different elements preserve the majority?"
+      ],
+      "answer": "Remove pairs of distinct elements: each removal takes away at most one copy of the majority element and one non-majority element, so a majority (> n/2) stays a majority of what remains. The counter tracks the surplus of the current candidate.",
+      "keyPoints": [
+        "Cancel distinct pairs",
+        "Majority survives the cancellation",
+        "Counter = candidate's surplus"
+      ],
+      "explanation": "Requires the guarantee that a majority exists."
+    },
+    {
+      "id": "me-time-01",
+      "category": "time_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Time complexity of the sort-based solution: ___",
+        "Sorting-based Majority Element runs in ___ time."
+      ],
+      "answer": "O(n log n)",
+      "explanation": "Dominated by sorting; the lookup is O(1).",
+      "acceptedAnswers": [
+        "O(nlogn)",
+        "O(n log(n))"
+      ]
+    },
+    {
+      "id": "me-space-01",
+      "category": "space_complexity",
+      "type": "free_recall",
+      "promptVariants": [
+        "Compare the space and time of the three solutions you know.",
+        "Which Majority Element approach is best on both time and space, and how do the others compare?"
+      ],
+      "answer": "Hash map: O(n)/O(n). Sort: O(n log n)/O(1) (in place, mutates). Boyer-Moore: O(n)/O(1) - best on both.",
+      "keyPoints": [
+        "Hash map O(n) space",
+        "Sort O(n log n)",
+        "Boyer-Moore O(n)/O(1)"
+      ],
+      "explanation": "Boyer-Moore dominates."
+    },
+    {
+      "id": "me-edge-01",
+      "category": "edge_case",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "When is Boyer-Moore's candidate not guaranteed to be correct?",
+        "What assumption does Boyer-Moore rely on?"
+      ],
+      "options": [
+        "When no element has a count > n/2 (a second verification pass is then needed)",
+        "When the array contains negatives",
+        "When n is odd",
+        "When values repeat"
+      ],
+      "answer": "When no element has a count > n/2 (a second verification pass is then needed)",
+      "explanation": "The algorithm only returns the right answer if a majority exists; otherwise verify the candidate with a counting pass.",
+      "incorrectOptionExplanations": {
+        "When the array contains negatives": "Values are compared only for equality.",
+        "When n is odd": "Parity is irrelevant.",
+        "When values repeat": "Repeats are the point."
+      }
+    },
+    {
+      "id": "me-code-01",
+      "category": "code_reasoning",
+      "type": "code_question",
+      "promptVariants": [
+        "Your accepted solution sorts in place. What are its side effects and what is the one-pass alternative?",
+        "What are the drawbacks of sorting nums in place for Majority Element, and what is the optimal alternative?"
+      ],
+      "code": "nums.sort()\nreturn nums[int(len(nums)/2)]",
+      "answer": "It mutates the caller's array and costs O(n log n). The one-pass O(1)-space alternative is Boyer-Moore: candidate/count voting. (Also prefer `len(nums) // 2` to avoid float conversion.)",
+      "keyPoints": [
+        "Mutates input",
+        "O(n log n)",
+        "Boyer-Moore is O(n)/O(1)",
+        "Use // 2"
+      ],
+      "explanation": "Use sorting when it is the simplest correct answer; mention Boyer-Moore as the optimum."
+    }
+  ],
+  "generatedAt": "2026-10-01T14:04:28Z"
+}

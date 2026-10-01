@@ -1,0 +1,179 @@
+{
+  "schemaVersion": 1,
+  "problemSlug": "longest-common-prefix",
+  "summary": "Return the longest prefix shared by every string in the list.",
+  "patterns": [
+    "Array / Hashing"
+  ],
+  "mainInsight": "The common prefix can be no longer than the shortest string and must match at every index across all strings, so scan column by column (vertical scan) and stop at the first mismatch.",
+  "canonicalApproach": "Vertical scan",
+  "approaches": [
+    {
+      "name": "Horizontal scan",
+      "summary": "Take the first string as prefix and shrink it against each next string.",
+      "timeComplexity": "O(S)",
+      "spaceComplexity": "O(1)",
+      "strengths": [
+        "Simple"
+      ],
+      "weaknesses": [
+        "May re-compare early characters many times"
+      ]
+    },
+    {
+      "name": "Vertical scan",
+      "summary": "For each index i compare strs[0][i] with every other string at i; stop on mismatch or end of a string.",
+      "timeComplexity": "O(S)",
+      "spaceComplexity": "O(1)",
+      "strengths": [
+        "Stops at the first mismatching column",
+        "No allocation"
+      ],
+      "interviewRelevance": "The expected answer; S = total characters."
+    },
+    {
+      "name": "Sort, compare first and last",
+      "summary": "After sorting, the common prefix of the whole list equals that of the lexicographically smallest and largest strings.",
+      "timeComplexity": "O(S log n)",
+      "spaceComplexity": "O(1)",
+      "strengths": [
+        "Neat trick"
+      ],
+      "weaknesses": [
+        "Sorting cost"
+      ],
+      "interviewRelevance": "Nice to mention."
+    },
+    {
+      "name": "Trie",
+      "summary": "Insert all strings and walk while a node has a single child.",
+      "timeComplexity": "O(S)",
+      "spaceComplexity": "O(S)",
+      "strengths": [
+        "Extends to many queries"
+      ],
+      "weaknesses": [
+        "Extra memory"
+      ],
+      "interviewRelevance": "Overkill for one query."
+    }
+  ],
+  "personalSolution": {
+    "approach": "Vertical scan",
+    "timeComplexity": "O(S)",
+    "spaceComplexity": "O(1)",
+    "isOptimal": true,
+    "notes": "Optimal. The inner loop could start at j=1 since j=0 trivially matches."
+  },
+  "commonMistakes": [],
+  "edgeCases": [],
+  "cards": [
+    {
+      "id": "lcp-pattern-01",
+      "category": "pattern",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "How do you find the longest common prefix efficiently?",
+        "Which scan order makes Longest Common Prefix stop earliest?"
+      ],
+      "options": [
+        "Compare column by column across all strings (vertical scan)",
+        "Binary search on string length only",
+        "Sliding window",
+        "Dynamic programming"
+      ],
+      "answer": "Compare column by column across all strings (vertical scan)",
+      "explanation": "The first mismatching column ends the prefix, so you never read past it.",
+      "incorrectOptionExplanations": {
+        "Binary search on string length only": "Valid (prefix property is monotone) but unnecessary extra complexity.",
+        "Sliding window": "No window being maintained.",
+        "Dynamic programming": "No overlapping subproblems."
+      }
+    },
+    {
+      "id": "lcp-insight-01",
+      "category": "main_insight",
+      "type": "free_recall",
+      "promptVariants": [
+        "Why can the loop stop at the first mismatching column?",
+        "What bounds the length of the common prefix?"
+      ],
+      "answer": "A prefix is shared only if every character up to that index matches in all strings; once column i differs (or a string ends) no longer prefix can be common. The answer is also bounded by the shortest string.",
+      "keyPoints": [
+        "First mismatch ends it",
+        "Bounded by the shortest string"
+      ],
+      "explanation": "That is why the `i >= len(strs[j])` check is required."
+    },
+    {
+      "id": "lcp-time-01",
+      "category": "time_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Worst-case time of the vertical scan in terms of S, the total number of characters: ___",
+        "Longest Common Prefix with a vertical scan is ___ in the total number of characters S."
+      ],
+      "answer": "O(S)",
+      "explanation": "Every character is compared at most once (worst case all strings are identical).",
+      "acceptedAnswers": [
+        "O(n*m)",
+        "O(nm)",
+        "O(n m)"
+      ]
+    },
+    {
+      "id": "lcp-space-01",
+      "category": "space_complexity",
+      "type": "free_recall",
+      "promptVariants": [
+        "What is the extra space of your solution, and what would a trie cost?",
+        "How much extra memory does the vertical scan use versus a trie?"
+      ],
+      "answer": "O(1) extra (only indices; the answer slice is output). A trie would need O(S) nodes.",
+      "keyPoints": [
+        "O(1) extra",
+        "Trie O(S)"
+      ],
+      "explanation": "Prefer scanning for a single query."
+    },
+    {
+      "id": "lcp-edge-01",
+      "category": "edge_case",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "What must the inner condition check besides character equality?",
+        "Which edge case causes an IndexError if ignored?"
+      ],
+      "options": [
+        "That i is still inside every string (`i >= len(strs[j])`)",
+        "That strings are sorted",
+        "That characters are lowercase",
+        "That strs[0] is the longest"
+      ],
+      "answer": "That i is still inside every string (`i >= len(strs[j])`)",
+      "explanation": "A shorter string than strs[0] ends the prefix; indexing past it would raise IndexError.",
+      "incorrectOptionExplanations": {
+        "That strings are sorted": "Not required.",
+        "That characters are lowercase": "Irrelevant to indexing.",
+        "That strs[0] is the longest": "The reverse: strs[0] may be longer, which is why the check exists."
+      }
+    },
+    {
+      "id": "lcp-code-01",
+      "category": "code_reasoning",
+      "type": "code_question",
+      "promptVariants": [
+        "Why does the function return `strs[0][0:i]` on mismatch but `strs[0]` after the loop?",
+        "What do the two return statements in the vertical scan represent?"
+      ],
+      "code": "for i in range(len(strs[0])):\n    c = strs[0][i]\n    for j in range(len(strs)):\n        if i >= len(strs[j]) or strs[j][i] != c:\n            return strs[0][0:i]\nreturn strs[0]",
+      "answer": "On a mismatch at column i the common prefix is the first i characters. If the outer loop completes without a mismatch, every character of strs[0] matched in every string, so the whole of strs[0] is the prefix.",
+      "keyPoints": [
+        "Mismatch at i => prefix length i",
+        "No mismatch => whole first string"
+      ],
+      "explanation": "Also covers the single-string list."
+    }
+  ],
+  "generatedAt": "2026-10-01T14:04:28Z"
+}

@@ -1,0 +1,163 @@
+{
+  "schemaVersion": 1,
+  "problemSlug": "number-of-1-bits",
+  "summary": "Count the set bits (Hamming weight) of an unsigned integer.",
+  "patterns": [
+    "Bit Manipulation"
+  ],
+  "mainInsight": "n & (n - 1) clears the lowest set bit, so looping until n becomes 0 counts exactly the set bits (Brian Kernighan's trick) instead of testing all 32 positions.",
+  "canonicalApproach": "Brian Kernighan (n & (n-1))",
+  "approaches": [
+    {
+      "name": "Shift and mask",
+      "summary": "Test the lowest bit and shift right 32 times.",
+      "timeComplexity": "O(32)",
+      "spaceComplexity": "O(1)",
+      "strengths": [
+        "Obvious"
+      ],
+      "weaknesses": [
+        "Always 32 iterations"
+      ]
+    },
+    {
+      "name": "Brian Kernighan (n & (n-1))",
+      "summary": "Clear the lowest set bit each iteration and count iterations.",
+      "timeComplexity": "O(k), k = set bits",
+      "spaceComplexity": "O(1)",
+      "strengths": [
+        "Iterates only over set bits"
+      ],
+      "interviewRelevance": "The expected answer."
+    },
+    {
+      "name": "bin(n).count('1')",
+      "summary": "Convert to a binary string and count.",
+      "timeComplexity": "O(32)",
+      "spaceComplexity": "O(32)",
+      "strengths": [
+        "One line"
+      ],
+      "weaknesses": [
+        "Hides the technique"
+      ],
+      "interviewRelevance": "Fine if allowed; state the loop version."
+    }
+  ],
+  "personalSolution": {
+    "approach": "Brian Kernighan (n & (n-1))",
+    "timeComplexity": "O(k)",
+    "spaceComplexity": "O(1)",
+    "isOptimal": true,
+    "notes": "Optimal."
+  },
+  "commonMistakes": [],
+  "edgeCases": [],
+  "cards": [
+    {
+      "id": "ob-pattern-01",
+      "category": "pattern",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "What does n & (n - 1) do?",
+        "Which operation removes the lowest set bit of n?"
+      ],
+      "options": [
+        "Clears the lowest set bit",
+        "Sets the lowest zero bit",
+        "Flips all bits",
+        "Shifts n right by one"
+      ],
+      "answer": "Clears the lowest set bit",
+      "explanation": "Subtracting 1 flips the lowest set bit and all zeros below it; AND-ing with n clears that bit and keeps the higher bits.",
+      "incorrectOptionExplanations": {
+        "Sets the lowest zero bit": "That would be n | (n + 1).",
+        "Flips all bits": "That is ~n.",
+        "Shifts n right by one": "That is n >> 1."
+      }
+    },
+    {
+      "id": "ob-insight-01",
+      "category": "main_insight",
+      "type": "free_recall",
+      "promptVariants": [
+        "Why does the loop run once per set bit?",
+        "Explain Brian Kernighan's algorithm."
+      ],
+      "answer": "Each n & (n - 1) removes exactly one 1 bit, so the number of iterations until n == 0 equals the number of set bits, independent of the zeros in between.",
+      "keyPoints": [
+        "Clears one set bit per step",
+        "Iterations = popcount"
+      ],
+      "explanation": "Shift-and-mask always costs 32 iterations."
+    },
+    {
+      "id": "ob-time-01",
+      "category": "time_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Time complexity with k set bits: ___ (at most 32).",
+        "Brian Kernighan's algorithm costs ___ iterations."
+      ],
+      "answer": "O(k)",
+      "explanation": "One iteration per set bit; k <= 32 so it is O(1) for fixed-width ints.",
+      "acceptedAnswers": [
+        "O(1)",
+        "O(set bits)"
+      ]
+    },
+    {
+      "id": "ob-space-01",
+      "category": "space_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Extra space: ___",
+        "Brian Kernighan's bit counting uses ___ extra space."
+      ],
+      "answer": "O(1)",
+      "explanation": "Two integers.",
+      "acceptedAnswers": [
+        "constant"
+      ]
+    },
+    {
+      "id": "ob-edge-01",
+      "category": "edge_case",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "Which input returns 0?",
+        "How many iterations does n = 0 take?"
+      ],
+      "options": [
+        "n = 0 (no iterations)",
+        "n = 1",
+        "n = 2^31",
+        "n = 2^32 - 1"
+      ],
+      "answer": "n = 0 (no iterations)",
+      "explanation": "The loop condition `n > 0` fails immediately. The others have 1, 1 and 32 set bits.",
+      "incorrectOptionExplanations": {
+        "n = 1": "One set bit.",
+        "n = 2^31": "One set bit (the top one).",
+        "n = 2^32 - 1": "All 32 bits set."
+      }
+    },
+    {
+      "id": "ob-code-01",
+      "category": "code_reasoning",
+      "type": "code_question",
+      "promptVariants": [
+        "Trace n = 0b1100 through the loop. What are the values of n and ans?",
+        "Step through the n & (n - 1) loop for n = 12 (0b1100)."
+      ],
+      "code": "ans = 0\nwhile n > 0:\n    n = n & (n - 1)\n    ans += 1",
+      "answer": "1100 & 1011 = 1000 (ans=1); 1000 & 0111 = 0000 (ans=2); loop ends. Each step clears the lowest 1.",
+      "keyPoints": [
+        "1100 -> 1000 -> 0",
+        "ans = 2"
+      ],
+      "explanation": "n - 1 flips the lowest 1 and the zeros below it."
+    }
+  ],
+  "generatedAt": "2026-10-01T14:04:28Z"
+}

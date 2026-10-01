@@ -1,0 +1,163 @@
+{
+  "schemaVersion": 1,
+  "problemSlug": "contains-duplicate",
+  "summary": "Return true if any value appears at least twice in the array.",
+  "patterns": [
+    "Array / Hashing"
+  ],
+  "mainInsight": "Duplicates are detected by remembering what you have already seen: membership in a hash set is O(1), so one pass replaces comparing all pairs or sorting.",
+  "canonicalApproach": "Hash set (one pass)",
+  "approaches": [
+    {
+      "name": "Brute force",
+      "summary": "Compare every pair.",
+      "timeComplexity": "O(n^2)",
+      "spaceComplexity": "O(1)"
+    },
+    {
+      "name": "Sort then compare neighbours",
+      "summary": "After sorting, equal values are adjacent; check nums[i] == nums[i+1].",
+      "timeComplexity": "O(n log n)",
+      "spaceComplexity": "O(1) extra (in-place sort)",
+      "strengths": [
+        "No extra memory"
+      ],
+      "weaknesses": [
+        "Slower; mutates input"
+      ],
+      "interviewRelevance": "Good answer when memory is constrained."
+    },
+    {
+      "name": "Hash set (one pass)",
+      "summary": "Return true as soon as a value is already in the set; otherwise add it.",
+      "timeComplexity": "O(n)",
+      "spaceComplexity": "O(n)",
+      "strengths": [
+        "Optimal time",
+        "Early exit"
+      ],
+      "weaknesses": [
+        "O(n) memory"
+      ],
+      "interviewRelevance": "The expected answer."
+    }
+  ],
+  "personalSolution": {
+    "approach": "Hash set (via dict) with early return",
+    "timeComplexity": "O(n)",
+    "spaceComplexity": "O(n)",
+    "isOptimal": true,
+    "notes": "A set would be more idiomatic; your comments also note the sort-based O(n log n)/O(1) alternative."
+  },
+  "commonMistakes": [],
+  "edgeCases": [],
+  "cards": [
+    {
+      "id": "cd-pattern-01",
+      "category": "pattern",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "Which technique detects duplicates in O(n) time?",
+        "What data structure should 'have I seen this before?' suggest?"
+      ],
+      "options": [
+        "Hash set",
+        "Two pointers",
+        "Binary search",
+        "Monotonic stack"
+      ],
+      "answer": "Hash set",
+      "explanation": "A set answers membership in O(1) average, so a single pass finds the first repeat.",
+      "incorrectOptionExplanations": {
+        "Two pointers": "Two pointers needs sorted order; duplicates are not at symmetric positions.",
+        "Binary search": "It needs sorted data and still O(n log n) overall with the sort.",
+        "Monotonic stack": "No nearest-greater structure is involved."
+      }
+    },
+    {
+      "id": "cd-insight-01",
+      "category": "main_insight",
+      "type": "free_recall",
+      "promptVariants": [
+        "Why is a set enough to solve Contains Duplicate?",
+        "Explain the O(n) idea."
+      ],
+      "answer": "We only need to know whether the current value was seen earlier, not where or how often. A hash set stores seen values with O(1) lookup, so one pass with early return suffices.",
+      "keyPoints": [
+        "Only existence matters, not counts",
+        "O(1) lookup per element",
+        "Return early on the first repeat"
+      ],
+      "explanation": "Counts or indices (a dict) are unnecessary extra information."
+    },
+    {
+      "id": "cd-time-01",
+      "category": "time_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Time complexity of the hash-set solution: ___",
+        "Contains Duplicate with a set runs in ___ time."
+      ],
+      "answer": "O(n)",
+      "explanation": "Each element does one O(1) average lookup + insert.",
+      "acceptedAnswers": [
+        "linear"
+      ]
+    },
+    {
+      "id": "cd-space-01",
+      "category": "space_complexity",
+      "type": "free_recall",
+      "promptVariants": [
+        "What is the time-space trade-off between sorting and the hash-set approach?",
+        "Compare sort-based and set-based Contains Duplicate."
+      ],
+      "answer": "Set: O(n) time, O(n) extra space. Sort: O(n log n) time, O(1) extra space if sorted in place (but it mutates the input). Choose the set unless memory is the constraint.",
+      "keyPoints": [
+        "Set O(n)/O(n)",
+        "Sort O(n log n)/O(1)",
+        "Sorting mutates the input"
+      ],
+      "explanation": "Classic time-for-space trade."
+    },
+    {
+      "id": "cd-code-01",
+      "category": "code_reasoning",
+      "type": "code_question",
+      "promptVariants": [
+        "Your solution stores `counter[num] = 1` in a dict but never reads the value. What simpler structure expresses the same idea, and why is the return inside the loop correct?",
+        "Why can the loop return True the moment it sees a repeat, and what is a cleaner structure than a dict with dummy values?"
+      ],
+      "code": "counter = {}\nfor num in nums:\n    if num not in counter:\n        counter[num] = 1\n    else:\n        return True\nreturn False",
+      "answer": "A set: `if num in seen: return True; seen.add(num)`. The first time a value is already present we have proved a duplicate exists, so returning immediately is correct; reaching the end means every value was unique.",
+      "keyPoints": [
+        "Use a set; the dict value is unused",
+        "Early return is safe: one repeat is enough"
+      ],
+      "explanation": "Dict-as-set works but obscures intent."
+    },
+    {
+      "id": "cd-edge-01",
+      "category": "edge_case",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "Which input should return False?",
+        "Which array has no duplicates?"
+      ],
+      "options": [
+        "[1]",
+        "[1,1]",
+        "[2,2,2]",
+        "[3,1,3]"
+      ],
+      "answer": "[1]",
+      "explanation": "A single element cannot repeat. The others each contain a repeated value.",
+      "incorrectOptionExplanations": {
+        "[1,1]": "1 appears twice.",
+        "[2,2,2]": "2 appears three times.",
+        "[3,1,3]": "3 appears twice (non-adjacent)."
+      }
+    }
+  ],
+  "generatedAt": "2026-10-01T14:01:51Z"
+}

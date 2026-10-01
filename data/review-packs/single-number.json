@@ -1,0 +1,149 @@
+{
+  "schemaVersion": 1,
+  "problemSlug": "single-number",
+  "summary": "Every element appears twice except one; find the one that appears once in O(n) time and O(1) space.",
+  "patterns": [
+    "Bit Manipulation"
+  ],
+  "mainInsight": "XOR is commutative and associative with x ^ x = 0 and x ^ 0 = x, so XOR-ing the whole array cancels every pair and leaves the single element.",
+  "canonicalApproach": "XOR all elements",
+  "approaches": [
+    {
+      "name": "Hash map / set",
+      "summary": "Count occurrences or toggle membership in a set.",
+      "timeComplexity": "O(n)",
+      "spaceComplexity": "O(n)",
+      "strengths": [
+        "Straightforward"
+      ],
+      "weaknesses": [
+        "Extra memory"
+      ]
+    },
+    {
+      "name": "Math (2*sum(set) - sum)",
+      "summary": "Twice the sum of distinct values minus the array sum.",
+      "timeComplexity": "O(n)",
+      "spaceComplexity": "O(n)",
+      "strengths": [
+        "Clever"
+      ],
+      "weaknesses": [
+        "Uses a set"
+      ]
+    },
+    {
+      "name": "XOR all elements",
+      "summary": "ans ^= num for every num.",
+      "timeComplexity": "O(n)",
+      "spaceComplexity": "O(1)",
+      "strengths": [
+        "Optimal"
+      ],
+      "weaknesses": [
+        "Only works for exactly-twice duplicates"
+      ],
+      "interviewRelevance": "The expected answer."
+    }
+  ],
+  "personalSolution": {
+    "approach": "XOR all elements",
+    "timeComplexity": "O(n)",
+    "spaceComplexity": "O(1)",
+    "isOptimal": true,
+    "notes": "Optimal and well explained in your docstring."
+  },
+  "commonMistakes": [],
+  "edgeCases": [],
+  "cards": [
+    {
+      "id": "sn-pattern-01",
+      "category": "pattern",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "Which operator isolates the unpaired element in O(1) space?",
+        "What bit trick solves Single Number?"
+      ],
+      "options": [
+        "XOR",
+        "AND",
+        "Left shift",
+        "Bitwise NOT"
+      ],
+      "answer": "XOR",
+      "explanation": "x ^ x = 0 cancels pairs and x ^ 0 = x preserves the survivor.",
+      "incorrectOptionExplanations": {
+        "AND": "AND has no cancelling property.",
+        "Left shift": "Shifts change magnitude, not cancellation.",
+        "Bitwise NOT": "NOT is unary and does not combine elements."
+      }
+    },
+    {
+      "id": "sn-insight-01",
+      "category": "main_insight",
+      "type": "free_recall",
+      "promptVariants": [
+        "Why does XOR-ing all numbers leave only the single one, regardless of order?",
+        "Why do the pairs cancel under XOR even when they are not adjacent?"
+      ],
+      "answer": "XOR is commutative and associative, so duplicates can be brought together: (A^A) ^ (C^C) ^ B = 0 ^ 0 ^ B = B.",
+      "keyPoints": [
+        "x ^ x = 0",
+        "x ^ 0 = x",
+        "Order does not matter (commutative + associative)"
+      ],
+      "explanation": "That is exactly the derivation in your docstring."
+    },
+    {
+      "id": "sn-time-01",
+      "category": "time_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Time complexity of the XOR solution: ___",
+        "Single Number via XOR runs in ___ time."
+      ],
+      "answer": "O(n)",
+      "explanation": "One pass.",
+      "acceptedAnswers": [
+        "linear"
+      ]
+    },
+    {
+      "id": "sn-space-01",
+      "category": "space_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Space complexity of the XOR solution: ___",
+        "The XOR solution to Single Number needs ___ extra space."
+      ],
+      "answer": "O(1)",
+      "explanation": "One accumulator variable.",
+      "acceptedAnswers": [
+        "constant"
+      ]
+    },
+    {
+      "id": "sn-edge-01",
+      "category": "edge_case",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "When does the XOR trick break?",
+        "Which variation can XOR alone not solve?"
+      ],
+      "options": [
+        "When duplicates appear three times instead of twice (Single Number II)",
+        "When the array has negatives",
+        "When n is large",
+        "When the single number is 0"
+      ],
+      "answer": "When duplicates appear three times instead of twice (Single Number II)",
+      "explanation": "XOR cancels pairs only; for triples you must count bits modulo 3 (or use two accumulators).",
+      "incorrectOptionExplanations": {
+        "When the array has negatives": "XOR works on two's-complement bits just fine.",
+        "When n is large": "Time is linear regardless.",
+        "When the single number is 0": "Then the XOR is 0, which is correct."
+      }
+    }
+  ],
+  "generatedAt": "2026-10-01T14:04:28Z"
+}

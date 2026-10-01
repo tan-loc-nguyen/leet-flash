@@ -1,0 +1,148 @@
+{
+  "schemaVersion": 1,
+  "problemSlug": "happy-number",
+  "summary": "Repeatedly replace n with the sum of the squares of its digits; return true if it reaches 1, false if it loops forever.",
+  "patterns": [
+    "Two Pointers",
+    "Math"
+  ],
+  "mainInsight": "The digit-square sequence either reaches 1 or enters a cycle, which is a linked-list-cycle problem: detect it with a hash set or, in O(1) space, with Floyd's slow/fast pointers.",
+  "canonicalApproach": "Floyd's cycle detection",
+  "approaches": [
+    {
+      "name": "Hash set of seen values",
+      "summary": "Stop when 1 is reached (true) or a value repeats (false).",
+      "timeComplexity": "O(log n)",
+      "spaceComplexity": "O(log n)",
+      "strengths": [
+        "Simple to explain"
+      ],
+      "weaknesses": [
+        "Extra memory"
+      ]
+    },
+    {
+      "name": "Floyd's cycle detection",
+      "summary": "slow moves one step, fast two steps; they meet in a cycle, or fast hits 1.",
+      "timeComplexity": "O(log n)",
+      "spaceComplexity": "O(1)",
+      "strengths": [
+        "Constant space"
+      ],
+      "weaknesses": [
+        "Needs the cycle insight"
+      ],
+      "interviewRelevance": "The follow-up answer; your approach."
+    },
+    {
+      "name": "Known cycle (4)",
+      "summary": "Every non-happy number eventually enters the cycle containing 4.",
+      "timeComplexity": "O(log n)",
+      "spaceComplexity": "O(1)",
+      "strengths": [
+        "Tiny code"
+      ],
+      "weaknesses": [
+        "Relies on a math fact"
+      ],
+      "interviewRelevance": "A trick worth knowing."
+    }
+  ],
+  "personalSolution": {
+    "approach": "Floyd's cycle detection",
+    "timeComplexity": "O(log n)",
+    "spaceComplexity": "O(1)",
+    "isOptimal": true,
+    "notes": "Optimal space. The hash-set version is simpler to explain first."
+  },
+  "commonMistakes": [],
+  "edgeCases": [],
+  "cards": [
+    {
+      "id": "hn-pattern-01",
+      "category": "pattern",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "What well-known pattern detects the endless loop in Happy Number?",
+        "Which technique detects a cycle in a sequence with O(1) space?"
+      ],
+      "options": [
+        "Floyd's tortoise and hare (slow/fast pointers)",
+        "Binary search",
+        "Sliding window",
+        "Prefix sums"
+      ],
+      "answer": "Floyd's tortoise and hare (slow/fast pointers)",
+      "explanation": "The next-value function defines an implicit linked list; if it never reaches 1 it cycles, which slow/fast pointers detect.",
+      "incorrectOptionExplanations": {
+        "Binary search": "No sorted structure.",
+        "Sliding window": "No window.",
+        "Prefix sums": "Not a range query."
+      }
+    },
+    {
+      "id": "hn-insight-01",
+      "category": "main_insight",
+      "type": "free_recall",
+      "promptVariants": [
+        "Why must the sequence either reach 1 or cycle (never grow forever)?",
+        "Why does the digit-square process always terminate in 1 or a cycle?"
+      ],
+      "answer": "For large n the digit-square sum is much smaller than n (a d-digit number maps to at most 81d), so values are bounded; a bounded sequence in a deterministic function must eventually repeat, i.e. reach 1 (a fixed point) or enter a cycle.",
+      "keyPoints": [
+        "Digit-square sum shrinks large numbers",
+        "Finite state space => cycle or fixed point"
+      ],
+      "explanation": "That is why the process terminates."
+    },
+    {
+      "id": "hn-time-01",
+      "category": "time_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Time complexity (n = starting value): ___",
+        "Happy Number runs in roughly ___ time."
+      ],
+      "answer": "O(log n)",
+      "explanation": "Each step costs O(digits) = O(log n) and the number of steps before reaching 1 or a cycle is small/bounded.",
+      "acceptedAnswers": [
+        "O(log n) per step",
+        "O(log10 n)",
+        "O(d)"
+      ]
+    },
+    {
+      "id": "hn-space-01",
+      "category": "space_complexity",
+      "type": "free_recall",
+      "promptVariants": [
+        "How do hash set and Floyd's approaches compare on space?",
+        "What does Floyd's cycle detection save over a hash set in Happy Number?"
+      ],
+      "answer": "Hash set: O(number of distinct values visited) = O(log n)-ish; Floyd: O(1). Both have the same time.",
+      "keyPoints": [
+        "Set stores visited values",
+        "Floyd uses two variables"
+      ],
+      "explanation": "Cycle detection trade-off, as in Linked List Cycle."
+    },
+    {
+      "id": "hn-code-01",
+      "category": "code_reasoning",
+      "type": "code_question",
+      "promptVariants": [
+        "Why does `fast` start at squareSum(squareSum(n)) while `slow` starts at n, and why can the loop test `fast != 1`?",
+        "Explain the initial positions of slow and fast and the two exit conditions of the Happy Number loop."
+      ],
+      "code": "slow = n\nfast = squareSum(squareSum(n))\nwhile fast != 1:\n    slow = squareSum(slow)\n    fast = squareSum(squareSum(fast))\n    if slow == fast:\n        return False\nreturn True",
+      "answer": "fast is one step per two of slow's, so it starts one 'double step' ahead (n -> f(n) -> f(f(n))). If fast reaches 1 the number is happy (1 stays 1). If slow meets fast without fast being 1, they are inside a cycle not containing 1 -> not happy.",
+      "keyPoints": [
+        "fast moves 2 steps, slow 1",
+        "fast == 1 => happy",
+        "slow == fast elsewhere => cycle"
+      ],
+      "explanation": "Same as Linked List Cycle with next = digit-square sum."
+    }
+  ],
+  "generatedAt": "2026-10-01T14:04:28Z"
+}

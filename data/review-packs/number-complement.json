@@ -1,0 +1,144 @@
+{
+  "schemaVersion": 1,
+  "problemSlug": "number-complement",
+  "summary": "Flip all bits of a positive integer's binary representation (no leading zeros) and return the result.",
+  "patterns": [
+    "Bit Manipulation"
+  ],
+  "mainInsight": "XOR with a mask of all ones that is exactly as long as the number's binary form flips precisely the significant bits (not the leading zeros).",
+  "canonicalApproach": "bit_length mask",
+  "approaches": [
+    {
+      "name": "String flip",
+      "summary": "Flip each character of bin(num) and parse.",
+      "timeComplexity": "O(log n)",
+      "spaceComplexity": "O(log n)"
+    },
+    {
+      "name": "Build a ones-mask, XOR",
+      "summary": "mask = 1; grow it with (mask << 1) | 1 until mask >= num; return num ^ mask.",
+      "timeComplexity": "O(log n)",
+      "spaceComplexity": "O(1)",
+      "strengths": [
+        "No strings"
+      ],
+      "interviewRelevance": "Your approach."
+    },
+    {
+      "name": "bit_length mask",
+      "summary": "mask = (1 << num.bit_length()) - 1; return num ^ mask.",
+      "timeComplexity": "O(1)",
+      "spaceComplexity": "O(1)",
+      "strengths": [
+        "One line"
+      ],
+      "weaknesses": [
+        "Needs bit_length()"
+      ],
+      "interviewRelevance": "Idiomatic Python."
+    }
+  ],
+  "personalSolution": {
+    "approach": "Build a ones-mask, XOR",
+    "timeComplexity": "O(log n)",
+    "spaceComplexity": "O(1)",
+    "isOptimal": true,
+    "notes": "Optimal asymptotically; `(1 << num.bit_length()) - 1` is the one-line mask."
+  },
+  "commonMistakes": [],
+  "edgeCases": [],
+  "cards": [
+    {
+      "id": "nc-pattern-01",
+      "category": "pattern",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "How do you flip only the significant bits of a number?",
+        "Which operation flips selected bits?"
+      ],
+      "options": [
+        "XOR with a mask of ones covering the significant bits",
+        "AND with the number's complement",
+        "Left shift",
+        "Subtract from 2^32"
+      ],
+      "answer": "XOR with a mask of ones covering the significant bits",
+      "explanation": "x ^ 1 flips a bit; a mask of ones as wide as the number flips all and only its significant bits.",
+      "incorrectOptionExplanations": {
+        "AND with the number's complement": "That yields 0.",
+        "Left shift": "Does not flip bits.",
+        "Subtract from 2^32": "Would flip the leading zeros as well."
+      }
+    },
+    {
+      "id": "nc-insight-01",
+      "category": "main_insight",
+      "type": "free_recall",
+      "promptVariants": [
+        "Why can't you just use ~num?",
+        "Why is ~num wrong here?"
+      ],
+      "answer": "~num flips every bit including the infinite leading zeros (it becomes -num-1 in Python). We must flip only the bits up to the highest set bit, hence the all-ones mask of matching length.",
+      "keyPoints": [
+        "~ flips leading zeros",
+        "Mask limits to significant bits"
+      ],
+      "explanation": "(1 << bit_length) - 1 is the mask."
+    },
+    {
+      "id": "nc-time-01",
+      "category": "time_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Time complexity of building the mask: ___ (n = value of num)",
+        "Building the all-ones mask takes ___ iterations (num = the value)."
+      ],
+      "answer": "O(log n)",
+      "explanation": "The mask grows one bit per iteration until it covers num.",
+      "acceptedAnswers": [
+        "O(log num)",
+        "O(bits)",
+        "O(1)"
+      ]
+    },
+    {
+      "id": "nc-code-01",
+      "category": "code_reasoning",
+      "type": "code_question",
+      "promptVariants": [
+        "Trace num = 5 (101). What are the mask values and the result?",
+        "Run the mask loop for num = 5 and give the final answer."
+      ],
+      "code": "mask = 1\nwhile mask < num:\n    mask = (mask << 1) | 1\nreturn num ^ mask",
+      "answer": "mask: 1 -> 3 -> 7 (7 >= 5 stops). 5 ^ 7 = 101 ^ 111 = 010 = 2.",
+      "keyPoints": [
+        "mask 1, 3, 7",
+        "result 2"
+      ],
+      "explanation": "Loop ends when the mask has as many ones as num has bits."
+    },
+    {
+      "id": "nc-edge-01",
+      "category": "edge_case",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "What is the complement of 1?",
+        "How does the loop behave for num = 1?"
+      ],
+      "options": [
+        "0",
+        "1",
+        "2",
+        "-2"
+      ],
+      "answer": "0",
+      "explanation": "mask = 1; the loop is skipped; 1 ^ 1 = 0. (Powers of two like 4 = 100 give mask 111 and result 011 = 3.)",
+      "incorrectOptionExplanations": {
+        "1": "That would mean nothing flipped.",
+        "2": "Would flip into a longer number.",
+        "-2": "That is what ~1 gives; not the requirement."
+      }
+    }
+  ],
+  "generatedAt": "2026-10-01T14:04:28Z"
+}
