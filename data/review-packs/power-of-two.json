@@ -52,16 +52,16 @@
       ],
       "options": [
         "n > 0 and n & (n - 1) == 0",
-        "Sort all the paths found and drop the duplicates",
-        "BFS with a set of visited nodes per path",
-        "Memoisation of each subtree's list of paths"
+        "n > 0 and n % 2 == 0 (is even)",
+        "n > 0 and n | (n - 1) == 0",
+        "n > 0 and n & (n + 1) == 0"
       ],
       "answer": "n > 0 and n & (n - 1) == 0",
       "explanation": "Exactly one set bit: removing it leaves 0.",
       "incorrectOptionExplanations": {
-        "Sort all the paths found and drop the duplicates": "Unrelated to powers of two.",
-        "BFS with a set of visited nodes per path": "True only for n = 1... not a general test.",
-        "Memoisation of each subtree's list of paths": "Only true for 0."
+        "n > 0 and n % 2 == 0 (is even)": "Every even number passes, including 6, which is not a power of two.",
+        "n > 0 and n | (n - 1) == 0": "n | (n - 1) is at least n, so it is never 0 for n >= 1; the test is always false.",
+        "n > 0 and n & (n + 1) == 0": "That is true for 1, 3, 7, 15 (all ones) but false for 2 and 4, so it is not a power-of-two test."
       }
     },
     {

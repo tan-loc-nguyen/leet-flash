@@ -118,12 +118,12 @@
         "Which values are compared first?"
       ],
       "options": [
-        "[1, 4, 25, 36, 49]: 49 beats 36 first",
+        "[1, 4, 25, 36, 49]: 49 beats 36 first, placed last",
         "[36, 4, 1, 25, 49]: the squares in the original order",
         "[1, 4, 25, 36, 49] after comparing 36 and 1 first",
         "[4, 1, 25, 36, 49]: the sign change is not handled"
       ],
-      "answer": "[1, 4, 25, 36, 49]: 49 beats 36 first",
+      "answer": "[1, 4, 25, 36, 49]: 49 beats 36 first, placed last",
       "explanation": "Compare |-6| = 6 and 7; 49 is placed at the end, then 36 vs 25, and so on.",
       "incorrectOptionExplanations": {
         "[36, 4, 1, 25, 49]: the squares in the original order": "The output must be sorted.",

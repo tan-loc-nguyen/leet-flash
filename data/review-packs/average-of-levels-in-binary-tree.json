@@ -48,12 +48,12 @@
         "What do you track per level?"
       ],
       "options": [
-        "BFS with a level snapshot (sum and count)",
+        "BFS that snapshots each level, tracking its sum and count",
         "Inorder DFS that appends each visited value to a per-depth list",
         "Heap that keeps the largest values of each level on top",
         "Binary search over the levels to find where each one ends"
       ],
-      "answer": "BFS with a level snapshot (sum and count)",
+      "answer": "BFS that snapshots each level, tracking its sum and count",
       "explanation": "n = len(queue) is the level size and the sum is accumulated while popping them.",
       "incorrectOptionExplanations": {
         "Inorder DFS that appends each visited value to a per-depth list": "Level boundaries are lost.",

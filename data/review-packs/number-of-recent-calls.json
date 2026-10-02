@@ -57,12 +57,12 @@
         "What data structure does Number of Recent Calls need?"
       ],
       "options": [
-        "Queue (deque) of timestamps",
+        "A queue (deque) holding the timestamps",
         "Heap of timestamps ordered by value",
         "Stack of timestamps popped newest-first",
         "Hash set of timestamps with no order"
       ],
-      "answer": "Queue (deque) of timestamps",
+      "answer": "A queue (deque) holding the timestamps",
       "explanation": "Oldest timestamps leave from the front, newest enter at the back.",
       "incorrectOptionExplanations": {
         "Heap of timestamps ordered by value": "Not needed since arrival order equals time order.",

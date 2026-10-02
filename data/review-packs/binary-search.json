@@ -185,12 +185,12 @@
         "How does recursion change the space cost of binary search?"
       ],
       "options": [
-        "Iterative O(1); recursive O(log n) call stack",
+        "Iterative O(1); recursive O(log n) for the call stack depth",
         "Iterative O(log n) because of the loop; recursive O(1) because nothing is stored",
         "Both versions use O(1) since the array is never copied or sliced",
         "Iterative O(n) for a stored copy; recursive O(n) for the call stack"
       ],
-      "answer": "Iterative O(1); recursive O(log n) call stack",
+      "answer": "Iterative O(1); recursive O(log n) for the call stack depth",
       "explanation": "The iterative version keeps three integers; recursion adds one stack frame per halving, i.e. log n frames.",
       "incorrectOptionExplanations": {
         "Iterative O(log n) because of the loop; recursive O(1) because nothing is stored": "Reversed: recursion is the one that uses the stack.",

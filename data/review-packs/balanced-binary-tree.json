@@ -51,12 +51,12 @@
         "How do you avoid recomputing heights?"
       ],
       "options": [
-        "Postorder: return the height and check balance on the way up",
+        "Postorder: return the height and check balance on the way back up",
         "Preorder traversal that calls a separate height helper at every node",
         "Breadth-first traversal that compares the sizes of consecutive levels",
         "Inorder traversal that checks the sorted order of the visited node values"
       ],
-      "answer": "Postorder: return the height and check balance on the way up",
+      "answer": "Postorder: return the height and check balance on the way back up",
       "explanation": "Children heights are available when the parent is processed, so each node's check is O(1).",
       "incorrectOptionExplanations": {
         "Preorder traversal that calls a separate height helper at every node": "That is the O(n^2) top-down approach.",

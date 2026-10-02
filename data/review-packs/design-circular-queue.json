@@ -65,12 +65,12 @@
         "How do head and tail move in a circular queue?"
       ],
       "options": [
-        "Increment indices modulo the capacity",
+        "Advance head and tail indices with a modulo of the capacity",
         "Shift all remaining elements left on every dequeue operation",
         "Reallocate a bigger array whenever the tail reaches the end",
         "Sort the array after each enqueue so free slots come first"
       ],
-      "answer": "Increment indices modulo the capacity",
+      "answer": "Advance head and tail indices with a modulo of the capacity",
       "explanation": "Wrapping with % cap lets head/tail cycle without moving elements.",
       "incorrectOptionExplanations": {
         "Shift all remaining elements left on every dequeue operation": "That makes dequeue O(n).",

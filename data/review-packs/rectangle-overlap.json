@@ -47,12 +47,12 @@
         "How do you extend it to rectangles?"
       ],
       "options": [
-        "a1 < b2 and a2 < b1, checked on both axes",
+        "a1 < b2 and a2 < b1, checked separately on both axes",
         "a1 == a2, i.e. both rectangles start at the same point",
         "b1 > b2, i.e. the first rectangle ends later than the second",
         "Only the x axis matters, so skip the y axis entirely"
       ],
-      "answer": "a1 < b2 and a2 < b1, checked on both axes",
+      "answer": "a1 < b2 and a2 < b1, checked separately on both axes",
       "explanation": "Each axis projection must overlap; both conditions are required.",
       "incorrectOptionExplanations": {
         "a1 == a2, i.e. both rectangles start at the same point": "Equal starts is not required.",

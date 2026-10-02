@@ -44,7 +44,7 @@
   "edgeCases": [],
   "cards": [
     {
-      "id": "p2-pattern-01",
+      "id": "psii-pattern-01",
       "category": "pattern",
       "type": "multiple_choice",
       "promptVariants": [
@@ -66,7 +66,7 @@
       }
     },
     {
-      "id": "p2-insight-01",
+      "id": "psii-insight-01",
       "category": "main_insight",
       "type": "free_recall",
       "promptVariants": [
@@ -82,7 +82,7 @@
       "explanation": "Cost: O(h) per solution."
     },
     {
-      "id": "p2-time-01",
+      "id": "psii-time-01",
       "category": "time_complexity",
       "type": "fill_blank",
       "promptVariants": [
@@ -97,7 +97,7 @@
       ]
     },
     {
-      "id": "p2-space-01",
+      "id": "psii-space-01",
       "category": "space_complexity",
       "type": "free_recall",
       "promptVariants": [
@@ -112,7 +112,7 @@
       "explanation": "Mention both when asked."
     },
     {
-      "id": "p2-code-01",
+      "id": "psii-code-01",
       "category": "code_reasoning",
       "type": "code_question",
       "promptVariants": [
@@ -129,7 +129,7 @@
       "explanation": "Appending inside the callee (at entry) is an equivalent style."
     },
     {
-      "id": "p2-edge-01",
+      "id": "psii-edge-01",
       "category": "edge_case",
       "type": "multiple_choice",
       "promptVariants": [
@@ -137,17 +137,17 @@
         "How is an empty tree handled?"
       ],
       "options": [
-        "An empty list",
-        "n = 1, which is 2^0 and would wrongly fail",
-        "n = 2, since 2 & 1 == 0 makes it fail the test",
-        "n = 2^31, which overflows a 32-bit signed integer"
+        "An empty list: there are no paths",
+        "[[]]: one empty path is reported",
+        "None, since there is nothing to return",
+        "An error, since the root is missing"
       ],
-      "answer": "An empty list",
+      "answer": "An empty list: there are no paths",
       "explanation": "There are no root-to-leaf paths, so the result list is empty.",
       "incorrectOptionExplanations": {
-        "n = 1, which is 2^0 and would wrongly fail": "That would claim an empty path exists.",
-        "n = 2, since 2 & 1 == 0 makes it fail the test": "The function returns a list.",
-        "n = 2^31, which overflows a 32-bit signed integer": "The guard handles it."
+        "[[]]: one empty path is reported": "That would claim an empty path exists; with no root there are no root-to-leaf paths.",
+        "None, since there is nothing to return": "The function returns a list of paths, so an empty tree gives [].",
+        "An error, since the root is missing": "An empty tree is valid input; the traversal simply finds no paths."
       }
     }
   ],

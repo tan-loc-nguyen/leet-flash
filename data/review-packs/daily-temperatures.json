@@ -57,12 +57,12 @@
         "What technique finds the next warmer day for every index?"
       ],
       "options": [
-        "Monotonic (decreasing) stack",
+        "A monotonic decreasing stack of the days still waiting",
         "Sliding window that expands until a larger value is found",
         "Binary search over the sorted values for the next larger one",
         "Two pointers moving in from both ends of the array"
       ],
-      "answer": "Monotonic (decreasing) stack",
+      "answer": "A monotonic decreasing stack of the days still waiting",
       "explanation": "Indices waiting for a greater value are kept on a stack and resolved as soon as it appears.",
       "incorrectOptionExplanations": {
         "Sliding window that expands until a larger value is found": "No window property.",

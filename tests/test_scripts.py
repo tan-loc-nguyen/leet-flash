@@ -149,3 +149,23 @@ def test_bad_topic_weights_give_a_clean_error_not_a_traceback(paths, run):
     paths.settings.write_text(json.dumps({"topicWeights": {"Binary serach": 5}}))
     p = run("review.py", "start", "--mode", "daily", "--target", "1", check=False)
     assert p.returncode == 1 and "unknown topic 'Binary serach'" in p.stdout and "Traceback" not in p.stderr
+
+
+def test_audit_cards_script(paths, run):
+    make_problem(paths, "tell", leetcode_id=1, problem_statement="Example 1:\nInput: nums = [3,1,2,9]\nOutput: 4")
+    cards = [
+        {"id": "t-pattern-01", "category": "pattern", "type": "multiple_choice", "promptVariants": ["p one", "p two"],
+         "options": ["short a", "short b", "short c", "The correct answer is conspicuously much longer than the rest"],
+         "answer": "The correct answer is conspicuously much longer than the rest", "explanation": "x",
+         "incorrectOptionExplanations": {"short a": "a", "short b": "b", "short c": "c"}},
+        {"id": "t-edge-01", "category": "edge_case", "type": "free_recall", "promptVariants": ["What for [3,1,2,9]?", "Again?"],
+         "answer": "4", "keyPoints": ["k"], "explanation": "x"},
+    ]
+    make_pack(paths, "tell", cards=cards)
+    p = run("audit_cards.py", check=False)
+    assert p.returncode == 1 and "t-pattern-01" in p.stdout and "t-edge-01" in p.stdout and "2 finding(s)" in p.stdout
+    clean = [dict(cards[0], options=["alpha one", "alpha two", "alpha three", "alpha four"], answer="alpha four",
+                  incorrectOptionExplanations={"alpha one": "a", "alpha two": "b", "alpha three": "c"}),
+             dict(cards[1], promptVariants=["What for [7,7,7]?", "Again?"])]
+    make_pack(paths, "tell", cards=clean)
+    assert run("audit_cards.py").returncode == 0

@@ -44,12 +44,12 @@
         "What pattern does 3Sum Closest reuse?"
       ],
       "options": [
-        "Sort + two pointers",
+        "Sort the array, then two pointers for each fixed element",
         "Hash set lookup of the needed complement for every pair of numbers",
         "Variable-size sliding window over the sorted array of values",
         "Breadth-first search over the states of partial sums"
       ],
-      "answer": "Sort + two pointers",
+      "answer": "Sort the array, then two pointers for each fixed element",
       "explanation": "Same skeleton as 3Sum, but compare |target - total| instead of testing equality.",
       "incorrectOptionExplanations": {
         "Hash set lookup of the needed complement for every pair of numbers": "A set finds exact matches; closeness needs ordering.",

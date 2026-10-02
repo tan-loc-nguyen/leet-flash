@@ -51,12 +51,12 @@
         "How do you handle different list lengths and the final carry?"
       ],
       "options": [
-        "Simultaneous traversal with a carry and a dummy head",
+        "Walk both lists at once with a carry and a dummy head node",
         "Reverse both lists first and then add them from the new heads",
         "Recursion over the longer list only, ignoring the shorter one's digits",
         "Sorting the digits of both lists before adding them pairwise"
       ],
-      "answer": "Simultaneous traversal with a carry and a dummy head",
+      "answer": "Walk both lists at once with a carry and a dummy head node",
       "explanation": "The least significant digits are at the heads, so addition proceeds from the start; treat an exhausted list as 0 and append a node for a final carry.",
       "incorrectOptionExplanations": {
         "Reverse both lists first and then add them from the new heads": "They are already in reverse order; reversing is only needed for the 'II' version.",

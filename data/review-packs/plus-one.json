@@ -52,12 +52,12 @@
         "How should the +1 be propagated across the digit array?"
       ],
       "options": [
-        "Right-to-left pass carrying overflow",
+        "Right-to-left pass, carrying the overflow along",
         "Left-to-right pass with a stack for the digits",
         "Binary search for the digit position to increment",
         "Sorting the digits and adding one to the largest"
       ],
-      "answer": "Right-to-left pass carrying overflow",
+      "answer": "Right-to-left pass, carrying the overflow along",
       "explanation": "Addition proceeds from the least significant digit, which is at the end of the array.",
       "incorrectOptionExplanations": {
         "Left-to-right pass with a stack for the digits": "Unnecessary; the carry flows right to left.",

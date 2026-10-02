@@ -95,3 +95,18 @@ def test_invalid_canonical_code_is_an_error(paths):
     d["canonicalCode"] = "def f():\n    return 1\n"
     f.write_text(json.dumps(d))
     assert not [i for i in validate_pack_file(f, {"two-sum"}) if i.level == "error"]
+
+
+def test_duplicate_card_ids_across_packs_are_an_error(paths):
+    from leetcode_review.content.validator import validate_all
+    from tests.conftest import make_pack, make_problem
+    for slug in ("one", "two"):
+        make_problem(paths, slug, leetcode_id=hash(slug) % 1000)
+    make_pack(paths, "one")
+    make_pack(paths, "two")
+    f = paths.review_packs / "two.json"
+    d = json.loads(f.read_text())
+    d["cards"][0]["id"] = "one-pattern-01"                     # collides with the card of pack 'one'
+    f.write_text(json.dumps(d))
+    issues = validate_all(paths, {"one", "two"})
+    assert any(i.level == "error" and "one-pattern-01" in i.message and "unique across packs" in i.message for i in issues)

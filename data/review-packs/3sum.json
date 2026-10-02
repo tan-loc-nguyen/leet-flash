@@ -73,12 +73,12 @@
         "Which pattern solves 3Sum optimally?"
       ],
       "options": [
-        "Sorting + two pointers",
+        "Sort the array, then two pointers for each fixed first number",
         "Prefix sums combined with a hash map of previously seen totals",
         "Breadth-first search over partial triples of indices and sums",
         "Monotonic stack that tracks the nearest greater element for each index"
       ],
-      "answer": "Sorting + two pointers",
+      "answer": "Sort the array, then two pointers for each fixed first number",
       "explanation": "Sorting enables a linear two-pointer search for each fixed first element: O(n log n) + O(n^2) = O(n^2).",
       "incorrectOptionExplanations": {
         "Prefix sums combined with a hash map of previously seen totals": "Prefix sums answer contiguous-subarray queries; triplets are not contiguous.",

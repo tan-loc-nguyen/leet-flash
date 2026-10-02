@@ -39,16 +39,16 @@
       ],
       "options": [
         "str.capitalize() and ' '.join(...)",
-        "str.upper() on every word, then ' '.join(...) to rebuild the title",
-        "str.title() on the whole string, then fixing the short words by hand",
-        "str.swapcase() on every word, then ' '.join(...) to rebuild the title"
+        "str.upper() on every word, then ' '.join(...)",
+        "str.title() on the whole title string",
+        "str.swapcase() on every word, then ' '.join(...)"
       ],
       "answer": "str.capitalize() and ' '.join(...)",
       "explanation": "capitalize() transforms one word as required by the problem.",
       "incorrectOptionExplanations": {
-        "str.upper() on every word, then ' '.join(...) to rebuild the title": "Uppercases everything.",
-        "str.title() on the whole string, then fixing the short words by hand": "Title-cases words regardless of the length rule and treats apostrophes oddly.",
-        "str.swapcase() on every word, then ' '.join(...) to rebuild the title": "Swaps cases."
+        "str.upper() on every word, then ' '.join(...)": "Uppercases everything.",
+        "str.title() on the whole title string": "Title-cases words regardless of the length rule and treats apostrophes oddly.",
+        "str.swapcase() on every word, then ' '.join(...)": "Swaps cases."
       }
     },
     {

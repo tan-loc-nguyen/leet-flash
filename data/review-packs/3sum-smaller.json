@@ -50,12 +50,12 @@
         "Which technique counts triplets below a threshold efficiently?"
       ],
       "options": [
-        "Sort + two pointers with range counting",
+        "Sort, then two pointers counting whole ranges of valid pairs",
         "Hash map of all pair sums, looked up for every third element",
         "Prefix sums over the array to count qualifying contiguous ranges",
         "Full backtracking over every triplet while pruning on the sum"
       ],
-      "answer": "Sort + two pointers with range counting",
+      "answer": "Sort, then two pointers counting whole ranges of valid pairs",
       "explanation": "Sorted order lets a single successful pair certify a whole range of valid partners.",
       "incorrectOptionExplanations": {
         "Hash map of all pair sums, looked up for every third element": "Inequalities need order, not equality lookup.",

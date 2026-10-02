@@ -103,12 +103,12 @@
         "What happens for num = [9,9], k = 1?"
       ],
       "options": [
-        "Result [1,0,0]: a final carry adds a digit",
+        "Result [1,0,0]: a final carry creates one extra leading digit",
         "Result [0,0] because the carry is discarded when it leaves the array",
         "Result [1,0] because only one extra digit can ever be produced",
         "It overflows because the sum cannot be stored in a list of digits"
       ],
-      "answer": "Result [1,0,0]: a final carry adds a digit",
+      "answer": "Result [1,0,0]: a final carry creates one extra leading digit",
       "explanation": "99 + 1 = 100; the loop must emit the leftover carry. Likewise k can have more digits than num.",
       "incorrectOptionExplanations": {
         "Result [0,0] because the carry is discarded when it leaves the array": "Loses the carry.",

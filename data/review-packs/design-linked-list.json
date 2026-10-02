@@ -138,12 +138,12 @@
         "How are out-of-range indices handled?"
       ],
       "options": [
-        "index == size appends; index > size does nothing",
+        "index == size appends at the end; index > size does nothing",
         "Both append to the end, regardless of how large the index is",
         "Both raise errors because the index must be strictly below the size",
         "index == size does nothing; index > size appends at the end"
       ],
-      "answer": "index == size appends; index > size does nothing",
+      "answer": "index == size appends at the end; index > size does nothing",
       "explanation": "The specification allows insertion at the end but ignores larger indices.",
       "incorrectOptionExplanations": {
         "Both append to the end, regardless of how large the index is": "Indices beyond size are invalid and ignored.",

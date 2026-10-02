@@ -88,6 +88,11 @@ Guidelines:
 * Keep every MCQ option about the same length and shape as the answer — a noticeably longer,
   more specific option is a giveaway. Shorten a verbose answer or lengthen the distractors (while
   keeping them wrong for the stated reason) rather than leaving the tell in.
+* The answer must be neither noticeably longer nor noticeably shorter than every distractor (`scripts/audit_cards.py`
+  flags a gap of 8+ characters either way).
+* The problem statement, with its worked examples, is shown first, so edge-case and code-reasoning cards must use an input
+  that is *not* one of the statement's examples; compute the expected answer by running a reference solution, never by hand.
+* Card ids must be unique across all packs (the validator enforces it): bulk edits key on ids.
 * Write `incorrectOptionExplanations` for every distractor; they are the learning content.
 * Every pack should carry `canonicalCode`: clean, runnable Python for the canonical approach (LeetCode class/method
   signature, no judge scaffolding), with comments on what drives the cost. Test it against the statement's examples and a

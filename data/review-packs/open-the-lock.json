@@ -137,12 +137,12 @@
         "Can you reach it?"
       ],
       "options": [
-        "-1 (deadends are never entered)",
+        "-1 (deadends can never be entered at all)",
         "1, since a single turn always reaches target",
         "0, since the start is already at the target",
         "The distance computed while ignoring the deadends"
       ],
-      "answer": "-1 (deadends are never entered)",
+      "answer": "-1 (deadends can never be entered at all)",
       "explanation": "A deadend state is never added to the queue, so it is never reached.",
       "incorrectOptionExplanations": {
         "1, since a single turn always reaches target": "Not generally.",

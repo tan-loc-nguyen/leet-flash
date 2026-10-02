@@ -128,12 +128,12 @@
         "What does the function return for [1]?"
       ],
       "options": [
-        "1 (j stays 0, return j + 1)",
+        "1 (the loop never advances j, so it returns j + 1)",
         "0 (an empty array has no unique value to return)",
         "2 (the loop starts at index 1 and returns j + 1)",
         "It errors on a single element since nums[1] is missing"
       ],
-      "answer": "1 (j stays 0, return j + 1)",
+      "answer": "1 (the loop never advances j, so it returns j + 1)",
       "explanation": "With one element nothing is written and the count is 1.",
       "incorrectOptionExplanations": {
         "0 (an empty array has no unique value to return)": "The array is non-empty so at least one element remains.",

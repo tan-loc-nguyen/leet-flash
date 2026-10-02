@@ -138,12 +138,12 @@
         "What if there are no prerequisites?"
       ],
       "options": [
-        "No (a cycle); yes with no prerequisites",
+        "No, there is a cycle; yes when there are no prerequisites",
         "Yes, and also yes when there are no prerequisites at all",
         "No (a cycle), and also no when there are no prerequisites",
         "Yes (no cycle exists), but no when there are no prerequisites"
       ],
-      "answer": "No (a cycle); yes with no prerequisites",
+      "answer": "No, there is a cycle; yes when there are no prerequisites",
       "explanation": "0 needs 2, 2 needs 1 and 1 needs 0: a cycle, so no order exists. With no prerequisites any order works.",
       "incorrectOptionExplanations": {
         "Yes, and also yes when there are no prerequisites at all": "The three courses depend on each other in a loop, so it is not schedulable.",

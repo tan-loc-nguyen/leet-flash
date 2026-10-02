@@ -48,12 +48,12 @@
         "What pattern fits 'maximise a function of two endpoints'?"
       ],
       "options": [
-        "Two pointers converging from both ends",
+        "Two pointers moving inward, always advancing the shorter wall",
         "Sliding window of fixed size that moves across the heights array",
         "Prefix sums of the heights to compute the water between two bars",
         "Dynamic programming over every pair of left and right walls"
       ],
-      "answer": "Two pointers converging from both ends",
+      "answer": "Two pointers moving inward, always advancing the shorter wall",
       "explanation": "Starting with maximum width and shrinking while discarding provably worse candidates.",
       "incorrectOptionExplanations": {
         "Sliding window of fixed size that moves across the heights array": "The window width varies.",

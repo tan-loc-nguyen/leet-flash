@@ -74,12 +74,12 @@
         "What sequence does it produce?"
       ],
       "options": [
-        "ways(n) = ways(n-1) + ways(n-2): Fibonacci",
+        "ways(n) = ways(n-1) + ways(n-2) (a Fibonacci step)",
         "ways(n) = 2 * ways(n-1), because every step doubles the choices",
         "ways(n) = ways(n-1) * ways(n-2), multiplying the two earlier counts",
         "ways(n) = n!, counting every ordering of the steps"
       ],
-      "answer": "ways(n) = ways(n-1) + ways(n-2): Fibonacci",
+      "answer": "ways(n) = ways(n-1) + ways(n-2) (a Fibonacci step)",
       "explanation": "The last move is either 1 step (from n-1) or 2 steps (from n-2).",
       "incorrectOptionExplanations": {
         "ways(n) = 2 * ways(n-1), because every step doubles the choices": "That would allow arbitrary step choices at each stair independent of position.",

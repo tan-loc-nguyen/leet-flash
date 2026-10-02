@@ -49,12 +49,12 @@
         "What does one BFS level represent?"
       ],
       "options": [
-        "Multi-source BFS; one level = one minute",
+        "Multi-source BFS, where one level equals one minute",
         "DFS from the first rotten orange found in the grid",
         "Binary search on time with a check for each guess",
         "Sorting oranges by distance and spreading in order"
       ],
-      "answer": "Multi-source BFS; one level = one minute",
+      "answer": "Multi-source BFS, where one level equals one minute",
       "explanation": "All rotten oranges spread at the same time, so they start together in the queue.",
       "incorrectOptionExplanations": {
         "DFS from the first rotten orange found in the grid": "Spreading is simultaneous.",

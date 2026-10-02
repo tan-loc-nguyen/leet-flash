@@ -54,12 +54,12 @@
         "What is the interleaving technique?"
       ],
       "options": [
-        "Insert each clone right after its original node",
+        "Weave each clone into the list right after its original node",
         "Sort the nodes by their value so originals and clones line up",
         "Reverse the list so that each clone appears before its original",
         "Recursion with memoisation, which stores every result in a table"
       ],
-      "answer": "Insert each clone right after its original node",
+      "answer": "Weave each clone into the list right after its original node",
       "explanation": "Then original.random.next is exactly the clone of the random target.",
       "incorrectOptionExplanations": {
         "Sort the nodes by their value so originals and clones line up": "Nodes have no natural order.",

@@ -50,12 +50,12 @@
         "What is the loop's core step?"
       ],
       "options": [
-        "prev, curr and a saved next pointer",
+        "prev, curr and a saved pointer to the next node",
         "A stack of values pushed and popped in order",
         "Two heaps holding the first and second halves",
         "A hash map from each node to its next pointer"
       ],
-      "answer": "prev, curr and a saved next pointer",
+      "answer": "prev, curr and a saved pointer to the next node",
       "explanation": "Save curr.next, point curr to prev, then advance both.",
       "incorrectOptionExplanations": {
         "A stack of values pushed and popped in order": "Works but uses O(n) space.",

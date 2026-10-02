@@ -55,12 +55,12 @@
         "What do you track along with each node?"
       ],
       "options": [
-        "BFS carrying each node's column index",
+        "BFS (level order) that carries each node's column index along",
         "Inorder DFS, which already lists the nodes of each column in order",
         "Postorder DFS, since children are always output before parents",
         "A heap of values that always pops the smallest value first"
       ],
-      "answer": "BFS carrying each node's column index",
+      "answer": "BFS (level order) that carries each node's column index along",
       "explanation": "BFS visits by increasing depth, so values land in each column in top-to-bottom order.",
       "incorrectOptionExplanations": {
         "Inorder DFS, which already lists the nodes of each column in order": "Depth order is not preserved.",

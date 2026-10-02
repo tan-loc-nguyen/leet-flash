@@ -114,12 +114,12 @@
         "Why is the empty tree special?"
       ],
       "options": [
-        "False (there is no root-to-leaf path)",
+        "False (there is no root-to-leaf path at all)",
         "True, because the sum 0 is matched by an empty path",
         "An error, since the root node is missing here",
         "None, since there is no path to evaluate at all"
       ],
-      "answer": "False (there is no root-to-leaf path)",
+      "answer": "False (there is no root-to-leaf path at all)",
       "explanation": "An empty tree has no paths at all, even when the target is 0.",
       "incorrectOptionExplanations": {
         "True, because the sum 0 is matched by an empty path": "A path must exist.",

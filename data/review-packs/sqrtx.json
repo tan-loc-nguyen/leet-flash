@@ -157,12 +157,12 @@
         "Why is the result 2 and not 3?"
       ],
       "options": [
-        "2 (floor of 2.828)",
+        "2 (the floor of 2.828, truncated downward)",
         "3, rounding 2.828 up to the nearest integer",
         "2.83, the square root rounded to two decimals",
         "4, the first integer whose square exceeds 8"
       ],
-      "answer": "2 (floor of 2.828)",
+      "answer": "2 (the floor of 2.828, truncated downward)",
       "explanation": "3^2 = 9 exceeds 8, so the greatest integer square not exceeding 8 is 2^2 = 4.",
       "incorrectOptionExplanations": {
         "3, rounding 2.828 up to the nearest integer": "9 > 8.",

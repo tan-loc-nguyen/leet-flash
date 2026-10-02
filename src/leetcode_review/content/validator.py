@@ -94,6 +94,13 @@ def validate_all(paths: Paths, known_slugs: set[str]) -> list[Issue]:
             generated_ids[f.stem] = {c["id"] for c in json.loads(f.read_text()).get("cards", [])}
         except Exception:
             pass
+    owner: dict[str, str] = {}
+    for slug, ids in generated_ids.items():   # a shared id once made a bulk edit rewrite two different packs' cards
+        for cid in sorted(ids):
+            if cid in owner and owner[cid] != slug:
+                issues.append(Issue(f"{slug}.json", "error",
+                                    f"card id '{cid}' is also used in {owner[cid]}.json; ids must be unique across packs"))
+            owner.setdefault(cid, slug)
     for f in sorted(paths.custom_cards.glob("*.json")):
         issues += validate_pack_file(f, known_slugs, custom=True)
         try:

@@ -45,12 +45,12 @@
         "What validity check does the window need?"
       ],
       "options": [
-        "Sliding window with a frequency map",
+        "A sliding window plus a frequency map of values",
         "Sorting + binary search over the sorted array",
         "Monotonic stack of the element counts so far",
         "Prefix sums over the element counts directly"
       ],
-      "answer": "Sliding window with a frequency map",
+      "answer": "A sliding window plus a frequency map of values",
       "explanation": "Counts only change by one element per step, so validity is easy to maintain.",
       "incorrectOptionExplanations": {
         "Sorting + binary search over the sorted array": "Destroys the contiguity of subarrays.",

@@ -66,12 +66,12 @@
         "How do you model the browser tabs' history efficiently?"
       ],
       "options": [
-        "Array with a cursor",
+        "An array of visited pages plus a cursor index into it",
         "A priority queue ordered by the time each page was visited",
         "A hash set of visited pages with their visit counts",
         "A trie of the page addresses to find the previous and next pages"
       ],
-      "answer": "Array with a cursor",
+      "answer": "An array of visited pages plus a cursor index into it",
       "explanation": "Index arithmetic jumps any number of steps at once. (Array with a cursor: clamped moves)",
       "incorrectOptionExplanations": {
         "A priority queue ordered by the time each page was visited": "No ordering by priority.",
@@ -150,12 +150,12 @@
         "What happens to b?"
       ],
       "options": [
-        "It stays on c",
+        "It stays on c: visiting c cleared the forward history",
         "It returns b, because b is still stored right after the cursor",
         "It returns a, because forward moves back to the older page",
         "It raises an error because forward history is empty"
       ],
-      "answer": "It stays on c",
+      "answer": "It stays on c: visiting c cleared the forward history",
       "explanation": "Visiting c from a clears the forward history, so forward(1) cannot move and returns c. (It stays on c: the forward history was discarded)",
       "incorrectOptionExplanations": {
         "It returns b, because b is still stored right after the cursor": "b was discarded when visiting c.",

@@ -50,12 +50,12 @@
         "How can you place each element straight into its final slot?"
       ],
       "options": [
-        "Two write indices stepping by 2",
+        "Two write indices, each stepping forward by 2 slots",
         "Sorting by absolute value, then splitting by sign",
         "Binary search for the next positive or negative value",
         "A stack that holds the values of the opposite sign"
       ],
-      "answer": "Two write indices stepping by 2",
+      "answer": "Two write indices, each stepping forward by 2 slots",
       "explanation": "Positives occupy indices 0,2,4,... and negatives 1,3,5,..., both in original order.",
       "incorrectOptionExplanations": {
         "Sorting by absolute value, then splitting by sign": "Would break the required relative order.",

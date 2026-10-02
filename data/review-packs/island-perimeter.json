@@ -56,12 +56,12 @@
         "Which formula gives the perimeter?"
       ],
       "options": [
-        "4 * land cells - 2 * (number of shared edges)",
+        "4 * land cells - 2 * (number of edges shared by land cells)",
         "Number of land cells, because every cell adds exactly one unit",
         "Rows plus columns of the grid, since the island fills the bounding box",
         "Area squared, because the perimeter grows with the square of the area"
       ],
-      "answer": "4 * land cells - 2 * (number of shared edges)",
+      "answer": "4 * land cells - 2 * (number of edges shared by land cells)",
       "explanation": "Every shared edge hides two cell sides (one from each cell). (4 * land cells - 2 *: number of shared edges)",
       "incorrectOptionExplanations": {
         "Number of land cells, because every cell adds exactly one unit": "That is the area.",

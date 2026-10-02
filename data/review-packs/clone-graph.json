@@ -65,12 +65,12 @@
         "What does the map store?"
       ],
       "options": [
-        "A hash map from each original node to its clone",
+        "A hash map from every original node to its cloned node",
         "A sorted list of node values that is searched for each neighbour",
         "A stack of node values that is popped to find each clone",
         "A heap of node values keyed by the number of neighbours"
       ],
-      "answer": "A hash map from each original node to its clone",
+      "answer": "A hash map from every original node to its cloned node",
       "explanation": "Neighbours can be reached by several paths and cycles exist; the map ensures each node is cloned exactly once and reused.",
       "incorrectOptionExplanations": {
         "A sorted list of node values that is searched for each neighbour": "No ordering is needed.",

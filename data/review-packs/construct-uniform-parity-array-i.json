@@ -105,12 +105,12 @@
         "Is a single element trivially uniform?"
       ],
       "options": [
-        "True: one element always has one parity",
+        "True: a single element trivially has one uniform parity",
         "False because a single element has no partner to compare against",
         "It depends on whether the single value is odd or even",
         "An error is raised because the subtraction needs a second index"
       ],
-      "answer": "True: one element always has one parity",
+      "answer": "True: a single element trivially has one uniform parity",
       "explanation": "A one-element array is uniform without any operation.",
       "incorrectOptionExplanations": {
         "False because a single element has no partner to compare against": "Uniform trivially holds.",

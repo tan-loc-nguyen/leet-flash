@@ -56,12 +56,12 @@
         "What does a bucket store in a chained hash map?"
       ],
       "options": [
-        "Key-value pairs",
+        "Key-value pairs, with a value stored for every key",
         "Only values, since keys can be recovered from their positions",
         "Only keys, because the value is implied by the bucket index",
         "Sorted values so that lookups can use binary search"
       ],
-      "answer": "Key-value pairs",
+      "answer": "Key-value pairs, with a value stored for every key",
       "explanation": "Different keys land in the same bucket, so the stored key identifies the correct entry. (Key-value pairs: the key is needed to resolve collisions)",
       "incorrectOptionExplanations": {
         "Only values, since keys can be recovered from their positions": "You could not tell which key a value belongs to.",
@@ -123,12 +123,12 @@
         "How are overwrites handled?"
       ],
       "options": [
-        "Overwrite the value for that key",
+        "Overwrite the old value with the new one for that key",
         "Insert a second entry so that both values are kept for the key",
         "Ignore the update and keep the first value stored for the key",
         "Raise an error because the key already exists in the map"
       ],
-      "answer": "Overwrite the value for that key",
+      "answer": "Overwrite the old value with the new one for that key",
       "explanation": "A map holds at most one value per key.",
       "incorrectOptionExplanations": {
         "Insert a second entry so that both values are kept for the key": "That would violate the map invariant.",

@@ -36,6 +36,7 @@ Python only (I interview in Python). Run everything with `uv run python scripts/
 | "Show / change topic weights" ("I won't see X in the interview") | `scripts/set_topic_weight.py` (table) / `set_topic_weight.py "<topic>" <weight>`; weights are shares of reviews, see `docs/SRS.md` |
 | "Do the topic labels look right?" | `scripts/check_topic_labels.py` — lists problems where my pattern label and LeetCode's tags disagree; propose relabels, edit only after I approve |
 | "Rebuild state" | `scripts/rebuild_state.py` |
+| "Audit the cards" / "Any card tells?" | `scripts/audit_cards.py` (read-only): length tells and edge cards that reuse the statement's examples; flag what it finds, fix only after I approve |
 | "Which problems have no packs?" | `scripts/list_missing_review_packs.py` |
 | (query) | `scripts/query_problems.py --topic graph --difficulty Medium --due --json` |
 

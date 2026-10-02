@@ -50,12 +50,12 @@
         "What pattern pairs the first and last elements?"
       ],
       "options": [
-        "Two pointers moving inward",
+        "Two pointers moving inward from both array ends",
         "Sliding window over the array from the left",
         "Binary search for the swap positions in the array",
         "A stack that pops the elements back in reverse"
       ],
-      "answer": "Two pointers moving inward",
+      "answer": "Two pointers moving inward from both array ends",
       "explanation": "Mirrored indices are swapped until the pointers meet.",
       "incorrectOptionExplanations": {
         "Sliding window over the array from the left": "No window.",
@@ -117,12 +117,12 @@
         "How many swaps happen for odd length n?"
       ],
       "options": [
-        "No real swap; the middle element stays",
+        "No real swap; the single middle element stays put",
         "It raises an error since there is no pair to swap",
         "It deletes the character from the array entirely",
         "It needs special casing before the loop starts"
       ],
-      "answer": "No real swap; the middle element stays",
+      "answer": "No real swap; the single middle element stays put",
       "explanation": "The pointers coincide immediately, so at most a self-swap occurs.",
       "incorrectOptionExplanations": {
         "It raises an error since there is no pair to swap": "No out-of-range index.",

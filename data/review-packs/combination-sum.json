@@ -132,12 +132,12 @@
         "How is 'no solution' represented?"
       ],
       "options": [
-        "[] (an empty list of combinations)",
+        "[] (an empty list: no combination sums to the target)",
         "[[]] because the empty combination has a sum of zero",
         "None because there is no valid combination to return",
         "An error is raised because the target is smaller than every candidate"
       ],
-      "answer": "[] (an empty list of combinations)",
+      "answer": "[] (an empty list: no combination sums to the target)",
       "explanation": "No combination sums to 1, so no path is ever recorded.",
       "incorrectOptionExplanations": {
         "[[]] because the empty combination has a sum of zero": "That would claim the empty combination sums to 1.",

@@ -57,12 +57,12 @@
         "What pattern bounds memory for 'duplicate within k positions'?"
       ],
       "options": [
-        "Sliding window set of the last k elements",
+        "A sliding-window set that holds just the last k elements",
         "Sorting the array first so that equal values become adjacent",
         "Two stacks that keep the most recent and the oldest elements",
         "Binary search over the array for the nearest equal element"
       ],
-      "answer": "Sliding window set of the last k elements",
+      "answer": "A sliding-window set that holds just the last k elements",
       "explanation": "Only elements within distance k matter, so older ones are evicted.",
       "incorrectOptionExplanations": {
         "Sorting the array first so that equal values become adjacent": "Loses original positions.",
