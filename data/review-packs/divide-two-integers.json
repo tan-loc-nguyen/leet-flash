@@ -55,17 +55,17 @@
         "What do you subtract on each step?"
       ],
       "options": [
-        "Subtract the largest divisor << k that fits; add 1 << k to the quotient",
-        "Subtract the divisor once and add 1 to the quotient",
-        "Multiply the dividend by the inverse of the divisor",
-        "Subtract the dividend from the divisor repeatedly"
+        "Subtract the biggest shifted divisor that fits",
+        "Subtract the divisor once per loop and count it",
+        "Multiply the dividend by the divisor's inverse",
+        "Subtract the dividend from the divisor in turn"
       ],
-      "answer": "Subtract the largest divisor << k that fits; add 1 << k to the quotient",
-      "explanation": "Doubling the divisor mimics long division in binary.",
+      "answer": "Subtract the biggest shifted divisor that fits",
+      "explanation": "Doubling the divisor (b << k) mimics long division in binary: subtract the largest b << k that still fits, add 1 << k to the quotient, repeat on the remainder.",
       "incorrectOptionExplanations": {
-        "Subtract the divisor once and add 1 to the quotient": "That is repeated subtraction, which is far too slow.",
-        "Multiply the dividend by the inverse of the divisor": "Inverses need division or floating point.",
-        "Subtract the dividend from the divisor repeatedly": "That divides the wrong way round."
+        "Subtract the divisor once per loop and count it": "That is repeated subtraction: O(quotient) steps, far too slow for 2^31 / 1.",
+        "Multiply the dividend by the divisor's inverse": "An inverse needs division or floating point, which the problem forbids.",
+        "Subtract the dividend from the divisor in turn": "That divides the wrong way round and goes negative."
       }
     },
     {

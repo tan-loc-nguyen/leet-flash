@@ -147,21 +147,21 @@
       "category": "edge_case",
       "type": "multiple_choice",
       "promptVariants": [
-        "What is [7,2,4,3] + [5,6,4]?",
-        "How does the carry propagate?"
+        "What does the algorithm return for [9,9] + [1], and why does the list get longer?",
+        "Which node must be created after the main loop for [5] + [5]?"
       ],
       "options": [
-        "[7,8,0,7]",
-        "[7,8,0,6]",
-        "[1,2,0,7]",
-        "[7,7,0,7]"
+        "[1,0,0]: the final carry becomes a new head node",
+        "[0,0]: the last carry is dropped",
+        "[1,0]: the carry is added only once",
+        "[9,10]: digits are added without carrying"
       ],
-      "answer": "[7,8,0,7]",
-      "explanation": "7243 + 564 = 7807.",
+      "answer": "[1,0,0]: the final carry becomes a new head node",
+      "explanation": "99 + 1 = 100. Both digits become 0 with a carry out of the most significant place, and the post-loop `if carry:` appends one more node (reversed back, it becomes the new head).",
       "incorrectOptionExplanations": {
-        "[7,8,0,6]": "Last digit 3 + 4 = 7.",
-        "[1,2,0,7]": "Wrong magnitude.",
-        "[7,7,0,7]": "Hundreds digit is 8 after the carry."
+        "[0,0]: the last carry is dropped": "That is the bug the post-loop `if carry` prevents: the answer would be 0, not 100.",
+        "[1,0]: the carry is added only once": "Each position carries separately: 9 + 1 = 10 then 9 + 0 + 1 = 10, so two zeros precede the new 1.",
+        "[9,10]: digits are added without carrying": "A node holds one decimal digit, so 10 must become 0 with a carry."
       }
     }
   ],

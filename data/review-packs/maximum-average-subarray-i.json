@@ -63,17 +63,17 @@
         "How do you slide from one window of size k to the next?"
       ],
       "options": [
-        "Add the new element and subtract the one that leaves the window",
+        "Add the entering element, drop the leaving one",
         "Sort the array and take the k largest elements",
         "Binary search on the best possible average value",
-        "Keep a heap of the k largest windows seen so far"
+        "Keep a heap of the k best windows seen so far"
       ],
-      "answer": "Add the new element and subtract the one that leaves the window",
-      "explanation": "Each step changes the sum by nums[i] - nums[i - k].",
+      "answer": "Add the entering element, drop the leaving one",
+      "explanation": "Each step changes the window sum by nums[i] - nums[i - k], so every window costs O(1).",
       "incorrectOptionExplanations": {
-        "Sort the array and take the k largest elements": "The subarray must be contiguous.",
-        "Binary search on the best possible average value": "That is a harder variant, not needed here.",
-        "Keep a heap of the k largest windows seen so far": "Heaps do not preserve contiguity."
+        "Sort the array and take the k largest elements": "The subarray must be contiguous; sorting destroys the order.",
+        "Binary search on the best possible average value": "That is a harder variant (the length is not fixed there); not needed here.",
+        "Keep a heap of the k best windows seen so far": "A heap does not preserve contiguity and adds a log factor."
       }
     },
     {
@@ -143,5 +143,5 @@
     }
   ],
   "generatedAt": "2026-10-01T14:54:43Z",
-  "canonicalCode": "class Solution:\n    def findMaxAverage(self, nums: List[int], k: int) -> float:\n        window = sum(nums[:k])\n        best = window\n        for i in range(k, len(nums)):\n            window += nums[i] - nums[i - k]     # slide: add the new element, drop the old\n            best = max(best, window)\n        return best / k\n"
+  "canonicalCode": "class Solution:\n    def findMaxAverage(self, nums: List[int], k: int) -> float:\n        window = 0\n        for i in range(k):                      # first window, no slice copy\n            window += nums[i]\n        best = window\n        for i in range(k, len(nums)):\n            window += nums[i] - nums[i - k]     # slide: add the new element, drop the old\n            best = max(best, window)\n        return best / k\n"
 }

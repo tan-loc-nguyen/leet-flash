@@ -91,10 +91,10 @@
         "Time complexity of the math solution (ignoring big-integer cost): ___",
         "Complete the statement: Time complexity of the math solution (ignoring big-integer cost): ___"
       ],
-      "answer": "O(1)",
-      "explanation": "A fixed number of arithmetic operations (the power is O(log n) multiplications).",
+      "answer": "O(log n)",
+      "explanation": "3**factor uses fast exponentiation: O(log n) multiplications (n <= 58 here, so effectively constant, which is why O(1) is accepted too).",
       "acceptedAnswers": [
-        "O(log n)",
+        "O(1)",
         "constant"
       ]
     },

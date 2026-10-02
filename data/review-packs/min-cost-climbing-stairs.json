@@ -101,7 +101,8 @@
       "explanation": "n distinct states, O(1) work each.",
       "acceptedAnswers": [
         "linear"
-      ]
+      ],
+      "code": "class Solution:\n    def minCostClimbingStairs(self, cost: List[int]) -> int:\n        n = len(cost)\n\n        @lru_cache\n        def step(i: int) -> int:\n            if i >= n:\n                return 0\n            return cost[i] + min(step(i + 1), step(i + 2))\n\n        return min(step(0), step(1))\n"
     },
     {
       "id": "mc4-space-01",
@@ -116,7 +117,8 @@
         "Depends on two neighbours",
         "Rolling variables"
       ],
-      "explanation": "Same trick as Climbing Stairs."
+      "explanation": "Same trick as Climbing Stairs.",
+      "code": "class Solution:\n    def minCostClimbingStairs(self, cost: List[int]) -> int:\n        n = len(cost)\n\n        @lru_cache\n        def step(i: int) -> int:\n            if i >= n:\n                return 0\n            return cost[i] + min(step(i + 1), step(i + 2))\n\n        return min(step(0), step(1))\n"
     },
     {
       "id": "mc4-code-01",

@@ -51,17 +51,17 @@
         "What goes wrong otherwise?"
       ],
       "options": [
-        "A multiple of 15 also passes the 3 test, so it would print only 'Fizz'",
-        "15 is larger than 3 and 5, so larger numbers must come first",
-        "The modulo operator is only valid when the divisor is 15",
-        "Python evaluates the last branch of an elif chain first"
+        "A multiple of 15 also passes the 3 test and prints Fizz",
+        "Python raises an error when two branches both match",
+        "elif runs all matching branches, so 15 prints twice",
+        "Multiples of 15 are not divisible by 3 or by 5"
       ],
-      "answer": "A multiple of 15 also passes the 3 test, so it would print only 'Fizz'",
-      "explanation": "The concatenation version avoids the ordering problem.",
+      "answer": "A multiple of 15 also passes the 3 test and prints Fizz",
+      "explanation": "In an if/elif chain the first matching branch wins. 15 is divisible by 3, so testing 3 first prints only 'Fizz'; the combined case must come first (or build the word by concatenation).",
       "incorrectOptionExplanations": {
-        "15 is larger than 3 and 5, so larger numbers must come first": "Size has no special priority.",
-        "The modulo operator is only valid when the divisor is 15": "It works for any divisor.",
-        "Python evaluates the last branch of an elif chain first": "Branches are evaluated top to bottom."
+        "Python raises an error when two branches both match": "No error: the first true condition runs and the rest are skipped.",
+        "elif runs all matching branches, so 15 prints twice": "elif skips every branch after the first match; that is what makes the order matter.",
+        "Multiples of 15 are not divisible by 3 or by 5": "15 = 3 * 5, so it is divisible by both."
       }
     },
     {

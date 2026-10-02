@@ -114,7 +114,8 @@
       "explanation": "Each value is computed once.",
       "acceptedAnswers": [
         "linear"
-      ]
+      ],
+      "code": "class Solution:\n    @lru_cache(None)\n    def fib(self, n: int) -> int:\n        if n < 2:\n            return n\n        \n        return self.fib(n - 1) + self.fib(n - 2)\n"
     },
     {
       "id": "fi-space-01",
@@ -130,7 +131,8 @@
         "Depth O(n)",
         "Loop O(1)"
       ],
-      "explanation": "Deep recursion can hit Python's limit for large n."
+      "explanation": "Deep recursion can hit Python's limit for large n.",
+      "code": "class Solution:\n    @lru_cache(None)\n    def fib(self, n: int) -> int:\n        if n < 2:\n            return n\n        \n        return self.fib(n - 1) + self.fib(n - 2)\n"
     },
     {
       "id": "fi-code-01",
