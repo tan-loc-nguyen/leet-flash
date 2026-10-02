@@ -117,21 +117,21 @@
       "category": "edge_case",
       "type": "multiple_choice",
       "promptVariants": [
-        "What is the answer for '100'?",
+        "What is the answer for '1100'?",
         "How many (1, 0) pairs exist?"
       ],
       "options": [
-        "2: the 1 must cross both zeros",
-        "1: only one swap moves the 1 to the right",
-        "0: the 1 is already to the left of the zeros",
-        "3: every pair of balls must swap"
+        "4: each of the two 1s must cross both zeros",
+        "2: each 1 needs only one swap",
+        "6: every pair of balls must swap",
+        "0: the 1s are already grouped on the right"
       ],
-      "answer": "2: the 1 must cross both zeros",
-      "explanation": "'100' -> '010' -> '001'.",
+      "answer": "4: each of the two 1s must cross both zeros",
+      "explanation": "'1100' -> '1010' -> '0110' -> '0101' -> '0011': four swaps, one per (1, 0) pair.",
       "incorrectOptionExplanations": {
-        "1: only one swap moves the 1 to the right": "It must cross two zeros.",
-        "0: the 1 is already to the left of the zeros": "Ones must end on the right.",
-        "3: every pair of balls must swap": "Only inverted pairs swap."
+        "2: each 1 needs only one swap": "Each 1 must pass two zeros, so one swap each is not enough.",
+        "6: every pair of balls must swap": "Only (1, 0) pairs swap, not every pair of balls.",
+        "0: the 1s are already grouped on the right": "The 1s start on the left, not the right."
       }
     }
   ],

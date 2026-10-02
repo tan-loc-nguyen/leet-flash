@@ -131,21 +131,21 @@
       "category": "edge_case",
       "type": "multiple_choice",
       "promptVariants": [
-        "What is the result for s = 'abcd', k = 5?",
+        "What is the result for s = 'xyz', k = 10?",
         "How does a k larger than the string behave?"
       ],
       "options": [
-        "'dcba'",
-        "'abcd'",
-        "'bcda'",
+        "'zyx'",
+        "'xyz'",
+        "'yzx'",
         "An error"
       ],
-      "answer": "'dcba'",
-      "explanation": "Fewer than k characters remain, so the entire (only) block is reversed. ('dcba': the whole string is reversed)",
+      "answer": "'zyx'",
+      "explanation": "Fewer than k characters remain, so the entire (only) block is reversed.",
       "incorrectOptionExplanations": {
-        "'abcd'": "Nothing would be reversed.",
-        "'bcda'": "That is a rotation.",
-        "An error": "Slicing clips safely."
+        "'xyz'": "The first block (the whole string) must be reversed.",
+        "'yzx'": "Only the reversal of the whole string is correct, not a rotation.",
+        "An error": "A k larger than the string is valid; the whole string is just one block."
       }
     }
   ],

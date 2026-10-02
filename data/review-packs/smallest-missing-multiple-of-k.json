@@ -113,21 +113,21 @@
       "category": "edge_case",
       "type": "multiple_choice",
       "promptVariants": [
-        "What is returned for nums = [8,2,3,4,6] and k = 2?",
+        "What is returned for nums = [3,9,6,12] and k = 3?",
         "Which multiple is missing?"
       ],
       "options": [
-        "10",
-        "2",
-        "5",
-        "12"
+        "15",
+        "3",
+        "12",
+        "18"
       ],
-      "answer": "10",
-      "explanation": "2, 4, 6, 8 are present, 10 is the first missing multiple of 2.",
+      "answer": "15",
+      "explanation": "3, 6, 9, 12 are present, so 15 is the first missing multiple of 3.",
       "incorrectOptionExplanations": {
-        "2": "2 is present.",
-        "5": "Not a multiple of 2.",
-        "12": "10 is smaller."
+        "3": "3 is already in the array.",
+        "12": "12 is already in the array.",
+        "18": "18 is a multiple of 3 but 15 comes first."
       }
     }
   ],

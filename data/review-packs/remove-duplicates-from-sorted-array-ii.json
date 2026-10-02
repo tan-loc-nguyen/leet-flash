@@ -113,21 +113,21 @@
       "category": "edge_case",
       "type": "multiple_choice",
       "promptVariants": [
-        "What is the result for [1, 1, 1, 2, 2, 3]?",
+        "What is the result for [0, 0, 0, 1, 1, 1, 2]?",
         "How many elements remain?"
       ],
       "options": [
-        "5 elements: [1, 1, 2, 2, 3]",
-        "3 elements: [1, 2, 3]",
-        "6 elements: nothing is removed",
-        "4 elements: [1, 1, 2, 3]"
+        "5 elements: [0, 0, 1, 1, 2]",
+        "3 elements: [0, 1, 2]",
+        "7 elements: nothing is removed",
+        "4 elements: [0, 0, 1, 2]"
       ],
-      "answer": "5 elements: [1, 1, 2, 2, 3]",
-      "explanation": "Only the third 1 is dropped.",
+      "answer": "5 elements: [0, 0, 1, 1, 2]",
+      "explanation": "Each value may stay at most twice, so the third 0 and the third 1 are dropped.",
       "incorrectOptionExplanations": {
-        "3 elements: [1, 2, 3]": "Each value is allowed twice.",
-        "6 elements: nothing is removed": "The third 1 must go.",
-        "4 elements: [1, 1, 2, 3]": "Both 2s are kept."
+        "3 elements: [0, 1, 2]": "Each value may appear twice, not once.",
+        "7 elements: nothing is removed": "Values appearing three times must lose one copy.",
+        "4 elements: [0, 0, 1, 2]": "The 1s are also limited to two copies, so a second 1 stays."
       }
     }
   ],

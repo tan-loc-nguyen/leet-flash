@@ -208,10 +208,10 @@
       "category": "edge_case",
       "type": "free_recall",
       "promptVariants": [
-        "Why does the one-pass solution still work when duplicate values exist (e.g. [3,3], target 6)?",
-        "Trace [3,3] with target 6 through the hash-map solution. Why is the duplicate not a problem?"
+        "Why does the one-pass solution still work when duplicate values exist (e.g. [1,6,6,2], target 12)?",
+        "Trace [1,6,6,2] with target 12 through the hash-map solution. Why is the duplicate not a problem?"
       ],
-      "answer": "At index 0 the complement 3 is not in the map, so 3 -> 0 is stored. At index 1 the complement 3 IS in the map (index 0), so we return [0,1] before the later duplicate could overwrite the entry.",
+      "answer": "At index 0 the complement 11 is not in the map, so 1 -> 0 is stored. At index 1 the complement 6 is not in the map yet, so 6 -> 1 is stored. At index 2 the complement 6 IS in the map (index 1), so we return [1,2] before the second 6 could overwrite the entry.",
       "keyPoints": [
         "Check happens before insert",
         "First 3 stored, second 3 finds it",

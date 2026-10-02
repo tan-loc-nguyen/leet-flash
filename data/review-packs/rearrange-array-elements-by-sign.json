@@ -129,21 +129,21 @@
       "category": "edge_case",
       "type": "multiple_choice",
       "promptVariants": [
-        "What is the output for [3,1,-2,-5,2,-4]?",
+        "What is the output for [4,-1,2,-3,-6,5]?",
         "How is relative order within each sign preserved?"
       ],
       "options": [
-        "[3,-2,1,-5,2,-4]",
-        "[1,-2,2,-5,3,-4]",
-        "[3,1,2,-2,-5,-4]",
-        "[-2,3,-5,1,-4,2]"
+        "[4,-1,2,-3,5,-6]",
+        "[2,-1,4,-3,5,-6]",
+        "[4,2,5,-1,-3,-6]",
+        "[-1,4,-3,2,-6,5]"
       ],
-      "answer": "[3,-2,1,-5,2,-4]",
-      "explanation": "Positives in order: 3,1,2 at indices 0,2,4; negatives in order: -2,-5,-4 at 1,3,5.",
+      "answer": "[4,-1,2,-3,5,-6]",
+      "explanation": "Positives in order (4,2,5) go to indices 0,2,4; negatives in order (-1,-3,-6) go to indices 1,3,5.",
       "incorrectOptionExplanations": {
-        "[1,-2,2,-5,3,-4]": "Positive order is not preserved.",
-        "[3,1,2,-2,-5,-4]": "Signs do not alternate.",
-        "[-2,3,-5,1,-4,2]": "Must start with a positive."
+        "[2,-1,4,-3,5,-6]": "That swaps the order of the positives; relative order must be kept.",
+        "[4,2,5,-1,-3,-6]": "That groups by sign instead of alternating.",
+        "[-1,4,-3,2,-6,5]": "The result must start with a positive number."
       }
     }
   ],

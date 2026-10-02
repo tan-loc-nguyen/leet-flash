@@ -128,21 +128,21 @@
       "category": "edge_case",
       "type": "multiple_choice",
       "promptVariants": [
-        "What is the result for [1, 5, 2]?",
+        "What is the result for [3, 9, 1, 2]?",
         "Does player 1 win?"
       ],
       "options": [
-        "False: dp = 1 - max(5 - 2, 2 - 5) = -2 < 0",
-        "True: player 1 takes 5 first",
-        "True: player 1 gets 1 + 2 = 3 against 5",
+        "True: dp = max(3 - 8, 2 - (-5)) = 7 >= 0, so start with 2",
+        "False: player 1 can only take 3 or 2, both small",
+        "True: player 1 takes 9 first",
         "False: a tie is a loss for player 1"
       ],
-      "answer": "False: dp = 1 - max(5 - 2, 2 - 5) = -2 < 0",
-      "explanation": "Whatever player 1 takes, player 2 can take 5.",
+      "answer": "True: dp = max(3 - 8, 2 - (-5)) = 7 >= 0, so start with 2",
+      "explanation": "Taking the 2 at the right end leaves [3,9,1], where the mover's best margin is -5; so player 1 wins by 7. Whatever player 2 then does, player 1 collects the 9.",
       "incorrectOptionExplanations": {
-        "True: player 1 takes 5 first": "5 is not on an end of [1, 5, 2].",
-        "True: player 1 gets 1 + 2 = 3 against 5": "5 beats 3 for player 2.",
-        "False: a tie is a loss for player 1": "A tie is a win for player 1."
+        "False: player 1 can only take 3 or 2, both small": "Taking a small end value now can still win by leaving the opponent a bad position.",
+        "True: player 1 takes 9 first": "The 9 is not at either end, so it cannot be taken first.",
+        "False: a tie is a loss for player 1": "A tie goes to player 1; here player 1 wins outright."
       }
     }
   ],

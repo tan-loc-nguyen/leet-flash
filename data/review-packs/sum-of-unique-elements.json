@@ -112,21 +112,21 @@
       "category": "edge_case",
       "type": "multiple_choice",
       "promptVariants": [
-        "What is the sum for [1,2,3,2]?",
-        "And for [1,1,1,1,1]?"
+        "What is the sum for [5,3,5,8,3,9]?",
+        "And for [7,7]?"
       ],
       "options": [
-        "4 (1 + 3), and 0",
-        "8, and 5",
-        "6, and 0",
-        "4, and 1"
+        "17 (8 + 9), and 0",
+        "33 (sum of all), and 14 (7 + 7)",
+        "17 (8 + 9), and 7",
+        "9, and 0"
       ],
-      "answer": "4 (1 + 3), and 0",
-      "explanation": "2 appears twice, so only 1 and 3 count; all 1s repeat so nothing counts.",
+      "answer": "17 (8 + 9), and 0",
+      "explanation": "5 and 3 repeat, so only 8 and 9 count; both 7s repeat, so nothing counts.",
       "incorrectOptionExplanations": {
-        "8, and 5": "Duplicates are not counted.",
-        "6, and 0": "2 is not unique.",
-        "4, and 1": "1 repeats in the second array."
+        "33 (sum of all), and 14 (7 + 7)": "Repeated values do not count at all.",
+        "17 (8 + 9), and 7": "A value that appears twice contributes nothing, not once.",
+        "9, and 0": "Both 8 and 9 appear exactly once and count."
       }
     }
   ],

@@ -129,21 +129,21 @@
       "category": "edge_case",
       "type": "multiple_choice",
       "promptVariants": [
-        "What is the result for deck = [17,13,11,2,3,5,7]?",
+        "What is the result for deck = [9,4,6,1,3,8,2,5]?",
         "How are the positions revealed?"
       ],
       "options": [
-        "[2,13,3,11,5,17,7]",
-        "[2,3,5,7,11,13,17]",
-        "[17,13,11,7,5,3,2]",
-        "[2,13,3,17,5,11,7]"
+        "[1,5,2,8,3,6,4,9]",
+        "[1,2,3,4,5,6,8,9]",
+        "[9,8,6,5,4,3,2,1]",
+        "[1,8,2,6,3,5,4,9]"
       ],
-      "answer": "[2,13,3,11,5,17,7]",
-      "explanation": "Revealing the result gives 2,3,5,7,11,13,17 in order.",
+      "answer": "[1,5,2,8,3,6,4,9]",
+      "explanation": "Revealing the result gives 1,2,3,4,5,6,8,9 in order.",
       "incorrectOptionExplanations": {
-        "[2,3,5,7,11,13,17]": "That is just the sorted deck, which would reveal 2,5,11,... not increasing order.",
-        "[17,13,11,7,5,3,2]": "Descending order cannot reveal increasing values.",
-        "[2,13,3,17,5,11,7]": "Reveals 2,3,5,7,11,... check: 17 and 11 are swapped relative to the true order."
+        "[1,2,3,4,5,6,8,9]": "That is the sorted deck itself, not the arrangement that reveals it in order.",
+        "[9,8,6,5,4,3,2,1]": "That is the deck in decreasing order.",
+        "[1,8,2,6,3,5,4,9]": "That interleaves the cards in the wrong order."
       }
     }
   ],

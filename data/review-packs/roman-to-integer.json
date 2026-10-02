@@ -116,21 +116,21 @@
       "category": "edge_case",
       "type": "multiple_choice",
       "promptVariants": [
-        "What does 'MCMXCIV' evaluate to?",
+        "What does 'MMCDXLIV' evaluate to?",
         "How are its subtractive pairs resolved?"
       ],
       "options": [
-        "1994 = 1000 + (1000 - 100) + (100 - 10) + (5 - 1)",
-        "2994, treating every symbol as additive",
-        "1904, applying only the CM pair",
-        "1894, treating C as subtractive twice"
+        "2444 = 1000 + 1000 + (500 - 100) + (50 - 10) + (5 - 1)",
+        "2666, treating every symbol as additive",
+        "2466, applying only the CD pair",
+        "2664, applying only the IV pair"
       ],
-      "answer": "1994 = 1000 + (1000 - 100) + (100 - 10) + (5 - 1)",
-      "explanation": "M + CM + XC + IV = 1000 + 900 + 90 + 4 = 1994.",
+      "answer": "2444 = 1000 + 1000 + (500 - 100) + (50 - 10) + (5 - 1)",
+      "explanation": "M + M + CD + XL + IV = 1000 + 1000 + 400 + 40 + 4 = 2444.",
       "incorrectOptionExplanations": {
-        "2994, treating every symbol as additive": "That ignores the subtractive pairs.",
-        "1904, applying only the CM pair": "XC and IV also subtract.",
-        "1894, treating C as subtractive twice": "Only a smaller symbol before a larger one subtracts."
+        "2666, treating every symbol as additive": "CD, XL and IV are subtractive pairs and must subtract.",
+        "2466, applying only the CD pair": "XL and IV are subtractive pairs as well.",
+        "2664, applying only the IV pair": "CD and XL are subtractive pairs as well."
       }
     }
   ],

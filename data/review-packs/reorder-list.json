@@ -133,21 +133,21 @@
       "category": "edge_case",
       "type": "multiple_choice",
       "promptVariants": [
-        "What is the result for [1,2,3,4]? And [1,2,3]?",
+        "What is the result for [10,20,30,40,50,60]? And [7,8]?",
         "How do odd and even lengths differ?"
       ],
       "options": [
-        "[1,4,2,3] and [1,3,2]",
-        "[1,2,3,4] and [1,2,3]",
-        "[4,1,3,2] and [3,1,2]",
-        "[1,3,2,4] and [1,3,2]"
+        "[10,60,20,50,30,40] and [7,8]",
+        "[10,20,30,40,50,60] and [7,8]",
+        "[60,10,50,20,40,30] and [8,7]",
+        "[10,60,30,50,20,40] and [7,8]"
       ],
-      "answer": "[1,4,2,3] and [1,3,2]",
-      "explanation": "Front, back, front, back...: 1,4,2,3 and 1,3,2.",
+      "answer": "[10,60,20,50,30,40] and [7,8]",
+      "explanation": "Front, back, front, back...: 10,60,20,50,30,40; a two-node list is already in order.",
       "incorrectOptionExplanations": {
-        "[1,2,3,4] and [1,2,3]": "That is the original order.",
-        "[4,1,3,2] and [3,1,2]": "Must start with the head.",
-        "[1,3,2,4] and [1,3,2]": "The first result is wrong (3 before 2 then 4)."
+        "[10,20,30,40,50,60] and [7,8]": "The list must be interleaved, not left unchanged.",
+        "[60,10,50,20,40,30] and [8,7]": "The order starts with the first node, not the last.",
+        "[10,60,30,50,20,40] and [7,8]": "After 10 and 60 comes the second node 20, not the third."
       }
     }
   ],

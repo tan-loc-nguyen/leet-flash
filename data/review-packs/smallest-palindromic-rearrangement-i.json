@@ -132,20 +132,20 @@
       "type": "multiple_choice",
       "promptVariants": [
         "What is the result for 'z'?",
-        "And for 'babab'?"
+        "And for 'cbbcc'?"
       ],
       "options": [
-        "'z' and 'abbba'",
-        "'z' and 'babab'",
-        "'' and 'aabbb'",
-        "'z' and 'ababa'"
+        "'z' and 'bcccb'",
+        "'z' and 'cbbcc'",
+        "'' and 'bbccc'",
+        "'z' and 'cbcbc'"
       ],
-      "answer": "'z' and 'abbba'",
-      "explanation": "Counts: a = 2, b = 3 -> left = 'ab', mid = 'b', right = 'ba' -> 'abbba'.",
+      "answer": "'z' and 'bcccb'",
+      "explanation": "Counts: b = 2, c = 3 -> left = 'bc', mid = 'c', right = 'cb' -> 'bcccb'.",
       "incorrectOptionExplanations": {
-        "'z' and 'babab'": "The second is not minimal.",
-        "'' and 'aabbb'": "Not a palindrome.",
-        "'z' and 'ababa'": "'ababa' uses three a's and two b's, which is not a rearrangement of the input's letters (two a's and three b's)."
+        "'z' and 'cbbcc'": "The input is not a palindrome and not the smallest arrangement.",
+        "'' and 'bbccc'": "A palindrome rearrangement exists, so the answer is not empty.",
+        "'z' and 'cbcbc'": "That is a palindrome but not the lexicographically smallest."
       }
     }
   ],

@@ -95,8 +95,8 @@
       "category": "edge_case",
       "type": "multiple_choice",
       "promptVariants": [
-        "Do [0,0,1,1] and [1,0,2,1] (sharing the edge x = 1) overlap?",
-        "What about [0,0,2,2] and [1,1,3,3]?"
+        "Do [0,0,2,2] and [2,2,4,4] (touching only at the corner (2, 2)) overlap?",
+        "What about [0,0,3,3] and [1,1,2,2] (one inside the other)?"
       ],
       "options": [
         "No, and yes",
@@ -105,11 +105,11 @@
         "Yes, and no"
       ],
       "answer": "No, and yes",
-      "explanation": "Shared edges have zero area; the second pair overlaps in [1,2]x[1,2].",
+      "explanation": "A shared corner has zero area, so the first pair does not overlap; the second pair overlaps because the small rectangle lies inside the large one.",
       "incorrectOptionExplanations": {
-        "Yes, and yes": "Touching is not overlapping.",
-        "No, and no": "The second pair overlaps.",
-        "Yes, and no": "Reversed."
+        "Yes, and yes": "Touching at a single point is not an overlap of positive area.",
+        "No, and no": "Containment gives a positive-area overlap.",
+        "Yes, and no": "The first pair only touches at a point, and the second overlaps."
       }
     }
   ],

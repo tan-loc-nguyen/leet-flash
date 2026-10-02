@@ -114,21 +114,21 @@
       "category": "edge_case",
       "type": "multiple_choice",
       "promptVariants": [
-        "Is 'abca' a valid answer with one deletion?",
+        "Is 'madame' a valid answer with one deletion?",
         "Which character can be deleted?"
       ],
       "options": [
-        "Yes: delete 'b' or 'c' to get 'aca' or 'aba'",
-        "No: 'abca' has two mismatched pairs",
-        "Yes, but only by deleting 'a'",
+        "Yes: delete the final 'e' to get 'madam'",
+        "No: 'madame' has two mismatched pairs",
+        "Yes, but only by deleting the first 'm'",
         "No: palindromes need odd length"
       ],
-      "answer": "Yes: delete 'b' or 'c' to get 'aca' or 'aba'",
-      "explanation": "At the mismatch (b vs c), skipping either side gives a palindrome.",
+      "answer": "Yes: delete the final 'e' to get 'madam'",
+      "explanation": "At the first mismatch (m vs e), skipping the right character leaves 'madam', a palindrome.",
       "incorrectOptionExplanations": {
-        "No: 'abca' has two mismatched pairs": "It has only one mismatching pair.",
-        "Yes, but only by deleting 'a'": "Deleting an 'a' leaves 'bca' or 'abc'.",
-        "No: palindromes need odd length": "Even length palindromes exist."
+        "No: 'madame' has two mismatched pairs": "Only the outer pair mismatches; the inner letters match.",
+        "Yes, but only by deleting the first 'm'": "Deleting the first 'm' leaves 'adame', which is not a palindrome.",
+        "No: palindromes need odd length": "Even-length strings can become palindromes too."
       }
     }
   ],

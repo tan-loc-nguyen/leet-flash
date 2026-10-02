@@ -128,21 +128,21 @@
       "category": "edge_case",
       "type": "multiple_choice",
       "promptVariants": [
-        "Is [1,2,2,null,3,null,3] symmetric?",
-        "Why not?"
+        "Is [5,3,3,null,8,8] symmetric?",
+        "Which pairs of nodes are compared?"
       ],
       "options": [
-        "No: both 2s have only a right child (3 and 3), not mirrored",
-        "Yes: both 2s hold a 3, so the tree is symmetric",
-        "Only if all the values in the tree are sorted",
-        "Cannot tell without the full tree shape drawn"
+        "Yes: the left 3's right child 8 mirrors the right 3's left child 8",
+        "No: the left 3 has no left child but the right 3 has one",
+        "No: the two 3s must both have two children",
+        "Only if all the values in the tree are distinct"
       ],
-      "answer": "No: both 2s have only a right child (3 and 3), not mirrored",
-      "explanation": "Mirrors need the left 2's right child to match the right 2's left child, but the right 2 has none.",
+      "answer": "Yes: the left 3's right child 8 mirrors the right 3's left child 8",
+      "explanation": "Mirroring pairs the left subtree's right child with the right subtree's left child; both are 8, and the outer children are both absent.",
       "incorrectOptionExplanations": {
-        "Yes: both 2s hold a 3, so the tree is symmetric": "The structure is not mirrored.",
-        "Only if all the values in the tree are sorted": "Sortedness is irrelevant.",
-        "Cannot tell without the full tree shape drawn": "It can be decided."
+        "No: the left 3 has no left child but the right 3 has one": "Missing outer children are fine when they mirror (both absent).",
+        "No: the two 3s must both have two children": "Mirrored children can be absent on both sides.",
+        "Only if all the values in the tree are distinct": "Equal values are needed for mirrored pairs, so distinct values would break symmetry."
       }
     }
   ],

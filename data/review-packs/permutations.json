@@ -132,21 +132,21 @@
       "category": "edge_case",
       "type": "multiple_choice",
       "promptVariants": [
-        "How many permutations of [1,2,3]?",
+        "How many permutations of [4,5,6,7]?",
         "What does the algorithm return for a single element?"
       ],
       "options": [
-        "6; and [[x]] for one element",
-        "3; and [[x]] for a one-element input",
-        "6; and [] for a one-element input",
-        "9; and [[x,x]] for a one-element input"
+        "24; and [[x]] for one element",
+        "16; and [[x]] for a one-element input",
+        "24; and [] for a one-element input",
+        "256; and [[x,x]] for a one-element input"
       ],
-      "answer": "6; and [[x]] for one element",
-      "explanation": "3! = 6 and a single element has exactly one permutation.",
+      "answer": "24; and [[x]] for one element",
+      "explanation": "4! = 24, and a single element has exactly one permutation, itself.",
       "incorrectOptionExplanations": {
-        "3; and [[x]] for a one-element input": "3 is n, not n!.",
-        "6; and [] for a one-element input": "A single element has one permutation.",
-        "9; and [[x,x]] for a one-element input": "Wrong counts."
+        "16; and [[x]] for a one-element input": "16 = 4 * 4 allows repeated elements; permutations use each element once.",
+        "24; and [] for a one-element input": "A one-element list still has one arrangement, so the result is not empty.",
+        "256; and [[x,x]] for a one-element input": "256 = 4^4 counts sequences with repeats, and [x,x] repeats the single element."
       }
     }
   ],

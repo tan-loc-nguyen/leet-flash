@@ -130,21 +130,21 @@
       "category": "edge_case",
       "type": "multiple_choice",
       "promptVariants": [
-        "Are ['apple','app'] sorted under the standard alphabet?",
+        "Are ['kite','kit'] sorted under the standard alphabet?",
         "Why not?"
       ],
       "options": [
-        "No: 'app' is a prefix of 'apple' and must come first",
-        "Yes: 'app' is shorter, so it may come after",
+        "No: 'kit' is a prefix of 'kite' and must come first",
+        "Yes: 'kit' is shorter, so it may come after",
         "Only if the alphabet is reversed, like zyx...",
         "It depends on which letters the words contain"
       ],
-      "answer": "No: 'app' is a prefix of 'apple' and must come first",
+      "answer": "No: 'kit' is a prefix of 'kite' and must come first",
       "explanation": "A prefix sorts before any longer word that starts with it.",
       "incorrectOptionExplanations": {
-        "Yes: 'app' is shorter, so it may come after": "The longer word comes first.",
-        "Only if the alphabet is reversed, like zyx...": "The prefix rule holds for any alphabet.",
-        "It depends on which letters the words contain": "The rule is independent of the order."
+        "Yes: 'kit' is shorter, so it may come after": "Shorter prefixes come first, not after.",
+        "Only if the alphabet is reversed, like zyx...": "The prefix rule holds for any alphabet order.",
+        "It depends on which letters the words contain": "The rule is independent of the letters used."
       }
     }
   ],

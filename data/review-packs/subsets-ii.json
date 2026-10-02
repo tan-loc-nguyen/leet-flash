@@ -145,21 +145,21 @@
       "category": "edge_case",
       "type": "multiple_choice",
       "promptVariants": [
-        "How many distinct subsets does [1,2,2] have?",
+        "How many distinct subsets does [3,3,3] have?",
         "Which duplicate subset is avoided?"
       ],
       "options": [
-        "6",
-        "8",
         "4",
+        "8",
+        "3",
         "7"
       ],
-      "answer": "6",
-      "explanation": "[], [1], [2], [1,2], [2,2], [1,2,2]; 8 would count [2] and [1,2] twice.",
+      "answer": "4",
+      "explanation": "[], [3], [3,3], [3,3,3]; 8 would count the same subset several times.",
       "incorrectOptionExplanations": {
-        "8": "That counts duplicates.",
-        "4": "Too few.",
-        "7": "Still one too many."
+        "8": "8 = 2^3 counts equal subsets of different positions separately.",
+        "3": "The empty subset also counts.",
+        "7": "7 would count [3] and [3,3] more than once."
       }
     }
   ],

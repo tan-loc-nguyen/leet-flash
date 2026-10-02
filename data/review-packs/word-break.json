@@ -128,21 +128,21 @@
       "category": "edge_case",
       "type": "multiple_choice",
       "promptVariants": [
-        "Can 'catsandog' be segmented with ['cats', 'dog', 'sand', 'and', 'cat']?",
+        "Can 'moonlighter' be segmented with ['moon', 'light', 'night']?",
         "Why or why not?"
       ],
       "options": [
-        "No: 'catsand' can be built but the leftover 'og' is not a word",
-        "Yes: 'cats' + 'and' + 'og' covers the whole string",
-        "Yes: 'cat' + 'sand' + 'dog' covers the whole string",
-        "No: because 'dog' is longer than the leftover word 'og'"
+        "No: 'moonlight' can be built but the leftover 'er' is not a word",
+        "Yes: 'moon' + 'light' + 'er' covers the whole string",
+        "Yes: 'moon' + 'light' + 'night' covers the whole string",
+        "No: because 'night' is longer than the leftover word 'er'"
       ],
-      "answer": "No: 'catsand' can be built but the leftover 'og' is not a word",
-      "explanation": "Both 'cats|and' and 'cat|sand' leave 'og'.",
+      "answer": "No: 'moonlight' can be built but the leftover 'er' is not a word",
+      "explanation": "The only way to start is 'moon' + 'light', which leaves 'er', not in the dictionary.",
       "incorrectOptionExplanations": {
-        "Yes: 'cats' + 'and' + 'og' covers the whole string": "'og' is not in the dictionary.",
-        "Yes: 'cat' + 'sand' + 'dog' covers the whole string": "That spells 'catsanddog', not 'catsandog'.",
-        "No: because 'dog' is longer than the leftover word 'og'": "Length of 'dog' is irrelevant."
+        "Yes: 'moon' + 'light' + 'er' covers the whole string": "'er' is not in the dictionary, so that segmentation fails.",
+        "Yes: 'moon' + 'light' + 'night' covers the whole string": "That would spell 'moonlightnight', not 'moonlighter'.",
+        "No: because 'night' is longer than the leftover word 'er'": "Word length is irrelevant; the leftover text must itself be a word."
       }
     }
   ],

@@ -120,21 +120,21 @@
       "category": "edge_case",
       "type": "multiple_choice",
       "promptVariants": [
-        "What does 'aaab' return?",
-        "Can 'aaab' be reorganised?"
+        "What does 'aaaabb' return?",
+        "Can 'aaaabb' be reorganised?"
       ],
       "options": [
-        "'' (empty): 'a' occurs 3 times, more than (4 + 1) // 2 = 2",
-        "'abaa' - the extra a goes at the end of the string",
-        "'aaba' - swapping the last two letters of the input",
-        "'abab' - using the single b twice in the answer"
+        "'' (empty): 'a' occurs 4 times, more than (6 + 1) // 2 = 3",
+        "'aabaab' - the two b's split the a's into pairs",
+        "'ababaa' - the extra a goes at the end",
+        "'abaaba' - the b's sit in the middle"
       ],
-      "answer": "'' (empty): 'a' occurs 3 times, more than (4 + 1) // 2 = 2",
-      "explanation": "Three a's need three non-adjacent slots among four positions, which is impossible.",
+      "answer": "'' (empty): 'a' occurs 4 times, more than (6 + 1) // 2 = 3",
+      "explanation": "Four a's need four non-adjacent slots among six positions, but only three exist, so no valid arrangement exists.",
       "incorrectOptionExplanations": {
-        "'abaa' - the extra a goes at the end of the string": "That has two adjacent a's.",
-        "'aaba' - swapping the last two letters of the input": "That has adjacent a's too.",
-        "'abab' - using the single b twice in the answer": "There is only one b."
+        "'aabaab' - the two b's split the a's into pairs": "Each pair of a's still touches, so it is invalid.",
+        "'ababaa' - the extra a goes at the end": "The last two letters are both a, which are adjacent.",
+        "'abaaba' - the b's sit in the middle": "The a's at the middle touch each other."
       }
     }
   ],

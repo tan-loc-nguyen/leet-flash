@@ -131,21 +131,21 @@
       "category": "edge_case",
       "type": "multiple_choice",
       "promptVariants": [
-        "What does the algorithm return for [1, 5, 11, 5]?",
+        "What does the algorithm return for [3, 3, 3, 4, 5]?",
         "Which subsets work?"
       ],
       "options": [
-        "True: [11] and [1, 5, 5] both sum to 11",
-        "False: the array contains a very large element",
-        "False: the total is odd",
-        "True: [1, 5] and [11, 5] both sum to 6 and 16"
+        "True: [4, 5] and [3, 3, 3] both sum to 9",
+        "False: an odd count of equal values cannot be split",
+        "False: the total of 18 is odd, so no split exists",
+        "True: [3, 3] and [3, 4, 5] sum to 6 and 12"
       ],
-      "answer": "True: [11] and [1, 5, 5] both sum to 11",
-      "explanation": "Target 11 is reachable.",
+      "answer": "True: [4, 5] and [3, 3, 3] both sum to 9",
+      "explanation": "The total is 18, so each side must sum to 9: [4, 5] and [3, 3, 3] do it.",
       "incorrectOptionExplanations": {
-        "False: the array contains a very large element": "11 is exactly half.",
-        "False: the total is odd": "The total is 22, which is even.",
-        "True: [1, 5] and [11, 5] both sum to 6 and 16": "The two subsets must have equal sums."
+        "False: an odd count of equal values cannot be split": "Equal values can sit on either side; only the sums matter.",
+        "False: the total of 18 is odd, so no split exists": "18 is even; an odd total would be the case that fails immediately.",
+        "True: [3, 3] and [3, 4, 5] sum to 6 and 12": "The two groups must have equal sums (9 each), not just cover the array."
       }
     }
   ],

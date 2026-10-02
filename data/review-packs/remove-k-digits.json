@@ -125,21 +125,21 @@
       "category": "edge_case",
       "type": "multiple_choice",
       "promptVariants": [
-        "What is the result for num = '10200', k = 1?",
+        "What is the result for num = '20105', k = 2?",
         "How do leading zeros appear?"
       ],
       "options": [
-        "'200'",
-        "'1200'",
-        "'0200'",
-        "'20'"
+        "'5'",
+        "'105'",
+        "'005'",
+        "'015'"
       ],
-      "answer": "'200'",
-      "explanation": "Removing '1' (a descent 1 > 0) gives '0200' which becomes '200' after stripping leading zeros.",
+      "answer": "'5'",
+      "explanation": "Removing 2 (a descent 2 > 0) and then 1 (1 > 0) leaves '005'; stripping the leading zeros gives '5'.",
       "incorrectOptionExplanations": {
-        "'1200'": "That removes a zero, which is not optimal.",
-        "'0200'": "Leading zeros must be stripped.",
-        "'20'": "That removes two digits."
+        "'105'": "That removes the first two digits, which are not the ones that shrink the number most.",
+        "'005'": "That leaves the leading zeros in place; they must be stripped.",
+        "'015'": "That removes the 2 and the final 5-side zero, not the descents."
       }
     }
   ],

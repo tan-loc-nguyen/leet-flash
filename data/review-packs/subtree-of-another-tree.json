@@ -146,21 +146,21 @@
       "category": "edge_case",
       "type": "multiple_choice",
       "promptVariants": [
-        "Is the tree [3,4,5,1,2,null,null,0] a subtree match for subRoot [4,1,2]?",
+        "Is the tree [1,2,3,4,5,null,null,6] a subtree match for subRoot [2,4,5]?",
         "Why not?"
       ],
       "options": [
-        "No: node 2 has an extra child 0 in root, so the subtree at 4 differs",
-        "Yes: the values of 4, 1 and 2 all match the subRoot",
-        "Only if values are unique, which they are not here",
+        "No: node 4 has an extra child 6 in root, so the subtree at 2 differs",
+        "Yes: the values of 2, 4 and 5 all match the subRoot",
+        "Yes: a subtree may leave out some descendants",
         "Cannot tell without checking the tree's height first"
       ],
-      "answer": "No: node 2 has an extra child 0 in root, so the subtree at 4 differs",
+      "answer": "No: node 4 has an extra child 6 in root, so the subtree at 2 differs",
       "explanation": "A subtree must include ALL descendants of the matched node, not just a prefix of them.",
       "incorrectOptionExplanations": {
-        "Yes: the values of 4, 1 and 2 all match the subRoot": "The extra descendant breaks the match.",
-        "Only if values are unique, which they are not here": "Irrelevant.",
-        "Cannot tell without checking the tree's height first": "It can be decided by comparison."
+        "Yes: the values of 2, 4 and 5 all match the subRoot": "Matching values is not enough; the shapes must be identical.",
+        "Yes: a subtree may leave out some descendants": "The subtree must contain every descendant of the matched node.",
+        "Cannot tell without checking the tree's height first": "The structures can be compared directly node by node."
       }
     }
   ],

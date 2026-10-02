@@ -114,21 +114,21 @@
       "category": "edge_case",
       "type": "multiple_choice",
       "promptVariants": [
-        "What is the result for [-4, -1, 0, 3, 10]?",
+        "What is the result for [-6, -2, 1, 5, 7]?",
         "Which values are compared first?"
       ],
       "options": [
-        "[0, 1, 9, 16, 100]: 100 beats 16 first",
-        "[16, 1, 0, 9, 100]: the squares in the original order",
-        "[0, 1, 9, 16, 100] after comparing 16 and 0 first",
-        "[1, 0, 9, 16, 100]: the sign change is not handled"
+        "[1, 4, 25, 36, 49]: 49 beats 36 first",
+        "[36, 4, 1, 25, 49]: the squares in the original order",
+        "[1, 4, 25, 36, 49] after comparing 36 and 1 first",
+        "[4, 1, 25, 36, 49]: the sign change is not handled"
       ],
-      "answer": "[0, 1, 9, 16, 100]: 100 beats 16 first",
-      "explanation": "Compare |-4| = 4 and 10; 100 is placed at the end.",
+      "answer": "[1, 4, 25, 36, 49]: 49 beats 36 first",
+      "explanation": "Compare |-6| = 6 and 7; 49 is placed at the end, then 36 vs 25, and so on.",
       "incorrectOptionExplanations": {
-        "[16, 1, 0, 9, 100]: the squares in the original order": "The output must be sorted.",
-        "[0, 1, 9, 16, 100] after comparing 16 and 0 first": "The first comparison is 16 vs 100.",
-        "[1, 0, 9, 16, 100]: the sign change is not handled": "0 is smaller than 1."
+        "[36, 4, 1, 25, 49]: the squares in the original order": "The output must be sorted.",
+        "[1, 4, 25, 36, 49] after comparing 36 and 1 first": "The result is right, but the comparison starts at both ends: 6 vs 7.",
+        "[4, 1, 25, 36, 49]: the sign change is not handled": "1 is smaller than 4, so 1 must come first."
       }
     }
   ],
