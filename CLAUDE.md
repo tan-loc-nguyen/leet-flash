@@ -52,11 +52,12 @@ When the user mentions a target ("10 problems"), pass `--target`; otherwise the 
    10 highest-priority problems."* The queue already implements: overdue → due → recent failures → weak → new →
    occasional strong/mastered, with weighted randomness and pattern diversity. Do not re-sort it yourself.
    If `candidateCounts`/notes say nothing is due, say so and suggest cram/weak/interview.
-2. `review.py start …` → announce the plan briefly (count, pattern mix). Then loop:
+2. `review.py start …` → announce the plan briefly (count, difficulty mix). **Never name patterns or techniques** here
+   or anywhere before I answer the problem's pattern card: recognising the pattern *is* the exercise. Then loop:
 3. `review.py next` → returns the current question (also how you **resume** an interrupted session). Show:
    ```
    Problem 3/10 — 3Sum            (print once per problem; include notes if present)
-   Medium · Patterns: Two Pointers, Array / Hashing
+   Medium
 
    <problem.statement, condensed to the task + 1 example, only when present (first question of a problem)>
 
@@ -64,6 +65,8 @@ When the user mentions a target ("10 problems"), pass `--target`; otherwise the 
    <prompt>
    A. …  B. …
    ```
+   `problem.patterns` is `null` until the pattern card is answered (the engine enforces it): do not show, hint at, or
+   paraphrase it. When the `answer` result contains `patterns`, show them once, in the feedback ("Patterns: …").
    Always show `problem.statement` when it is present, so I know which problem a question refers to (it is
    omitted only if `settings.json → showStatement` is false, i.e. I asked for recall-from-title practice).
    Show `code` as a Python block when present. **Complexity questions** (`time_complexity` / `space_complexity`)

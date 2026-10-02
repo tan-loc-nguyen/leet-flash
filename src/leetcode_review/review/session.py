@@ -137,7 +137,7 @@ class ReviewEngine:
             "notes": plan.notes,
             "problems": [
                 {"slug": e.slug, "title": cat.problems[e.slug].title, "bucket": e.bucket,
-                 "difficulty": cat.problems[e.slug].difficulty, "pattern": cat.primary_pattern(e.slug)}
+                 "difficulty": cat.problems[e.slug].difficulty}   # patterns stay hidden: naming one gives the answer away
                 for e in plan.entries
             ],
         }
@@ -209,7 +209,7 @@ class ReviewEngine:
                 "title": p.title,
                 "difficulty": p.difficulty,
                 "status": p.status,
-                "patterns": cat.patterns(p.slug) or p.tags,
+                "patterns": self._patterns(cat, p.slug) if self._patterns_revealed(prob, cat) else None,
                 "bucket": prob["bucket"],
                 "notes": [n.text for n in p.notes] if qn == 1 else [],
                 "statement": p.problem_statement if qn == 1 and self.settings.get("showStatement", True) else None,
@@ -228,6 +228,23 @@ class ReviewEngine:
             "solutionCode": self._solution_code(card, p, cat.packs[prob["slug"]]),
             "hintsUsed": prob["hintLevel"],
         }
+
+    @staticmethod
+    def _patterns_revealed(prob: dict, cat: Catalog) -> bool:
+        """Patterns are shown only once the problem's pattern card is answered (they would give it away)."""
+        answered = {a["cardId"] for a in prob["answers"]}
+        has_pattern_card = False
+        for cid in prob["cardIds"]:
+            card = ReviewEngine._card(cat, prob["slug"], cid)
+            if card.category == "pattern":
+                has_pattern_card = True
+                if cid not in answered:
+                    return False
+        return has_pattern_card  # no pattern card drawn: stay hidden until the problem is finished
+
+    @staticmethod
+    def _patterns(cat: Catalog, slug: str) -> list[str]:
+        return cat.patterns(slug) or cat.problems[slug].tags
 
     @staticmethod
     def _solution_code(card: Card, problem, pack) -> dict | None:
@@ -313,6 +330,8 @@ class ReviewEngine:
 
         out = {"recorded": True, "result": result, "correctAnswer": card.answer, "explanation": card.explanation,
                "keyPoints": card.key_points, **{k: v for k, v in feedback.items() if v}}
+        if card.category == "pattern" or len(prob["answers"]) >= len(prob["cardIds"]):
+            out["patterns"] = self._patterns(cat, prob["slug"])  # now safe to show
         if len(prob["answers"]) >= len(prob["cardIds"]):
             out["problemFinished"] = True
             out["problemResult"] = self._finish_problem(sess, prob, cat, store, now)

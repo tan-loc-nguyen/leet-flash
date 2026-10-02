@@ -255,3 +255,26 @@ def test_solution_code_preference():
     assert f(card, NS(latest_submission=sub), NS(canonical_code=None, personal_solution=NS(is_optimal=True)))["label"] == "Your accepted solution"
     assert f(card, NS(latest_submission=sub), NS(canonical_code=None, personal_solution=NS(is_optimal=False))) is None
     assert f(NS(category="pattern", code=None), NS(latest_submission=sub), NS(canonical_code="x", personal_solution=None)) is None
+
+
+def test_patterns_are_hidden_until_the_pattern_card_is_answered(engine):
+    engine.settings["cardsPerProblem"] = 5                      # draw every card, including the pattern card
+    started = engine.start(mode="cram", target=1)
+    assert all("pattern" not in p for p in started["problems"])      # the plan itself must not name patterns
+    q = engine.next_question()
+    assert q["card"]["category"] == "pattern" and q["problem"]["patterns"] is None
+    out = engine.answer(result="correct")
+    assert out["patterns"]                                       # revealed in the feedback to the pattern card
+    q2 = engine.next_question()
+    assert q2["problem"]["patterns"] == out["patterns"]
+
+
+def test_patterns_stay_hidden_when_no_pattern_card_is_drawn(engine):
+    engine.settings["cardsPerProblem"] = 1
+    engine.start(mode="cram", target=1)
+    q = engine.next_question()
+    if q["card"]["category"] == "pattern":                       # this draw happened to include it
+        return
+    assert q["problem"]["patterns"] is None
+    out = engine.answer(result="correct")
+    assert out["problemFinished"] and out["patterns"]            # shown once the problem is over
