@@ -78,6 +78,6 @@ try:
               "dueTotal": sum(counts.get(b, 0) for b in URGENT_BUCKETS),
               "missingReviewPacks": len(cat.missing_packs()),
               "topicWeights": topics.summary(cat, [sl for sl in cat.problems if cat.has_cards(sl)])})
-except SessionError as exc:
+except (SessionError, ValueError) as exc:  # ValueError: invalid settings.json (e.g. unknown topic in topicWeights)
     emit({"error": str(exc)})
     sys.exit(1)

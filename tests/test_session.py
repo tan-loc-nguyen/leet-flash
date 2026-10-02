@@ -218,7 +218,7 @@ def test_statement_shown_on_first_question_only_and_can_be_disabled(engine):
     engine.start(mode="cram", target=1)
     q1 = engine.next_question()
     assert q1["problem"]["statement"]
-    engine.answer(choice="A")
+    engine.answer(result="correct")
     q2 = engine.next_question()
     assert q2["problem"]["statement"] is None
 

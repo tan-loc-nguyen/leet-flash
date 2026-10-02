@@ -140,3 +140,12 @@ def test_check_topic_labels_script(paths, run):
     rows = json.loads(run("check_topic_labels.py", "--json").stdout)
     assert [r["slug"] for r in rows] == ["odd-one"] and rows[0]["pack topic"] == "Greedy"
     assert "odd-one" not in run("set_topic_weight.py").stdout
+
+
+def test_bad_topic_weights_give_a_clean_error_not_a_traceback(paths, run):
+    make_problem(paths, "two-sum", leetcode_id=1)
+    make_pack(paths, "two-sum")
+    paths.settings.parent.mkdir(parents=True, exist_ok=True)
+    paths.settings.write_text(json.dumps({"topicWeights": {"Binary serach": 5}}))
+    p = run("review.py", "start", "--mode", "daily", "--target", "1", check=False)
+    assert p.returncode == 1 and "unknown topic 'Binary serach'" in p.stdout and "Traceback" not in p.stderr
