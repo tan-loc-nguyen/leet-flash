@@ -1,5 +1,24 @@
 {
   "dailyProblemTarget": 10,
   "cardsPerProblem": 4,
-  "leetcodeRequestDelaySeconds": 0.4
+  "leetcodeRequestDelaySeconds": 0.4,
+  "topicWeights": {
+    "Hashtable / array": 13,
+    "Dynamic programming": 12,
+    "Heap / top-k": 12,
+    "Binary search": 9,
+    "Graph DFS/BFS": 8,
+    "Two pointers": 7,
+    "Tree DFS/BFS": 6,
+    "Sorting / intervals": 6,
+    "Linked list": 5,
+    "Sliding window": 5,
+    "Monotonic stack / deque": 5,
+    "Backtracking": 4,
+    "Topological sort": 4,
+    "Plain stack": 4,
+    "Greedy": 4,
+    "Union-find": 4
+  },
+  "unlistedTopicWeight": 1
 }

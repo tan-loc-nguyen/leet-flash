@@ -80,8 +80,64 @@ class Paths:
 
 # --------------------------------------------------------------------------- settings
 
+# Interview-likelihood weight per topic (relative scale; only ratios matter). Override in data/state/settings.json
+# (`topicWeights`, merged per key) or with scripts/set_topic_weight.py.
+DEFAULT_TOPIC_WEIGHTS = {
+    "Hashtable / array": 13,
+    "Dynamic programming": 12,
+    "Heap / top-k": 12,
+    "Binary search": 9,
+    "Graph DFS/BFS": 8,
+    "Two pointers": 7,
+    "Tree DFS/BFS": 6,
+    "Sorting / intervals": 6,
+    "Linked list": 5,
+    "Sliding window": 5,
+    "Monotonic stack / deque": 5,
+    "Backtracking": 4,
+    "Topological sort": 4,
+    "Plain stack": 4,
+    "Greedy": 4,
+    "Union-find": 4,
+}
+# Which LeetCode tags (Problem.tags) belong to each weighted topic. The table is a reference for how likely a topic
+# is to be asked; a problem's weight is derived from its tags by review/topics.py:
+#   * DFS/BFS tags count toward "Tree DFS/BFS" when the problem also has a tree tag, else "Graph DFS/BFS";
+#   * the generic row (Array, Hash Table, String, ...) only applies when no technique row matches;
+#   * several technique rows -> their mean; no match at all -> the unlisted weight.
+GENERIC_TOPIC = "Hashtable / array"
+TREE_TAGS = ("Tree", "Binary Tree", "Binary Search Tree", "Lowest Common Ancestor", "Cartesian Tree")
+DFS_BFS_TAGS = ("Depth-First Search", "Breadth-First Search", "Bidirectional Search")
+TOPIC_TAGS = {
+    "Hashtable / array": ("Array", "Hash Table", "String", "Prefix Sum", "Matrix", "Counting", "Hash Function",
+                          "Simulation", "String Matching", "Data Stream"),
+    "Dynamic programming": ("Dynamic Programming", "Memoization", "Knapsack Problem", "0-1 Knapsack",
+                            "Complete Knapsack", "DP on Trees"),
+    "Heap / top-k": ("Heap (Priority Queue)", "Quickselect"),
+    "Binary search": ("Binary Search",),
+    "Graph DFS/BFS": ("Graph Theory", "Shortest Path", "Bipartite Graph", "Graph Coloring", "Directed Acyclic Graph"),
+    "Two pointers": ("Two Pointers",),
+    "Tree DFS/BFS": TREE_TAGS,
+    "Sorting / intervals": ("Sorting", "Merge Sort", "Bucket Sort", "Counting Sort", "Quicksort", "Radix Sort",
+                            "Tournament Sort", "Bubble Sort", "Line Sweep"),
+    "Linked list": ("Linked List", "Doubly-Linked List", "Floyd's Cycle Finding Algorithm"),
+    "Sliding window": ("Sliding Window",),
+    "Monotonic stack / deque": ("Monotonic Stack", "Monotonic Queue"),
+    "Backtracking": ("Backtracking",),
+    "Topological sort": ("Topological Sort",),
+    "Plain stack": ("Stack", "Bracket Sequences"),
+    "Greedy": ("Greedy",),
+    "Union-find": ("Union-Find",),
+}
+DEFAULT_UNLISTED_TOPIC_WEIGHT = 1.0  # problems with no tag in TOPIC_TAGS (Math, Design, Bit Manipulation, ...)
+URGENT_TOPIC_NUDGE = 4.0     # priority points per doubling of the topic factor for overdue/due/recent-failure problems
+URGENT_TOPIC_NUDGE_CAP = 6.0  # keeps the nudge inside a bucket: gaps between urgent buckets are >= 15
+WEAK_MODE_TOPIC_EXPONENT = 0.5  # "quiz me on my weak problems" is damped: factor ** 0.5
+
 DEFAULT_SETTINGS = {
     "dailyProblemTarget": 10,
+    "topicWeights": DEFAULT_TOPIC_WEIGHTS,
+    "unlistedTopicWeight": DEFAULT_UNLISTED_TOPIC_WEIGHT,
     "cardsPerProblem": 4,  # 3-5 recommended
     "showStatement": True,  # include the problem statement with the first question of each problem
     "leetcodeRequestDelaySeconds": 0.4,
@@ -90,8 +146,11 @@ DEFAULT_SETTINGS = {
 
 def load_settings(paths: Paths) -> dict:
     settings = dict(DEFAULT_SETTINGS)
+    settings["topicWeights"] = dict(DEFAULT_TOPIC_WEIGHTS)
     if paths.settings.exists():
-        settings.update(json.loads(paths.settings.read_text()))
+        user = json.loads(paths.settings.read_text())
+        settings["topicWeights"].update(user.pop("topicWeights", {}))  # per-key override
+        settings.update(user)
     return settings
 
 

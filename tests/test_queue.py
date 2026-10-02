@@ -146,3 +146,78 @@ def test_order_for_diversity_keeps_all_entries(paths, now, rng):
     cat = Catalog(paths, now)
     entries = [QueueEntry(s, "new", 1.0) for s in cat.problems]
     assert sorted(e.slug for e in order_for_diversity(cat, entries, rng)) == sorted(cat.problems)
+
+
+# --------------------------------------------------------------------------- topic weights
+
+
+def test_topic_weight_validation_and_per_key_override(paths):
+    import json
+    import pytest
+    from leetcode_review.config import load_settings
+    from leetcode_review.review import topics
+    paths.settings.parent.mkdir(parents=True, exist_ok=True)
+    paths.settings.write_text(json.dumps({"topicWeights": {"Greedy": 40}}))
+    s = load_settings(paths)
+    assert s["topicWeights"]["Greedy"] == 40 and s["topicWeights"]["Binary search"] == 9      # merged per key
+    paths.settings.write_text(json.dumps({"topicWeights": {"Nonsense": 1}}))
+    with pytest.raises(ValueError):
+        topics.effective_weights(load_settings(paths))
+    paths.settings.write_text(json.dumps({"topicWeights": {"Greedy": -1}}))
+    with pytest.raises(ValueError):
+        topics.effective_weights(load_settings(paths))
+
+
+def test_primary_pattern_decides_the_topic(paths, now):
+    from leetcode_review.review import topics
+    make_problem(paths, "tree-dfs", tags=("Tree",))
+    make_pack(paths, "tree-dfs", patterns=("Tree", "DFS"))        # DFS alone would be "Graph DFS/BFS"
+    make_problem(paths, "mystery", tags=("Weird",))
+    make_pack(paths, "mystery", patterns=("Weird",))
+    cat = Catalog(paths, now)
+    assert topics.topic_of(cat, "tree-dfs") == ("Tree DFS/BFS", 6.0)
+    label, w = topics.topic_of(cat, "mystery")
+    assert label.startswith("Unlisted") and w == 1.0
+    assert topics.factor(cat, "tree-dfs") > topics.factor(cat, "mystery")
+
+
+def test_new_problems_follow_topic_weights(paths, now):
+    specs = {f"arr-{i}": ("Array / Hashing", None) for i in range(15)}
+    specs.update({f"math-{i}": ("Math", None) for i in range(15)})        # unlisted: weight 1 vs 13
+    setup_problems(paths, specs)
+    cat = Catalog(paths, now)
+    picks = Counter()
+    for seed in range(300):
+        for e in build_daily(cat, 4, random.Random(seed)).entries:
+            picks[e.slug.split("-")[0]] += 1
+    share = picks["arr"] / (picks["arr"] + picks["math"])
+    assert share > 0.85, picks                                           # expected ~13/14
+
+
+def test_urgent_problems_keep_bucket_order_and_are_never_dropped(paths, now, rng):
+    setup_problems(paths, {
+        "due-array": ("Array / Hashing", ps(now, due_in=0)),
+        "overdue-math": ("Math", ps(now, due_in=-3)),              # low weight but overdue: still first
+        "due-math": ("Math", ps(now, due_in=0)),
+    })
+    cat = Catalog(paths, now)
+    slugs = [e.slug for e in build_daily(cat, 3, rng).entries]
+    assert set(slugs) == {"due-array", "overdue-math", "due-math"}     # nothing is dropped when it fits
+    top = build_daily(cat, 1, random.Random(1)).entries[0]
+    assert top.slug == "overdue-math" and top.bucket == "overdue"      # nudge cannot cross a bucket
+    # within one bucket the higher-weight topic is preferred when only one slot is free
+    only_due = build_daily(cat, 2, random.Random(1)).entries
+    assert {e.slug for e in only_due} == {"overdue-math", "due-array"}
+
+
+def test_cram_and_weak_use_weights_too(paths, now):
+    specs = {f"arr-{i}": ("Array / Hashing", ps(now, level=2, due_in=3, accuracy=0.5)) for i in range(10)}
+    specs.update({f"math-{i}": ("Math", ps(now, level=2, due_in=3, accuracy=0.5)) for i in range(10)})
+    setup_problems(paths, specs)
+    cat = Catalog(paths, now)
+    for mode in ("cram", "weak"):
+        picks = Counter()
+        for seed in range(200):
+            for e in build_queue(cat, mode, 3, random.Random(seed)).entries:
+                picks[e.slug.split("-")[0]] += 1
+        assert picks["arr"] > picks["math"], (mode, picks)

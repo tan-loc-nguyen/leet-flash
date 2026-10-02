@@ -116,3 +116,17 @@ def test_flag_card_flow(paths, run):
     assert json.loads(run("flag_card.py", "list", "--all", "--json").stdout)[0]["status"] == "resolved"
     # re-flagging after resolution is allowed
     assert "flag-0002" in run("flag_card.py", "add", "two-sum", "two-sum-pattern-01", "--reason", "again").stdout
+
+
+def test_set_topic_weight_script(paths, run):
+    make_problem(paths, "bs", leetcode_id=1)
+    make_pack(paths, "bs", patterns=("Binary Search",))
+    out = run("set_topic_weight.py").stdout
+    assert "Binary search" in out and "Hashtable / array" in out
+    assert run("set_topic_weight.py", "binary", "20").returncode == 0                    # unique substring match
+    assert json.loads(paths.settings.read_text())["topicWeights"]["Binary search"] == 20
+    assert run("set_topic_weight.py", "stack", "5", check=False).returncode != 0         # ambiguous: two stack topics
+    assert run("set_topic_weight.py", "nonsense", "5", check=False).returncode != 0
+    assert run("set_topic_weight.py", "greedy", "-1", check=False).returncode != 0
+    assert run("set_topic_weight.py", "--reset").returncode == 0
+    assert json.loads(paths.settings.read_text())["topicWeights"]["Binary search"] == 9

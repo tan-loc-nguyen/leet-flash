@@ -9,6 +9,7 @@ from datetime import datetime
 from .. import config as C
 from ..catalog import Catalog, Filters
 from ..timeutil import day_start, parse_iso
+from . import topics
 from .scheduler import days_overdue
 
 MODES = ("daily", "weak", "cram", "interview", "filtered")
@@ -136,6 +137,15 @@ def _select(
     return picked
 
 
+def _apply_topic_weight(cat: Catalog, e: QueueEntry) -> QueueEntry:
+    """Urgent problems get a small bucket-preserving nudge; the rest are scaled by the topic factor."""
+    if e.bucket in C.URGENT_BUCKETS:
+        e.priority += topics.urgent_nudge(cat, e.slug)
+    else:
+        e.priority *= topics.factor(cat, e.slug)
+    return e
+
+
 # --------------------------------------------------------------------------- plans
 
 
@@ -150,7 +160,7 @@ def build_daily(cat: Catalog, target: int, rng: random.Random, f: Filters | None
     for slug in _candidates(cat, f or Filters()):
         c = classify(cat, slug, now)
         if c:
-            entries.append(QueueEntry(slug, *c))
+            entries.append(_apply_topic_weight(cat, QueueEntry(slug, *c)))
     counts: dict[str, int] = {}
     for e in entries:
         counts[e.bucket] = counts.get(e.bucket, 0) + 1
@@ -178,7 +188,7 @@ def build_weak(cat: Catalog, target: int, rng: random.Random, f: Filters | None 
         if ps.last_score is not None and ps.last_score < C.DEMOTE_SCORE:
             w += 3
         if w > 0:
-            scored.append(QueueEntry(slug, "weak", w + 1))
+            scored.append(QueueEntry(slug, "weak", (w + 1) * topics.factor(cat, slug) ** C.WEAK_MODE_TOPIC_EXPONENT))
     chosen = _select(cat, sorted(scored, key=lambda e: -e.priority)[: target * 2], [], target, rng)
     plan = QueuePlan("weak", target, order_for_diversity(cat, chosen, rng), {"weak": len(scored)})
     if not scored:
@@ -198,7 +208,7 @@ def _sample_by_level(cat: Catalog, slugs: list[str], target: int, rng: random.Ra
             w *= 3
         if recency and ps and ps.last_review:
             w *= 1 + min((cat.now - parse_iso(ps.last_review)).days, 60) / 30
-        entries.append(QueueEntry(slug, "sampled", w))
+        entries.append(QueueEntry(slug, "sampled", w * topics.factor(cat, slug)))
     return order_for_diversity(cat, _select(cat, [], entries, target, rng), rng)
 
 

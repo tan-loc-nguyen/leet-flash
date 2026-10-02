@@ -20,6 +20,7 @@ from leetcode_review.catalog import Catalog
 from leetcode_review.cli import add_filter_args, emit, filters_from_args
 from leetcode_review.config import Paths
 from leetcode_review.config import URGENT_BUCKETS
+from leetcode_review.review import topics
 from leetcode_review.review.queue import MODES, bucket_counts
 from leetcode_review.review.session import ReviewEngine, SessionError
 from leetcode_review.schemas import CATEGORIES
@@ -75,7 +76,8 @@ try:
         counts = bucket_counts(cat)
         emit({"dailyProblemTarget": engine.settings["dailyProblemTarget"], "candidatesByBucket": counts,
               "dueTotal": sum(counts.get(b, 0) for b in URGENT_BUCKETS),
-              "missingReviewPacks": len(cat.missing_packs())})
+              "missingReviewPacks": len(cat.missing_packs()),
+              "topicWeights": topics.summary(cat, [sl for sl in cat.problems if cat.has_cards(sl)])})
 except SessionError as exc:
     emit({"error": str(exc)})
     sys.exit(1)

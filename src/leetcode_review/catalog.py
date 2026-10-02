@@ -9,7 +9,7 @@ from dataclasses import dataclass, field
 from datetime import datetime
 
 from . import config as C
-from .config import Paths
+from .config import Paths, load_settings
 from .content.loader import enabled_cards, list_pack_slugs, load_lists, load_pack
 from .review.scheduler import due_status
 from .schemas import Problem, ProblemState, ReviewPack
@@ -59,6 +59,7 @@ class Catalog:
     def __init__(self, paths: Paths, now: datetime):
         self.paths = paths
         self.now = now
+        self.settings = load_settings(paths)
         self.problems: dict[str, Problem] = ProblemStore(paths).load_all()
         self.state: dict[str, ProblemState] = ReviewStateStore(paths).load()
         self.lists: dict[str, dict] = load_lists(paths)
