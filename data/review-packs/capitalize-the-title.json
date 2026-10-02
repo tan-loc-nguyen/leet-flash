@@ -99,21 +99,21 @@
       "category": "edge_case",
       "type": "multiple_choice",
       "promptVariants": [
-        "What does 'capiTalIze tHe titLe' become?",
+        "What does 'Of mICE and meN' become?",
         "How are 2-letter words treated?"
       ],
       "options": [
-        "'Capitalize The Title'",
-        "'capitalize the title'",
-        "'Capitalize the Title'",
-        "'CAPITALIZE THE TITLE'"
+        "'of Mice And Men'",
+        "'Of Mice And Men'",
+        "'of mice and men'",
+        "'of Mice and Men'"
       ],
-      "answer": "'Capitalize The Title'",
-      "explanation": "All three words have more than two letters.",
+      "answer": "'of Mice And Men'",
+      "explanation": "Words of one or two letters are lower-cased entirely (even the first word); every longer word gets a capital first letter and a lower-case rest.",
       "incorrectOptionExplanations": {
-        "'capitalize the title'": "Words longer than 2 are capitalised.",
-        "'Capitalize the Title'": "'the' has 3 letters, so it is capitalised.",
-        "'CAPITALIZE THE TITLE'": "Only the first letter is uppercase."
+        "'Of Mice And Men'": "'Of' has two letters, so it must stay lower case.",
+        "'of mice and men'": "Words longer than two letters still get a capital first letter.",
+        "'of Mice and Men'": "'and' has three letters, so it is capitalised too."
       }
     }
   ],

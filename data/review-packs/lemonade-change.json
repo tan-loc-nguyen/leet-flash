@@ -116,21 +116,21 @@
       "category": "edge_case",
       "type": "multiple_choice",
       "promptVariants": [
-        "Can you serve [5,5,10,10,20]?",
+        "Can you serve [5,5,10,20,20]?",
         "Why does it fail?"
       ],
       "options": [
-        "No: at the last 20 no $5 bill is left, so $15 of change fails",
-        "Yes: every 10 has a 5 available to give back as change",
-        "Yes, by giving two 10s as the change for the final 20 bill",
-        "Only if the first customer in line pays with a 20 bill"
+        "No: the first 20 takes the 10 and a 5, so the last 20 has no change",
+        "Yes: every 20 can be paid back with three 5s",
+        "Yes: each 20 needs only one 10 as change",
+        "Only if the 10 is kept back for a later customer"
       ],
-      "answer": "No: at the last 20 no $5 bill is left, so $15 of change fails",
-      "explanation": "Trace the counts: after 5,5 you hold two 5s; the first 10 leaves one 5 and one 10; the second 10 needs a 5 and leaves zero 5s and two 10s. The 20 then needs change of 15 = one 10 + one 5 (or three 5s), but no 5 remains, so it fails.",
+      "answer": "No: the first 20 takes the 10 and a 5, so the last 20 has no change",
+      "explanation": "After 5,5 you hold two 5s; the 10 leaves one 5 and one 10; the first 20 uses the 10 and the 5 (change 15); the last 20 then finds no bills at all.",
       "incorrectOptionExplanations": {
-        "Yes: every 10 has a 5 available to give back as change": "The required 5 is missing.",
-        "Yes, by giving two 10s as the change for the final 20 bill": "Two 10s give $20, not $15.",
-        "Only if the first customer in line pays with a 20 bill": "A first 20 can never be served."
+        "Yes: every 20 can be paid back with three 5s": "Only one 5 remains when the first 20 arrives; three 5s are not available.",
+        "Yes: each 20 needs only one 10 as change": "A 20 needs change of 15, so one 10 is not enough.",
+        "Only if the 10 is kept back for a later customer": "Serving customers in order does not allow choosing to keep the 10."
       }
     }
   ],

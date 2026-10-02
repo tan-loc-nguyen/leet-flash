@@ -119,21 +119,21 @@
       "category": "edge_case",
       "type": "multiple_choice",
       "promptVariants": [
-        "What is the result for nums = [1, 1, 2, 1, 1] and k = 2?",
+        "What is the result for nums = [2, 2, 1] and k = 2?",
         "How many subarrays have an even product?"
       ],
       "options": [
-        "[9, 6]: nine subarrays have product % 2 = 0 and six have 1",
-        "[6, 9]: six even products and nine odd products",
-        "[15, 0]: every subarray has an even product",
-        "[5, 10]: the counts are split evenly in a balanced way"
+        "[5, 1]: five subarrays have an even product, one is odd",
+        "[1, 5]: one subarray is even, five are odd",
+        "[6, 0]: every subarray has an even product",
+        "[3, 3]: the six subarrays split evenly by parity"
       ],
-      "answer": "[9, 6]: nine subarrays have product % 2 = 0 and six have 1",
-      "explanation": "The subarrays containing the 2 (3 * 3 = 9) are even.",
+      "answer": "[5, 1]: five subarrays have an even product, one is odd",
+      "explanation": "Six subarrays exist. Only [1] has an odd product; every other subarray contains a 2, so its product is even: result[0] = 5, result[1] = 1.",
       "incorrectOptionExplanations": {
-        "[6, 9]: six even products and nine odd products": "The subarrays containing the 2 are even.",
-        "[15, 0]: every subarray has an even product": "Subarrays without the 2 are odd.",
-        "[5, 10]: the counts are split evenly in a balanced way": "There are 15 subarrays in total."
+        "[1, 5]: one subarray is even, five are odd": "The counts are reversed: most subarrays contain a 2 and are even.",
+        "[6, 0]: every subarray has an even product": "The single subarray [1] has product 1, which is odd.",
+        "[3, 3]: the six subarrays split evenly by parity": "Containing a 2 makes a product even, so the split is not even."
       }
     }
   ],

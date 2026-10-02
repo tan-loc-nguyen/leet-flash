@@ -111,21 +111,21 @@
       "category": "edge_case",
       "type": "multiple_choice",
       "promptVariants": [
-        "What is the answer for 'aeiaeia'?",
-        "What about 'bbb'?"
+        "What is the answer for 'eeiioo'?",
+        "What about 'xyz'?"
       ],
       "options": [
-        "3 (a appears 3 times, no consonant), and 3",
-        "7 (all letters are vowels), and 3",
-        "3 (a appears 3 times), and 0 (no vowels in 'bbb')",
-        "1 (one distinct vowel), and 3"
+        "2 (each vowel appears twice, no consonant), and 1",
+        "6 (all letters are vowels), and 1",
+        "2 (each vowel appears twice), and 3 (three consonants)",
+        "1 (one distinct vowel), and 1"
       ],
-      "answer": "3 (a appears 3 times, no consonant), and 3",
-      "explanation": "Vowels: a = 3 is the maximum; there is no consonant so the sum is 3. 'bbb' has consonant maximum 3 and no vowels.",
+      "answer": "2 (each vowel appears twice, no consonant), and 1",
+      "explanation": "The most frequent vowel appears twice and there is no consonant, so the sum is 2. In 'xyz' every consonant appears once, so the maximum is 1 and there are no vowels.",
       "incorrectOptionExplanations": {
-        "7 (all letters are vowels), and 3": "Not the sum of frequencies of all vowels.",
-        "3 (a appears 3 times), and 0 (no vowels in 'bbb')": "'bbb' has consonants.",
-        "1 (one distinct vowel), and 3": "The first has a maximum vowel frequency of 3."
+        "6 (all letters are vowels), and 1": "The sum uses the maximum frequency of one vowel, not the count of all vowels.",
+        "2 (each vowel appears twice), and 3 (three consonants)": "The consonant part is the maximum frequency of a single consonant (1), not their number.",
+        "1 (one distinct vowel), and 1": "Frequencies count occurrences of a letter, not distinct letters."
       }
     }
   ],

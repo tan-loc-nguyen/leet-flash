@@ -127,21 +127,21 @@
       "category": "edge_case",
       "type": "multiple_choice",
       "promptVariants": [
-        "What does the algorithm return for [2,1]?",
-        "Which node is the middle of a 2-node list?"
+        "What does the algorithm return for a single-node list [9]?",
+        "Which node is the middle of a 1-node list?"
       ],
       "options": [
-        "[2]",
-        "[1]",
-        "[]",
-        "[2,1]"
+        "[]: the only node is the middle and is removed",
+        "[9]: with one node nothing is removed",
+        "An error: there is no previous node to relink",
+        "[0]: the value is reset instead of removing it"
       ],
-      "answer": "[2]",
-      "explanation": "floor(2/2) = 1 is the middle index, so the second node is deleted. ([2]: index 1 is removed)",
+      "answer": "[]: the only node is the middle and is removed",
+      "explanation": "floor(1/2) = 0 is the middle index, so the head itself is deleted and the result is an empty list (None).",
       "incorrectOptionExplanations": {
-        "[1]": "That would delete the head (index 0).",
-        "[]": "Only a single-node list becomes empty.",
-        "[2,1]": "A node must be removed."
+        "[9]: with one node nothing is removed": "The only node is the middle, so it is deleted.",
+        "An error: there is no previous node to relink": "A dummy node before the head avoids the missing previous node.",
+        "[0]: the value is reset instead of removing it": "The node is unlinked, not overwritten."
       }
     }
   ],

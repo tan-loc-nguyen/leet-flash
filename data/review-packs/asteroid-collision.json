@@ -116,21 +116,21 @@
       "category": "edge_case",
       "type": "multiple_choice",
       "promptVariants": [
-        "What remains for [10, 2, -5]?",
+        "What remains for [8, 3, -4, -9]?",
         "Which asteroids survive?"
       ],
       "options": [
-        "[10]: -5 destroys 2 and then explodes against 10",
-        "[10, -5]: -5 survives because it is larger than 2",
-        "[-5]: -5 is the largest in magnitude",
-        "[]: all asteroids cancel"
+        "[-9]: -4 dies against 8, then -9 destroys 8",
+        "[8]: 8 survives both left-moving asteroids",
+        "[8, -9]: -9 never meets the 8 on its way left",
+        "[]: all the asteroids cancel each other out"
       ],
-      "answer": "[10]: -5 destroys 2 and then explodes against 10",
-      "explanation": "-5 beats 2 (pop) then loses to 10.",
+      "answer": "[-9]: -4 dies against 8, then -9 destroys 8",
+      "explanation": "-4 destroys 3 and then loses to 8; the 8 is still on the stack when -9 arrives, and -9 is bigger, so it destroys 8 and survives.",
       "incorrectOptionExplanations": {
-        "[10, -5]: -5 survives because it is larger than 2": "It must still face the 10.",
-        "[-5]: -5 is the largest in magnitude": "10 is larger in magnitude.",
-        "[]: all asteroids cancel": "The 10 survives."
+        "[8]: 8 survives both left-moving asteroids": "-9 is larger than 8, so 8 cannot survive it.",
+        "[8, -9]: -9 never meets the 8 on its way left": "They move towards each other along the line, so they do meet.",
+        "[]: all the asteroids cancel each other out": "Only equal sizes cancel; -9 is larger than 8."
       }
     }
   ],

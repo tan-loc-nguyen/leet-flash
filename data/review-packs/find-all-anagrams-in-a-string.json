@@ -143,7 +143,7 @@
       "type": "multiple_choice",
       "promptVariants": [
         "What happens when len(p) > len(s)?",
-        "What does the algorithm return for s = 'ab', p = 'abc'?"
+        "What does the algorithm return for s = 'xy', p = 'xyz'?"
       ],
       "options": [
         "An empty list",
@@ -152,11 +152,11 @@
         "[-1]"
       ],
       "answer": "An empty list",
-      "explanation": "The window can never reach size len(p).",
+      "explanation": "The window can never reach size len(p), so no start index qualifies.",
       "incorrectOptionExplanations": {
-        "[0]": "No window of size 3 exists.",
-        "An error": "No invalid indexing.",
-        "[-1]": "Not a valid index result."
+        "[0]": "A start index needs a full window of len(p) characters.",
+        "An error": "Nothing is invalid here; the result is simply empty.",
+        "[-1]": "Indices are never negative; the result is a list of starts."
       }
     }
   ],

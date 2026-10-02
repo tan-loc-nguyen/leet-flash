@@ -99,21 +99,21 @@
       "category": "edge_case",
       "type": "multiple_choice",
       "promptVariants": [
-        "What is returned for [1,4,2,5]?",
+        "What is returned for [7,10,8,12]?",
         "What if there are no gaps?"
       ],
       "options": [
-        "[3]; and []",
-        "[3,4]; and [1]",
-        "[]; and []",
-        "[1,3]; and [2]"
+        "[9,11]; and []",
+        "[9,10,11]; and []",
+        "[9,11]; and [3,4,5]",
+        "[7,12]; and [3]"
       ],
-      "answer": "[3]; and []",
-      "explanation": "3 is missing between 1 and 5; with consecutive values the result is empty.",
+      "answer": "[9,11]; and []",
+      "explanation": "Between the minimum 7 and the maximum 12 the values 9 and 11 are missing; with consecutive values (such as [3,4,5]) nothing is missing.",
       "incorrectOptionExplanations": {
-        "[3,4]; and [1]": "4 is present.",
-        "[]; and []": "3 is missing in the first.",
-        "[1,3]; and [2]": "1 is present."
+        "[9,10,11]; and []": "10 is present in the array, so it is not missing.",
+        "[9,11]; and [3,4,5]": "Consecutive values leave no gaps, so the result is empty.",
+        "[7,12]; and [3]": "The endpoints are in the array; only values strictly between them can be missing."
       }
     }
   ],

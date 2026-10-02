@@ -136,21 +136,21 @@
       "category": "edge_case",
       "type": "multiple_choice",
       "promptVariants": [
-        "What is the answer for [1,2,3,2,2]?",
+        "What is the answer for [3,3,1,2,2,2,1]?",
         "Which window is the best?"
       ],
       "options": [
-        "4",
-        "3",
         "5",
-        "2"
+        "7",
+        "4",
+        "3"
       ],
-      "answer": "4",
-      "explanation": "[1,2] has 2 types, but the longest valid window is [2,3,2,2] (types 2 and 3).",
+      "answer": "5",
+      "explanation": "The window [1,2,2,2,1] holds only two fruit types and has length 5; extending left to the 3s would add a third type.",
       "incorrectOptionExplanations": {
-        "3": "Shorter than [2,3,2,2].",
-        "5": "The whole array has 3 types.",
-        "2": "Much shorter than achievable."
+        "7": "The whole array has three types (3, 1, 2), so it is not valid.",
+        "4": "A longer window with two types exists.",
+        "3": "That is the length of [3,3,1] or [2,2,2], both shorter than the best window."
       }
     }
   ],

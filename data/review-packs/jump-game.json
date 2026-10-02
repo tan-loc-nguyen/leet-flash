@@ -113,21 +113,21 @@
       "category": "edge_case",
       "type": "multiple_choice",
       "promptVariants": [
-        "What is the result for [3, 2, 1, 0, 4]?",
+        "What is the result for [1, 2, 0, 0, 5]?",
         "Where do you get stuck?"
       ],
       "options": [
-        "False: every path leads to index 3 whose jump length is 0",
-        "True: index 0 can jump straight to index 3 and then to 4",
+        "False: nothing can get past index 3, whose jump length is 0",
+        "True: index 1 can jump 2 steps to index 3 and then to 4",
         "True: the array has enough total jump length",
         "False: index 0 cannot jump at all"
       ],
-      "answer": "False: every path leads to index 3 whose jump length is 0",
-      "explanation": "The maximum reach is 3 < 4.",
+      "answer": "False: nothing can get past index 3, whose jump length is 0",
+      "explanation": "The farthest reachable index is 3 (from index 1), and index 3 has jump length 0, so index 4 is out of reach.",
       "incorrectOptionExplanations": {
-        "True: index 0 can jump straight to index 3 and then to 4": "Index 3 has jump length 0.",
-        "True: the array has enough total jump length": "Total length is not what matters.",
-        "False: index 0 cannot jump at all": "It can jump up to three steps."
+        "True: index 1 can jump 2 steps to index 3 and then to 4": "Index 3 has jump length 0, so it cannot continue to index 4.",
+        "True: the array has enough total jump length": "Total jump length is irrelevant; reachability index by index is what matters.",
+        "False: index 0 cannot jump at all": "Index 0 can jump one step to index 1."
       }
     }
   ],

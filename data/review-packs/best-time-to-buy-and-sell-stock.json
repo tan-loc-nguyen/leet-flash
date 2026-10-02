@@ -124,21 +124,21 @@
       "category": "edge_case",
       "type": "multiple_choice",
       "promptVariants": [
-        "What is the answer for [7,6,4,3,1]?",
-        "And for [7,1,5,3,6,4]?"
+        "What is the answer for [9,7,4,2]?",
+        "And for [3,8,1,6]?"
       ],
       "options": [
         "0, and 5",
-        "-6, and 5",
-        "0, and 6",
-        "1, and 5"
+        "-7, and 5",
+        "0, and 7",
+        "2, and 5"
       ],
       "answer": "0, and 5",
-      "explanation": "Falling prices give no profit; buying at 1 and selling at 6 gives 5.",
+      "explanation": "Falling prices give no profit (0). In [3,8,1,6] buying at 3 and selling at 8 gives 5, which beats 1 -> 6 (also 5).",
       "incorrectOptionExplanations": {
-        "-6, and 5": "Profit is never negative here.",
-        "0, and 6": "5 is the maximum for the second.",
-        "1, and 5": "The first has no profit."
+        "-7, and 5": "Profit is never negative: you may simply not trade.",
+        "0, and 7": "8 - 1 = 7 sells before it buys; the buy must come first.",
+        "2, and 5": "Prices only fall in the first array, so there is no profit."
       }
     }
   ],

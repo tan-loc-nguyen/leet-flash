@@ -133,21 +133,21 @@
       "category": "edge_case",
       "type": "multiple_choice",
       "promptVariants": [
-        "What is the result of [9,9,9,9] + [1]?",
+        "What is the result of [5,5] + [5,5] (digits stored in reverse order)?",
         "Which input produces a longer result list?"
       ],
       "options": [
-        "[0,0,0,0,1]",
-        "[0,0,0,0]",
-        "[1,0,0,0,0]",
-        "[9,9,9,9,1]"
+        "[0,1,1]",
+        "[0,1]",
+        "[1,1,0]",
+        "[10,11]"
       ],
-      "answer": "[0,0,0,0,1]",
-      "explanation": "9999 + 1 = 10000, stored in reverse as [0,0,0,0,1]; the final carry creates the extra node.",
+      "answer": "[0,1,1]",
+      "explanation": "55 + 55 = 110, stored in reverse as [0,1,1]: 5 + 5 = 10 (digit 0, carry 1), 5 + 5 + 1 = 11 (digit 1, carry 1), and the final carry creates the extra node.",
       "incorrectOptionExplanations": {
-        "[0,0,0,0]": "That drops the carry.",
-        "[1,0,0,0,0]": "That is the non-reversed form.",
-        "[9,9,9,9,1]": "Not the sum."
+        "[0,1]": "That drops the last carry; the sum has three digits.",
+        "[1,1,0]": "That reads the result most-significant digit first, but the list is stored in reverse.",
+        "[10,11]": "Each node holds one digit, so 10 and 11 must be split with a carry."
       }
     }
   ],

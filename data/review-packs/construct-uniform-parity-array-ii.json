@@ -117,21 +117,21 @@
       "category": "edge_case",
       "type": "multiple_choice",
       "promptVariants": [
-        "What is the answer for [2, 3]?",
+        "What is the answer for [3, 4, 8, 5]?",
         "Why?"
       ],
       "options": [
-        "False: the only odd value 3 exceeds the even 2, so 2 cannot become odd",
-        "True: 3 - 2 = 1 would make both elements odd",
-        "True: keep both elements as they are, unchanged",
-        "False: a length-two array can never be valid at all"
+        "True: 4 - 3 = 1 and 8 - 3 = 5 make every element odd",
+        "False: an array with mixed parities can never be made uniform",
+        "False: an odd number cannot be subtracted from an even one",
+        "True: subtract the largest even number from each odd one"
       ],
-      "answer": "False: the only odd value 3 exceeds the even 2, so 2 cannot become odd",
-      "explanation": "To make everything odd, 2 must be reduced by an odd value smaller than 2, which does not exist.",
+      "answer": "True: 4 - 3 = 1 and 8 - 3 = 5 make every element odd",
+      "explanation": "The smallest odd value (3) is below the smallest even value (4), so every even element can lose it and become odd; the odd ones stay as they are.",
       "incorrectOptionExplanations": {
-        "True: 3 - 2 = 1 would make both elements odd": "The subtraction would change 3 into 1, but 2 stays even.",
-        "True: keep both elements as they are, unchanged": "They have different parities.",
-        "False: a length-two array can never be valid at all": "Length two can be valid, e.g. [4, 6]."
+        "False: an array with mixed parities can never be made uniform": "Mixed parities are fine as long as every even element has a smaller odd value to lose.",
+        "False: an odd number cannot be subtracted from an even one": "Odd minus even and even minus odd are both allowed; only the result must be at least 1.",
+        "True: subtract the largest even number from each odd one": "Subtracting an even value keeps the parity of the element it is taken from."
       }
     }
   ],

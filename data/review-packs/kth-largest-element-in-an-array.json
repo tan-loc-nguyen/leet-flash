@@ -116,11 +116,11 @@
       "category": "code_reasoning",
       "type": "code_question",
       "promptVariants": [
-        "Trace nums = [3,2,1,5,6,4], k = 2 through this code: what does the heap hold after each element, and what is returned?",
-        "Walk this heap solution on [3,2,1,5,6,4] with k = 2. What is popped at each step?"
+        "Trace nums = [7,4,9,2,8], k = 3 through this code: what does the heap hold after each element, and what is returned?",
+        "Walk this heap solution on [7,4,9,2,8] with k = 3. What is popped at each step?"
       ],
       "code": "import heapq\n\nheap = []\nfor num in nums:\n    heapq.heappush(heap, num)\n    if len(heap) > k:\n        heapq.heappop(heap)\nreturn heap[0]",
-      "answer": "After 3: {3}. After 2: {2,3}. After 1: push 1, size 3 > 2, pop 1, so {2,3}. After 5: pop 2, so {3,5}. After 6: pop 3, so {5,6}. After 4: pop 4, so {5,6}. The root is the smallest of {5,6}, so 5 is returned.",
+      "answer": "After 7: {7}. After 4: {4,7}. After 9: {4,7,9}. After 2: push 2, size 4 > 3, pop 2, so {4,7,9}. After 8: push 8, pop 4, so {7,8,9}. The root is the smallest of {7,8,9}, so 7 is returned.",
       "keyPoints": [
         "Pop removes the smallest, so the heap always holds the k largest so far",
         "Elements smaller than everything kept are pushed and popped straight away",
@@ -193,21 +193,21 @@
       "category": "edge_case",
       "type": "multiple_choice",
       "promptVariants": [
-        "What is the 2nd largest of [3,2,3,1,2,4,5,5,6]?",
+        "What is the 2nd largest of [9,4,9,7,1]?",
         "Do duplicates count separately?"
       ],
       "options": [
-        "5",
-        "6",
+        "9",
+        "7",
         "4",
-        "3"
+        "1"
       ],
-      "answer": "5",
-      "explanation": "Sorted descending: 6,5,5,4,... so the 2nd largest element (not distinct) is 5. (5: the array has two 5s)",
+      "answer": "9",
+      "explanation": "Sorted descending: 9, 9, 7, 4, 1, so the 2nd largest element (duplicates count separately) is 9; counting distinct values would give 7.",
       "incorrectOptionExplanations": {
-        "6": "That is the 1st largest.",
-        "4": "That would be the 'distinct' 3rd largest.",
-        "3": "Too small."
+        "7": "7 is the 2nd largest distinct value; the problem counts elements, not distinct values.",
+        "4": "4 is the 4th largest element.",
+        "1": "1 is the smallest element."
       }
     },
     {

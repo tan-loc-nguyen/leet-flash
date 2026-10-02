@@ -134,7 +134,7 @@
       "category": "edge_case",
       "type": "multiple_choice",
       "promptVariants": [
-        "Is [[1,0],[0,1]] schedulable?",
+        "Is [[1,0],[2,1],[0,2]] schedulable (3 courses)?",
         "What if there are no prerequisites?"
       ],
       "options": [
@@ -144,11 +144,11 @@
         "Yes (no cycle exists), but no when there are no prerequisites"
       ],
       "answer": "No (a cycle); yes with no prerequisites",
-      "explanation": "0 requires 1 and 1 requires 0 - a cycle. With no prerequisites any order works.",
+      "explanation": "0 needs 2, 2 needs 1 and 1 needs 0: a cycle, so no order exists. With no prerequisites any order works.",
       "incorrectOptionExplanations": {
-        "Yes, and also yes when there are no prerequisites at all": "The first pair is a cycle.",
-        "No (a cycle), and also no when there are no prerequisites": "No prerequisites is trivially fine.",
-        "Yes (no cycle exists), but no when there are no prerequisites": "Reversed."
+        "Yes, and also yes when there are no prerequisites at all": "The three courses depend on each other in a loop, so it is not schedulable.",
+        "No (a cycle), and also no when there are no prerequisites": "With no prerequisites there is nothing to violate, so it is schedulable.",
+        "Yes (no cycle exists), but no when there are no prerequisites": "There is a cycle here, and an empty prerequisite list is always schedulable."
       }
     }
   ],

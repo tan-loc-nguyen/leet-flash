@@ -138,21 +138,21 @@
       "category": "edge_case",
       "type": "multiple_choice",
       "promptVariants": [
-        "What is the result for [3,9,20,null,null,15,7]?",
+        "What is the result for [1,2,3,4,5,6,7]?",
         "How are columns ordered?"
       ],
       "options": [
-        "[[9],[3,15],[20],[7]]",
-        "[[3],[9,20],[15,7]]",
-        "[[9],[3],[15],[20],[7]]",
-        "[[9,3],[15,20,7]]"
+        "[[4],[2],[1,5,6],[3],[7]]",
+        "[[1],[2,3],[4,5,6,7]]",
+        "[[4],[2],[1,6,5],[3],[7]]",
+        "[[4,2],[1,5,6],[3,7]]"
       ],
-      "answer": "[[9],[3,15],[20],[7]]",
-      "explanation": "Columns -1..2: 9 | 3 and 15 (15 is deeper) | 20 | 7.",
+      "answer": "[[4],[2],[1,5,6],[3],[7]]",
+      "explanation": "Columns -2..2 hold 4 | 2 | 1, 5, 6 (same column, ordered top to bottom then left to right) | 3 | 7.",
       "incorrectOptionExplanations": {
-        "[[3],[9,20],[15,7]]": "That is level order.",
-        "[[9],[3],[15],[20],[7]]": "3 and 15 share column 0.",
-        "[[9,3],[15,20,7]]": "Not grouped by column."
+        "[[1],[2,3],[4,5,6,7]]": "That is the level order, not the vertical order.",
+        "[[4],[2],[1,6,5],[3],[7]]": "Within one column and row the left node (5) comes before the right node (6).",
+        "[[4,2],[1,5,6],[3,7]]": "Neighbouring columns must stay separate lists."
       }
     }
   ],

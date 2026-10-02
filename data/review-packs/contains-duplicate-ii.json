@@ -136,21 +136,21 @@
       "category": "edge_case",
       "type": "multiple_choice",
       "promptVariants": [
-        "For nums = [1,2,3,1], k = 2 what is the result?",
+        "For nums = [4,5,6,4], k = 3 what is the result?",
         "Which distance shows the `<= k` boundary?"
       ],
       "options": [
-        "False (the 1s are 3 apart)",
-        "True, because the value 1 appears twice in the array somewhere",
-        "Only if k is raised to 3, otherwise the answer is always false",
-        "It depends on sorting the array before comparing the indices"
+        "True (the 4s are exactly 3 apart, and 3 <= k)",
+        "False (the 4s are 3 apart, which exceeds k = 3)",
+        "False (equal values must be adjacent to count)",
+        "True, but only after sorting the array first"
       ],
-      "answer": "False (the 1s are 3 apart)",
-      "explanation": "Indices 0 and 3 differ by 3 > 2, so no pair qualifies; with k = 3 it would be True.",
+      "answer": "True (the 4s are exactly 3 apart, and 3 <= k)",
+      "explanation": "Indices 0 and 3 differ by exactly 3, and the condition is abs(i - j) <= k, so the boundary case counts; with k = 2 it would be False.",
       "incorrectOptionExplanations": {
-        "True, because the value 1 appears twice in the array somewhere": "The distance 3 exceeds k = 2.",
-        "Only if k is raised to 3, otherwise the answer is always false": "True for k >= 3, but the question has k = 2.",
-        "It depends on sorting the array before comparing the indices": "Sorting is irrelevant."
+        "False (the 4s are 3 apart, which exceeds k = 3)": "The condition is <= k, so a distance equal to k is allowed.",
+        "False (equal values must be adjacent to count)": "Equal values may be up to k indices apart; they need not be adjacent.",
+        "True, but only after sorting the array first": "Sorting would destroy the index distances the problem is about."
       }
     }
   ],

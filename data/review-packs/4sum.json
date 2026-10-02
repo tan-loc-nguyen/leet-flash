@@ -131,21 +131,21 @@
       "category": "edge_case",
       "type": "multiple_choice",
       "promptVariants": [
-        "What does 4Sum return for [2, 2, 2, 2, 2] with target 8?",
-        "How many unique quadruplets exist?"
+        "What does 4Sum return for [1, 1, 1, 1, 1, 1] with target 4?",
+        "How many unique quadruplets exist when every value is equal?"
       ],
       "options": [
-        "[[2, 2, 2, 2]]: the duplicates are skipped so it is reported once",
-        "[[2, 2, 2, 2]] repeated five times, once per choice of omitted 2",
-        "[]: four equal numbers are not allowed",
-        "[[2, 2, 2, 2, 2]]: all five elements are used"
+        "[[1,1,1,1]]: duplicates are skipped, so it appears once",
+        "[[1,1,1,1]] repeated 15 times, once per choice of four 1s",
+        "[]: four equal numbers are not allowed in one quadruplet",
+        "[[1,1,1,1,1,1]]: a quadruplet may take all six elements"
       ],
-      "answer": "[[2, 2, 2, 2]]: the duplicates are skipped so it is reported once",
-      "explanation": "Without duplicate skipping you would emit the same quadruplet several times.",
+      "answer": "[[1,1,1,1]]: duplicates are skipped, so it appears once",
+      "explanation": "Sorting puts equal values together and the loops skip repeats, so the quadruplet is reported once. Without duplicate skipping the same one would appear many times.",
       "incorrectOptionExplanations": {
-        "[[2, 2, 2, 2]] repeated five times, once per choice of omitted 2": "Equal values are interchangeable.",
-        "[]: four equal numbers are not allowed": "There is no such restriction.",
-        "[[2, 2, 2, 2, 2]]: all five elements are used": "A quadruplet has exactly four elements."
+        "[[1,1,1,1]] repeated 15 times, once per choice of four 1s": "Without the skip logic you would emit C(6,4) = 15 copies; the problem asks for unique quadruplets.",
+        "[]: four equal numbers are not allowed in one quadruplet": "Nothing forbids equal values; they only need to be four different positions.",
+        "[[1,1,1,1,1,1]]: a quadruplet may take all six elements": "A quadruplet has exactly four elements, never more."
       }
     }
   ],

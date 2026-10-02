@@ -119,21 +119,21 @@
       "category": "edge_case",
       "type": "multiple_choice",
       "promptVariants": [
-        "Are 'a##c' and '#a#c' equal?",
+        "Are '##b' and 'b' equal?",
         "Which backspaces apply to an empty string?"
       ],
       "options": [
-        "Yes: both become 'c' since a backspace on empty text is a no-op",
-        "No: 'a##c' becomes 'c' but '#a#c' becomes 'ac'",
-        "No: backspaces are not allowed on an empty text",
-        "Yes: both become 'ac' after the backspaces apply"
+        "Yes: both become 'b' since backspace on empty text does nothing",
+        "No: the two '#' remove the 'b' that follows them",
+        "No: backspaces are not allowed before the first letter",
+        "Yes, but only if both strings have the same length"
       ],
-      "answer": "Yes: both become 'c' since a backspace on empty text is a no-op",
-      "explanation": "'a##c' -> 'c'; '#a#c' -> 'c'.",
+      "answer": "Yes: both become 'b' since backspace on empty text does nothing",
+      "explanation": "A backspace on empty text deletes nothing, so '##b' is 'b'.",
       "incorrectOptionExplanations": {
-        "No: 'a##c' becomes 'c' but '#a#c' becomes 'ac'": "The '#' after 'a' deletes it.",
-        "No: backspaces are not allowed on an empty text": "They are allowed and have no effect.",
-        "Yes: both become 'ac' after the backspaces apply": "'a' is deleted in both."
+        "No: the two '#' remove the 'b' that follows them": "A backspace deletes the character before it, never the one after.",
+        "No: backspaces are not allowed before the first letter": "A backspace on empty text is a no-op, not an error.",
+        "Yes, but only if both strings have the same length": "Length plays no role; only the final texts are compared."
       }
     }
   ],

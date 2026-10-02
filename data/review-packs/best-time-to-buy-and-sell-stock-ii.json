@@ -113,21 +113,21 @@
       "category": "edge_case",
       "type": "multiple_choice",
       "promptVariants": [
-        "What is the answer for [1,2,3,4,5]?",
-        "And for [7,6,4,3,1]?"
+        "What is the answer for [2,4,6,8]?",
+        "And for [9,8,7]?"
       ],
       "options": [
-        "4, and 0",
-        "4, and 6",
-        "5, and 0",
-        "0, and 0"
+        "6, and 0",
+        "3, and 0",
+        "20, and 0",
+        "6, and 2"
       ],
-      "answer": "4, and 0",
-      "explanation": "Buy at 1 and sell at 5 (profit 4 = four daily gains of 1); a falling series has no gains.",
+      "answer": "6, and 0",
+      "explanation": "A rising series gains 2 on each of three days (6); a falling series has no gain on any day.",
       "incorrectOptionExplanations": {
-        "4, and 6": "No profit in a falling series.",
-        "5, and 0": "The first profit is 5 - 1 = 4.",
-        "0, and 0": "The first series is increasing."
+        "3, and 0": "That counts the number of gains, not their size.",
+        "20, and 0": "That is the sum of the prices.",
+        "6, and 2": "A falling series never gives a positive profit."
       }
     }
   ],

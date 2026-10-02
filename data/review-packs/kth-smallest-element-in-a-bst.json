@@ -144,21 +144,21 @@
       "category": "edge_case",
       "type": "multiple_choice",
       "promptVariants": [
-        "What is the 1st smallest of [3,1,4,null,2]?",
+        "What is the 1st smallest of [5,3,8,2,4]?",
         "Where is the smallest value found?"
       ],
       "options": [
-        "1",
         "2",
         "3",
-        "4"
+        "4",
+        "5"
       ],
-      "answer": "1",
-      "explanation": "Inorder starts at the leftmost node, which holds the minimum.",
+      "answer": "2",
+      "explanation": "Inorder starts at the leftmost node, which holds the minimum: 5 -> 3 -> 2.",
       "incorrectOptionExplanations": {
-        "2": "That is the 2nd smallest.",
-        "3": "That is the 3rd.",
-        "4": "That is the 4th."
+        "3": "3 is the second smallest; the smallest is the leftmost node below it.",
+        "4": "4 is the third smallest.",
+        "5": "5 is the root, not the leftmost node."
       }
     }
   ],

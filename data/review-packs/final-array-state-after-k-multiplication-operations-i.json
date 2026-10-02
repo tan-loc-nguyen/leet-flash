@@ -115,20 +115,20 @@
       "type": "multiple_choice",
       "promptVariants": [
         "What if k = 0?",
-        "What is the output for nums = [2,1,3,5,6], k = 5, multiplier = 2?"
+        "What is the output for nums = [3,1,4], k = 4, multiplier = 3?"
       ],
       "options": [
-        "The array unchanged; [8,4,6,5,6]",
-        "[]; [8,4,6,5,6]",
-        "The array unchanged; [4,2,3,5,6]",
-        "Error; [8,4,6,5,6]"
+        "The array unchanged; [9,9,12]",
+        "[]; [9,9,12]",
+        "The array unchanged; [27,3,4]",
+        "Error; [9,9,12]"
       ],
-      "answer": "The array unchanged; [8,4,6,5,6]",
-      "explanation": "No operations means no change; simulating the five operations gives [8,4,6,5,6].",
+      "answer": "The array unchanged; [9,9,12]",
+      "explanation": "No operations means no change. Simulating: [3,1,4] -> [3,3,4] -> [9,3,4] -> [9,9,4] -> [9,9,12] (the first minimum wins ties).",
       "incorrectOptionExplanations": {
-        "[]; [8,4,6,5,6]": "k = 0 does not clear the array.",
-        "The array unchanged; [4,2,3,5,6]": "Only two operations are reflected there.",
-        "Error; [8,4,6,5,6]": "k = 0 is valid."
+        "[]; [9,9,12]": "The array is returned as it is, not emptied.",
+        "The array unchanged; [27,3,4]": "The first minimum is multiplied each time, not the same element repeatedly.",
+        "Error; [9,9,12]": "k = 0 is a valid input and returns the array unchanged."
       }
     }
   ],

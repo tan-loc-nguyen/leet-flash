@@ -110,21 +110,21 @@
       "category": "edge_case",
       "type": "multiple_choice",
       "promptVariants": [
-        "What is returned for [2,2,3,4]?",
-        "And for [1,2,2,3,3,3]?"
+        "What is returned for [4,4,4,4,2,2]?",
+        "And for [6,6,2]?"
       ],
       "options": [
-        "2, and 3",
-        "-1, and 3",
-        "2, and 2",
-        "4, and 1"
+        "4, and -1",
+        "2, and -1",
+        "4, and 2",
+        "-1, and -1"
       ],
-      "answer": "2, and 3",
-      "explanation": "2 appears twice; in the second array 1 (once), 2 (twice) and 3 (thrice) are all lucky and the largest is 3.",
+      "answer": "4, and -1",
+      "explanation": "4 appears four times and 2 appears twice, both lucky, and the largest is 4. In [6,6,2] no value equals its frequency (6 twice, 2 once).",
       "incorrectOptionExplanations": {
-        "-1, and 3": "2 is lucky in the first array.",
-        "2, and 2": "3 is lucky and larger in the second.",
-        "4, and 1": "Neither."
+        "2, and -1": "2 is lucky too, but the largest lucky integer is wanted.",
+        "4, and 2": "2 appears once, but it would need to appear twice to be lucky.",
+        "-1, and -1": "4 appears four times, so a lucky integer exists in the first array."
       }
     }
   ],

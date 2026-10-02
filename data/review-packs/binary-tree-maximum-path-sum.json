@@ -126,20 +126,20 @@
       "type": "multiple_choice",
       "promptVariants": [
         "What is the answer for a single node with value -3?",
-        "What about [-10,9,20,null,null,15,7]?"
+        "What about [-5,4,8,null,null,6,9]?"
       ],
       "options": [
-        "-3, and 42",
-        "0 and 42",
-        "-3 and 25",
-        "0 and 29"
+        "-3, and 23",
+        "0 and 23",
+        "-3 and 17",
+        "0 and 17"
       ],
-      "answer": "-3, and 42",
-      "explanation": "A one-node path must be taken for the single node; the second tree's best path 15 -> 20 -> 7 sums to 42. (-3, and 42: 15 + 20 + 7)",
+      "answer": "-3, and 23",
+      "explanation": "A path must contain at least one node, so a lone -3 gives -3. In the second tree the best path 6 -> 8 -> 9 sums to 23 and skips the negative root.",
       "incorrectOptionExplanations": {
-        "0 and 42": "The empty path is not allowed.",
-        "-3 and 25": "25 omits the left child 7 or 15.",
-        "0 and 29": "Both parts are wrong."
+        "0 and 23": "An empty path is not allowed; the single node must be taken.",
+        "-3 and 17": "17 uses only one child of 8; the path can include both (6 + 8 + 9).",
+        "0 and 17": "Neither an empty path nor a single child of 8 is optimal."
       }
     }
   ],

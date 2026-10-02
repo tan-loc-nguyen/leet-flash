@@ -125,21 +125,21 @@
       "category": "edge_case",
       "type": "multiple_choice",
       "promptVariants": [
-        "What is the answer for [1,2,3,1,2,3,1,2], k = 2?",
+        "What is the answer for [6,1,6,1,6,2,6], k = 2?",
         "How long is the longest valid window?"
       ],
       "options": [
-        "6",
-        "8",
         "5",
-        "4"
+        "7",
+        "4",
+        "6"
       ],
-      "answer": "6",
-      "explanation": "The window [2,3,1,2,3,1] holds each value at most twice; adding a further element would make a count 3.",
+      "answer": "5",
+      "explanation": "The window [1,6,1,6,2] keeps every value at most twice; extending it left or right adds a third 6.",
       "incorrectOptionExplanations": {
-        "8": "The whole array has three 1s... count of 1 is 3 > 2.",
-        "5": "A longer valid window (6) exists.",
-        "4": "Too short."
+        "7": "The whole array has four 6s, so it breaks the limit of 2.",
+        "4": "A valid window of length 5 exists.",
+        "6": "Any length-6 window contains three 6s."
       }
     }
   ],

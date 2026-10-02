@@ -130,21 +130,21 @@
       "category": "edge_case",
       "type": "multiple_choice",
       "promptVariants": [
-        "What is the result for [4, 9, 5] and [9, 4, 9, 8, 4]?",
+        "What is the result for [3, 8, 3, 5] and [5, 3, 3, 9, 3]?",
         "Is the order important?"
       ],
       "options": [
-        "[9, 4] in any order: each shared value appears once",
-        "[4, 9, 4, 9]: every shared occurrence is listed",
-        "[4, 9, 5]: the first array's values",
-        "[8]: only the value that appears once in the second array"
+        "[3, 5] in any order: each shared value appears once",
+        "[3, 3, 5]: duplicates are kept up to the smaller count",
+        "[3, 8, 5]: the first array's distinct values",
+        "[9]: only the value that is unique to the second array"
       ],
-      "answer": "[9, 4] in any order: each shared value appears once",
-      "explanation": "The problem accepts any order.",
+      "answer": "[3, 5] in any order: each shared value appears once",
+      "explanation": "The shared values are 3 and 5, and each is reported once; the problem accepts any order.",
       "incorrectOptionExplanations": {
-        "[4, 9, 4, 9]: every shared occurrence is listed": "That is the second variant (with duplicates).",
-        "[4, 9, 5]: the first array's values": "5 is not in the second array.",
-        "[8]: only the value that appears once in the second array": "8 is not in the first array."
+        "[3, 3, 5]: duplicates are kept up to the smaller count": "That is Intersection II, which keeps duplicates; this problem wants unique values.",
+        "[3, 8, 5]: the first array's distinct values": "8 does not appear in the second array.",
+        "[9]: only the value that is unique to the second array": "9 does not appear in the first array."
       }
     }
   ],

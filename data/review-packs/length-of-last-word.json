@@ -113,21 +113,21 @@
       "category": "edge_case",
       "type": "multiple_choice",
       "promptVariants": [
-        "What is the answer for 'luffy is still joyboy   '?",
+        "What is the answer for '  ab  cde  '?",
         "How should the trailing spaces be treated?"
       ],
       "options": [
-        "6 ('joyboy'): the trailing spaces are skipped",
+        "3 ('cde'): the trailing spaces are skipped",
         "0: the string ends with a space",
-        "5: 'still' is the last word",
-        "9: the length of the last three spaces plus 'joyboy'"
+        "2: 'ab' is the last word",
+        "5: 'cde' plus its two trailing spaces"
       ],
-      "answer": "6 ('joyboy'): the trailing spaces are skipped",
-      "explanation": "Skip trailing spaces, then count 'joyboy'.",
+      "answer": "3 ('cde'): the trailing spaces are skipped",
+      "explanation": "Skip the trailing spaces, then count the letters of 'cde'.",
       "incorrectOptionExplanations": {
-        "0: the string ends with a space": "The last word is still 'joyboy'.",
-        "5: 'still' is the last word": "There is more text after 'still'.",
-        "9: the length of the last three spaces plus 'joyboy'": "Spaces are not part of a word."
+        "0: the string ends with a space": "The last word is still 'cde'; spaces after it are not part of the answer.",
+        "2: 'ab' is the last word": "'cde' comes after 'ab', so it is the last word.",
+        "5: 'cde' plus its two trailing spaces": "Spaces are not part of a word."
       }
     }
   ],

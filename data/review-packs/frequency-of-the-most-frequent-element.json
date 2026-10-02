@@ -141,21 +141,21 @@
       "category": "edge_case",
       "type": "multiple_choice",
       "promptVariants": [
-        "What is the answer for nums = [1,4,8,13], k = 5?",
+        "What is the answer for nums = [1,2,4], k = 5?",
         "How many elements can be made equal?"
       ],
       "options": [
-        "2",
         "3",
+        "2",
         "1",
-        "4"
+        "5"
       ],
-      "answer": "2",
-      "explanation": "4 and 8 cost 4 to equalise (<= 5); adding 1 or 13 would exceed the budget; so frequency 2.",
+      "answer": "3",
+      "explanation": "Raising 1 and 2 up to 4 costs 3 + 2 = 5, which is within k = 5, so all three elements can be made equal.",
       "incorrectOptionExplanations": {
-        "3": "Even the cheapest triple [1,4,8] needs 7 + 4 = 11 increments, more than 5.",
-        "1": "Two elements can be equalised within 5.",
-        "4": "The whole array needs far more than 5."
+        "2": "Two elements are possible, but the whole array fits in the budget.",
+        "1": "A single element is always possible; more fit here.",
+        "5": "The frequency cannot exceed the array length; 5 is k, not the answer."
       }
     }
   ],

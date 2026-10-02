@@ -137,21 +137,21 @@
       "category": "edge_case",
       "type": "multiple_choice",
       "promptVariants": [
-        "What is the output for [30,40,50,60]?",
+        "What is the output for [61,62,70,71,99]?",
         "How does an increasing sequence behave?"
       ],
       "options": [
-        "[1,1,1,0]",
-        "[0,0,0,0]",
-        "[3,2,1,0]",
-        "[1,1,1,1]"
+        "[1,1,1,1,0]",
+        "[0,0,0,0,0]",
+        "[4,3,2,1,0]",
+        "[1,1,1,1,1]"
       ],
-      "answer": "[1,1,1,0]",
-      "explanation": "Each day is followed by a warmer day the next day, except the last.",
+      "answer": "[1,1,1,1,0]",
+      "explanation": "Each day is followed by a warmer day the very next day, except the last one, which has none (0).",
       "incorrectOptionExplanations": {
-        "[0,0,0,0]": "Warmer days do exist.",
-        "[3,2,1,0]": "That would be for a different pattern.",
-        "[1,1,1,1]": "The last day has no warmer day."
+        "[0,0,0,0,0]": "There are warmer days ahead, so only the last entry is 0.",
+        "[4,3,2,1,0]": "That counts the days to the final day instead of the next warmer day.",
+        "[1,1,1,1,1]": "The last day has no warmer day after it, so its entry is 0."
       }
     }
   ],
