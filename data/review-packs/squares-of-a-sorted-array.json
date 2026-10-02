@@ -52,17 +52,17 @@
         "Where do the negatives matter?"
       ],
       "options": [
-        "Large-magnitude negatives square to large values, so a maximum sits at an end",
-        "The largest square is always the last element",
-        "The largest square always sits in the array's middle",
-        "The largest square belongs to the value nearest zero"
+        "Large negatives square to large values, so a maximum sits at an end",
+        "The largest square is always the last element of the array",
+        "The largest square always sits somewhere in the array's middle",
+        "The largest square always belongs to the value nearest zero"
       ],
-      "answer": "Large-magnitude negatives square to large values, so a maximum sits at an end",
+      "answer": "Large negatives square to large values, so a maximum sits at an end",
       "explanation": "The array is sorted by value, not by absolute value.",
       "incorrectOptionExplanations": {
-        "The largest square is always the last element": "A large negative at the front can be larger in magnitude.",
-        "The largest square always sits in the array's middle": "Near zero the squares are smallest.",
-        "The largest square belongs to the value nearest zero": "That gives the smallest square."
+        "The largest square is always the last element of the array": "A large negative at the front can be larger in magnitude.",
+        "The largest square always sits somewhere in the array's middle": "Near zero the squares are smallest.",
+        "The largest square always belongs to the value nearest zero": "That gives the smallest square."
       }
     },
     {

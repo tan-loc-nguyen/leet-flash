@@ -67,12 +67,12 @@
         "How can reversals implement a rotation?"
       ],
       "options": [
-        "Reverse everything, then the first k elements and the last n - k",
+        "Reverse all, then the first k and the last n - k",
         "Reverse only the first k elements of the array",
         "Sort the array and shift every element by k places",
         "Swap element i with element i + k for each index i"
       ],
-      "answer": "Reverse everything, then the first k elements and the last n - k",
+      "answer": "Reverse all, then the first k and the last n - k",
       "explanation": "Reversing all moves the last k to the front reversed; reversing each part restores their order.",
       "incorrectOptionExplanations": {
         "Reverse only the first k elements of the array": "That leaves the tail untouched.",

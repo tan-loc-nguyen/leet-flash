@@ -54,17 +54,17 @@
         "What must be skipped or read first?"
       ],
       "options": [
-        "Skip spaces, read an optional sign, read digits until a non-digit, then clamp",
-        "Read digits, then the sign, then skip spaces and clamp",
-        "Strip every non-digit anywhere, then convert the rest",
-        "Split on spaces, then convert the first token found"
+        "Skip spaces, read an optional sign, read digits, then clamp",
+        "Read digits first, then the sign, then skip spaces and clamp",
+        "Strip every non-digit anywhere in it, then convert the rest",
+        "Split on spaces, then convert the very first token found"
       ],
-      "answer": "Skip spaces, read an optional sign, read digits until a non-digit, then clamp",
+      "answer": "Skip spaces, read an optional sign, read digits, then clamp",
       "explanation": "Each step has a precise place in the specification.",
       "incorrectOptionExplanations": {
-        "Read digits, then the sign, then skip spaces and clamp": "The order of the steps matters.",
-        "Strip every non-digit anywhere, then convert the rest": "Parsing stops at the first invalid character.",
-        "Split on spaces, then convert the first token found": "A token such as '-42abc' would not convert."
+        "Read digits first, then the sign, then skip spaces and clamp": "The order of the steps matters.",
+        "Strip every non-digit anywhere in it, then convert the rest": "Parsing stops at the first invalid character.",
+        "Split on spaces, then convert the very first token found": "A token such as '-42abc' would not convert."
       }
     },
     {

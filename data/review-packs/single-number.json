@@ -131,16 +131,16 @@
         "Which variation can XOR alone not solve?"
       ],
       "options": [
-        "When duplicates appear three times instead of twice (Single Number II)",
+        "When duplicates appear three times, not twice (Single Number II)",
         "When the array has negatives, since XOR needs positives",
-        "When n is large, since XOR overflows 32 bits",
+        "When n is large, since the XOR then overflows 32 bits easily",
         "When the single number is 0, which XOR cannot isolate"
       ],
-      "answer": "When duplicates appear three times instead of twice (Single Number II)",
+      "answer": "When duplicates appear three times, not twice (Single Number II)",
       "explanation": "XOR cancels pairs only; for triples you must count bits modulo 3 (or use two accumulators).",
       "incorrectOptionExplanations": {
         "When the array has negatives, since XOR needs positives": "XOR works on two's-complement bits just fine.",
-        "When n is large, since XOR overflows 32 bits": "Time is linear regardless.",
+        "When n is large, since the XOR then overflows 32 bits easily": "Time is linear regardless.",
         "When the single number is 0, which XOR cannot isolate": "Then the XOR is 0, which is correct."
       }
     }

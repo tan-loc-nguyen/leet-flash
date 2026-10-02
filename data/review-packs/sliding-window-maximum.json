@@ -162,16 +162,16 @@
       ],
       "options": [
         "The answer is the array itself",
-        "The answer is empty",
-        "Only the first element",
-        "It requires a heap"
+        "The answer is an empty list",
+        "Only the first element is kept",
+        "It requires a heap to be used"
       ],
       "answer": "The answer is the array itself",
       "explanation": "Each window contains one element and the deque holds that single index.",
       "incorrectOptionExplanations": {
-        "The answer is empty": "There are n windows of size 1.",
-        "Only the first element": "Every window needs a result.",
-        "It requires a heap": "The deque handles it."
+        "The answer is an empty list": "There are n windows of size 1.",
+        "Only the first element is kept": "Every window needs a result.",
+        "It requires a heap to be used": "The deque handles it."
       }
     }
   ],

@@ -68,17 +68,17 @@
         "How do you exploit sorted inorder order?"
       ],
       "options": [
-        "Two Sum (hash set) or Two Sum II (two pointers on the inorder array)",
-        "Knapsack over the node values and the target sum",
+        "Two Sum (hash set) or Two Sum II (two pointers, inorder)",
+        "Knapsack over all the node values and the target sum",
         "Longest increasing subsequence on the inorder array",
-        "Graph colouring of the nodes by their values"
+        "Graph colouring of the nodes according to their values"
       ],
-      "answer": "Two Sum (hash set) or Two Sum II (two pointers on the inorder array)",
+      "answer": "Two Sum (hash set) or Two Sum II (two pointers, inorder)",
       "explanation": "Inorder of a BST is a sorted array, so any Two Sum technique applies.",
       "incorrectOptionExplanations": {
-        "Knapsack over the node values and the target sum": "Unrelated.",
+        "Knapsack over all the node values and the target sum": "Unrelated.",
         "Longest increasing subsequence on the inorder array": "Unrelated.",
-        "Graph colouring of the nodes by their values": "Unrelated."
+        "Graph colouring of the nodes according to their values": "Unrelated."
       }
     },
     {

@@ -131,16 +131,16 @@
       "category": "edge_case",
       "type": "multiple_choice",
       "promptVariants": [
-        "Which sum values can satisfy the condition for x = 3?",
+        "Which sum can satisfy the condition for x = 3?",
         "Which sum is valid?"
       ],
       "options": [
-        "3, 33, 303",
+        "303",
         "13",
         "30",
         "-3"
       ],
-      "answer": "3, 33, 303",
+      "answer": "303",
       "explanation": "First and last digit must both be 3: 3, 33, 303, 3003...",
       "incorrectOptionExplanations": {
         "13": "Starts with 1.",

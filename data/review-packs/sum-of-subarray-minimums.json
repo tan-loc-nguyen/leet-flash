@@ -67,17 +67,17 @@
         "What do you count for each element?"
       ],
       "options": [
-        "Count the subarrays where each element is the minimum, times its value",
-        "Sum the elements and multiply by the number of subarrays",
-        "Sort the array and sum the first n - k elements",
-        "Sum the minimum of each window of a fixed length k"
+        "Count subarrays where each element is the minimum, times its value",
+        "Sum the elements and then multiply by the number of subarrays",
+        "Sort the array first and then sum the first n - k elements",
+        "Sum the minimum of each window of one fixed length k only"
       ],
-      "answer": "Count the subarrays where each element is the minimum, times its value",
+      "answer": "Count subarrays where each element is the minimum, times its value",
       "explanation": "Contribution = value * (choices on the left) * (choices on the right).",
       "incorrectOptionExplanations": {
-        "Sum the elements and multiply by the number of subarrays": "That ignores which element is the minimum.",
-        "Sort the array and sum the first n - k elements": "Sorting loses subarray structure.",
-        "Sum the minimum of each window of a fixed length k": "Subarrays have all lengths."
+        "Sum the elements and then multiply by the number of subarrays": "That ignores which element is the minimum.",
+        "Sort the array first and then sum the first n - k elements": "Sorting loses subarray structure.",
+        "Sum the minimum of each window of one fixed length k only": "Subarrays have all lengths."
       }
     },
     {

@@ -230,16 +230,16 @@
       ],
       "options": [
         "Sorting costs O(n log n) and loses the original indices",
-        "Two pointers cannot find sums in a sorted array",
-        "Sorting makes duplicates impossible to handle",
-        "It needs O(n^2) memory to track the pairs"
+        "Two pointers cannot find sums in an already sorted array",
+        "Sorting makes duplicate values impossible to handle at all",
+        "It needs O(n^2) memory to track all of the pairs"
       ],
       "answer": "Sorting costs O(n log n) and loses the original indices",
       "explanation": "You must return original indices, so you have to carry (value, index) pairs through the sort, and the sort makes it O(n log n) instead of O(n).",
       "incorrectOptionExplanations": {
-        "Two pointers cannot find sums in a sorted array": "Two pointers works on sorted data (it is the Two Sum II solution).",
-        "Sorting makes duplicates impossible to handle": "Duplicates are fine after sorting.",
-        "It needs O(n^2) memory to track the pairs": "Memory is O(n) for the index pairs."
+        "Two pointers cannot find sums in an already sorted array": "Two pointers works on sorted data (it is the Two Sum II solution).",
+        "Sorting makes duplicate values impossible to handle at all": "Duplicates are fine after sorting.",
+        "It needs O(n^2) memory to track all of the pairs": "Memory is O(n) for the index pairs."
       },
       "enabled": true
     },

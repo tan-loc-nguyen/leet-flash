@@ -138,16 +138,16 @@
       ],
       "options": [
         "True - the cleaned string is empty",
-        "False - nothing to compare",
-        "It raises an error",
-        "Depends on the length"
+        "False - there is nothing to compare",
+        "It raises an error on empty text",
+        "Depends on the original length"
       ],
       "answer": "True - the cleaned string is empty",
       "explanation": "An empty cleaned string reads the same forwards and backwards.",
       "incorrectOptionExplanations": {
-        "False - nothing to compare": "The empty string is a palindrome by definition.",
-        "It raises an error": "The pointers just cross without indexing errors.",
-        "Depends on the length": "No - all punctuation-only inputs are palindromes."
+        "False - there is nothing to compare": "The empty string is a palindrome by definition.",
+        "It raises an error on empty text": "The pointers just cross without indexing errors.",
+        "Depends on the original length": "No - all punctuation-only inputs are palindromes."
       }
     }
   ],

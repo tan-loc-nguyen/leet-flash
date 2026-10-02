@@ -55,16 +55,16 @@
         "What happens after the top row is finished?"
       ],
       "options": [
-        "top moves down after the top row, right moves left after the right column, etc.",
+        "The boundary of each traversed side moves inward by one",
         "All four boundaries move inward by one after each single side",
-        "Only the top and bottom boundaries ever move inward",
+        "Only the top and bottom boundaries move inward each round",
         "The boundaries stay fixed while a visited set is used"
       ],
-      "answer": "top moves down after the top row, right moves left after the right column, etc.",
+      "answer": "The boundary of each traversed side moves inward by one",
       "explanation": "Each traversed side is removed from the remaining region.",
       "incorrectOptionExplanations": {
         "All four boundaries move inward by one after each single side": "Only the boundary just traversed moves.",
-        "Only the top and bottom boundaries ever move inward": "Left and right move too.",
+        "Only the top and bottom boundaries move inward each round": "Left and right move too.",
         "The boundaries stay fixed while a visited set is used": "That is the other approach."
       }
     },

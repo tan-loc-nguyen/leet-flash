@@ -63,16 +63,16 @@
       ],
       "options": [
         "Start from the border: 'O's connected to the border are safe",
-        "Flip all 'O's to 'X' and then restore them",
-        "Search from the centre outward to the border",
-        "Use binary search on the rows to find the border"
+        "Flip all of the 'O's to 'X' and then restore them later",
+        "Search outward from the centre of the board to the border",
+        "Use binary search on the rows to find the border cells"
       ],
       "answer": "Start from the border: 'O's connected to the border are safe",
       "explanation": "A region is captured only if no cell of it touches the border.",
       "incorrectOptionExplanations": {
-        "Flip all 'O's to 'X' and then restore them": "Border regions must stay.",
-        "Search from the centre outward to the border": "Interior regions are the ones to capture.",
-        "Use binary search on the rows to find the border": "Irrelevant."
+        "Flip all of the 'O's to 'X' and then restore them later": "Border regions must stay.",
+        "Search outward from the centre of the board to the border": "Interior regions are the ones to capture.",
+        "Use binary search on the rows to find the border cells": "Irrelevant."
       }
     },
     {
@@ -146,17 +146,17 @@
         "What about boards smaller than 3x3?"
       ],
       "options": [
-        "No: border 'O's and cells connected to them are never captured",
-        "Yes if surrounded by X on every other side",
-        "Only corner cells are safe from being captured",
-        "Only the first row is safe from being captured"
+        "No: border 'O's and their connected cells are never captured",
+        "Yes, if it is surrounded by X on every other open side",
+        "Only the corner cells are safe from being captured by X",
+        "Only the cells of the first row are safe from capture"
       ],
-      "answer": "No: border 'O's and cells connected to them are never captured",
+      "answer": "No: border 'O's and their connected cells are never captured",
       "explanation": "A captured region must be completely enclosed, which requires interior cells.",
       "incorrectOptionExplanations": {
-        "Yes if surrounded by X on every other side": "Border cells cannot be surrounded on all four sides.",
-        "Only corner cells are safe from being captured": "All border cells are safe.",
-        "Only the first row is safe from being captured": "All four borders are safe."
+        "Yes, if it is surrounded by X on every other open side": "Border cells cannot be surrounded on all four sides.",
+        "Only the corner cells are safe from being captured by X": "All border cells are safe.",
+        "Only the cells of the first row are safe from capture": "All four borders are safe."
       }
     }
   ],

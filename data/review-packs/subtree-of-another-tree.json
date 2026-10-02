@@ -150,17 +150,17 @@
         "Why not?"
       ],
       "options": [
-        "No: node 4 has an extra child 6 in root, so the subtree at 2 differs",
-        "Yes: the values of 2, 4 and 5 all match the subRoot",
-        "Yes: a subtree may leave out some descendants",
-        "Cannot tell without checking the tree's height first"
+        "No: node 4 has an extra child 6, so the subtree at 2 differs",
+        "Yes: the values of 2, 4 and 5 all match the subRoot values",
+        "Yes: a subtree is allowed to leave out some descendants",
+        "Cannot tell without first checking the height of the tree"
       ],
-      "answer": "No: node 4 has an extra child 6 in root, so the subtree at 2 differs",
+      "answer": "No: node 4 has an extra child 6, so the subtree at 2 differs",
       "explanation": "A subtree must include ALL descendants of the matched node, not just a prefix of them.",
       "incorrectOptionExplanations": {
-        "Yes: the values of 2, 4 and 5 all match the subRoot": "Matching values is not enough; the shapes must be identical.",
-        "Yes: a subtree may leave out some descendants": "The subtree must contain every descendant of the matched node.",
-        "Cannot tell without checking the tree's height first": "The structures can be compared directly node by node."
+        "Yes: the values of 2, 4 and 5 all match the subRoot values": "Matching values is not enough; the shapes must be identical.",
+        "Yes: a subtree is allowed to leave out some descendants": "The subtree must contain every descendant of the matched node.",
+        "Cannot tell without first checking the height of the tree": "The structures can be compared directly node by node."
       }
     }
   ],

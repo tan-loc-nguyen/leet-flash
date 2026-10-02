@@ -49,16 +49,16 @@
       ],
       "options": [
         "Outer pair (l.left, r.right) and inner pair (l.right, r.left)",
-        "Left with left and right with right, like Same Tree",
-        "Only the two roots and nothing below them",
-        "Inorder traversal equals the reversed preorder"
+        "Left with left and right with right, exactly like Same Tree",
+        "Only the two roots and nothing below them in either tree",
+        "The inorder traversal equals the reversed preorder one"
       ],
       "answer": "Outer pair (l.left, r.right) and inner pair (l.right, r.left)",
       "explanation": "A mirror crosses the children: the outer nodes face each other and the inner nodes face each other.",
       "incorrectOptionExplanations": {
-        "Left with left and right with right, like Same Tree": "That is Same Tree.",
-        "Only the two roots and nothing below them": "Ignores the structure.",
-        "Inorder traversal equals the reversed preorder": "Not a valid test."
+        "Left with left and right with right, exactly like Same Tree": "That is Same Tree.",
+        "Only the two roots and nothing below them in either tree": "Ignores the structure.",
+        "The inorder traversal equals the reversed preorder one": "Not a valid test."
       }
     },
     {
@@ -132,17 +132,17 @@
         "Which pairs of nodes are compared?"
       ],
       "options": [
-        "Yes: the left 3's right child 8 mirrors the right 3's left child 8",
+        "Yes: the left 3's right child mirrors the right 3's left child",
         "No: the left 3 has no left child but the right 3 has one",
-        "No: the two 3s must both have two children",
-        "Only if all the values in the tree are distinct"
+        "No: the two 3s must both have exactly two children",
+        "Only if all of the values in the whole tree are distinct"
       ],
-      "answer": "Yes: the left 3's right child 8 mirrors the right 3's left child 8",
+      "answer": "Yes: the left 3's right child mirrors the right 3's left child",
       "explanation": "Mirroring pairs the left subtree's right child with the right subtree's left child; both are 8, and the outer children are both absent.",
       "incorrectOptionExplanations": {
         "No: the left 3 has no left child but the right 3 has one": "Missing outer children are fine when they mirror (both absent).",
-        "No: the two 3s must both have two children": "Mirrored children can be absent on both sides.",
-        "Only if all the values in the tree are distinct": "Equal values are needed for mirrored pairs, so distinct values would break symmetry."
+        "No: the two 3s must both have exactly two children": "Mirrored children can be absent on both sides.",
+        "Only if all of the values in the whole tree are distinct": "Equal values are needed for mirrored pairs, so distinct values would break symmetry."
       }
     }
   ],

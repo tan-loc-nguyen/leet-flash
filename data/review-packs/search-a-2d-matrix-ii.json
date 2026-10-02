@@ -64,12 +64,12 @@
         "Which corner lets you discard a row or a column on every comparison?"
       ],
       "options": [
-        "At the top-right corner: it is the largest in its row and the smallest in its column",
+        "At the top-right: largest in its row, smallest in its column",
         "At the top-left corner: it is the smallest of the whole matrix",
         "At the centre: it splits the matrix into four sorted quadrants",
         "At the bottom-right corner: it is the largest of the matrix"
       ],
-      "answer": "At the top-right corner: it is the largest in its row and the smallest in its column",
+      "answer": "At the top-right: largest in its row, smallest in its column",
       "explanation": "From the top-right, one move direction always decreases and the other always increases.",
       "incorrectOptionExplanations": {
         "At the top-left corner: it is the smallest of the whole matrix": "Both moves would be increasing.",
@@ -131,17 +131,17 @@
         "Why does the algorithm not work from there?"
       ],
       "options": [
-        "Both moves increase the value, so you cannot tell which side to drop",
-        "It works the same, only the loop bounds change",
+        "Both moves increase the value, so you cannot choose a side",
+        "It works the same way, only the loop bounds would change",
         "It runs in O(log n) because the corner is the minimum",
-        "It always misses the last row of the matrix"
+        "It always misses the last row and column of the matrix"
       ],
-      "answer": "Both moves increase the value, so you cannot tell which side to drop",
+      "answer": "Both moves increase the value, so you cannot choose a side",
       "explanation": "You need one direction that decreases and one that increases.",
       "incorrectOptionExplanations": {
-        "It works the same, only the loop bounds change": "The direction becomes ambiguous.",
+        "It works the same way, only the loop bounds would change": "The direction becomes ambiguous.",
         "It runs in O(log n) because the corner is the minimum": "It does not run faster.",
-        "It always misses the last row of the matrix": "That is not the cause."
+        "It always misses the last row and column of the matrix": "That is not the cause."
       }
     }
   ],

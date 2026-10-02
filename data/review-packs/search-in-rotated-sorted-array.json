@@ -54,17 +54,17 @@
         "What do you decide at each step?"
       ],
       "options": [
-        "Find the sorted half, test the target against it, keep or drop that half",
-        "Sort the array first and then run a normal search",
-        "Always search the left half because it is larger",
-        "Compare the target with the first element, then scan"
+        "Find the sorted half, test the target against it, then discard",
+        "Sort the array first and then run a normal binary search",
+        "Always search the left half only, because it is the larger one",
+        "Compare the target with the first element, then scan linearly"
       ],
-      "answer": "Find the sorted half, test the target against it, keep or drop that half",
+      "answer": "Find the sorted half, test the target against it, then discard",
       "explanation": "One of the two halves is always sorted, which gives a reliable range test.",
       "incorrectOptionExplanations": {
-        "Sort the array first and then run a normal search": "Sorting costs O(n log n).",
-        "Always search the left half because it is larger": "Either half may hold the target.",
-        "Compare the target with the first element, then scan": "A linear scan is O(n)."
+        "Sort the array first and then run a normal binary search": "Sorting costs O(n log n).",
+        "Always search the left half only, because it is the larger one": "Either half may hold the target.",
+        "Compare the target with the first element, then scan linearly": "A linear scan is O(n)."
       }
     },
     {
@@ -120,12 +120,12 @@
         "Which half is sorted when lo == mid?"
       ],
       "options": [
-        "1: left half [3] is sorted and lacks the target, so the search moves right",
+        "1: the sorted left half [3] lacks the target, so go right",
         "-1: a two-element rotated array cannot be searched at all",
         "0: the first element is always the one that is checked",
         "2: the index just after the end of the array is returned"
       ],
-      "answer": "1: left half [3] is sorted and lacks the target, so the search moves right",
+      "answer": "1: the sorted left half [3] lacks the target, so go right",
       "explanation": "Using `<` instead of `<=` for the sorted-half test breaks this case.",
       "incorrectOptionExplanations": {
         "-1: a two-element rotated array cannot be searched at all": "It can; the mid==lo case is handled by <=.",

@@ -64,17 +64,17 @@
         "How is it computed from earlier prefixes?"
       ],
       "options": [
-        "Whether s[:i] can be segmented: some dp[j] is true and s[j:i] is a word",
-        "The number of words used to build the prefix s[:i]",
-        "The longest dictionary word ending at position i",
-        "Whether the single character s[i] is in the dictionary"
+        "Whether s[:i] can be segmented: dp[j] is true and s[j:i] is a word",
+        "The number of words that were used to build the prefix s[:i]",
+        "The longest dictionary word that ends at position i in s",
+        "Whether the single character s[i] is itself in the dictionary"
       ],
-      "answer": "Whether s[:i] can be segmented: some dp[j] is true and s[j:i] is a word",
+      "answer": "Whether s[:i] can be segmented: dp[j] is true and s[j:i] is a word",
       "explanation": "dp[0] = True represents the empty prefix.",
       "incorrectOptionExplanations": {
-        "The number of words used to build the prefix s[:i]": "dp stores a boolean, not a count.",
-        "The longest dictionary word ending at position i": "Only feasibility is tracked.",
-        "Whether the single character s[i] is in the dictionary": "Words are substrings, not characters."
+        "The number of words that were used to build the prefix s[:i]": "dp stores a boolean, not a count.",
+        "The longest dictionary word that ends at position i in s": "Only feasibility is tracked.",
+        "Whether the single character s[i] is itself in the dictionary": "Words are substrings, not characters."
       }
     },
     {

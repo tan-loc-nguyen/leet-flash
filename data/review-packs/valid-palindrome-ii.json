@@ -52,17 +52,17 @@
         "How is the single deletion handled?"
       ],
       "options": [
-        "Test whether skipping the left character or the right character leaves a palindrome",
-        "Delete both of the mismatching characters and continue",
-        "Return false at once, since it is not a palindrome",
-        "Restart the scan from the middle of the whole string"
+        "Skip the left or the right character and test for a palindrome",
+        "Delete both of the two mismatching characters and continue",
+        "Return false at once, because the string is not a palindrome",
+        "Restart the scan again from the middle of the whole string"
       ],
-      "answer": "Test whether skipping the left character or the right character leaves a palindrome",
+      "answer": "Skip the left or the right character and test for a palindrome",
       "explanation": "Either mismatching character may be the one to remove.",
       "incorrectOptionExplanations": {
-        "Delete both of the mismatching characters and continue": "That uses two deletions.",
-        "Return false at once, since it is not a palindrome": "One deletion may fix it.",
-        "Restart the scan from the middle of the whole string": "The mismatch location is what matters."
+        "Delete both of the two mismatching characters and continue": "That uses two deletions.",
+        "Return false at once, because the string is not a palindrome": "One deletion may fix it.",
+        "Restart the scan again from the middle of the whole string": "The mismatch location is what matters."
       }
     },
     {

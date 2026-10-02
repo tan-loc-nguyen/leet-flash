@@ -55,16 +55,16 @@
         "What determines the idle time in Task Scheduler?"
       ],
       "options": [
-        "(maxCount - 1) frames of n + 1 slots, plus the tasks tied for the max",
-        "The sum of all frequencies multiplied by n",
-        "The number of distinct tasks multiplied by n + 1",
+        "(maxCount - 1) frames of n + 1 slots, plus the tied tasks",
+        "The sum of all the task frequencies multiplied by n",
+        "The number of distinct task types multiplied by n + 1",
         "The largest frequency plus the second largest frequency"
       ],
-      "answer": "(maxCount - 1) frames of n + 1 slots, plus the tasks tied for the max",
+      "answer": "(maxCount - 1) frames of n + 1 slots, plus the tied tasks",
       "explanation": "Other tasks fill the idle slots; leftover idles are the only waste.",
       "incorrectOptionExplanations": {
-        "The sum of all frequencies multiplied by n": "That ignores that other tasks fill the gaps.",
-        "The number of distinct tasks multiplied by n + 1": "Frequency, not variety, determines the frames.",
+        "The sum of all the task frequencies multiplied by n": "That ignores that other tasks fill the gaps.",
+        "The number of distinct task types multiplied by n + 1": "Frequency, not variety, determines the frames.",
         "The largest frequency plus the second largest frequency": "Every tied task must be counted in the last frame."
       }
     },

@@ -54,17 +54,17 @@
         "What changes after the single element in a sorted pair array?"
       ],
       "options": [
-        "Pairs start on even indices before it and on odd indices after it",
-        "The single element is always the middle of the array",
+        "Pairs start on even indices before it and on odd ones after",
+        "The single element is always the middle element of the array",
         "The values before it are smaller than the values after it",
-        "The sum of the left half is even before it"
+        "The sum of the left half is even before the single one"
       ],
-      "answer": "Pairs start on even indices before it and on odd indices after it",
+      "answer": "Pairs start on even indices before it and on odd ones after",
       "explanation": "Check whether nums[mid] pairs with its even-aligned partner.",
       "incorrectOptionExplanations": {
-        "The single element is always the middle of the array": "It can be anywhere.",
+        "The single element is always the middle element of the array": "It can be anywhere.",
         "The values before it are smaller than the values after it": "Sortedness does not tell where the single lies.",
-        "The sum of the left half is even before it": "Sums do not locate it reliably."
+        "The sum of the left half is even before the single one": "Sums do not locate it reliably."
       }
     },
     {

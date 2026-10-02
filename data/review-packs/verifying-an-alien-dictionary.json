@@ -51,16 +51,16 @@
       ],
       "options": [
         "Map each letter to its rank and compare at the first difference",
-        "Sort the letters of each word, then compare the words",
-        "Reverse each word, then compare them in order",
-        "Count the vowels of each word and compare the counts"
+        "Sort the letters of each word first, then compare the words",
+        "Reverse each word first, then compare the reversed words",
+        "Count the vowels of each word, then compare those counts"
       ],
       "answer": "Map each letter to its rank and compare at the first difference",
       "explanation": "Lexicographic order is decided by the first differing character according to the given rank.",
       "incorrectOptionExplanations": {
-        "Sort the letters of each word, then compare the words": "Changes the words.",
-        "Reverse each word, then compare them in order": "Not lexicographic order.",
-        "Count the vowels of each word and compare the counts": "Irrelevant."
+        "Sort the letters of each word first, then compare the words": "Changes the words.",
+        "Reverse each word first, then compare the reversed words": "Not lexicographic order.",
+        "Count the vowels of each word, then compare those counts": "Irrelevant."
       }
     },
     {

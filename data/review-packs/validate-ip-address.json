@@ -54,12 +54,12 @@
         "Which parts allow leading zeros?"
       ],
       "options": [
-        "IPv4: no leading zeros, 0..255; IPv6: 1-4 hex digits, zeros allowed",
+        "IPv4: no leading zeros, 0..255; IPv6: 1-4 hex digits (zeros ok)",
         "IPv4 allows hex digits; IPv6 allows only decimal digits",
         "Both need exactly the same number of digits in each part",
         "IPv6 forbids leading zeros; IPv4 allows them in a part"
       ],
-      "answer": "IPv4: no leading zeros, 0..255; IPv6: 1-4 hex digits, zeros allowed",
+      "answer": "IPv4: no leading zeros, 0..255; IPv6: 1-4 hex digits (zeros ok)",
       "explanation": "'01' is invalid in IPv4, '0001' is valid in IPv6.",
       "incorrectOptionExplanations": {
         "IPv4 allows hex digits; IPv6 allows only decimal digits": "It is the other way round.",

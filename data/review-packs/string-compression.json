@@ -54,17 +54,17 @@
         "Why can you write into the same array you read?"
       ],
       "options": [
-        "A read pointer scans runs; a write pointer that never passes it stores output",
-        "Sort the characters, then write each unique one once",
-        "Keep a hash map from character to count and overwrite",
-        "Build the answer backwards from the end of the array"
+        "A read pointer scans runs; a write pointer stores the output",
+        "Sort the characters first, then write each unique one once",
+        "Keep a hash map from character to count, then overwrite",
+        "Build the answer backwards from the very end of the array"
       ],
-      "answer": "A read pointer scans runs; a write pointer that never passes it stores output",
+      "answer": "A read pointer scans runs; a write pointer stores the output",
       "explanation": "The compressed form is never longer than the original run.",
       "incorrectOptionExplanations": {
-        "Sort the characters, then write each unique one once": "Sorting changes the order.",
-        "Keep a hash map from character to count and overwrite": "Runs are about consecutive characters, not totals.",
-        "Build the answer backwards from the end of the array": "The output is written at the front."
+        "Sort the characters first, then write each unique one once": "Sorting changes the order.",
+        "Keep a hash map from character to count, then overwrite": "Runs are about consecutive characters, not totals.",
+        "Build the answer backwards from the very end of the array": "The output is written at the front."
       }
     },
     {
