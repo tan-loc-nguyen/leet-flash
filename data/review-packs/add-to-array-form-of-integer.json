@@ -145,7 +145,8 @@
         "Extra digit array for k",
         "Output list is unavoidable"
       ],
-      "explanation": "Minor optimisation; clarity matters more."
+      "explanation": "Minor optimisation; clarity matters more.",
+      "code": "class Solution:\n    def addToArrayForm(self, num: list[int], k: int) -> list[int]:\n        num2 = []\n        while k:\n            digit = k % 10\n            num2.append(digit)\n            k //= 10\n        \n        num2.reverse()\n\n        i, j = len(num) - 1, len(num2) - 1\n        carry = 0\n        ans = []\n        while i >= 0 or j >= 0:\n            total = carry\n\n            if i >= 0:\n                total += num[i]\n                i -= 1\n            \n            if j >= 0:\n                total += num2[j]\n                j -= 1\n            \n            ans.append(total % 10)\n            carry = total // 10\n        \n        if carry:\n            ans.append(carry)\n\n        ans.reverse()\n        return ans\n"
     },
     {
       "id": "aa-code-01",
@@ -165,5 +166,6 @@
       "explanation": "Same skeleton as Add Two Numbers / Add Strings."
     }
   ],
-  "generatedAt": "2026-10-01T14:04:28Z"
+  "generatedAt": "2026-10-01T14:04:28Z",
+  "canonicalCode": "class Solution:\n    def addToArrayForm(self, num: List[int], k: int) -> List[int]:\n        res = []\n        i = len(num) - 1\n        while i >= 0 or k:                       # add k's digits as we go\n            if i >= 0:\n                k += num[i]\n                i -= 1\n            res.append(k % 10)\n            k //= 10                             # the carry stays inside k\n        return res[::-1]\n"
 }

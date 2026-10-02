@@ -150,5 +150,6 @@
       }
     }
   ],
-  "generatedAt": "2026-10-01T14:54:43Z"
+  "generatedAt": "2026-10-01T14:54:43Z",
+  "canonicalCode": "class Solution:\n    def coinChange(self, coins: List[int], amount: int) -> int:\n        INF = amount + 1\n        dp = [0] + [INF] * amount             # dp[a] = fewest coins that make a\n        for a in range(1, amount + 1):\n            for c in coins:\n                if c <= a:\n                    dp[a] = min(dp[a], dp[a - c] + 1)\n        return dp[amount] if dp[amount] != INF else -1\n"
 }

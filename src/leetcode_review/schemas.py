@@ -233,6 +233,7 @@ class ReviewPack(StrictModel):
     canonical_approach: str | None = None
     approaches: list[Approach] = Field(default_factory=list)
     personal_solution: PersonalSolution | None = None
+    canonical_code: str | None = None  # clean Python for the canonical approach; shown with complexity questions
     common_mistakes: list[str] = Field(default_factory=list)
     edge_cases: list[str] = Field(default_factory=list)
     cards: list[Card] = Field(default_factory=list)

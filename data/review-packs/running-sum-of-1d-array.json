@@ -131,5 +131,6 @@
       }
     }
   ],
-  "generatedAt": "2026-10-01T14:56:24Z"
+  "generatedAt": "2026-10-01T14:56:24Z",
+  "canonicalCode": "class Solution:\n    def runningSum(self, nums: List[int]) -> List[int]:\n        for i in range(1, len(nums)):\n            nums[i] += nums[i - 1]        # each prefix extends the previous one\n        return nums\n"
 }

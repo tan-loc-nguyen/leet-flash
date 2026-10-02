@@ -149,5 +149,6 @@
       }
     }
   ],
-  "generatedAt": "2026-10-01T15:00:56Z"
+  "generatedAt": "2026-10-01T15:00:56Z",
+  "canonicalCode": "class Solution:\n    def canPartition(self, nums: List[int]) -> bool:\n        total = sum(nums)\n        if total % 2:\n            return False\n        target = total // 2\n        dp = [False] * (target + 1)              # dp[s]: some subset sums to s\n        dp[0] = True\n        for x in nums:\n            for s in range(target, x - 1, -1):   # downwards: each number is used at most once\n                dp[s] = dp[s] or dp[s - x]\n        return dp[target]\n"
 }

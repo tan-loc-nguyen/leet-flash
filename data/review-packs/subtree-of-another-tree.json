@@ -106,7 +106,8 @@
         "O(nm)",
         "O(n m)",
         "O(m*n)"
-      ]
+      ],
+      "code": "# Definition for a binary tree node.\n# class TreeNode:\n#     def __init__(self, val=0, left=None, right=None):\n#         self.val = val\n#         self.left = left\n#         self.right = right\nclass Solution:\n    def isSameTree(self, p: Optional[TreeNode], q: Optional[TreeNode]) -> bool:\n        if not p and not q:\n            return True\n        if not p and q:\n            return False\n        if p and not q:\n            return False\n\n        sameLeft = self.isSameTree(p.left, q.left)\n        sameRight = self.isSameTree(p.right, q.right)\n\n        return sameLeft and sameRight and p.val == q.val\n\n    def isSubtree(self, root: Optional[TreeNode], subRoot: Optional[TreeNode]) -> bool:\n        self.ans = False\n        \n        def dfs(root: Optional[TreeNode]) -> None:\n            if not root:\n                return\n            \n            dfs(root.left)\n            dfs(root.right)\n            if not self.ans:\n                self.ans = self.isSameTree(root, subRoot)\n        \n        dfs(root)\n        return self.ans\n"
     },
     {
       "id": "sb2-space-01",
@@ -163,5 +164,6 @@
       }
     }
   ],
-  "generatedAt": "2026-10-01T14:29:30Z"
+  "generatedAt": "2026-10-01T14:29:30Z",
+  "canonicalCode": "class Solution:\n    def isSubtree(self, root: Optional[TreeNode], subRoot: Optional[TreeNode]) -> bool:\n        def serialize(node: Optional[TreeNode]) -> str:\n            if not node:\n                return \"#\"                       # null marker\n            # the leading \",\" makes \"12\" and \"2\" distinct values\n            return \",\" + str(node.val) + serialize(node.left) + serialize(node.right)\n\n        # substring search over the two preorder strings (linear with KMP-style search)\n        return serialize(subRoot) in serialize(root)\n"
 }

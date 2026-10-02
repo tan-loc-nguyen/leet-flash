@@ -135,5 +135,6 @@
       }
     }
   ],
-  "generatedAt": "2026-10-01T15:00:56Z"
+  "generatedAt": "2026-10-01T15:00:56Z",
+  "canonicalCode": "class Solution:\n    def distanceK(self, root: TreeNode, target: TreeNode, k: int) -> List[int]:\n        parent = {root: None}\n        stack = [root]\n        while stack:                             # record every node's parent\n            node = stack.pop()\n            for child in (node.left, node.right):\n                if child:\n                    parent[child] = node\n                    stack.append(child)\n\n        queue = deque([target])                  # BFS over left, right and parent\n        seen = {target}\n        for _ in range(k):\n            for _ in range(len(queue)):\n                node = queue.popleft()\n                for nb in (node.left, node.right, parent[node]):\n                    if nb and nb not in seen:\n                        seen.add(nb)\n                        queue.append(nb)\n        return [node.val for node in queue]\n"
 }

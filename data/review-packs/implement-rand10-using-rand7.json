@@ -135,5 +135,6 @@
       }
     }
   ],
-  "generatedAt": "2026-10-01T14:57:59Z"
+  "generatedAt": "2026-10-01T14:57:59Z",
+  "canonicalCode": "# rand7() is provided by the judge: it returns a uniform integer in [1, 7]\nclass Solution:\n    def rand10(self) -> int:\n        while True:\n            idx = (rand7() - 1) * 7 + rand7()    # uniform over 1..49\n            if idx <= 40:                        # reject 41..49 so 40 outcomes split evenly\n                return 1 + (idx - 1) % 10\n"
 }

@@ -131,5 +131,6 @@
       }
     }
   ],
-  "generatedAt": "2026-10-01T14:57:58Z"
+  "generatedAt": "2026-10-01T14:57:58Z",
+  "canonicalCode": "class Solution:\n    def lengthOfLastWord(self, s: str) -> int:\n        i = len(s) - 1\n        while i >= 0 and s[i] == \" \":            # skip trailing spaces\n            i -= 1\n        length = 0\n        while i >= 0 and s[i] != \" \":            # count the last word\n            length += 1\n            i -= 1\n        return length\n"
 }

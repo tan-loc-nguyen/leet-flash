@@ -164,5 +164,6 @@
       }
     }
   ],
-  "generatedAt": "2026-10-01T14:37:19Z"
+  "generatedAt": "2026-10-01T14:37:19Z",
+  "canonicalCode": "class Solution:\n    def cloneGraph(self, node: Optional[\"Node\"]) -> Optional[\"Node\"]:\n        if not node:\n            return None\n        clones = {}                              # original -> clone\n\n        def clone(n: \"Node\") -> \"Node\":\n            if n in clones:\n                return clones[n]\n            copy = Node(n.val)\n            clones[n] = copy                     # register before recursing to survive cycles\n            for nb in n.neighbors:\n                copy.neighbors.append(clone(nb))\n            return copy\n\n        return clone(node)\n"
 }

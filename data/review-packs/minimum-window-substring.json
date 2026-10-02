@@ -135,7 +135,8 @@
         "compare() is O(k) per check",
         "O(n * k) overall"
       ],
-      "explanation": "The satisfied-counter version makes it O(n + m)."
+      "explanation": "The satisfied-counter version makes it O(n + m).",
+      "code": "class Solution:\n    def compare(self, freq: Counter[str], bar: Counter[str]) -> bool:\n        for k, v in bar.items():\n            if freq[k] < v:\n                return False\n        return True\n\n    def minWindow(self, s: str, t: str) -> str:\n        freq = defaultdict(int)\n        for c in t:\n            freq[c] = 0\n        bar = Counter(t)\n        ans = \"\"\n        best = float(\"Inf\")\n        l = 0\n\n        for r in range(len(s)):\n            if s[r] in freq:\n                freq[s[r]] += 1\n            \n            while self.compare(freq, bar):\n                currSize = r - l + 1\n                if best > currSize:\n                    best = currSize\n                    ans = s[l:r+1]\n                \n                if s[l] in freq:\n                    freq[s[l]] -= 1\n                l += 1\n\n        return ans\n"
     },
     {
       "id": "mw-code-01",
@@ -177,5 +178,6 @@
       }
     }
   ],
-  "generatedAt": "2026-10-01T14:26:53Z"
+  "generatedAt": "2026-10-01T14:26:53Z",
+  "canonicalCode": "class Solution:\n    def minWindow(self, s: str, t: str) -> str:\n        need = Counter(t)\n        required = len(need)                     # distinct characters that must be satisfied\n        have = 0\n        window = defaultdict(int)\n        best = (float(\"inf\"), 0, 0)              # (length, left, right)\n        left = 0\n        for right, ch in enumerate(s):\n            window[ch] += 1\n            if ch in need and window[ch] == need[ch]:\n                have += 1\n            while have == required:              # valid window: try to shrink it\n                if right - left + 1 < best[0]:\n                    best = (right - left + 1, left, right)\n                out = s[left]\n                window[out] -= 1\n                if out in need and window[out] < need[out]:\n                    have -= 1\n                left += 1\n        return \"\" if best[0] == float(\"inf\") else s[best[1]:best[2] + 1]\n"
 }

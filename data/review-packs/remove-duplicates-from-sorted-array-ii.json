@@ -131,5 +131,6 @@
       }
     }
   ],
-  "generatedAt": "2026-10-01T14:56:24Z"
+  "generatedAt": "2026-10-01T14:56:24Z",
+  "canonicalCode": "class Solution:\n    def removeDuplicates(self, nums: List[int]) -> int:\n        k = 0                                   # length of the valid output so far\n        for x in nums:\n            if k < 2 or x != nums[k - 2]:       # a third copy would equal nums[k - 2]\n                nums[k] = x\n                k += 1\n        return k\n"
 }

@@ -79,3 +79,19 @@ def test_custom_cards_collision_detected(paths):
     (paths.review_packs / "p.json").write_text(json.dumps(base()))
     (paths.custom_cards / "p.json").write_text(json.dumps({"problemSlug": "p", "cards": [free("p-1")]}))
     assert any("collide" in i.message for i in validate_all(paths, {"p"}))
+
+
+def test_invalid_canonical_code_is_an_error(paths):
+    from leetcode_review.content.validator import validate_pack_file
+    from tests.conftest import make_pack, make_problem
+    make_problem(paths, "two-sum", leetcode_id=1)
+    make_pack(paths, "two-sum")
+    f = paths.review_packs / "two-sum.json"
+    d = json.loads(f.read_text())
+    d["canonicalCode"] = "def f(:\n  pass"
+    f.write_text(json.dumps(d))
+    issues = validate_pack_file(f, {"two-sum"})
+    assert any(i.level == "error" and "canonicalCode is not valid Python" in i.message for i in issues)
+    d["canonicalCode"] = "def f():\n    return 1\n"
+    f.write_text(json.dumps(d))
+    assert not [i for i in validate_pack_file(f, {"two-sum"}) if i.level == "error"]

@@ -135,5 +135,6 @@
       }
     }
   ],
-  "generatedAt": "2026-10-01T14:52:56Z"
+  "generatedAt": "2026-10-01T14:52:56Z",
+  "canonicalCode": "class Solution:\n    def nextPermutation(self, nums: List[int]) -> None:\n        n = len(nums)\n        i = n - 2\n        while i >= 0 and nums[i] >= nums[i + 1]:      # rightmost ascent (the pivot)\n            i -= 1\n        if i >= 0:\n            j = n - 1\n            while nums[j] <= nums[i]:                 # smallest element larger than the pivot\n                j -= 1\n            nums[i], nums[j] = nums[j], nums[i]\n        l, r = i + 1, n - 1                           # reverse the non-increasing suffix\n        while l < r:\n            nums[l], nums[r] = nums[r], nums[l]\n            l += 1\n            r -= 1\n"
 }

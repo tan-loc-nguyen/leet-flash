@@ -135,5 +135,6 @@
       }
     }
   ],
-  "generatedAt": "2026-10-01T14:54:43Z"
+  "generatedAt": "2026-10-01T14:54:43Z",
+  "canonicalCode": "class Solution:\n    def minMeetingRooms(self, intervals: List[List[int]]) -> int:\n        intervals.sort()                    # by start time\n        ends = []                           # min-heap of end times of rooms in use\n        for start, end in intervals:\n            if ends and ends[0] <= start:   # earliest room is free: reuse it\n                heapq.heapreplace(ends, end)\n            else:\n                heapq.heappush(ends, end)   # need a new room\n        return len(ends)\n"
 }

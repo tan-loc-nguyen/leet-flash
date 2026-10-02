@@ -134,5 +134,6 @@
       }
     }
   ],
-  "generatedAt": "2026-10-01T14:52:56Z"
+  "generatedAt": "2026-10-01T14:52:56Z",
+  "canonicalCode": "class Solution:\n    def romanToInt(self, s: str) -> int:\n        value = {\"I\": 1, \"V\": 5, \"X\": 10, \"L\": 50, \"C\": 100, \"D\": 500, \"M\": 1000}\n        total = 0\n        for i, ch in enumerate(s):\n            if i + 1 < len(s) and value[ch] < value[s[i + 1]]:\n                total -= value[ch]        # subtractive pair such as IV or CM\n            else:\n                total += value[ch]\n        return total\n"
 }

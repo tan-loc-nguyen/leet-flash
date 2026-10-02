@@ -147,5 +147,6 @@
       }
     }
   ],
-  "generatedAt": "2026-10-01T14:52:56Z"
+  "generatedAt": "2026-10-01T14:52:56Z",
+  "canonicalCode": "class Solution:\n    def rotate(self, nums: List[int], k: int) -> None:\n        n = len(nums)\n        k %= n\n\n        def reverse(l: int, r: int) -> None:\n            while l < r:\n                nums[l], nums[r] = nums[r], nums[l]\n                l += 1\n                r -= 1\n\n        reverse(0, n - 1)        # whole array\n        reverse(0, k - 1)        # first k elements\n        reverse(k, n - 1)        # the rest\n"
 }

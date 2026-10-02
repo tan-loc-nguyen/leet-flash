@@ -135,5 +135,6 @@
       }
     }
   ],
-  "generatedAt": "2026-10-01T15:00:56Z"
+  "generatedAt": "2026-10-01T15:00:56Z",
+  "canonicalCode": "class Solution:\n    def uniformArray(self, nums1: List[int]) -> bool:\n        odds = [x for x in nums1 if x % 2]\n        evens = [x for x in nums1 if x % 2 == 0]\n        if not odds or not evens:            # already one parity\n            return True\n        # every even must lose a smaller odd to become odd; the smallest odd can never become even\n        return min(odds) < min(evens)\n"
 }

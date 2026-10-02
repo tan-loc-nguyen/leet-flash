@@ -148,5 +148,6 @@
       }
     }
   ],
-  "generatedAt": "2026-10-01T14:54:43Z"
+  "generatedAt": "2026-10-01T14:54:43Z",
+  "canonicalCode": "class RandomizedSet:\n    def __init__(self):\n        self.vals = []          # for O(1) random access\n        self.index = {}         # value -> position in vals\n\n    def insert(self, val: int) -> bool:\n        if val in self.index:\n            return False\n        self.index[val] = len(self.vals)\n        self.vals.append(val)\n        return True\n\n    def remove(self, val: int) -> bool:\n        if val not in self.index:\n            return False\n        i, last = self.index[val], self.vals[-1]\n        self.vals[i] = last              # move the last element into the hole\n        self.index[last] = i\n        self.vals.pop()\n        del self.index[val]              # delete last so removing the last element also works\n        return True\n\n    def getRandom(self) -> int:\n        return random.choice(self.vals)\n"
 }

@@ -142,5 +142,6 @@
       }
     }
   ],
-  "generatedAt": "2026-10-01T14:54:43Z"
+  "generatedAt": "2026-10-01T14:54:43Z",
+  "canonicalCode": "class Solution:\n    def findMaxAverage(self, nums: List[int], k: int) -> float:\n        window = sum(nums[:k])\n        best = window\n        for i in range(k, len(nums)):\n            window += nums[i] - nums[i - k]     # slide: add the new element, drop the old\n            best = max(best, window)\n        return best / k\n"
 }

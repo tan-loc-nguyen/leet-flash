@@ -112,7 +112,8 @@
         "O(mn) queue",
         "Direct scan O(1)"
       ],
-      "explanation": "You never actually use BFS order."
+      "explanation": "You never actually use BFS order.",
+      "code": "class Solution:\n    def islandPerimeter(self, grid: List[List[int]]) -> int:\n        # accumulate the total of land edges that exposed to water\n        m, n = len(grid), len(grid[0])\n        DIR = [0, 1, 0, -1, 0]\n        queue = collections.deque()\n        for i in range(m):\n            for j in range(n):\n                if grid[i][j] == 1:\n                    queue.append((i, j))\n        \n        perimeter = 0\n        while queue:\n            cell = queue.popleft()\n            for i in range(4):\n                nr, nc = cell[0] + DIR[i], cell[1] + DIR[i + 1]\n                if (0 <= nr < m and 0 <= nc < n and grid[nr][nc] == 0) or nr < 0 or nr >= m or nc <0 or nc >= n:\n                    perimeter += 1\n                \n        \n        return perimeter\n"
     },
     {
       "id": "ip-code-01",
@@ -154,5 +155,6 @@
       }
     }
   ],
-  "generatedAt": "2026-10-01T14:37:19Z"
+  "generatedAt": "2026-10-01T14:37:19Z",
+  "canonicalCode": "class Solution:\n    def islandPerimeter(self, grid: List[List[int]]) -> int:\n        m, n = len(grid), len(grid[0])\n        perimeter = 0\n        for r in range(m):\n            for c in range(n):\n                if grid[r][c] == 1:\n                    perimeter += 4                         # each land cell starts with 4 edges\n                    if r > 0 and grid[r - 1][c] == 1:      # a shared edge with the cell above\n                        perimeter -= 2                     # hides one edge on each cell\n                    if c > 0 and grid[r][c - 1] == 1:      # ... or with the cell on the left\n                        perimeter -= 2\n        return perimeter\n"
 }

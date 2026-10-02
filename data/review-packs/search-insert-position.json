@@ -133,5 +133,6 @@
       }
     }
   ],
-  "generatedAt": "2026-10-01T14:21:49Z"
+  "generatedAt": "2026-10-01T14:21:49Z",
+  "canonicalCode": "class Solution:\n    def searchInsert(self, nums: List[int], target: int) -> int:\n        lo, hi = 0, len(nums)                    # answer lies in [0, n]\n        while lo < hi:                           # lower bound: first index with nums[i] >= target\n            mid = (lo + hi) // 2\n            if nums[mid] < target:\n                lo = mid + 1\n            else:\n                hi = mid\n        return lo\n"
 }

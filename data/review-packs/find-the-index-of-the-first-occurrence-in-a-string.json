@@ -165,5 +165,6 @@
       }
     }
   ],
-  "generatedAt": "2026-10-01T14:08:18Z"
+  "generatedAt": "2026-10-01T14:08:18Z",
+  "canonicalCode": "class Solution:\n    def strStr(self, haystack: str, needle: str) -> int:\n        # lps[i]: length of the longest proper prefix of needle[:i+1] that is also its suffix\n        lps = [0] * len(needle)\n        k = 0\n        for i in range(1, len(needle)):\n            while k and needle[i] != needle[k]:\n                k = lps[k - 1]\n            if needle[i] == needle[k]:\n                k += 1\n            lps[i] = k\n\n        k = 0\n        for i, ch in enumerate(haystack):        # the haystack index never moves backwards\n            while k and ch != needle[k]:\n                k = lps[k - 1]\n            if ch == needle[k]:\n                k += 1\n            if k == len(needle):\n                return i - k + 1\n        return -1\n"
 }

@@ -138,5 +138,6 @@
       }
     }
   ],
-  "generatedAt": "2026-10-01T14:52:56Z"
+  "generatedAt": "2026-10-01T14:52:56Z",
+  "canonicalCode": "class Solution:\n    def reorganizeString(self, s: str) -> str:\n        count = Counter(s)\n        most, freq = count.most_common(1)[0]\n        if freq > (len(s) + 1) // 2:             # not enough gaps to separate the top letter\n            return \"\"\n        res = [\"\"] * len(s)\n        slots = list(range(0, len(s), 2)) + list(range(1, len(s), 2))   # even slots first, then odd\n        i = 0\n        for ch, c in count.most_common():        # most frequent letter is written first\n            for _ in range(c):\n                res[slots[i]] = ch\n                i += 1\n        return \"\".join(res)\n"
 }

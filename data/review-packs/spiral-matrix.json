@@ -137,5 +137,6 @@
       }
     }
   ],
-  "generatedAt": "2026-10-01T15:00:56Z"
+  "generatedAt": "2026-10-01T15:00:56Z",
+  "canonicalCode": "class Solution:\n    def spiralOrder(self, matrix: List[List[int]]) -> List[int]:\n        top, bottom = 0, len(matrix) - 1\n        left, right = 0, len(matrix[0]) - 1\n        out = []\n        while top <= bottom and left <= right:\n            out.extend(matrix[top][left:right + 1])              # top row\n            out.extend(matrix[r][right] for r in range(top + 1, bottom + 1))   # right column\n            if top < bottom:\n                out.extend(matrix[bottom][c] for c in range(right - 1, left - 1, -1))   # bottom row\n            if left < right:\n                out.extend(matrix[r][left] for r in range(bottom - 1, top, -1))         # left column\n            top, bottom, left, right = top + 1, bottom - 1, left + 1, right - 1\n        return out\n"
 }

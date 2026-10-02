@@ -132,5 +132,6 @@
       }
     }
   ],
-  "generatedAt": "2026-10-01T14:57:58Z"
+  "generatedAt": "2026-10-01T14:57:58Z",
+  "canonicalCode": "class ParkingSystem:\n    def __init__(self, big: int, medium: int, small: int):\n        self.free = [big, medium, small]         # remaining slots per car type\n\n    def addCar(self, carType: int) -> bool:\n        if self.free[carType - 1] > 0:\n            self.free[carType - 1] -= 1\n            return True\n        return False\n"
 }

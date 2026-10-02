@@ -147,5 +147,6 @@
       }
     }
   ],
-  "generatedAt": "2026-10-01T14:52:56Z"
+  "generatedAt": "2026-10-01T14:52:56Z",
+  "canonicalCode": "class Solution:\n    def findDuplicate(self, nums: List[int]) -> int:\n        slow = fast = nums[0]\n        while True:                       # phase 1: meet inside the cycle\n            slow = nums[slow]\n            fast = nums[nums[fast]]\n            if slow == fast:\n                break\n        slow = nums[0]                    # phase 2: walk to the cycle entrance\n        while slow != fast:\n            slow = nums[slow]\n            fast = nums[fast]\n        return slow\n"
 }

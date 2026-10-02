@@ -121,7 +121,8 @@
         "Chaining O(n + buckets)",
         "Resizing by load factor"
       ],
-      "explanation": "Python's built-in set is the real-world solution."
+      "explanation": "Python's built-in set is the real-world solution.",
+      "code": "class MyHashSet:\n\n    def __init__(self):\n        self.map = [False]*(10**6 + 1)      \n\n    def add(self, key: int) -> None:\n        self.map[key] = True\n\n    def remove(self, key: int) -> None:\n        self.map[key] = False\n\n    def contains(self, key: int) -> bool:\n        return self.map[key]\n\n\n# Your MyHashSet object will be instantiated and called as such:\n# obj = MyHashSet()\n# obj.add(key)\n# obj.remove(key)\n# param_3 = obj.contains(key)\n"
     },
     {
       "id": "hs-code-01",
@@ -141,5 +142,6 @@
       "explanation": "Average O(1) relies on keeping chains short."
     }
   ],
-  "generatedAt": "2026-10-01T14:19:52Z"
+  "generatedAt": "2026-10-01T14:19:52Z",
+  "canonicalCode": "class MyHashSet:\n    def __init__(self):\n        self.size = 1009                         # a prime number of buckets\n        self.buckets = [[] for _ in range(self.size)]\n\n    def add(self, key: int) -> None:\n        bucket = self.buckets[key % self.size]\n        if key not in bucket:                    # scan one short bucket\n            bucket.append(key)\n\n    def remove(self, key: int) -> None:\n        bucket = self.buckets[key % self.size]\n        if key in bucket:\n            bucket.remove(key)\n\n    def contains(self, key: int) -> bool:\n        return key in self.buckets[key % self.size]\n"
 }

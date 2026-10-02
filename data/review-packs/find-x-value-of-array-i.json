@@ -137,5 +137,6 @@
       }
     }
   ],
-  "generatedAt": "2026-10-01T15:00:56Z"
+  "generatedAt": "2026-10-01T15:00:56Z",
+  "canonicalCode": "class Solution:\n    def resultArray(self, nums: List[int], k: int) -> List[int]:\n        result = [0] * k\n        ending = [0] * k                         # ending[r]: subarrays ending at the previous index with product % k == r\n        for a in nums:\n            nxt = [0] * k\n            nxt[a % k] += 1                      # the subarray [a] on its own\n            for r in range(k):                   # extend every earlier subarray by a\n                nxt[(r * a) % k] += ending[r]\n            ending = nxt\n            for r in range(k):\n                result[r] += ending[r]\n        return result\n"
 }

@@ -132,5 +132,6 @@
       }
     }
   ],
-  "generatedAt": "2026-10-01T15:00:56Z"
+  "generatedAt": "2026-10-01T15:00:56Z",
+  "canonicalCode": "class Solution:\n    def sortedSquares(self, nums: List[int]) -> List[int]:\n        n = len(nums)\n        out = [0] * n\n        l, r = 0, n - 1\n        for i in range(n - 1, -1, -1):           # fill from the back with the largest square\n            if abs(nums[l]) > abs(nums[r]):\n                out[i] = nums[l] ** 2\n                l += 1\n            else:\n                out[i] = nums[r] ** 2\n                r -= 1\n        return out\n"
 }

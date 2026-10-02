@@ -225,8 +225,26 @@ class ReviewEngine:
                 "options": pres["options"],
                 "code": card.code,
             },
+            "solutionCode": self._solution_code(card, p, cat.packs[prob["slug"]]),
             "hintsUsed": prob["hintLevel"],
         }
+
+    @staticmethod
+    def _solution_code(card: Card, problem, pack) -> dict | None:
+        """Code to read while answering a complexity question, so the answer is derived rather than memorised.
+
+        Preference: the pack's canonical code; else the user's accepted Python when it is the optimal approach
+        (or the pack makes no claim about it). Never show code whose complexity differs from the card's answer.
+        """
+        if card.category not in ("time_complexity", "space_complexity") or card.code:
+            return None
+        if pack.canonical_code:
+            return {"label": "Canonical solution", "code": pack.canonical_code}
+        sub = problem.latest_submission
+        mine = pack.personal_solution
+        if sub and sub.code.strip() and (mine is None or mine.is_optimal is not False):
+            return {"label": "Your accepted solution", "code": sub.code}
+        return None
 
     # ------------------------------------------------------------------ answering
     def reveal(self) -> dict:

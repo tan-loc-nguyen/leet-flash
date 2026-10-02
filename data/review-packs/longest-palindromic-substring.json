@@ -160,5 +160,6 @@
       }
     }
   ],
-  "generatedAt": "2026-10-01T14:52:56Z"
+  "generatedAt": "2026-10-01T14:52:56Z",
+  "canonicalCode": "class Solution:\n    def longestPalindrome(self, s: str) -> str:\n        best_l, best_r = 0, 0\n\n        def expand(l: int, r: int) -> None:\n            nonlocal best_l, best_r\n            while l >= 0 and r < len(s) and s[l] == s[r]:   # grow while the ends match\n                l -= 1\n                r += 1\n            if (r - 1) - (l + 1) > best_r - best_l:          # span of the last valid palindrome\n                best_l, best_r = l + 1, r - 1\n\n        for i in range(len(s)):\n            expand(i, i)        # odd-length centre\n            expand(i, i + 1)    # even-length centre\n        return s[best_l:best_r + 1]\n"
 }

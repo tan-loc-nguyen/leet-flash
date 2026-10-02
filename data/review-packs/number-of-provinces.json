@@ -165,5 +165,6 @@
       }
     }
   ],
-  "generatedAt": "2026-10-01T14:37:19Z"
+  "generatedAt": "2026-10-01T14:37:19Z",
+  "canonicalCode": "class Solution:\n    def findCircleNum(self, isConnected: List[List[int]]) -> int:\n        n = len(isConnected)\n        visited = [False] * n\n\n        def dfs(i: int) -> None:\n            visited[i] = True\n            for j in range(n):                   # scan row i of the matrix\n                if isConnected[i][j] and not visited[j]:\n                    dfs(j)\n\n        provinces = 0\n        for i in range(n):\n            if not visited[i]:                   # a new component\n                provinces += 1\n                dfs(i)\n        return provinces\n"
 }

@@ -149,5 +149,6 @@
       }
     }
   ],
-  "generatedAt": "2026-10-01T14:08:18Z"
+  "generatedAt": "2026-10-01T14:08:18Z",
+  "canonicalCode": "class Solution:\n    def reverseStr(self, s: str, k: int) -> str:\n        chars = list(s)\n        for i in range(0, len(chars), 2 * k):    # jump 2k at a time\n            chars[i:i + k] = reversed(chars[i:i + k])   # reverse the first k of each block\n        return \"\".join(chars)\n"
 }

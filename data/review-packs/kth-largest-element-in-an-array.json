@@ -136,7 +136,8 @@
         "Heap O(k)",
         "Quickselect O(1) extra"
       ],
-      "explanation": "R must be bounded for counting."
+      "explanation": "R must be bounded for counting.",
+      "code": "class Solution:\n    def findKthLargest(self, nums: List[int], k: int) -> int:\n        low, high = min(nums), max(nums)\n        arr = [0] * (high - low + 1)\n\n        for num in nums:\n            arr[num - low] += 1\n        \n        for i in range(len(arr) - 1, -1, -1):\n            k -= arr[i]\n            if k <= 0:\n                return i + low\n        \n        return -1\n"
     },
     {
       "id": "kt-code-01",
@@ -178,5 +179,6 @@
       }
     }
   ],
-  "generatedAt": "2026-10-01T14:22:47Z"
+  "generatedAt": "2026-10-01T14:22:47Z",
+  "canonicalCode": "class Solution:\n    def findKthLargest(self, nums: List[int], k: int) -> int:\n        target = len(nums) - k                   # index of the answer in sorted order\n        lo, hi = 0, len(nums) - 1\n        while True:\n            pivot = nums[random.randint(lo, hi)]  # a random pivot avoids the sorted-input worst case\n            lt, i, gt = lo, lo, hi                # three-way partition: < pivot | == pivot | > pivot\n            while i <= gt:\n                if nums[i] < pivot:\n                    nums[lt], nums[i] = nums[i], nums[lt]\n                    lt += 1\n                    i += 1\n                elif nums[i] > pivot:\n                    nums[gt], nums[i] = nums[i], nums[gt]\n                    gt -= 1\n                else:\n                    i += 1\n            if target < lt:                       # keep only the side that holds the target\n                hi = lt - 1\n            elif target > gt:\n                lo = gt + 1\n            else:\n                return nums[target]\n"
 }

@@ -104,7 +104,8 @@
       "explanation": "Two linear passes (counting) or one pass (partition).",
       "acceptedAnswers": [
         "linear"
-      ]
+      ],
+      "code": "class Solution:\n    def sortColors(self, nums: List[int]) -> None:\n        \"\"\"\n        Do not return anything, modify nums in-place instead.\n        \"\"\"\n        cnt = [0] * 3\n        for num in nums:\n            cnt[num] += 1\n        j = 0\n        for num in range(3):\n            for _ in range(cnt[num]):\n                nums[j] = num\n                j += 1\n"
     },
     {
       "id": "sc-space-01",
@@ -118,7 +119,8 @@
       "explanation": "A fixed 3-element counter array.",
       "acceptedAnswers": [
         "constant"
-      ]
+      ],
+      "code": "class Solution:\n    def sortColors(self, nums: List[int]) -> None:\n        \"\"\"\n        Do not return anything, modify nums in-place instead.\n        \"\"\"\n        cnt = [0] * 3\n        for num in nums:\n            cnt[num] += 1\n        j = 0\n        for num in range(3):\n            for _ in range(cnt[num]):\n                nums[j] = num\n                j += 1\n"
     },
     {
       "id": "sc-alt-01",
@@ -153,5 +155,6 @@
       "explanation": "It is not a general-purpose sort; it relies on the tiny key range."
     }
   ],
-  "generatedAt": "2026-10-01T14:08:18Z"
+  "generatedAt": "2026-10-01T14:08:18Z",
+  "canonicalCode": "class Solution:\n    def sortColors(self, nums: List[int]) -> None:\n        low, mid, high = 0, 0, len(nums) - 1     # nums[:low] are 0s, nums[high+1:] are 2s\n        while mid <= high:\n            if nums[mid] == 0:\n                nums[low], nums[mid] = nums[mid], nums[low]\n                low += 1\n                mid += 1\n            elif nums[mid] == 1:\n                mid += 1\n            else:\n                nums[mid], nums[high] = nums[high], nums[mid]   # do not advance mid: the swapped value is unseen\n                high -= 1\n"
 }

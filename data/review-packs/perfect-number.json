@@ -135,5 +135,6 @@
       }
     }
   ],
-  "generatedAt": "2026-10-01T15:00:56Z"
+  "generatedAt": "2026-10-01T15:00:56Z",
+  "canonicalCode": "class Solution:\n    def checkPerfectNumber(self, num: int) -> bool:\n        if num <= 1:\n            return False\n        total = 1                                # 1 divides everything\n        d = 2\n        while d * d <= num:                      # divisors come in pairs (d, num // d)\n            if num % d == 0:\n                total += d\n                if d != num // d:\n                    total += num // d\n            d += 1\n        return total == num\n"
 }

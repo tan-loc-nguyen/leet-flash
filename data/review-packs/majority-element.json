@@ -123,7 +123,8 @@
       "acceptedAnswers": [
         "O(nlogn)",
         "O(n log(n))"
-      ]
+      ],
+      "code": "class Solution:\n    def majorityElement(self, nums: List[int]) -> int:\n        # time o(n) space o(n)\n        # counter = {}\n        # for num in nums:\n        #     if num in counter:\n        #         counter[num] += 1\n        #     else:\n        #         counter[num] = 1\n\n        # major, maxFreq = nums[0], 0\n        # for k, v in counter.items():\n        #     if maxFreq < v:\n        #         maxFreq = v\n        #         major = k\n        \n        # return major\n        # time o(nlogn) space o(1)\n        nums.sort()\n        return nums[int(len(nums)/2)]\n"
     },
     {
       "id": "me-space-01",
@@ -182,5 +183,6 @@
       "explanation": "Use sorting when it is the simplest correct answer; mention Boyer-Moore as the optimum."
     }
   ],
-  "generatedAt": "2026-10-01T14:04:28Z"
+  "generatedAt": "2026-10-01T14:04:28Z",
+  "canonicalCode": "class Solution:\n    def majorityElement(self, nums: List[int]) -> int:\n        candidate, count = None, 0\n        for x in nums:\n            if count == 0:\n                candidate = x                    # start a new candidate\n            count += 1 if x == candidate else -1 # votes cancel in pairs\n        return candidate\n"
 }

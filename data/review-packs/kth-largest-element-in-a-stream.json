@@ -117,7 +117,8 @@
         "O(n) vs O(k)",
         "Smaller values can never matter again"
       ],
-      "explanation": "The constructor must heapify then trim to size k."
+      "explanation": "The constructor must heapify then trim to size k.",
+      "code": "class KthLargest:\n\n    def __init__(self, k: int, nums: List[int]):\n        self.heap = nums[:]\n        self.k = k\n\n    def add(self, val: int) -> int:\n        self.heap.append(val)\n\n        self.heap.sort()\n        return self.heap[-self.k]\n\n\n# Your KthLargest object will be instantiated and called as such:\n# obj = KthLargest(k, nums)\n# param_1 = obj.add(val)\n"
     },
     {
       "id": "kl-code-01",
@@ -159,5 +160,6 @@
       }
     }
   ],
-  "generatedAt": "2026-10-01T14:19:52Z"
+  "generatedAt": "2026-10-01T14:19:52Z",
+  "canonicalCode": "class KthLargest:\n    def __init__(self, k: int, nums: List[int]):\n        self.k = k\n        self.heap = []                           # min-heap holding the k largest values seen\n        for x in nums:\n            self.add(x)\n\n    def add(self, val: int) -> int:\n        heapq.heappush(self.heap, val)\n        if len(self.heap) > self.k:\n            heapq.heappop(self.heap)             # drop the smallest\n        return self.heap[0]                      # the root is the k-th largest\n"
 }

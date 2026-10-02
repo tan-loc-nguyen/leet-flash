@@ -137,5 +137,6 @@
       }
     }
   ],
-  "generatedAt": "2026-10-01T14:54:43Z"
+  "generatedAt": "2026-10-01T14:54:43Z",
+  "canonicalCode": "class Solution:\n    def leastInterval(self, tasks: List[str], n: int) -> int:\n        count = Counter(tasks)\n        max_count = max(count.values())\n        num_max = sum(1 for c in count.values() if c == max_count)\n        # (max_count - 1) full frames of n + 1 slots, then the final partial frame\n        return max(len(tasks), (max_count - 1) * (n + 1) + num_max)\n"
 }

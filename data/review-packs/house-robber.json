@@ -133,5 +133,6 @@
       }
     }
   ],
-  "generatedAt": "2026-10-01T14:52:56Z"
+  "generatedAt": "2026-10-01T14:52:56Z",
+  "canonicalCode": "class Solution:\n    def rob(self, nums: List[int]) -> int:\n        prev2 = prev1 = 0                 # best loot up to i-2 and i-1\n        for x in nums:\n            prev2, prev1 = prev1, max(prev1, prev2 + x)   # skip house i, or rob it\n        return prev1\n"
 }

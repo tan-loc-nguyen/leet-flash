@@ -146,5 +146,6 @@
       }
     }
   ],
-  "generatedAt": "2026-10-01T15:00:56Z"
+  "generatedAt": "2026-10-01T15:00:56Z",
+  "canonicalCode": "class Solution:\n    def uniquePaths(self, m: int, n: int) -> int:\n        row = [1] * n                            # first row: one way to reach each cell\n        for _ in range(1, m):\n            for j in range(1, n):\n                row[j] += row[j - 1]             # from above (row[j]) plus from the left\n        return row[-1]\n"
 }

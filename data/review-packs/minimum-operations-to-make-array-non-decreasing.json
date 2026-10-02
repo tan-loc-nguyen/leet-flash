@@ -135,5 +135,6 @@
       }
     }
   ],
-  "generatedAt": "2026-10-01T14:54:43Z"
+  "generatedAt": "2026-10-01T14:54:43Z",
+  "canonicalCode": "class Solution:\n    def minOperations(self, nums: List[int]) -> int:\n        total = 0\n        for i in range(len(nums) - 1):\n            if nums[i] > nums[i + 1]:\n                total += nums[i] - nums[i + 1]     # pay for every drop\n        return total\n"
 }

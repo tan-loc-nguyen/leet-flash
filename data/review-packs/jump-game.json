@@ -131,5 +131,6 @@
       }
     }
   ],
-  "generatedAt": "2026-10-01T15:00:56Z"
+  "generatedAt": "2026-10-01T15:00:56Z",
+  "canonicalCode": "class Solution:\n    def canJump(self, nums: List[int]) -> bool:\n        reach = 0                                # farthest index reachable so far\n        for i, jump in enumerate(nums):\n            if i > reach:                        # stuck before getting to i\n                return False\n            reach = max(reach, i + jump)\n        return True\n"
 }

@@ -146,5 +146,6 @@
       }
     }
   ],
-  "generatedAt": "2026-10-01T14:56:24Z"
+  "generatedAt": "2026-10-01T14:56:24Z",
+  "canonicalCode": "class Solution:\n    def countSubstrings(self, s: str) -> int:\n        count = 0\n\n        def expand(l: int, r: int) -> None:\n            nonlocal count\n            while l >= 0 and r < len(s) and s[l] == s[r]:\n                count += 1                       # every successful step is one more palindrome\n                l -= 1\n                r += 1\n\n        for i in range(len(s)):\n            expand(i, i)\n            expand(i, i + 1)\n        return count\n"
 }

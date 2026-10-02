@@ -172,5 +172,6 @@
       }
     }
   ],
-  "generatedAt": "2026-10-01T14:39:54Z"
+  "generatedAt": "2026-10-01T14:39:54Z",
+  "canonicalCode": "class Solution:\n    def fib(self, n: int) -> int:\n        a, b = 0, 1                              # F(0), F(1)\n        for _ in range(n):\n            a, b = b, a + b\n        return a\n"
 }

@@ -89,6 +89,12 @@ Guidelines:
   more specific option is a giveaway. Shorten a verbose answer or lengthen the distractors (while
   keeping them wrong for the stated reason) rather than leaving the tell in.
 * Write `incorrectOptionExplanations` for every distractor; they are the learning content.
+* Every pack should carry `canonicalCode`: clean, runnable Python for the canonical approach (LeetCode class/method
+  signature, no judge scaffolding), with comments on what drives the cost. Test it against the statement's examples and a
+  brute force before storing it. It is shown with time/space questions so I derive the complexity from code. Complexity
+  cards must describe *that* code; a card about a different approach (my own heap/sort solution, say) carries its own
+  `code` field, which takes precedence. When `canonicalCode` is absent the engine shows my accepted submission, but only
+  if `personalSolution.isOptimal` is not false.
 * Complexity cards should say *why*, not just the symbol (amortised analysis, alphabet-bounded space…).
 * Avoid trivial Python-syntax questions unless they carry interview reasoning (heap tuple ordering,
   `last[ch] >= left` guards, `lo + (hi - lo)//2`…).

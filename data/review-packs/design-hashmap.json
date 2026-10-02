@@ -111,7 +111,8 @@
         "O(U) vs O(n + m)",
         "Sparse/large key ranges favour chaining"
       ],
-      "explanation": "Python's dict is the practical answer."
+      "explanation": "Python's dict is the practical answer.",
+      "code": "class MyHashMap:\n\n    def __init__(self):\n        self.map = [-1]*(10**6 + 1)\n\n    def put(self, key: int, value: int) -> None:\n        self.map[key] = value\n\n    def get(self, key: int) -> int:\n        return self.map[key]\n\n    def remove(self, key: int) -> None:\n        self.map[key] = -1\n\n\n# Your MyHashMap object will be instantiated and called as such:\n# obj = MyHashMap()\n# obj.put(key,value)\n# param_2 = obj.get(key)\n# obj.remove(key)\n"
     },
     {
       "id": "hm-edge-01",
@@ -136,5 +137,6 @@
       }
     }
   ],
-  "generatedAt": "2026-10-01T14:19:52Z"
+  "generatedAt": "2026-10-01T14:19:52Z",
+  "canonicalCode": "class MyHashMap:\n    def __init__(self):\n        self.size = 1009                         # a prime number of buckets\n        self.buckets = [[] for _ in range(self.size)]   # each bucket: list of [key, value]\n\n    def put(self, key: int, value: int) -> None:\n        bucket = self.buckets[key % self.size]\n        for pair in bucket:\n            if pair[0] == key:\n                pair[1] = value                  # update in place\n                return\n        bucket.append([key, value])\n\n    def get(self, key: int) -> int:\n        for k, v in self.buckets[key % self.size]:\n            if k == key:\n                return v\n        return -1\n\n    def remove(self, key: int) -> None:\n        bucket = self.buckets[key % self.size]\n        for i, (k, _) in enumerate(bucket):\n            if k == key:\n                bucket.pop(i)\n                return\n"
 }

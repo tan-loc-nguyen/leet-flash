@@ -147,5 +147,6 @@
       }
     }
   ],
-  "generatedAt": "2026-10-01T15:00:56Z"
+  "generatedAt": "2026-10-01T15:00:56Z",
+  "canonicalCode": "class Solution:\n    def sumSubarrayMins(self, arr: List[int]) -> int:\n        MOD = 10**9 + 7\n        n = len(arr)\n        left = [0] * n                           # choices of left end (previous strictly smaller)\n        right = [0] * n                          # choices of right end (next smaller or equal)\n        stack = []\n        for i in range(n):\n            while stack and arr[stack[-1]] > arr[i]:\n                stack.pop()\n            left[i] = i - (stack[-1] if stack else -1)\n            stack.append(i)\n        stack = []\n        for i in range(n - 1, -1, -1):\n            while stack and arr[stack[-1]] >= arr[i]:\n                stack.pop()\n            right[i] = (stack[-1] if stack else n) - i\n            stack.append(i)\n        return sum(a * l * r for a, l, r in zip(arr, left, right)) % MOD\n"
 }

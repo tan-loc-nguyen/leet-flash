@@ -114,7 +114,8 @@
         "All windows => O(n^2)",
         "Track best only => O(n)"
       ],
-      "explanation": "Fine for n <= 100 but wasteful in general."
+      "explanation": "Fine for n <= 100 but wasteful in general.",
+      "code": "class Solution:\n    def shortestBeautifulSubstring(self, s: str, k: int) -> str:\n        # find the beautiful substrings\n        # find the smallest one in terms of lexicography and length\n        l = 0\n        ans = 0\n        num_of_ones = 0\n        min_len = 101\n        valid = []\n\n        for r in range(len(s)):\n            if s[r] == \"1\":\n                num_of_ones += 1\n            \n            while num_of_ones == k:\n                min_len = min(min_len, r - l + 1)\n                valid.append(s[l:r + 1])\n                if s[l] == \"1\":\n                    num_of_ones -= 1\n                l += 1\n        ans = sorted(list(filter(lambda x: len(x) == min_len, valid)))\n        if not ans:\n            return \"\"\n        return ans[0]\n"
     },
     {
       "id": "sb-code-01",
@@ -156,5 +157,6 @@
       }
     }
   ],
-  "generatedAt": "2026-10-01T14:16:46Z"
+  "generatedAt": "2026-10-01T14:16:46Z",
+  "canonicalCode": "class Solution:\n    def shortestBeautifulSubstring(self, s: str, k: int) -> str:\n        best = \"\"\n        left = ones = 0\n        for right, ch in enumerate(s):\n            ones += ch == \"1\"\n            while ones > k or (left < right and s[left] == \"0\"):   # shrink to a minimal window\n                ones -= s[left] == \"1\"\n                left += 1\n            if ones == k:\n                cand = s[left:right + 1]\n                # compare by (length, lexicographic order); string compare costs O(length)\n                if not best or (len(cand), cand) < (len(best), best):\n                    best = cand\n        return best\n"
 }

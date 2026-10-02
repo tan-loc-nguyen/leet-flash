@@ -135,5 +135,6 @@
       }
     }
   ],
-  "generatedAt": "2026-10-01T15:00:55Z"
+  "generatedAt": "2026-10-01T15:00:55Z",
+  "canonicalCode": "class Solution:\n    def minOperations(self, nums: List[int], x: int) -> int:\n        target = sum(nums) - x               # the untouched middle must sum to this\n        if target < 0:\n            return -1\n        best = -1                            # longest middle subarray with sum == target\n        left = window = 0\n        for right, v in enumerate(nums):\n            window += v\n            while window > target:           # all values positive: shrink from the left\n                window -= nums[left]\n                left += 1\n            if window == target:\n                best = max(best, right - left + 1)\n        return len(nums) - best if best != -1 else -1\n"
 }

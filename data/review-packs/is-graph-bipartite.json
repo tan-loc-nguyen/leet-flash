@@ -146,5 +146,6 @@
       }
     }
   ],
-  "generatedAt": "2026-10-01T14:57:58Z"
+  "generatedAt": "2026-10-01T14:57:58Z",
+  "canonicalCode": "class Solution:\n    def isBipartite(self, graph: List[List[int]]) -> bool:\n        color = [-1] * len(graph)\n        for start in range(len(graph)):          # the graph may be disconnected\n            if color[start] != -1:\n                continue\n            color[start] = 0\n            queue = deque([start])\n            while queue:\n                u = queue.popleft()\n                for v in graph[u]:\n                    if color[v] == -1:\n                        color[v] = 1 - color[u]  # opposite colour\n                        queue.append(v)\n                    elif color[v] == color[u]:   # same colour on an edge: odd cycle\n                        return False\n        return True\n"
 }

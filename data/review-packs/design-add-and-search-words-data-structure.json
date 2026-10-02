@@ -138,5 +138,6 @@
       }
     }
   ],
-  "generatedAt": "2026-10-01T15:00:55Z"
+  "generatedAt": "2026-10-01T15:00:55Z",
+  "canonicalCode": "class WordDictionary:\n    def __init__(self):\n        self.root = {}                       # trie of dicts; \"$\" marks the end of a word\n\n    def addWord(self, word: str) -> None:\n        node = self.root\n        for ch in word:\n            node = node.setdefault(ch, {})\n        node[\"$\"] = True\n\n    def search(self, word: str) -> bool:\n        def dfs(node: dict, i: int) -> bool:\n            if i == len(word):\n                return \"$\" in node\n            ch = word[i]\n            if ch == \".\":                    # wildcard: try every child\n                return any(dfs(child, i + 1) for key, child in node.items() if key != \"$\")\n            return ch in node and dfs(node[ch], i + 1)\n\n        return dfs(self.root, 0)\n"
 }

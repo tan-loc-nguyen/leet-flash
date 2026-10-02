@@ -135,5 +135,6 @@
       }
     }
   ],
-  "generatedAt": "2026-10-01T14:57:58Z"
+  "generatedAt": "2026-10-01T14:57:58Z",
+  "canonicalCode": "class Solution:\n    def insertionSortList(self, head: Optional[ListNode]) -> Optional[ListNode]:\n        dummy = ListNode(0)                      # head of the sorted list\n        cur = head\n        while cur:\n            nxt = cur.next                       # save before relinking\n            prev = dummy\n            while prev.next and prev.next.val < cur.val:   # scan the sorted part\n                prev = prev.next\n            cur.next = prev.next                 # splice cur in\n            prev.next = cur\n            cur = nxt\n        return dummy.next\n"
 }

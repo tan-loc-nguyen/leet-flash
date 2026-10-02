@@ -135,5 +135,6 @@
       }
     }
   ],
-  "generatedAt": "2026-10-01T14:57:59Z"
+  "generatedAt": "2026-10-01T14:57:59Z",
+  "canonicalCode": "class Solution:\n    def validIPAddress(self, queryIP: str) -> str:\n        def ipv4(parts: List[str]) -> bool:\n            return len(parts) == 4 and all(\n                p.isascii() and p.isdigit() and len(p) <= 3 and int(p) <= 255 and (p == \"0\" or p[0] != \"0\")\n                for p in parts\n            )\n\n        def ipv6(parts: List[str]) -> bool:\n            hexdigits = set(\"0123456789abcdefABCDEF\")\n            return len(parts) == 8 and all(1 <= len(p) <= 4 and all(ch in hexdigits for ch in p) for p in parts)\n\n        if \".\" in queryIP and ipv4(queryIP.split(\".\")):\n            return \"IPv4\"\n        if \":\" in queryIP and ipv6(queryIP.split(\":\")):\n            return \"IPv6\"\n        return \"Neither\"\n"
 }

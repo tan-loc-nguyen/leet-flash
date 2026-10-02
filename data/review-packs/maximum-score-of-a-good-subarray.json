@@ -134,7 +134,8 @@
         "Greedy expansion O(1)",
         "Expand toward the larger neighbour"
       ],
-      "explanation": "Both are optimal in time."
+      "explanation": "Both are optimal in time.",
+      "code": "class Solution:\n    def maximumScore(self, nums: List[int], k: int) -> int:\n        n = len(nums)\n        # left[i] is the closest val on the left where nums[l] < nums[i]\n        left = [-1] * n\n        stackL = []\n        for i in range(n):\n            while stackL and nums[stackL[-1]] >= nums[i]:\n                stackL.pop()\n            if stackL:\n                left[i] = stackL[-1]\n            stackL.append(i)\n\n        # right[i] is the closest val on the right where nums[r] < nums[i]\n        right = [n] * n\n        stackR = []\n        for i in range(n - 1, -1, -1):\n            while stackR and nums[stackR[-1]] >= nums[i]:\n                stackR.pop()\n            if stackR:\n                right[i] = stackR[-1]\n            stackR.append(i)\n\n        ans = 0\n        for i in range(n):\n            # nums[i] is the minimum throughout:\n            # [left[i] + 1, right[i] - 1]\n            if left[i] < k < right[i]:\n                length = right[i] - left[i] - 1\n                score = nums[i] * length\n                ans = max(ans, score)\n\n        return ans\n"
     },
     {
       "id": "mg-code-01",
@@ -176,5 +177,6 @@
       }
     }
   ],
-  "generatedAt": "2026-10-01T14:16:46Z"
+  "generatedAt": "2026-10-01T14:16:46Z",
+  "canonicalCode": "class Solution:\n    def maximumScore(self, nums: List[int], k: int) -> int:\n        l = r = k                                # the window must contain index k\n        low = best = nums[k]\n        while l > 0 or r < len(nums) - 1:\n            # expand towards the larger neighbour so the minimum drops as slowly as possible\n            if l == 0 or (r < len(nums) - 1 and nums[r + 1] >= nums[l - 1]):\n                r += 1\n                low = min(low, nums[r])\n            else:\n                l -= 1\n                low = min(low, nums[l])\n            best = max(best, low * (r - l + 1))\n        return best\n"
 }

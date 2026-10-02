@@ -185,5 +185,6 @@
       }
     }
   ],
-  "generatedAt": "2026-10-01T14:01:51Z"
+  "generatedAt": "2026-10-01T14:01:51Z",
+  "canonicalCode": "class Solution:\n    def productExceptSelf(self, nums: List[int]) -> List[int]:\n        n = len(nums)\n        out = [1] * n\n        prefix = 1\n        for i in range(n):                       # out[i] = product of everything left of i\n            out[i] = prefix\n            prefix *= nums[i]\n        suffix = 1\n        for i in range(n - 1, -1, -1):           # multiply by the product right of i\n            out[i] *= suffix\n            suffix *= nums[i]\n        return out\n"
 }

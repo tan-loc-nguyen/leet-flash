@@ -119,7 +119,8 @@
         "O(n) temporary dict per find",
         "Persistent counter updated in add"
       ],
-      "explanation": "Total memory stays O(n)."
+      "explanation": "Total memory stays O(n).",
+      "code": "class TwoSum:\n\n    def __init__(self):\n        self.nums = []\n\n    def add(self, number: int) -> None:\n        self.nums.append(number)\n\n    def find(self, value: int) -> bool:\n        hmap = {}\n        for num in self.nums:\n            complement = value - num\n            if complement in hmap:\n                return True\n            hmap[num] = True\n        return False\n\n\n# Your TwoSum object will be instantiated and called as such:\n# obj = TwoSum()\n# obj.add(number)\n# param_2 = obj.find(value)\n"
     },
     {
       "id": "t3-code-01",
@@ -161,5 +162,6 @@
       }
     }
   ],
-  "generatedAt": "2026-10-01T14:19:52Z"
+  "generatedAt": "2026-10-01T14:19:52Z",
+  "canonicalCode": "class TwoSum:\n    def __init__(self):\n        self.count = defaultdict(int)            # value -> how many times it was added\n\n    def add(self, number: int) -> None:\n        self.count[number] += 1\n\n    def find(self, value: int) -> bool:\n        for num, c in self.count.items():        # loop over the distinct numbers\n            other = value - num\n            if other in self.count and (other != num or c > 1):   # a number cannot pair with itself unless added twice\n                return True\n        return False\n"
 }

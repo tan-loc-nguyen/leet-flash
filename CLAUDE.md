@@ -64,7 +64,11 @@ When the user mentions a target ("10 problems"), pass `--target`; otherwise the 
    ```
    Always show `problem.statement` when it is present, so I know which problem a question refers to (it is
    omitted only if `settings.json → showStatement` is false, i.e. I asked for recall-from-title practice).
-   Show `code` as a Python block when present. Ask exactly one question and **wait**. Never reveal the answer first.
+   Show `code` as a Python block when present. **Complexity questions** (`time_complexity` / `space_complexity`)
+   come last in a problem's question order (the engine sorts them there; never reorder). They return `solutionCode`
+   (`label` + `code`): always show it as a Python block under its label ("Canonical solution" or "Your accepted
+   solution") and ask me to *derive* the answer from the code (loops, recursion, data structures), not recall it.
+   Ask exactly one question and **wait**. Never reveal the answer first.
 4. Grade by type, then call `answer`:
    * **multiple_choice** → `answer --choice B` (letter or text). Auto-graded.
    * **fill_blank** → `answer --text "<user's answer>"`. If it returns `needsJudgment`, compare with the reference
@@ -73,7 +77,9 @@ When the user mentions a target ("10 problems"), pass `--target`; otherwise the 
      `keyPoints`, compare, then `answer --result …`. *Correct* = key ideas present; *Partial* = right direction but
      missing/incorrect important detail; *Failed* = wrong or absent. **If unsure, choose Partial.**
    * If I used hints beyond the pattern hint on this problem, grade at most Partial for later cards.
-5. Feedback style:
+5. Feedback style (for a complexity question I got wrong, point at the exact lines of `solutionCode` that set the
+   cost — e.g. "the `while` inside the `for` only advances `left`, so each index is visited at most twice" — instead of
+   just restating the answer):
    * Correct → 1–2 lines: "Correct. <one-sentence reason>" and move on.
    * Wrong/partial → show the correct answer, explain why (use `explanation`), explain why my choice was wrong
      (`whySelectedIsWrong`), mention missing key points, optionally other distractors. Keep it useful, not a lecture.
@@ -112,7 +118,9 @@ misleading explanation, garbled text, a card that does not fit the problem state
 
 Read `docs/REVIEW_PACK_GUIDE.md` first. Steps: `list_missing_review_packs.py --json` → for each problem read
 `data/problems/<slug>.json` (statement, constraints, tags, `latestSubmission.code`) → `scaffold_review_pack.py <slug>` →
-write the full pack (approaches with complexities, `personalSolution` if my code differs, 8–12 high-value cards with stable ids,
+write the full pack (approaches with complexities, `personalSolution` if my code differs, a tested `canonicalCode`
+(clean Python for the canonical approach, LeetCode signature, short comments marking what drives the cost; run it against
+the statement's examples before storing), 8–12 high-value cards with stable ids,
 2–3 prompt variants, distractor explanations) → `validate_review_packs.py` until clean. Generate in batches and report the count.
 Never overwrite a hand-edited pack without `--force` and my say-so. Never touch `data/review-packs/custom/`.
 

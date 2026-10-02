@@ -135,5 +135,6 @@
       }
     }
   ],
-  "generatedAt": "2026-10-01T14:54:43Z"
+  "generatedAt": "2026-10-01T14:54:43Z",
+  "canonicalCode": "class Solution:\n    def minimumSteps(self, s: str) -> int:\n        steps = zeros = 0\n        for ch in reversed(s):\n            if ch == \"0\":\n                zeros += 1               # zeros already to the right\n            else:\n                steps += zeros           # this 1 must cross each of them\n        return steps\n"
 }

@@ -137,5 +137,6 @@
       }
     }
   ],
-  "generatedAt": "2026-10-01T14:57:58Z"
+  "generatedAt": "2026-10-01T14:57:58Z",
+  "canonicalCode": "class Solution:\n    def largestOverlap(self, img1: List[List[int]], img2: List[List[int]]) -> int:\n        n = len(img1)\n        ones1 = [(r, c) for r in range(n) for c in range(n) if img1[r][c]]\n        ones2 = [(r, c) for r in range(n) for c in range(n) if img2[r][c]]\n        votes = Counter()\n        for r1, c1 in ones1:                     # every pair of ones votes for one translation\n            for r2, c2 in ones2:\n                votes[(r2 - r1, c2 - c1)] += 1\n        return max(votes.values(), default=0)\n"
 }

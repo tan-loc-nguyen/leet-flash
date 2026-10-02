@@ -96,7 +96,8 @@
       "explanation": "Visiting is O(n); sorting up to n keys is O(n log n).",
       "acceptedAnswers": [
         "O(nlogn)"
-      ]
+      ],
+      "code": "# Definition for a binary tree node.\n# class TreeNode:\n#     def __init__(self, val=0, left=None, right=None):\n#         self.val = val\n#         self.left = left\n#         self.right = right\nclass Solution:\n    def verticalOrder(self, root: Optional[TreeNode]) -> List[List[int]]:\n        store = defaultdict(list)\n\n        def dfs(root: Optional[TreeNode], col: int, row: int) -> None:\n            if not root:\n                return\n            \n            store[(col, row)].append(root.val)\n            dfs(root.left, col - 1, row + 1)\n            dfs(root.right, col + 1, row + 1)\n            \n        dfs(root, 0, 0)\n\n        sortedKey = sorted(store.keys())\n        minCol = 100\n        maxCol = -100\n        for col, _ in sortedKey:\n            minCol = min(minCol, col)\n            maxCol = max(maxCol, col)\n        ans = [[] for _ in range(maxCol - minCol + 1)]\n        for col, row in sortedKey:\n            ans[col - minCol].extend(store[(col, row)])\n\n        return ans\n"
     },
     {
       "id": "vo-space-01",
@@ -112,7 +113,8 @@
         "Magic bounds assume the constraints",
         "Use inf/-inf or the first key"
       ],
-      "explanation": "Magic numbers make code fragile."
+      "explanation": "Magic numbers make code fragile.",
+      "code": "# Definition for a binary tree node.\n# class TreeNode:\n#     def __init__(self, val=0, left=None, right=None):\n#         self.val = val\n#         self.left = left\n#         self.right = right\nclass Solution:\n    def verticalOrder(self, root: Optional[TreeNode]) -> List[List[int]]:\n        store = defaultdict(list)\n\n        def dfs(root: Optional[TreeNode], col: int, row: int) -> None:\n            if not root:\n                return\n            \n            store[(col, row)].append(root.val)\n            dfs(root.left, col - 1, row + 1)\n            dfs(root.right, col + 1, row + 1)\n            \n        dfs(root, 0, 0)\n\n        sortedKey = sorted(store.keys())\n        minCol = 100\n        maxCol = -100\n        for col, _ in sortedKey:\n            minCol = min(minCol, col)\n            maxCol = max(maxCol, col)\n        ans = [[] for _ in range(maxCol - minCol + 1)]\n        for col, row in sortedKey:\n            ans[col - minCol].extend(store[(col, row)])\n\n        return ans\n"
     },
     {
       "id": "vo-code-01",
@@ -154,5 +156,6 @@
       }
     }
   ],
-  "generatedAt": "2026-10-01T14:32:31Z"
+  "generatedAt": "2026-10-01T14:32:31Z",
+  "canonicalCode": "class Solution:\n    def verticalOrder(self, root: Optional[TreeNode]) -> List[List[int]]:\n        if not root:\n            return []\n        columns = defaultdict(list)\n        queue = deque([(root, 0)])               # BFS keeps top-to-bottom, left-to-right order\n        lo = hi = 0\n        while queue:\n            node, col = queue.popleft()\n            columns[col].append(node.val)\n            lo, hi = min(lo, col), max(hi, col)\n            if node.left:\n                queue.append((node.left, col - 1))\n            if node.right:\n                queue.append((node.right, col + 1))\n        return [columns[c] for c in range(lo, hi + 1)]\n"
 }

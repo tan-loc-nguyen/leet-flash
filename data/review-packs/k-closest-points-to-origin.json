@@ -108,7 +108,8 @@
       "acceptedAnswers": [
         "O(nlogk)",
         "O(n log(k))"
-      ]
+      ],
+      "code": "class Solution:\n    def kClosest(self, points: List[List[int]], k: int) -> List[List[int]]:\n        # use heap datastructure\n        heap = []\n        for x, y in points:\n            dis = (x**2 + y**2)**0.5\n            heapq.heappush(heap, (-dis, [x, y]))\n            if len(heap) > k:\n                heapq.heappop(heap)\n        \n        return [p for _, p in heap]\n"
     },
     {
       "id": "kc-space-01",
@@ -124,7 +125,8 @@
         "Sort O(n)",
         "Quickselect O(1)"
       ],
-      "explanation": "Choose by n and k."
+      "explanation": "Choose by n and k.",
+      "code": "class Solution:\n    def kClosest(self, points: List[List[int]], k: int) -> List[List[int]]:\n        # use heap datastructure\n        heap = []\n        for x, y in points:\n            dis = (x**2 + y**2)**0.5\n            heapq.heappush(heap, (-dis, [x, y]))\n            if len(heap) > k:\n                heapq.heappop(heap)\n        \n        return [p for _, p in heap]\n"
     },
     {
       "id": "kc-code-01",
@@ -166,5 +168,6 @@
       }
     }
   ],
-  "generatedAt": "2026-10-01T14:22:47Z"
+  "generatedAt": "2026-10-01T14:22:47Z",
+  "canonicalCode": "class Solution:\n    def kClosest(self, points: List[List[int]], k: int) -> List[List[int]]:\n        def dist(p: List[int]) -> int:\n            return p[0] * p[0] + p[1] * p[1]     # squared distance: no sqrt, no floats\n\n        lo, hi = 0, len(points) - 1\n        while lo < hi:                           # quickselect: place the k-th smallest at index k - 1\n            pivot = dist(points[random.randint(lo, hi)])\n            lt, i, gt = lo, lo, hi               # < pivot | == pivot | > pivot\n            while i <= gt:\n                d = dist(points[i])\n                if d < pivot:\n                    points[lt], points[i] = points[i], points[lt]\n                    lt += 1\n                    i += 1\n                elif d > pivot:\n                    points[gt], points[i] = points[i], points[gt]\n                    gt -= 1\n                else:\n                    i += 1\n            if k - 1 < lt:\n                hi = lt - 1\n            elif k - 1 > gt:\n                lo = gt + 1\n            else:\n                break\n        return points[:k]\n"
 }

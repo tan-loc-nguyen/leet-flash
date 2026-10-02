@@ -137,5 +137,6 @@
       }
     }
   ],
-  "generatedAt": "2026-10-01T14:57:58Z"
+  "generatedAt": "2026-10-01T14:57:58Z",
+  "canonicalCode": "class Solution:\n    def divide(self, dividend: int, divisor: int) -> int:\n        INT_MAX, INT_MIN = 2**31 - 1, -2**31\n        if dividend == INT_MIN and divisor == -1:\n            return INT_MAX\n        negative = (dividend < 0) != (divisor < 0)\n        a, b = abs(dividend), abs(divisor)\n        quotient = 0\n        while a >= b:\n            shift = 0\n            while a >= (b << (shift + 1)):       # largest b * 2^shift that still fits\n                shift += 1\n            a -= b << shift\n            quotient += 1 << shift\n        return -quotient if negative else quotient\n"
 }

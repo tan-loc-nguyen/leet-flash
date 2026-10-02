@@ -135,5 +135,6 @@
       }
     }
   ],
-  "generatedAt": "2026-10-01T14:52:56Z"
+  "generatedAt": "2026-10-01T14:52:56Z",
+  "canonicalCode": "from functools import cmp_to_key\n\nclass Solution:\n    def largestNumber(self, nums: List[int]) -> str:\n        strs = [str(x) for x in nums]\n        # a goes before b when a+b is bigger than b+a\n        strs.sort(key=cmp_to_key(lambda a, b: -1 if a + b > b + a else 1))\n        return \"0\" if strs[0] == \"0\" else \"\".join(strs)\n"
 }

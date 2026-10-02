@@ -112,7 +112,8 @@
         "Map O(h)",
         "Nested DFS O(h) space but slower"
       ],
-      "explanation": "Both use stack space proportional to the height."
+      "explanation": "Both use stack space proportional to the height.",
+      "code": "# Definition for a binary tree node.\n# class TreeNode:\n#     def __init__(self, val=0, left=None, right=None):\n#         self.val = val\n#         self.left = left\n#         self.right = right\nclass Solution:\n    def pathSum(self, root: TreeNode | None, targetSum: int) -> int:\n        # dfs + backtracking\n        # dfs is for iterating through every not\n        # then try backtracking, stop when find not to reach the leaf\n        ans = 0\n\n        def backtrack(root, target):\n            nonlocal ans\n            if not root:\n                return\n\n            remaining = target - root.val\n            if remaining == 0:\n                ans += 1\n\n            for node in [root.left, root.right]:\n                backtrack(node, remaining)    \n\n        def dfs(root):\n            if not root:\n                return\n            \n            backtrack(root, targetSum)\n            dfs(root.left)\n            dfs(root.right)\n        \n        dfs(root)\n        return ans\n"
     },
     {
       "id": "p3-code-01",
@@ -154,5 +155,6 @@
       }
     }
   ],
-  "generatedAt": "2026-10-01T14:29:30Z"
+  "generatedAt": "2026-10-01T14:29:30Z",
+  "canonicalCode": "class Solution:\n    def pathSum(self, root: Optional[TreeNode], targetSum: int) -> int:\n        prefix_count = defaultdict(int)\n        prefix_count[0] = 1                      # the empty prefix: paths that start at the root\n\n        def dfs(node: Optional[TreeNode], running: int) -> int:\n            if not node:\n                return 0\n            running += node.val\n            found = prefix_count[running - targetSum]   # paths ending here with the target sum\n            prefix_count[running] += 1\n            found += dfs(node.left, running) + dfs(node.right, running)\n            prefix_count[running] -= 1                  # backtrack: leave this path\n            return found\n\n        return dfs(root, 0)\n"
 }

@@ -166,5 +166,6 @@
       }
     }
   ],
-  "generatedAt": "2026-10-01T14:32:31Z"
+  "generatedAt": "2026-10-01T14:32:31Z",
+  "canonicalCode": "class Solution:\n    def findTarget(self, root: Optional[TreeNode], k: int) -> bool:\n        seen = set()\n        stack = [root]\n        while stack:\n            node = stack.pop()\n            if not node:\n                continue\n            if k - node.val in seen:             # check the complement before inserting\n                return True\n            seen.add(node.val)\n            stack.append(node.left)\n            stack.append(node.right)\n        return False\n"
 }

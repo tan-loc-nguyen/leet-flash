@@ -146,5 +146,6 @@
       }
     }
   ],
-  "generatedAt": "2026-10-01T14:52:56Z"
+  "generatedAt": "2026-10-01T14:52:56Z",
+  "canonicalCode": "class Solution:\n    def longestConsecutive(self, nums: List[int]) -> int:\n        seen = set(nums)\n        best = 0\n        for x in seen:\n            if x - 1 not in seen:             # only start counting at the beginning of a run\n                length = 1\n                while x + length in seen:\n                    length += 1\n                best = max(best, length)\n        return best\n"
 }

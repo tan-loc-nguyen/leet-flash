@@ -135,5 +135,6 @@
       }
     }
   ],
-  "generatedAt": "2026-10-01T14:57:58Z"
+  "generatedAt": "2026-10-01T14:57:58Z",
+  "canonicalCode": "class Solution:\n    def combinationSum3(self, k: int, n: int) -> List[List[int]]:\n        res, path = [], []\n\n        def dfs(start: int, remaining: int) -> None:\n            if len(path) == k:\n                if remaining == 0:\n                    res.append(path[:])\n                return\n            for d in range(start, 10):           # digits strictly increase: no repeats, no permutations\n                if d > remaining:\n                    break\n                path.append(d)\n                dfs(d + 1, remaining - d)\n                path.pop()\n\n        dfs(1, n)\n        return res\n"
 }

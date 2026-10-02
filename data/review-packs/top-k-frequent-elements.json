@@ -110,7 +110,8 @@
       "acceptedAnswers": [
         "O(n log(k))",
         "O(nlogk)"
-      ]
+      ],
+      "code": "class Solution:\n    def topKFrequent(self, nums: list[int], k: int) -> list[int]:\n        count = Counter(nums)\n        minHeap = []\n        for num, freq in count.items():\n            heappush(minHeap, (freq, num))\n\n            if len(minHeap) > k:\n                heappop(minHeap)\n        \n        return [num for _, num in minHeap]\n"
     },
     {
       "id": "tk-alt-01",
@@ -163,7 +164,8 @@
         "Counter O(n)",
         "Heap O(k)"
       ],
-      "explanation": "Overall O(n)."
+      "explanation": "Overall O(n).",
+      "code": "class Solution:\n    def topKFrequent(self, nums: list[int], k: int) -> list[int]:\n        count = Counter(nums)\n        minHeap = []\n        for num, freq in count.items():\n            heappush(minHeap, (freq, num))\n\n            if len(minHeap) > k:\n                heappop(minHeap)\n        \n        return [num for _, num in minHeap]\n"
     },
     {
       "id": "tk-code-01",
@@ -182,5 +184,6 @@
       "explanation": "Pop-after-push keeps the heap bounded at k."
     }
   ],
-  "generatedAt": "2026-10-01T14:01:51Z"
+  "generatedAt": "2026-10-01T14:01:51Z",
+  "canonicalCode": "class Solution:\n    def topKFrequent(self, nums: List[int], k: int) -> List[int]:\n        count = Counter(nums)\n        buckets = [[] for _ in range(len(nums) + 1)]   # buckets[f]: values that occur f times\n        for value, freq in count.items():\n            buckets[freq].append(value)\n        res = []\n        for freq in range(len(buckets) - 1, 0, -1):    # most frequent first\n            for value in buckets[freq]:\n                res.append(value)\n                if len(res) == k:\n                    return res\n        return res\n"
 }

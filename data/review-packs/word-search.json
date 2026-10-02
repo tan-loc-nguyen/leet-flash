@@ -166,5 +166,6 @@
       }
     }
   ],
-  "generatedAt": "2026-10-01T14:34:53Z"
+  "generatedAt": "2026-10-01T14:34:53Z",
+  "canonicalCode": "class Solution:\n    def exist(self, board: List[List[str]], word: str) -> bool:\n        m, n = len(board), len(board[0])\n\n        def dfs(r: int, c: int, i: int) -> bool:\n            if i == len(word):\n                return True\n            if not (0 <= r < m and 0 <= c < n) or board[r][c] != word[i]:\n                return False\n            saved, board[r][c] = board[r][c], \"#\"      # mark as used in place\n            found = (dfs(r + 1, c, i + 1) or dfs(r - 1, c, i + 1) or\n                     dfs(r, c + 1, i + 1) or dfs(r, c - 1, i + 1))\n            board[r][c] = saved                        # backtrack\n            return found\n\n        return any(dfs(r, c, 0) for r in range(m) for c in range(n))\n"
 }

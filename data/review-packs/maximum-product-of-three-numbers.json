@@ -101,7 +101,8 @@
       "explanation": "Sorting dominates.",
       "acceptedAnswers": [
         "O(nlogn)"
-      ]
+      ],
+      "code": "class Solution:\n    def maximumProduct(self, nums: List[int]) -> int:\n        # brute-force: 3 loops to find top 3 max nums\n        # return a * b * c -> n^3\n\n        # Sort nlogn then return product\n        nums.sort()\n        return max(nums[-1] * nums[-2] * nums[-3], nums[-1] * nums[0] * nums[1])\n"
     },
     {
       "id": "mp3-space-01",
@@ -116,7 +117,8 @@
         "O(1) extra",
         "One pass with 5 values"
       ],
-      "explanation": "Sorting mutates the input."
+      "explanation": "Sorting mutates the input.",
+      "code": "class Solution:\n    def maximumProduct(self, nums: List[int]) -> int:\n        # brute-force: 3 loops to find top 3 max nums\n        # return a * b * c -> n^3\n\n        # Sort nlogn then return product\n        nums.sort()\n        return max(nums[-1] * nums[-2] * nums[-3], nums[-1] * nums[0] * nums[1])\n"
     },
     {
       "id": "mp3-edge-01",
@@ -141,5 +143,6 @@
       }
     }
   ],
-  "generatedAt": "2026-10-01T14:39:54Z"
+  "generatedAt": "2026-10-01T14:39:54Z",
+  "canonicalCode": "class Solution:\n    def maximumProduct(self, nums: List[int]) -> int:\n        max1 = max2 = max3 = float(\"-inf\")       # three largest\n        min1 = min2 = float(\"inf\")               # two smallest\n        for x in nums:\n            if x > max1:\n                max1, max2, max3 = x, max1, max2\n            elif x > max2:\n                max2, max3 = x, max2\n            elif x > max3:\n                max3 = x\n            if x < min1:\n                min1, min2 = x, min1\n            elif x < min2:\n                min2 = x\n        return max(max1 * max2 * max3, min1 * min2 * max1)   # two negatives can win\n"
 }

@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import ast
 import json
 from dataclasses import dataclass
 from pathlib import Path
@@ -72,6 +73,11 @@ def validate_pack_file(path: Path, known_slugs: set[str], *, custom: bool = Fals
         issues.append(Issue(name, "warning", "no approaches listed"))
     if pack.canonical_approach and pack.canonical_approach not in {a.name for a in pack.approaches}:
         issues.append(Issue(name, "error", f"canonicalApproach '{pack.canonical_approach}' is not one of the approach names"))
+    if pack.canonical_code:  # card `code` may be an excerpt, canonicalCode must be complete
+        try:
+            ast.parse(pack.canonical_code)
+        except SyntaxError as exc:
+            issues.append(Issue(name, "error", f"canonicalCode is not valid Python: {exc.msg} (line {exc.lineno})"))
     if not pack.cards:
         issues.append(Issue(name, "warning", "pack has no cards yet (skeleton)"))
     elif not any(c.enabled for c in pack.cards):

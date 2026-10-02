@@ -108,7 +108,8 @@
         "lower() allocates a copy",
         "Lowercase per character instead"
       ],
-      "explanation": "Time is unchanged."
+      "explanation": "Time is unchanged.",
+      "code": "class Solution:\n    def isPalindrome(self, s: str) -> bool:\n        l, r = 0, len(s) - 1\n        lowercase = s.lower()\n\n        while l <= r:\n            if not lowercase[l].isalnum():\n                l += 1\n            elif not lowercase[r].isalnum():\n                r -= 1\n            elif lowercase[l] == lowercase[r]:\n                l += 1\n                r -= 1\n            else:\n                return False\n        return True\n"
     },
     {
       "id": "vp2-code-01",
@@ -150,5 +151,6 @@
       }
     }
   ],
-  "generatedAt": "2026-10-01T14:01:51Z"
+  "generatedAt": "2026-10-01T14:01:51Z",
+  "canonicalCode": "class Solution:\n    def isPalindrome(self, s: str) -> bool:\n        l, r = 0, len(s) - 1\n        while l < r:\n            while l < r and not s[l].isalnum():  # skip punctuation and spaces\n                l += 1\n            while l < r and not s[r].isalnum():\n                r -= 1\n            if s[l].lower() != s[r].lower():\n                return False\n            l += 1\n            r -= 1\n        return True\n"
 }

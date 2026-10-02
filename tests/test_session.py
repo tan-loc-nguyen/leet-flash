@@ -226,3 +226,32 @@ def test_statement_shown_on_first_question_only_and_can_be_disabled(engine):
     engine.settings["showStatement"] = False
     engine.start(mode="cram", target=1)
     assert engine.next_question()["problem"]["statement"] is None
+
+
+def test_complexity_questions_come_last_and_carry_code(engine, paths):
+    engine.start(mode="cram", target=1)
+    seen = []
+    while True:
+        q = engine.next_question()
+        if q.get("done") or q["questionIndex"] != len(seen) + 1:
+            break
+        seen.append(q)
+        engine.answer(result="correct")
+        if q["questionIndex"] == q["questionCount"]:
+            break
+    cats = [q["card"]["category"] for q in seen]
+    cx = [i for i, c in enumerate(cats) if c in ("time_complexity", "space_complexity")]
+    assert cx == list(range(len(cats) - len(cx), len(cats)))      # all complexity cards are at the end
+    assert all(q["solutionCode"] is None for q in seen)           # fixture problem has no submission / canonical code
+
+
+def test_solution_code_preference():
+    from types import SimpleNamespace as NS
+    from leetcode_review.review.session import ReviewEngine
+    card = NS(category="time_complexity", code=None)
+    sub = NS(code="def f(): pass")
+    f = ReviewEngine._solution_code
+    assert f(card, NS(latest_submission=sub), NS(canonical_code="def g(): pass", personal_solution=None))["label"] == "Canonical solution"
+    assert f(card, NS(latest_submission=sub), NS(canonical_code=None, personal_solution=NS(is_optimal=True)))["label"] == "Your accepted solution"
+    assert f(card, NS(latest_submission=sub), NS(canonical_code=None, personal_solution=NS(is_optimal=False))) is None
+    assert f(NS(category="pattern", code=None), NS(latest_submission=sub), NS(canonical_code="x", personal_solution=None)) is None

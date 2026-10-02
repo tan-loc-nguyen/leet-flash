@@ -158,5 +158,6 @@
       }
     }
   ],
-  "generatedAt": "2026-10-01T14:39:54Z"
+  "generatedAt": "2026-10-01T14:39:54Z",
+  "canonicalCode": "class Solution:\n    def minCostClimbingStairs(self, cost: List[int]) -> int:\n        one, two = 0, 0                          # cheapest cost to stand on step i-1 and i-2\n        for i in range(2, len(cost) + 1):\n            one, two = min(one + cost[i - 1], two + cost[i - 2]), one\n        return one\n"
 }

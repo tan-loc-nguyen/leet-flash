@@ -146,5 +146,6 @@
       }
     }
   ],
-  "generatedAt": "2026-10-01T15:00:56Z"
+  "generatedAt": "2026-10-01T15:00:56Z",
+  "canonicalCode": "class Solution:\n    def predictTheWinner(self, nums: List[int]) -> bool:\n        n = len(nums)\n        dp = nums[:]                             # dp[i]: best score difference on nums[i..j] for the mover\n        for length in range(2, n + 1):\n            for i in range(n - length + 1):\n                j = i + length - 1\n                dp[i] = max(nums[i] - dp[i + 1], nums[j] - dp[i])\n        return dp[0] >= 0\n"
 }

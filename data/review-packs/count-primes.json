@@ -135,5 +135,6 @@
       }
     }
   ],
-  "generatedAt": "2026-10-01T14:56:24Z"
+  "generatedAt": "2026-10-01T14:56:24Z",
+  "canonicalCode": "class Solution:\n    def countPrimes(self, n: int) -> int:\n        if n < 3:\n            return 0\n        is_prime = [True] * n\n        is_prime[0] = is_prime[1] = False\n        for p in range(2, int(n ** 0.5) + 1):\n            if is_prime[p]:\n                for m in range(p * p, n, p):     # smaller multiples were crossed out already\n                    is_prime[m] = False\n        return sum(is_prime)\n"
 }

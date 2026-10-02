@@ -128,5 +128,6 @@
       }
     }
   ],
-  "generatedAt": "2026-10-01T14:21:49Z"
+  "generatedAt": "2026-10-01T14:21:49Z",
+  "canonicalCode": "# guess(num) is provided by the judge: -1 if the pick is lower, 1 if higher, 0 if num is the pick\nclass Solution:\n    def guessNumber(self, n: int) -> int:\n        lo, hi = 1, n\n        while lo <= hi:\n            mid = lo + (hi - lo) // 2\n            res = guess(mid)                     # one API call per step\n            if res == 0:\n                return mid\n            if res < 0:\n                hi = mid - 1\n            else:\n                lo = mid + 1\n        return -1\n"
 }

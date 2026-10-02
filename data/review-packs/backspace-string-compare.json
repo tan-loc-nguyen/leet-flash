@@ -137,5 +137,6 @@
       }
     }
   ],
-  "generatedAt": "2026-10-01T15:00:56Z"
+  "generatedAt": "2026-10-01T15:00:56Z",
+  "canonicalCode": "class Solution:\n    def backspaceCompare(self, s: str, t: str) -> bool:\n        def next_valid(string: str, i: int) -> int:\n            skip = 0\n            while i >= 0:\n                if string[i] == \"#\":\n                    skip += 1\n                elif skip > 0:\n                    skip -= 1\n                else:\n                    break                        # a character that survives\n                i -= 1\n            return i\n\n        i, j = len(s) - 1, len(t) - 1\n        while i >= 0 or j >= 0:\n            i, j = next_valid(s, i), next_valid(t, j)\n            if i >= 0 and j >= 0:\n                if s[i] != t[j]:\n                    return False\n            elif i >= 0 or j >= 0:               # one string ran out first\n                return False\n            i -= 1\n            j -= 1\n        return True\n"
 }

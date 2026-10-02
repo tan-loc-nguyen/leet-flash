@@ -149,5 +149,6 @@
       }
     }
   ],
-  "generatedAt": "2026-10-01T14:56:23Z"
+  "generatedAt": "2026-10-01T14:56:23Z",
+  "canonicalCode": "class Solution:\n    def fourSum(self, nums: List[int], target: int) -> List[List[int]]:\n        nums.sort()\n        n, res = len(nums), []\n        for i in range(n - 3):                         # fix the first number\n            if i > 0 and nums[i] == nums[i - 1]:\n                continue\n            for j in range(i + 1, n - 2):              # fix the second number\n                if j > i + 1 and nums[j] == nums[j - 1]:\n                    continue\n                l, r = j + 1, n - 1                    # two pointers for the rest\n                while l < r:\n                    s = nums[i] + nums[j] + nums[l] + nums[r]\n                    if s < target:\n                        l += 1\n                    elif s > target:\n                        r -= 1\n                    else:\n                        res.append([nums[i], nums[j], nums[l], nums[r]])\n                        l += 1\n                        r -= 1\n                        while l < r and nums[l] == nums[l - 1]:\n                            l += 1\n        return res\n"
 }
