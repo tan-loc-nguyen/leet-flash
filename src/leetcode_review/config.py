@@ -54,6 +54,10 @@ class Paths:
         return self.state_dir / "review-state.json"
 
     @property
+    def card_flags(self) -> Path:
+        return self.state_dir / "card-flags.jsonl"
+
+    @property
     def history(self) -> Path:
         return self.state_dir / "review-history.jsonl"
 

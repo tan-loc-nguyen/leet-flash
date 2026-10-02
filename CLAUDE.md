@@ -31,6 +31,8 @@ Python only (I interview in Python). Run everything with `uv run python scripts/
 | "Show my stats" / "What am I weakest at?" | `scripts/stats.py` (add `--json` if you need to reason over it) |
 | "Add this card to X: …" | `scripts/add_card.py <slug> "<question>" --answer "…" --category …` (or `--json`) |
 | "Add a note to X: …" | `scripts/add_note.py <slug> "<text>"` |
+| "Show flagged cards" / "Review the flags" | `scripts/flag_card.py list` — show each flag with the full card; wait for my decision before changing anything |
+| "Fix flag-0003" / "Fix them" (after I approve) | edit the pack JSON, run `validate_review_packs.py`, then `scripts/flag_card.py resolve <flag-id> --note "<what changed>"` (`--dismiss` if the card was fine) |
 | "Rebuild state" | `scripts/rebuild_state.py` |
 | "Which problems have no packs?" | `scripts/list_missing_review_packs.py` |
 | (query) | `scripts/query_problems.py --topic graph --difficulty Medium --due --json` |
@@ -91,6 +93,21 @@ When showing my own solution, **clearly distinguish "Your accepted approach" fro
 Pacing: ~3–5 short questions per problem (the engine picks them); weak categories are pulled forward automatically
 within the *same* problem schedule — there are no separate per-card schedules.
 
+## Flagging malformed cards
+
+Packs are written by an AI, so some cards will be wrong. While reviewing, watch for: ambiguous or underspecified
+questions, an answer that contradicts its own explanation, more than one defensible correct option, a wrong or
+misleading explanation, garbled text, a card that does not fit the problem statement, or a giveaway option.
+
+* **Never edit a pack on your own initiative.** Flag it, tell me, and wait for my approval.
+* Flag *after* I have answered (don't derail the question):
+  `scripts/flag_card.py add <problem-slug> <card-id> --reason "<what is wrong>" [--suggest "<proposed fix>"]`.
+  Say in one line that you flagged it and why. Do not hold a card against me when the card itself is the problem:
+  grade by what a reasonable reading supports and mention that you were lenient.
+* Run `flag_card.py list` at the start of a session if flags might be open and mention the count in one line.
+* To fix: only after I say so. Make the minimal edit, run `validate_review_packs.py` until clean, resolve the flag with a note.
+  Card ids are only unique within a pack, so always identify a card by problem slug + card id.
+
 ## Pack generation (no external AI API — you write the content)
 
 Read `docs/REVIEW_PACK_GUIDE.md` first. Steps: `list_missing_review_packs.py --json` → for each problem read
@@ -108,4 +125,4 @@ Never overwrite a hand-edited pack without `--force` and my say-so. Never touch 
 
 ## Repository map
 
-`src/leetcode_review/` library · `scripts/` CLI wrappers · `data/problems|review-packs|lists|state` · `docs/` (ARCHITECTURE, REVIEW_PACK_GUIDE, SRS) · `tests/`.
+`src/leetcode_review/` library · `scripts/` CLI wrappers · `data/problems|review-packs|lists|state` (state incl. `card-flags.jsonl`) · `docs/` (ARCHITECTURE, REVIEW_PACK_GUIDE, SRS) · `tests/`.

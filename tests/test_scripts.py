@@ -98,3 +98,21 @@ def test_review_cli_session_and_stats_and_rebuild(paths, run):
 def test_sync_without_credentials_reports_clearly(paths, run):
     p = run("sync_leetcode.py", check=False)
     assert p.returncode == 2 and "No LeetCode credentials" in p.stderr
+
+
+def test_flag_card_flow(paths, run):
+    make_problem(paths, "two-sum", leetcode_id=1)
+    make_pack(paths, "two-sum")
+    assert run("flag_card.py", "add", "two-sum", "nope", "--reason", "x", check=False).returncode != 0
+    assert "Flagged two-sum/two-sum-pattern-01 as flag-0001" in run(
+        "flag_card.py", "add", "two-sum", "two-sum-pattern-01", "--reason", "Two options are correct", "--suggest", "Fix C").stdout
+    assert run("flag_card.py", "add", "two-sum", "two-sum-pattern-01", "--reason", "again", check=False).returncode != 0
+    rows = json.loads(run("flag_card.py", "list", "--json").stdout)
+    assert [r["id"] for r in rows] == ["flag-0001"] and rows[0]["cardContent"]["id"] == "two-sum-pattern-01"
+    assert "Two options are correct" in run("flag_card.py", "list").stdout
+    assert "marked resolved" in run("flag_card.py", "resolve", "flag-0001", "--note", "fixed").stdout
+    assert run("flag_card.py", "resolve", "flag-0001", check=False).returncode != 0
+    assert "No open card flags" in run("flag_card.py", "list").stdout
+    assert json.loads(run("flag_card.py", "list", "--all", "--json").stdout)[0]["status"] == "resolved"
+    # re-flagging after resolution is allowed
+    assert "flag-0002" in run("flag_card.py", "add", "two-sum", "two-sum-pattern-01", "--reason", "again").stdout
