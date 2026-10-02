@@ -70,7 +70,7 @@ data/lists/*.json                "solved" (Solved list, auto-maintained by sync)
 data/state/review-state.json     current mastery / next review / weak categories
 data/state/review-history.jsonl  append-only audit log of every answer
 data/state/sessions.json         active/finished sessions (resume after interruptions)
-data/state/settings.json         dailyProblemTarget (10), cardsPerProblem (4), request delay
+data/state/settings.json         dailyProblemTarget (10), cardsPerProblem (4), showStatement (true), request delay
 .local/leetcode_credentials.json secrets, gitignored
 ```
 

@@ -212,3 +212,17 @@ def test_manual_cards_are_served_and_survive_regeneration(engine, paths, now):
     scaffold_pack(paths, ProblemStore(paths).get("alpha"), force=True)   # regenerate the generated pack
     ids = {c.id for c in load_pack(paths, "alpha").cards}
     assert ids == {"alpha-manual-01"}                                    # generated cards gone, manual survives
+
+
+def test_statement_shown_on_first_question_only_and_can_be_disabled(engine):
+    engine.start(mode="cram", target=1)
+    q1 = engine.next_question()
+    assert q1["problem"]["statement"]
+    engine.answer(choice="A")
+    q2 = engine.next_question()
+    assert q2["problem"]["statement"] is None
+
+    engine.abort()
+    engine.settings["showStatement"] = False
+    engine.start(mode="cram", target=1)
+    assert engine.next_question()["problem"]["statement"] is None

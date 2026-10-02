@@ -212,6 +212,7 @@ class ReviewEngine:
                 "patterns": cat.patterns(p.slug) or p.tags,
                 "bucket": prob["bucket"],
                 "notes": [n.text for n in p.notes] if qn == 1 else [],
+                "statement": p.problem_statement if qn == 1 and self.settings.get("showStatement", True) else None,
             },
             "isFirstQuestion": qn == 1,
             "questionIndex": qn,

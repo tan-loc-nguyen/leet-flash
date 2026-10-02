@@ -54,10 +54,14 @@ When the user mentions a target ("10 problems"), pass `--target`; otherwise the 
    Problem 3/10 — 3Sum            (print once per problem; include notes if present)
    Medium · Patterns: Two Pointers, Array / Hashing
 
+   <problem.statement, condensed to the task + 1 example, only when present (first question of a problem)>
+
    Question 1/4
    <prompt>
    A. …  B. …
    ```
+   Always show `problem.statement` when it is present, so I know which problem a question refers to (it is
+   omitted only if `settings.json → showStatement` is false, i.e. I asked for recall-from-title practice).
    Show `code` as a Python block when present. Ask exactly one question and **wait**. Never reveal the answer first.
 4. Grade by type, then call `answer`:
    * **multiple_choice** → `answer --choice B` (letter or text). Auto-graded.

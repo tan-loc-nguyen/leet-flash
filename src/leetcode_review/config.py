@@ -79,6 +79,7 @@ class Paths:
 DEFAULT_SETTINGS = {
     "dailyProblemTarget": 10,
     "cardsPerProblem": 4,  # 3-5 recommended
+    "showStatement": True,  # include the problem statement with the first question of each problem
     "leetcodeRequestDelaySeconds": 0.4,
 }
 
