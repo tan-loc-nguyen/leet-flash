@@ -146,17 +146,17 @@
         "How does the heap version behave until k elements exist?"
       ],
       "options": [
-        "The heap holds all elements; the k-th largest exists once k values are present",
-        "It raises an error right away when fewer than k values exist",
-        "It returns 0 for every query until the heap reaches size k",
-        "It requires padding the heap with -inf values up to size k"
+        "The heap holds them all; the k-th largest exists once k values arrive",
+        "It raises an error right away when fewer than k values exist yet",
+        "It returns 0 for every single query until the heap reaches size k",
+        "It requires padding the heap with -inf values up to size k first"
       ],
-      "answer": "The heap holds all elements; the k-th largest exists once k values are present",
+      "answer": "The heap holds them all; the k-th largest exists once k values arrive",
       "explanation": "The problem guarantees at least k elements when add is called, so heap[0] is valid; before that nothing is popped.",
       "incorrectOptionExplanations": {
-        "It raises an error right away when fewer than k values exist": "Not with the constraints given.",
-        "It returns 0 for every query until the heap reaches size k": "No such rule.",
-        "It requires padding the heap with -inf values up to size k": "Unnecessary under the guarantee."
+        "It raises an error right away when fewer than k values exist yet": "Not with the constraints given.",
+        "It returns 0 for every single query until the heap reaches size k": "No such rule.",
+        "It requires padding the heap with -inf values up to size k first": "Unnecessary under the guarantee."
       }
     }
   ],

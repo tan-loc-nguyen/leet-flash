@@ -56,16 +56,16 @@
       ],
       "options": [
         "total = a + b + carry; bit = total % 2; carry = total // 2",
-        "bit = total // 2; carry = total % 2 per column",
-        "bit = total; carry = 0 for every column added",
-        "bit = a ^ b; carry = a | b without the carry in"
+        "bit = total // 2; carry = total % 2 for every column added",
+        "bit = total; carry = 0 for every column of the two strings",
+        "bit = a ^ b; carry = a | b, ignoring the carry from before"
       ],
       "answer": "total = a + b + carry; bit = total % 2; carry = total // 2",
       "explanation": "Totals range from 0 to 3.",
       "incorrectOptionExplanations": {
-        "bit = total // 2; carry = total % 2 per column": "The roles of the quotient and remainder are swapped.",
-        "bit = total; carry = 0 for every column added": "Totals up to 3 are not a single bit.",
-        "bit = a ^ b; carry = a | b without the carry in": "That ignores the incoming carry and the AND."
+        "bit = total // 2; carry = total % 2 for every column added": "The roles of the quotient and remainder are swapped.",
+        "bit = total; carry = 0 for every column of the two strings": "Totals up to 3 are not a single bit.",
+        "bit = a ^ b; carry = a | b, ignoring the carry from before": "That ignores the incoming carry and the AND."
       }
     },
     {

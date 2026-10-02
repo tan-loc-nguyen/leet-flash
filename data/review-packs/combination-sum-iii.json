@@ -51,17 +51,17 @@
         "What argument does the recursion carry?"
       ],
       "options": [
-        "Recurse with start = d + 1 so digits are strictly increasing",
+        "Recurse with start = d + 1 so digits strictly increase",
         "Sort the digits and use each as many times as needed",
-        "Use a visited array and permute all digits",
-        "Recurse with the same start so digits repeat"
+        "Use a visited array and permute all of the digits",
+        "Recurse with the same start so digits can repeat"
       ],
-      "answer": "Recurse with start = d + 1 so digits are strictly increasing",
+      "answer": "Recurse with start = d + 1 so digits strictly increase",
       "explanation": "Increasing order removes ordering duplicates.",
       "incorrectOptionExplanations": {
         "Sort the digits and use each as many times as needed": "Digits can be used only once.",
-        "Use a visited array and permute all digits": "That would list permutations, not combinations.",
-        "Recurse with the same start so digits repeat": "That allows repeated digits (Combination Sum I)."
+        "Use a visited array and permute all of the digits": "That would list permutations, not combinations.",
+        "Recurse with the same start so digits can repeat": "That allows repeated digits (Combination Sum I)."
       }
     },
     {
@@ -121,17 +121,17 @@
         "Which combination exists?"
       ],
       "options": [
-        "[[1, 2, 4]]: the only three distinct digits summing to 7",
-        "[[1, 2, 4], [1, 3, 3]]: 1 + 3 + 3 also sums to 7",
-        "[]: three digits cannot reach a sum of 7 at all",
-        "[[7]]: a single digit that equals 7 is returned"
+        "[[1, 2, 4]]: the only three distinct digits with sum 7",
+        "[[1, 2, 4], [1, 3, 3]]: 1 + 3 + 3 also sums to 7 here",
+        "[]: no three digits can reach a sum of 7 at all, so none",
+        "[[7]]: a single digit that equals 7 is the only answer"
       ],
-      "answer": "[[1, 2, 4]]: the only three distinct digits summing to 7",
+      "answer": "[[1, 2, 4]]: the only three distinct digits with sum 7",
       "explanation": "The minimum sum of three distinct digits is 6; 7 allows only 1 + 2 + 4.",
       "incorrectOptionExplanations": {
-        "[[1, 2, 4], [1, 3, 3]]: 1 + 3 + 3 also sums to 7": "Digits must be distinct.",
-        "[]: three digits cannot reach a sum of 7 at all": "1 + 2 + 4 does.",
-        "[[7]]: a single digit that equals 7 is returned": "Exactly three digits are required."
+        "[[1, 2, 4], [1, 3, 3]]: 1 + 3 + 3 also sums to 7 here": "Digits must be distinct.",
+        "[]: no three digits can reach a sum of 7 at all, so none": "1 + 2 + 4 does.",
+        "[[7]]: a single digit that equals 7 is the only answer": "Exactly three digits are required."
       }
     }
   ],

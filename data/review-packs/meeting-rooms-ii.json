@@ -55,17 +55,17 @@
         "What do you store in the heap?"
       ],
       "options": [
-        "A min-heap of end times, giving the room that frees up first",
-        "A max-heap of start times, giving the latest meeting",
-        "A stack of meetings, giving the latest started",
-        "A hash set of meeting lengths, to avoid duplicates"
+        "A min-heap of end times: the room that frees up first",
+        "A max-heap of start times, giving the latest meeting started",
+        "A stack of meetings, giving the one that started last",
+        "A hash set of meeting lengths, to avoid any duplicates"
       ],
-      "answer": "A min-heap of end times, giving the room that frees up first",
+      "answer": "A min-heap of end times: the room that frees up first",
       "explanation": "If the earliest end is <= the new start, that room is reused.",
       "incorrectOptionExplanations": {
-        "A max-heap of start times, giving the latest meeting": "The earliest ending room is what we reuse.",
-        "A stack of meetings, giving the latest started": "Rooms free up by end time, not by start order.",
-        "A hash set of meeting lengths, to avoid duplicates": "Lengths do not determine overlap."
+        "A max-heap of start times, giving the latest meeting started": "The earliest ending room is what we reuse.",
+        "A stack of meetings, giving the one that started last": "Rooms free up by end time, not by start order.",
+        "A hash set of meeting lengths, to avoid any duplicates": "Lengths do not determine overlap."
       }
     },
     {
@@ -121,16 +121,16 @@
         "Is [0, 5] and [5, 10] one room or two?"
       ],
       "options": [
-        "One room: end <= start frees the room, so use `<=` when popping",
-        "Two rooms: the meetings overlap at the time 5",
-        "Two rooms: always add a room whenever times tie",
+        "One room: end <= start frees it, so pop with `<=`",
+        "Two rooms: the meetings overlap at the shared time 5",
+        "Two rooms: always add one more room whenever times tie",
         "It depends on the length of each meeting involved"
       ],
-      "answer": "One room: end <= start frees the room, so use `<=` when popping",
+      "answer": "One room: end <= start frees it, so pop with `<=`",
       "explanation": "Using `<` instead of `<=` would overcount.",
       "incorrectOptionExplanations": {
-        "Two rooms: the meetings overlap at the time 5": "Intervals are half-open; they do not overlap.",
-        "Two rooms: always add a room whenever times tie": "A tie means the room is free.",
+        "Two rooms: the meetings overlap at the shared time 5": "Intervals are half-open; they do not overlap.",
+        "Two rooms: always add one more room whenever times tie": "A tie means the room is free.",
         "It depends on the length of each meeting involved": "Length is irrelevant."
       }
     }

@@ -54,15 +54,15 @@
         "What does a negative tank imply?"
       ],
       "options": [
-        "When the tank goes negative at i, the start moves to i + 1 and the tank resets",
-        "Always start at the station with the most gas",
+        "When the tank goes negative at i, restart from i + 1",
+        "Always start at the station with the most gas available",
         "Start at the station with the smallest cost to the next",
         "Start at station 0 and sum all net gains along the way"
       ],
-      "answer": "When the tank goes negative at i, the start moves to i + 1 and the tank resets",
+      "answer": "When the tank goes negative at i, restart from i + 1",
       "explanation": "Any start between the old start and i fails at i.",
       "incorrectOptionExplanations": {
-        "Always start at the station with the most gas": "The cost to the next station matters too.",
+        "Always start at the station with the most gas available": "The cost to the next station matters too.",
         "Start at the station with the smallest cost to the next": "Net gas, not cost alone, decides.",
         "Start at station 0 and sum all net gains along the way": "The sum only tells whether a solution exists."
       }

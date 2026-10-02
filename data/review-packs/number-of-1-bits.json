@@ -129,12 +129,12 @@
         "How many iterations does n = 0 take?"
       ],
       "options": [
-        "n = 0 (no iterations)",
+        "n = 0",
         "n = 1",
         "n = 2^31",
         "n = 2^32 - 1"
       ],
-      "answer": "n = 0 (no iterations)",
+      "answer": "n = 0",
       "explanation": "The loop condition `n > 0` fails immediately. The others have 1, 1 and 32 set bits.",
       "incorrectOptionExplanations": {
         "n = 1": "One set bit.",

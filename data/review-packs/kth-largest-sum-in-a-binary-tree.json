@@ -53,16 +53,16 @@
       ],
       "options": [
         "Compute sums by BFS, then a size-k min-heap (or a sort)",
-        "A max-heap holding all of the nodes' values",
-        "DFS only, with a running sum per node",
-        "A stack of the level sums in visit order"
+        "A max-heap holding all of the nodes' values at once",
+        "DFS only, with a running sum kept for every node",
+        "A stack of all level sums, kept in the order visited"
       ],
       "answer": "Compute sums by BFS, then a size-k min-heap (or a sort)",
       "explanation": "The heap root is the k-th largest sum seen.",
       "incorrectOptionExplanations": {
-        "A max-heap holding all of the nodes' values": "Nodes are not the quantity ranked.",
-        "DFS only, with a running sum per node": "Level sums are natural with BFS.",
-        "A stack of the level sums in visit order": "No ordering."
+        "A max-heap holding all of the nodes' values at once": "Nodes are not the quantity ranked.",
+        "DFS only, with a running sum kept for every node": "Level sums are natural with BFS.",
+        "A stack of all level sums, kept in the order visited": "No ordering."
       }
     },
     {

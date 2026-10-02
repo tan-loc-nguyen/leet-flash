@@ -55,17 +55,17 @@
         "What does each pair of 1 cells imply?"
       ],
       "options": [
-        "Each pair of ones (one from each image) votes for one translation vector",
-        "Each row of ones votes for a vertical shift only",
-        "Each pair of zeros votes for a rotation angle",
-        "Each column of ones votes for a horizontal shift only"
+        "Each pair of ones, one from each image, votes for a translation",
+        "Each row of ones votes for a vertical shift and nothing else",
+        "Each pair of zeros votes for a rotation angle of the image",
+        "Each column of ones votes for a horizontal shift and no more"
       ],
-      "answer": "Each pair of ones (one from each image) votes for one translation vector",
+      "answer": "Each pair of ones, one from each image, votes for a translation",
       "explanation": "The best translation is the most-voted vector.",
       "incorrectOptionExplanations": {
-        "Each row of ones votes for a vertical shift only": "Shifts are two-dimensional.",
-        "Each pair of zeros votes for a rotation angle": "Zeros are ignored and there is no rotation.",
-        "Each column of ones votes for a horizontal shift only": "Both axes matter."
+        "Each row of ones votes for a vertical shift and nothing else": "Shifts are two-dimensional.",
+        "Each pair of zeros votes for a rotation angle of the image": "Zeros are ignored and there is no rotation.",
+        "Each column of ones votes for a horizontal shift and no more": "Both axes matter."
       }
     },
     {
@@ -124,16 +124,16 @@
       ],
       "options": [
         "0: there are no pairs of ones, so no vector receives a vote",
-        "1: the image can always overlap in a single cell",
-        "n^2: every cell of the grid overlaps with another",
-        "-1: no valid translation exists for an empty image"
+        "1: the image can always overlap in a single cell of the grid",
+        "n^2: every cell of the grid overlaps with another cell",
+        "-1: no valid translation exists for an empty image at all"
       ],
       "answer": "0: there are no pairs of ones, so no vector receives a vote",
       "explanation": "Guard against max() of an empty counter.",
       "incorrectOptionExplanations": {
-        "1: the image can always overlap in a single cell": "Both cells must be 1.",
-        "n^2: every cell of the grid overlaps with another": "Zeros do not count.",
-        "-1: no valid translation exists for an empty image": "The overlap is a count, never negative."
+        "1: the image can always overlap in a single cell of the grid": "Both cells must be 1.",
+        "n^2: every cell of the grid overlaps with another cell": "Zeros do not count.",
+        "-1: no valid translation exists for an empty image at all": "The overlap is a count, never negative."
       }
     }
   ],

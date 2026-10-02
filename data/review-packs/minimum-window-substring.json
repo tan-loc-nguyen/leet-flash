@@ -164,17 +164,17 @@
         "Which inputs expose duplicate-handling mistakes?"
       ],
       "options": [
-        "The empty string; repeated letters in t need counts, not presence",
-        "None, since the function must always return a string",
-        "The whole string s, as the largest possible window",
-        "-1, the usual sentinel for a failed search result"
+        "The empty string (and t's repeated letters need counts)",
+        "None, since the function must always return some string",
+        "The whole string s, as the largest window that exists",
+        "-1, the usual sentinel for a failed search result here"
       ],
-      "answer": "The empty string; repeated letters in t need counts, not presence",
+      "answer": "The empty string (and t's repeated letters need counts)",
       "explanation": "e.g. s = 'a', t = 'aa' has no valid window; checking only 'is the character present' would wrongly accept it.",
       "incorrectOptionExplanations": {
-        "None, since the function must always return a string": "The function returns a string.",
-        "The whole string s, as the largest possible window": "Only if it actually covers t.",
-        "-1, the usual sentinel for a failed search result": "Not an integer result."
+        "None, since the function must always return some string": "The function returns a string.",
+        "The whole string s, as the largest window that exists": "Only if it actually covers t.",
+        "-1, the usual sentinel for a failed search result here": "Not an integer result."
       }
     }
   ],

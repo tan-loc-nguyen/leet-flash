@@ -64,17 +64,17 @@
         "Why store a difference rather than a score?"
       ],
       "options": [
-        "The best score difference (mover minus opponent) on the subarray i..j",
+        "The best score difference (mover - opponent) on subarray i..j",
         "The maximum sum the first player can collect from i..j",
-        "The number of subarrays in which player 1 wins",
-        "The plain sum of the numbers from index i to j"
+        "The number of subarrays within i..j in which player 1 wins",
+        "The plain sum of all the numbers from index i up to j"
       ],
-      "answer": "The best score difference (mover minus opponent) on the subarray i..j",
+      "answer": "The best score difference (mover - opponent) on subarray i..j",
       "explanation": "A zero-sum game: what you gain is what the opponent loses.",
       "incorrectOptionExplanations": {
         "The maximum sum the first player can collect from i..j": "That ignores the opponent's replies.",
-        "The number of subarrays in which player 1 wins": "It is not a count.",
-        "The plain sum of the numbers from index i to j": "That is a prefix sum quantity."
+        "The number of subarrays within i..j in which player 1 wins": "It is not a count.",
+        "The plain sum of all the numbers from index i up to j": "That is a prefix sum quantity."
       }
     },
     {
@@ -132,17 +132,17 @@
         "Does player 1 win?"
       ],
       "options": [
-        "True: dp = max(3 - 8, 2 - (-5)) = 7 >= 0, so start with 2",
+        "True: dp = max(3 - 8, 2 - (-5)) = 7 >= 0 (start with 2)",
         "False: player 1 can only take 3 or 2, both small",
-        "True: player 1 takes 9 first",
-        "False: a tie is a loss for player 1"
+        "True: player 1 takes the 9 first and then wins easily",
+        "False: a tie is a loss for player 1, and here it is a tie"
       ],
-      "answer": "True: dp = max(3 - 8, 2 - (-5)) = 7 >= 0, so start with 2",
+      "answer": "True: dp = max(3 - 8, 2 - (-5)) = 7 >= 0 (start with 2)",
       "explanation": "Taking the 2 at the right end leaves [3,9,1], where the mover's best margin is -5; so player 1 wins by 7. Whatever player 2 then does, player 1 collects the 9.",
       "incorrectOptionExplanations": {
         "False: player 1 can only take 3 or 2, both small": "Taking a small end value now can still win by leaving the opponent a bad position.",
-        "True: player 1 takes 9 first": "The 9 is not at either end, so it cannot be taken first.",
-        "False: a tie is a loss for player 1": "A tie goes to player 1; here player 1 wins outright."
+        "True: player 1 takes the 9 first and then wins easily": "The 9 is not at either end, so it cannot be taken first.",
+        "False: a tie is a loss for player 1, and here it is a tie": "A tie goes to player 1; here player 1 wins outright."
       }
     }
   ],

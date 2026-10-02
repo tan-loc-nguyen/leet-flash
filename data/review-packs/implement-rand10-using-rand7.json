@@ -54,17 +54,17 @@
         "Why can the sum of two rand7() calls not be used?"
       ],
       "options": [
-        "(rand7() - 1) * 7 + rand7(): each pair gives a unique value from 1 to 49",
+        "(rand7() - 1) * 7 + rand7(): every pair gives a unique value 1..49",
         "rand7() + rand7(): every sum from 2 to 14 is equally likely",
         "rand7() * rand7(): products from 1 to 49 are equally likely",
-        "rand7() * 7: multiples of seven from 7 to 49"
+        "rand7() * 7: only the multiples of seven, from 7 to 49"
       ],
-      "answer": "(rand7() - 1) * 7 + rand7(): each pair gives a unique value from 1 to 49",
+      "answer": "(rand7() - 1) * 7 + rand7(): every pair gives a unique value 1..49",
       "explanation": "Base-7 digits: the first call is the high digit, the second the low digit.",
       "incorrectOptionExplanations": {
         "rand7() + rand7(): every sum from 2 to 14 is equally likely": "Sums are not uniform.",
         "rand7() * rand7(): products from 1 to 49 are equally likely": "Products repeat and are not uniform.",
-        "rand7() * 7: multiples of seven from 7 to 49": "That has only seven outcomes."
+        "rand7() * 7: only the multiples of seven, from 7 to 49": "That has only seven outcomes."
       }
     },
     {
@@ -121,17 +121,17 @@
         "How does the result map from the accepted index?"
       ],
       "options": [
-        "Index 21 maps to 1 + (21 - 1) % 10 = 1; index 45 is rejected and retried",
-        "Index 21 maps to 2; index 45 maps to 5 directly",
-        "Index 21 is rejected; index 45 maps to 10 directly",
-        "Both map to 1, since their index values are both odd"
+        "21 maps to 1 + (21 - 1) % 10 = 1; 45 is rejected and retried",
+        "Index 21 maps to 2; index 45 maps to 5 directly, no retry",
+        "Index 21 is rejected; index 45 maps to 10 directly, no retry",
+        "Both map to 1, since both of their index values are odd"
       ],
-      "answer": "Index 21 maps to 1 + (21 - 1) % 10 = 1; index 45 is rejected and retried",
+      "answer": "21 maps to 1 + (21 - 1) % 10 = 1; 45 is rejected and retried",
       "explanation": "idx > 40 loops again; otherwise the output is ((idx - 1) % 10) + 1.",
       "incorrectOptionExplanations": {
-        "Index 21 maps to 2; index 45 maps to 5 directly": "21 - 1 = 20, 20 % 10 = 0, so the result is 1.",
-        "Index 21 is rejected; index 45 maps to 10 directly": "Only indices above 40 are rejected.",
-        "Both map to 1, since their index values are both odd": "Index 45 is above 40 and is retried."
+        "Index 21 maps to 2; index 45 maps to 5 directly, no retry": "21 - 1 = 20, 20 % 10 = 0, so the result is 1.",
+        "Index 21 is rejected; index 45 maps to 10 directly, no retry": "Only indices above 40 are rejected.",
+        "Both map to 1, since both of their index values are odd": "Index 45 is above 40 and is retried."
       }
     }
   ],

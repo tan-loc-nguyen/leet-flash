@@ -54,17 +54,17 @@
         "How do you decide whether two neighbouring asteroids collide?"
       ],
       "options": [
-        "A stack; collide only when the top is positive and the incoming one is negative",
-        "A queue; collide when the front and back differ in sign",
-        "A min-heap by size; always collide the two smallest first",
-        "A hash map from size to count; cancel the equal sizes"
+        "A stack; collide when the top is positive and the new one negative",
+        "A queue; collide when the front and back differ in sign each time",
+        "A min-heap by size; always collide the two smallest asteroids first",
+        "A hash map from size to count; cancel equal sizes with each other"
       ],
-      "answer": "A stack; collide only when the top is positive and the incoming one is negative",
+      "answer": "A stack; collide when the top is positive and the new one negative",
       "explanation": "Only a right-mover followed by a left-mover can meet.",
       "incorrectOptionExplanations": {
-        "A queue; collide when the front and back differ in sign": "Asteroids interact with their neighbours, not the ends.",
-        "A min-heap by size; always collide the two smallest first": "Position order matters, not size order.",
-        "A hash map from size to count; cancel the equal sizes": "Positions determine collisions."
+        "A queue; collide when the front and back differ in sign each time": "Asteroids interact with their neighbours, not the ends.",
+        "A min-heap by size; always collide the two smallest asteroids first": "Position order matters, not size order.",
+        "A hash map from size to count; cancel equal sizes with each other": "Positions determine collisions."
       }
     },
     {

@@ -55,17 +55,17 @@
         "What problem does it solve?"
       ],
       "options": [
-        "A node may have to be inserted before the current head, and the dummy removes that special case",
-        "It stores the length of the sorted list built so far",
-        "It reverses the order of the already sorted nodes",
-        "It lets you compare each node with the tail in O(1)"
+        "A node may belong before the head; the dummy removes that special case",
+        "It stores the length of the sorted list built so far by the loop",
+        "It reverses the order of all of the nodes that are already sorted",
+        "It lets you compare each new node with the sorted tail in O(1)"
       ],
-      "answer": "A node may have to be inserted before the current head, and the dummy removes that special case",
+      "answer": "A node may belong before the head; the dummy removes that special case",
       "explanation": "The dummy's next always points to the smallest node.",
       "incorrectOptionExplanations": {
-        "It stores the length of the sorted list built so far": "The dummy does not store a length.",
-        "It reverses the order of the already sorted nodes": "Nothing needs reversing.",
-        "It lets you compare each node with the tail in O(1)": "The tail is not used for insertion."
+        "It stores the length of the sorted list built so far by the loop": "The dummy does not store a length.",
+        "It reverses the order of all of the nodes that are already sorted": "Nothing needs reversing.",
+        "It lets you compare each new node with the sorted tail in O(1)": "The tail is not used for insertion."
       }
     },
     {
@@ -121,17 +121,17 @@
         "Why is nothing special needed?"
       ],
       "options": [
-        "The input itself (None or the single node): the loop does nothing",
-        "An error: there is nothing to sort in the list",
-        "A new dummy node that points to None only",
-        "None, even when the list holds one single node"
+        "The input itself (None or one node): the loop does nothing",
+        "An error: there is nothing to sort in the list at all",
+        "A new dummy node that points to None, whatever the input",
+        "None, even when the list holds one single node of data"
       ],
-      "answer": "The input itself (None or the single node): the loop does nothing",
+      "answer": "The input itself (None or one node): the loop does nothing",
       "explanation": "dummy.next is returned in all cases.",
       "incorrectOptionExplanations": {
-        "An error: there is nothing to sort in the list": "The loop simply does not run.",
-        "A new dummy node that points to None only": "The dummy's next is returned, which is the input.",
-        "None, even when the list holds one single node": "A single node is already sorted."
+        "An error: there is nothing to sort in the list at all": "The loop simply does not run.",
+        "A new dummy node that points to None, whatever the input": "The dummy's next is returned, which is the input.",
+        "None, even when the list holds one single node of data": "A single node is already sorted."
       }
     }
   ],

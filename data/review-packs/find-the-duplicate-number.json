@@ -67,12 +67,12 @@
         "How is the array turned into a linked list?"
       ],
       "options": [
-        "Following i -> nums[i] creates a cycle whose entrance is the duplicated value",
+        "Following i -> nums[i] creates a cycle that enters at the duplicate",
         "Equal values are adjacent after sorting, so a fast pointer finds them",
         "Sorting the indices by value puts the duplicate next to its twin",
         "Binary search halves the array so the duplicate is always the middle"
       ],
-      "answer": "Following i -> nums[i] creates a cycle whose entrance is the duplicated value",
+      "answer": "Following i -> nums[i] creates a cycle that enters at the duplicate",
       "explanation": "Two indices point to the same value, so some node has two predecessors, creating a cycle.",
       "incorrectOptionExplanations": {
         "Equal values are adjacent after sorting, so a fast pointer finds them": "The array is not sorted or modified.",

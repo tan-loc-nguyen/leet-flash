@@ -51,17 +51,17 @@
         "How do you decide where each sorted card goes?"
       ],
       "options": [
-        "Simulate the reveal on indices with a queue; assign sorted cards in order",
-        "Sort the deck in place and read it in reveal order",
-        "Binary search for each card's position in the answer",
-        "Use a heap of positions and pop the smallest each time"
+        "Simulate the reveal on indices with a queue; assign sorted cards",
+        "Sort the deck in place and then read it in reveal order",
+        "Binary search for each card's final position in the answer",
+        "Use a heap of positions and pop the smallest one each time"
       ],
-      "answer": "Simulate the reveal on indices with a queue; assign sorted cards in order",
+      "answer": "Simulate the reveal on indices with a queue; assign sorted cards",
       "explanation": "The i-th revealed position must receive the i-th smallest card.",
       "incorrectOptionExplanations": {
-        "Sort the deck in place and read it in reveal order": "Sorted order is the reveal order, not the deck order.",
-        "Binary search for each card's position in the answer": "No search needed.",
-        "Use a heap of positions and pop the smallest each time": "The order of positions is determined by a fixed rotation, not by priority."
+        "Sort the deck in place and then read it in reveal order": "Sorted order is the reveal order, not the deck order.",
+        "Binary search for each card's final position in the answer": "No search needed.",
+        "Use a heap of positions and pop the smallest one each time": "The order of positions is determined by a fixed rotation, not by priority."
       }
     },
     {

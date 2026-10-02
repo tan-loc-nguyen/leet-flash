@@ -68,16 +68,16 @@
       ],
       "options": [
         "Two pointers moving inward",
-        "Sliding window",
-        "Monotonic stack",
-        "Hashing"
+        "Sliding window over the bits",
+        "Monotonic stack of the bits",
+        "Hashing each bit position"
       ],
       "answer": "Two pointers moving inward",
       "explanation": "Mirrored positions are processed from both ends, exactly like reversing an array.",
       "incorrectOptionExplanations": {
-        "Sliding window": "No window.",
-        "Monotonic stack": "Not relevant.",
-        "Hashing": "No lookups."
+        "Sliding window over the bits": "No window.",
+        "Monotonic stack of the bits": "Not relevant.",
+        "Hashing each bit position": "No lookups."
       }
     },
     {
@@ -152,16 +152,16 @@
         "What happens to leading zeros in the input?"
       ],
       "options": [
-        "Leading zeros become trailing zeros of the output, so all 32 bits matter",
+        "Leading zeros become trailing zeros, so all 32 bits matter",
         "They are dropped, since leading zeros carry no value",
-        "They cause an overflow in the signed 32-bit result",
+        "They cause an overflow in the signed 32-bit result too",
         "They are irrelevant, since only set bits affect the output"
       ],
-      "answer": "Leading zeros become trailing zeros of the output, so all 32 bits matter",
+      "answer": "Leading zeros become trailing zeros, so all 32 bits matter",
       "explanation": "e.g. n = 1 (bit 0 set) must become 2^31; stopping at the highest set bit would give 1.",
       "incorrectOptionExplanations": {
         "They are dropped, since leading zeros carry no value": "That would produce a different (shorter) number.",
-        "They cause an overflow in the signed 32-bit result": "Python ints do not overflow.",
+        "They cause an overflow in the signed 32-bit result too": "Python ints do not overflow.",
         "They are irrelevant, since only set bits affect the output": "They determine the high bits of the result."
       }
     }

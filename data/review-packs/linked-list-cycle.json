@@ -149,17 +149,17 @@
         "How does the standard loop behave?"
       ],
       "options": [
-        "False; the loop exits immediately because fast.next is None",
-        "True; the loop never exits for short lists",
-        "An error, since the list has no cycle at all",
-        "None; the function never reaches a return"
+        "False; the loop exits at once since fast.next is None",
+        "True; the loop never exits for short lists at all",
+        "An error, since the list has no cycle at all to find",
+        "None; the function never reaches a return statement"
       ],
-      "answer": "False; the loop exits immediately because fast.next is None",
+      "answer": "False; the loop exits at once since fast.next is None",
       "explanation": "The condition `fast and fast.next` stops at the end of a non-cyclic list.",
       "incorrectOptionExplanations": {
-        "True; the loop never exits for short lists": "There is no cycle.",
-        "An error, since the list has no cycle at all": "No invalid access occurs.",
-        "None; the function never reaches a return": "The function returns a boolean."
+        "True; the loop never exits for short lists at all": "There is no cycle.",
+        "An error, since the list has no cycle at all to find": "No invalid access occurs.",
+        "None; the function never reaches a return statement": "The function returns a boolean."
       }
     }
   ],

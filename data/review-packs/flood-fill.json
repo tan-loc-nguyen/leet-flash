@@ -120,16 +120,16 @@
       ],
       "options": [
         "Return the image unchanged to avoid infinite recursion",
-        "Recolour every pixel in the grid to 0 first",
-        "Raise an error because nothing would change",
-        "Recolour only the start pixel and stop there"
+        "Recolour every pixel in the grid to 0 first, then fill",
+        "Raise an error because nothing would change in the image",
+        "Recolour only the start pixel and then stop right there"
       ],
       "answer": "Return the image unchanged to avoid infinite recursion",
       "explanation": "Nothing would be marked as visited, so the DFS would revisit pixels without end.",
       "incorrectOptionExplanations": {
-        "Recolour every pixel in the grid to 0 first": "Wrong behaviour.",
-        "Raise an error because nothing would change": "Not required.",
-        "Recolour only the start pixel and stop there": "It would not mark neighbours either."
+        "Recolour every pixel in the grid to 0 first, then fill": "Wrong behaviour.",
+        "Raise an error because nothing would change in the image": "Not required.",
+        "Recolour only the start pixel and then stop right there": "It would not mark neighbours either."
       }
     }
   ],

@@ -123,17 +123,17 @@
         "In which direction is the quotient truncated?"
       ],
       "options": [
-        "-3: the quotient truncates toward zero, not toward minus infinity",
-        "-4: the floor of -3.5, as Python's // would give",
-        "-3.5: the exact quotient without any truncation",
-        "3: the absolute quotient with the sign dropped"
+        "-3: the quotient truncates toward zero, not minus infinity",
+        "-4: the floor of -3.5, as Python's // would give here",
+        "-3.5: the exact quotient without any truncation at all",
+        "3: the absolute quotient with the sign dropped by mistake"
       ],
-      "answer": "-3: the quotient truncates toward zero, not toward minus infinity",
+      "answer": "-3: the quotient truncates toward zero, not minus infinity",
       "explanation": "Python's // would give -4, so use absolute values.",
       "incorrectOptionExplanations": {
-        "-4: the floor of -3.5, as Python's // would give": "The problem says to truncate toward zero.",
-        "-3.5: the exact quotient without any truncation": "The result is an integer.",
-        "3: the absolute quotient with the sign dropped": "The sign must be restored."
+        "-4: the floor of -3.5, as Python's // would give here": "The problem says to truncate toward zero.",
+        "-3.5: the exact quotient without any truncation at all": "The result is an integer.",
+        "3: the absolute quotient with the sign dropped by mistake": "The sign must be restored."
       }
     }
   ],

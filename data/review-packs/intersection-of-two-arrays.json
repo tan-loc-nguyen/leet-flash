@@ -66,17 +66,17 @@
         "Why a set?"
       ],
       "options": [
-        "Two sets: membership tests are O(1) and duplicates disappear automatically",
-        "Two sorted lists: the first match is always unique",
-        "A max-heap of both arrays merged into one heap",
-        "A stack: push one array and pop while it matches"
+        "Two sets: O(1) membership and duplicates disappear automatically",
+        "Two sorted lists: the first match you find is always unique",
+        "A max-heap holding both arrays merged together into one heap",
+        "A stack: push one whole array and pop elements while they match"
       ],
-      "answer": "Two sets: membership tests are O(1) and duplicates disappear automatically",
+      "answer": "Two sets: O(1) membership and duplicates disappear automatically",
       "explanation": "The result must contain each element once.",
       "incorrectOptionExplanations": {
-        "Two sorted lists: the first match is always unique": "Duplicates would still need removal.",
-        "A max-heap of both arrays merged into one heap": "Heaps do not detect common elements.",
-        "A stack: push one array and pop while it matches": "Stacks do not provide membership tests."
+        "Two sorted lists: the first match you find is always unique": "Duplicates would still need removal.",
+        "A max-heap holding both arrays merged together into one heap": "Heaps do not detect common elements.",
+        "A stack: push one whole array and pop elements while they match": "Stacks do not provide membership tests."
       }
     },
     {

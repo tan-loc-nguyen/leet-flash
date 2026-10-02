@@ -121,17 +121,17 @@
         "Which capacities must the check reject?"
       ],
       "options": [
-        "Capacities below the heaviest package are never feasible, so the check must treat them as failures",
-        "Nothing changes; the greedy check handles tiny capacities",
-        "The search stops being monotone and may loop forever",
-        "The answer always becomes sum(weights) in that case"
+        "Capacities below the heaviest package never work, so the check must reject them",
+        "Nothing changes; the greedy check already handles tiny capacities well",
+        "The search stops being monotone, so it may loop forever or misbehave",
+        "The answer always becomes sum(weights), the one-day capacity, in that case"
       ],
-      "answer": "Capacities below the heaviest package are never feasible, so the check must treat them as failures",
+      "answer": "Capacities below the heaviest package never work, so the check must reject them",
       "explanation": "Without the bound, a package heavier than C could be 'loaded' by the simple counter and give a wrong day count.",
       "incorrectOptionExplanations": {
-        "Nothing changes; the greedy check handles tiny capacities": "A heavy package would be loaded onto a too-small ship.",
-        "The search stops being monotone and may loop forever": "It stays monotone; it may just return a wrong value.",
-        "The answer always becomes sum(weights) in that case": "That is only the upper bound."
+        "Nothing changes; the greedy check already handles tiny capacities well": "A heavy package would be loaded onto a too-small ship.",
+        "The search stops being monotone, so it may loop forever or misbehave": "It stays monotone; it may just return a wrong value.",
+        "The answer always becomes sum(weights), the one-day capacity, in that case": "That is only the upper bound."
       }
     }
   ],

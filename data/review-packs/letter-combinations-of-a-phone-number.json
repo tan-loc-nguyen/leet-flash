@@ -50,12 +50,12 @@
         "Which pattern generates all combinations of one choice per position?"
       ],
       "options": [
-        "One level per digit, branching over that digit's letters (backtracking)",
+        "One level per digit, branching over its letters (backtracking)",
         "A single level that holds all letters of all digits at once",
         "A binary include/exclude choice per digit, giving 2^n leaves",
         "Dynamic programming over digit prefixes with memoised results"
       ],
-      "answer": "One level per digit, branching over that digit's letters (backtracking)",
+      "answer": "One level per digit, branching over its letters (backtracking)",
       "explanation": "Every complete path picks exactly one letter for each digit.",
       "incorrectOptionExplanations": {
         "A single level that holds all letters of all digits at once": "That would mix letters of different digits.",
@@ -137,16 +137,16 @@
       ],
       "options": [
         "[] (the problem asks for no combinations for empty input)",
-        "[\"\"] (a list holding one empty combination)",
-        "None (the function has nothing to return)",
-        "An error (the empty input is invalid)"
+        "[\"\"] (a list holding exactly one empty combination)",
+        "None (the function has nothing at all to return here)",
+        "An error (the empty input string is not a valid input)"
       ],
       "answer": "[] (the problem asks for no combinations for empty input)",
       "explanation": "Special-case the empty string; otherwise the base case would immediately append the empty string.",
       "incorrectOptionExplanations": {
-        "[\"\"] (a list holding one empty combination)": "That would be one empty combination.",
-        "None (the function has nothing to return)": "Return a list.",
-        "An error (the empty input is invalid)": "No exception is needed."
+        "[\"\"] (a list holding exactly one empty combination)": "That would be one empty combination.",
+        "None (the function has nothing at all to return here)": "Return a list.",
+        "An error (the empty input string is not a valid input)": "No exception is needed."
       }
     }
   ],

@@ -104,12 +104,12 @@
         "Which edge case do negative numbers and trailing zeros illustrate?"
       ],
       "options": [
-        "Negatives and non-zero numbers ending in 0 (like 10) are never palindromes",
+        "Negatives and non-zero multiples of 10 are never palindromes",
         "Only negatives need special care; trailing zeros are fine",
         "Zero is not a palindrome, so it must be rejected up front",
         "Numbers above 2^31 only, since they overflow the reverse"
       ],
-      "answer": "Negatives and non-zero numbers ending in 0 (like 10) are never palindromes",
+      "answer": "Negatives and non-zero multiples of 10 are never palindromes",
       "explanation": "'-121' reads '121-' backwards; 10 reverses to 01 = 1, which is not 10 (the full-reverse approach handles it naturally, the half-reverse approach needs an explicit check).",
       "incorrectOptionExplanations": {
         "Only negatives need special care; trailing zeros are fine": "Trailing-zero numbers are another trap for half-reversal.",

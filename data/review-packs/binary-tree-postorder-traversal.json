@@ -63,17 +63,17 @@
         "Which problems need children processed before the node?"
       ],
       "options": [
-        "When a node's answer depends on its subtrees' results (height, diameter, deletion)",
+        "When a node's answer depends on its subtrees (height, diameter, deletion)",
         "When you need the sorted values of a binary search tree in one pass",
         "When you copy a tree top-down, creating each parent before its children",
-        "When you need the nodes grouped level by level from the root"
+        "When you need nodes grouped level by level, starting at the root"
       ],
-      "answer": "When a node's answer depends on its subtrees' results (height, diameter, deletion)",
+      "answer": "When a node's answer depends on its subtrees (height, diameter, deletion)",
       "explanation": "Postorder gives each node its children's results before processing it.",
       "incorrectOptionExplanations": {
         "When you need the sorted values of a binary search tree in one pass": "That is inorder.",
         "When you copy a tree top-down, creating each parent before its children": "That is preorder.",
-        "When you need the nodes grouped level by level from the root": "That is BFS."
+        "When you need nodes grouped level by level, starting at the root": "That is BFS."
       }
     },
     {

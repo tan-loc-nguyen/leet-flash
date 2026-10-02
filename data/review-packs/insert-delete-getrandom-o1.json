@@ -134,17 +134,17 @@
         "Which order of operations is safest?"
       ],
       "options": [
-        "A stale dict key can remain; move last into place, update its index, then delete",
-        "Nothing; the swap works the same when both indices are equal",
-        "The list would become unsorted and getRandom would fail then",
-        "The dictionary would raise a KeyError on the very next insert"
+        "A stale dict key can remain; move last into place, update, then delete",
+        "Nothing; the swap works the same when both indices are equal here",
+        "The list would become unsorted and getRandom would fail for good",
+        "The dictionary would raise a KeyError on the very next insert call"
       ],
-      "answer": "A stale dict key can remain; move last into place, update its index, then delete",
+      "answer": "A stale dict key can remain; move last into place, update, then delete",
       "explanation": "Delete the key after the index update so a single-element removal still ends consistent.",
       "incorrectOptionExplanations": {
-        "Nothing; the swap works the same when both indices are equal": "The stale-key ordering matters when they are equal.",
-        "The list would become unsorted and getRandom would fail then": "The list does not need to be sorted.",
-        "The dictionary would raise a KeyError on the very next insert": "The first insert has nothing to do with it."
+        "Nothing; the swap works the same when both indices are equal here": "The stale-key ordering matters when they are equal.",
+        "The list would become unsorted and getRandom would fail for good": "The list does not need to be sorted.",
+        "The dictionary would raise a KeyError on the very next insert call": "The first insert has nothing to do with it."
       }
     }
   ],

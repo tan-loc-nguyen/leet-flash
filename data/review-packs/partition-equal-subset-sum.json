@@ -66,17 +66,17 @@
         "What is the first check?"
       ],
       "options": [
-        "One subset summing to total / 2 leaves the other the same; odd totals fail",
+        "One subset of sum total / 2 leaves the other equal; odd totals fail",
         "The two subsets must have equal sizes, so choose n / 2 items",
-        "The largest element must be at most half of the total",
-        "Every element of the array must be even to split it"
+        "The largest element must be at most half of the whole total",
+        "Every element of the array must be even to split it evenly"
       ],
-      "answer": "One subset summing to total / 2 leaves the other the same; odd totals fail",
+      "answer": "One subset of sum total / 2 leaves the other equal; odd totals fail",
       "explanation": "target = total // 2.",
       "incorrectOptionExplanations": {
         "The two subsets must have equal sizes, so choose n / 2 items": "Only the sums must be equal.",
-        "The largest element must be at most half of the total": "That is necessary, not sufficient.",
-        "Every element of the array must be even to split it": "Odd numbers can still pair up."
+        "The largest element must be at most half of the whole total": "That is necessary, not sufficient.",
+        "Every element of the array must be even to split it evenly": "Odd numbers can still pair up."
       }
     },
     {

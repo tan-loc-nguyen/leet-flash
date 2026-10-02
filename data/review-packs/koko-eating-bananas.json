@@ -48,16 +48,16 @@
       ],
       "options": [
         "Binary search on the answer (speed in [1, max(piles)])",
-        "Sliding window over the pile sizes in order",
-        "Greedy sorting of the piles then a single scan",
-        "Heap simulation of every hour one at a time"
+        "Sliding window over the pile sizes in their given order",
+        "Greedy sorting of the piles then a single scan over them",
+        "Heap simulation of every single hour, one hour at a time"
       ],
       "answer": "Binary search on the answer (speed in [1, max(piles)])",
       "explanation": "Feasibility is monotone in the speed: if k works, any larger k works too.",
       "incorrectOptionExplanations": {
-        "Sliding window over the pile sizes in order": "No subarray.",
-        "Greedy sorting of the piles then a single scan": "Order of piles does not matter for the time calculation.",
-        "Heap simulation of every hour one at a time": "Unneeded and slower."
+        "Sliding window over the pile sizes in their given order": "No subarray.",
+        "Greedy sorting of the piles then a single scan over them": "Order of piles does not matter for the time calculation.",
+        "Heap simulation of every single hour, one hour at a time": "Unneeded and slower."
       }
     },
     {

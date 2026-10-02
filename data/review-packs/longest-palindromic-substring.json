@@ -147,16 +147,16 @@
       ],
       "options": [
         "'yzzy' - from the even centre between the two z's",
-        "'yzz' - an odd centre at the first z",
-        "'z' - the first character only",
-        "'zzy' - an odd centre at the last z"
+        "'yzz' - from an odd centre sitting at the first z",
+        "'z' - just the first character, a single letter",
+        "'zzy' - from an odd centre sitting at the last z"
       ],
       "answer": "'yzzy' - from the even centre between the two z's",
       "explanation": "The even centre between the two z's expands to 'zz', then 'yzzy', and stops because 'x' != 'w'.",
       "incorrectOptionExplanations": {
-        "'yzz' - an odd centre at the first z": "'yzz' is not a palindrome, and an odd centre cannot give an even length.",
-        "'z' - the first character only": "A longer palindrome, 'yzzy', exists.",
-        "'zzy' - an odd centre at the last z": "'zzy' is not a palindrome."
+        "'yzz' - from an odd centre sitting at the first z": "'yzz' is not a palindrome, and an odd centre cannot give an even length.",
+        "'z' - just the first character, a single letter": "A longer palindrome, 'yzzy', exists.",
+        "'zzy' - from an odd centre sitting at the last z": "'zzy' is not a palindrome."
       }
     }
   ],

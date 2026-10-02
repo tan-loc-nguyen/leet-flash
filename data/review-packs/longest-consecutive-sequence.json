@@ -67,16 +67,16 @@
       ],
       "options": [
         "A set, counting only from numbers whose predecessor is absent",
-        "A max-heap that pops the numbers in sorted order",
-        "Two pointers over the unsorted array of numbers",
-        "A stack that tracks the current streak of numbers"
+        "A max-heap that pops all of the numbers in sorted order",
+        "Two pointers moving over the unsorted array of numbers",
+        "A stack that keeps track of the current streak of numbers"
       ],
       "answer": "A set, counting only from numbers whose predecessor is absent",
       "explanation": "Every run is counted once, from its smallest element.",
       "incorrectOptionExplanations": {
-        "A max-heap that pops the numbers in sorted order": "That costs O(n log n).",
-        "Two pointers over the unsorted array of numbers": "Two pointers need sorted input.",
-        "A stack that tracks the current streak of numbers": "A stack does not locate neighbours."
+        "A max-heap that pops all of the numbers in sorted order": "That costs O(n log n).",
+        "Two pointers moving over the unsorted array of numbers": "Two pointers need sorted input.",
+        "A stack that keeps track of the current streak of numbers": "A stack does not locate neighbours."
       }
     },
     {

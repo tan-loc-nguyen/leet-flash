@@ -44,17 +44,17 @@
         "What happens to the opposite run when the direction changes?"
       ],
       "options": [
-        "Single pass: extend the matching run and reset the other",
-        "Sort the array and compare the neighbours",
-        "Sliding window with a heap of run lengths",
-        "Binary search on the run length required"
+        "Single pass: extend the matching run, reset the other",
+        "Sort the array first, then compare the neighbours",
+        "Sliding window that keeps a heap of the run lengths",
+        "Binary search on the run length that is required"
       ],
-      "answer": "Single pass: extend the matching run and reset the other",
+      "answer": "Single pass: extend the matching run, reset the other",
       "explanation": "A comparison with the previous element either extends or breaks each run.",
       "incorrectOptionExplanations": {
-        "Sort the array and compare the neighbours": "Destroys adjacency.",
-        "Sliding window with a heap of run lengths": "Overkill.",
-        "Binary search on the run length required": "Irrelevant."
+        "Sort the array first, then compare the neighbours": "Destroys adjacency.",
+        "Sliding window that keeps a heap of the run lengths": "Overkill.",
+        "Binary search on the run length that is required": "Irrelevant."
       }
     },
     {

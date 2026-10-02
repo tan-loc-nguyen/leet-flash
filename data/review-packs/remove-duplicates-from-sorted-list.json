@@ -113,17 +113,17 @@
         "Why can the head never be removed?"
       ],
       "options": [
-        "No: the first node of each value is kept, so the head never changes",
-        "Yes, otherwise the head node is lost when removed",
-        "Only when the head value itself is a duplicate",
-        "Only for empty lists and for single-node lists"
+        "No: the first node of each value is kept, so the head stays",
+        "Yes, otherwise the head node is lost when it is removed",
+        "Only when the head value itself is a duplicate of the next",
+        "Only for empty lists and for lists with a single node"
       ],
-      "answer": "No: the first node of each value is kept, so the head never changes",
+      "answer": "No: the first node of each value is kept, so the head stays",
       "explanation": "Only later duplicates are deleted, so head remains valid (an empty list is handled by the initial check).",
       "incorrectOptionExplanations": {
-        "Yes, otherwise the head node is lost when removed": "That is true for Remove Duplicates II where the head may be removed.",
-        "Only when the head value itself is a duplicate": "The first occurrence is kept.",
-        "Only for empty lists and for single-node lists": "A null check suffices."
+        "Yes, otherwise the head node is lost when it is removed": "That is true for Remove Duplicates II where the head may be removed.",
+        "Only when the head value itself is a duplicate of the next": "The first occurrence is kept.",
+        "Only for empty lists and for lists with a single node": "A null check suffices."
       }
     }
   ],

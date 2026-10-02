@@ -148,16 +148,16 @@
         "What do enQueue/deQueue return on full/empty?"
       ],
       "options": [
-        "enQueue returns False without changing state; deQueue on empty returns False",
+        "enQueue returns False and changes nothing; so does deQueue on empty",
         "It overwrites the oldest element and returns True for the new value",
-        "It raises an exception that the caller must handle",
+        "It raises an exception that the calling code must then handle",
         "It grows the buffer and then stores the new value as usual"
       ],
-      "answer": "enQueue returns False without changing state; deQueue on empty returns False",
+      "answer": "enQueue returns False and changes nothing; so does deQueue on empty",
       "explanation": "The API reports failure via booleans and leaves the queue unchanged.",
       "incorrectOptionExplanations": {
         "It overwrites the oldest element and returns True for the new value": "That would be a different (overwriting) ring buffer.",
-        "It raises an exception that the caller must handle": "The interface uses return values.",
+        "It raises an exception that the calling code must then handle": "The interface uses return values.",
         "It grows the buffer and then stores the new value as usual": "Capacity is fixed."
       }
     }

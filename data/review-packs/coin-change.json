@@ -136,15 +136,15 @@
         "How does the table express 'impossible'?"
       ],
       "options": [
-        "-1: dp[3] stays at infinity because 3 cannot be formed from 2s",
-        "0: no coin fits evenly, so no coins are needed",
+        "-1: dp[3] stays at infinity since 3 cannot be made from 2s",
+        "0: no coin fits evenly, so zero coins are needed at all",
         "1: a single coin of size 2 is the closest we can get",
         "2: use the 2-coin twice and drop one unit of value"
       ],
-      "answer": "-1: dp[3] stays at infinity because 3 cannot be formed from 2s",
+      "answer": "-1: dp[3] stays at infinity since 3 cannot be made from 2s",
       "explanation": "Initialise dp with amount + 1 (or inf) and map unreachable back to -1.",
       "incorrectOptionExplanations": {
-        "0: no coin fits evenly, so no coins are needed": "0 is only for amount 0.",
+        "0: no coin fits evenly, so zero coins are needed at all": "0 is only for amount 0.",
         "1: a single coin of size 2 is the closest we can get": "The sum must be exactly the amount.",
         "2: use the 2-coin twice and drop one unit of value": "Coins cannot be partially used."
       }

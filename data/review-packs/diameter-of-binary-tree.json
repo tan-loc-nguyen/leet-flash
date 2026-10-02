@@ -51,12 +51,12 @@
         "Which quantity is returned vs recorded?"
       ],
       "options": [
-        "Return the height upward; record left + right in a global at each node",
+        "Return the height up; record left + right in a global at each node",
         "Return the diameter upward and take the maximum at the root",
         "Use BFS depth only, taking the deepest two levels as the path",
         "Sort the node depths and add the two largest to get the answer"
       ],
-      "answer": "Return the height upward; record left + right in a global at each node",
+      "answer": "Return the height up; record left + right in a global at each node",
       "explanation": "The parent needs the height (one branch), while the best path may bend at any node using both branches.",
       "incorrectOptionExplanations": {
         "Return the diameter upward and take the maximum at the root": "The parent cannot extend a path that already uses both children.",

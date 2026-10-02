@@ -67,17 +67,17 @@
         "What additional state is needed?"
       ],
       "options": [
-        "The cheapest path may use too many stops, so stops must be in the state",
-        "Dijkstra cannot handle directed graphs with cycles at all",
-        "Flight prices may be negative, which Dijkstra forbids",
-        "The graph may contain parallel edges between two cities"
+        "The cheapest path may use too many stops, so stops join the state",
+        "Dijkstra cannot handle directed graphs with cycles in them at all",
+        "Flight prices may be negative, which Dijkstra does not allow at all",
+        "The graph may contain parallel edges between the same two cities"
       ],
-      "answer": "The cheapest path may use too many stops, so stops must be in the state",
+      "answer": "The cheapest path may use too many stops, so stops join the state",
       "explanation": "A pricier path with fewer stops can be the only feasible one.",
       "incorrectOptionExplanations": {
-        "Dijkstra cannot handle directed graphs with cycles at all": "It handles directed graphs.",
-        "Flight prices may be negative, which Dijkstra forbids": "Prices are non-negative.",
-        "The graph may contain parallel edges between two cities": "That does not break Dijkstra."
+        "Dijkstra cannot handle directed graphs with cycles in them at all": "It handles directed graphs.",
+        "Flight prices may be negative, which Dijkstra does not allow at all": "Prices are non-negative.",
+        "The graph may contain parallel edges between the same two cities": "That does not break Dijkstra."
       }
     },
     {
@@ -136,16 +136,16 @@
       ],
       "options": [
         "-1: the distance is still infinity after k + 1 rounds",
-        "0: no money is spent when there is no route",
-        "The cheapest price ignoring the stop limit",
-        "k + 1: the number of rounds performed"
+        "0: no money is spent when there is no route at all",
+        "The cheapest price found while ignoring the stop limit",
+        "k + 1: the number of rounds that the loop has performed"
       ],
       "answer": "-1: the distance is still infinity after k + 1 rounds",
       "explanation": "Map infinity back to -1.",
       "incorrectOptionExplanations": {
-        "0: no money is spent when there is no route": "0 would mean a free route.",
-        "The cheapest price ignoring the stop limit": "That would violate the constraint.",
-        "k + 1: the number of rounds performed": "The answer is a price, not a round count."
+        "0: no money is spent when there is no route at all": "0 would mean a free route.",
+        "The cheapest price found while ignoring the stop limit": "That would violate the constraint.",
+        "k + 1: the number of rounds that the loop has performed": "The answer is a price, not a round count."
       }
     }
   ],

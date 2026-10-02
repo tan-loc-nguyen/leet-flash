@@ -55,12 +55,12 @@
         "How do you detect a balanced subarray with a running total?"
       ],
       "options": [
-        "Treat 0 as -1, so a balanced subarray has total 0 (repeated prefix sum)",
+        "Treat 0 as -1: a balanced subarray then has total 0",
         "Treat 1 as -1, so a balanced subarray has a total of 1",
         "Sort the array, so that equal counts become neighbours",
         "Count only the ones, since the zeros are then implied"
       ],
-      "answer": "Treat 0 as -1, so a balanced subarray has total 0 (repeated prefix sum)",
+      "answer": "Treat 0 as -1: a balanced subarray then has total 0",
       "explanation": "Equal prefix sums at i and j mean the elements in (i, j] sum to 0.",
       "incorrectOptionExplanations": {
         "Treat 1 as -1, so a balanced subarray has a total of 1": "The target would be 0, not 1.",

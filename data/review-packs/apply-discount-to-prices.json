@@ -55,16 +55,16 @@
       ],
       "options": [
         "It starts with '$' and the rest is one or more digits",
-        "It contains a '$' somewhere inside the word",
-        "It is a number written with a decimal point",
-        "It starts with a digit and ends with a '$'"
+        "It contains a '$' somewhere inside the word, in any place",
+        "It is any number written with a decimal point or a sign",
+        "It starts with a digit run and ends with a '$' character"
       ],
       "answer": "It starts with '$' and the rest is one or more digits",
       "explanation": "'$' alone and '$1e5' are not prices.",
       "incorrectOptionExplanations": {
-        "It contains a '$' somewhere inside the word": "'5$' is not a price.",
-        "It is a number written with a decimal point": "Prices are integers here.",
-        "It starts with a digit and ends with a '$'": "The dollar sign must come first."
+        "It contains a '$' somewhere inside the word, in any place": "'5$' is not a price.",
+        "It is any number written with a decimal point or a sign": "Prices are integers here.",
+        "It starts with a digit run and ends with a '$' character": "The dollar sign must come first."
       }
     },
     {

@@ -55,17 +55,17 @@
         "What does the BFS start from?"
       ],
       "options": [
-        "Nodes at distance k may lie above the target, via its ancestors",
-        "Parents are needed to sort the nodes by value first",
+        "Nodes at distance k may lie above the target, via ancestors",
+        "Parents are needed to sort all of the nodes by their value",
         "Parents are needed to locate the root of the whole tree",
-        "BFS cannot visit children without a parent map"
+        "BFS cannot visit the children without building a parent map"
       ],
-      "answer": "Nodes at distance k may lie above the target, via its ancestors",
+      "answer": "Nodes at distance k may lie above the target, via ancestors",
       "explanation": "BFS from the target in all three directions.",
       "incorrectOptionExplanations": {
-        "Parents are needed to sort the nodes by value first": "Values are not sorted.",
+        "Parents are needed to sort all of the nodes by their value": "Values are not sorted.",
         "Parents are needed to locate the root of the whole tree": "The root is given.",
-        "BFS cannot visit children without a parent map": "Children are reachable directly."
+        "BFS cannot visit the children without building a parent map": "Children are reachable directly."
       }
     },
     {

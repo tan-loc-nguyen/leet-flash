@@ -64,16 +64,16 @@
       ],
       "options": [
         "1 + max(left depth, right depth)",
-        "left depth + right depth",
-        "min(left, right)",
-        "left depth - right depth"
+        "left depth + right depth + 1",
+        "1 + min(left depth, right depth)",
+        "abs(left depth - right depth)"
       ],
       "answer": "1 + max(left depth, right depth)",
       "explanation": "The longest path goes through the deeper child.",
       "incorrectOptionExplanations": {
-        "left depth + right depth": "That is the diameter (in edges), not the depth.",
-        "min(left, right)": "That is the minimum depth idea (and is wrong for single-child nodes).",
-        "left depth - right depth": "That is used to test balance."
+        "left depth + right depth + 1": "That is the diameter (in edges), not the depth.",
+        "1 + min(left depth, right depth)": "That is the minimum depth idea (and is wrong for single-child nodes).",
+        "abs(left depth - right depth)": "That is used to test balance."
       }
     },
     {

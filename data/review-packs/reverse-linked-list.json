@@ -132,17 +132,17 @@
         "How does a single node behave?"
       ],
       "options": [
-        "None for an empty list; a single node is returned unchanged",
+        "None for an empty list; one node comes back unchanged",
         "An error, since there is no head node to reverse",
         "A new empty node that has no value or next pointer",
-        "The node pointing to itself as a one-node cycle"
+        "The node pointing to itself as a one-node cycle here"
       ],
-      "answer": "None for an empty list; a single node is returned unchanged",
+      "answer": "None for an empty list; one node comes back unchanged",
       "explanation": "The loop is skipped for empty input and runs once for one node (its next becomes None).",
       "incorrectOptionExplanations": {
         "An error, since there is no head node to reverse": "No special handling needed.",
         "A new empty node that has no value or next pointer": "No node is created.",
-        "The node pointing to itself as a one-node cycle": "Its next is set to prev = None."
+        "The node pointing to itself as a one-node cycle here": "Its next is set to prev = None."
       }
     }
   ],

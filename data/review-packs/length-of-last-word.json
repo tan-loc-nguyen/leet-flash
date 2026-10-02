@@ -51,17 +51,17 @@
         "Where do you start the scan?"
       ],
       "options": [
-        "Start at the end, skip trailing spaces, then count characters up to the next space",
-        "Start at the beginning and count up to the first space",
-        "Count all the spaces and subtract them from the length",
-        "Find the longest word and return that word's length"
+        "Scan from the end: skip trailing spaces, then count to the next space",
+        "Start at the beginning of the string and count up to the first space",
+        "Count all the spaces in the string and subtract them from the length",
+        "Find the longest word in the string and return that word's length"
       ],
-      "answer": "Start at the end, skip trailing spaces, then count characters up to the next space",
+      "answer": "Scan from the end: skip trailing spaces, then count to the next space",
       "explanation": "Trailing spaces must be skipped first.",
       "incorrectOptionExplanations": {
-        "Start at the beginning and count up to the first space": "That finds the first word.",
-        "Count all the spaces and subtract them from the length": "That is not the last word's length.",
-        "Find the longest word and return that word's length": "The last word may be shorter."
+        "Start at the beginning of the string and count up to the first space": "That finds the first word.",
+        "Count all the spaces in the string and subtract them from the length": "That is not the last word's length.",
+        "Find the longest word in the string and return that word's length": "The last word may be shorter."
       }
     },
     {

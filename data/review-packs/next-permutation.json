@@ -55,17 +55,17 @@
         "How do you transform the array into the next permutation in place?"
       ],
       "options": [
-        "Find the rightmost ascent, swap with the next larger on its right, reverse the suffix",
-        "Sort the suffix descending, then swap the first two items",
-        "Reverse the whole array, then swap the last two items",
-        "Swap the two largest items, then sort everything again"
+        "Find the last ascent, swap with the next larger, reverse the tail",
+        "Sort the suffix in descending order, then swap the first two items",
+        "Reverse the whole array first, then swap the last two items",
+        "Swap the two largest items, then sort the whole array again"
       ],
-      "answer": "Find the rightmost ascent, swap with the next larger on its right, reverse the suffix",
+      "answer": "Find the last ascent, swap with the next larger, reverse the tail",
       "explanation": "The suffix right of the pivot is non-increasing, so reversing it makes it the smallest possible.",
       "incorrectOptionExplanations": {
-        "Sort the suffix descending, then swap the first two items": "That does not produce the next permutation.",
-        "Reverse the whole array, then swap the last two items": "That produces a different order.",
-        "Swap the two largest items, then sort everything again": "That can skip many permutations."
+        "Sort the suffix in descending order, then swap the first two items": "That does not produce the next permutation.",
+        "Reverse the whole array first, then swap the last two items": "That produces a different order.",
+        "Swap the two largest items, then sort the whole array again": "That can skip many permutations."
       }
     },
     {
@@ -121,16 +121,16 @@
         "What if no pivot exists?"
       ],
       "options": [
-        "No pivot exists, so the whole array is reversed to [1, 2, 3, 5, 6]",
+        "No pivot exists: the whole array is reversed to [1, 2, 3, 5, 6]",
         "It raises an error because no larger permutation exists",
-        "It returns the array unchanged",
+        "It returns the array unchanged, as no next one exists",
         "It swaps the first and last elements only: [1, 5, 3, 2, 6]"
       ],
-      "answer": "No pivot exists, so the whole array is reversed to [1, 2, 3, 5, 6]",
+      "answer": "No pivot exists: the whole array is reversed to [1, 2, 3, 5, 6]",
       "explanation": "When the array is entirely non-increasing it is the last permutation, so it wraps around to the first (fully reversed).",
       "incorrectOptionExplanations": {
         "It raises an error because no larger permutation exists": "The problem asks for the smallest permutation instead of failing.",
-        "It returns the array unchanged": "The array must wrap to the lowest ordering, not stay as is.",
+        "It returns the array unchanged, as no next one exists": "The array must wrap to the lowest ordering, not stay as is.",
         "It swaps the first and last elements only: [1, 5, 3, 2, 6]": "Swapping the ends leaves the middle unsorted; the whole array must be reversed."
       }
     }

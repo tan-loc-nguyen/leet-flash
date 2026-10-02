@@ -148,12 +148,12 @@
         "Which pair is used?"
       ],
       "options": [
-        "40 ((9-1)*(6-1))",
+        "40",
         "54",
         "24",
         "8"
       ],
-      "answer": "40 ((9-1)*(6-1))",
+      "answer": "40",
       "explanation": "The two largest are 9 and 6, so (9-1) * (6-1) = 40.",
       "incorrectOptionExplanations": {
         "54": "That forgets to subtract 1 from each factor (9 * 6).",

@@ -52,17 +52,17 @@
         "What is the stuck condition?"
       ],
       "options": [
-        "The farthest index reachable so far; if i exceeds it you are stuck",
+        "The farthest index reachable so far; i beyond it means stuck",
         "The number of jumps made so far; stop at the last index",
-        "The largest value in the array; jump greedily by it",
-        "The sum of nums so far; stop when it exceeds n"
+        "The largest value in the array, jumping greedily by that much",
+        "The running sum of nums so far; stop when that sum exceeds n"
       ],
-      "answer": "The farthest index reachable so far; if i exceeds it you are stuck",
+      "answer": "The farthest index reachable so far; i beyond it means stuck",
       "explanation": "If every earlier index reaches less than i, index i is unreachable.",
       "incorrectOptionExplanations": {
         "The number of jumps made so far; stop at the last index": "That is Jump Game II.",
-        "The largest value in the array; jump greedily by it": "Jump sizes are upper bounds.",
-        "The sum of nums so far; stop when it exceeds n": "The sum has no meaning for reachability."
+        "The largest value in the array, jumping greedily by that much": "Jump sizes are upper bounds.",
+        "The running sum of nums so far; stop when that sum exceeds n": "The sum has no meaning for reachability."
       }
     },
     {

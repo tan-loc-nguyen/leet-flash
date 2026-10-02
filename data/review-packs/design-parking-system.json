@@ -119,16 +119,16 @@
       ],
       "options": [
         "False: no slot of that type remains and nothing is changed",
-        "True: a larger slot can host a smaller car",
-        "False, and the counter becomes -1",
-        "An error is raised because the capacity is zero"
+        "True: a larger slot can host a smaller car as a fallback",
+        "False, and the counter becomes -1 for that type of car",
+        "An error is raised because the capacity is already zero"
       ],
       "answer": "False: no slot of that type remains and nothing is changed",
       "explanation": "Only successful additions decrement.",
       "incorrectOptionExplanations": {
-        "True: a larger slot can host a smaller car": "The car must park in its own type.",
-        "False, and the counter becomes -1": "Counters must not go negative.",
-        "An error is raised because the capacity is zero": "A boolean is returned instead."
+        "True: a larger slot can host a smaller car as a fallback": "The car must park in its own type.",
+        "False, and the counter becomes -1 for that type of car": "Counters must not go negative.",
+        "An error is raised because the capacity is already zero": "A boolean is returned instead."
       }
     }
   ],

@@ -53,15 +53,15 @@
         "Which pointers do you need to relink afterwards?"
       ],
       "options": [
-        "3-pointer reversal, then reconnect the node before left and after right",
-        "Recursion on the whole list, reversing every node",
+        "3-pointer reversal, then reconnect both ends of the sub-list",
+        "Recursion on the whole list, reversing every single node",
         "Sorting the values of the sub-list and relinking them",
         "A stack of all the list's nodes, popped to relink them"
       ],
-      "answer": "3-pointer reversal, then reconnect the node before left and after right",
+      "answer": "3-pointer reversal, then reconnect both ends of the sub-list",
       "explanation": "After reversing, the old left node must point to the node after the segment and the node before left must point to the new segment head.",
       "incorrectOptionExplanations": {
-        "Recursion on the whole list, reversing every node": "Possible but unnecessary.",
+        "Recursion on the whole list, reversing every single node": "Possible but unnecessary.",
         "Sorting the values of the sub-list and relinking them": "Order is specific, not sorted.",
         "A stack of all the list's nodes, popped to relink them": "Uses O(n) space."
       }

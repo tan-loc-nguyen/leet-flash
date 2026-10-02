@@ -63,17 +63,17 @@
         "What can a very negative product become?"
       ],
       "options": [
-        "A negative minimum can become the maximum after multiplying by another negative number",
-        "The minimum is needed to detect an integer overflow",
-        "The minimum is used to reset the product after a zero",
-        "The minimum tracks the shortest subarray found so far"
+        "A negative minimum can become the maximum after another negative",
+        "The minimum is needed to detect an integer overflow early",
+        "The minimum is used to reset the product after a zero appears",
+        "The minimum tracks the shortest subarray found so far here"
       ],
-      "answer": "A negative minimum can become the maximum after multiplying by another negative number",
+      "answer": "A negative minimum can become the maximum after another negative",
       "explanation": "A large negative times a negative can be the new best.",
       "incorrectOptionExplanations": {
-        "The minimum is needed to detect an integer overflow": "Python integers do not overflow.",
-        "The minimum is used to reset the product after a zero": "A zero resets everything, not only the minimum.",
-        "The minimum tracks the shortest subarray found so far": "Subarray length is not tracked."
+        "The minimum is needed to detect an integer overflow early": "Python integers do not overflow.",
+        "The minimum is used to reset the product after a zero appears": "A zero resets everything, not only the minimum.",
+        "The minimum tracks the shortest subarray found so far here": "Subarray length is not tracked."
       }
     },
     {

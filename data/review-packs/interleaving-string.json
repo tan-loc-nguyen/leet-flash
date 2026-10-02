@@ -66,17 +66,17 @@
         "What does each state say about the prefixes?"
       ],
       "options": [
-        "Whether the first i + j characters of s3 interleave s1[:i] and s2[:j]",
+        "Whether s3[:i + j] is an interleaving of s1[:i] and s2[:j]",
         "The length of the longest common subsequence of s1 and s2",
-        "The number of ways to delete characters from s3",
-        "Whether the prefix s1[:i] equals the prefix s3[:i]"
+        "The number of ways to delete characters from s3 to match",
+        "Whether the prefix s1[:i] equals the prefix s3[:i] exactly"
       ],
-      "answer": "Whether the first i + j characters of s3 interleave s1[:i] and s2[:j]",
+      "answer": "Whether s3[:i + j] is an interleaving of s1[:i] and s2[:j]",
       "explanation": "The next character of s3 must come from s1 or from s2.",
       "incorrectOptionExplanations": {
         "The length of the longest common subsequence of s1 and s2": "That is a different DP.",
-        "The number of ways to delete characters from s3": "This is a boolean feasibility DP.",
-        "Whether the prefix s1[:i] equals the prefix s3[:i]": "It must allow characters from both strings."
+        "The number of ways to delete characters from s3 to match": "This is a boolean feasibility DP.",
+        "Whether the prefix s1[:i] equals the prefix s3[:i] exactly": "It must allow characters from both strings."
       }
     },
     {
@@ -134,17 +134,17 @@
         "Why is that check needed?"
       ],
       "options": [
-        "Return False immediately: the lengths cannot match an interleaving",
+        "Return False at once: the lengths cannot possibly match",
         "Continue anyway; the DP will find a mismatch by itself",
-        "Truncate s3 to the combined length of s1 and s2",
-        "Swap s1 and s2 so the shorter is first"
+        "Truncate s3 down to the combined length of s1 and s2",
+        "Swap s1 and s2 so that the shorter one comes first"
       ],
-      "answer": "Return False immediately: the lengths cannot match an interleaving",
+      "answer": "Return False at once: the lengths cannot possibly match",
       "explanation": "It is cheap and avoids invalid indexing.",
       "incorrectOptionExplanations": {
         "Continue anyway; the DP will find a mismatch by itself": "The indices s3[i + j - 1] can go out of range.",
-        "Truncate s3 to the combined length of s1 and s2": "That changes the question.",
-        "Swap s1 and s2 so the shorter is first": "That does not fix the length."
+        "Truncate s3 down to the combined length of s1 and s2": "That changes the question.",
+        "Swap s1 and s2 so that the shorter one comes first": "That does not fix the length."
       }
     }
   ],

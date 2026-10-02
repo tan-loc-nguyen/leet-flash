@@ -132,16 +132,16 @@
         "Why or why not?"
       ],
       "options": [
-        "No: it is an odd cycle, so two adjacent nodes must share a colour",
-        "Yes: colour the three nodes 0, 1, 0 in turn",
-        "Yes: any graph with three nodes is bipartite",
+        "No: an odd cycle forces two adjacent nodes to share a colour",
+        "Yes: colour the three nodes 0, 1, 0 in turn around the cycle",
+        "Yes: every graph with only three nodes is bipartite anyway",
         "No: a graph needs at least four nodes to be bipartite"
       ],
-      "answer": "No: it is an odd cycle, so two adjacent nodes must share a colour",
+      "answer": "No: an odd cycle forces two adjacent nodes to share a colour",
       "explanation": "Nodes 0, 1, 2 mutually adjacent need three colours.",
       "incorrectOptionExplanations": {
-        "Yes: colour the three nodes 0, 1, 0 in turn": "The first and third nodes are adjacent.",
-        "Yes: any graph with three nodes is bipartite": "A triangle fails.",
+        "Yes: colour the three nodes 0, 1, 0 in turn around the cycle": "The first and third nodes are adjacent.",
+        "Yes: every graph with only three nodes is bipartite anyway": "A triangle fails.",
         "No: a graph needs at least four nodes to be bipartite": "Two nodes with one edge are already bipartite."
       }
     }

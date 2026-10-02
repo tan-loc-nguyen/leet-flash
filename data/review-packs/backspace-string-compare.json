@@ -55,17 +55,17 @@
         "What does a '#' affect?"
       ],
       "options": [
-        "A '#' deletes what came before it, so a backwards scan can skip it",
-        "Backspaces only affect the characters after them",
-        "The end of the string is always the shortest part",
-        "Scanning backwards sorts the characters on the way"
+        "A '#' erases the character before it, so scan from the end",
+        "Backspaces only affect the characters that come after them",
+        "The end of the string is always the shortest part to compare",
+        "Scanning backwards sorts the characters while it counts them"
       ],
-      "answer": "A '#' deletes what came before it, so a backwards scan can skip it",
+      "answer": "A '#' erases the character before it, so scan from the end",
       "explanation": "Going forwards you cannot know if a character will be deleted later.",
       "incorrectOptionExplanations": {
-        "Backspaces only affect the characters after them": "They delete the preceding character.",
-        "The end of the string is always the shortest part": "Lengths are unrelated.",
-        "Scanning backwards sorts the characters on the way": "Order is preserved."
+        "Backspaces only affect the characters that come after them": "They delete the preceding character.",
+        "The end of the string is always the shortest part to compare": "Lengths are unrelated.",
+        "Scanning backwards sorts the characters while it counts them": "Order is preserved."
       }
     },
     {
@@ -123,17 +123,17 @@
         "Which backspaces apply to an empty string?"
       ],
       "options": [
-        "Yes: both become 'b' since backspace on empty text does nothing",
-        "No: the two '#' remove the 'b' that follows them",
+        "Yes: both become 'b'; a backspace on empty text does nothing",
+        "No: the two '#' would remove the 'b' that comes right after",
         "No: backspaces are not allowed before the first letter",
-        "Yes, but only if both strings have the same length"
+        "Yes, but only if both strings have exactly the same length"
       ],
-      "answer": "Yes: both become 'b' since backspace on empty text does nothing",
+      "answer": "Yes: both become 'b'; a backspace on empty text does nothing",
       "explanation": "A backspace on empty text deletes nothing, so '##b' is 'b'.",
       "incorrectOptionExplanations": {
-        "No: the two '#' remove the 'b' that follows them": "A backspace deletes the character before it, never the one after.",
+        "No: the two '#' would remove the 'b' that comes right after": "A backspace deletes the character before it, never the one after.",
         "No: backspaces are not allowed before the first letter": "A backspace on empty text is a no-op, not an error.",
-        "Yes, but only if both strings have the same length": "Length plays no role; only the final texts are compared."
+        "Yes, but only if both strings have exactly the same length": "Length plays no role; only the final texts are compared."
       }
     }
   ],

@@ -61,17 +61,17 @@
         "Which windows need to be considered?"
       ],
       "options": [
-        "Windows that start at a segment's left end or end at a segment's right end",
+        "Windows that start at a segment's left end or end at its right end",
         "Every integer start position between the first and last segment",
-        "Only windows centred on the largest segment in the array",
-        "Windows starting at index 0 and ending at the last cell"
+        "Only windows centred on the largest segment of the whole array",
+        "Windows starting at index 0 and ending only at the last cell"
       ],
-      "answer": "Windows that start at a segment's left end or end at a segment's right end",
+      "answer": "Windows that start at a segment's left end or end at its right end",
       "explanation": "If neither end is aligned with a segment boundary, sliding the window one step either way changes the total linearly, so one direction is never worse until an end aligns.",
       "incorrectOptionExplanations": {
         "Every integer start position between the first and last segment": "Far too many (up to 10^9 positions).",
-        "Only windows centred on the largest segment in the array": "Not necessarily optimal.",
-        "Windows starting at index 0 and ending at the last cell": "Ignores where the coins are."
+        "Only windows centred on the largest segment of the whole array": "Not necessarily optimal.",
+        "Windows starting at index 0 and ending only at the last cell": "Ignores where the coins are."
       }
     },
     {
@@ -147,17 +147,17 @@
         "Which window shape does the second sweep cover?"
       ],
       "options": [
-        "The optimum may start at a left boundary or end at a right boundary",
-        "The array may not be sorted, so both orders are required",
-        "To handle overlapping segments by merging them first",
-        "To avoid integer overflow in the running window total"
+        "The best window may start at a left end or end at a right end",
+        "The array may not be sorted, so both orders are required here",
+        "To handle overlapping segments by merging them all up front",
+        "To avoid integer overflow in the running total of the window"
       ],
-      "answer": "The optimum may start at a left boundary or end at a right boundary",
+      "answer": "The best window may start at a left end or end at a right end",
       "explanation": "A window ending at a right boundary is not necessarily starting at any left boundary, so both orientations must be tried.",
       "incorrectOptionExplanations": {
-        "The array may not be sorted, so both orders are required": "Sorting is done up front.",
-        "To handle overlapping segments by merging them first": "Segments are guaranteed non-overlapping.",
-        "To avoid integer overflow in the running window total": "Python ints do not overflow."
+        "The array may not be sorted, so both orders are required here": "Sorting is done up front.",
+        "To handle overlapping segments by merging them all up front": "Segments are guaranteed non-overlapping.",
+        "To avoid integer overflow in the running total of the window": "Python ints do not overflow."
       }
     }
   ],

@@ -44,12 +44,12 @@
         "Why does removing one non-zero element fix a zero total XOR?"
       ],
       "options": [
-        "total ^ x = XOR of the rest, so removing a non-zero x leaves x (non-zero)",
+        "total ^ x = XOR of the rest, so removing a non-zero x leaves x",
         "XOR is not associative, so the order of the operands matters",
         "XOR of equal numbers is non-zero, so pairs never cancel out",
         "XOR ignores operand order only for sorted arrays of numbers"
       ],
-      "answer": "total ^ x = XOR of the rest, so removing a non-zero x leaves x (non-zero)",
+      "answer": "total ^ x = XOR of the rest, so removing a non-zero x leaves x",
       "explanation": "If the total XOR is 0, the XOR of the other elements equals the removed element.",
       "incorrectOptionExplanations": {
         "XOR is not associative, so the order of the operands matters": "It is associative and commutative.",

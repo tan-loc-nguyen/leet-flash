@@ -56,16 +56,16 @@
       ],
       "options": [
         "Subtracting an odd value flips the parity; an even value keeps it",
-        "Subtracting always flips the parity of the number",
-        "Subtracting never changes the parity of the number",
-        "Parity depends only on the larger of the two numbers"
+        "Subtracting always flips the parity of the number it is taken from",
+        "Subtracting never changes the parity of the number it is taken from",
+        "Parity depends only on which of the two numbers is the larger"
       ],
       "answer": "Subtracting an odd value flips the parity; an even value keeps it",
       "explanation": "odd - odd = even, even - odd = odd.",
       "incorrectOptionExplanations": {
-        "Subtracting always flips the parity of the number": "Only odd values flip it.",
-        "Subtracting never changes the parity of the number": "An odd value flips it.",
-        "Parity depends only on the larger of the two numbers": "It depends on the subtracted value."
+        "Subtracting always flips the parity of the number it is taken from": "Only odd values flip it.",
+        "Subtracting never changes the parity of the number it is taken from": "An odd value flips it.",
+        "Parity depends only on which of the two numbers is the larger": "It depends on the subtracted value."
       }
     },
     {

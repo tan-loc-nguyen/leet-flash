@@ -152,16 +152,16 @@
       ],
       "options": [
         "Even count: average both roots; odd: the larger heap's root",
-        "Always average the two roots, whatever the sizes",
-        "Always the min-heap root, whatever the sizes",
-        "Always the max-heap root, whatever the sizes"
+        "Always average the two roots, whatever the two sizes are",
+        "Always the min-heap root, whatever the two sizes might be",
+        "Always the max-heap root, whatever the two sizes might be"
       ],
       "answer": "Even count: average both roots; odd: the larger heap's root",
       "explanation": "Even count means two middle elements; odd count has a single middle in the larger heap.",
       "incorrectOptionExplanations": {
-        "Always average the two roots, whatever the sizes": "Odd counts have one middle value.",
-        "Always the min-heap root, whatever the sizes": "Wrong for even counts.",
-        "Always the max-heap root, whatever the sizes": "In this design the extra element lives in the min-heap."
+        "Always average the two roots, whatever the two sizes are": "Odd counts have one middle value.",
+        "Always the min-heap root, whatever the two sizes might be": "Wrong for even counts.",
+        "Always the max-heap root, whatever the two sizes might be": "In this design the extra element lives in the min-heap."
       }
     }
   ],

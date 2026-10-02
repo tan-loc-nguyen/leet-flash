@@ -46,15 +46,15 @@
       "options": [
         "Variable sliding window with counts (at most 2 occurrences)",
         "Binary search on the substring length with a check",
-        "Dynamic programming over prefixes with two states",
-        "A trie holding every substring seen so far"
+        "Dynamic programming over all prefixes with two states each",
+        "A trie that stores every substring seen so far in the scan"
       ],
       "answer": "Variable sliding window with counts (at most 2 occurrences)",
       "explanation": "Validity is local to the newly added character.",
       "incorrectOptionExplanations": {
         "Binary search on the substring length with a check": "Not needed.",
-        "Dynamic programming over prefixes with two states": "No overlapping states.",
-        "A trie holding every substring seen so far": "Not about prefixes."
+        "Dynamic programming over all prefixes with two states each": "No overlapping states.",
+        "A trie that stores every substring seen so far in the scan": "Not about prefixes."
       }
     },
     {

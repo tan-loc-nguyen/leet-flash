@@ -55,15 +55,15 @@
         "How do you track which litter has been collected?"
       ],
       "options": [
-        "(row, col, mask of collected litter, energy), one mask bit per litter cell",
-        "(row, col) only, with one global visited set",
+        "(row, col, mask of collected litter, energy); one bit per litter",
+        "(row, col) only, with one global visited set for all moves",
         "(row, col, steps), explored by a heap ordered by steps",
         "A permutation of the litter cells to visit, in order"
       ],
-      "answer": "(row, col, mask of collected litter, energy), one mask bit per litter cell",
+      "answer": "(row, col, mask of collected litter, energy); one bit per litter",
       "explanation": "With at most 10 litter cells the mask has at most 1024 values.",
       "incorrectOptionExplanations": {
-        "(row, col) only, with one global visited set": "The collected set and energy matter.",
+        "(row, col) only, with one global visited set for all moves": "The collected set and energy matter.",
         "(row, col, steps), explored by a heap ordered by steps": "Moves are unit cost; the mask is missing.",
         "A permutation of the litter cells to visit, in order": "That multiplies the work by L!."
       }
@@ -123,17 +123,17 @@
         "Why?"
       ],
       "options": [
-        "2: the reset tile refills the energy after the first move",
-        "-1: one unit of energy cannot cover two moves",
-        "1: the litter is one move away from the start",
-        "0: the start cell already holds the litter"
+        "2: the reset tile refills the energy after one move",
+        "-1: one unit of energy can never cover two whole moves",
+        "1: the litter is only one move away from the start cell",
+        "0: the start cell already holds the only litter item"
       ],
-      "answer": "2: the reset tile refills the energy after the first move",
+      "answer": "2: the reset tile refills the energy after one move",
       "explanation": "The first move reaches 'R', which restores energy to 1 even though it reached 0; the second move reaches 'L'. (Without the reset, 'S.L' with energy 1 returns -1.)",
       "incorrectOptionExplanations": {
-        "-1: one unit of energy cannot cover two moves": "The reset tile on the way restores the energy, so the trip is possible.",
-        "1: the litter is one move away from the start": "The litter is two cells away from the start.",
-        "0: the start cell already holds the litter": "The start cell is 'S', not litter."
+        "-1: one unit of energy can never cover two whole moves": "The reset tile on the way restores the energy, so the trip is possible.",
+        "1: the litter is only one move away from the start cell": "The litter is two cells away from the start.",
+        "0: the start cell already holds the only litter item": "The start cell is 'S', not litter."
       }
     }
   ],

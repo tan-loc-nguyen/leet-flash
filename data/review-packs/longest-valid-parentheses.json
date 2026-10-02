@@ -71,16 +71,16 @@
       ],
       "options": [
         "Indices of unmatched characters, with -1 as the initial base",
-        "The characters themselves, popped on a match",
-        "Counts of '(' seen so far in the string",
-        "Lengths of the valid substrings found so far"
+        "The characters themselves, popped when a pair matches",
+        "Counts of '(' seen so far, reset at every unmatched ')'",
+        "Lengths of the valid substrings found so far, summed up"
       ],
       "answer": "Indices of unmatched characters, with -1 as the initial base",
       "explanation": "The index below the top marks where the current valid run begins; -1 handles a valid prefix starting at index 0.",
       "incorrectOptionExplanations": {
-        "The characters themselves, popped on a match": "Lengths need positions.",
-        "Counts of '(' seen so far in the string": "Counts lose positions.",
-        "Lengths of the valid substrings found so far": "That is the DP approach."
+        "The characters themselves, popped when a pair matches": "Lengths need positions.",
+        "Counts of '(' seen so far, reset at every unmatched ')'": "Counts lose positions.",
+        "Lengths of the valid substrings found so far, summed up": "That is the DP approach."
       }
     },
     {

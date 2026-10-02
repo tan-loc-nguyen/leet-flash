@@ -47,17 +47,17 @@
         "What is the final formula?"
       ],
       "options": [
-        "All in the direction that increases the distance: |x| + |y| + wildcards",
-        "Assign them randomly between the four directions",
-        "Half in x and half in y to keep the walk balanced",
-        "Always 'U', since up is the first direction listed"
+        "All in the direction that increases it: |x| + |y| + wildcards",
+        "Assign them randomly between the four directions of travel",
+        "Half in x and half in y, to keep the walk balanced overall",
+        "Always 'U', since up is the first direction listed in moves"
       ],
-      "answer": "All in the direction that increases the distance: |x| + |y| + wildcards",
+      "answer": "All in the direction that increases it: |x| + |y| + wildcards",
       "explanation": "Each wildcard can add exactly 1 to |x| or |y| in an increasing direction (choose the sign matching the current displacement).",
       "incorrectOptionExplanations": {
-        "Assign them randomly between the four directions": "Not optimal.",
-        "Half in x and half in y to keep the walk balanced": "Not needed.",
-        "Always 'U', since up is the first direction listed": "May reduce the distance."
+        "Assign them randomly between the four directions of travel": "Not optimal.",
+        "Half in x and half in y, to keep the walk balanced overall": "Not needed.",
+        "Always 'U', since up is the first direction listed in moves": "May reduce the distance."
       }
     },
     {

@@ -115,12 +115,12 @@
         "How is a node with no children handled?"
       ],
       "options": [
-        "[] for a null root; children is an empty list so extend adds nothing",
+        "[] for a null root; an empty children list adds nothing",
         "[[]] (one empty level), because a root level always exists",
         "None, since a null root has no result list to return",
         "An error, since a null root has no children attribute"
       ],
-      "answer": "[] for a null root; children is an empty list so extend adds nothing",
+      "answer": "[] for a null root; an empty children list adds nothing",
       "explanation": "The queue starts with None, which is skipped, and no level is added.",
       "incorrectOptionExplanations": {
         "[[]] (one empty level), because a root level always exists": "No level exists.",

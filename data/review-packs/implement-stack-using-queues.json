@@ -141,17 +141,17 @@
         "How does your code treat it?"
       ],
       "options": [
-        "Constraints guarantee non-empty top/pop; the guard is only a safety net",
-        "It must raise an exception when the stack is empty on top",
-        "It must return -1 as a sentinel when the stack is empty",
-        "It should rebuild the queue from scratch before returning"
+        "Constraints guarantee it is never empty; the guard is a safety net",
+        "It must raise an exception whenever the stack is empty on top",
+        "It must return -1 as a sentinel whenever the stack is empty",
+        "It should rebuild the queue from scratch before returning anything"
       ],
-      "answer": "Constraints guarantee non-empty top/pop; the guard is only a safety net",
+      "answer": "Constraints guarantee it is never empty; the guard is a safety net",
       "explanation": "LeetCode only calls pop/top on non-empty stacks, so any guard value is arbitrary.",
       "incorrectOptionExplanations": {
-        "It must raise an exception when the stack is empty on top": "Not specified.",
-        "It must return -1 as a sentinel when the stack is empty": "Not specified.",
-        "It should rebuild the queue from scratch before returning": "Nothing to rebuild."
+        "It must raise an exception whenever the stack is empty on top": "Not specified.",
+        "It must return -1 as a sentinel whenever the stack is empty": "Not specified.",
+        "It should rebuild the queue from scratch before returning anything": "Nothing to rebuild."
       }
     }
   ],

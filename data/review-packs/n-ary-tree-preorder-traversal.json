@@ -102,16 +102,16 @@
         "How is a leaf's children field handled?"
       ],
       "options": [
-        "[] ; a leaf has an empty children list so the loop does nothing",
+        "[]; a leaf has no children, so the loop does nothing",
         "None, because an empty tree has no root node to visit",
-        "[[]] (a list holding one empty list of values)",
+        "[[]] (a list holding one empty list of values here)",
         "An error, since the root has no children attribute"
       ],
-      "answer": "[] ; a leaf has an empty children list so the loop does nothing",
+      "answer": "[]; a leaf has no children, so the loop does nothing",
       "explanation": "The null check returns early and an empty list iterates zero times.",
       "incorrectOptionExplanations": {
         "None, because an empty tree has no root node to visit": "The function returns a list.",
-        "[[]] (a list holding one empty list of values)": "Result is flat.",
+        "[[]] (a list holding one empty list of values here)": "Result is flat.",
         "An error, since the root has no children attribute": "No exception occurs."
       }
     }

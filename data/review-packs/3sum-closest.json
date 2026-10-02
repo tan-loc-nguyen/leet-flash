@@ -128,12 +128,12 @@
         "What happens with exactly three elements?"
       ],
       "options": [
-        "Any real sum has a smaller distance than infinity, so the first sum replaces it",
+        "Any real sum is closer than infinity, so the first sum replaces it",
         "Infinity is required so that the array can be sorted in place first",
         "It avoids an integer overflow when adding three large values",
         "It makes the loop run exactly once for every starting index"
       ],
-      "answer": "Any real sum has a smaller distance than infinity, so the first sum replaces it",
+      "answer": "Any real sum is closer than infinity, so the first sum replaces it",
       "explanation": "abs(target - inf) is infinite, so the first evaluated total always becomes best. (With 3 elements the only triple is evaluated and returned.)",
       "incorrectOptionExplanations": {
         "Infinity is required so that the array can be sorted in place first": "Unrelated.",

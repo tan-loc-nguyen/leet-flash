@@ -55,17 +55,17 @@
         "How are composite numbers eliminated?"
       ],
       "options": [
-        "The sieve of Eratosthenes: cross out multiples of each prime starting at its square",
-        "Trial division of every number by all smaller numbers",
-        "A hash set of every number divisible by two or three",
-        "Binary search on the count of primes below each value"
+        "Sieve of Eratosthenes: cross out multiples from each prime's square",
+        "Trial division of every number by all the smaller numbers before it",
+        "A hash set holding every number that is divisible by two or three",
+        "Binary search on the count of primes below each candidate value"
       ],
-      "answer": "The sieve of Eratosthenes: cross out multiples of each prime starting at its square",
+      "answer": "Sieve of Eratosthenes: cross out multiples from each prime's square",
       "explanation": "The leftover unmarked numbers are exactly the primes.",
       "incorrectOptionExplanations": {
-        "Trial division of every number by all smaller numbers": "That is quadratic.",
-        "A hash set of every number divisible by two or three": "That misses most composites.",
-        "Binary search on the count of primes below each value": "Primality is not monotone."
+        "Trial division of every number by all the smaller numbers before it": "That is quadratic.",
+        "A hash set holding every number that is divisible by two or three": "That misses most composites.",
+        "Binary search on the count of primes below each candidate value": "Primality is not monotone."
       }
     },
     {

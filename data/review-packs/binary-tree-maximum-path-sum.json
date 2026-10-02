@@ -46,12 +46,12 @@
         "What do you do with a negative subtree gain?"
       ],
       "options": [
-        "Postorder DP: ignore negative gains (clamp to 0) and record the bent path globally",
+        "Postorder DP: clamp negative gains to 0, record the bent path globally",
         "Add all node values on the longest root-to-leaf path and return that sum",
         "Sort every node value and add the largest few that form a valid path",
         "BFS over levels, choosing the largest level sum as the path sum"
       ],
-      "answer": "Postorder DP: ignore negative gains (clamp to 0) and record the bent path globally",
+      "answer": "Postorder DP: clamp negative gains to 0, record the bent path globally",
       "explanation": "A negative branch only reduces the sum, so the path should not extend into it.",
       "incorrectOptionExplanations": {
         "Add all node values on the longest root-to-leaf path and return that sum": "Negative nodes would reduce the sum.",

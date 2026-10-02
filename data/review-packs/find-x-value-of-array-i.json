@@ -56,16 +56,16 @@
       ],
       "options": [
         "The number of subarrays ending at i whose product modulo k is r",
-        "The product of the first i elements modulo k",
-        "The longest subarray ending at i with remainder r",
-        "Whether a subarray with remainder r exists at index i"
+        "The product of the first i elements taken modulo k, as a number",
+        "The length of the longest subarray ending at i with remainder r",
+        "Whether some subarray ending at i has remainder r, yes or no"
       ],
       "answer": "The number of subarrays ending at i whose product modulo k is r",
       "explanation": "Extend each subarray ending at i - 1 by nums[i]: remainder r becomes (r * nums[i]) % k.",
       "incorrectOptionExplanations": {
-        "The product of the first i elements modulo k": "That counts a single subarray.",
-        "The longest subarray ending at i with remainder r": "Counts are needed, not lengths.",
-        "Whether a subarray with remainder r exists at index i": "Counts matter, not existence."
+        "The product of the first i elements taken modulo k, as a number": "That counts a single subarray.",
+        "The length of the longest subarray ending at i with remainder r": "Counts are needed, not lengths.",
+        "Whether some subarray ending at i has remainder r, yes or no": "Counts matter, not existence."
       }
     },
     {

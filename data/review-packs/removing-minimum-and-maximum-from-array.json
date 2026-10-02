@@ -39,16 +39,16 @@
       ],
       "options": [
         "All from the front, all from the back, or some from each end",
-        "Sort the array first, then drop the smallest items",
-        "Delete the middle elements, then shift the rest over",
-        "Use a heap to pick the cheapest elements to delete"
+        "Sort the array first, then drop the smallest few items",
+        "Delete the middle elements, then shift all the rest over",
+        "Use a heap to pick the cheapest elements to delete first"
       ],
       "answer": "All from the front, all from the back, or some from each end",
       "explanation": "Deletions only happen at the ends, so the set of removed elements is a prefix plus a suffix.",
       "incorrectOptionExplanations": {
-        "Sort the array first, then drop the smallest items": "Positions matter, sorting destroys them.",
-        "Delete the middle elements, then shift the rest over": "Not allowed.",
-        "Use a heap to pick the cheapest elements to delete": "Unnecessary."
+        "Sort the array first, then drop the smallest few items": "Positions matter, sorting destroys them.",
+        "Delete the middle elements, then shift all the rest over": "Not allowed.",
+        "Use a heap to pick the cheapest elements to delete first": "Unnecessary."
       }
     },
     {

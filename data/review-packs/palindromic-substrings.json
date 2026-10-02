@@ -64,17 +64,17 @@
         "What is the number of centres to expand?"
       ],
       "options": [
-        "Expand from each of the 2n - 1 centres, counting each successful step",
-        "Count the pairs of equal letters in the string",
-        "Sort the letters and count the runs of equal ones",
-        "Count the distinct letters and square the result"
+        "Expand around each of the 2n - 1 centres, counting every step",
+        "Count the pairs of equal letters anywhere in the string",
+        "Sort the letters first, then count the runs of equal ones",
+        "Count the distinct letters and then square that result"
       ],
-      "answer": "Expand from each of the 2n - 1 centres, counting each successful step",
+      "answer": "Expand around each of the 2n - 1 centres, counting every step",
       "explanation": "Each successful expansion is one more palindrome.",
       "incorrectOptionExplanations": {
-        "Count the pairs of equal letters in the string": "Equal letters are not necessarily palindromes.",
-        "Sort the letters and count the runs of equal ones": "Sorting loses the substring order.",
-        "Count the distinct letters and square the result": "That has no relation to palindromes."
+        "Count the pairs of equal letters anywhere in the string": "Equal letters are not necessarily palindromes.",
+        "Sort the letters first, then count the runs of equal ones": "Sorting loses the substring order.",
+        "Count the distinct letters and then square that result": "That has no relation to palindromes."
       }
     },
     {

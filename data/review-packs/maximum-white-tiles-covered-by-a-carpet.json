@@ -134,16 +134,16 @@
         "How many tiles are covered?"
       ],
       "options": [
-        "All tiles: the carpet can start at the first interval and cover every one",
-        "Only the longest single interval can ever be covered",
-        "Zero: the carpet must match a tile run exactly",
+        "All tiles: starting at the first interval it covers every one",
+        "Only the longest single interval can ever be covered at once",
+        "Zero: the carpet must match a tile run exactly to count",
         "The carpet length, counting the gaps as white tiles too"
       ],
-      "answer": "All tiles: the carpet can start at the first interval and cover every one",
+      "answer": "All tiles: starting at the first interval it covers every one",
       "explanation": "The cover is the total white tile count.",
       "incorrectOptionExplanations": {
-        "Only the longest single interval can ever be covered": "A long carpet can cover them all.",
-        "Zero: the carpet must match a tile run exactly": "A carpet may overlap many intervals.",
+        "Only the longest single interval can ever be covered at once": "A long carpet can cover them all.",
+        "Zero: the carpet must match a tile run exactly to count": "A carpet may overlap many intervals.",
         "The carpet length, counting the gaps as white tiles too": "Gaps are not white tiles."
       }
     }

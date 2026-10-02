@@ -54,17 +54,17 @@
         "What must be saved before you start?"
       ],
       "options": [
-        "An odd pointer, an even pointer and the head of the even list",
-        "A slow pointer and a fast pointer from the head",
-        "A stack of the even nodes to reverse later",
-        "A dummy node and a previous pointer only"
+        "An odd pointer, an even pointer and the even list's head",
+        "A slow pointer and a fast pointer, both from the head",
+        "A stack of the even nodes, to be reversed at the end",
+        "A dummy node and one previous pointer, and nothing else"
       ],
-      "answer": "An odd pointer, an even pointer and the head of the even list",
+      "answer": "An odd pointer, an even pointer and the even list's head",
       "explanation": "even_head is attached to the odd tail at the end.",
       "incorrectOptionExplanations": {
-        "A slow pointer and a fast pointer from the head": "Those find the middle, not the odd/even split.",
-        "A stack of the even nodes to reverse later": "No reversal is required.",
-        "A dummy node and a previous pointer only": "That does not hold the even list head."
+        "A slow pointer and a fast pointer, both from the head": "Those find the middle, not the odd/even split.",
+        "A stack of the even nodes, to be reversed at the end": "No reversal is required.",
+        "A dummy node and one previous pointer, and nothing else": "That does not hold the even list head."
       }
     },
     {
@@ -120,17 +120,17 @@
         "Why is a guard needed?"
       ],
       "options": [
-        "It returns the head unchanged; a guard avoids reading head.next of None",
-        "It creates a new empty even list and returns that",
-        "It raises an error since there are no even nodes",
-        "It reverses the single node and returns it again"
+        "It returns the head unchanged; a guard avoids head.next on None",
+        "It creates a new empty even list and returns that list",
+        "It raises an error since there are no even nodes to link",
+        "It reverses the single node, then returns it once again"
       ],
-      "answer": "It returns the head unchanged; a guard avoids reading head.next of None",
+      "answer": "It returns the head unchanged; a guard avoids head.next on None",
       "explanation": "if not head: return head.",
       "incorrectOptionExplanations": {
-        "It creates a new empty even list and returns that": "Nothing needs to be created.",
-        "It raises an error since there are no even nodes": "It should simply return.",
-        "It reverses the single node and returns it again": "No reversal is performed."
+        "It creates a new empty even list and returns that list": "Nothing needs to be created.",
+        "It raises an error since there are no even nodes to link": "It should simply return.",
+        "It reverses the single node, then returns it once again": "No reversal is performed."
       }
     }
   ],

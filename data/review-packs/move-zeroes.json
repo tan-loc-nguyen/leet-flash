@@ -65,16 +65,16 @@
       ],
       "options": [
         "Read/write two pointers",
-        "Binary search",
-        "Sliding window",
-        "Stack"
+        "Binary search on positions",
+        "Sliding window over zeros",
+        "Stack of the non-zeros"
       ],
       "answer": "Read/write two pointers",
       "explanation": "A write index tracks the boundary between the non-zero prefix and the zeros.",
       "incorrectOptionExplanations": {
-        "Binary search": "Unsorted input.",
-        "Sliding window": "No window property.",
-        "Stack": "No LIFO structure needed."
+        "Binary search on positions": "Unsorted input.",
+        "Sliding window over zeros": "No window property.",
+        "Stack of the non-zeros": "No LIFO structure needed."
       }
     },
     {

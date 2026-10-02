@@ -51,16 +51,16 @@
         "What does the function return from each call?"
       ],
       "options": [
-        "The node where p and q fall in different subtrees (or is one of them)",
+        "The node where p and q split into different subtrees (or is one)",
         "The deepest node that is visited during the whole search",
-        "The root always, whatever the positions of p and q",
+        "The root always, whatever the positions of p and q might be",
         "The node with the smallest value among both subtrees' nodes"
       ],
-      "answer": "The node where p and q fall in different subtrees (or is one of them)",
+      "answer": "The node where p and q split into different subtrees (or is one)",
       "explanation": "If left and right searches both return non-null, p and q are on different sides of this node.",
       "incorrectOptionExplanations": {
         "The deepest node that is visited during the whole search": "Unrelated.",
-        "The root always, whatever the positions of p and q": "Only if they diverge at the root.",
+        "The root always, whatever the positions of p and q might be": "Only if they diverge at the root.",
         "The node with the smallest value among both subtrees' nodes": "Values are not ordered."
       }
     },

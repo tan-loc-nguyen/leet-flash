@@ -52,17 +52,17 @@
         "Which entries must be in the table besides the seven base symbols?"
       ],
       "options": [
-        "The table includes the subtractive pairs (900, 400, 90, 40, 9, 4)",
-        "The table includes the powers of two (2, 4, 8, ...)",
-        "The table includes the repeats (II, XX, CC, ...)",
-        "The table includes the primes up to 3999"
+        "The table includes subtractive pairs (900, 400, 90, 40, 9, 4)",
+        "The table includes the powers of two (2, 4, 8, 16, 32, ...)",
+        "The table includes the repeats (II, XX, CC, MM, and so on)",
+        "The table includes every prime number up to 3999, in order"
       ],
-      "answer": "The table includes the subtractive pairs (900, 400, 90, 40, 9, 4)",
+      "answer": "The table includes subtractive pairs (900, 400, 90, 40, 9, 4)",
       "explanation": "With subtractive forms in the table, taking the largest value first gives the canonical form.",
       "incorrectOptionExplanations": {
-        "The table includes the powers of two (2, 4, 8, ...)": "Roman numerals are decimal based.",
-        "The table includes the repeats (II, XX, CC, ...)": "Repeats come from repeated subtraction.",
-        "The table includes the primes up to 3999": "Primes play no role."
+        "The table includes the powers of two (2, 4, 8, 16, 32, ...)": "Roman numerals are decimal based.",
+        "The table includes the repeats (II, XX, CC, MM, and so on)": "Repeats come from repeated subtraction.",
+        "The table includes every prime number up to 3999, in order": "Primes play no role."
       }
     },
     {

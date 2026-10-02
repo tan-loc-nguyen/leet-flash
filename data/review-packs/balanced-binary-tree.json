@@ -134,12 +134,12 @@
         "What does the check look at?"
       ],
       "options": [
-        "Not necessarily: balance compares the two child heights at every node, not only at the root",
+        "Not necessarily: balance compares the two child heights at every node",
         "Yes always, because a missing sibling can never make a node unbalanced",
         "Only the root matters, so the subtrees below do not need to be checked",
         "Only the leaves matter, because they carry all the height information"
       ],
-      "answer": "Not necessarily: balance compares the two child heights at every node, not only at the root",
+      "answer": "Not necessarily: balance compares the two child heights at every node",
       "explanation": "A deep imbalance anywhere in the tree makes it unbalanced.",
       "incorrectOptionExplanations": {
         "Yes always, because a missing sibling can never make a node unbalanced": "Local imbalances matter.",

@@ -117,15 +117,15 @@
         "How does the code return it?"
       ],
       "options": [
-        "The ancestor itself, since it is not strictly left or right of both",
-        "The parent of the ancestor node, one level above it",
+        "The ancestor itself: it is not strictly left or right of both",
+        "The parent of the ancestor node, one level above that node",
         "None, because the nodes are not on different sides of it",
         "The root, whatever the positions of p and q in the tree"
       ],
-      "answer": "The ancestor itself, since it is not strictly left or right of both",
+      "answer": "The ancestor itself: it is not strictly left or right of both",
       "explanation": "A node can be a descendant of itself, so the LCA of a node and its descendant is the node.",
       "incorrectOptionExplanations": {
-        "The parent of the ancestor node, one level above it": "Too high.",
+        "The parent of the ancestor node, one level above that node": "Too high.",
         "None, because the nodes are not on different sides of it": "A LCA exists.",
         "The root, whatever the positions of p and q in the tree": "Only if it is the split point."
       }

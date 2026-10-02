@@ -66,16 +66,16 @@
       ],
       "options": [
         "Hash map + doubly linked list",
-        "Array + binary search",
-        "Min-heap + hash set",
-        "Stack + queue"
+        "Sorted array + binary search",
+        "Min-heap + hash set of keys",
+        "Stack + queue with a counter"
       ],
       "answer": "Hash map + doubly linked list",
       "explanation": "The map finds the node in O(1); the doubly linked list reorders and evicts in O(1).",
       "incorrectOptionExplanations": {
-        "Array + binary search": "Insertions/removals are O(n).",
-        "Min-heap + hash set": "Updating recency in a heap is O(log n) and awkward.",
-        "Stack + queue": "Cannot remove from the middle in O(1)."
+        "Sorted array + binary search": "Insertions/removals are O(n).",
+        "Min-heap + hash set of keys": "Updating recency in a heap is O(log n) and awkward.",
+        "Stack + queue with a counter": "Cannot remove from the middle in O(1)."
       }
     },
     {
@@ -166,17 +166,17 @@
         "What must put(existing_key, new_value) do?"
       ],
       "options": [
-        "Yes: update the value and move the node to the most-recent position",
-        "No: only the value changes, the position stays",
-        "It must evict the tail node first, then insert",
-        "It creates a duplicate node next to the old one"
+        "Yes: update the value and mark the node most recently used",
+        "No: only the value changes, while the position stays put",
+        "It must evict the tail node first, and then insert anew",
+        "It creates a duplicate node placed next to the old one"
       ],
-      "answer": "Yes: update the value and move the node to the most-recent position",
+      "answer": "Yes: update the value and mark the node most recently used",
       "explanation": "Both get and put count as uses of the key.",
       "incorrectOptionExplanations": {
-        "No: only the value changes, the position stays": "That would let a frequently written key be evicted.",
-        "It must evict the tail node first, then insert": "Only when inserting a new key over capacity.",
-        "It creates a duplicate node next to the old one": "The key must map to a single node."
+        "No: only the value changes, while the position stays put": "That would let a frequently written key be evicted.",
+        "It must evict the tail node first, and then insert anew": "Only when inserting a new key over capacity.",
+        "It creates a duplicate node placed next to the old one": "The key must map to a single node."
       }
     }
   ],

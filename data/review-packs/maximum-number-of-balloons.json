@@ -47,12 +47,12 @@
         "Why are l and o halved?"
       ],
       "options": [
-        "The minimum over letters of available / required (l and o are required twice)",
+        "The minimum over letters of available / required (l, o twice)",
         "The sum of all letter counts divided by the word length",
         "The count of 'b' in the text, ignoring all other letters",
         "The length of the text divided by the length of 'balloon'"
       ],
-      "answer": "The minimum over letters of available / required (l and o are required twice)",
+      "answer": "The minimum over letters of available / required (l, o twice)",
       "explanation": "The scarcest letter (relative to its requirement) limits how many words can be built.",
       "incorrectOptionExplanations": {
         "The sum of all letter counts divided by the word length": "Letters are not interchangeable.",

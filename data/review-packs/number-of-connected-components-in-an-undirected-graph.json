@@ -56,16 +56,16 @@
         "What changes the count?"
       ],
       "options": [
-        "Start with n and subtract 1 for every union of two different components",
+        "Start with n; subtract 1 for each union of two different components",
         "Add 1 for every edge processed while scanning the edge list",
-        "Count the leaves of the spanning forest after all unions",
+        "Count the leaves of the spanning forest after all the unions",
         "Sort the edges by weight, then count the groups that form"
       ],
-      "answer": "Start with n and subtract 1 for every union of two different components",
+      "answer": "Start with n; subtract 1 for each union of two different components",
       "explanation": "Each successful merge joins two components into one.",
       "incorrectOptionExplanations": {
         "Add 1 for every edge processed while scanning the edge list": "Edges can join components or lie inside one.",
-        "Count the leaves of the spanning forest after all unions": "Irrelevant.",
+        "Count the leaves of the spanning forest after all the unions": "Irrelevant.",
         "Sort the edges by weight, then count the groups that form": "Order does not matter."
       }
     },

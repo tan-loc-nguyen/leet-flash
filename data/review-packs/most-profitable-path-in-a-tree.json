@@ -52,17 +52,17 @@
         "What do you store for each node on Bob's path?"
       ],
       "options": [
-        "Bob's route to the root is fixed, so his arrival times can be stored",
-        "Bob moves randomly, so his times must be sampled",
-        "Alice's path decides where Bob walks each step",
-        "Both players always meet at the root before gates"
+        "Bob's route to the root is fixed, so his times can be stored",
+        "Bob moves randomly, so his arrival times must be sampled",
+        "Alice's path decides where Bob walks at each single step",
+        "Both players always meet at the root before any gates"
       ],
-      "answer": "Bob's route to the root is fixed, so his arrival times can be stored",
+      "answer": "Bob's route to the root is fixed, so his times can be stored",
       "explanation": "Nodes off Bob's path have an infinite arrival time.",
       "incorrectOptionExplanations": {
-        "Bob moves randomly, so his times must be sampled": "Bob follows the unique path to node 0.",
-        "Alice's path decides where Bob walks each step": "Bob's path does not depend on Alice.",
-        "Both players always meet at the root before gates": "Only some nodes may be shared."
+        "Bob moves randomly, so his arrival times must be sampled": "Bob follows the unique path to node 0.",
+        "Alice's path decides where Bob walks at each single step": "Bob's path does not depend on Alice.",
+        "Both players always meet at the root before any gates": "Only some nodes may be shared."
       }
     },
     {
@@ -118,17 +118,17 @@
         "How should the root be treated as a leaf?"
       ],
       "options": [
-        "Not the root, which Alice starts at; leaves are nodes other than 0 with degree one",
-        "The root itself, since it has only one neighbour",
-        "There are no leaves in this case at all",
-        "Every node with degree two, as it ends a branch"
+        "Not the root: leaves are nodes other than 0 with degree one",
+        "The root itself, since it has only a single neighbour node",
+        "There are no leaves in this case at all, only the root",
+        "Every node with degree two, since it ends a branch there"
       ],
-      "answer": "Not the root, which Alice starts at; leaves are nodes other than 0 with degree one",
+      "answer": "Not the root: leaves are nodes other than 0 with degree one",
       "explanation": "Check len(adj[node]) == 1 and node != 0.",
       "incorrectOptionExplanations": {
-        "The root itself, since it has only one neighbour": "Alice's start is not a leaf.",
-        "There are no leaves in this case at all": "The far end is a leaf.",
-        "Every node with degree two, as it ends a branch": "Leaves have degree one."
+        "The root itself, since it has only a single neighbour node": "Alice's start is not a leaf.",
+        "There are no leaves in this case at all, only the root": "The far end is a leaf.",
+        "Every node with degree two, since it ends a branch there": "Leaves have degree one."
       }
     }
   ],
