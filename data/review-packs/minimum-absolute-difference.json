@@ -114,21 +114,21 @@
       "category": "edge_case",
       "type": "multiple_choice",
       "promptVariants": [
-        "What is returned for [4, 2, 1, 3]?",
+        "What is returned for [7, 3, 5, 9]?",
         "How many pairs share the minimum difference?"
       ],
       "options": [
-        "[[1, 2], [2, 3], [3, 4]]: the minimum difference is 1",
-        "[[1, 4]]: the extremes are the closest",
-        "[[1, 2]]: only the first pair is reported",
-        "[[2, 4], [1, 3]]: pairs with a difference of 2"
+        "[[3, 5], [5, 7], [7, 9]]: the minimum difference is 2",
+        "[[3, 9]]: the extremes are the closest",
+        "[[3, 5]]: only the first pair is reported",
+        "[[3, 7], [5, 9]]: pairs with a difference of 4"
       ],
-      "answer": "[[1, 2], [2, 3], [3, 4]]: the minimum difference is 1",
-      "explanation": "Pairs are reported in ascending order.",
+      "answer": "[[3, 5], [5, 7], [7, 9]]: the minimum difference is 2",
+      "explanation": "Sorted, the neighbours differ by 2 each time, so all three adjacent pairs are reported in ascending order.",
       "incorrectOptionExplanations": {
-        "[[1, 4]]: the extremes are the closest": "They are the farthest apart.",
-        "[[1, 2]]: only the first pair is reported": "All pairs with that gap must be reported.",
-        "[[2, 4], [1, 3]]: pairs with a difference of 2": "The minimum difference is 1."
+        "[[3, 9]]: the extremes are the closest": "The extremes are the farthest apart, not the closest.",
+        "[[3, 5]]: only the first pair is reported": "Every pair with the minimum difference must be reported, not just the first.",
+        "[[3, 7], [5, 9]]: pairs with a difference of 4": "The minimum difference is 2, so pairs 4 apart are not part of the answer."
       }
     }
   ],

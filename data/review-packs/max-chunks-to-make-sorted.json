@@ -133,21 +133,21 @@
       "category": "edge_case",
       "type": "multiple_choice",
       "promptVariants": [
-        "What is the answer for [1,0,2,3,4]?",
+        "What is the answer for [0,2,1,4,3]?",
         "Where are the cuts?"
       ],
       "options": [
-        "4",
+        "3",
         "5",
-        "1",
-        "2"
+        "2",
+        "1"
       ],
-      "answer": "4",
-      "explanation": "Cuts after index 1 (prefix {1,0}), 2, 3, 4: chunks [1,0],[2],[3],[4].",
+      "answer": "3",
+      "explanation": "Cuts after index 0, 2 and 4 give the chunks [0], [2,1] and [4,3]; a cut after index 1 or 3 would leave an unsorted prefix.",
       "incorrectOptionExplanations": {
-        "5": "The first two elements cannot be separated.",
-        "1": "More cuts are possible.",
-        "2": "More cuts are possible."
+        "5": "Five chunks would need every element to be in its sorted position, but 2 and 1 are swapped.",
+        "2": "Three independent chunks exist, so two is too few.",
+        "1": "One chunk is always possible, but more cuts are valid here."
       }
     }
   ],

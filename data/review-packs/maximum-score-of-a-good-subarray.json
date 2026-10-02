@@ -159,21 +159,21 @@
       "category": "edge_case",
       "type": "multiple_choice",
       "promptVariants": [
-        "What is the answer for nums = [1,4,3,7,4,5], k = 3?",
+        "What is the answer for nums = [2,6,4,3,5], k = 2?",
         "Which subarray achieves it?"
       ],
       "options": [
-        "15",
-        "14",
-        "20",
-        "7"
+        "12",
+        "10",
+        "9",
+        "20"
       ],
-      "answer": "15",
-      "explanation": "Min 3 with width 5 gives 15; narrower windows with a larger min score less. (15: nums[1..5] = [4,3,7,4,5], min 3 x 5)",
+      "answer": "12",
+      "explanation": "The subarray nums[1..4] = [6,4,3,5] contains index 2, has min 3 and width 4, so the score is 12; the whole array gives only 2 x 5 = 10.",
       "incorrectOptionExplanations": {
-        "14": "Not achievable.",
-        "20": "Would require a larger min and width.",
-        "7": "Only the element 7 alone, but the subarray must contain index 3 = value 7: score 7, a lower candidate."
+        "10": "The whole array has min 2 and width 5, a smaller score than [6,4,3,5].",
+        "9": "[6,4,3] has min 3 and width 3, narrower than the best window.",
+        "20": "No window contains index 2 and scores 20."
       }
     }
   ],

@@ -111,21 +111,21 @@
       "category": "edge_case",
       "type": "multiple_choice",
       "promptVariants": [
-        "What is the result for word1 = 'ab', word2 = 'pqrs'?",
+        "What is the result for word1 = 'xyz', word2 = 'm'?",
         "How is the longer tail handled?"
       ],
       "options": [
-        "'apbqrs'",
-        "'abpqrs'",
-        "'apbq'",
-        "'apbqsr'"
+        "'xmyz'",
+        "'xyzm'",
+        "'mxyz'",
+        "'xmy'"
       ],
-      "answer": "'apbqrs'",
-      "explanation": "Interleave a,p,b,q then append the remaining 'rs'.",
+      "answer": "'xmyz'",
+      "explanation": "Interleave x,m then append the remaining 'yz' of the longer word.",
       "incorrectOptionExplanations": {
-        "'abpqrs'": "That is plain concatenation.",
-        "'apbq'": "The tail 'rs' is dropped.",
-        "'apbqsr'": "The tail order is wrong."
+        "'xyzm'": "That appends word2 instead of interleaving it.",
+        "'mxyz'": "word1 supplies the first character, not word2.",
+        "'xmy'": "The remaining tail 'z' must not be dropped."
       }
     }
   ],

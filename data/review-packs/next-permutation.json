@@ -117,21 +117,21 @@
       "category": "edge_case",
       "type": "multiple_choice",
       "promptVariants": [
-        "What does the algorithm do for [3, 2, 1]?",
+        "What does the algorithm do for [6, 5, 3, 2, 1]?",
         "What if no pivot exists?"
       ],
       "options": [
-        "No pivot exists, so the whole array is reversed to [1, 2, 3]",
+        "No pivot exists, so the whole array is reversed to [1, 2, 3, 5, 6]",
         "It raises an error because no larger permutation exists",
         "It returns the array unchanged",
-        "It swaps the first and last elements only to [1, 2, 3]"
+        "It swaps the first and last elements only: [1, 5, 3, 2, 6]"
       ],
-      "answer": "No pivot exists, so the whole array is reversed to [1, 2, 3]",
-      "explanation": "When the array is entirely non-increasing it is the last permutation, so it wraps to the first.",
+      "answer": "No pivot exists, so the whole array is reversed to [1, 2, 3, 5, 6]",
+      "explanation": "When the array is entirely non-increasing it is the last permutation, so it wraps around to the first (fully reversed).",
       "incorrectOptionExplanations": {
-        "It raises an error because no larger permutation exists": "The problem asks for the smallest permutation instead.",
-        "It returns the array unchanged": "The wrap-around must produce ascending order.",
-        "It swaps the first and last elements only to [1, 2, 3]": "That only works by accident for length 3."
+        "It raises an error because no larger permutation exists": "The problem asks for the smallest permutation instead of failing.",
+        "It returns the array unchanged": "The array must wrap to the lowest ordering, not stay as is.",
+        "It swaps the first and last elements only: [1, 5, 3, 2, 6]": "Swapping the ends leaves the middle unsorted; the whole array must be reversed."
       }
     }
   ],

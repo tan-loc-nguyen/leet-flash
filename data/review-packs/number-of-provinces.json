@@ -147,21 +147,21 @@
       "category": "edge_case",
       "type": "multiple_choice",
       "promptVariants": [
-        "What is the answer for [[1,0,0],[0,1,0],[0,0,1]]?",
+        "What is the answer when only the diagonal of a 4 x 4 matrix is 1?",
         "How many provinces if no cities are connected?"
       ],
       "options": [
-        "3",
+        "4",
         "1",
         "0",
-        "9"
+        "16"
       ],
-      "answer": "3",
-      "explanation": "With only the diagonal set every city is isolated. (3: each city is its own province)",
+      "answer": "4",
+      "explanation": "With only the diagonal set every city is isolated, so each city is its own province.",
       "incorrectOptionExplanations": {
-        "1": "No connections exist.",
-        "0": "There are cities.",
-        "9": "The number of matrix entries."
+        "1": "One province would need every city to be connected.",
+        "0": "There are cities, so at least one province exists.",
+        "16": "16 is the number of matrix cells, not provinces."
       }
     }
   ],

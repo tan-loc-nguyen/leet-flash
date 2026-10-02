@@ -122,21 +122,21 @@
       "category": "edge_case",
       "type": "multiple_choice",
       "promptVariants": [
-        "What is the answer for 'aaaa'?",
+        "What is the answer for 'abababab'?",
         "How long can the window be?"
       ],
       "options": [
-        "2",
         "4",
-        "1",
-        "3"
+        "8",
+        "2",
+        "6"
       ],
-      "answer": "2",
-      "explanation": "Any window of 'a' contains more than two copies once its length exceeds 2.",
+      "answer": "4",
+      "explanation": "'abab' has two a's and two b's; adding one more letter would make a third occurrence of a or b.",
       "incorrectOptionExplanations": {
-        "4": "The entire string has four copies.",
-        "1": "Two copies are allowed.",
-        "3": "Three copies violate the limit."
+        "8": "The whole string has four of each letter.",
+        "2": "A longer window than 2 is valid (for example 'abab').",
+        "6": "Six letters would contain three a's or three b's."
       }
     }
   ],

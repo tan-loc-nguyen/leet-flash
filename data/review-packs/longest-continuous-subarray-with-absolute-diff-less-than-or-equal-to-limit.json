@@ -155,21 +155,21 @@
       "category": "edge_case",
       "type": "multiple_choice",
       "promptVariants": [
-        "What is the answer for nums = [10,1,2,4,7,2], limit = 5?",
+        "What is the answer for nums = [9,3,5,6,2,4], limit = 3?",
         "Which window is best?"
       ],
       "options": [
-        "4",
         "3",
-        "5",
+        "2",
+        "4",
         "6"
       ],
-      "answer": "4",
-      "explanation": "[2,4,7,2] has max 7 and min 2 (difference 5 <= 5); extending left to 1 makes the difference 6.",
+      "answer": "3",
+      "explanation": "[3,5,6] has max 6 and min 3 (difference 3 <= 3); adding 9 on the left (difference 6) or 2 on the right (difference 4) breaks the limit.",
       "incorrectOptionExplanations": {
-        "3": "Shorter than [2,4,7,2].",
-        "5": "Adding the 1 breaks the limit (7 - 1 = 6).",
-        "6": "The whole array has difference 9."
+        "2": "A window of length 3 exists, so 2 is too small.",
+        "4": "Every length-4 window has a max-min difference above 3.",
+        "6": "The whole array has max 9 and min 2 (difference 7)."
       }
     }
   ],

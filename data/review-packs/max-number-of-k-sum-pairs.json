@@ -135,21 +135,21 @@
       "category": "edge_case",
       "type": "multiple_choice",
       "promptVariants": [
-        "What is the answer for [3,1,3,4,3], k = 6?",
+        "What is the answer for [2,2,2,2,5], k = 4?",
         "How are repeated equal values paired?"
       ],
       "options": [
-        "1",
         "2",
-        "0",
-        "3"
+        "1",
+        "3",
+        "4"
       ],
-      "answer": "1",
-      "explanation": "Only 3+3 sums to 6 and a single pair of 3s can be formed from the first two available 3s; the third 3 has no partner (1+4 = 5).",
+      "answer": "2",
+      "explanation": "The four 2s form two pairs (2 + 2 = 4); the 5 has no partner (it would need -1).",
       "incorrectOptionExplanations": {
-        "2": "There are three 3s, enough for one pair only.",
-        "0": "3 + 3 = 6 is possible.",
-        "3": "Each operation uses two numbers."
+        "1": "Four equal values make two pairs, not one.",
+        "3": "Each pair uses two elements, so at most 2 pairs fit among four 2s.",
+        "4": "Four is the number of 2s, not the number of pairs."
       }
     }
   ],

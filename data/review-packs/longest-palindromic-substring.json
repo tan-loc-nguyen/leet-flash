@@ -142,21 +142,21 @@
       "category": "edge_case",
       "type": "multiple_choice",
       "promptVariants": [
-        "What should 'cbbd' return, and which kind of centre finds it?",
-        "Which centre type finds the longest palindrome of 'cbbd'?"
+        "What should 'xyzzyw' return, and which kind of centre finds it?",
+        "Which centre type finds the longest palindrome of 'xyzzyw'?"
       ],
       "options": [
-        "'bb' - from the even centre between the two b's",
-        "'cbb' - an odd centre at the first b",
-        "'c' - the first character only",
-        "'bbd' - an odd centre at the last b"
+        "'yzzy' - from the even centre between the two z's",
+        "'yzz' - an odd centre at the first z",
+        "'z' - the first character only",
+        "'zzy' - an odd centre at the last z"
       ],
-      "answer": "'bb' - from the even centre between the two b's",
-      "explanation": "The even centre (1, 2) expands to 'bb' and then stops because 'c' != 'd'.",
+      "answer": "'yzzy' - from the even centre between the two z's",
+      "explanation": "The even centre between the two z's expands to 'zz', then 'yzzy', and stops because 'x' != 'w'.",
       "incorrectOptionExplanations": {
-        "'cbb' - an odd centre at the first b": "'cbb' is not a palindrome.",
-        "'c' - the first character only": "A longer palindrome 'bb' exists.",
-        "'bbd' - an odd centre at the last b": "'bbd' is not a palindrome."
+        "'yzz' - an odd centre at the first z": "'yzz' is not a palindrome, and an odd centre cannot give an even length.",
+        "'z' - the first character only": "A longer palindrome, 'yzzy', exists.",
+        "'zzy' - an odd centre at the last z": "'zzy' is not a palindrome."
       }
     }
   ],

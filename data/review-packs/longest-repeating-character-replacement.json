@@ -155,21 +155,21 @@
       "category": "edge_case",
       "type": "multiple_choice",
       "promptVariants": [
-        "For s = 'AABABBA' and k = 1 what is the answer?",
+        "For s = 'ABACCCD' and k = 2 what is the answer?",
         "Which result shows the window logic?"
       ],
       "options": [
-        "4",
-        "3",
         "5",
+        "6",
+        "4",
         "7"
       ],
-      "answer": "4",
-      "explanation": "E.g. 'AABA' -> replace the B (or 'ABBB' via one change) gives length 4; no length-5 window has len - maxFreq <= 1.",
+      "answer": "5",
+      "explanation": "'BACCC' has a most frequent letter C (3 times), so 5 - 3 = 2 replacements <= k; a window of 6 would need 3.",
       "incorrectOptionExplanations": {
-        "3": "Smaller than achievable.",
-        "5": "Would need 2 replacements.",
-        "7": "Would need 3 replacements."
+        "6": "'ABACCC' needs three replacements (6 - 3 = 3 > 2).",
+        "4": "A window of length 5 is achievable with two replacements.",
+        "7": "The whole string has a best letter count of 3, so it needs 4 replacements."
       }
     }
   ],

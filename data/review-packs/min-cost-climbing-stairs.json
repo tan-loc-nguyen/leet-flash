@@ -142,21 +142,21 @@
       "category": "edge_case",
       "type": "multiple_choice",
       "promptVariants": [
-        "What is the answer for cost = [10, 15, 20]?",
+        "What is the answer for cost = [5, 20, 6, 9]?",
         "Which stairs are used?"
       ],
       "options": [
+        "11",
+        "20",
         "15",
-        "25",
-        "30",
-        "10"
+        "26"
       ],
-      "answer": "15",
-      "explanation": "Starting on stair 1 you pay 15 and can climb 2 to reach the top. (15: start at index 1, jump to the top)",
+      "answer": "11",
+      "explanation": "Start on stair 0 (pay 5), jump to stair 2 (pay 6), then jump to the top: 11.",
       "incorrectOptionExplanations": {
-        "25": "10 + 15 is not needed.",
-        "30": "Not minimal.",
-        "10": "Starting at index 0 then stepping to 2 costs 30."
+        "20": "That is only the price of stair 1; the cheapest route avoids it.",
+        "15": "That pays 6 + 9 but skips the cost of getting onto stair 2.",
+        "26": "That starts on stair 1 (20) and then pays 6; starting on stair 0 is cheaper."
       }
     }
   ],

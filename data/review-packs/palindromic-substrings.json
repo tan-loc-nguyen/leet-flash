@@ -128,21 +128,21 @@
       "category": "edge_case",
       "type": "multiple_choice",
       "promptVariants": [
-        "How many palindromic substrings does 'aaa' have?",
+        "How many palindromic substrings does 'abba' have?",
         "Which are they?"
       ],
       "options": [
-        "6: a, a, a, aa, aa, aaa",
-        "3: only the single letters",
-        "4: a, a, a and aaa",
-        "5: three singles and the two 'aa'"
+        "6: a, b, b, a, bb, abba",
+        "4: only the single letters",
+        "5: the singles and 'bb', but not 'abba'",
+        "8: the singles plus every pair of letters"
       ],
-      "answer": "6: a, a, a, aa, aa, aaa",
-      "explanation": "Substrings are counted by position.",
+      "answer": "6: a, b, b, a, bb, abba",
+      "explanation": "Four single letters, the even palindrome 'bb' and the whole string 'abba' make six.",
       "incorrectOptionExplanations": {
-        "3: only the single letters": "Longer substrings are palindromes too.",
-        "4: a, a, a and aaa": "Both 'aa' substrings count.",
-        "5: three singles and the two 'aa'": "The full 'aaa' counts as well."
+        "4: only the single letters": "Longer palindromes count too.",
+        "5: the singles and 'bb', but not 'abba'": "'abba' reads the same backwards and counts as well.",
+        "8: the singles plus every pair of letters": "Only equal pairs such as 'bb' are palindromes; 'ab' is not."
       }
     }
   ],

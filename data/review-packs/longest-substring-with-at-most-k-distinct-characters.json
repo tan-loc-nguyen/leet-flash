@@ -124,21 +124,21 @@
       "category": "edge_case",
       "type": "multiple_choice",
       "promptVariants": [
-        "What is the answer for s = 'eceba', k = 2?",
+        "What is the answer for s = 'aabbcca', k = 2?",
         "How long is the best window?"
       ],
       "options": [
-        "3",
         "4",
-        "2",
-        "5"
+        "5",
+        "3",
+        "2"
       ],
-      "answer": "3",
-      "explanation": "Windows with <= 2 distinct characters: 'ece' (3) is the longest; 'eceb' has 3 distinct.",
+      "answer": "4",
+      "explanation": "'aabb' and 'bbcc' have two distinct characters each (length 4); extending either adds a third character.",
       "incorrectOptionExplanations": {
-        "4": "'eceb' has e, c, b = 3 distinct.",
-        "2": "Shorter than achievable.",
-        "5": "Whole string has 4 distinct characters."
+        "5": "Any window of length 5 contains three distinct letters.",
+        "3": "Windows of length 4 are valid, so 3 is too small.",
+        "2": "A window must hold at least one of each allowed character; 2 is too small."
       }
     }
   ],

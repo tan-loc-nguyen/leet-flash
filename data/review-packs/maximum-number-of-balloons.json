@@ -109,21 +109,21 @@
       "category": "edge_case",
       "type": "multiple_choice",
       "promptVariants": [
-        "How many 'balloon' can be made from 'loonbalxballpoon'?",
+        "How many 'balloon' can be made from 'bbaallloonnoo'?",
         "Which letters limit it?"
       ],
       "options": [
-        "2",
         "1",
+        "2",
         "3",
         "0"
       ],
-      "answer": "2",
-      "explanation": "b=2, a=2, l=4 -> 2, o=4 -> 2, n=2: min is 2.",
+      "answer": "1",
+      "explanation": "b=2, a=2, l=3 (needs 2 per word -> 1), o=4 (needs 2 -> 2), n=2: the minimum is 1, limited by l.",
       "incorrectOptionExplanations": {
-        "1": "There are enough letters for two.",
-        "3": "b is only 2.",
-        "0": "All letters are present."
+        "2": "Two words need four l's, but only three are available.",
+        "3": "Three is more than the l and o counts allow.",
+        "0": "Every needed letter is present, so at least one word can be made."
       }
     }
   ],

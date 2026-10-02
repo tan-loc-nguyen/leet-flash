@@ -125,21 +125,21 @@
       "category": "edge_case",
       "type": "multiple_choice",
       "promptVariants": [
-        "What is the output for [1,2,1]?",
+        "What is the output for [3,1,4,2,3]?",
         "How does wraparound change the answer for the last element?"
       ],
       "options": [
-        "[2,-1,2]",
-        "[2,2,2]",
-        "[-1,-1,-1]",
-        "[2,-1,-1]"
+        "[4,4,-1,3,4]",
+        "[4,4,-1,3,-1]",
+        "[4,4,-1,-1,4]",
+        "[4,4,4,3,4]"
       ],
-      "answer": "[2,-1,2]",
-      "explanation": "The first 1 sees 2; 2 has no greater element; the last 1 wraps around to see 2.",
+      "answer": "[4,4,-1,3,4]",
+      "explanation": "3 sees 4; 1 sees 4; 4 is the maximum so it gets -1; 2 sees 3; the last 3 wraps around and sees 4.",
       "incorrectOptionExplanations": {
-        "[2,2,2]": "2 has no greater element.",
-        "[-1,-1,-1]": "Greater elements exist for the 1s.",
-        "[2,-1,-1]": "The last 1 finds 2 by wrapping."
+        "[4,4,-1,3,-1]": "The last 3 wraps around to the 4 at index 2, so it is not -1.",
+        "[4,4,-1,-1,4]": "2 sees the 3 right after it, so it is not -1.",
+        "[4,4,4,3,4]": "The maximum 4 has no greater element anywhere in the circle."
       }
     }
   ],

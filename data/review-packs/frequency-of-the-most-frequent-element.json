@@ -141,21 +141,21 @@
       "category": "edge_case",
       "type": "multiple_choice",
       "promptVariants": [
-        "What is the answer for nums = [1,2,4], k = 5?",
+        "What is the answer for nums = [3,5,6,12], k = 4?",
         "How many elements can be made equal?"
       ],
       "options": [
         "3",
         "2",
         "1",
-        "5"
+        "4"
       ],
       "answer": "3",
-      "explanation": "Raising 1 and 2 up to 4 costs 3 + 2 = 5, which is within k = 5, so all three elements can be made equal.",
+      "explanation": "Raising 3 and 5 up to 6 costs 3 + 1 = 4, within k = 4, so three elements can be made equal; including 12 would cost far more.",
       "incorrectOptionExplanations": {
-        "2": "Two elements are possible, but the whole array fits in the budget.",
-        "1": "A single element is always possible; more fit here.",
-        "5": "The frequency cannot exceed the array length; 5 is k, not the answer."
+        "2": "Two elements fit, but the budget also covers 3, 5 and 6 together.",
+        "1": "A single element is always possible, but more fit here.",
+        "4": "Making all four equal needs 9 + 7 + 6 = 22 operations."
       }
     }
   ],

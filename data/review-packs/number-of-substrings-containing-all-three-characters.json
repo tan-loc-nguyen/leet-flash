@@ -133,21 +133,21 @@
       "category": "edge_case",
       "type": "multiple_choice",
       "promptVariants": [
-        "What is the answer for 'abc'?",
+        "What is the answer for 'aabcc'?",
         "How many substrings contain a, b and c?"
       ],
       "options": [
+        "4",
         "1",
         "3",
-        "0",
         "6"
       ],
-      "answer": "1",
-      "explanation": "Only the whole string 'abc' contains all three characters.",
+      "answer": "4",
+      "explanation": "'abc', 'aabc', 'abcc' and 'aabcc' contain all three letters.",
       "incorrectOptionExplanations": {
-        "3": "Shorter substrings lack a character.",
-        "0": "The full string qualifies.",
-        "6": "Only one substring qualifies."
+        "1": "More than the single 'abc' qualify: extending it by a or c keeps all three.",
+        "3": "Four substrings qualify, not three.",
+        "6": "Six would also count substrings that miss one of the letters."
       }
     }
   ],

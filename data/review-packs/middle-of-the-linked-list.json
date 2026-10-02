@@ -109,21 +109,21 @@
       "category": "edge_case",
       "type": "multiple_choice",
       "promptVariants": [
-        "What is returned for [1,2,3,4,5,6]?",
+        "What is returned for [10,20,30,40]?",
         "Which node is the middle of an even list?"
       ],
       "options": [
-        "The node with value 4",
-        "The node with value 3",
-        "The node with value 5",
+        "The node with value 30",
+        "The node with value 20",
+        "The node with value 40",
         "None"
       ],
-      "answer": "The node with value 4",
-      "explanation": "The second of the two middle nodes (3 and 4).",
+      "answer": "The node with value 30",
+      "explanation": "With two middle nodes (20 and 30) the second one is returned.",
       "incorrectOptionExplanations": {
-        "The node with value 3": "That is the first middle.",
-        "The node with value 5": "Too far.",
-        "None": "A middle always exists."
+        "The node with value 20": "That is the first middle node; the problem asks for the second.",
+        "The node with value 40": "The last node is not a middle node of a four-node list.",
+        "None": "A non-empty list always has a middle node."
       }
     }
   ],

@@ -130,21 +130,21 @@
       "category": "edge_case",
       "type": "multiple_choice",
       "promptVariants": [
-        "What is the result for [[1,4],[4,5]]?",
+        "What is the result for [[2,3],[3,7],[9,10]]?",
         "How do touching intervals behave?"
       ],
       "options": [
-        "[[1,5]]",
-        "[[1,4],[4,5]]",
-        "[[1,4]]",
-        "[[4,5]]"
+        "[[2,7],[9,10]]",
+        "[[2,3],[3,7],[9,10]]",
+        "[[2,7]]",
+        "[[2,3],[9,10]]"
       ],
-      "answer": "[[1,5]]",
-      "explanation": "They share the endpoint 4, so they overlap and merge into [1,5].",
+      "answer": "[[2,7],[9,10]]",
+      "explanation": "[2,3] and [3,7] share the endpoint 3, so they merge into [2,7]; [9,10] is separate.",
       "incorrectOptionExplanations": {
-        "[[1,4],[4,5]]": "Touching counts as overlapping.",
-        "[[1,4]]": "That drops [4,5].",
-        "[[4,5]]": "That drops [1,4]."
+        "[[2,3],[3,7],[9,10]]": "Touching intervals count as overlapping, so they merge.",
+        "[[2,7]]": "[9,10] does not touch [2,7], so it stays separate.",
+        "[[2,3],[9,10]]": "No interval may be dropped; every value must stay covered."
       }
     }
   ],

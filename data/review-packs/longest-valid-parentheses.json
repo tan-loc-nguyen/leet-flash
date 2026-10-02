@@ -150,21 +150,21 @@
       "category": "edge_case",
       "type": "multiple_choice",
       "promptVariants": [
-        "What is the answer for ')()())'?",
+        "What is the answer for ')(()())('?",
         "Which substring is the longest valid?"
       ],
       "options": [
-        "4",
-        "2",
         "6",
-        "0"
+        "8",
+        "4",
+        "2"
       ],
-      "answer": "4",
-      "explanation": "The first ')' is unmatched, the next four characters form '()()', and the last ')' is unmatched.",
+      "answer": "6",
+      "explanation": "The first ')' and the last '(' are unmatched; the six characters in between, '(()())', form the longest valid substring.",
       "incorrectOptionExplanations": {
-        "2": "Two adjacent pairs give 4.",
-        "6": "The unmatched outer ')' break the string.",
-        "0": "Valid substrings exist."
+        "8": "The outer characters cannot be matched, so the whole string is not valid.",
+        "4": "A valid substring of length 6 exists.",
+        "2": "A longer valid substring than 2 exists."
       }
     }
   ],

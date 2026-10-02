@@ -119,21 +119,21 @@
       "category": "edge_case",
       "type": "multiple_choice",
       "promptVariants": [
-        "What does the BFS return for classroom = ['L.S', 'RXL'] and energy = 3?",
+        "What does the BFS return for classroom = ['SRL'] and energy = 1?",
         "Why?"
       ],
       "options": [
-        "-1: collecting both litter cells is impossible with this energy",
-        "3: the nearest litter takes three moves to reach",
-        "4: a reset on 'R' makes the whole trip possible",
-        "0: the start cell already contains some litter"
+        "2: the reset tile refills the energy after the first move",
+        "-1: one unit of energy cannot cover two moves",
+        "1: the litter is one move away from the start",
+        "0: the start cell already holds the litter"
       ],
-      "answer": "-1: collecting both litter cells is impossible with this energy",
-      "explanation": "The statement's Example 3 shows -1.",
+      "answer": "2: the reset tile refills the energy after the first move",
+      "explanation": "The first move reaches 'R', which restores energy to 1 even though it reached 0; the second move reaches 'L'. (Without the reset, 'S.L' with energy 1 returns -1.)",
       "incorrectOptionExplanations": {
-        "3: the nearest litter takes three moves to reach": "Both litter cells must be collected.",
-        "4: a reset on 'R' makes the whole trip possible": "The route to the second litter needs more energy than the reset gives.",
-        "0: the start cell already contains some litter": "The start is 'S'."
+        "-1: one unit of energy cannot cover two moves": "The reset tile on the way restores the energy, so the trip is possible.",
+        "1: the litter is one move away from the start": "The litter is two cells away from the start.",
+        "0: the start cell already holds the litter": "The start cell is 'S', not litter."
       }
     }
   ],

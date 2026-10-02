@@ -144,21 +144,21 @@
       "category": "edge_case",
       "type": "multiple_choice",
       "promptVariants": [
-        "What is the answer for [3,4,5,2]?",
+        "What is the answer for [6,2,9,4]?",
         "Which pair is used?"
       ],
       "options": [
-        "12 ((5-1)*(4-1))",
-        "20",
-        "8",
-        "6"
+        "40 ((9-1)*(6-1))",
+        "54",
+        "24",
+        "8"
       ],
-      "answer": "12 ((5-1)*(4-1))",
-      "explanation": "The two largest are 5 and 4, so (5-1) * (4-1) = 12.",
+      "answer": "40 ((9-1)*(6-1))",
+      "explanation": "The two largest are 9 and 6, so (9-1) * (6-1) = 40.",
       "incorrectOptionExplanations": {
-        "20": "That is 5 * 4 without subtracting.",
-        "8": "Wrong pair.",
-        "6": "Wrong pair."
+        "54": "That forgets to subtract 1 from each factor (9 * 6).",
+        "24": "That pairs 9 with 4 ((9-1) * (4-1)); the two largest values give more.",
+        "8": "That pairs 9 with the smallest value ((9-1) * (2-1))."
       }
     }
   ],

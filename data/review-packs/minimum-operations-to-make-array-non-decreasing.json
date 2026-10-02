@@ -117,21 +117,21 @@
       "category": "edge_case",
       "type": "multiple_choice",
       "promptVariants": [
-        "What is the answer for [5, 1, 2, 3]?",
+        "What is the answer for [4, 2, 6, 3, 8]?",
         "Which index contributes?"
       ],
       "options": [
-        "4: only the drop 5 -> 1 contributes",
-        "2: the array has two descents",
-        "0: the array can already be sorted by reordering",
-        "7: the total of all decreases and increases"
+        "5: the drops 4 -> 2 and 6 -> 3 cost 2 + 3",
+        "2: the number of descents is what counts",
+        "3: only the larger drop is paid",
+        "14: the rises are paid as well"
       ],
-      "answer": "4: only the drop 5 -> 1 contributes",
-      "explanation": "Raising [1, 2, 3] by 4 gives [5, 6, 7].",
+      "answer": "5: the drops 4 -> 2 and 6 -> 3 cost 2 + 3",
+      "explanation": "Only descents cost something, and each costs its size: 4 - 2 = 2 and 6 - 3 = 3.",
       "incorrectOptionExplanations": {
-        "2: the array has two descents": "There is only one descent and its size is 4.",
-        "0: the array can already be sorted by reordering": "Only increments are allowed.",
-        "7: the total of all decreases and increases": "Increases cost nothing."
+        "2: the number of descents is what counts": "The cost is the size of each drop, not how many drops exist.",
+        "3: only the larger drop is paid": "Every drop is paid separately, not just the largest.",
+        "14: the rises are paid as well": "Rises are free; only drops are paid."
       }
     }
   ],

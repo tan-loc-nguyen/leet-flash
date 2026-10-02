@@ -129,21 +129,21 @@
       "category": "edge_case",
       "type": "multiple_choice",
       "promptVariants": [
-        "What is the LCA of nodes 5 and 4 in [3,5,1,6,2,0,8,null,null,7,4]?",
+        "What is the LCA of nodes 5 and 6 in [1,2,3,4,5,6,7]?",
         "Why?"
       ],
       "options": [
-        "5",
-        "3",
+        "1",
         "2",
-        "6"
+        "3",
+        "5"
       ],
-      "answer": "5",
-      "explanation": "4 lies below 5, and a node counts as its own ancestor. (5: node 4 is a descendant of 5)",
+      "answer": "1",
+      "explanation": "5 lies below 2 and 6 lies below 3, so their paths first meet at the root 1.",
       "incorrectOptionExplanations": {
-        "3": "The root is a common ancestor but not the lowest.",
-        "2": "2 is the parent of 4 but is not an ancestor of 5.",
-        "6": "Unrelated branch."
+        "2": "2 is an ancestor of 5 only; 6 is on the other side.",
+        "3": "3 is an ancestor of 6 only; 5 is on the other side.",
+        "5": "5 is one of the nodes, but 6 is not below it."
       }
     }
   ],

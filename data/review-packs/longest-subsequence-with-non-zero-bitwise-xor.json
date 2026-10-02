@@ -106,7 +106,7 @@
       "category": "edge_case",
       "type": "multiple_choice",
       "promptVariants": [
-        "What is the answer for [1,2,3] and for [0,0]?",
+        "What is the answer for [4,5,1] and for [0,0,0]?",
         "Why is the first 2?"
       ],
       "options": [
@@ -116,11 +116,11 @@
         "3 and 2"
       ],
       "answer": "2 and 0",
-      "explanation": "1 ^ 2 ^ 3 = 0, so drop one element (length 2); [0,0] has XOR 0 for every subsequence.",
+      "explanation": "4 ^ 5 ^ 1 = 0, so drop one element (length 2, XOR non-zero); [0,0,0] has XOR 0 for every subsequence, so no valid subsequence exists.",
       "incorrectOptionExplanations": {
-        "3 and 0": "The whole array XORs to 0.",
-        "2 and 1": "[0] also XORs to 0.",
-        "3 and 2": "Both wrong."
+        "3 and 0": "The whole array XORs to 0, so it cannot be the answer.",
+        "2 and 1": "An all-zero array has no subsequence with a non-zero XOR, so the answer is 0.",
+        "3 and 2": "The whole array is invalid and the all-zero array has no valid subsequence."
       }
     }
   ],
