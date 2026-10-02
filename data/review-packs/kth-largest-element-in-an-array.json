@@ -6,8 +6,8 @@
     "Heap / Priority Queue",
     "Array / Hashing"
   ],
-  "mainInsight": "You do not need a full sort: a size-k min-heap gives O(n log k), quickselect gives O(n) on average, and when values lie in a small bounded range a counting array gives O(n + range).",
-  "canonicalApproach": "Quickselect",
+  "mainInsight": "You do not need a full sort: keep only the k largest seen so far in a size-k min-heap. Its root is the smallest of those k, so it is both the next one to evict and, at the end, the k-th largest. That gives O(n log k); quickselect improves the average to O(n).",
+  "canonicalApproach": "Min-heap of size k",
   "approaches": [
     {
       "name": "Sort",
@@ -27,11 +27,14 @@
       "timeComplexity": "O(n log k)",
       "spaceComplexity": "O(k)",
       "strengths": [
-        "Streams, simple"
+        "Guaranteed O(n log k)",
+        "Does not mutate the input",
+        "Works on streams"
       ],
       "weaknesses": [
         "log k factor"
-      ]
+      ],
+      "interviewRelevance": "The expected answer; mention quickselect as the O(n) average-time follow-up."
     },
     {
       "name": "Quickselect",
@@ -44,7 +47,7 @@
       "weaknesses": [
         "Worst case, mutation"
       ],
-      "interviewRelevance": "The expected optimal-time answer."
+      "interviewRelevance": "The follow-up: best average time, but know the O(n^2) worst case and that it mutates the input."
     },
     {
       "name": "Counting array over the value range",
@@ -65,79 +68,108 @@
     "timeComplexity": "O(n + R)",
     "spaceComplexity": "O(R)",
     "isOptimal": false,
-    "notes": "Valid because values are bounded. In general use a size-k min-heap (O(n log k)) or quickselect (O(n) average)."
+    "notes": "Valid because values are bounded. In general use a size-k min-heap (O(n log k)), the expected interview answer, or quickselect (O(n) average)."
   },
   "commonMistakes": [],
   "edgeCases": [],
   "cards": [
     {
-      "id": "kt-pattern-01",
+      "id": "kt-pattern-02",
       "category": "pattern",
       "type": "multiple_choice",
       "promptVariants": [
-        "Which techniques avoid a full sort for the k-th largest?",
-        "What gives O(n) average time?"
+        "Which structure keeps only the k largest elements seen so far?",
+        "What do you maintain while scanning to avoid sorting for the k-th largest?"
       ],
       "options": [
-        "Quickselect (partition-based selection)",
-        "Binary search directly on the unsorted array",
-        "Two pointers moving in from both array ends",
-        "Prefix sums followed by a range lookup"
+        "Min-heap capped at size k",
+        "Max-heap capped at size k",
+        "Monotonic stack of size k",
+        "Queue holding the last k items"
       ],
-      "answer": "Quickselect (partition-based selection)",
-      "explanation": "Partitioning discards one side each step, giving an expected linear total.",
+      "answer": "Min-heap capped at size k",
+      "explanation": "The smallest of the kept elements sits at the root, so it is the one to evict when a larger element arrives.",
       "incorrectOptionExplanations": {
-        "Binary search directly on the unsorted array": "The array is unsorted.",
-        "Two pointers moving in from both array ends": "No sorted structure.",
-        "Prefix sums followed by a range lookup": "Not a range query."
+        "Max-heap capped at size k": "Its root is the largest, so evicting it throws away the best candidate.",
+        "Monotonic stack of size k": "A monotonic stack tracks next-greater relations, not the k largest values overall.",
+        "Queue holding the last k items": "That keeps the most recent k elements, not the largest k."
       }
     },
     {
-      "id": "kt-insight-01",
+      "id": "kt-insight-02",
       "category": "main_insight",
       "type": "free_recall",
       "promptVariants": [
-        "Why is the k-th largest equal to the root of a size-k min-heap of the largest values?",
-        "Why does a counting array work in your solution and when does it not?"
+        "Why a min-heap and not a max-heap for the k largest, and why is the root the answer?",
+        "Why is the root of a size-k min-heap of the largest values the k-th largest?"
       ],
-      "answer": "A size-k min-heap keeps the k largest seen; its root is the smallest of them, which is exactly the k-th largest. Your counting array works because the value range is bounded (about 2*10^4 wide), so counts can be scanned from the top; with a huge range the array would be too large.",
+      "answer": "The heap holds the k largest seen so far. A min-heap puts the smallest of them at the root, which is exactly the one to evict when a bigger element arrives. After all elements, the root is the smallest of the top k, i.e. the k-th largest.",
       "keyPoints": [
-        "Heap root = k-th largest",
-        "Counting needs a bounded range",
-        "Range = max - min + 1"
+        "Min-heap: root is the smallest of the kept k, so it is the eviction candidate",
+        "Pop when size exceeds k, so the heap always holds the k largest",
+        "Final root = smallest of the top k = k-th largest"
       ],
-      "explanation": "Choose by constraints."
+      "explanation": "A max-heap would put the largest element at the root, which is the one you want to keep."
     },
     {
-      "id": "kt-time-01",
+      "id": "kt-code-02",
+      "category": "code_reasoning",
+      "type": "code_question",
+      "promptVariants": [
+        "Trace nums = [3,2,1,5,6,4], k = 2 through this code: what does the heap hold after each element, and what is returned?",
+        "Walk this heap solution on [3,2,1,5,6,4] with k = 2. What is popped at each step?"
+      ],
+      "code": "import heapq\n\nheap = []\nfor num in nums:\n    heapq.heappush(heap, num)\n    if len(heap) > k:\n        heapq.heappop(heap)\nreturn heap[0]",
+      "answer": "After 3: {3}. After 2: {2,3}. After 1: push 1, size 3 > 2, pop 1, so {2,3}. After 5: pop 2, so {3,5}. After 6: pop 3, so {5,6}. After 4: pop 4, so {5,6}. The root is the smallest of {5,6}, so 5 is returned.",
+      "keyPoints": [
+        "Pop removes the smallest, so the heap always holds the k largest so far",
+        "Elements smaller than everything kept are pushed and popped straight away",
+        "Return heap[0], the smallest of the top k"
+      ],
+      "explanation": "heappop always removes the minimum, which is why the heap converges to the k largest values."
+    },
+    {
+      "id": "kt-time-02",
       "category": "time_complexity",
       "type": "fill_blank",
       "promptVariants": [
-        "Average time of quickselect: ___",
-        "Finding the k-th largest by partitioning takes ___ on average."
+        "Time complexity of the size-k min-heap solution for n elements: ___",
+        "Scanning n elements with a heap capped at size k takes ___."
       ],
-      "answer": "O(n)",
-      "explanation": "Each partition halves the expected remaining work.",
+      "answer": "O(n log k)",
       "acceptedAnswers": [
-        "linear"
-      ]
+        "O(n log(k))",
+        "O(n * log k)",
+        "O(nlogk)"
+      ],
+      "explanation": "n elements, each with one push and at most one pop on a heap of size at most k + 1, so O(log k) each."
     },
     {
-      "id": "kt-space-01",
+      "id": "kt-space-02",
       "category": "space_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Extra space of the size-k min-heap solution: ___",
+        "How much memory does a heap capped at size k use? ___"
+      ],
+      "answer": "O(k)",
+      "explanation": "The heap never holds more than k + 1 elements, regardless of n."
+    },
+    {
+      "id": "kt-alt-01",
+      "category": "alternative_approach",
       "type": "free_recall",
       "promptVariants": [
-        "What is the space cost of your counting-array solution and of the heap solution?",
-        "Compare the memory of counting vs heap vs quickselect."
+        "When would you choose the heap over quickselect, and quickselect over the heap?",
+        "The interviewer asks for better than O(n log k). What do you offer and what do you give up?"
       ],
-      "answer": "Counting: O(R) where R = max - min + 1. Heap: O(k). Quickselect: O(1) extra (in place) with O(log n) recursion if recursive.",
+      "answer": "Quickselect is O(n) on average versus O(n log k) for the heap, but its worst case is O(n^2) and it mutates the input. The heap has a guaranteed bound, leaves the input alone and works on a stream; for small k its O(n log k) is close to linear anyway.",
       "keyPoints": [
-        "Counting O(R)",
-        "Heap O(k)",
-        "Quickselect O(1) extra"
+        "Quickselect O(n) average, O(n^2) worst case",
+        "Quickselect mutates the input; heap does not",
+        "Heap has a guaranteed bound and works on streams"
       ],
-      "explanation": "R must be bounded for counting.",
-      "code": "class Solution:\n    def findKthLargest(self, nums: List[int], k: int) -> int:\n        low, high = min(nums), max(nums)\n        arr = [0] * (high - low + 1)\n\n        for num in nums:\n            arr[num - low] += 1\n        \n        for i in range(len(arr) - 1, -1, -1):\n            k -= arr[i]\n            if k <= 0:\n                return i + low\n        \n        return -1\n"
+      "explanation": "Lead with the heap, then offer quickselect as the average-case optimisation and name its trade-offs."
     },
     {
       "id": "kt-code-01",
@@ -177,8 +209,81 @@
         "4": "That would be the 'distinct' 3rd largest.",
         "3": "Too small."
       }
+    },
+    {
+      "id": "kt-pattern-01",
+      "category": "pattern",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "Which techniques avoid a full sort for the k-th largest?",
+        "What gives O(n) average time?"
+      ],
+      "options": [
+        "Quickselect (partition-based selection)",
+        "Binary search directly on the unsorted array",
+        "Two pointers moving in from both array ends",
+        "Prefix sums followed by a range lookup"
+      ],
+      "answer": "Quickselect (partition-based selection)",
+      "explanation": "Partitioning discards one side each step, giving an expected linear total.",
+      "incorrectOptionExplanations": {
+        "Binary search directly on the unsorted array": "The array is unsorted.",
+        "Two pointers moving in from both array ends": "No sorted structure.",
+        "Prefix sums followed by a range lookup": "Not a range query."
+      },
+      "enabled": false
+    },
+    {
+      "id": "kt-insight-01",
+      "category": "main_insight",
+      "type": "free_recall",
+      "promptVariants": [
+        "Why is the k-th largest equal to the root of a size-k min-heap of the largest values?",
+        "Why does a counting array work in your solution and when does it not?"
+      ],
+      "answer": "A size-k min-heap keeps the k largest seen; its root is the smallest of them, which is exactly the k-th largest. Your counting array works because the value range is bounded (about 2*10^4 wide), so counts can be scanned from the top; with a huge range the array would be too large.",
+      "keyPoints": [
+        "Heap root = k-th largest",
+        "Counting needs a bounded range",
+        "Range = max - min + 1"
+      ],
+      "explanation": "Choose by constraints.",
+      "enabled": false
+    },
+    {
+      "id": "kt-time-01",
+      "category": "time_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Average time of quickselect: ___",
+        "Finding the k-th largest by partitioning takes ___ on average."
+      ],
+      "answer": "O(n)",
+      "explanation": "Each partition halves the expected remaining work.",
+      "acceptedAnswers": [
+        "linear"
+      ],
+      "enabled": false
+    },
+    {
+      "id": "kt-space-01",
+      "category": "space_complexity",
+      "type": "free_recall",
+      "promptVariants": [
+        "What is the space cost of your counting-array solution and of the heap solution?",
+        "Compare the memory of counting vs heap vs quickselect."
+      ],
+      "answer": "Counting: O(R) where R = max - min + 1. Heap: O(k). Quickselect: O(1) extra (in place) with O(log n) recursion if recursive.",
+      "keyPoints": [
+        "Counting O(R)",
+        "Heap O(k)",
+        "Quickselect O(1) extra"
+      ],
+      "explanation": "R must be bounded for counting.",
+      "code": "class Solution:\n    def findKthLargest(self, nums: List[int], k: int) -> int:\n        low, high = min(nums), max(nums)\n        arr = [0] * (high - low + 1)\n\n        for num in nums:\n            arr[num - low] += 1\n        \n        for i in range(len(arr) - 1, -1, -1):\n            k -= arr[i]\n            if k <= 0:\n                return i + low\n        \n        return -1\n",
+      "enabled": false
     }
   ],
   "generatedAt": "2026-10-01T14:22:47Z",
-  "canonicalCode": "class Solution:\n    def findKthLargest(self, nums: List[int], k: int) -> int:\n        target = len(nums) - k                   # index of the answer in sorted order\n        lo, hi = 0, len(nums) - 1\n        while True:\n            pivot = nums[random.randint(lo, hi)]  # a random pivot avoids the sorted-input worst case\n            lt, i, gt = lo, lo, hi                # three-way partition: < pivot | == pivot | > pivot\n            while i <= gt:\n                if nums[i] < pivot:\n                    nums[lt], nums[i] = nums[i], nums[lt]\n                    lt += 1\n                    i += 1\n                elif nums[i] > pivot:\n                    nums[gt], nums[i] = nums[i], nums[gt]\n                    gt -= 1\n                else:\n                    i += 1\n            if target < lt:                       # keep only the side that holds the target\n                hi = lt - 1\n            elif target > gt:\n                lo = gt + 1\n            else:\n                return nums[target]\n"
+  "canonicalCode": "class Solution:\n    def findKthLargest(self, nums: List[int], k: int) -> int:\n        heap = []                              # min-heap holding the k largest seen so far\n        for num in nums:\n            heapq.heappush(heap, num)          # O(log k): the heap never exceeds k + 1 items\n            if len(heap) > k:\n                heapq.heappop(heap)            # evict the smallest, keeping the k largest\n        return heap[0]                         # smallest of the top k = k-th largest\n"
 }
