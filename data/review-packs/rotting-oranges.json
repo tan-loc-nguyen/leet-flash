@@ -129,8 +129,8 @@
       "category": "edge_case",
       "type": "multiple_choice",
       "promptVariants": [
-        "What is the answer for a grid with no fresh oranges?",
-        "What about a fresh orange with no rotten orange anywhere?"
+        "What is the answer for (1) a grid with no fresh oranges, and (2) a grid with a fresh orange but no rotten orange anywhere?",
+        "What do you return for (1) a grid with no fresh oranges, and (2) a fresh orange with no rotten orange anywhere?"
       ],
       "options": [
         "0, and -1",
