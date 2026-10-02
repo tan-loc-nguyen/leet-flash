@@ -130,3 +130,13 @@ def test_set_topic_weight_script(paths, run):
     assert run("set_topic_weight.py", "greedy", "-1", check=False).returncode != 0
     assert run("set_topic_weight.py", "--reset").returncode == 0
     assert json.loads(paths.settings.read_text())["topicWeights"]["Binary search"] == 9
+
+
+def test_check_topic_labels_script(paths, run):
+    make_problem(paths, "ok-one", leetcode_id=1, tags=("Binary Search", "Array"))
+    make_pack(paths, "ok-one", patterns=("Binary Search",))
+    make_problem(paths, "odd-one", leetcode_id=2, tags=("Array", "Sorting"))
+    make_pack(paths, "odd-one", patterns=("Greedy",))                  # tags say sorting, my label says greedy
+    rows = json.loads(run("check_topic_labels.py", "--json").stdout)
+    assert [r["slug"] for r in rows] == ["odd-one"] and rows[0]["pack topic"] == "Greedy"
+    assert "odd-one" not in run("set_topic_weight.py").stdout

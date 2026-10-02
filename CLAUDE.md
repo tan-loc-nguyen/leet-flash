@@ -33,6 +33,8 @@ Python only (I interview in Python). Run everything with `uv run python scripts/
 | "Add a note to X: …" | `scripts/add_note.py <slug> "<text>"` |
 | "Show flagged cards" / "Review the flags" | `scripts/flag_card.py list` — show each flag with the full card; wait for my decision before changing anything |
 | "Fix flag-0003" / "Fix them" (after I approve) | edit the pack JSON, run `validate_review_packs.py`, then `scripts/flag_card.py resolve <flag-id> --note "<what changed>"` (`--dismiss` if the card was fine) |
+| "Show / change topic weights" ("I won't see X in the interview") | `scripts/set_topic_weight.py` (table) / `set_topic_weight.py "<topic>" <weight>`; weights are shares of reviews, see `docs/SRS.md` |
+| "Do the topic labels look right?" | `scripts/check_topic_labels.py` — lists problems where my pattern label and LeetCode's tags disagree; propose relabels, edit only after I approve |
 | "Rebuild state" | `scripts/rebuild_state.py` |
 | "Which problems have no packs?" | `scripts/list_missing_review_packs.py` |
 | (query) | `scripts/query_problems.py --topic graph --difficulty Medium --due --json` |

@@ -126,6 +126,28 @@ Selection of `dailyProblemTarget` problems:
 If more problems are urgent than the target, the plan notes it ("Due: 17 > target 10 …").
 `--all-due` raises the target to cover every urgent problem. Seeds make selection deterministic.
 
+### Topic weights (how likely a topic is to be asked)
+
+`settings.json → topicWeights` is a table of relative interview-likelihood weights over 16 topics (defaults in
+`config.DEFAULT_TOPIC_WEIGHTS`, merged per key; change with `scripts/set_topic_weight.py`). A problem's topic is its pack's
+**primary pattern** (first in `patterns`) mapped through `config.TOPIC_PATTERNS`; if the pack lists no pattern the
+LeetCode tags are used (`config.TOPIC_TAGS`: technique tags beat generic Array/Hash Table/String; DFS/BFS count as Tree
+when a tree tag is present, else Graph). Patterns that map to no row (Math, Design, Bit Manipulation, Trie, Queue,
+Divide and Conquer) are **Unlisted** and share `unlistedTopicWeight` (default 1).
+
+Weights are **shares**, not per-problem multipliers (those would only tilt a bank that is already array-heavy):
+
+* `factor(problem) = (topic weight / sum of weights of the topics present in the pool) / (topic problems / pool size)`,
+  capped at `SHARE_FACTOR_CAP` (6). Sampling a pool by `priority * factor` makes each topic's expected share of draws equal
+  its share of the weight table, whatever its size in the bank.
+* Applied to the non-urgent pool in daily mode (new / weak / retention), to weak mode (damped: factor ** 0.5), and to
+  cram / filtered / interview sampling. A pool is whatever the mode is choosing from, so filters work as usual.
+* **Overdue / due / recent-failure** problems are never scaled: they only get an additive nudge of
+  `URGENT_TOPIC_NUDGE * log2(weight / mean weight)`, clamped to ±`URGENT_TOPIC_NUDGE_CAP` (6), which cannot cross a bucket
+  (gaps are >= 15). A low-weight problem is therefore never starved: its overdue bonus keeps growing.
+* Weight 0 = filler only (chosen when nothing else is left). `review.py plan` prints the table with problem counts.
+* `scripts/check_topic_labels.py` cross-checks my pattern labels against LeetCode's tags and lists disagreements.
+
 ### Other modes
 
 * **weak** – ranks problems with history by `10 × (1 − recentAccuracy) + 4 × #weak categories + 2 × lapses (+3 if last score < 0.35)`.

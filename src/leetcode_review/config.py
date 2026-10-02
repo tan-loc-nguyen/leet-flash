@@ -100,6 +100,32 @@ DEFAULT_TOPIC_WEIGHTS = {
     "Greedy": 4,
     "Union-find": 4,
 }
+# Which review-pack pattern labels (schemas.PATTERN_TAXONOMY) belong to each weighted topic. A problem's topic is the
+# row of its pack's *primary* pattern (the first one listed): the technique you need to recognise in the interview.
+TOPIC_PATTERNS = {
+    "Hashtable / array": ("Array / Hashing", "Prefix Sum", "Matrix"),
+    "Dynamic programming": ("Dynamic Programming",),
+    "Heap / top-k": ("Heap / Priority Queue",),
+    "Binary search": ("Binary Search",),
+    "Graph DFS/BFS": ("Graph", "DFS", "BFS"),
+    "Two pointers": ("Two Pointers",),
+    "Tree DFS/BFS": ("Tree", "BST"),
+    "Sorting / intervals": ("Sorting", "Intervals"),
+    "Linked list": ("Linked List",),
+    "Sliding window": ("Sliding Window",),
+    "Monotonic stack / deque": ("Monotonic Stack",),
+    "Backtracking": ("Backtracking",),
+    "Topological sort": ("Topological Sort",),
+    "Plain stack": ("Stack",),
+    "Greedy": ("Greedy",),
+    "Union-find": ("Union Find",),
+}
+SHARE_FACTOR_CAP = 6.0  # a topic that is rare in the candidate pool is boosted at most this much
+
+# LeetCode tags per topic: used only (a) as a fallback for problems whose pack lists no pattern and (b) by
+# scripts/check_topic_labels.py to cross-check my pattern labels against LeetCode's own tags.
+# Rules: DFS/BFS tags count toward "Tree DFS/BFS" if the problem has a tree tag, else "Graph DFS/BFS"; the generic
+# row (Array, Hash Table, String, ...) only applies when no technique row matches; several rows -> highest weight.
 # Which LeetCode tags (Problem.tags) belong to each weighted topic. The table is a reference for how likely a topic
 # is to be asked; a problem's weight is derived from its tags by review/topics.py:
 #   * DFS/BFS tags count toward "Tree DFS/BFS" when the problem also has a tree tag, else "Graph DFS/BFS";

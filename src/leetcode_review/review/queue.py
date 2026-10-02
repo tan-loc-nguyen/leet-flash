@@ -137,13 +137,15 @@ def _select(
     return picked
 
 
-def _apply_topic_weight(cat: Catalog, e: QueueEntry) -> QueueEntry:
-    """Urgent problems get a small bucket-preserving nudge; the rest are scaled by the topic factor."""
-    if e.bucket in C.URGENT_BUCKETS:
-        e.priority += topics.urgent_nudge(cat, e.slug)
-    else:
-        e.priority *= topics.factor(cat, e.slug)
-    return e
+def _apply_topic_weights(cat: Catalog, entries: list[QueueEntry]) -> None:
+    """Urgent problems get a small bucket-preserving nudge; the rest are scaled by topic share (see review/topics.py)."""
+    rest = [e for e in entries if e.bucket not in C.URGENT_BUCKETS]
+    factors = topics.share_factors(cat, [e.slug for e in rest])
+    for e in entries:
+        if e.bucket in C.URGENT_BUCKETS:
+            e.priority += topics.urgent_nudge(cat, e.slug)
+        else:
+            e.priority *= factors[e.slug]
 
 
 # --------------------------------------------------------------------------- plans
@@ -160,7 +162,8 @@ def build_daily(cat: Catalog, target: int, rng: random.Random, f: Filters | None
     for slug in _candidates(cat, f or Filters()):
         c = classify(cat, slug, now)
         if c:
-            entries.append(_apply_topic_weight(cat, QueueEntry(slug, *c)))
+            entries.append(QueueEntry(slug, *c))
+    _apply_topic_weights(cat, entries)
     counts: dict[str, int] = {}
     for e in entries:
         counts[e.bucket] = counts.get(e.bucket, 0) + 1
@@ -188,7 +191,10 @@ def build_weak(cat: Catalog, target: int, rng: random.Random, f: Filters | None 
         if ps.last_score is not None and ps.last_score < C.DEMOTE_SCORE:
             w += 3
         if w > 0:
-            scored.append(QueueEntry(slug, "weak", (w + 1) * topics.factor(cat, slug) ** C.WEAK_MODE_TOPIC_EXPONENT))
+            scored.append(QueueEntry(slug, "weak", w + 1))
+    wf = topics.share_factors(cat, [e.slug for e in scored], exponent=C.WEAK_MODE_TOPIC_EXPONENT)
+    for e in scored:
+        e.priority *= wf[e.slug]
     chosen = _select(cat, sorted(scored, key=lambda e: -e.priority)[: target * 2], [], target, rng)
     plan = QueuePlan("weak", target, order_for_diversity(cat, chosen, rng), {"weak": len(scored)})
     if not scored:
@@ -199,6 +205,7 @@ def build_weak(cat: Catalog, target: int, rng: random.Random, f: Filters | None 
 def _sample_by_level(cat: Catalog, slugs: list[str], target: int, rng: random.Random,
                      *, boost_due: bool, recency: bool) -> list[QueueEntry]:
     entries = []
+    factors = topics.share_factors(cat, slugs)
     for slug in slugs:
         ps = cat.state.get(slug)
         w = 1.0 + (C.MAX_LEVEL - (ps.level if ps else 0)) / C.MAX_LEVEL  # lower mastery -> more likely
@@ -208,7 +215,7 @@ def _sample_by_level(cat: Catalog, slugs: list[str], target: int, rng: random.Ra
             w *= 3
         if recency and ps and ps.last_review:
             w *= 1 + min((cat.now - parse_iso(ps.last_review)).days, 60) / 30
-        entries.append(QueueEntry(slug, "sampled", w * topics.factor(cat, slug)))
+        entries.append(QueueEntry(slug, "sampled", w * factors[slug]))
     return order_for_diversity(cat, _select(cat, [], entries, target, rng), rng)
 
 

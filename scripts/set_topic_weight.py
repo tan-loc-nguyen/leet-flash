@@ -5,8 +5,9 @@
   set_topic_weight.py --unlisted 1.5           weight for patterns not in the table (Design, Trie, Math, Bit Manipulation, ...)
   set_topic_weight.py --reset                  restore the built-in table
 
-Higher weight = drawn more often for new / weak / retention / cram / interview sessions; overdue and due problems
-are only nudged, never dropped. Weight 0 keeps a topic out unless nothing else is left.
+A topic is a problem's primary pack pattern mapped to a row (config.TOPIC_PATTERNS). Weights are shares: reviews of
+new / weak / retention / cram / interview problems follow weight / total, whatever the size of each topic in the bank.
+Overdue and due problems are only nudged, never dropped. Weight 0 keeps a topic out unless nothing else is left.
 """
 
 import argparse
@@ -39,9 +40,9 @@ if a.unlisted is not None:
     raw["unlistedTopicWeight"] = a.unlisted
     changed = True
 if a.topic:
-    match = [t for t in C.TOPIC_TAGS if t.lower() == a.topic.lower()] or [t for t in C.TOPIC_TAGS if a.topic.lower() in t.lower()]
+    match = [t for t in C.TOPIC_PATTERNS if t.lower() == a.topic.lower()] or [t for t in C.TOPIC_PATTERNS if a.topic.lower() in t.lower()]
     if len(match) != 1 or a.weight is None or a.weight < 0:
-        sys.exit(f"ERROR: give one topic from: {', '.join(C.TOPIC_TAGS)} and a weight >= 0"
+        sys.exit(f"ERROR: give one topic from: {', '.join(C.TOPIC_PATTERNS)} and a weight >= 0"
                  + (f" ('{a.topic}' matched {len(match)})" if a.weight is not None else ""))
     raw.setdefault("topicWeights", dict(C.DEFAULT_TOPIC_WEIGHTS))[match[0]] = a.weight
     changed = True
@@ -52,9 +53,6 @@ if changed:
 cat = Catalog(paths, utcnow())
 slugs = [s for s in cat.problems if cat.has_cards(s)]
 rows = topics.summary(cat, slugs)
-total = sum(r["weight"] for r in rows if r["topic"] != "Unlisted") or 1
-print(f"{'topic (LeetCode tags)':28} {'weight':>6} {'share':>6} {'factor':>6} {'problems':>8}")
+print(f"{'topic':28} {'weight':>6} {'target share':>12} {'problems':>8} {'bank share':>10}")
 for r in rows:
-    share = "" if r["topic"] == "Unlisted" else f"{r['weight'] / total:.1%}"
-    print(f"{r['topic']:28} {r['weight']:6g} {share:>6} {r['factor']:6.2f} {r['problems']:8}")
-print("(a problem counts toward every topic its tags map to; its weight is the mean of those topics)")
+    print(f"{r['topic']:28} {r['weight']:6g} {r['targetShare']:12.1%} {r['problems']:8} {r['problems'] / (len(slugs) or 1):10.1%}")

@@ -168,46 +168,62 @@ def test_topic_weight_validation_and_per_key_override(paths):
         topics.effective_weights(load_settings(paths))
 
 
-def test_primary_pattern_decides_the_topic(paths, now):
+def test_topic_comes_from_primary_pattern_with_tag_fallback(paths, now):
     from leetcode_review.review import topics
-    make_problem(paths, "tree-dfs", tags=("Tree",))
-    make_pack(paths, "tree-dfs", patterns=("Tree", "DFS"))        # DFS alone would be "Graph DFS/BFS"
+    make_problem(paths, "tree-dfs", tags=("Tree", "Depth-First Search"))
+    make_pack(paths, "tree-dfs", patterns=("Tree", "DFS"))          # secondary DFS must not make it a graph problem
     make_problem(paths, "mystery", tags=("Weird",))
-    make_pack(paths, "mystery", patterns=("Weird",))
+    make_pack(paths, "mystery", patterns=("Weird",))                 # no row for this pattern -> unlisted
+    make_problem(paths, "no-pack-pattern", tags=("Array", "Sliding Window"))
+    make_pack(paths, "no-pack-pattern", patterns=())                 # fallback to tags: technique beats generic
     cat = Catalog(paths, now)
     assert topics.topic_of(cat, "tree-dfs") == ("Tree DFS/BFS", 6.0)
-    label, w = topics.topic_of(cat, "mystery")
-    assert label.startswith("Unlisted") and w == 1.0
-    assert topics.factor(cat, "tree-dfs") > topics.factor(cat, "mystery")
+    assert topics.topic_of(cat, "mystery") == ("Unlisted", 1.0)
+    assert topics.topic_of(cat, "no-pack-pattern") == ("Sliding window", 5.0)
+    assert topics.tag_rows(["Array", "Backtracking", "Bit Manipulation"]) == ["Backtracking"]
+    assert topics.tag_rows(["Tree", "Binary Tree", "Depth-First Search"]) == ["Tree DFS/BFS"]
+    assert topics.tag_rows(["Array", "Depth-First Search", "Matrix"]) == ["Graph DFS/BFS"]
+    assert topics.tag_rows(["Math"]) == []
 
 
-def test_new_problems_follow_topic_weights(paths, now):
-    specs = {f"arr-{i}": ("Array / Hashing", None) for i in range(15)}
-    specs.update({f"math-{i}": ("Math", None) for i in range(15)})        # unlisted: weight 1 vs 13
+def test_share_factors_follow_target_shares_not_bank_size(paths, now):
+    from leetcode_review.review import topics
+    specs = {f"arr-{i}": ("Array / Hashing", None) for i in range(30)}
+    specs.update({f"topo-{i}": ("Topological Sort", None) for i in range(3)})
+    setup_problems(paths, specs)
+    cat = Catalog(paths, now)
+    f = topics.share_factors(cat, list(cat.problems))
+    # target shares 13/17 and 4/17; pool shares 30/33 and 3/33
+    assert abs(f["arr-0"] - (13 / 17) / (30 / 33)) < 1e-9 and abs(f["topo-0"] - (4 / 17) / (3 / 33)) < 1e-9
+    assert f["topo-0"] > 2 * f["arr-0"]
+    expected_mass_topo = 3 * f["topo-0"] / (3 * f["topo-0"] + 30 * f["arr-0"])
+    assert abs(expected_mass_topo - 4 / 17) < 1e-9                  # draw mass equals the table share
+
+
+def test_new_problems_follow_topic_shares(paths, now):
+    specs = {f"arr-{i}": ("Array / Hashing", None) for i in range(30)}
+    specs.update({f"topo-{i}": ("Topological Sort", None) for i in range(3)})
     setup_problems(paths, specs)
     cat = Catalog(paths, now)
     picks = Counter()
-    for seed in range(300):
-        for e in build_daily(cat, 4, random.Random(seed)).entries:
+    for seed in range(400):
+        for e in build_daily(cat, 3, random.Random(seed)).entries:
             picks[e.slug.split("-")[0]] += 1
-    share = picks["arr"] / (picks["arr"] + picks["math"])
-    assert share > 0.85, picks                                           # expected ~13/14
+    share = picks["topo"] / (picks["topo"] + picks["arr"])
+    assert 0.17 < share < 0.30, picks               # table: 4/17 = 23.5% (3/33 = 9% without weighting)
 
 
 def test_urgent_problems_keep_bucket_order_and_are_never_dropped(paths, now, rng):
     setup_problems(paths, {
         "due-array": ("Array / Hashing", ps(now, due_in=0)),
-        "overdue-math": ("Math", ps(now, due_in=-3)),              # low weight but overdue: still first
+        "overdue-math": ("Math", ps(now, due_in=-3)),              # unlisted (low weight) but overdue: still first
         "due-math": ("Math", ps(now, due_in=0)),
     })
     cat = Catalog(paths, now)
-    slugs = [e.slug for e in build_daily(cat, 3, rng).entries]
-    assert set(slugs) == {"due-array", "overdue-math", "due-math"}     # nothing is dropped when it fits
+    assert {e.slug for e in build_daily(cat, 3, rng).entries} == {"due-array", "overdue-math", "due-math"}
     top = build_daily(cat, 1, random.Random(1)).entries[0]
-    assert top.slug == "overdue-math" and top.bucket == "overdue"      # nudge cannot cross a bucket
-    # within one bucket the higher-weight topic is preferred when only one slot is free
-    only_due = build_daily(cat, 2, random.Random(1)).entries
-    assert {e.slug for e in only_due} == {"overdue-math", "due-array"}
+    assert top.slug == "overdue-math" and top.bucket == "overdue"      # the nudge cannot cross a bucket
+    assert {e.slug for e in build_daily(cat, 2, random.Random(1)).entries} == {"overdue-math", "due-array"}
 
 
 def test_cram_and_weak_use_weights_too(paths, now):

@@ -71,7 +71,7 @@ data/state/review-state.json     current mastery / next review / weak categories
 data/state/review-history.jsonl  append-only audit log of every answer
 data/state/sessions.json         active/finished sessions (resume after interruptions)
 data/state/card-flags.jsonl      cards flagged as malformed (scripts/flag_card.py); never edits packs by itself
-data/state/settings.json         dailyProblemTarget (10), cardsPerProblem (4), showStatement (true), request delay
+data/state/settings.json         topicWeights (interview-likelihood table; scripts/set_topic_weight.py), dailyProblemTarget (10), cardsPerProblem (4), showStatement (true), request delay
 .local/leetcode_credentials.json secrets, gitignored
 ```
 
