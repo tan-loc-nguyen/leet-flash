@@ -610,5 +610,413 @@
         ]
       }
     }
+  },
+  "add-two-numbers-ii": {
+    "level": 0,
+    "lastReview": "2026-10-02T02:54:52Z",
+    "nextReview": "2026-10-02T02:54:52Z",
+    "recentAccuracy": 0.847,
+    "lastScore": 0.847,
+    "reviewCount": 1,
+    "lapses": 0,
+    "weakCategories": [],
+    "cardStats": {
+      "a2-insight-01": {
+        "category": "main_insight",
+        "seen": 1,
+        "correct": 0,
+        "partial": 1,
+        "failed": 0,
+        "incorrectStreak": 1,
+        "lastResult": "partial",
+        "lastSeenAt": "2026-10-02T02:52:03Z"
+      },
+      "a2-edge-01": {
+        "category": "edge_case",
+        "seen": 1,
+        "correct": 1,
+        "partial": 0,
+        "failed": 0,
+        "incorrectStreak": 0,
+        "lastResult": "correct",
+        "lastSeenAt": "2026-10-02T02:53:42Z"
+      },
+      "a2-time-01": {
+        "category": "time_complexity",
+        "seen": 1,
+        "correct": 1,
+        "partial": 0,
+        "failed": 0,
+        "incorrectStreak": 0,
+        "lastResult": "correct",
+        "lastSeenAt": "2026-10-02T02:54:16Z"
+      },
+      "a2-space-01": {
+        "category": "space_complexity",
+        "seen": 1,
+        "correct": 1,
+        "partial": 0,
+        "failed": 0,
+        "incorrectStreak": 0,
+        "lastResult": "correct",
+        "lastSeenAt": "2026-10-02T02:54:52Z"
+      }
+    },
+    "categoryStats": {
+      "main_insight": {
+        "seen": 1,
+        "correct": 0,
+        "partial": 1,
+        "failed": 0,
+        "incorrectStreak": 1,
+        "lastResult": "partial",
+        "lastSeenAt": "2026-10-02T02:52:03Z",
+        "recent": [
+          "partial"
+        ]
+      },
+      "edge_case": {
+        "seen": 1,
+        "correct": 1,
+        "partial": 0,
+        "failed": 0,
+        "incorrectStreak": 0,
+        "lastResult": "correct",
+        "lastSeenAt": "2026-10-02T02:53:42Z",
+        "recent": [
+          "correct"
+        ]
+      },
+      "time_complexity": {
+        "seen": 1,
+        "correct": 1,
+        "partial": 0,
+        "failed": 0,
+        "incorrectStreak": 0,
+        "lastResult": "correct",
+        "lastSeenAt": "2026-10-02T02:54:16Z",
+        "recent": [
+          "correct"
+        ]
+      },
+      "space_complexity": {
+        "seen": 1,
+        "correct": 1,
+        "partial": 0,
+        "failed": 0,
+        "incorrectStreak": 0,
+        "lastResult": "correct",
+        "lastSeenAt": "2026-10-02T02:54:52Z",
+        "recent": [
+          "correct"
+        ]
+      }
+    }
+  },
+  "divide-two-integers": {
+    "level": 0,
+    "lastReview": "2026-10-02T02:59:38Z",
+    "nextReview": "2026-10-02T02:59:38Z",
+    "recentAccuracy": 0.636,
+    "lastScore": 0.636,
+    "reviewCount": 1,
+    "lapses": 0,
+    "weakCategories": [],
+    "cardStats": {
+      "d2i-pattern-01": {
+        "category": "pattern",
+        "seen": 1,
+        "correct": 1,
+        "partial": 0,
+        "failed": 0,
+        "incorrectStreak": 0,
+        "lastResult": "correct",
+        "lastSeenAt": "2026-10-02T02:56:10Z"
+      },
+      "d2i-insight-01": {
+        "category": "main_insight",
+        "seen": 1,
+        "correct": 0,
+        "partial": 1,
+        "failed": 0,
+        "incorrectStreak": 1,
+        "lastResult": "partial",
+        "lastSeenAt": "2026-10-02T02:58:51Z"
+      },
+      "d2i-time-01": {
+        "category": "time_complexity",
+        "seen": 1,
+        "correct": 0,
+        "partial": 0,
+        "failed": 1,
+        "incorrectStreak": 1,
+        "lastResult": "failed",
+        "lastSeenAt": "2026-10-02T02:59:22Z"
+      },
+      "d2i-space-01": {
+        "category": "space_complexity",
+        "seen": 1,
+        "correct": 1,
+        "partial": 0,
+        "failed": 0,
+        "incorrectStreak": 0,
+        "lastResult": "correct",
+        "lastSeenAt": "2026-10-02T02:59:38Z"
+      }
+    },
+    "categoryStats": {
+      "pattern": {
+        "seen": 1,
+        "correct": 1,
+        "partial": 0,
+        "failed": 0,
+        "incorrectStreak": 0,
+        "lastResult": "correct",
+        "lastSeenAt": "2026-10-02T02:56:10Z",
+        "recent": [
+          "correct"
+        ]
+      },
+      "main_insight": {
+        "seen": 1,
+        "correct": 0,
+        "partial": 1,
+        "failed": 0,
+        "incorrectStreak": 1,
+        "lastResult": "partial",
+        "lastSeenAt": "2026-10-02T02:58:51Z",
+        "recent": [
+          "partial"
+        ]
+      },
+      "time_complexity": {
+        "seen": 1,
+        "correct": 0,
+        "partial": 0,
+        "failed": 1,
+        "incorrectStreak": 1,
+        "lastResult": "failed",
+        "lastSeenAt": "2026-10-02T02:59:22Z",
+        "recent": [
+          "failed"
+        ]
+      },
+      "space_complexity": {
+        "seen": 1,
+        "correct": 1,
+        "partial": 0,
+        "failed": 0,
+        "incorrectStreak": 0,
+        "lastResult": "correct",
+        "lastSeenAt": "2026-10-02T02:59:38Z",
+        "recent": [
+          "correct"
+        ]
+      }
+    }
+  },
+  "maximum-average-subarray-i": {
+    "level": 1,
+    "lastReview": "2026-10-02T03:13:29Z",
+    "nextReview": "2026-10-03T00:00:00Z",
+    "recentAccuracy": 1.0,
+    "lastScore": 1.0,
+    "reviewCount": 1,
+    "lapses": 0,
+    "weakCategories": [],
+    "cardStats": {
+      "mas-pattern-01": {
+        "category": "pattern",
+        "seen": 1,
+        "correct": 1,
+        "partial": 0,
+        "failed": 0,
+        "incorrectStreak": 0,
+        "lastResult": "correct",
+        "lastSeenAt": "2026-10-02T03:12:40Z"
+      },
+      "mas-edge-01": {
+        "category": "edge_case",
+        "seen": 1,
+        "correct": 1,
+        "partial": 0,
+        "failed": 0,
+        "incorrectStreak": 0,
+        "lastResult": "correct",
+        "lastSeenAt": "2026-10-02T03:12:56Z"
+      },
+      "mas-time-01": {
+        "category": "time_complexity",
+        "seen": 1,
+        "correct": 1,
+        "partial": 0,
+        "failed": 0,
+        "incorrectStreak": 0,
+        "lastResult": "correct",
+        "lastSeenAt": "2026-10-02T03:13:13Z"
+      },
+      "mas-space-01": {
+        "category": "space_complexity",
+        "seen": 1,
+        "correct": 1,
+        "partial": 0,
+        "failed": 0,
+        "incorrectStreak": 0,
+        "lastResult": "correct",
+        "lastSeenAt": "2026-10-02T03:13:29Z"
+      }
+    },
+    "categoryStats": {
+      "pattern": {
+        "seen": 1,
+        "correct": 1,
+        "partial": 0,
+        "failed": 0,
+        "incorrectStreak": 0,
+        "lastResult": "correct",
+        "lastSeenAt": "2026-10-02T03:12:40Z",
+        "recent": [
+          "correct"
+        ]
+      },
+      "edge_case": {
+        "seen": 1,
+        "correct": 1,
+        "partial": 0,
+        "failed": 0,
+        "incorrectStreak": 0,
+        "lastResult": "correct",
+        "lastSeenAt": "2026-10-02T03:12:56Z",
+        "recent": [
+          "correct"
+        ]
+      },
+      "time_complexity": {
+        "seen": 1,
+        "correct": 1,
+        "partial": 0,
+        "failed": 0,
+        "incorrectStreak": 0,
+        "lastResult": "correct",
+        "lastSeenAt": "2026-10-02T03:13:13Z",
+        "recent": [
+          "correct"
+        ]
+      },
+      "space_complexity": {
+        "seen": 1,
+        "correct": 1,
+        "partial": 0,
+        "failed": 0,
+        "incorrectStreak": 0,
+        "lastResult": "correct",
+        "lastSeenAt": "2026-10-02T03:13:29Z",
+        "recent": [
+          "correct"
+        ]
+      }
+    }
+  },
+  "fizz-buzz": {
+    "level": 1,
+    "lastReview": "2026-10-02T03:16:05Z",
+    "nextReview": "2026-10-03T00:00:00Z",
+    "recentAccuracy": 1.0,
+    "lastScore": 1.0,
+    "reviewCount": 1,
+    "lapses": 0,
+    "weakCategories": [],
+    "cardStats": {
+      "fb3-pattern-01": {
+        "category": "pattern",
+        "seen": 1,
+        "correct": 1,
+        "partial": 0,
+        "failed": 0,
+        "incorrectStreak": 0,
+        "lastResult": "correct",
+        "lastSeenAt": "2026-10-02T03:14:32Z"
+      },
+      "fb3-edge-01": {
+        "category": "edge_case",
+        "seen": 1,
+        "correct": 1,
+        "partial": 0,
+        "failed": 0,
+        "incorrectStreak": 0,
+        "lastResult": "correct",
+        "lastSeenAt": "2026-10-02T03:15:16Z"
+      },
+      "fb3-time-01": {
+        "category": "time_complexity",
+        "seen": 1,
+        "correct": 1,
+        "partial": 0,
+        "failed": 0,
+        "incorrectStreak": 0,
+        "lastResult": "correct",
+        "lastSeenAt": "2026-10-02T03:15:33Z"
+      },
+      "fb3-space-01": {
+        "category": "space_complexity",
+        "seen": 1,
+        "correct": 1,
+        "partial": 0,
+        "failed": 0,
+        "incorrectStreak": 0,
+        "lastResult": "correct",
+        "lastSeenAt": "2026-10-02T03:16:05Z"
+      }
+    },
+    "categoryStats": {
+      "pattern": {
+        "seen": 1,
+        "correct": 1,
+        "partial": 0,
+        "failed": 0,
+        "incorrectStreak": 0,
+        "lastResult": "correct",
+        "lastSeenAt": "2026-10-02T03:14:32Z",
+        "recent": [
+          "correct"
+        ]
+      },
+      "edge_case": {
+        "seen": 1,
+        "correct": 1,
+        "partial": 0,
+        "failed": 0,
+        "incorrectStreak": 0,
+        "lastResult": "correct",
+        "lastSeenAt": "2026-10-02T03:15:16Z",
+        "recent": [
+          "correct"
+        ]
+      },
+      "time_complexity": {
+        "seen": 1,
+        "correct": 1,
+        "partial": 0,
+        "failed": 0,
+        "incorrectStreak": 0,
+        "lastResult": "correct",
+        "lastSeenAt": "2026-10-02T03:15:33Z",
+        "recent": [
+          "correct"
+        ]
+      },
+      "space_complexity": {
+        "seen": 1,
+        "correct": 1,
+        "partial": 0,
+        "failed": 0,
+        "incorrectStreak": 0,
+        "lastResult": "correct",
+        "lastSeenAt": "2026-10-02T03:16:05Z",
+        "recent": [
+          "correct"
+        ]
+      }
+    }
   }
 }

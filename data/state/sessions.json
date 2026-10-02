@@ -1,12 +1,12 @@
 {
-  "activeSessionId": "daily-2026-10-02",
+  "activeSessionId": null,
   "sessions": {
     "daily-2026-10-02": {
       "id": "daily-2026-10-02",
       "mode": "daily",
-      "status": "active",
+      "status": "completed",
       "createdAt": "2026-10-02T01:52:46Z",
-      "updatedAt": "2026-10-02T02:45:19Z",
+      "updatedAt": "2026-10-02T03:16:05Z",
       "seed": 417099993,
       "target": 10,
       "filters": {},
@@ -546,38 +546,356 @@
         {
           "slug": "add-two-numbers-ii",
           "bucket": "new",
-          "status": "pending",
-          "cardIds": [],
-          "answers": [],
+          "status": "done",
+          "cardIds": [
+            "a2-insight-01",
+            "a2-edge-01",
+            "a2-time-01",
+            "a2-space-01"
+          ],
+          "answers": [
+            {
+              "cardId": "a2-insight-01",
+              "category": "main_insight",
+              "result": "partial",
+              "timestamp": "2026-10-02T02:52:03Z"
+            },
+            {
+              "cardId": "a2-edge-01",
+              "category": "edge_case",
+              "result": "correct",
+              "timestamp": "2026-10-02T02:53:42Z"
+            },
+            {
+              "cardId": "a2-time-01",
+              "category": "time_complexity",
+              "result": "correct",
+              "timestamp": "2026-10-02T02:54:16Z"
+            },
+            {
+              "cardId": "a2-space-01",
+              "category": "space_complexity",
+              "result": "correct",
+              "timestamp": "2026-10-02T02:54:52Z"
+            }
+          ],
           "hintLevel": 0,
-          "presented": {}
+          "presented": {
+            "a2-insight-01": {
+              "prompt": "Why is a reversal (or stack) required here but not in Add Two Numbers I?",
+              "options": null
+            },
+            "a2-edge-01": {
+              "prompt": "What is [7,2,4,3] + [5,6,4]?",
+              "options": [
+                {
+                  "label": "A",
+                  "text": "[7,8,0,7]"
+                },
+                {
+                  "label": "B",
+                  "text": "[7,8,0,6]"
+                },
+                {
+                  "label": "C",
+                  "text": "[1,2,0,7]"
+                },
+                {
+                  "label": "D",
+                  "text": "[7,7,0,7]"
+                }
+              ]
+            },
+            "a2-time-01": {
+              "prompt": "Time complexity: ___",
+              "options": null
+            },
+            "a2-space-01": {
+              "prompt": "What are the extra-space differences between reversing and stacks?",
+              "options": null
+            }
+          },
+          "outcome": {
+            "score": 0.847,
+            "outcome": "hold",
+            "levelBefore": 0,
+            "levelAfter": 0,
+            "nextReview": "2026-10-02T02:54:52Z"
+          }
         },
         {
           "slug": "divide-two-integers",
           "bucket": "new",
-          "status": "pending",
-          "cardIds": [],
-          "answers": [],
+          "status": "done",
+          "cardIds": [
+            "d2i-pattern-01",
+            "d2i-insight-01",
+            "d2i-time-01",
+            "d2i-space-01"
+          ],
+          "answers": [
+            {
+              "cardId": "d2i-pattern-01",
+              "category": "pattern",
+              "result": "correct",
+              "timestamp": "2026-10-02T02:56:10Z"
+            },
+            {
+              "cardId": "d2i-insight-01",
+              "category": "main_insight",
+              "result": "partial",
+              "timestamp": "2026-10-02T02:58:51Z"
+            },
+            {
+              "cardId": "d2i-time-01",
+              "category": "time_complexity",
+              "result": "failed",
+              "timestamp": "2026-10-02T02:59:22Z"
+            },
+            {
+              "cardId": "d2i-space-01",
+              "category": "space_complexity",
+              "result": "correct",
+              "timestamp": "2026-10-02T02:59:38Z"
+            }
+          ],
           "hintLevel": 0,
-          "presented": {}
+          "presented": {
+            "d2i-pattern-01": {
+              "prompt": "How do you divide quickly without the division operator?",
+              "options": [
+                {
+                  "label": "A",
+                  "text": "Subtract the divisor once and add 1 to the quotient"
+                },
+                {
+                  "label": "B",
+                  "text": "Subtract the dividend from the divisor repeatedly"
+                },
+                {
+                  "label": "C",
+                  "text": "Multiply the dividend by the inverse of the divisor"
+                },
+                {
+                  "label": "D",
+                  "text": "Subtract the largest divisor << k that fits; add 1 << k to the quotient"
+                }
+              ]
+            },
+            "d2i-insight-01": {
+              "prompt": "Why is -2^31 / -1 a special case and how is the sign handled?",
+              "options": null
+            },
+            "d2i-time-01": {
+              "prompt": "Time complexity: ___",
+              "options": null
+            },
+            "d2i-space-01": {
+              "prompt": "Space complexity (excluding the input): ___",
+              "options": null
+            }
+          },
+          "outcome": {
+            "score": 0.636,
+            "outcome": "hold",
+            "levelBefore": 0,
+            "levelAfter": 0,
+            "nextReview": "2026-10-02T02:59:38Z"
+          }
         },
         {
           "slug": "maximum-average-subarray-i",
           "bucket": "new",
-          "status": "pending",
-          "cardIds": [],
-          "answers": [],
+          "status": "done",
+          "cardIds": [
+            "mas-pattern-01",
+            "mas-edge-01",
+            "mas-time-01",
+            "mas-space-01"
+          ],
+          "answers": [
+            {
+              "cardId": "mas-pattern-01",
+              "category": "pattern",
+              "result": "correct",
+              "timestamp": "2026-10-02T03:12:40Z"
+            },
+            {
+              "cardId": "mas-edge-01",
+              "category": "edge_case",
+              "result": "correct",
+              "timestamp": "2026-10-02T03:12:56Z"
+            },
+            {
+              "cardId": "mas-time-01",
+              "category": "time_complexity",
+              "result": "correct",
+              "timestamp": "2026-10-02T03:13:13Z"
+            },
+            {
+              "cardId": "mas-space-01",
+              "category": "space_complexity",
+              "result": "correct",
+              "timestamp": "2026-10-02T03:13:29Z"
+            }
+          ],
           "hintLevel": 0,
-          "presented": {}
+          "presented": {
+            "mas-pattern-01": {
+              "prompt": "Which technique avoids recomputing the sum of every window?",
+              "options": [
+                {
+                  "label": "A",
+                  "text": "Keep a heap of the k largest windows seen so far"
+                },
+                {
+                  "label": "B",
+                  "text": "Add the new element and subtract the one that leaves the window"
+                },
+                {
+                  "label": "C",
+                  "text": "Binary search on the best possible average value"
+                },
+                {
+                  "label": "D",
+                  "text": "Sort the array and take the k largest elements"
+                }
+              ]
+            },
+            "mas-edge-01": {
+              "prompt": "What does the algorithm return for nums = [5] and k = 1?",
+              "options": [
+                {
+                  "label": "A",
+                  "text": "0.0: there is no full window yet"
+                },
+                {
+                  "label": "B",
+                  "text": "An error: there is no element to subtract"
+                },
+                {
+                  "label": "C",
+                  "text": "5.0: the only window is the single element"
+                },
+                {
+                  "label": "D",
+                  "text": "1.0: the average is divided by k twice"
+                }
+              ]
+            },
+            "mas-time-01": {
+              "prompt": "Time complexity: ___",
+              "options": null
+            },
+            "mas-space-01": {
+              "prompt": "Space complexity (excluding the input): ___",
+              "options": null
+            }
+          },
+          "outcome": {
+            "score": 1.0,
+            "outcome": "promote",
+            "levelBefore": 0,
+            "levelAfter": 1,
+            "nextReview": "2026-10-03T00:00:00Z"
+          }
         },
         {
           "slug": "fizz-buzz",
           "bucket": "new",
-          "status": "pending",
-          "cardIds": [],
-          "answers": [],
+          "status": "done",
+          "cardIds": [
+            "fb3-pattern-01",
+            "fb3-edge-01",
+            "fb3-time-01",
+            "fb3-space-01"
+          ],
+          "answers": [
+            {
+              "cardId": "fb3-pattern-01",
+              "category": "pattern",
+              "result": "correct",
+              "timestamp": "2026-10-02T03:14:32Z"
+            },
+            {
+              "cardId": "fb3-edge-01",
+              "category": "edge_case",
+              "result": "correct",
+              "timestamp": "2026-10-02T03:15:16Z"
+            },
+            {
+              "cardId": "fb3-time-01",
+              "category": "time_complexity",
+              "result": "correct",
+              "timestamp": "2026-10-02T03:15:33Z"
+            },
+            {
+              "cardId": "fb3-space-01",
+              "category": "space_complexity",
+              "result": "correct",
+              "timestamp": "2026-10-02T03:16:05Z"
+            }
+          ],
           "hintLevel": 0,
-          "presented": {}
+          "presented": {
+            "fb3-pattern-01": {
+              "prompt": "Why must the divisible-by-15 case be tested first in an if/elif chain?",
+              "options": [
+                {
+                  "label": "A",
+                  "text": "The modulo operator is only valid when the divisor is 15"
+                },
+                {
+                  "label": "B",
+                  "text": "Python evaluates the last branch of an elif chain first"
+                },
+                {
+                  "label": "C",
+                  "text": "A multiple of 15 also passes the 3 test, so it would print only 'Fizz'"
+                },
+                {
+                  "label": "D",
+                  "text": "15 is larger than 3 and 5, so larger numbers must come first"
+                }
+              ]
+            },
+            "fb3-edge-01": {
+              "prompt": "What is the output for n = 15?",
+              "options": [
+                {
+                  "label": "A",
+                  "text": "The last item is 'FizzBuzz'"
+                },
+                {
+                  "label": "B",
+                  "text": "The last item is '15'"
+                },
+                {
+                  "label": "C",
+                  "text": "The last item is 'Buzz'"
+                },
+                {
+                  "label": "D",
+                  "text": "The last item is 'Fizz'"
+                }
+              ]
+            },
+            "fb3-time-01": {
+              "prompt": "Time complexity: ___",
+              "options": null
+            },
+            "fb3-space-01": {
+              "prompt": "Space complexity (excluding the input): ___",
+              "options": null
+            }
+          },
+          "outcome": {
+            "score": 1.0,
+            "outcome": "promote",
+            "levelBefore": 0,
+            "levelAfter": 1,
+            "nextReview": "2026-10-03T00:00:00Z"
+          }
         }
       ]
     }
