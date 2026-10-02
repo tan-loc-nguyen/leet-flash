@@ -139,7 +139,7 @@
       "incorrectOptionExplanations": {
         "'105'": "That removes the first two digits, which are not the ones that shrink the number most.",
         "'005'": "That leaves the leading zeros in place; they must be stripped.",
-        "'015'": "That removes the 2 and the final 5-side zero, not the descents."
+        "'015'": "That removes the 2 and the second 0 instead of the 1, which is the digit that causes the descent."
       }
     }
   ],

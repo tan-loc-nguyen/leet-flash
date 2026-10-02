@@ -95,8 +95,8 @@
       "category": "edge_case",
       "type": "multiple_choice",
       "promptVariants": [
-        "Do [0,0,2,2] and [2,2,4,4] (touching only at the corner (2, 2)) overlap?",
-        "What about [0,0,3,3] and [1,1,2,2] (one inside the other)?"
+        "Do [0,0,4,4] and [4,4,6,6] (touching only at the corner (4, 4)) overlap?",
+        "What about [0,0,5,5] and [1,1,4,4] (one inside the other)?"
       ],
       "options": [
         "No, and yes",
