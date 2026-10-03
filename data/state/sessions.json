@@ -904,7 +904,7 @@
       "mode": "daily",
       "status": "active",
       "createdAt": "2026-10-03T12:00:20Z",
-      "updatedAt": "2026-10-03T12:06:00Z",
+      "updatedAt": "2026-10-03T12:06:51Z",
       "seed": 815821225,
       "target": 10,
       "filters": {},
@@ -932,6 +932,12 @@
               "category": "main_insight",
               "result": "correct",
               "timestamp": "2026-10-03T12:06:00Z"
+            },
+            {
+              "cardId": "d2i-edge-01",
+              "category": "edge_case",
+              "result": "correct",
+              "timestamp": "2026-10-03T12:06:51Z"
             }
           ],
           "hintLevel": 0,

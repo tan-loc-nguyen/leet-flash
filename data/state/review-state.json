@@ -762,6 +762,16 @@
         "incorrectStreak": 0,
         "lastResult": "correct",
         "lastSeenAt": "2026-10-02T02:59:38Z"
+      },
+      "d2i-edge-01": {
+        "category": "edge_case",
+        "seen": 1,
+        "correct": 1,
+        "partial": 0,
+        "failed": 0,
+        "incorrectStreak": 0,
+        "lastResult": "correct",
+        "lastSeenAt": "2026-10-03T12:06:51Z"
       }
     },
     "categoryStats": {
@@ -811,6 +821,18 @@
         "incorrectStreak": 0,
         "lastResult": "correct",
         "lastSeenAt": "2026-10-02T02:59:38Z",
+        "recent": [
+          "correct"
+        ]
+      },
+      "edge_case": {
+        "seen": 1,
+        "correct": 1,
+        "partial": 0,
+        "failed": 0,
+        "incorrectStreak": 0,
+        "lastResult": "correct",
+        "lastSeenAt": "2026-10-03T12:06:51Z",
         "recent": [
           "correct"
         ]
