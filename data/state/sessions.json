@@ -904,7 +904,7 @@
       "mode": "daily",
       "status": "active",
       "createdAt": "2026-10-03T12:00:20Z",
-      "updatedAt": "2026-10-03T12:16:39Z",
+      "updatedAt": "2026-10-03T12:17:08Z",
       "seed": 815821225,
       "target": 10,
       "filters": {},
@@ -1090,7 +1090,7 @@
         {
           "slug": "add-two-numbers-ii",
           "bucket": "overdue",
-          "status": "in_progress",
+          "status": "done",
           "cardIds": [
             "a2-pattern-01",
             "a2-insight-01",
@@ -1115,6 +1115,12 @@
               "category": "edge_case",
               "result": "correct",
               "timestamp": "2026-10-03T12:16:39Z"
+            },
+            {
+              "cardId": "a2-time-01",
+              "category": "time_complexity",
+              "result": "correct",
+              "timestamp": "2026-10-03T12:17:07Z"
             }
           ],
           "hintLevel": 0,
@@ -1169,16 +1175,62 @@
               "prompt": "Complete the statement: Time complexity: ___",
               "options": null
             }
+          },
+          "outcome": {
+            "score": 0.854,
+            "outcome": "promote",
+            "levelBefore": 0,
+            "levelAfter": 1,
+            "nextReview": "2026-10-04T00:00:00Z"
           }
         },
         {
           "slug": "rotting-oranges",
           "bucket": "due",
-          "status": "pending",
-          "cardIds": [],
+          "status": "in_progress",
+          "cardIds": [
+            "ro2-pattern-01",
+            "ro2-insight-01",
+            "ro2-code-01",
+            "ro2-time-01"
+          ],
           "answers": [],
           "hintLevel": 0,
-          "presented": {}
+          "presented": {
+            "ro2-pattern-01": {
+              "prompt": "What does one BFS level represent?",
+              "options": [
+                {
+                  "label": "A",
+                  "text": "DFS from the first rotten orange found in the grid"
+                },
+                {
+                  "label": "B",
+                  "text": "Binary search on time with a check for each guess"
+                },
+                {
+                  "label": "C",
+                  "text": "Sorting oranges by distance and spreading in order"
+                },
+                {
+                  "label": "D",
+                  "text": "Multi-source BFS, where one level equals one minute"
+                }
+              ]
+            },
+            "ro2-insight-01": {
+              "prompt": "How do you detect the impossible case?",
+              "options": null
+            },
+            "ro2-code-01": {
+              "prompt": "Why the loop condition `while queue and fresh > 0` and where is `time` incremented?",
+              "options": null
+            },
+            "ro2-time-01": {
+              "prompt": "Complete the statement: Time complexity: ___",
+              "options": null
+            }
+          }
         },
         {
           "slug": "insert-delete-getrandom-o1",
