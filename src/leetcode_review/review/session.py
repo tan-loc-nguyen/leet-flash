@@ -495,7 +495,10 @@ class ReviewEngine:
         prob["hintLevel"] = level + 1
         self._commit(data, sess)
         kind, content = ladder[level]
-        return {"hintNumber": level + 1, "of": len(ladder), "kind": kind, "content": content}
+        out = {"hintNumber": level + 1, "of": len(ladder), "kind": kind, "content": content}
+        if self._current_card(prob, cat).rubric is not None:
+            out["warning"] = "The recognition card is open: after a hint the best it can score is Partial."
+        return out
 
     # ------------------------------------------------------------------ status / finish
     def status(self) -> dict:

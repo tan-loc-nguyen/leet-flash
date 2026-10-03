@@ -78,7 +78,7 @@
     },
     {
       "id": "mc3-pattern-01",
-      "category": "pattern",
+      "category": "main_insight",
       "type": "multiple_choice",
       "promptVariants": [
         "When can a chunk end at index i?",

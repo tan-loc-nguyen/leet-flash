@@ -23,6 +23,7 @@ Python only (I interview in Python). Run everything with `uv run python scripts/
 | "Add problem <slug/url>" | `scripts/add_problem.py <slug>` |
 | "Generate review packs for new problems" | follow *Pack generation* below |
 | "Start today's review" / "Give me 10 problems" | `review.py plan`, then `review.py start --mode daily [--target N] [--all-due]` |
+| "Drill my patterns" / "Pattern drill" | `review.py start --mode drill --target 25 [--list unsolved-amazon] [--topic …]`: only the recognition question per problem, no levels or schedules change |
 | "Quiz me on my weak problems" | `review.py start --mode weak` (optionally `--focus-category space_complexity`) |
 | "Review Graph and DP problems" | `review.py start --mode filtered --topic graph --topic dp` |
 | "Cram my solved list" | `review.py start --mode cram --list solved --target 20` (cram ignores due dates; still records) |
@@ -54,19 +55,20 @@ When the user mentions a target ("10 problems"), pass `--target`; otherwise the 
    occasional strong/mastered, with weighted randomness and pattern diversity. Do not re-sort it yourself.
    If `candidateCounts`/notes say nothing is due, say so and suggest cram/weak/interview.
 2. `review.py start …` → announce the plan briefly (count, difficulty mix). **Never name patterns or techniques** here
-   or anywhere before I answer the problem's pattern card: recognising the pattern *is* the exercise. Then loop:
+   or anywhere before I answer the problem's recognition question: recognising the technique *is* the exercise. Then loop:
 3. `review.py next` → returns the current question (also how you **resume** an interrupted session). Show:
    ```
    Problem 3/10 — 3Sum            (print once per problem; include notes if present)
    Medium
 
    <problem.statement, condensed to the task + 1 example, only when present (first question of a problem)>
+   Constraints: <problem.constraints, verbatim, one per line, only when present>
 
-   Question 1/4
+   Question 1/5
    <prompt>
    A. …  B. …
    ```
-   `problem.patterns` is `null` until the pattern card is answered (the engine enforces it): do not show, hint at, or
+   `problem.patterns` is `null` until the recognition question is answered (the engine enforces it): do not show, hint at, or
    paraphrase it. When the `answer` result contains `patterns`, show them once, in the feedback ("Patterns: …").
    Always show `problem.statement` when it is present, so I know which problem a question refers to (it is
    omitted only if `settings.json → showStatement` is false, i.e. I asked for recall-from-title practice).
@@ -74,11 +76,27 @@ When the user mentions a target ("10 problems"), pass `--target`; otherwise the 
    come last in a problem's question order (the engine sorts them there; never reorder). They return `solutionCode`
    (`label` + `code`): always show it as a Python block under its label ("Canonical solution" or "Your accepted
    solution") and ask me to *derive* the answer from the code (loops, recursion, data structures), not recall it.
+   **`problem.constraints` are shown verbatim** with the statement: they are often the clue (`n ≤ 20`, "sorted", "linear
+   time") the first question is about, so never trim or paraphrase them away.
    Ask exactly one question and **wait**. Never reveal the answer first.
 4. Grade by type, then call `answer`:
    * **multiple_choice** → `answer --choice B` (letter or text). Auto-graded.
    * **fill_blank** → `answer --text "<user's answer>"`. If it returns `needsJudgment`, compare with the reference
      (be generous with equivalent phrasing) and call `answer --result failed|partial|correct`.
+   * **The recognition card** (category `pattern`, type `free_recall`, **the first question of every problem**; asks
+     "which technique solves this, and what in the statement or constraints points to it?"). Wait for my typed answer
+     (no options, never hint at the technique), then call `reveal` and read its `rubric`, and grade it with
+     `answer --text "<my answer, as typed>" --technique accepted|valid|wrong --clue valid|missing|wrong` — the engine
+     derives the result, you only judge the two parts, strictly and by the rubric, never generously:
+     * technique `accepted` = the rubric `technique` or one of its `aliases`; `valid` = another approach that works but
+       is weaker (the rubric's `alsoValid`, or any correct brute force); `wrong` = anything else, including naming only
+       a topic ("tree", "array") or "I don't know".
+     * clue `valid` = I name a property of the statement or constraints of one of the rubric's `clueTypes` that is really
+       there; `missing` = no clue; `wrong` = a property that is absent or does not point to the technique.
+     * Correct = accepted + valid clue; Partial = accepted without a valid clue, or a valid weaker technique; Failed = wrong.
+     After a hint on the problem the engine caps this card at Partial (warn me before giving the hint).
+     In the feedback show the reference technique and clue, `alsoValid` with its notes, then the coarse `patterns`.
+     Never grade on how plausible the answer sounds: if the technique is not the rubric's, it is not `accepted`.
    * **free_recall / code_question** → do **not** reveal beforehand. Call `reveal` for the reference answer and
      `keyPoints`, compare, then `answer --result …`. *Correct* = key ideas present; *Partial* = right direction but
      missing/incorrect important detail; *Failed* = wrong or absent. **If unsure, choose Partial.**
@@ -97,6 +115,7 @@ When the user mentions a target ("10 problems"), pass `--target`; otherwise the 
    approach only after. Do not make me solve it.
 8. **Hints** ("give me a hint") → `review.py hint`, one step at a time:
    summary → pattern → invariant → main insight → approaches → my previous Python. Do not skip ahead.
+   A hint taken while the recognition question is open caps that question at Partial (the result of `hint` says so).
 9. `skip` drops the current problem without scheduling; `abort` abandons the session. Answers already given stay recorded.
 
 When showing my own solution, **clearly distinguish "Your accepted approach" from the "Canonical / optimal approach"**
@@ -124,7 +143,10 @@ misleading explanation, garbled text, a card that does not fit the problem state
 
 Read `docs/REVIEW_PACK_GUIDE.md` first. Steps: `list_missing_review_packs.py --json` → for each problem read
 `data/problems/<slug>.json` (statement, constraints, tags, `latestSubmission.code`) → `scaffold_review_pack.py <slug>` →
-write the full pack (approaches with complexities, `personalSolution` if my code differs, a tested `canonicalCode`
+write the full pack (approaches with complexities, **exactly one recognition card** (id `recog-<slug>`, category `pattern`,
+type `free_recall`, one of the fixed prompts from `RECOGNITION_PROMPTS`, with a `rubric`: the *specific* `technique` (never
+a topic like "Tree"), `aliases`, `alsoValid` weaker alternatives with notes, `clueTypes` from `CLUE_TYPES`, one-sentence
+`clue` naming the real clue in this problem's statement/constraints without stating a complexity; see the pack guide), `personalSolution` if my code differs, a tested `canonicalCode`
 (clean Python for the canonical approach, LeetCode signature, short comments marking what drives the cost; run it against
 the statement's examples before storing), 8–12 high-value cards with stable ids,
 2–3 prompt variants, distractor explanations) → `validate_review_packs.py` until clean. Generate in batches and report the count.

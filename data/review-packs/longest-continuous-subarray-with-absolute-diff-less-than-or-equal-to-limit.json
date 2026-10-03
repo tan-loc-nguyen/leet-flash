@@ -89,7 +89,7 @@
     },
     {
       "id": "lc-pattern-01",
-      "category": "pattern",
+      "category": "data_structure",
       "type": "multiple_choice",
       "promptVariants": [
         "Which structure gives the window max and min in O(1) amortised?",

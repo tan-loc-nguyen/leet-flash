@@ -82,7 +82,7 @@
     },
     {
       "id": "sr3-pattern-01",
-      "category": "pattern",
+      "category": "main_insight",
       "type": "multiple_choice",
       "promptVariants": [
         "How does binary search work on a rotated sorted array?",

@@ -110,7 +110,8 @@
         "Sort both numbers and then add them with a two-pointer merge": "Digit order matters.",
         "Sliding window across the digits keeping a running sum of the window": "No window.",
         "Binary search on the value of the sum, checking each candidate": "The sum is computed directly."
-      }
+      },
+      "enabled": false
     },
     {
       "id": "aa-insight-01",

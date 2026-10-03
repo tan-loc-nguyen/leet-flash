@@ -75,7 +75,7 @@
     },
     {
       "id": "ma-pattern-01",
-      "category": "pattern",
+      "category": "main_insight",
       "type": "multiple_choice",
       "promptVariants": [
         "How does the DFS compute an island's area?",

@@ -77,7 +77,7 @@
     },
     {
       "id": "mad-pattern-01",
-      "category": "pattern",
+      "category": "main_insight",
       "type": "multiple_choice",
       "promptVariants": [
         "Why does sorting reduce the problem to adjacent elements?",

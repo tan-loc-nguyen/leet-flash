@@ -75,7 +75,7 @@
     },
     {
       "id": "vip-pattern-01",
-      "category": "pattern",
+      "category": "main_insight",
       "type": "multiple_choice",
       "promptVariants": [
         "How do the validity rules differ between IPv4 and IPv6 parts?",

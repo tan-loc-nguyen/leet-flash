@@ -118,7 +118,7 @@
         "Two pointers from both ends": "That gives O(n); it does not exploit sorted order for halving.",
         "Heap": "A heap does not support efficient arbitrary lookup."
       },
-      "enabled": true
+      "enabled": false
     },
     {
       "id": "binary-search-invariant-01",

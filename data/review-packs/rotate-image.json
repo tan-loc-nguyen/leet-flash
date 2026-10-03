@@ -87,7 +87,7 @@
     },
     {
       "id": "ri2-pattern-01",
-      "category": "pattern",
+      "category": "main_insight",
       "type": "multiple_choice",
       "promptVariants": [
         "Which two-step operation rotates a matrix 90 degrees clockwise?",

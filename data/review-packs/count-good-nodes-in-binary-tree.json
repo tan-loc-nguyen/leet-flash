@@ -40,8 +40,42 @@
   "edgeCases": [],
   "cards": [
     {
-      "id": "cg-pattern-01",
+      "id": "recog-count-good-nodes-in-binary-tree",
       "category": "pattern",
+      "type": "free_recall",
+      "promptVariants": [
+        "Which technique solves this problem, and what in the statement or constraints points to it?",
+        "Name the technique you would use here and the clue in the problem that tells you.",
+        "What approach fits this problem, and which part of the statement gives it away?"
+      ],
+      "answer": "DFS carrying the maximum value seen on the path from the root. Clue: Whether a node is good depends only on the maximum along the path from the root, so pass that maximum down as you traverse.",
+      "keyPoints": [
+        "Whether a node is good depends only on the maximum along the path from the root, so pass that maximum down as you traverse."
+      ],
+      "explanation": "A node is good if it is at least the path maximum, and that maximum can be carried down in constant time per node.",
+      "rubric": {
+        "technique": "DFS carrying the maximum value seen on the path from the root",
+        "aliases": [
+          "preorder dfs with the max so far",
+          "dfs with a path maximum",
+          "carry the running max",
+          "bfs with the max"
+        ],
+        "alsoValid": [
+          {
+            "name": "Walk up from each node to check its path",
+            "note": "repeats the path for every node"
+          }
+        ],
+        "clueTypes": [
+          "tree_structure"
+        ],
+        "clue": "Whether a node is good depends only on the maximum along the path from the root, so pass that maximum down as you traverse."
+      }
+    },
+    {
+      "id": "cg-pattern-01",
+      "category": "main_insight",
       "type": "multiple_choice",
       "promptVariants": [
         "What state should DFS pass down to decide whether a node is 'good'?",

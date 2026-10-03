@@ -118,7 +118,8 @@
         "Dynamic programming": "No subproblem structure.",
         "Sliding window": "Not a subarray problem.",
         "Two pointers on a sorted array": "There is no array."
-      }
+      },
+      "enabled": false
     },
     {
       "id": "sx-insight-01",

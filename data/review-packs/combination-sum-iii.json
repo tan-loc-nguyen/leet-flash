@@ -78,7 +78,7 @@
     },
     {
       "id": "cs3x-pattern-01",
-      "category": "pattern",
+      "category": "main_insight",
       "type": "multiple_choice",
       "promptVariants": [
         "How do you ensure each digit is used at most once and combinations are unique?",

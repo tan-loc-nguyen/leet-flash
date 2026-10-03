@@ -87,7 +87,7 @@
     },
     {
       "id": "ob-pattern-01",
-      "category": "pattern",
+      "category": "implementation_detail",
       "type": "multiple_choice",
       "promptVariants": [
         "What does n & (n - 1) do?",

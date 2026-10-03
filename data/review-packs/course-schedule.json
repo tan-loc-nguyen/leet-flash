@@ -44,8 +44,38 @@
   "edgeCases": [],
   "cards": [
     {
-      "id": "cs3-pattern-01",
+      "id": "recog-course-schedule",
       "category": "pattern",
+      "type": "free_recall",
+      "promptVariants": [
+        "Which technique solves this problem, and what in the statement or constraints points to it?",
+        "Name the technique you would use here and the clue in the problem that tells you.",
+        "What approach fits this problem, and which part of the statement gives it away?"
+      ],
+      "answer": "Topological sort (Kahn's algorithm) or DFS cycle detection on the prerequisite graph. Clue: Prerequisites form a directed graph, and all courses can be finished exactly when it has no cycle, so check for a cycle by trying to order the courses topologically.",
+      "keyPoints": [
+        "Prerequisites form a directed graph, and all courses can be finished exactly when it has no cycle, so check for a cycle by trying to order the courses topologically."
+      ],
+      "explanation": "A topological order exists if and only if the graph is acyclic, so processing courses whose prerequisites are done tells you whether all can be taken.",
+      "rubric": {
+        "technique": "Topological sort (Kahn's algorithm) or DFS cycle detection on the prerequisite graph",
+        "aliases": [
+          "topological sort",
+          "kahn's algorithm",
+          "cycle detection",
+          "indegree bfs",
+          "dfs three colours"
+        ],
+        "alsoValid": [],
+        "clueTypes": [
+          "dependencies_graph"
+        ],
+        "clue": "Prerequisites form a directed graph, and all courses can be finished exactly when it has no cycle, so check for a cycle by trying to order the courses topologically."
+      }
+    },
+    {
+      "id": "cs3-pattern-01",
+      "category": "main_insight",
       "type": "multiple_choice",
       "promptVariants": [
         "What graph property decides whether all courses can be finished?",

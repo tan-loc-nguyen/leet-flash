@@ -76,7 +76,7 @@
     },
     {
       "id": "r10-pattern-01",
-      "category": "pattern",
+      "category": "main_insight",
       "type": "multiple_choice",
       "promptVariants": [
         "How do two rand7() calls become a uniform value in 1..49?",

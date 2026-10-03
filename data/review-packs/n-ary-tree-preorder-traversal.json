@@ -43,8 +43,37 @@
   "edgeCases": [],
   "cards": [
     {
-      "id": "np-pattern-01",
+      "id": "recog-n-ary-tree-preorder-traversal",
       "category": "pattern",
+      "type": "free_recall",
+      "promptVariants": [
+        "Which technique solves this problem, and what in the statement or constraints points to it?",
+        "Name the technique you would use here and the clue in the problem that tells you.",
+        "What approach fits this problem, and which part of the statement gives it away?"
+      ],
+      "answer": "DFS visiting the node and then each child in order (recursively or with a stack). Clue: The order is defined by the problem (the node before its children), so implement that DFS order.",
+      "keyPoints": [
+        "The order is defined by the problem (the node before its children), so implement that DFS order."
+      ],
+      "explanation": "Recording the node and then recursing into every child gives the preorder directly.",
+      "rubric": {
+        "technique": "DFS visiting the node and then each child in order (recursively or with a stack)",
+        "aliases": [
+          "preorder dfs",
+          "recursive dfs",
+          "iterative with a stack"
+        ],
+        "alsoValid": [],
+        "clueTypes": [
+          "tree_structure",
+          "direct_simulation"
+        ],
+        "clue": "The order is defined by the problem (the node before its children), so implement that DFS order."
+      }
+    },
+    {
+      "id": "np-pattern-01",
+      "category": "main_insight",
       "type": "multiple_choice",
       "promptVariants": [
         "How do you generalise binary preorder to N children?",

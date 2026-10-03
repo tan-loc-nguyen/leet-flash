@@ -91,7 +91,8 @@
         "Sliding window over the pile sizes in their given order": "No subarray.",
         "Greedy sorting of the piles then a single scan over them": "Order of piles does not matter for the time calculation.",
         "Heap simulation of every single hour, one hour at a time": "Unneeded and slower."
-      }
+      },
+      "enabled": false
     },
     {
       "id": "kb-insight-01",

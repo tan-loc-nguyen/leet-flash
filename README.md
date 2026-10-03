@@ -7,6 +7,8 @@ and schedules what to review next. All memory is in transparent JSON / JSONL fil
 
 * Short recall questions instead of re-solving whole problems: pattern, core insight, data structure,
   invariants, complexity, edge cases, alternatives, and reasoning about *your own* Python solution.
+* Every problem starts with a free-recall **recognition question**: you type which technique solves the problem and what in
+  the statement or constraints points to it, graded against a per-problem rubric (`drill` mode asks only that question).
 * Problem-level spaced repetition (levels 0–6, 0–60 days) with weak-category tracking.
 * Python-only, single user, local-only. See `CLAUDE.md` for how the agent behaves.
 
@@ -38,6 +40,7 @@ Import my LeetCode problems.            Start today's review.
 Sync LeetCode.                          Give me 10 problems today.
 Generate review packs for new problems. Quiz me on my weak problems.
 Review Dynamic Programming and Graph.   Interview mode: 8 Medium problems.
+Drill my patterns.                      Review my Unsolved Amazon list.
 Cram my solved list.                          What am I weakest at?
 Add a note to 3Sum: ...                 Add this card to Minimum Window Substring: ...
 ```

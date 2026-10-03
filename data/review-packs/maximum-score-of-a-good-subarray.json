@@ -108,7 +108,8 @@
         "Kadane's maximum subarray (running sum with reset)": "That maximises a sum, not min x length.",
         "Sliding window maximum (monotonic deque of indices)": "Fixed-size windows; unrelated objective.",
         "Longest increasing subsequence (patience sorting)": "Unrelated."
-      }
+      },
+      "enabled": false
     },
     {
       "id": "mg-insight-01",

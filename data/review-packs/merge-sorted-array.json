@@ -48,8 +48,47 @@
   "edgeCases": [],
   "cards": [
     {
-      "id": "ms-pattern-01",
+      "id": "recog-merge-sorted-array",
       "category": "pattern",
+      "type": "free_recall",
+      "promptVariants": [
+        "Which technique solves this problem, and what in the statement or constraints points to it?",
+        "Name the technique you would use here and the clue in the problem that tells you.",
+        "What approach fits this problem, and which part of the statement gives it away?"
+      ],
+      "answer": "Merge from the back with three pointers, writing the larger element to the last free slot of nums1. Clue: Both arrays are sorted and the result must go into nums1, which has free space at the end, so fill from the back to avoid overwriting unread elements.",
+      "keyPoints": [
+        "Both arrays are sorted and the result must go into nums1, which has free space at the end, so fill from the back to avoid overwriting unread elements."
+      ],
+      "explanation": "The free space is at the back, so writing the largest remaining element there never overwrites anything still needed.",
+      "rubric": {
+        "technique": "Merge from the back with three pointers, writing the larger element to the last free slot of nums1",
+        "aliases": [
+          "merge from the end",
+          "two pointers from the back",
+          "three pointers",
+          "in-place merge"
+        ],
+        "alsoValid": [
+          {
+            "name": "Append nums2 and sort",
+            "note": "correct, but ignores that both arrays are already sorted"
+          },
+          {
+            "name": "Merge into a new array",
+            "note": "correct, but uses O(m + n) extra space"
+          }
+        ],
+        "clueTypes": [
+          "sorted_or_ordered",
+          "in_place_pointers"
+        ],
+        "clue": "Both arrays are sorted and the result must go into nums1, which has free space at the end, so fill from the back to avoid overwriting unread elements."
+      }
+    },
+    {
+      "id": "ms-pattern-01",
+      "category": "main_insight",
       "type": "multiple_choice",
       "promptVariants": [
         "How do you merge in place without overwriting unread values?",

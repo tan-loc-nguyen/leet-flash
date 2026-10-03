@@ -73,7 +73,7 @@
     },
     {
       "id": "ne-pattern-01",
-      "category": "pattern",
+      "category": "main_insight",
       "type": "multiple_choice",
       "promptVariants": [
         "How do you compare two clock times arithmetically?",

@@ -89,7 +89,7 @@
     },
     {
       "id": "ss-pattern-01",
-      "category": "pattern",
+      "category": "data_structure",
       "type": "multiple_choice",
       "promptVariants": [
         "Which structure computes 'previous greater element' online?",

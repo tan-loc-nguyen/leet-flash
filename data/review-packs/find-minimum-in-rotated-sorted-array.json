@@ -82,7 +82,7 @@
     },
     {
       "id": "fm2-pattern-01",
-      "category": "pattern",
+      "category": "main_insight",
       "type": "multiple_choice",
       "promptVariants": [
         "How do you find the rotation pivot in O(log n)?",

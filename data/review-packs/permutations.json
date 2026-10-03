@@ -73,7 +73,7 @@
     },
     {
       "id": "pe2-pattern-01",
-      "category": "pattern",
+      "category": "main_insight",
       "type": "multiple_choice",
       "promptVariants": [
         "What is the decision at each level of the permutation tree?",

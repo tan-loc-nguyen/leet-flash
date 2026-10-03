@@ -124,7 +124,7 @@
         "Binary search": "It needs sorted data; sorting would destroy the original indices you must return.",
         "Monotonic stack": "There is no nearest-greater / nearest-smaller structure in the problem."
       },
-      "enabled": true
+      "enabled": false
     },
     {
       "id": "two-sum-main-insight-01",

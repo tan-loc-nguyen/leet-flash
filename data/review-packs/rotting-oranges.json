@@ -95,7 +95,8 @@
         "DFS from the first rotten orange found in the grid": "Spreading is simultaneous.",
         "Binary search on time with a check for each guess": "Unneeded.",
         "Sorting oranges by distance and spreading in order": "Irrelevant."
-      }
+      },
+      "enabled": false
     },
     {
       "id": "ro2-insight-01",

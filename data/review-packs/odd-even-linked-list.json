@@ -81,7 +81,7 @@
     },
     {
       "id": "oel-pattern-01",
-      "category": "pattern",
+      "category": "implementation_detail",
       "type": "multiple_choice",
       "promptVariants": [
         "Which pointers do you need to separate the odd and even nodes?",

@@ -81,7 +81,7 @@
     },
     {
       "id": "gs-pattern-01",
-      "category": "pattern",
+      "category": "main_insight",
       "type": "multiple_choice",
       "promptVariants": [
         "How does the greedy approach choose the starting station?",

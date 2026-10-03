@@ -108,7 +108,8 @@
         "Sort the array and take the k largest elements": "The subarray must be contiguous; sorting destroys the order.",
         "Binary search on the best possible average value": "That is a harder variant (the length is not fixed there); not needed here.",
         "Keep a heap of the k best windows seen so far": "A heap does not preserve contiguity and adds a log factor."
-      }
+      },
+      "enabled": false
     },
     {
       "id": "mas-insight-01",

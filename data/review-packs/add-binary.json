@@ -79,7 +79,7 @@
     },
     {
       "id": "ab-pattern-01",
-      "category": "pattern",
+      "category": "main_insight",
       "type": "multiple_choice",
       "promptVariants": [
         "How is each output bit and the carry computed?",

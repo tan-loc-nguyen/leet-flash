@@ -83,7 +83,7 @@
     },
     {
       "id": "iox-pattern-01",
-      "category": "pattern",
+      "category": "main_insight",
       "type": "multiple_choice",
       "promptVariants": [
         "How can you count overlaps for every translation without sliding the whole image?",

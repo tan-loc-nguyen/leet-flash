@@ -106,7 +106,8 @@
         "Heap of frequencies with lazy deletions": "Counts are not the issue; increments are.",
         "Dynamic programming over the sorted values": "No overlapping subproblems.",
         "Two stacks tracking the window extremes": "No LIFO structure."
-      }
+      },
+      "enabled": false
     },
     {
       "id": "fm-insight-01",

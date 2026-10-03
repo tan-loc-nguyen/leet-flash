@@ -97,7 +97,8 @@
         "Reverse both lists first and then add them from the new heads": "They are already in reverse order; reversing is only needed for the 'II' version.",
         "Recursion over the longer list only, ignoring the shorter one's digits": "Possible but not required and risks depth.",
         "Sorting the digits of both lists before adding them pairwise": "Digit order matters."
-      }
+      },
+      "enabled": false
     },
     {
       "id": "an-insight-01",

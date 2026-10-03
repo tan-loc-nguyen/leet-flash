@@ -83,7 +83,7 @@
     },
     {
       "id": "mmc-pattern-01",
-      "category": "pattern",
+      "category": "main_insight",
       "type": "multiple_choice",
       "promptVariants": [
         "What is the state of the BFS and why is a bitmask used?",

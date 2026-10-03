@@ -89,7 +89,7 @@
     },
     {
       "id": "mc-pattern-01",
-      "category": "pattern",
+      "category": "main_insight",
       "type": "multiple_choice",
       "promptVariants": [
         "What is the key observation that reduces the candidate windows?",

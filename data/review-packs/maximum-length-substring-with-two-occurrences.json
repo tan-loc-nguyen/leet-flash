@@ -89,7 +89,8 @@
         "Binary search on the substring length with a check": "Not needed.",
         "Dynamic programming over all prefixes with two states each": "No overlapping states.",
         "A trie that stores every substring seen so far in the scan": "Not about prefixes."
-      }
+      },
+      "enabled": false
     },
     {
       "id": "mt-insight-01",

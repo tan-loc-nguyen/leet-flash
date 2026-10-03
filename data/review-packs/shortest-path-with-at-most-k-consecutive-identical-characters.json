@@ -91,7 +91,8 @@
         "Plain Dijkstra on nodes only, ignoring the constraint": "It cannot know the current run length.",
         "DFS over all paths, keeping the shortest valid one": "Exponential.",
         "Topological sort of the nodes, then relaxing the edges": "The graph may have cycles."
-      }
+      },
+      "enabled": false
     },
     {
       "id": "sk-insight-01",

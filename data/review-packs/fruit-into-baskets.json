@@ -103,7 +103,8 @@
         "Knapsack over the fruit types, with each basket as a capacity": "No weights or capacities.",
         "Interval scheduling over the tree positions and the baskets": "No intervals.",
         "Topological sort over the fruit types and their basket order": "No dependencies."
-      }
+      },
+      "enabled": false
     },
     {
       "id": "fb-insight-01",

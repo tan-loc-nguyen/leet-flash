@@ -107,7 +107,8 @@
         "Binary search on the answer length with a check": "Feasibility is monotone so it works, but it costs O(n log n).",
         "Dynamic programming over every substring of s": "No overlapping-subproblem structure.",
         "A trie of every substring of s, queried for t": "Not about prefixes."
-      }
+      },
+      "enabled": false
     },
     {
       "id": "mw-insight-01",

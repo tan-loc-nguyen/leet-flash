@@ -89,7 +89,7 @@
     },
     {
       "id": "a2-pattern-01",
-      "category": "pattern",
+      "category": "main_insight",
       "type": "multiple_choice",
       "promptVariants": [
         "How do you add numbers whose digits are stored most significant first?",

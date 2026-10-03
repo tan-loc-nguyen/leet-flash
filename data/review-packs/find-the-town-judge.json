@@ -75,7 +75,7 @@
     },
     {
       "id": "tj-pattern-01",
-      "category": "pattern",
+      "category": "main_insight",
       "type": "multiple_choice",
       "promptVariants": [
         "What degrees define the town judge in a directed graph?",

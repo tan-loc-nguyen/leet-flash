@@ -77,7 +77,7 @@
     },
     {
       "id": "dl-pattern-01",
-      "category": "pattern",
+      "category": "main_insight",
       "type": "multiple_choice",
       "promptVariants": [
         "What simplifies insertion/deletion at the list boundaries?",

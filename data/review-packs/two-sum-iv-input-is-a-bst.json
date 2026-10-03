@@ -115,7 +115,8 @@
         "Knapsack over all the node values and the target sum": "Unrelated.",
         "Longest increasing subsequence on the inorder array": "Unrelated.",
         "Graph colouring of the nodes according to their values": "Unrelated."
-      }
+      },
+      "enabled": false
     },
     {
       "id": "tb-insight-01",

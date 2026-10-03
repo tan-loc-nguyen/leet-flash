@@ -100,7 +100,8 @@
         "Trial division of every number by all the smaller numbers before it": "That is quadratic.",
         "A hash set holding every number that is divisible by two or three": "That misses most composites.",
         "Binary search on the count of primes below each candidate value": "Primality is not monotone."
-      }
+      },
+      "enabled": false
     },
     {
       "id": "cpx-insight-01",

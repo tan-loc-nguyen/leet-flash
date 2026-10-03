@@ -106,7 +106,7 @@
     },
     {
       "id": "sa-pattern-01",
-      "category": "pattern",
+      "category": "main_insight",
       "type": "multiple_choice",
       "promptVariants": [
         "Which algorithm gives a guaranteed O(n log n) bound and is stable?",

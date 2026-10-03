@@ -75,7 +75,7 @@
     },
     {
       "id": "i2r-pattern-01",
-      "category": "pattern",
+      "category": "main_insight",
       "type": "multiple_choice",
       "promptVariants": [
         "Why does a greedy over a descending value table work for Roman numerals?",

@@ -95,7 +95,8 @@
         "Binary search on the run length required": "Not sorted.",
         "Sorting the array and counting equal blocks": "Destroys contiguity.",
         "A hash map from each index to its run length": "No lookups needed."
-      }
+      },
+      "enabled": false
     },
     {
       "id": "mo1-insight-01",

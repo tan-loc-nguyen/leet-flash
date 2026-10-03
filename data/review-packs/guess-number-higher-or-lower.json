@@ -92,7 +92,8 @@
         "Hash map": "No keys to look up.",
         "Sorting": "Nothing to sort.",
         "Two pointers from both ends": "The pointers would move one step at a time."
-      }
+      },
+      "enabled": false
     },
     {
       "id": "gn-insight-01",

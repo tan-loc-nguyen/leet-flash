@@ -91,7 +91,7 @@
     },
     {
       "id": "mps-pattern-01",
-      "category": "pattern",
+      "category": "main_insight",
       "type": "multiple_choice",
       "promptVariants": [
         "Why does Maximum Product Subarray need both a running max and a running min?",

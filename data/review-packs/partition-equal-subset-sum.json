@@ -94,7 +94,7 @@
     },
     {
       "id": "pes-pattern-01",
-      "category": "pattern",
+      "category": "main_insight",
       "type": "multiple_choice",
       "promptVariants": [
         "Why does the problem reduce to a subset-sum with target sum / 2?",

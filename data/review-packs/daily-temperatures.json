@@ -102,7 +102,8 @@
         "Sliding window that expands until a larger value is found": "No window property.",
         "Binary search over the sorted values for the next larger one": "The array is unsorted.",
         "Two pointers moving in from both ends of the array": "No symmetric structure."
-      }
+      },
+      "enabled": false
     },
     {
       "id": "dt-invariant-01",

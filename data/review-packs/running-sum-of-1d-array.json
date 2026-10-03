@@ -79,7 +79,7 @@
     },
     {
       "id": "rsa-pattern-01",
-      "category": "pattern",
+      "category": "main_insight",
       "type": "multiple_choice",
       "promptVariants": [
         "What recurrence defines a running sum?",

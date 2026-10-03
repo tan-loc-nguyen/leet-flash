@@ -107,7 +107,8 @@
         "Two pointers on a sorted string": "Sorting the text destroys positions.",
         "Binary search": "No monotonic search.",
         "Dynamic programming": "No overlapping subproblems."
-      }
+      },
+      "enabled": false
     },
     {
       "id": "fa-invariant-01",

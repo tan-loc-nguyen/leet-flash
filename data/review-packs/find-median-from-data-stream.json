@@ -98,7 +98,7 @@
     },
     {
       "id": "fmd-pattern-01",
-      "category": "pattern",
+      "category": "data_structure",
       "type": "multiple_choice",
       "promptVariants": [
         "Which structure combination gives O(log n) insert and O(1) median?",

@@ -96,7 +96,7 @@
     },
     {
       "id": "bh-pattern-01",
-      "category": "pattern",
+      "category": "data_structure",
       "type": "multiple_choice",
       "promptVariants": [
         "Which structure gives O(1) back/forward?",

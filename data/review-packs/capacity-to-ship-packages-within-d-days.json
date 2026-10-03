@@ -99,7 +99,8 @@
         "Sliding window over the package weights in their order": "The ship's capacity is not a window length.",
         "A max-heap of the heaviest packages for each day": "Packages must ship in order.",
         "Prefix sums with a hash map of the running totals": "That finds subarrays with an exact sum."
-      }
+      },
+      "enabled": false
     },
     {
       "id": "csp-insight-01",

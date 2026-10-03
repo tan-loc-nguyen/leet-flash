@@ -77,7 +77,7 @@
     },
     {
       "id": "fm3-pattern-01",
-      "category": "pattern",
+      "category": "data_structure",
       "type": "multiple_choice",
       "promptVariants": [
         "Which structure gives O(1) membership for the scan?",

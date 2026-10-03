@@ -88,7 +88,7 @@
     },
     {
       "id": "mp3-pattern-01",
-      "category": "pattern",
+      "category": "main_insight",
       "type": "multiple_choice",
       "promptVariants": [
         "Which two candidate products must be compared?",

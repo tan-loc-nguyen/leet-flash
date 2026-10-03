@@ -93,7 +93,8 @@
         "Binary search over the pixel colour values": "Irrelevant.",
         "Sorting the pixels by their current colour": "Irrelevant.",
         "Dynamic programming over the grid cells": "Irrelevant."
-      }
+      },
+      "enabled": false
     },
     {
       "id": "ff-insight-01",

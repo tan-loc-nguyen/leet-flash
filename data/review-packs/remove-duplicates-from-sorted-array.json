@@ -39,6 +39,41 @@
   "edgeCases": [],
   "cards": [
     {
+      "id": "recog-remove-duplicates-from-sorted-array",
+      "category": "pattern",
+      "type": "free_recall",
+      "promptVariants": [
+        "Which technique solves this problem, and what in the statement or constraints points to it?",
+        "Name the technique you would use here and the clue in the problem that tells you.",
+        "What approach fits this problem, and which part of the statement gives it away?"
+      ],
+      "answer": "Read and write pointers: copy an element forward when it differs from the last unique value. Clue: The array is sorted so duplicates are adjacent, and it must be edited in place, so keep a write pointer for the next unique value.",
+      "keyPoints": [
+        "The array is sorted so duplicates are adjacent, and it must be edited in place, so keep a write pointer for the next unique value."
+      ],
+      "explanation": "Sorted order puts equal values together, so comparing each element with the last kept one is enough.",
+      "rubric": {
+        "technique": "Read and write pointers: copy an element forward when it differs from the last unique value",
+        "aliases": [
+          "two pointers",
+          "write index",
+          "slow and fast pointers",
+          "compare with the previous element"
+        ],
+        "alsoValid": [
+          {
+            "name": "Collect the unique values in a set and write them back",
+            "note": "correct, but uses extra space and ignores the sorted order"
+          }
+        ],
+        "clueTypes": [
+          "sorted_or_ordered",
+          "in_place_pointers"
+        ],
+        "clue": "The array is sorted so duplicates are adjacent, and it must be edited in place, so keep a write pointer for the next unique value."
+      }
+    },
+    {
       "id": "rd-pattern-01",
       "category": "pattern",
       "type": "multiple_choice",
@@ -58,7 +93,8 @@
         "Binary search": "No searching.",
         "Sliding window maximum": "Unrelated.",
         "Hash set": "Not needed because duplicates are adjacent (and sets use extra space)."
-      }
+      },
+      "enabled": false
     },
     {
       "id": "rd-invariant-01",

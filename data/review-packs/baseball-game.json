@@ -30,8 +30,37 @@
   "edgeCases": [],
   "cards": [
     {
-      "id": "bg-pattern-01",
+      "id": "recog-baseball-game",
       "category": "pattern",
+      "type": "free_recall",
+      "promptVariants": [
+        "Which technique solves this problem, and what in the statement or constraints points to it?",
+        "Name the technique you would use here and the clue in the problem that tells you.",
+        "What approach fits this problem, and which part of the statement gives it away?"
+      ],
+      "answer": "Stack of scores: C pops, D doubles the top, + adds the top two, a number pushes. Clue: Each operation refers to the most recent scores (cancel the last, double the last, sum the last two), so keep the valid scores on a stack.",
+      "keyPoints": [
+        "Each operation refers to the most recent scores (cancel the last, double the last, sum the last two), so keep the valid scores on a stack."
+      ],
+      "explanation": "Every rule touches only the top of the record, which is what a stack gives you in constant time.",
+      "rubric": {
+        "technique": "Stack of scores: C pops, D doubles the top, + adds the top two, a number pushes",
+        "aliases": [
+          "stack simulation",
+          "list used as a stack",
+          "simulation"
+        ],
+        "alsoValid": [],
+        "clueTypes": [
+          "direct_simulation",
+          "nesting_matching"
+        ],
+        "clue": "Each operation refers to the most recent scores (cancel the last, double the last, sum the last two), so keep the valid scores on a stack."
+      }
+    },
+    {
+      "id": "bg-pattern-01",
+      "category": "data_structure",
       "type": "multiple_choice",
       "promptVariants": [
         "Which data structure fits operations that refer to the previous scores?",

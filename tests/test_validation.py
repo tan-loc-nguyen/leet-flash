@@ -1,7 +1,7 @@
 import json
 
 from leetcode_review.content.validator import validate_all, validate_pack_file
-from tests.conftest import free, make_pack, make_problem, mcq
+from tests.conftest import free, make_pack, make_problem, mcq, recog, valid_cards
 
 
 def issues_for(paths, slug, pack_dict, *, create_problem=True):
@@ -22,12 +22,12 @@ def errors(issues):
 
 
 def test_valid_pack_has_no_errors(paths):
-    assert errors(issues_for(paths, "p", base(cards=[mcq("p-1"), free("p-2")]))) == []
+    assert errors(issues_for(paths, "p", base(cards=[recog("p-r"), mcq("p-1", "main_insight"), free("p-2")]))) == []
 
 
 def test_seed_style_pack_fully_valid(paths):
     make_problem(paths, "x")
-    make_pack(paths, "x")
+    make_pack(paths, "x", cards=valid_cards("x"))
     assert [i for i in validate_all(paths, {"x"}) if i.level == "error"] == []
 
 
@@ -85,7 +85,7 @@ def test_invalid_canonical_code_is_an_error(paths):
     from leetcode_review.content.validator import validate_pack_file
     from tests.conftest import make_pack, make_problem
     make_problem(paths, "two-sum", leetcode_id=1)
-    make_pack(paths, "two-sum")
+    make_pack(paths, "two-sum", cards=valid_cards("two-sum"))
     f = paths.review_packs / "two-sum.json"
     d = json.loads(f.read_text())
     d["canonicalCode"] = "def f(:\n  pass"
@@ -110,3 +110,23 @@ def test_duplicate_card_ids_across_packs_are_an_error(paths):
     f.write_text(json.dumps(d))
     issues = validate_all(paths, {"one", "two"})
     assert any(i.level == "error" and "one-pattern-01" in i.message and "unique across packs" in i.message for i in issues)
+
+
+def test_recognition_card_rules(paths):
+    ok = [recog("p-r"), mcq("p-1", "main_insight")]
+    assert errors(issues_for(paths, "p", base(cards=ok))) == []
+    no_rec = errors(issues_for(paths, "p", base(cards=[mcq("p-1", "main_insight")])))
+    assert any("no recognition card" in e for e in no_rec)
+    two = errors(issues_for(paths, "p", base(cards=[recog("p-r"), recog("p-r2")])))
+    assert any("exactly one" in e for e in two)
+    leftover = errors(issues_for(paths, "p", base(cards=[recog("p-r"), mcq("p-old", "pattern")])))
+    assert any("generated pattern cards besides" in e for e in leftover)
+    manual = {**mcq("p-m", "pattern"), "source": "manual"}
+    assert errors(issues_for(paths, "p", base(cards=[recog("p-r"), manual]))) == []   # manual cards are never blocked
+    skeleton = {"problemSlug": "p", "summary": "", "patterns": [], "cards": []}
+    assert errors(issues_for(paths, "p", skeleton)) == []                             # a scaffold only warns
+
+
+def test_disabled_pattern_cards_do_not_count_as_leftovers(paths):
+    old = {**mcq("p-old", "pattern"), "enabled": False}
+    assert errors(issues_for(paths, "p", base(cards=[recog("p-r"), old]))) == []

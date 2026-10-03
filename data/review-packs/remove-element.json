@@ -52,6 +52,40 @@
   "edgeCases": [],
   "cards": [
     {
+      "id": "recog-remove-element",
+      "category": "pattern",
+      "type": "free_recall",
+      "promptVariants": [
+        "Which technique solves this problem, and what in the statement or constraints points to it?",
+        "Name the technique you would use here and the clue in the problem that tells you.",
+        "What approach fits this problem, and which part of the statement gives it away?"
+      ],
+      "answer": "Read and write pointers: copy every element that is not val forward. Clue: The array must be filtered in place, so keep a write pointer for the next kept element and copy survivors forward.",
+      "keyPoints": [
+        "The array must be filtered in place, so keep a write pointer for the next kept element and copy survivors forward."
+      ],
+      "explanation": "A single pass copying kept elements to the write index removes the unwanted ones without extra memory.",
+      "rubric": {
+        "technique": "Read and write pointers: copy every element that is not val forward",
+        "aliases": [
+          "two pointers",
+          "write index",
+          "swap with the end",
+          "overwrite non-matching elements"
+        ],
+        "alsoValid": [
+          {
+            "name": "Collect the other elements in a new array and copy back",
+            "note": "not in place, uses extra space"
+          }
+        ],
+        "clueTypes": [
+          "in_place_pointers"
+        ],
+        "clue": "The array must be filtered in place, so keep a write pointer for the next kept element and copy survivors forward."
+      }
+    },
+    {
       "id": "re-pattern-01",
       "category": "pattern",
       "type": "multiple_choice",
@@ -71,7 +105,8 @@
         "Converging pointers from both ends": "That is the swap-with-end variant, less common.",
         "Binary search": "Nothing is sorted.",
         "Prefix sum": "Not a range-sum problem."
-      }
+      },
+      "enabled": false
     },
     {
       "id": "re-invariant-01",

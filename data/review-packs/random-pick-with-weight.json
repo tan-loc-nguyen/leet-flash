@@ -114,7 +114,8 @@
         "Sorting + two pointers": "Not relevant to sampling.",
         "Heap + hash map": "No ordering by weight is needed.",
         "Union find + DFS": "No connectivity."
-      }
+      },
+      "enabled": false
     },
     {
       "id": "rw-insight-01",

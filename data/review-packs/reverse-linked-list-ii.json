@@ -98,7 +98,8 @@
         "Recursion on the whole list, reversing every single node": "Possible but unnecessary.",
         "Sorting the values of the sub-list and relinking them": "Order is specific, not sorted.",
         "A stack of all the list's nodes, popped to relink them": "Uses O(n) space."
-      }
+      },
+      "enabled": false
     },
     {
       "id": "rr-invariant-01",

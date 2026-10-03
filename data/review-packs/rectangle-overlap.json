@@ -70,7 +70,7 @@
     },
     {
       "id": "ro3-pattern-01",
-      "category": "pattern",
+      "category": "main_insight",
       "type": "multiple_choice",
       "promptVariants": [
         "What is the condition for 1D intervals [a1, b1] and [a2, b2] to overlap with positive length?",

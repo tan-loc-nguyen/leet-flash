@@ -96,7 +96,7 @@
     },
     {
       "id": "lcs2-pattern-01",
-      "category": "pattern",
+      "category": "data_structure",
       "type": "multiple_choice",
       "promptVariants": [
         "Which structure and trick gives O(n) for the longest consecutive sequence?",

@@ -73,7 +73,7 @@
     },
     {
       "id": "fa2-pattern-01",
-      "category": "pattern",
+      "category": "data_structure",
       "type": "multiple_choice",
       "promptVariants": [
         "Which structure gives the repeated minimum efficiently?",

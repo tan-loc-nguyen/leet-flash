@@ -113,7 +113,8 @@
         "AND": "AND has no cancelling property.",
         "Left shift": "Shifts change magnitude, not cancellation.",
         "Bitwise NOT": "NOT is unary and does not combine elements."
-      }
+      },
+      "enabled": false
     },
     {
       "id": "sn-insight-01",

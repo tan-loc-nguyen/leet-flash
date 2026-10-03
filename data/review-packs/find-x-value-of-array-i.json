@@ -82,7 +82,7 @@
     },
     {
       "id": "fxv-pattern-01",
-      "category": "pattern",
+      "category": "main_insight",
       "type": "multiple_choice",
       "promptVariants": [
         "What does dp[i][r] represent for Find X Value of Array I?",

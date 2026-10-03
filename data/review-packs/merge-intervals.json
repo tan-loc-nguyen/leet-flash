@@ -76,7 +76,7 @@
     },
     {
       "id": "mi-pattern-01",
-      "category": "pattern",
+      "category": "implementation_detail",
       "type": "multiple_choice",
       "promptVariants": [
         "What is the first step of Merge Intervals and why?",

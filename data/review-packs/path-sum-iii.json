@@ -48,6 +48,40 @@
   "edgeCases": [],
   "cards": [
     {
+      "id": "recog-path-sum-iii",
+      "category": "pattern",
+      "type": "free_recall",
+      "promptVariants": [
+        "Which technique solves this problem, and what in the statement or constraints points to it?",
+        "Name the technique you would use here and the clue in the problem that tells you.",
+        "What approach fits this problem, and which part of the statement gives it away?"
+      ],
+      "answer": "Prefix sums along the current root-to-node path with a hash map of counts, undoing the counts on the way back. Clue: Paths may start and end anywhere but only go downwards, so the sum of a downward path is a difference of two prefix sums on the root-to-node path, which a count map can look up.",
+      "keyPoints": [
+        "Paths may start and end anywhere but only go downwards, so the sum of a downward path is a difference of two prefix sums on the root-to-node path, which a count map can look up."
+      ],
+      "explanation": "A path ending at a node starts at an ancestor, so its sum is the current prefix minus an earlier prefix, and counting earlier prefixes finds all of them at once.",
+      "rubric": {
+        "technique": "Prefix sums along the current root-to-node path with a hash map of counts, undoing the counts on the way back",
+        "aliases": [
+          "prefix sum and hash map on a tree",
+          "dfs with a running sum",
+          "count prefix sums on the path"
+        ],
+        "alsoValid": [
+          {
+            "name": "Run a DFS from every node",
+            "note": "quadratic in the worst case"
+          }
+        ],
+        "clueTypes": [
+          "tree_structure",
+          "prefix_range"
+        ],
+        "clue": "Paths may start and end anywhere but only go downwards, so the sum of a downward path is a difference of two prefix sums on the root-to-node path, which a count map can look up."
+      }
+    },
+    {
       "id": "p3-pattern-01",
       "category": "pattern",
       "type": "multiple_choice",
@@ -67,7 +101,8 @@
         "Sorting the node values and binary searching each sum": "Paths must follow tree edges.",
         "Binary search on the tree for the matching sum values": "The tree is not a BST.",
         "Two stacks holding the sums along each path taken": "Not helpful."
-      }
+      },
+      "enabled": false
     },
     {
       "id": "p3-insight-01",

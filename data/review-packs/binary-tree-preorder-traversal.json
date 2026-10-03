@@ -40,8 +40,37 @@
   "edgeCases": [],
   "cards": [
     {
-      "id": "pr-pattern-01",
+      "id": "recog-binary-tree-preorder-traversal",
       "category": "pattern",
+      "type": "free_recall",
+      "promptVariants": [
+        "Which technique solves this problem, and what in the statement or constraints points to it?",
+        "Name the technique you would use here and the clue in the problem that tells you.",
+        "What approach fits this problem, and which part of the statement gives it away?"
+      ],
+      "answer": "DFS visiting the node, then the left subtree, then the right subtree (recursively or with an explicit stack). Clue: The visiting order is defined by the problem (node before its children), so implement the DFS in that order.",
+      "keyPoints": [
+        "The visiting order is defined by the problem (node before its children), so implement the DFS in that order."
+      ],
+      "explanation": "Visiting the node first and then its subtrees is the plain recursion, and an iterative version pops a node and pushes its right then left child.",
+      "rubric": {
+        "technique": "DFS visiting the node, then the left subtree, then the right subtree (recursively or with an explicit stack)",
+        "aliases": [
+          "preorder dfs",
+          "iterative with a stack",
+          "node left right"
+        ],
+        "alsoValid": [],
+        "clueTypes": [
+          "tree_structure",
+          "direct_simulation"
+        ],
+        "clue": "The visiting order is defined by the problem (node before its children), so implement the DFS in that order."
+      }
+    },
+    {
+      "id": "pr-pattern-01",
+      "category": "implementation_detail",
       "type": "multiple_choice",
       "promptVariants": [
         "In what order does preorder visit nodes?",

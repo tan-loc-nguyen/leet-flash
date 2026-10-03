@@ -79,7 +79,7 @@
     },
     {
       "id": "cc-pattern-01",
-      "category": "pattern",
+      "category": "main_insight",
       "type": "multiple_choice",
       "promptVariants": [
         "How does union-find count components?",

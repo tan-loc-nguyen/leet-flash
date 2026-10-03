@@ -92,7 +92,8 @@
         "Buy at the global minimum price and sell at the global maximum price": "The maximum may come before the minimum and multiple swings are possible.",
         "Sell on every single day regardless of the earlier prices": "Not valid without buying.",
         "Buy only on the first day and sell on the last day": "Misses later opportunities."
-      }
+      },
+      "enabled": false
     },
     {
       "id": "b2-insight-01",

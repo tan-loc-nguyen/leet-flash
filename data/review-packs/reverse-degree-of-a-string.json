@@ -60,7 +60,7 @@
     },
     {
       "id": "rd2-pattern-01",
-      "category": "pattern",
+      "category": "implementation_detail",
       "type": "multiple_choice",
       "promptVariants": [
         "How do you get the reversed-alphabet value of a letter?",

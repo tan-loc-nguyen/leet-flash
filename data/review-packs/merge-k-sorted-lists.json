@@ -87,7 +87,7 @@
     },
     {
       "id": "mk2-pattern-01",
-      "category": "pattern",
+      "category": "data_structure",
       "type": "multiple_choice",
       "promptVariants": [
         "Which structure gives the smallest of k list heads efficiently?",

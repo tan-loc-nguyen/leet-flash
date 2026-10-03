@@ -92,7 +92,7 @@
     },
     {
       "id": "hs-pattern-01",
-      "category": "pattern",
+      "category": "main_insight",
       "type": "multiple_choice",
       "promptVariants": [
         "How do real hash tables handle keys that map to the same slot?",

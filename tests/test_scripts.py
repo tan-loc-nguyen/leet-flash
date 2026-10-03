@@ -8,7 +8,7 @@ from pathlib import Path
 
 import pytest
 
-from tests.conftest import make_pack, make_problem
+from tests.conftest import make_pack, make_problem, valid_cards
 
 SCRIPTS = Path(__file__).resolve().parents[1] / "scripts"
 
@@ -28,7 +28,7 @@ def run(paths):
 def test_missing_scaffold_validate_query_flow(paths, run):
     make_problem(paths, "two-sum", leetcode_id=1, tags=("Array", "Hash Table"))
     make_problem(paths, "has-pack", leetcode_id=2)
-    make_pack(paths, "has-pack")
+    make_pack(paths, "has-pack", cards=valid_cards("has-pack"))
     missing = json.loads(run("list_missing_review_packs.py", "--json").stdout)
     assert missing == [{"leetcodeId": "1", "slug": "two-sum", "title": "Two Sum", "status": "missing"}]
     assert "Wrote skeleton" in run("scaffold_review_pack.py", "two-sum").stdout
@@ -50,7 +50,7 @@ def test_validation_failure_exit_code(paths, run):
 
 def test_notes_and_manual_cards(paths, run):
     make_problem(paths, "3sum")
-    make_pack(paths, "3sum")
+    make_pack(paths, "3sum", cards=valid_cards("3sum"))
     run("add_note.py", "3sum", "skip duplicates twice")
     assert json.loads((paths.problems / "3sum.json").read_text())["notes"][0]["text"] == "skip duplicates twice"
     run("add_card.py", "3sum", "Why skip duplicates?", "--answer", "to avoid duplicate triplets", "--category", "edge_case")

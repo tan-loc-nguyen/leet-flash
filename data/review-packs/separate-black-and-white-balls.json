@@ -82,7 +82,7 @@
     },
     {
       "id": "sbw-pattern-01",
-      "category": "pattern",
+      "category": "main_insight",
       "type": "multiple_choice",
       "promptVariants": [
         "What does the minimum number of swaps equal?",

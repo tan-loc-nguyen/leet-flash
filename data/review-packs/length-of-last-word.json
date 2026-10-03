@@ -78,7 +78,7 @@
     },
     {
       "id": "llw-pattern-01",
-      "category": "pattern",
+      "category": "main_insight",
       "type": "multiple_choice",
       "promptVariants": [
         "How can you find the last word's length without splitting the string?",

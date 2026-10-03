@@ -92,7 +92,8 @@
         "Linear scan from the left until the predicate flips to True": "O(n) API calls.",
         "Two pointers closing in from both ends of the range each step": "No second pointer needed.",
         "Hashing each index into a lookup table of predicate results": "No lookups."
-      }
+      },
+      "enabled": false
     },
     {
       "id": "fb2-insight-01",

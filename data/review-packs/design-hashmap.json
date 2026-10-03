@@ -85,7 +85,7 @@
     },
     {
       "id": "hm-pattern-01",
-      "category": "pattern",
+      "category": "main_insight",
       "type": "multiple_choice",
       "promptVariants": [
         "What is needed beyond a set when implementing a hash map?",

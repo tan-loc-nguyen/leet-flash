@@ -93,7 +93,7 @@
     },
     {
       "id": "cg2-pattern-01",
-      "category": "pattern",
+      "category": "data_structure",
       "type": "multiple_choice",
       "promptVariants": [
         "What structure makes graph cloning correct with cycles?",

@@ -78,7 +78,7 @@
     },
     {
       "id": "r2i-pattern-01",
-      "category": "pattern",
+      "category": "main_insight",
       "type": "multiple_choice",
       "promptVariants": [
         "How do you handle subtractive notation such as IV and CM when parsing?",

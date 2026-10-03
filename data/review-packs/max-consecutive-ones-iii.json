@@ -88,7 +88,8 @@
         "Prefix sums only": "Binary search over prefix sums can work but sliding window is simpler.",
         "Greedy flipping the first k zeros": "The best flips depend on the window position.",
         "Binary search": "Possible on window length but O(n log n)."
-      }
+      },
+      "enabled": false
     },
     {
       "id": "mo-insight-01",

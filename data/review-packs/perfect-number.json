@@ -82,7 +82,7 @@
     },
     {
       "id": "pn2-pattern-01",
-      "category": "pattern",
+      "category": "main_insight",
       "type": "multiple_choice",
       "promptVariants": [
         "How do you enumerate the divisors of n efficiently?",

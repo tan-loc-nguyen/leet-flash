@@ -108,7 +108,8 @@
         "Sorting the rows and then counting the distinct ones": "Irrelevant.",
         "Binary search over the row and column indices": "Irrelevant.",
         "Dynamic programming over rows, carrying a count along": "Islands can wind across rows, so DP is not natural."
-      }
+      },
+      "enabled": false
     },
     {
       "id": "ni-insight-01",

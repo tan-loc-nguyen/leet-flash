@@ -79,7 +79,7 @@
     },
     {
       "id": "jg-pattern-01",
-      "category": "pattern",
+      "category": "main_insight",
       "type": "multiple_choice",
       "promptVariants": [
         "What single value summarises everything you need while scanning Jump Game?",

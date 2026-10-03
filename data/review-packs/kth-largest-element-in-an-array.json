@@ -110,7 +110,7 @@
     },
     {
       "id": "kt-pattern-02",
-      "category": "pattern",
+      "category": "data_structure",
       "type": "multiple_choice",
       "promptVariants": [
         "Which structure keeps only the k largest elements seen so far?",

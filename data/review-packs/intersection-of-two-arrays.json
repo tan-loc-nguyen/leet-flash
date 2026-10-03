@@ -96,7 +96,7 @@
     },
     {
       "id": "ita-pattern-01",
-      "category": "pattern",
+      "category": "data_structure",
       "type": "multiple_choice",
       "promptVariants": [
         "Which structure gives the unique common elements most simply?",

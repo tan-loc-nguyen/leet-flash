@@ -43,8 +43,38 @@
   ],
   "cards": [
     {
-      "id": "rd3-pattern-01",
+      "id": "recog-remove-duplicates-from-sorted-array-ii",
       "category": "pattern",
+      "type": "free_recall",
+      "promptVariants": [
+        "Which technique solves this problem, and what in the statement or constraints points to it?",
+        "Name the technique you would use here and the clue in the problem that tells you.",
+        "What approach fits this problem, and which part of the statement gives it away?"
+      ],
+      "answer": "Write pointer comparing each element with the one two places behind it. Clue: The array is sorted and each value may remain at most twice, in place, so compare each element with the one two positions behind the write index.",
+      "keyPoints": [
+        "The array is sorted and each value may remain at most twice, in place, so compare each element with the one two positions behind the write index."
+      ],
+      "explanation": "In sorted order a value can be kept if it differs from the element two slots back, which guarantees at most two copies.",
+      "rubric": {
+        "technique": "Write pointer comparing each element with the one two places behind it",
+        "aliases": [
+          "two pointers",
+          "write index",
+          "compare with nums[k-2]",
+          "run length counter"
+        ],
+        "alsoValid": [],
+        "clueTypes": [
+          "sorted_or_ordered",
+          "in_place_pointers"
+        ],
+        "clue": "The array is sorted and each value may remain at most twice, in place, so compare each element with the one two positions behind the write index."
+      }
+    },
+    {
+      "id": "rd3-pattern-01",
+      "category": "implementation_detail",
       "type": "multiple_choice",
       "promptVariants": [
         "What condition decides whether the current element is written?",

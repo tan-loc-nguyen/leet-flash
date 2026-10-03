@@ -106,7 +106,8 @@
         "BFS started from every cell that matches the first letter": "BFS cannot easily forbid cell reuse per path.",
         "Dynamic programming over all of the board's cell pairs": "The path-dependent visited state prevents standard DP.",
         "Binary search over all of the board's rows and columns": "Not a search problem."
-      }
+      },
+      "enabled": false
     },
     {
       "id": "ws-insight-01",

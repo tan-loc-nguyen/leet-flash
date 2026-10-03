@@ -115,7 +115,8 @@
         "Stack": "A stack has no ordering by score.",
         "Two pointers": "Not applicable to unsorted frequencies.",
         "Union find": "No connectivity merging."
-      }
+      },
+      "enabled": false
     },
     {
       "id": "tk-insight-01",

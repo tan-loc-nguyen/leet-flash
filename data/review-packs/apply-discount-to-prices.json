@@ -77,7 +77,7 @@
     },
     {
       "id": "adp-pattern-01",
-      "category": "pattern",
+      "category": "main_insight",
       "type": "multiple_choice",
       "promptVariants": [
         "How do you decide whether a word is a price?",

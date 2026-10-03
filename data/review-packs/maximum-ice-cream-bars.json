@@ -77,7 +77,7 @@
     },
     {
       "id": "mi2-pattern-01",
-      "category": "pattern",
+      "category": "main_insight",
       "type": "multiple_choice",
       "promptVariants": [
         "What greedy rule maximises the number of bars?",

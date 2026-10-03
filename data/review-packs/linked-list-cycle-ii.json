@@ -81,7 +81,7 @@
     },
     {
       "id": "lc3-pattern-01",
-      "category": "pattern",
+      "category": "implementation_detail",
       "type": "multiple_choice",
       "promptVariants": [
         "What is the second phase of Floyd's cycle-start algorithm?",

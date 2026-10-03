@@ -40,8 +40,37 @@
   "edgeCases": [],
   "cards": [
     {
-      "id": "al-pattern-01",
+      "id": "recog-average-of-levels-in-binary-tree",
       "category": "pattern",
+      "type": "free_recall",
+      "promptVariants": [
+        "Which technique solves this problem, and what in the statement or constraints points to it?",
+        "Name the technique you would use here and the clue in the problem that tells you.",
+        "What approach fits this problem, and which part of the statement gives it away?"
+      ],
+      "answer": "Level-order BFS: sum each level's values and divide by the level's size. Clue: It asks for a statistic of every level of a binary tree, so traverse the tree level by level.",
+      "keyPoints": [
+        "It asks for a statistic of every level of a binary tree, so traverse the tree level by level."
+      ],
+      "explanation": "A level-order traversal groups nodes by depth, so each group's sum and size are available directly.",
+      "rubric": {
+        "technique": "Level-order BFS: sum each level's values and divide by the level's size",
+        "aliases": [
+          "bfs",
+          "level order traversal",
+          "queue by level",
+          "dfs with per-depth sums"
+        ],
+        "alsoValid": [],
+        "clueTypes": [
+          "tree_structure"
+        ],
+        "clue": "It asks for a statistic of every level of a binary tree, so traverse the tree level by level."
+      }
+    },
+    {
+      "id": "al-pattern-01",
+      "category": "main_insight",
       "type": "multiple_choice",
       "promptVariants": [
         "Which traversal computes per-level statistics?",

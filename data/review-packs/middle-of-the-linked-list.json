@@ -88,7 +88,8 @@
         "Binary search": "No random access in a linked list.",
         "Recursion on halves": "Needs the length first.",
         "Sorting": "Irrelevant."
-      }
+      },
+      "enabled": false
     },
     {
       "id": "mid-insight-01",

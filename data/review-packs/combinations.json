@@ -73,7 +73,7 @@
     },
     {
       "id": "cb-pattern-01",
-      "category": "pattern",
+      "category": "main_insight",
       "type": "multiple_choice",
       "promptVariants": [
         "What prevents [1,2] and [2,1] from both being generated?",

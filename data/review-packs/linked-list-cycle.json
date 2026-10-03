@@ -111,7 +111,8 @@
         "Both pointers move one step per iteration": "They never get closer or farther apart, so they reveal nothing about a cycle.",
         "Binary search on the node positions": "No sorted structure or random access.",
         "Recursion with a visited set of nodes": "Uses O(n) stack."
-      }
+      },
+      "enabled": false
     },
     {
       "id": "lc2-insight-01",

@@ -94,7 +94,7 @@
     },
     {
       "id": "rb-pattern-01",
-      "category": "pattern",
+      "category": "main_insight",
       "type": "multiple_choice",
       "promptVariants": [
         "What is the pattern behind swapping bit i with bit 31-i?",

@@ -98,7 +98,8 @@
         "Binary search on the position of each one": "No sorted structure.",
         "A stack holding the positions of every one seen": "No nesting.",
         "Union find merging neighbouring ones into groups": "No merging."
-      }
+      },
+      "enabled": false
     },
     {
       "id": "sb-insight-01",

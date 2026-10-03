@@ -90,7 +90,8 @@
         "Sorting + binary search over the sorted array": "Destroys the contiguity of subarrays.",
         "Monotonic stack of the element counts so far": "No nearest-greater structure.",
         "Prefix sums over the element counts directly": "Sums are not the constraint."
-      }
+      },
+      "enabled": false
     },
     {
       "id": "lk-insight-01",

@@ -100,7 +100,8 @@
         "Sliding window over the sorted array with a running sum": "Elements need not be contiguous.",
         "Binary search on the answer, checking pair feasibility": "Not needed.",
         "Monotonic stack of the unmatched values seen so far": "No nearest-greater relation."
-      }
+      },
+      "enabled": false
     },
     {
       "id": "mk-insight-01",

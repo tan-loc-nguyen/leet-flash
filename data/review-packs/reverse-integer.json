@@ -95,7 +95,8 @@
         "Two pointers on the digit array": "Possible after converting to a list but unnecessary.",
         "Recursion with memoisation": "No overlapping subproblems.",
         "Binary search on the answer": "Not a search problem."
-      }
+      },
+      "enabled": false
     },
     {
       "id": "ri-edge-01",

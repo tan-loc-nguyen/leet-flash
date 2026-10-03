@@ -94,7 +94,8 @@
         "Hash lookup by the exact timestamp requested": "Only exact matches; we need the nearest earlier one.",
         "A heap of the key's timestamps, popped in order": "Not needed since sets arrive in order.",
         "Linear scan from the start of the stored values": "O(n)."
-      }
+      },
+      "enabled": false
     },
     {
       "id": "tm-insight-01",

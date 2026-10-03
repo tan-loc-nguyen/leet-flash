@@ -73,7 +73,7 @@
     },
     {
       "id": "sm2-pattern-01",
-      "category": "pattern",
+      "category": "main_insight",
       "type": "multiple_choice",
       "promptVariants": [
         "Which combination solves 'min x sum over subarrays' in O(n)?",

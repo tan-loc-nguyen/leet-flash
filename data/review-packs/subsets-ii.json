@@ -91,7 +91,7 @@
     },
     {
       "id": "s2-pattern-01",
-      "category": "pattern",
+      "category": "main_insight",
       "type": "multiple_choice",
       "promptVariants": [
         "What is the rule that removes duplicate subsets after sorting?",

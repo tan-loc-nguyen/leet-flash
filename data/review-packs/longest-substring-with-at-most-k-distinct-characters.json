@@ -89,7 +89,8 @@
         "Dynamic programming over the string prefixes": "Unnecessary state.",
         "Binary search on k plus a feasibility check": "k is given.",
         "A trie holding every substring of the input": "Not about prefixes."
-      }
+      },
+      "enabled": false
     },
     {
       "id": "kd-insight-01",

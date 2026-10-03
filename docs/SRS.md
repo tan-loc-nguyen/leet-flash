@@ -148,7 +148,39 @@ Weights are **shares**, not per-problem multipliers (those would only tilt a ban
 * Weight 0 = filler only (chosen when nothing else is left). `review.py plan` prints the table with problem counts.
 * `scripts/check_topic_labels.py` cross-checks my pattern labels against LeetCode's tags and lists disagreements.
 
+### The recognition card
+
+Every problem's first question is its **recognition card** (category `pattern`, type `free_recall`): *which technique
+solves this, and what in the statement or constraints points to it?* It is drawn in every mode except an explicit
+`--focus-category` session that leaves out `pattern`, and it comes **on top of** `cardsPerProblem` (a problem has 5 questions
+with the default of 4). The user types the answer; the agent judges two things against the card's `rubric` and the engine
+derives the result with a fixed table:
+
+| technique | clue | result |
+|---|---|---|
+| intended technique or alias | valid | correct |
+| intended technique or alias | missing / wrong | partial |
+| weaker but valid technique | any | partial |
+| wrong | any | failed |
+
+Any hint on the problem caps a would-be *correct* at *partial*. A *failed* recognition card blocks promotion
+(`PROMOTION_BLOCKING_CATEGORIES`), like a failed `main_insight`. The history event keeps `userText` (first 500 characters),
+`technique`, `clue` (and `hintCapped`) so grading can be audited and confusions studied; `stats.py` reports them.
+Patterns (`problem.patterns`) stay hidden until this card is answered.
+
+Effect on progress (Monte-Carlo with `scoring.py`, 6 reviews per problem, assumed recognition outcomes of 60/15/10 %,
+35/20/15 % and 15/20/15 % correct/partial-with-intended/valid-but-weaker for a strong, average and weak learner): a strong
+learner reaches level 3.0 instead of 3.8, an average one 0.55 instead of 1.2 (promotion rate per review 17 % instead of
+31 %). Almost all of that comes from the score threshold, not from the blocking rule (switching blocking off changes the
+mean level by under 0.05), so recognition is simply a harder, truer question. Tune `PROMOTE_SCORE` or
+`CATEGORY_WEIGHTS["pattern"]` in `config.py` if real data shows problems stalling.
+
 ### Other modes
+
+* **drill** – one recognition card per problem, nothing else. Weight `3` for a problem whose card was never asked (this
+  includes unsolved problems), else `1 + 3 × failure ratio`, × recency (`1 + min(days since asked, 60)/30`), × topic share
+  factor. A drill records history and card statistics but **never changes a level or a schedule**, so it can be run as
+  often as wanted. Filters work (`--list unsolved-amazon`, `--topic graph`).
 
 * **weak** – ranks problems with history by `10 × (1 − recentAccuracy) + 4 × #weak categories + 2 × lapses (+3 if last score < 0.35)`.
 * **cram / filtered** – ignore the schedule; sampling weight `1 + (6 − level)/6` (+0.5 if weak

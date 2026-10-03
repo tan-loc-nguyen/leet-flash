@@ -105,7 +105,8 @@
         "Binary search over indices of the original unsorted array": "Possible on prefix sums only, giving O(n log n).",
         "Dynamic programming over every start and end index pair": "Not needed.",
         "Hash map of prefix sums with exact-sum lookups only": "Used for exact-sum subarrays with negatives, not for minimum length with >= target."
-      }
+      },
+      "enabled": false
     },
     {
       "id": "ms2-insight-01",

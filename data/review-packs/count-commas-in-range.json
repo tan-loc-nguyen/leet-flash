@@ -89,7 +89,7 @@
     },
     {
       "id": "cr-pattern-01",
-      "category": "pattern",
+      "category": "main_insight",
       "type": "multiple_choice",
       "promptVariants": [
         "How many commas does a number between 1,000 and 999,999 have?",

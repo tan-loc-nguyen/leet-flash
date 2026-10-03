@@ -77,7 +77,7 @@
     },
     {
       "id": "sm4-pattern-01",
-      "category": "pattern",
+      "category": "main_insight",
       "type": "multiple_choice",
       "promptVariants": [
         "How do you find the first absent multiple?",

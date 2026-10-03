@@ -109,7 +109,8 @@
         "Sorting": "Order of elements matters.",
         "A hash set": "No lookups of values.",
         "A heap": "Not a range structure."
-      }
+      },
+      "enabled": false
     },
     {
       "id": "rq-insight-01",

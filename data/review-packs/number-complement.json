@@ -84,7 +84,7 @@
     },
     {
       "id": "nc-pattern-01",
-      "category": "pattern",
+      "category": "main_insight",
       "type": "multiple_choice",
       "promptVariants": [
         "How do you flip only the significant bits of a number?",

@@ -91,7 +91,8 @@
         "Sorting the digits": "Reordering is not allowed.",
         "Dynamic programming over subsets": "Exponential and unnecessary.",
         "Binary search": "Not a search problem."
-      }
+      },
+      "enabled": false
     },
     {
       "id": "rk-insight-01",

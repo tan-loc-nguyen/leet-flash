@@ -106,7 +106,8 @@
         "One binary search then a linear expansion": "Degenerates to O(n) when many duplicates exist.",
         "Hash map of indices": "Uses O(n) extra space and ignores sortedness.",
         "Two pointers from both ends": "That is O(n)."
-      }
+      },
+      "enabled": false
     },
     {
       "id": "fl-insight-01",

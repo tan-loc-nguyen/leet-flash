@@ -114,7 +114,8 @@
         "Two pointers from both ends": "That checks palindromes, not multiset equality.",
         "Sliding window": "No contiguous window constraint (that is the 'find anagrams in a string' variant).",
         "Binary search": "Nothing is sorted/monotonic."
-      }
+      },
+      "enabled": false
     },
     {
       "id": "va-insight-01",

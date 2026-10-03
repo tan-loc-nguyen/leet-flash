@@ -110,7 +110,8 @@
         "Two pointers": "Two pointers needs sorted order; duplicates are not at symmetric positions.",
         "Binary search": "It needs sorted data and still O(n log n) overall with the sort.",
         "Monotonic stack": "No nearest-greater structure is involved."
-      }
+      },
+      "enabled": false
     },
     {
       "id": "cd-insight-01",

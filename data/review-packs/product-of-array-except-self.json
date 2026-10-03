@@ -116,7 +116,8 @@
         "Sliding window": "No contiguous window is being maintained.",
         "Binary search": "Nothing is sorted/monotonic.",
         "Monotonic stack": "No nearest-greater relation."
-      }
+      },
+      "enabled": false
     },
     {
       "id": "pe-insight-01",

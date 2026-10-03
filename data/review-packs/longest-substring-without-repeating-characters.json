@@ -121,7 +121,7 @@
         "Dynamic programming over prefixes": "Overkill; the window already captures all the state needed.",
         "Monotonic stack": "There is no nearest-greater / smaller relationship to maintain."
       },
-      "enabled": true
+      "enabled": false
     },
     {
       "id": "lswrc-invariant-01",

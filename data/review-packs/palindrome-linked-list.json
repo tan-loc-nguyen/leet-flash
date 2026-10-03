@@ -99,7 +99,8 @@
         "Sort the list values and compare with the original": "Order matters.",
         "Hash the nodes into a set and compare by value": "Does not check order.",
         "Use binary search on the node positions in the list": "No random access."
-      }
+      },
+      "enabled": false
     },
     {
       "id": "pl-insight-01",

@@ -101,7 +101,8 @@
         "Binary search on the array": "Subarray products are not searched in a sorted array.",
         "Monotonic stack": "No nearest-greater relation.",
         "Hash map of prefix products": "Used for exact products, not thresholds."
-      }
+      },
+      "enabled": false
     },
     {
       "id": "sp-insight-01",

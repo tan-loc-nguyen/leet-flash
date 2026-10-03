@@ -95,7 +95,7 @@
     },
     {
       "id": "sm5-pattern-01",
-      "category": "pattern",
+      "category": "main_insight",
       "type": "multiple_choice",
       "promptVariants": [
         "Where does the staircase search start and why?",

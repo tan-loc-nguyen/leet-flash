@@ -74,7 +74,7 @@
     },
     {
       "id": "vs-pattern-01",
-      "category": "pattern",
+      "category": "main_insight",
       "type": "multiple_choice",
       "promptVariants": [
         "How can the subarray sum be maintained as the end index grows?",

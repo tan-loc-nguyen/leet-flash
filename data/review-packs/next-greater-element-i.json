@@ -94,7 +94,8 @@
         "Sorting nums2": "Loses the positions that define 'to the right'.",
         "Binary search": "Not sorted.",
         "Heap": "Order by value does not capture position."
-      }
+      },
+      "enabled": false
     },
     {
       "id": "ng1-insight-01",

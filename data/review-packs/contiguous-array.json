@@ -83,7 +83,7 @@
     },
     {
       "id": "ca3-pattern-01",
-      "category": "pattern",
+      "category": "main_insight",
       "type": "multiple_choice",
       "promptVariants": [
         "What trick turns 'equal zeros and ones' into a sum problem?",

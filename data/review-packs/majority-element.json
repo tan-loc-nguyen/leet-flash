@@ -116,7 +116,8 @@
         "Sliding window": "No contiguous window.",
         "Binary search": "The array is unsorted.",
         "Heap of size k": "Would work for top-k but costs O(n log k) and extra space."
-      }
+      },
+      "enabled": false
     },
     {
       "id": "me-insight-01",

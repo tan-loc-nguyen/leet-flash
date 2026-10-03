@@ -87,7 +87,7 @@
     },
     {
       "id": "tl-pattern-01",
-      "category": "pattern",
+      "category": "implementation_detail",
       "type": "multiple_choice",
       "promptVariants": [
         "How do ASCII uppercase and lowercase letters relate?",

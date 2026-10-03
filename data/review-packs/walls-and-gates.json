@@ -94,7 +94,8 @@
         "BFS from each room that looks for the nearest gate": "O((mn)^2).",
         "DFS from each gate, keeping the minimum distance": "DFS does not give shortest paths.",
         "Dynamic programming over the rows of the grid only": "Paths wind around walls."
-      }
+      },
+      "enabled": false
     },
     {
       "id": "wg-insight-01",

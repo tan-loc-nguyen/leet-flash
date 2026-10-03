@@ -105,7 +105,8 @@
         "Binary search on the string and a stack": "Possible on the answer length but needless.",
         "A stack of the characters in the window": "No nesting.",
         "Union find merging equal neighbouring letters": "No connectivity."
-      }
+      },
+      "enabled": false
     },
     {
       "id": "lr-insight-01",

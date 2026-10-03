@@ -69,6 +69,14 @@ def recog(cid, technique="Two pointers on the sorted array", **kw):
     return card
 
 
+def valid_cards(slug):
+    """A complete card set that passes the validator: a recognition card plus the usual categories."""
+    return [recog(f"recog-{slug}"), free(f"{slug}-insight-01", "main_insight"),
+            {"id": f"{slug}-time-01", "category": "time_complexity", "type": "fill_blank",
+             "promptVariants": ["Time: ___", "Time complexity: ___"], "answer": "O(n)", "explanation": "linear"},
+            free(f"{slug}-space-01", "space_complexity")]
+
+
 def make_pack(paths: Paths, slug: str, *, patterns=("Array / Hashing",), cards=None) -> None:
     cards = cards if cards is not None else [
         mcq(f"{slug}-pattern-01", "pattern"), free(f"{slug}-insight-01", "main_insight"),

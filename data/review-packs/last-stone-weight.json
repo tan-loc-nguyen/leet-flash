@@ -76,7 +76,7 @@
     },
     {
       "id": "ls-pattern-01",
-      "category": "pattern",
+      "category": "data_structure",
       "type": "multiple_choice",
       "promptVariants": [
         "Which structure repeatedly gives the two largest elements efficiently?",

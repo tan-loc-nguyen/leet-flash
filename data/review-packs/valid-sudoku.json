@@ -73,7 +73,7 @@
     },
     {
       "id": "vs3-pattern-01",
-      "category": "pattern",
+      "category": "implementation_detail",
       "type": "multiple_choice",
       "promptVariants": [
         "How do you map a cell to its 3x3 box?",

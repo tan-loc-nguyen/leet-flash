@@ -93,7 +93,7 @@
     },
     {
       "id": "kl-pattern-01",
-      "category": "pattern",
+      "category": "data_structure",
       "type": "multiple_choice",
       "promptVariants": [
         "Which structure maintains the k-th largest of a stream?",

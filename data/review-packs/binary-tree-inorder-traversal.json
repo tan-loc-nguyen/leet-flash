@@ -60,8 +60,38 @@
   "edgeCases": [],
   "cards": [
     {
-      "id": "io-pattern-01",
+      "id": "recog-binary-tree-inorder-traversal",
       "category": "pattern",
+      "type": "free_recall",
+      "promptVariants": [
+        "Which technique solves this problem, and what in the statement or constraints points to it?",
+        "Name the technique you would use here and the clue in the problem that tells you.",
+        "What approach fits this problem, and which part of the statement gives it away?"
+      ],
+      "answer": "DFS visiting the left subtree, the node, then the right subtree (recursively or with an explicit stack). Clue: The visiting order is defined by the problem (left subtree, node, right subtree), so implement that DFS order recursively or with a stack.",
+      "keyPoints": [
+        "The visiting order is defined by the problem (left subtree, node, right subtree), so implement that DFS order recursively or with a stack."
+      ],
+      "explanation": "The order is exactly the recursion structure of the tree, and a stack of the left spine reproduces it without recursion.",
+      "rubric": {
+        "technique": "DFS visiting the left subtree, the node, then the right subtree (recursively or with an explicit stack)",
+        "aliases": [
+          "inorder dfs",
+          "iterative with a stack",
+          "morris traversal",
+          "left node right"
+        ],
+        "alsoValid": [],
+        "clueTypes": [
+          "tree_structure",
+          "direct_simulation"
+        ],
+        "clue": "The visiting order is defined by the problem (left subtree, node, right subtree), so implement that DFS order recursively or with a stack."
+      }
+    },
+    {
+      "id": "io-pattern-01",
+      "category": "implementation_detail",
       "type": "multiple_choice",
       "promptVariants": [
         "In what order does inorder traversal visit nodes?",

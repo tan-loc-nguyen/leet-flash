@@ -100,7 +100,8 @@
         "Dynamic programming over every start/end substring pair": "O(n^2) states.",
         "A trie of all the substrings of the string": "Not about prefixes.",
         "Binary search on the substring length with a check": "Counting needs every valid substring, not just a length."
-      }
+      },
+      "enabled": false
     },
     {
       "id": "ns-insight-01",

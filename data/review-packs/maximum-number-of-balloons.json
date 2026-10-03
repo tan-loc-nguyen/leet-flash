@@ -69,7 +69,7 @@
     },
     {
       "id": "mb-pattern-01",
-      "category": "pattern",
+      "category": "main_insight",
       "type": "multiple_choice",
       "promptVariants": [
         "What is the answer in terms of letter counts?",

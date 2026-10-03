@@ -38,6 +38,41 @@
   "edgeCases": [],
   "cards": [
     {
+      "id": "recog-binary-tree-maximum-path-sum",
+      "category": "pattern",
+      "type": "free_recall",
+      "promptVariants": [
+        "Which technique solves this problem, and what in the statement or constraints points to it?",
+        "Name the technique you would use here and the clue in the problem that tells you.",
+        "What approach fits this problem, and which part of the statement gives it away?"
+      ],
+      "answer": "Postorder DFS returning the best downward gain (clamped at 0) while recording the best bent path through each node. Clue: A path may bend at any node, not only at the root, so at each node combine the best downward gains from both children (ignoring negative ones) while returning a single branch to the parent.",
+      "keyPoints": [
+        "A path may bend at any node, not only at the root, so at each node combine the best downward gains from both children (ignoring negative ones) while returning a single branch to the parent."
+      ],
+      "explanation": "The best path through a node uses its two best child branches, but a parent can extend only one of them, so the recursion returns one branch and records the combined one.",
+      "rubric": {
+        "technique": "Postorder DFS returning the best downward gain (clamped at 0) while recording the best bent path through each node",
+        "aliases": [
+          "dfs with a global maximum",
+          "dp on trees",
+          "postorder with clamped gains",
+          "max gain from each child"
+        ],
+        "alsoValid": [
+          {
+            "name": "Try every pair of nodes",
+            "note": "quadratic"
+          }
+        ],
+        "clueTypes": [
+          "tree_structure",
+          "optimization_overlap"
+        ],
+        "clue": "A path may bend at any node, not only at the root, so at each node combine the best downward gains from both children (ignoring negative ones) while returning a single branch to the parent."
+      }
+    },
+    {
       "id": "mp-pattern-01",
       "category": "pattern",
       "type": "multiple_choice",
@@ -57,7 +92,8 @@
         "Add all node values on the longest root-to-leaf path and return that sum": "Negative nodes would reduce the sum.",
         "Sort every node value and add the largest few that form a valid path": "A path must follow tree edges.",
         "BFS over levels, choosing the largest level sum as the path sum": "Level sums are unrelated to paths."
-      }
+      },
+      "enabled": false
     },
     {
       "id": "mp-insight-01",

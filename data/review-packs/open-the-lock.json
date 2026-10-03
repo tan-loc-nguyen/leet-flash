@@ -97,7 +97,8 @@
         "DFS with a visited set over all lock states": "Does not guarantee the shortest path.",
         "Dijkstra with weights on every dial turn": "Unnecessary: all edges have weight 1.",
         "Sorting the deadends and scanning them in order": "Irrelevant."
-      }
+      },
+      "enabled": false
     },
     {
       "id": "ol-insight-01",

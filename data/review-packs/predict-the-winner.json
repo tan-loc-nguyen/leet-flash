@@ -93,7 +93,7 @@
     },
     {
       "id": "ptw-pattern-01",
-      "category": "pattern",
+      "category": "main_insight",
       "type": "multiple_choice",
       "promptVariants": [
         "What does dp[i][j] represent in Predict the Winner?",

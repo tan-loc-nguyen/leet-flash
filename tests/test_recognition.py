@@ -145,7 +145,7 @@ def test_user_text_is_truncated(engine, paths):
 def test_hint_before_answer_caps_correct(engine, paths):
     engine.start("cram", target=1, seed=3)
     engine.next_question()
-    engine.hint()
+    assert "Partial" in engine.hint()["warning"]
     out = grade(engine)
     assert out["result"] == "partial" and out["recognition"]["hintCapped"]
     assert card_events(read_events(paths))[0]["hintCapped"] is True

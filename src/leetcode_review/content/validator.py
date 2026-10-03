@@ -36,8 +36,8 @@ def _format_validation_error(exc: ValidationError) -> list[str]:
     return msgs
 
 
-# Severity of a missing/duplicated recognition card (a warning while packs are being migrated).
-RECOGNITION_LEVEL = "warning"
+# Severity of a missing recognition card or of leftover generated pattern cards.
+RECOGNITION_LEVEL = "error"
 
 
 def validate_pack_file(path: Path, known_slugs: set[str], *, custom: bool = False) -> list[Issue]:
@@ -85,7 +85,7 @@ def validate_pack_file(path: Path, known_slugs: set[str], *, custom: bool = Fals
     recog = [c for c in pack.cards if c.rubric is not None and c.enabled]
     if len(recog) > 1:
         issues.append(Issue(name, "error", f"{len(recog)} enabled recognition cards; a pack has exactly one"))
-    elif not recog:
+    elif not recog and pack.cards:  # a scaffold without cards only gets the "skeleton" warning below
         issues.append(Issue(name, RECOGNITION_LEVEL, "no recognition card (free_recall pattern card with a rubric)"))
     else:
         extra = [c.id for c in pack.cards if c.enabled and c.category == "pattern" and c.rubric is None

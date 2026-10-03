@@ -76,7 +76,7 @@
     },
     {
       "id": "atoi-pattern-01",
-      "category": "pattern",
+      "category": "implementation_detail",
       "type": "multiple_choice",
       "promptVariants": [
         "What are the ordered steps of atoi?",

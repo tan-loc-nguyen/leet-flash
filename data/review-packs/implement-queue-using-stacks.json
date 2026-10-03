@@ -79,7 +79,7 @@
     },
     {
       "id": "qs-pattern-01",
-      "category": "pattern",
+      "category": "main_insight",
       "type": "multiple_choice",
       "promptVariants": [
         "How do two stacks implement a queue in amortised O(1)?",

@@ -99,7 +99,7 @@
     },
     {
       "id": "rs3-pattern-01",
-      "category": "pattern",
+      "category": "data_structure",
       "type": "multiple_choice",
       "promptVariants": [
         "Which two structures give O(1) insert, remove and getRandom?",

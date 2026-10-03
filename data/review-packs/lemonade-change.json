@@ -60,7 +60,7 @@
     },
     {
       "id": "lm-pattern-01",
-      "category": "pattern",
+      "category": "main_insight",
       "type": "multiple_choice",
       "promptVariants": [
         "How should change for a $20 bill be given?",

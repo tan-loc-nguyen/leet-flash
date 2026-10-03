@@ -98,7 +98,8 @@
         "Left-to-right pass with a stack for the digits": "Unnecessary; the carry flows right to left.",
         "Binary search for the digit position to increment": "Not a search problem.",
         "Sorting the digits and adding one to the largest": "Order of digits is meaningful."
-      }
+      },
+      "enabled": false
     },
     {
       "id": "po-insight-01",
