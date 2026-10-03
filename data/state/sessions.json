@@ -904,7 +904,7 @@
       "mode": "daily",
       "status": "active",
       "createdAt": "2026-10-03T12:00:20Z",
-      "updatedAt": "2026-10-03T12:39:16Z",
+      "updatedAt": "2026-10-03T12:41:25Z",
       "seed": 815821225,
       "target": 10,
       "filters": {},
@@ -1434,7 +1434,14 @@
             "kb-time-01",
             "kb-space-01"
           ],
-          "answers": [],
+          "answers": [
+            {
+              "cardId": "kb-insight-01",
+              "category": "main_insight",
+              "result": "correct",
+              "timestamp": "2026-10-03T12:41:25Z"
+            }
+          ],
           "hintLevel": 0,
           "presented": {
             "kb-insight-01": {

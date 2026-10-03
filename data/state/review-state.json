@@ -367,13 +367,13 @@
     "cardStats": {
       "kb-insight-01": {
         "category": "main_insight",
-        "seen": 1,
-        "correct": 1,
+        "seen": 2,
+        "correct": 2,
         "partial": 0,
         "failed": 0,
         "incorrectStreak": 0,
         "lastResult": "correct",
-        "lastSeenAt": "2026-10-02T02:25:48Z"
+        "lastSeenAt": "2026-10-03T12:41:25Z"
       },
       "kb-code-01": {
         "category": "code_reasoning",
@@ -408,14 +408,15 @@
     },
     "categoryStats": {
       "main_insight": {
-        "seen": 1,
-        "correct": 1,
+        "seen": 2,
+        "correct": 2,
         "partial": 0,
         "failed": 0,
         "incorrectStreak": 0,
         "lastResult": "correct",
-        "lastSeenAt": "2026-10-02T02:25:48Z",
+        "lastSeenAt": "2026-10-03T12:41:25Z",
         "recent": [
+          "correct",
           "correct"
         ]
       },

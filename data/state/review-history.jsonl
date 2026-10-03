@@ -78,3 +78,4 @@
 {"timestamp":"2026-10-03T12:38:54Z","sessionId":"daily-2026-10-03","problem":"maximum-average-subarray-i","card":"mas-time-01","category":"time_complexity","result":"correct","mode":"daily"}
 {"timestamp":"2026-10-03T12:39:15Z","sessionId":"daily-2026-10-03","problem":"maximum-average-subarray-i","card":"mas-space-01","category":"space_complexity","result":"correct","mode":"daily"}
 {"timestamp":"2026-10-03T12:39:15Z","event":"problem_review","sessionId":"daily-2026-10-03","problem":"maximum-average-subarray-i","mode":"daily","score":0.847,"outcome":"hold","levelBefore":1,"levelAfter":1,"nextReview":"2026-10-04T00:00:00Z","cards":4}
+{"timestamp":"2026-10-03T12:41:25Z","sessionId":"daily-2026-10-03","problem":"koko-eating-bananas","card":"kb-insight-01","category":"main_insight","result":"correct","mode":"daily"}
