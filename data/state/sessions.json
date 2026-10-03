@@ -904,7 +904,7 @@
       "mode": "daily",
       "status": "active",
       "createdAt": "2026-10-03T12:00:20Z",
-      "updatedAt": "2026-10-03T12:38:25Z",
+      "updatedAt": "2026-10-03T12:38:54Z",
       "seed": 815821225,
       "target": 10,
       "filters": {},
@@ -1366,6 +1366,12 @@
               "category": "edge_case",
               "result": "correct",
               "timestamp": "2026-10-03T12:38:25Z"
+            },
+            {
+              "cardId": "mas-time-01",
+              "category": "time_complexity",
+              "result": "correct",
+              "timestamp": "2026-10-03T12:38:54Z"
             }
           ],
           "hintLevel": 0,
