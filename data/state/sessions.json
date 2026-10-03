@@ -904,7 +904,7 @@
       "mode": "daily",
       "status": "active",
       "createdAt": "2026-10-03T12:00:20Z",
-      "updatedAt": "2026-10-03T12:08:53Z",
+      "updatedAt": "2026-10-03T12:11:21Z",
       "seed": 815821225,
       "target": 10,
       "filters": {},
@@ -1017,7 +1017,14 @@
             "cd2-time-01",
             "cd2-space-01"
           ],
-          "answers": [],
+          "answers": [
+            {
+              "cardId": "cd2-insight-01",
+              "category": "main_insight",
+              "result": "correct",
+              "timestamp": "2026-10-03T12:11:21Z"
+            }
+          ],
           "hintLevel": 0,
           "presented": {
             "cd2-insight-01": {
