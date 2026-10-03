@@ -48,6 +48,37 @@
   ],
   "cards": [
     {
+      "id": "recog-reorganize-string",
+      "category": "pattern",
+      "type": "free_recall",
+      "promptVariants": [
+        "Which technique solves this problem, and what in the statement or constraints points to it?",
+        "Name the technique you would use here and the clue in the problem that tells you.",
+        "What approach fits this problem, and which part of the statement gives it away?"
+      ],
+      "answer": "Greedy on letter counts: place the most frequent remaining letter that differs from the previous one (max-heap), or fill even indices first. Clue: No two adjacent characters may match, so the most frequent letter is the bottleneck and must be spread out first; it is possible only if no letter exceeds half the length rounded up.",
+      "keyPoints": [
+        "No two adjacent characters may match, so the most frequent letter is the bottleneck and must be spread out first; it is possible only if no letter exceeds half the length rounded up."
+      ],
+      "explanation": "The most frequent letter limits the arrangement, so placing it first (or on alternating positions) and filling the gaps with the rest works whenever it is feasible.",
+      "rubric": {
+        "technique": "Greedy on letter counts: place the most frequent remaining letter that differs from the previous one (max-heap), or fill even indices first",
+        "aliases": [
+          "max heap greedy",
+          "counting and even odd fill",
+          "most frequent first",
+          "priority queue greedy"
+        ],
+        "alsoValid": [],
+        "clueTypes": [
+          "local_choice",
+          "top_k",
+          "lookup_frequency"
+        ],
+        "clue": "No two adjacent characters may match, so the most frequent letter is the bottleneck and must be spread out first; it is possible only if no letter exceeds half the length rounded up."
+      }
+    },
+    {
       "id": "rs2-pattern-01",
       "category": "pattern",
       "type": "multiple_choice",

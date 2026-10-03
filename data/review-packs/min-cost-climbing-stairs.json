@@ -52,6 +52,40 @@
   "edgeCases": [],
   "cards": [
     {
+      "id": "recog-min-cost-climbing-stairs",
+      "category": "pattern",
+      "type": "free_recall",
+      "promptVariants": [
+        "Which technique solves this problem, and what in the statement or constraints points to it?",
+        "Name the technique you would use here and the clue in the problem that tells you.",
+        "What approach fits this problem, and which part of the statement gives it away?"
+      ],
+      "answer": "DP: the cost to stand on step i is cost[i] plus the cheaper of the two ways to arrive, with two rolling values. Clue: You can climb one or two steps and want the minimum total cost, so the cost to reach a step depends on the two steps before it and the same subproblems recur.",
+      "keyPoints": [
+        "You can climb one or two steps and want the minimum total cost, so the cost to reach a step depends on the two steps before it and the same subproblems recur."
+      ],
+      "explanation": "The cheapest way up to a step is a minimum over two earlier results, which a rolling pair of values computes in one pass.",
+      "rubric": {
+        "technique": "DP: the cost to stand on step i is cost[i] plus the cheaper of the two ways to arrive, with two rolling values",
+        "aliases": [
+          "dp",
+          "bottom-up with two variables",
+          "memoisation",
+          "recursion with a cache"
+        ],
+        "alsoValid": [
+          {
+            "name": "Plain recursion",
+            "note": "exponential, it recomputes the same steps"
+          }
+        ],
+        "clueTypes": [
+          "optimization_overlap"
+        ],
+        "clue": "You can climb one or two steps and want the minimum total cost, so the cost to reach a step depends on the two steps before it and the same subproblems recur."
+      }
+    },
+    {
       "id": "mc4-pattern-01",
       "category": "pattern",
       "type": "multiple_choice",

@@ -46,6 +46,41 @@
   ],
   "cards": [
     {
+      "id": "recog-search-in-rotated-sorted-array",
+      "category": "pattern",
+      "type": "free_recall",
+      "promptVariants": [
+        "Which technique solves this problem, and what in the statement or constraints points to it?",
+        "Name the technique you would use here and the clue in the problem that tells you.",
+        "What approach fits this problem, and which part of the statement gives it away?"
+      ],
+      "answer": "Modified binary search: find which half is sorted, then check whether the target lies in it. Clue: The array is ascending but rotated, so at least one half around the middle is still sorted, and a comparison shows whether the target is inside it.",
+      "keyPoints": [
+        "The array is ascending but rotated, so at least one half around the middle is still sorted, and a comparison shows whether the target is inside it."
+      ],
+      "explanation": "One half is always sorted, so you can test the target against that half's range and discard the other half every step.",
+      "rubric": {
+        "technique": "Modified binary search: find which half is sorted, then check whether the target lies in it",
+        "aliases": [
+          "binary search on a rotated array",
+          "find the pivot then binary search",
+          "two binary searches",
+          "compare lo with mid"
+        ],
+        "alsoValid": [
+          {
+            "name": "Linear scan",
+            "note": "correct, but ignores the sorted structure"
+          }
+        ],
+        "clueTypes": [
+          "sorted_or_ordered",
+          "monotonic_answer"
+        ],
+        "clue": "The array is ascending but rotated, so at least one half around the middle is still sorted, and a comparison shows whether the target is inside it."
+      }
+    },
+    {
       "id": "sr3-pattern-01",
       "category": "pattern",
       "type": "multiple_choice",

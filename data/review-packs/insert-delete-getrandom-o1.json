@@ -59,6 +59,45 @@
   ],
   "cards": [
     {
+      "id": "recog-insert-delete-getrandom-o1",
+      "category": "pattern",
+      "type": "free_recall",
+      "promptVariants": [
+        "Which technique solves this problem, and what in the statement or constraints points to it?",
+        "Name the technique you would use here and the clue in the problem that tells you.",
+        "What approach fits this problem, and which part of the statement gives it away?"
+      ],
+      "answer": "A list of values plus a hash map from value to list index, removing by swapping with the last element. Clue: Every operation must take constant time on average: a hash map gives lookups but random picking needs an array index, so combine them and remove by swapping with the last element.",
+      "keyPoints": [
+        "Every operation must take constant time on average: a hash map gives lookups but random picking needs an array index, so combine them and remove by swapping with the last element."
+      ],
+      "explanation": "The array gives uniform random access, the map finds an element's position, and swapping with the last element removes without shifting.",
+      "rubric": {
+        "technique": "A list of values plus a hash map from value to list index, removing by swapping with the last element",
+        "aliases": [
+          "array and hash map",
+          "dict of indices",
+          "swap with last and pop",
+          "list plus dict"
+        ],
+        "alsoValid": [
+          {
+            "name": "A list only",
+            "note": "remove has to search the list, linear time"
+          },
+          {
+            "name": "A hash set only",
+            "note": "random choice needs a conversion to a list, linear time"
+          }
+        ],
+        "clueTypes": [
+          "stream_design",
+          "lookup_frequency"
+        ],
+        "clue": "Every operation must take constant time on average: a hash map gives lookups but random picking needs an array index, so combine them and remove by swapping with the last element."
+      }
+    },
+    {
       "id": "rs3-pattern-01",
       "category": "pattern",
       "type": "multiple_choice",

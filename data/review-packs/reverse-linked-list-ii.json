@@ -45,6 +45,40 @@
   "edgeCases": [],
   "cards": [
     {
+      "id": "recog-reverse-linked-list-ii",
+      "category": "pattern",
+      "type": "free_recall",
+      "promptVariants": [
+        "Which technique solves this problem, and what in the statement or constraints points to it?",
+        "Name the technique you would use here and the clue in the problem that tells you.",
+        "What approach fits this problem, and which part of the statement gives it away?"
+      ],
+      "answer": "Walk to the node before position left, reverse right - left + 1 nodes in place, then reconnect (dummy head). Clue: Only the segment from left to right is reversed in a singly linked list, so find the node before it, reverse that stretch with the pointer-flipping loop and reconnect both ends.",
+      "keyPoints": [
+        "Only the segment from left to right is reversed in a singly linked list, so find the node before it, reverse that stretch with the pointer-flipping loop and reconnect both ends."
+      ],
+      "explanation": "The segment reversal is the plain list reversal applied to a sub-range, with the two boundary links patched afterwards.",
+      "rubric": {
+        "technique": "Walk to the node before position left, reverse right - left + 1 nodes in place, then reconnect (dummy head)",
+        "aliases": [
+          "in-place reversal of a segment",
+          "three pointers",
+          "dummy head",
+          "sublist reversal"
+        ],
+        "alsoValid": [
+          {
+            "name": "Copy the values to an array, reverse a slice and rebuild",
+            "note": "uses O(n) extra space"
+          }
+        ],
+        "clueTypes": [
+          "in_place_pointers"
+        ],
+        "clue": "Only the segment from left to right is reversed in a singly linked list, so find the node before it, reverse that stretch with the pointer-flipping loop and reconnect both ends."
+      }
+    },
+    {
       "id": "rr-pattern-01",
       "category": "pattern",
       "type": "multiple_choice",

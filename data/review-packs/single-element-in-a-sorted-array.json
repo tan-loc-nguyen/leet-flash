@@ -46,6 +46,40 @@
   ],
   "cards": [
     {
+      "id": "recog-single-element-in-a-sorted-array",
+      "category": "pattern",
+      "type": "free_recall",
+      "promptVariants": [
+        "Which technique solves this problem, and what in the statement or constraints points to it?",
+        "Name the technique you would use here and the clue in the problem that tells you.",
+        "What approach fits this problem, and which part of the statement gives it away?"
+      ],
+      "answer": "Binary search on pair parity: compare nums[mid] with its partner and keep the half containing the odd one out. Clue: The array is sorted with every value paired except one and the statement requires logarithmic time, so look for where the pairs shift from even to odd positions.",
+      "keyPoints": [
+        "The array is sorted with every value paired except one and the statement requires logarithmic time, so look for where the pairs shift from even to odd positions."
+      ],
+      "explanation": "Before the single element pairs start at even indices and afterwards at odd ones, so a comparison at the middle tells which side holds it.",
+      "rubric": {
+        "technique": "Binary search on pair parity: compare nums[mid] with its partner and keep the half containing the odd one out",
+        "aliases": [
+          "binary search on even indices",
+          "pairing parity",
+          "binary search with mid xor 1"
+        ],
+        "alsoValid": [
+          {
+            "name": "XOR all the elements",
+            "note": "correct, but linear time instead of logarithmic"
+          }
+        ],
+        "clueTypes": [
+          "sorted_or_ordered",
+          "monotonic_answer"
+        ],
+        "clue": "The array is sorted with every value paired except one and the statement requires logarithmic time, so look for where the pairs shift from even to odd positions."
+      }
+    },
+    {
       "id": "sea-pattern-01",
       "category": "pattern",
       "type": "multiple_choice",

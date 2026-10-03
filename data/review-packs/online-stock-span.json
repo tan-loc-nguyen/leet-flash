@@ -53,6 +53,41 @@
   "edgeCases": [],
   "cards": [
     {
+      "id": "recog-online-stock-span",
+      "category": "pattern",
+      "type": "free_recall",
+      "promptVariants": [
+        "Which technique solves this problem, and what in the statement or constraints points to it?",
+        "Name the technique you would use here and the clue in the problem that tells you.",
+        "What approach fits this problem, and which part of the statement gives it away?"
+      ],
+      "answer": "Monotonic stack of (price, span) pairs: pop prices at most today's and add their spans. Clue: The span counts consecutive earlier days with a price not higher than today's, so you need the previous strictly greater price, which a stack of decreasing prices exposes, and it must work online.",
+      "keyPoints": [
+        "The span counts consecutive earlier days with a price not higher than today's, so you need the previous strictly greater price, which a stack of decreasing prices exposes, and it must work online."
+      ],
+      "explanation": "Popped prices will never be the previous greater for a later day, so the stack stays small and each price is popped once.",
+      "rubric": {
+        "technique": "Monotonic stack of (price, span) pairs: pop prices at most today's and add their spans",
+        "aliases": [
+          "monotonic stack",
+          "stack of indices",
+          "previous greater element",
+          "decreasing stack"
+        ],
+        "alsoValid": [
+          {
+            "name": "Walk backwards on every call",
+            "note": "linear per call, too slow for many calls"
+          }
+        ],
+        "clueTypes": [
+          "next_greater_range",
+          "stream_design"
+        ],
+        "clue": "The span counts consecutive earlier days with a price not higher than today's, so you need the previous strictly greater price, which a stack of decreasing prices exposes, and it must work online."
+      }
+    },
+    {
       "id": "ss-pattern-01",
       "category": "pattern",
       "type": "multiple_choice",

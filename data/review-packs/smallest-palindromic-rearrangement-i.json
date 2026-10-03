@@ -43,6 +43,41 @@
   "edgeCases": [],
   "cards": [
     {
+      "id": "recog-smallest-palindromic-rearrangement-i",
+      "category": "pattern",
+      "type": "free_recall",
+      "promptVariants": [
+        "Which technique solves this problem, and what in the statement or constraints points to it?",
+        "Name the technique you would use here and the clue in the problem that tells you.",
+        "What approach fits this problem, and which part of the statement gives it away?"
+      ],
+      "answer": "Count the letters, build the left half in alphabetical order, then mirror it around the odd letter. Clue: The input is already a palindrome, so only half of each letter's count is free to place, and the lexicographically smallest result puts the smallest letters first.",
+      "keyPoints": [
+        "The input is already a palindrome, so only half of each letter's count is free to place, and the lexicographically smallest result puts the smallest letters first."
+      ],
+      "explanation": "A palindrome is fixed by its first half, so the smallest one uses half of each letter count in alphabetical order, with the odd letter in the middle.",
+      "rubric": {
+        "technique": "Count the letters, build the left half in alphabetical order, then mirror it around the odd letter",
+        "aliases": [
+          "counting sort",
+          "frequency count",
+          "sort the half and mirror",
+          "build half and reverse"
+        ],
+        "alsoValid": [
+          {
+            "name": "Sort the whole string and pair up letters",
+            "note": "correct, but O(n log n) instead of linear"
+          }
+        ],
+        "clueTypes": [
+          "lookup_frequency",
+          "sorted_or_ordered"
+        ],
+        "clue": "The input is already a palindrome, so only half of each letter's count is free to place, and the lexicographically smallest result puts the smallest letters first."
+      }
+    },
+    {
       "id": "sp2-pattern-01",
       "category": "pattern",
       "type": "multiple_choice",

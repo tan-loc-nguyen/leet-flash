@@ -47,6 +47,36 @@
   ],
   "cards": [
     {
+      "id": "recog-largest-number",
+      "category": "pattern",
+      "type": "free_recall",
+      "promptVariants": [
+        "Which technique solves this problem, and what in the statement or constraints points to it?",
+        "Name the technique you would use here and the clue in the problem that tells you.",
+        "What approach fits this problem, and which part of the statement gives it away?"
+      ],
+      "answer": "Sort with a custom comparator: a comes before b when a + b is larger than b + a as strings. Clue: The result depends only on the order of concatenation, and two numbers can be compared by which concatenation is larger, so sort with that pairwise rule.",
+      "keyPoints": [
+        "The result depends only on the order of concatenation, and two numbers can be compared by which concatenation is larger, so sort with that pairwise rule."
+      ],
+      "explanation": "The a + b versus b + a comparison is consistent, so sorting by it places every number where it contributes the most.",
+      "rubric": {
+        "technique": "Sort with a custom comparator: a comes before b when a + b is larger than b + a as strings",
+        "aliases": [
+          "custom sort",
+          "string comparator",
+          "concatenation order",
+          "sort by a+b"
+        ],
+        "alsoValid": [],
+        "clueTypes": [
+          "sorted_or_ordered",
+          "local_choice"
+        ],
+        "clue": "The result depends only on the order of concatenation, and two numbers can be compared by which concatenation is larger, so sort with that pairwise rule."
+      }
+    },
+    {
       "id": "ln-pattern-01",
       "category": "pattern",
       "type": "multiple_choice",

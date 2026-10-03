@@ -46,6 +46,34 @@
   ],
   "cards": [
     {
+      "id": "recog-validate-ip-address",
+      "category": "pattern",
+      "type": "free_recall",
+      "promptVariants": [
+        "Which technique solves this problem, and what in the statement or constraints points to it?",
+        "Name the technique you would use here and the clue in the problem that tells you.",
+        "What approach fits this problem, and which part of the statement gives it away?"
+      ],
+      "answer": "Split on the separator and validate each part against its format rules. Clue: The statement defines both formats part by part (four decimal parts up to 255 without leading zeros, eight hex parts of up to four digits), so split and check each part.",
+      "keyPoints": [
+        "The statement defines both formats part by part (four decimal parts up to 255 without leading zeros, eight hex parts of up to four digits), so split and check each part."
+      ],
+      "explanation": "The formats are fully specified, so a split plus per-part checks decides the answer.",
+      "rubric": {
+        "technique": "Split on the separator and validate each part against its format rules",
+        "aliases": [
+          "string parsing",
+          "split and check each part",
+          "regular expression"
+        ],
+        "alsoValid": [],
+        "clueTypes": [
+          "direct_simulation"
+        ],
+        "clue": "The statement defines both formats part by part (four decimal parts up to 255 without leading zeros, eight hex parts of up to four digits), so split and check each part."
+      }
+    },
+    {
       "id": "vip-pattern-01",
       "category": "pattern",
       "type": "multiple_choice",

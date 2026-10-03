@@ -46,6 +46,36 @@
   "edgeCases": [],
   "cards": [
     {
+      "id": "recog-reverse-integer",
+      "category": "pattern",
+      "type": "free_recall",
+      "promptVariants": [
+        "Which technique solves this problem, and what in the statement or constraints points to it?",
+        "Name the technique you would use here and the clue in the problem that tells you.",
+        "What approach fits this problem, and which part of the statement gives it away?"
+      ],
+      "answer": "Pop the last digit with % 10 and push it onto the result, checking the 32-bit range. Clue: Reversing the digits means repeatedly taking the last digit and appending it to the result, and the statement requires the result to stay within the 32-bit range.",
+      "keyPoints": [
+        "Reversing the digits means repeatedly taking the last digit and appending it to the result, and the statement requires the result to stay within the 32-bit range."
+      ],
+      "explanation": "Popping with remainder and pushing with a multiply-add reverses the digits, and the range check catches overflow.",
+      "rubric": {
+        "technique": "Pop the last digit with % 10 and push it onto the result, checking the 32-bit range",
+        "aliases": [
+          "digit pop and push",
+          "reverse digits arithmetically",
+          "modulo and division",
+          "string reversal"
+        ],
+        "alsoValid": [],
+        "clueTypes": [
+          "direct_simulation",
+          "bit_math"
+        ],
+        "clue": "Reversing the digits means repeatedly taking the last digit and appending it to the result, and the statement requires the result to stay within the 32-bit range."
+      }
+    },
+    {
       "id": "ri-pattern-01",
       "category": "pattern",
       "type": "multiple_choice",

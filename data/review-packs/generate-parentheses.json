@@ -51,6 +51,40 @@
   "edgeCases": [],
   "cards": [
     {
+      "id": "recog-generate-parentheses",
+      "category": "pattern",
+      "type": "free_recall",
+      "promptVariants": [
+        "Which technique solves this problem, and what in the statement or constraints points to it?",
+        "Name the technique you would use here and the clue in the problem that tells you.",
+        "What approach fits this problem, and which part of the statement gives it away?"
+      ],
+      "answer": "Backtracking that builds the string left to right using open and close counts. Clue: It asks for all well-formed strings of n pairs with n at most 8, and a prefix stays valid only while closing brackets never exceed opening ones, so build and prune.",
+      "keyPoints": [
+        "It asks for all well-formed strings of n pairs with n at most 8, and a prefix stays valid only while closing brackets never exceed opening ones, so build and prune."
+      ],
+      "explanation": "Adding '(' while fewer than n are used and ')' while it would not exceed the opens guarantees every built string is valid.",
+      "rubric": {
+        "technique": "Backtracking that builds the string left to right using open and close counts",
+        "aliases": [
+          "dfs with open and close counters",
+          "recursive generation",
+          "closure numbers dynamic programming"
+        ],
+        "alsoValid": [
+          {
+            "name": "Generate all 2^(2n) strings and filter the valid ones",
+            "note": "correct, but wastes work on invalid prefixes"
+          }
+        ],
+        "clueTypes": [
+          "enumerate_all",
+          "nesting_matching"
+        ],
+        "clue": "It asks for all well-formed strings of n pairs with n at most 8, and a prefix stays valid only while closing brackets never exceed opening ones, so build and prune."
+      }
+    },
+    {
       "id": "gp-pattern-01",
       "category": "pattern",
       "type": "multiple_choice",

@@ -47,6 +47,41 @@
   ],
   "cards": [
     {
+      "id": "recog-contiguous-array",
+      "category": "pattern",
+      "type": "free_recall",
+      "promptVariants": [
+        "Which technique solves this problem, and what in the statement or constraints points to it?",
+        "Name the technique you would use here and the clue in the problem that tells you.",
+        "What approach fits this problem, and which part of the statement gives it away?"
+      ],
+      "answer": "Prefix sum with 0 counted as -1 and a hash map of the first index of each running sum. Clue: A balanced subarray has as many 0s as 1s, which becomes a zero sum if 0 counts as -1, and a subarray sums to zero exactly when two prefix sums are equal.",
+      "keyPoints": [
+        "A balanced subarray has as many 0s as 1s, which becomes a zero sum if 0 counts as -1, and a subarray sums to zero exactly when two prefix sums are equal."
+      ],
+      "explanation": "Equal running sums at two positions mean the elements between them cancel out, and storing the first index of each sum gives the longest such stretch.",
+      "rubric": {
+        "technique": "Prefix sum with 0 counted as -1 and a hash map of the first index of each running sum",
+        "aliases": [
+          "prefix sum and hash map",
+          "balance counter",
+          "running sum with first occurrence",
+          "equal prefix sums"
+        ],
+        "alsoValid": [
+          {
+            "name": "Count zeros and ones for every subarray",
+            "note": "quadratic"
+          }
+        ],
+        "clueTypes": [
+          "prefix_range",
+          "contiguous"
+        ],
+        "clue": "A balanced subarray has as many 0s as 1s, which becomes a zero sum if 0 counts as -1, and a subarray sums to zero exactly when two prefix sums are equal."
+      }
+    },
+    {
       "id": "ca3-pattern-01",
       "category": "pattern",
       "type": "multiple_choice",

@@ -30,6 +30,35 @@
   "edgeCases": [],
   "cards": [
     {
+      "id": "recog-reverse-degree-of-a-string",
+      "category": "pattern",
+      "type": "free_recall",
+      "promptVariants": [
+        "Which technique solves this problem, and what in the statement or constraints points to it?",
+        "Name the technique you would use here and the clue in the problem that tells you.",
+        "What approach fits this problem, and which part of the statement gives it away?"
+      ],
+      "answer": "One pass with arithmetic on character codes: (i + 1) * (26 - (c - 'a')). Clue: The formula is given outright (reversed alphabet position times the 1-based index), so loop once and apply it to each character.",
+      "keyPoints": [
+        "The formula is given outright (reversed alphabet position times the 1-based index), so loop once and apply it to each character."
+      ],
+      "explanation": "Each character contributes independently, so a single loop computes the sum.",
+      "rubric": {
+        "technique": "One pass with arithmetic on character codes: (i + 1) * (26 - (c - 'a'))",
+        "aliases": [
+          "direct simulation",
+          "ascii arithmetic",
+          "single loop",
+          "sum of products"
+        ],
+        "alsoValid": [],
+        "clueTypes": [
+          "direct_simulation"
+        ],
+        "clue": "The formula is given outright (reversed alphabet position times the 1-based index), so loop once and apply it to each character."
+      }
+    },
+    {
       "id": "rd2-pattern-01",
       "category": "pattern",
       "type": "multiple_choice",

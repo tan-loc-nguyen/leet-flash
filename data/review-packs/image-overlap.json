@@ -47,6 +47,41 @@
   ],
   "cards": [
     {
+      "id": "recog-image-overlap",
+      "category": "pattern",
+      "type": "free_recall",
+      "promptVariants": [
+        "Which technique solves this problem, and what in the statement or constraints points to it?",
+        "Name the technique you would use here and the clue in the problem that tells you.",
+        "What approach fits this problem, and which part of the statement gives it away?"
+      ],
+      "answer": "Vote by translation vectors: every pair of ones from the two images supports the shift between them. Clue: Sliding one image over the other is described by a shift vector, and each pair of 1s from the two images supports exactly one shift, so count how often each shift occurs.",
+      "keyPoints": [
+        "Sliding one image over the other is described by a shift vector, and each pair of 1s from the two images supports exactly one shift, so count how often each shift occurs."
+      ],
+      "explanation": "The best translation is the one with the most supporting pairs, and a counter over shift vectors finds it directly.",
+      "rubric": {
+        "technique": "Vote by translation vectors: every pair of ones from the two images supports the shift between them",
+        "aliases": [
+          "translation vectors counter",
+          "hash map of shifts",
+          "count offsets",
+          "vote counting"
+        ],
+        "alsoValid": [
+          {
+            "name": "Try every translation and count the overlapping ones",
+            "note": "correct, but about n^4 work"
+          }
+        ],
+        "clueTypes": [
+          "lookup_frequency",
+          "small_constraints"
+        ],
+        "clue": "Sliding one image over the other is described by a shift vector, and each pair of 1s from the two images supports exactly one shift, so count how often each shift occurs."
+      }
+    },
+    {
       "id": "iox-pattern-01",
       "category": "pattern",
       "type": "multiple_choice",

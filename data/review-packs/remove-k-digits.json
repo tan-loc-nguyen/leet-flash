@@ -37,6 +37,41 @@
   "edgeCases": [],
   "cards": [
     {
+      "id": "recog-remove-k-digits",
+      "category": "pattern",
+      "type": "free_recall",
+      "promptVariants": [
+        "Which technique solves this problem, and what in the statement or constraints points to it?",
+        "Name the technique you would use here and the clue in the problem that tells you.",
+        "What approach fits this problem, and which part of the statement gives it away?"
+      ],
+      "answer": "Monotonic increasing stack: pop larger digits while removals remain, then trim the end and leading zeros. Clue: To make the smallest number, removing a digit that is larger than the digit after it improves the leading digits the most, so scan left to right with a stack that drops larger digits.",
+      "keyPoints": [
+        "To make the smallest number, removing a digit that is larger than the digit after it improves the leading digits the most, so scan left to right with a stack that drops larger digits."
+      ],
+      "explanation": "Removing the first digit that is larger than its successor lowers the number more than any later removal, which a stack applies greedily in one pass.",
+      "rubric": {
+        "technique": "Monotonic increasing stack: pop larger digits while removals remain, then trim the end and leading zeros",
+        "aliases": [
+          "greedy with a stack",
+          "monotonic stack",
+          "remove peaks",
+          "pop while the top is greater"
+        ],
+        "alsoValid": [
+          {
+            "name": "Try every way of removing k digits",
+            "note": "combinatorial"
+          }
+        ],
+        "clueTypes": [
+          "local_choice",
+          "next_greater_range"
+        ],
+        "clue": "To make the smallest number, removing a digit that is larger than the digit after it improves the leading digits the most, so scan left to right with a stack that drops larger digits."
+      }
+    },
+    {
       "id": "rk-pattern-01",
       "category": "pattern",
       "type": "multiple_choice",

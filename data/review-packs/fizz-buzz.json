@@ -43,6 +43,35 @@
   ],
   "cards": [
     {
+      "id": "recog-fizz-buzz",
+      "category": "pattern",
+      "type": "free_recall",
+      "promptVariants": [
+        "Which technique solves this problem, and what in the statement or constraints points to it?",
+        "Name the technique you would use here and the clue in the problem that tells you.",
+        "What approach fits this problem, and which part of the statement gives it away?"
+      ],
+      "answer": "Direct simulation: loop from 1 to n and test divisibility by 15 first, then by 3 and by 5. Clue: The output for each number is fully specified by divisibility rules, so loop and test them in the right order, checking numbers divisible by both first.",
+      "keyPoints": [
+        "The output for each number is fully specified by divisibility rules, so loop and test them in the right order, checking numbers divisible by both first."
+      ],
+      "explanation": "Each number is handled independently by the stated rules, with the combined case tested before the single ones.",
+      "rubric": {
+        "technique": "Direct simulation: loop from 1 to n and test divisibility by 15 first, then by 3 and by 5",
+        "aliases": [
+          "if elif chain",
+          "string concatenation",
+          "modulo checks",
+          "simulation"
+        ],
+        "alsoValid": [],
+        "clueTypes": [
+          "direct_simulation"
+        ],
+        "clue": "The output for each number is fully specified by divisibility rules, so loop and test them in the right order, checking numbers divisible by both first."
+      }
+    },
+    {
       "id": "fb3-pattern-01",
       "category": "pattern",
       "type": "multiple_choice",

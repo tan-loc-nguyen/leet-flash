@@ -58,6 +58,40 @@
   "edgeCases": [],
   "cards": [
     {
+      "id": "recog-palindrome-number",
+      "category": "pattern",
+      "type": "free_recall",
+      "promptVariants": [
+        "Which technique solves this problem, and what in the statement or constraints points to it?",
+        "Name the technique you would use here and the clue in the problem that tells you.",
+        "What approach fits this problem, and which part of the statement gives it away?"
+      ],
+      "answer": "Reverse half of the number with % 10 and // 10 and compare it with the other half. Clue: A palindrome reads the same reversed, digits can be peeled off with remainder and integer division, and negative numbers can never qualify, so compare the number with its reversed half.",
+      "keyPoints": [
+        "A palindrome reads the same reversed, digits can be peeled off with remainder and integer division, and negative numbers can never qualify, so compare the number with its reversed half."
+      ],
+      "explanation": "Reversing only half stops the loop in the middle and avoids overflow, and an odd length is handled by dropping the middle digit.",
+      "rubric": {
+        "technique": "Reverse half of the number with % 10 and // 10 and compare it with the other half",
+        "aliases": [
+          "reverse the number",
+          "digit extraction",
+          "reverse half",
+          "reverse the whole number"
+        ],
+        "alsoValid": [
+          {
+            "name": "Convert to a string and compare it with its reverse",
+            "note": "works, but uses extra space and skips the digit arithmetic"
+          }
+        ],
+        "clueTypes": [
+          "math_observation"
+        ],
+        "clue": "A palindrome reads the same reversed, digits can be peeled off with remainder and integer division, and negative numbers can never qualify, so compare the number with its reversed half."
+      }
+    },
+    {
       "id": "pn-pattern-01",
       "category": "pattern",
       "type": "multiple_choice",

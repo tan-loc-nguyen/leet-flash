@@ -47,6 +47,40 @@
   ],
   "cards": [
     {
+      "id": "recog-construct-uniform-parity-array-ii",
+      "category": "pattern",
+      "type": "free_recall",
+      "promptVariants": [
+        "Which technique solves this problem, and what in the statement or constraints points to it?",
+        "Name the technique you would use here and the clue in the problem that tells you.",
+        "What approach fits this problem, and which part of the statement gives it away?"
+      ],
+      "answer": "Parity case analysis: if both parities occur, the answer is whether the smallest odd element is smaller than the smallest even element. Clue: Subtracting an odd number flips parity, an even one keeps it, and the difference must be at least 1, so only the smallest odd and smallest even elements decide whether everything can become odd.",
+      "keyPoints": [
+        "Subtracting an odd number flips parity, an even one keeps it, and the difference must be at least 1, so only the smallest odd and smallest even elements decide whether everything can become odd."
+      ],
+      "explanation": "An odd element can never be changed into an even one when it is the smallest odd, while an even element needs a smaller odd element to flip, which gives the min_odd < min_even test.",
+      "rubric": {
+        "technique": "Parity case analysis: if both parities occur, the answer is whether the smallest odd element is smaller than the smallest even element",
+        "aliases": [
+          "compare min odd and min even",
+          "parity argument",
+          "case analysis on parity"
+        ],
+        "alsoValid": [
+          {
+            "name": "Try each element against every other",
+            "note": "quadratic, too slow for 10^5 elements"
+          }
+        ],
+        "clueTypes": [
+          "bit_math",
+          "math_observation"
+        ],
+        "clue": "Subtracting an odd number flips parity, an even one keeps it, and the difference must be at least 1, so only the smallest odd and smallest even elements decide whether everything can become odd."
+      }
+    },
+    {
       "id": "cup-pattern-01",
       "category": "pattern",
       "type": "multiple_choice",

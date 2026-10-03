@@ -69,6 +69,42 @@
   "edgeCases": [],
   "cards": [
     {
+      "id": "recog-sort-an-array",
+      "category": "pattern",
+      "type": "free_recall",
+      "promptVariants": [
+        "Which technique solves this problem, and what in the statement or constraints points to it?",
+        "Name the technique you would use here and the clue in the problem that tells you.",
+        "What approach fits this problem, and which part of the statement gives it away?"
+      ],
+      "answer": "Merge sort: split in halves, sort each recursively and merge in linear time. Clue: Built-ins are forbidden and n log n time is required, which rules out quadratic sorts, so split the array, sort the halves and merge them.",
+      "keyPoints": [
+        "Built-ins are forbidden and n log n time is required, which rules out quadratic sorts, so split the array, sort the halves and merge them."
+      ],
+      "explanation": "Halving gives log n levels and merging costs linear time per level, so the total is n log n and the worst case is guaranteed.",
+      "rubric": {
+        "technique": "Merge sort: split in halves, sort each recursively and merge in linear time",
+        "aliases": [
+          "merge sort",
+          "divide and conquer sort",
+          "heap sort",
+          "quicksort with a random pivot",
+          "counting sort"
+        ],
+        "alsoValid": [
+          {
+            "name": "Insertion, bubble or selection sort",
+            "note": "quadratic, too slow for 5 * 10^4 elements"
+          }
+        ],
+        "clueTypes": [
+          "divide_halves",
+          "sorted_or_ordered"
+        ],
+        "clue": "Built-ins are forbidden and n log n time is required, which rules out quadratic sorts, so split the array, sort the halves and merge them."
+      }
+    },
+    {
       "id": "sa-pattern-01",
       "category": "pattern",
       "type": "multiple_choice",

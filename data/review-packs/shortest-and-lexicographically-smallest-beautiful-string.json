@@ -49,6 +49,36 @@
   "edgeCases": [],
   "cards": [
     {
+      "id": "recog-shortest-and-lexicographically-smallest-beautiful-string",
+      "category": "pattern",
+      "type": "free_recall",
+      "promptVariants": [
+        "Which technique solves this problem, and what in the statement or constraints points to it?",
+        "Name the technique you would use here and the clue in the problem that tells you.",
+        "What approach fits this problem, and which part of the statement gives it away?"
+      ],
+      "answer": "Sliding window with exactly k ones, shrinking from the left, keeping the best by (length, string). Clue: A beautiful substring has exactly k ones, which is a window property, and the string is short (at most 100 characters), so slide a window and compare candidates by length and then lexicographically.",
+      "keyPoints": [
+        "A beautiful substring has exactly k ones, which is a window property, and the string is short (at most 100 characters), so slide a window and compare candidates by length and then lexicographically."
+      ],
+      "explanation": "Shrinking from the left while the count stays k gives the minimal window at each right end, and comparing (length, string) selects the answer.",
+      "rubric": {
+        "technique": "Sliding window with exactly k ones, shrinking from the left, keeping the best by (length, string)",
+        "aliases": [
+          "sliding window",
+          "two pointers on the ones count",
+          "enumerate windows with k ones",
+          "brute force with small constraints"
+        ],
+        "alsoValid": [],
+        "clueTypes": [
+          "contiguous",
+          "small_constraints"
+        ],
+        "clue": "A beautiful substring has exactly k ones, which is a window property, and the string is short (at most 100 characters), so slide a window and compare candidates by length and then lexicographically."
+      }
+    },
+    {
       "id": "sb-pattern-01",
       "category": "pattern",
       "type": "multiple_choice",

@@ -58,6 +58,40 @@
   "edgeCases": [],
   "cards": [
     {
+      "id": "recog-linked-list-cycle",
+      "category": "pattern",
+      "type": "free_recall",
+      "promptVariants": [
+        "Which technique solves this problem, and what in the statement or constraints points to it?",
+        "Name the technique you would use here and the clue in the problem that tells you.",
+        "What approach fits this problem, and which part of the statement gives it away?"
+      ],
+      "answer": "Floyd's slow and fast pointers: they meet if and only if the list has a cycle. Clue: Following next pointers either reaches the end or loops forever, and detecting the loop without extra memory calls for two pointers moving at different speeds.",
+      "keyPoints": [
+        "Following next pointers either reaches the end or loops forever, and detecting the loop without extra memory calls for two pointers moving at different speeds."
+      ],
+      "explanation": "Inside a cycle the faster pointer gains one node per step on the slower one, so they must meet, while without a cycle the fast one just hits the end.",
+      "rubric": {
+        "technique": "Floyd's slow and fast pointers: they meet if and only if the list has a cycle",
+        "aliases": [
+          "tortoise and hare",
+          "fast and slow pointers",
+          "floyd cycle detection",
+          "two pointers"
+        ],
+        "alsoValid": [
+          {
+            "name": "Hash set of visited nodes",
+            "note": "correct, but uses O(n) extra space"
+          }
+        ],
+        "clueTypes": [
+          "in_place_pointers"
+        ],
+        "clue": "Following next pointers either reaches the end or loops forever, and detecting the loop without extra memory calls for two pointers moving at different speeds."
+      }
+    },
+    {
       "id": "lc2-pattern-01",
       "category": "pattern",
       "type": "multiple_choice",

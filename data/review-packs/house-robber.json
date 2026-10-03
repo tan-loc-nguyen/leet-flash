@@ -46,6 +46,40 @@
   ],
   "cards": [
     {
+      "id": "recog-house-robber",
+      "category": "pattern",
+      "type": "free_recall",
+      "promptVariants": [
+        "Which technique solves this problem, and what in the statement or constraints points to it?",
+        "Name the technique you would use here and the clue in the problem that tells you.",
+        "What approach fits this problem, and which part of the statement gives it away?"
+      ],
+      "answer": "DP: best[i] = max(best[i-1], best[i-2] + nums[i]) with two rolling values. Clue: Adjacent houses cannot both be robbed, so at each house you either skip it or rob it plus the best from two houses back, and the same subproblems recur.",
+      "keyPoints": [
+        "Adjacent houses cannot both be robbed, so at each house you either skip it or rob it plus the best from two houses back, and the same subproblems recur."
+      ],
+      "explanation": "The best total up to a house is a choice between two earlier results, so a recurrence with two remembered values solves it.",
+      "rubric": {
+        "technique": "DP: best[i] = max(best[i-1], best[i-2] + nums[i]) with two rolling values",
+        "aliases": [
+          "dp",
+          "rolling two variables",
+          "skip or take",
+          "memoisation"
+        ],
+        "alsoValid": [
+          {
+            "name": "Recursion without caching",
+            "note": "exponential, it recomputes the same suffixes"
+          }
+        ],
+        "clueTypes": [
+          "optimization_overlap"
+        ],
+        "clue": "Adjacent houses cannot both be robbed, so at each house you either skip it or rob it plus the best from two houses back, and the same subproblems recur."
+      }
+    },
+    {
       "id": "hr-pattern-01",
       "category": "pattern",
       "type": "multiple_choice",

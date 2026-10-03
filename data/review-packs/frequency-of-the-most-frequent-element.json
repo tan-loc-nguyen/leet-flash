@@ -52,6 +52,41 @@
   "edgeCases": [],
   "cards": [
     {
+      "id": "recog-frequency-of-the-most-frequent-element",
+      "category": "pattern",
+      "type": "free_recall",
+      "promptVariants": [
+        "Which technique solves this problem, and what in the statement or constraints points to it?",
+        "Name the technique you would use here and the clue in the problem that tells you.",
+        "What approach fits this problem, and which part of the statement gives it away?"
+      ],
+      "answer": "Sort, then slide a window whose cost of raising every element to the window maximum stays within k. Clue: Raising elements to a common value is cheapest for the largest elements below it, which are contiguous in sorted order, and the cost is max times size minus the window sum, so slide a window while it stays within k.",
+      "keyPoints": [
+        "Raising elements to a common value is cheapest for the largest elements below it, which are contiguous in sorted order, and the cost is max times size minus the window sum, so slide a window while it stays within k."
+      ],
+      "explanation": "In sorted order the best group for a target is a contiguous run ending at it, and the window cost can be updated incrementally as the window moves.",
+      "rubric": {
+        "technique": "Sort, then slide a window whose cost of raising every element to the window maximum stays within k",
+        "aliases": [
+          "sorting and sliding window",
+          "two pointers on a sorted array",
+          "sort and window cost",
+          "binary search with prefix sums"
+        ],
+        "alsoValid": [
+          {
+            "name": "For each target count how many elements can be raised",
+            "note": "quadratic"
+          }
+        ],
+        "clueTypes": [
+          "sorted_or_ordered",
+          "contiguous"
+        ],
+        "clue": "Raising elements to a common value is cheapest for the largest elements below it, which are contiguous in sorted order, and the cost is max times size minus the window sum, so slide a window while it stays within k."
+      }
+    },
+    {
       "id": "fm-pattern-01",
       "category": "pattern",
       "type": "multiple_choice",

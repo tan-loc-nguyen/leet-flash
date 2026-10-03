@@ -57,6 +57,40 @@
   "edgeCases": [],
   "cards": [
     {
+      "id": "recog-add-to-array-form-of-integer",
+      "category": "pattern",
+      "type": "free_recall",
+      "promptVariants": [
+        "Which technique solves this problem, and what in the statement or constraints points to it?",
+        "Name the technique you would use here and the clue in the problem that tells you.",
+        "What approach fits this problem, and which part of the statement gives it away?"
+      ],
+      "answer": "Digit-by-digit addition from the end of the array, folding k into the carry. Clue: The number is given as an array of digits and k is added to it, so add from the least significant digit with a carry, consuming k's digits as you go.",
+      "keyPoints": [
+        "The number is given as an array of digits and k is added to it, so add from the least significant digit with a carry, consuming k's digits as you go."
+      ],
+      "explanation": "Adding k to the last digit and carrying the rest propagates the sum leftwards without any conversion.",
+      "rubric": {
+        "technique": "Digit-by-digit addition from the end of the array, folding k into the carry",
+        "aliases": [
+          "carry addition",
+          "add k as you go",
+          "array addition",
+          "grade-school addition"
+        ],
+        "alsoValid": [
+          {
+            "name": "Convert to an integer, add k and split into digits again",
+            "note": "works in Python, but ignores the digit-array form and builds a large integer"
+          }
+        ],
+        "clueTypes": [
+          "direct_simulation"
+        ],
+        "clue": "The number is given as an array of digits and k is added to it, so add from the least significant digit with a carry, consuming k's digits as you go."
+      }
+    },
+    {
       "id": "aa-pattern-01",
       "category": "pattern",
       "type": "multiple_choice",

@@ -56,6 +56,44 @@
   ],
   "cards": [
     {
+      "id": "recog-search-a-2d-matrix-ii",
+      "category": "pattern",
+      "type": "free_recall",
+      "promptVariants": [
+        "Which technique solves this problem, and what in the statement or constraints points to it?",
+        "Name the technique you would use here and the clue in the problem that tells you.",
+        "What approach fits this problem, and which part of the statement gives it away?"
+      ],
+      "answer": "Staircase search from the top-right corner, moving left or down. Clue: Rows and columns are sorted ascending but a row does not start above the previous one, so from the top-right corner each comparison removes a whole row or column.",
+      "keyPoints": [
+        "Rows and columns are sorted ascending but a row does not start above the previous one, so from the top-right corner each comparison removes a whole row or column."
+      ],
+      "explanation": "At the top-right corner a larger value means the column is too big and a smaller one means the row is too small, so each step discards a line.",
+      "rubric": {
+        "technique": "Staircase search from the top-right corner, moving left or down",
+        "aliases": [
+          "start at a corner",
+          "eliminate a row or column per step",
+          "saddleback search",
+          "staircase search"
+        ],
+        "alsoValid": [
+          {
+            "name": "Binary search every row",
+            "note": "correct, but m log n rather than m + n"
+          },
+          {
+            "name": "Divide and conquer into quadrants",
+            "note": "correct, but slower than the staircase"
+          }
+        ],
+        "clueTypes": [
+          "sorted_or_ordered"
+        ],
+        "clue": "Rows and columns are sorted ascending but a row does not start above the previous one, so from the top-right corner each comparison removes a whole row or column."
+      }
+    },
+    {
       "id": "sm5-pattern-01",
       "category": "pattern",
       "type": "multiple_choice",

@@ -42,6 +42,41 @@
   "edgeCases": [],
   "cards": [
     {
+      "id": "recog-sum-of-unique-elements",
+      "category": "pattern",
+      "type": "free_recall",
+      "promptVariants": [
+        "Which technique solves this problem, and what in the statement or constraints points to it?",
+        "Name the technique you would use here and the clue in the problem that tells you.",
+        "What approach fits this problem, and which part of the statement gives it away?"
+      ],
+      "answer": "Frequency count (hash map or count array), then sum the values that occur exactly once. Clue: Unique means appearing exactly once, so count occurrences; values are at most 100, so a plain count array also works.",
+      "keyPoints": [
+        "Unique means appearing exactly once, so count occurrences; values are at most 100, so a plain count array also works."
+      ],
+      "explanation": "The condition is about how many times a value occurs, which a frequency table answers directly.",
+      "rubric": {
+        "technique": "Frequency count (hash map or count array), then sum the values that occur exactly once",
+        "aliases": [
+          "counter",
+          "hash map of counts",
+          "count array",
+          "seen and removed in one pass"
+        ],
+        "alsoValid": [
+          {
+            "name": "Sort and compare neighbours",
+            "note": "works, adds the cost of sorting"
+          }
+        ],
+        "clueTypes": [
+          "lookup_frequency",
+          "small_constraints"
+        ],
+        "clue": "Unique means appearing exactly once, so count occurrences; values are at most 100, so a plain count array also works."
+      }
+    },
+    {
       "id": "su2-pattern-01",
       "category": "pattern",
       "type": "multiple_choice",

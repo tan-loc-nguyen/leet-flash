@@ -44,6 +44,36 @@
   "edgeCases": [],
   "cards": [
     {
+      "id": "recog-find-the-town-judge",
+      "category": "pattern",
+      "type": "free_recall",
+      "promptVariants": [
+        "Which technique solves this problem, and what in the statement or constraints points to it?",
+        "Name the technique you would use here and the clue in the problem that tells you.",
+        "What approach fits this problem, and which part of the statement gives it away?"
+      ],
+      "answer": "Net trust count per person: +1 for each person who trusts them, -1 for each person they trust, so the judge has n - 1. Clue: Trust is a directed relation where the judge trusts nobody and is trusted by everyone else, so count how many people trust each person and whom each person trusts.",
+      "keyPoints": [
+        "Trust is a directed relation where the judge trusts nobody and is trusted by everyone else, so count how many people trust each person and whom each person trusts."
+      ],
+      "explanation": "The judge is the only node with in-degree n - 1 and out-degree 0, so one net score per person identifies them.",
+      "rubric": {
+        "technique": "Net trust count per person: +1 for each person who trusts them, -1 for each person they trust, so the judge has n - 1",
+        "aliases": [
+          "in-degree and out-degree",
+          "degree counting",
+          "array of trust scores",
+          "indegree outdegree counts"
+        ],
+        "alsoValid": [],
+        "clueTypes": [
+          "dependencies_graph",
+          "lookup_frequency"
+        ],
+        "clue": "Trust is a directed relation where the judge trusts nobody and is trusted by everyone else, so count how many people trust each person and whom each person trusts."
+      }
+    },
+    {
       "id": "tj-pattern-01",
       "category": "pattern",
       "type": "multiple_choice",

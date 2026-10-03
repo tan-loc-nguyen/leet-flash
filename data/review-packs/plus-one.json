@@ -44,6 +44,41 @@
   "edgeCases": [],
   "cards": [
     {
+      "id": "recog-plus-one",
+      "category": "pattern",
+      "type": "free_recall",
+      "promptVariants": [
+        "Which technique solves this problem, and what in the statement or constraints points to it?",
+        "Name the technique you would use here and the clue in the problem that tells you.",
+        "What approach fits this problem, and which part of the statement gives it away?"
+      ],
+      "answer": "Add the carry from the last digit leftwards, stopping at the first digit that is not 9. Clue: The number is given as an array of digits, so add one the way you do by hand: start at the least significant digit and carry left.",
+      "keyPoints": [
+        "The number is given as an array of digits, so add one the way you do by hand: start at the least significant digit and carry left."
+      ],
+      "explanation": "Only a run of trailing 9s changes, so the carry stops at the first digit below 9, and a new leading 1 is needed only if every digit was 9.",
+      "rubric": {
+        "technique": "Add the carry from the last digit leftwards, stopping at the first digit that is not 9",
+        "aliases": [
+          "digit carry loop",
+          "right to left carry",
+          "grade-school addition",
+          "carry propagation"
+        ],
+        "alsoValid": [
+          {
+            "name": "Convert the digits to an integer, add one and convert back",
+            "note": "works in Python, but ignores the digit-array form and costs O(n) extra space"
+          }
+        ],
+        "clueTypes": [
+          "direct_simulation",
+          "in_place_pointers"
+        ],
+        "clue": "The number is given as an array of digits, so add one the way you do by hand: start at the least significant digit and carry left."
+      }
+    },
+    {
       "id": "po-pattern-01",
       "category": "pattern",
       "type": "multiple_choice",

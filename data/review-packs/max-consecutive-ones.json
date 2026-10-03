@@ -42,6 +42,40 @@
   "edgeCases": [],
   "cards": [
     {
+      "id": "recog-max-consecutive-ones",
+      "category": "pattern",
+      "type": "free_recall",
+      "promptVariants": [
+        "Which technique solves this problem, and what in the statement or constraints points to it?",
+        "Name the technique you would use here and the clue in the problem that tells you.",
+        "What approach fits this problem, and which part of the statement gives it away?"
+      ],
+      "answer": "Single pass with a running counter that resets on 0. Clue: It asks for the longest contiguous run of 1s in a binary array, so a counter that grows on 1 and resets on 0 is enough.",
+      "keyPoints": [
+        "It asks for the longest contiguous run of 1s in a binary array, so a counter that grows on 1 and resets on 0 is enough."
+      ],
+      "explanation": "Only the current run matters, so one counter and one maximum cover the whole array.",
+      "rubric": {
+        "technique": "Single pass with a running counter that resets on 0",
+        "aliases": [
+          "running counter",
+          "one pass",
+          "linear scan",
+          "kadane-style counter"
+        ],
+        "alsoValid": [
+          {
+            "name": "Join into a string and split on zeros",
+            "note": "correct, but builds extra strings"
+          }
+        ],
+        "clueTypes": [
+          "contiguous"
+        ],
+        "clue": "It asks for the longest contiguous run of 1s in a binary array, so a counter that grows on 1 and resets on 0 is enough."
+      }
+    },
+    {
       "id": "mo1-pattern-01",
       "category": "pattern",
       "type": "multiple_choice",

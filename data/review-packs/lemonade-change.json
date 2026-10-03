@@ -30,6 +30,35 @@
   "edgeCases": [],
   "cards": [
     {
+      "id": "recog-lemonade-change",
+      "category": "pattern",
+      "type": "free_recall",
+      "promptVariants": [
+        "Which technique solves this problem, and what in the statement or constraints points to it?",
+        "Name the technique you would use here and the clue in the problem that tells you.",
+        "What approach fits this problem, and which part of the statement gives it away?"
+      ],
+      "answer": "Greedy with counts of $5 and $10 bills, giving $10 + $5 as change for a $20 first. Clue: Customers are served in order with only three bill sizes, so simulate with counts of the bills you hold and prefer the change that keeps the scarce $5 bills.",
+      "keyPoints": [
+        "Customers are served in order with only three bill sizes, so simulate with counts of the bills you hold and prefer the change that keeps the scarce $5 bills."
+      ],
+      "explanation": "Fives are needed for every change, so spending a ten before two fives never hurts and keeps more flexibility.",
+      "rubric": {
+        "technique": "Greedy with counts of $5 and $10 bills, giving $10 + $5 as change for a $20 first",
+        "aliases": [
+          "greedy",
+          "bill counts",
+          "simulation with counters"
+        ],
+        "alsoValid": [],
+        "clueTypes": [
+          "local_choice",
+          "direct_simulation"
+        ],
+        "clue": "Customers are served in order with only three bill sizes, so simulate with counts of the bills you hold and prefer the change that keeps the scarce $5 bills."
+      }
+    },
+    {
       "id": "lm-pattern-01",
       "category": "pattern",
       "type": "multiple_choice",

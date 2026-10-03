@@ -48,6 +48,42 @@
   "edgeCases": [],
   "cards": [
     {
+      "id": "recog-design-hashmap",
+      "category": "pattern",
+      "type": "free_recall",
+      "promptVariants": [
+        "Which technique solves this problem, and what in the statement or constraints points to it?",
+        "Name the technique you would use here and the clue in the problem that tells you.",
+        "What approach fits this problem, and which part of the statement gives it away?"
+      ],
+      "answer": "Array of buckets indexed by key modulo size, with chaining for collisions (or a direct-address table). Clue: It asks you to build a hash map from scratch with fast put, get and remove, so hash each key into a bucket and handle collisions; keys are at most 10^6, which also permits a direct table.",
+      "keyPoints": [
+        "It asks you to build a hash map from scratch with fast put, get and remove, so hash each key into a bucket and handle collisions; keys are at most 10^6, which also permits a direct table."
+      ],
+      "explanation": "A hash function spreads keys over buckets so each operation touches only a short chain, and a bounded key range even allows direct indexing.",
+      "rubric": {
+        "technique": "Array of buckets indexed by key modulo size, with chaining for collisions (or a direct-address table)",
+        "aliases": [
+          "bucket array with chaining",
+          "hash table with linked lists",
+          "separate chaining",
+          "direct address table",
+          "array indexed by key"
+        ],
+        "alsoValid": [
+          {
+            "name": "One list of pairs scanned on every operation",
+            "note": "every operation costs time linear in the number of keys"
+          }
+        ],
+        "clueTypes": [
+          "stream_design",
+          "lookup_frequency"
+        ],
+        "clue": "It asks you to build a hash map from scratch with fast put, get and remove, so hash each key into a bucket and handle collisions; keys are at most 10^6, which also permits a direct table."
+      }
+    },
+    {
       "id": "hm-pattern-01",
       "category": "pattern",
       "type": "multiple_choice",

@@ -134,3 +134,31 @@ def check_fill_blank(card: Card, text: str) -> bool:
     accepted = [card.answer or "", *card.accepted_answers]
     got = normalize_answer(text)
     return any(got == normalize_answer(a) for a in accepted if a)
+
+
+# --------------------------------------------------------------------------- recognition cards
+
+TECHNIQUE_VERDICTS = ("accepted", "valid", "wrong")  # accepted: the intended technique or an alias
+CLUE_VERDICTS = ("valid", "missing", "wrong")
+
+
+def recognition_card(cards: list[Card]) -> Card | None:
+    """The pack's single free-recall pattern card with a grading rubric, if it has been written."""
+    return next((c for c in cards if c.rubric is not None), None)
+
+
+def grade_recognition(technique: str, clue: str, *, hints: int = 0) -> tuple[str, bool]:
+    """Fixed grading table for the recognition card -> (result, capped_by_hints).
+
+    accepted technique + valid clue -> correct; accepted technique without a valid clue, or a valid but
+    weaker technique -> partial; anything else -> failed. Any hint on the problem caps correct at partial.
+    """
+    if technique not in TECHNIQUE_VERDICTS:
+        raise ValueError(f"technique verdict must be one of: {', '.join(TECHNIQUE_VERDICTS)}")
+    if clue not in CLUE_VERDICTS:
+        raise ValueError(f"clue verdict must be one of: {', '.join(CLUE_VERDICTS)}")
+    if technique == "wrong":
+        return "failed", False
+    if technique == "accepted" and clue == "valid":
+        return ("partial", True) if hints else ("correct", False)
+    return "partial", False

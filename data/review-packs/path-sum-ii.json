@@ -44,6 +44,41 @@
   "edgeCases": [],
   "cards": [
     {
+      "id": "recog-path-sum-ii",
+      "category": "pattern",
+      "type": "free_recall",
+      "promptVariants": [
+        "Which technique solves this problem, and what in the statement or constraints points to it?",
+        "Name the technique you would use here and the clue in the problem that tells you.",
+        "What approach fits this problem, and which part of the statement gives it away?"
+      ],
+      "answer": "DFS with a shared path list: append, recurse, pop, and record a copy at a leaf with the target sum. Clue: It asks for all root-to-leaf paths with a given sum (the paths themselves, not a count), so walk the tree with a path you extend and undo.",
+      "keyPoints": [
+        "It asks for all root-to-leaf paths with a given sum (the paths themselves, not a count), so walk the tree with a path you extend and undo."
+      ],
+      "explanation": "The paths themselves are required, so one shared path that is extended and undone avoids rebuilding it at every node.",
+      "rubric": {
+        "technique": "DFS with a shared path list: append, recurse, pop, and record a copy at a leaf with the target sum",
+        "aliases": [
+          "backtracking on a tree",
+          "dfs with backtracking",
+          "root to leaf dfs with a path",
+          "path tracking dfs"
+        ],
+        "alsoValid": [
+          {
+            "name": "DFS that passes a fresh copy of the path to every call",
+            "note": "correct, but wastes time and memory on copies"
+          }
+        ],
+        "clueTypes": [
+          "tree_structure",
+          "enumerate_all"
+        ],
+        "clue": "It asks for all root-to-leaf paths with a given sum (the paths themselves, not a count), so walk the tree with a path you extend and undo."
+      }
+    },
+    {
       "id": "psii-pattern-01",
       "category": "pattern",
       "type": "multiple_choice",

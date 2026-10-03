@@ -41,6 +41,41 @@
   "edgeCases": [],
   "cards": [
     {
+      "id": "recog-rotting-oranges",
+      "category": "pattern",
+      "type": "free_recall",
+      "promptVariants": [
+        "Which technique solves this problem, and what in the statement or constraints points to it?",
+        "Name the technique you would use here and the clue in the problem that tells you.",
+        "What approach fits this problem, and which part of the statement gives it away?"
+      ],
+      "answer": "Multi-source BFS from all rotten oranges, one level per minute, with a fresh-orange counter. Clue: Every minute all rotten oranges spread to their neighbours at the same time, so it is a breadth-first spread from all rotten cells at once and each level is one minute.",
+      "keyPoints": [
+        "Every minute all rotten oranges spread to their neighbours at the same time, so it is a breadth-first spread from all rotten cells at once and each level is one minute."
+      ],
+      "explanation": "Starting the queue with every rotten orange makes each BFS level a minute, and leftover fresh oranges mean the answer is -1.",
+      "rubric": {
+        "technique": "Multi-source BFS from all rotten oranges, one level per minute, with a fresh-orange counter",
+        "aliases": [
+          "bfs",
+          "multi-source bfs",
+          "level-order bfs on a grid",
+          "simulate with a queue"
+        ],
+        "alsoValid": [
+          {
+            "name": "Rescan the whole grid every minute",
+            "note": "repeats a full scan for every minute"
+          }
+        ],
+        "clueTypes": [
+          "shortest_steps",
+          "grid_connectivity"
+        ],
+        "clue": "Every minute all rotten oranges spread to their neighbours at the same time, so it is a breadth-first spread from all rotten cells at once and each level is one minute."
+      }
+    },
+    {
       "id": "ro2-pattern-01",
       "category": "pattern",
       "type": "multiple_choice",

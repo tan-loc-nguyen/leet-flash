@@ -65,6 +65,41 @@
   "edgeCases": [],
   "cards": [
     {
+      "id": "recog-fibonacci-number",
+      "category": "pattern",
+      "type": "free_recall",
+      "promptVariants": [
+        "Which technique solves this problem, and what in the statement or constraints points to it?",
+        "Name the technique you would use here and the clue in the problem that tells you.",
+        "What approach fits this problem, and which part of the statement gives it away?"
+      ],
+      "answer": "DP on F(n) = F(n-1) + F(n-2): memoise or iterate with two rolling variables. Clue: Each value is defined by the previous two, so a naive recursion repeats the same subproblems, which caching or iterating removes.",
+      "keyPoints": [
+        "Each value is defined by the previous two, so a naive recursion repeats the same subproblems, which caching or iterating removes."
+      ],
+      "explanation": "Overlapping subproblems are solved once if you cache them or compute from the bottom up.",
+      "rubric": {
+        "technique": "DP on F(n) = F(n-1) + F(n-2): memoise or iterate with two rolling variables",
+        "aliases": [
+          "memoisation",
+          "bottom-up",
+          "iterative with two variables",
+          "dp",
+          "matrix exponentiation"
+        ],
+        "alsoValid": [
+          {
+            "name": "Plain recursion",
+            "note": "exponential, it recomputes the same values"
+          }
+        ],
+        "clueTypes": [
+          "optimization_overlap"
+        ],
+        "clue": "Each value is defined by the previous two, so a naive recursion repeats the same subproblems, which caching or iterating removes."
+      }
+    },
+    {
       "id": "fi-pattern-01",
       "category": "pattern",
       "type": "multiple_choice",

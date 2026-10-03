@@ -58,6 +58,43 @@
   ],
   "cards": [
     {
+      "id": "recog-longest-consecutive-sequence",
+      "category": "pattern",
+      "type": "free_recall",
+      "promptVariants": [
+        "Which technique solves this problem, and what in the statement or constraints points to it?",
+        "Name the technique you would use here and the clue in the problem that tells you.",
+        "What approach fits this problem, and which part of the statement gives it away?"
+      ],
+      "answer": "Hash set of the numbers, counting only from sequence starts (x - 1 not in the set). Clue: It requires linear time on unsorted data, which rules out sorting, so use constant-time membership checks to extend each run.",
+      "keyPoints": [
+        "It requires linear time on unsorted data, which rules out sorting, so use constant-time membership checks to extend each run."
+      ],
+      "explanation": "Starting a walk only where x - 1 is absent means every run is counted once, so total work stays linear without sorting.",
+      "rubric": {
+        "technique": "Hash set of the numbers, counting only from sequence starts (x - 1 not in the set)",
+        "aliases": [
+          "set of numbers",
+          "hash set with sequence starts",
+          "count from the start of each run"
+        ],
+        "alsoValid": [
+          {
+            "name": "Sort and scan the runs",
+            "note": "O(n log n), which breaks the linear-time requirement"
+          },
+          {
+            "name": "Union-find merging x with x + 1",
+            "note": "correct, but heavier than needed"
+          }
+        ],
+        "clueTypes": [
+          "lookup_frequency"
+        ],
+        "clue": "It requires linear time on unsorted data, which rules out sorting, so use constant-time membership checks to extend each run."
+      }
+    },
+    {
       "id": "lcs2-pattern-01",
       "category": "pattern",
       "type": "multiple_choice",

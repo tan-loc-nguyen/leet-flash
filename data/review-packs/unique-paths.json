@@ -56,6 +56,41 @@
   ],
   "cards": [
     {
+      "id": "recog-unique-paths",
+      "category": "pattern",
+      "type": "free_recall",
+      "promptVariants": [
+        "Which technique solves this problem, and what in the statement or constraints points to it?",
+        "Name the technique you would use here and the clue in the problem that tells you.",
+        "What approach fits this problem, and which part of the statement gives it away?"
+      ],
+      "answer": "Grid DP: paths(i, j) = paths(i-1, j) + paths(i, j-1), or the binomial count C(m+n-2, m-1). Clue: The robot moves only down or right, so every cell is reached from the cell above or the cell to its left and the counts add, and many routes share the same cells.",
+      "keyPoints": [
+        "The robot moves only down or right, so every cell is reached from the cell above or the cell to its left and the counts add, and many routes share the same cells."
+      ],
+      "explanation": "The number of ways to reach a cell is the sum of the ways to reach its two possible predecessors, which a table (or a binomial formula) computes.",
+      "rubric": {
+        "technique": "Grid DP: paths(i, j) = paths(i-1, j) + paths(i, j-1), or the binomial count C(m+n-2, m-1)",
+        "aliases": [
+          "grid dp",
+          "dp table",
+          "combinatorics",
+          "binomial coefficient",
+          "rolling row"
+        ],
+        "alsoValid": [
+          {
+            "name": "Plain recursion",
+            "note": "exponential, many routes reach the same cell"
+          }
+        ],
+        "clueTypes": [
+          "optimization_overlap"
+        ],
+        "clue": "The robot moves only down or right, so every cell is reached from the cell above or the cell to its left and the counts add, and many routes share the same cells."
+      }
+    },
+    {
       "id": "up-pattern-01",
       "category": "pattern",
       "type": "multiple_choice",

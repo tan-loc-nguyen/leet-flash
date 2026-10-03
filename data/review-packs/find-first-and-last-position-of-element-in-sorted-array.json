@@ -48,6 +48,45 @@
   "edgeCases": [],
   "cards": [
     {
+      "id": "recog-find-first-and-last-position-of-element-in-sorted-array",
+      "category": "pattern",
+      "type": "free_recall",
+      "promptVariants": [
+        "Which technique solves this problem, and what in the statement or constraints points to it?",
+        "Name the technique you would use here and the clue in the problem that tells you.",
+        "What approach fits this problem, and which part of the statement gives it away?"
+      ],
+      "answer": "Two boundary binary searches: lower bound for the first index and upper bound for the last. Clue: The array is sorted and may contain duplicates, and the statement asks for logarithmic time, so binary search for each boundary of the equal range.",
+      "keyPoints": [
+        "The array is sorted and may contain duplicates, and the statement asks for logarithmic time, so binary search for each boundary of the equal range."
+      ],
+      "explanation": "The first index with a value at least the target and the first index with a value greater than it bound the equal range, and each is one binary search.",
+      "rubric": {
+        "technique": "Two boundary binary searches: lower bound for the first index and upper bound for the last",
+        "aliases": [
+          "binary search twice",
+          "lower bound and upper bound",
+          "bisect left and bisect right",
+          "leftmost and rightmost binary search"
+        ],
+        "alsoValid": [
+          {
+            "name": "Find any occurrence, then expand outwards",
+            "note": "degrades to linear time when there are many duplicates"
+          },
+          {
+            "name": "Linear scan",
+            "note": "ignores the sorted order and the logarithmic-time requirement"
+          }
+        ],
+        "clueTypes": [
+          "sorted_or_ordered",
+          "monotonic_answer"
+        ],
+        "clue": "The array is sorted and may contain duplicates, and the statement asks for logarithmic time, so binary search for each boundary of the equal range."
+      }
+    },
+    {
       "id": "fl-pattern-01",
       "category": "pattern",
       "type": "multiple_choice",

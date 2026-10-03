@@ -52,6 +52,42 @@
   "edgeCases": [],
   "cards": [
     {
+      "id": "recog-longest-continuous-subarray-with-absolute-diff-less-than-or-equal-to-limit",
+      "category": "pattern",
+      "type": "free_recall",
+      "promptVariants": [
+        "Which technique solves this problem, and what in the statement or constraints points to it?",
+        "Name the technique you would use here and the clue in the problem that tells you.",
+        "What approach fits this problem, and which part of the statement gives it away?"
+      ],
+      "answer": "Sliding window with two monotonic deques that track the window's maximum and minimum. Clue: The largest pairwise difference in a subarray is its max minus its min, so a window is valid when that is at most the limit; slide a window and keep its max and min available as it moves.",
+      "keyPoints": [
+        "The largest pairwise difference in a subarray is its max minus its min, so a window is valid when that is at most the limit; slide a window and keep its max and min available as it moves."
+      ],
+      "explanation": "Validity depends only on the window's extremes, which monotonic deques maintain in constant amortised time.",
+      "rubric": {
+        "technique": "Sliding window with two monotonic deques that track the window's maximum and minimum",
+        "aliases": [
+          "monotonic deque",
+          "two deques",
+          "sliding window max and min",
+          "two heaps with lazy deletion",
+          "sorted container"
+        ],
+        "alsoValid": [
+          {
+            "name": "Compute the max and min of every subarray",
+            "note": "quadratic"
+          }
+        ],
+        "clueTypes": [
+          "contiguous",
+          "next_greater_range"
+        ],
+        "clue": "The largest pairwise difference in a subarray is its max minus its min, so a window is valid when that is at most the limit; slide a window and keep its max and min available as it moves."
+      }
+    },
+    {
       "id": "lc-pattern-01",
       "category": "pattern",
       "type": "multiple_choice",

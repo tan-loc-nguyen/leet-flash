@@ -42,6 +42,36 @@
   "edgeCases": [],
   "cards": [
     {
+      "id": "recog-permutations",
+      "category": "pattern",
+      "type": "free_recall",
+      "promptVariants": [
+        "Which technique solves this problem, and what in the statement or constraints points to it?",
+        "Name the technique you would use here and the clue in the problem that tells you.",
+        "What approach fits this problem, and which part of the statement gives it away?"
+      ],
+      "answer": "Backtracking that tries each unused element for the next position (or swaps in place). Clue: It asks for every ordering of at most 6 distinct numbers, so fill the positions one by one, trying each unused element.",
+      "keyPoints": [
+        "It asks for every ordering of at most 6 distinct numbers, so fill the positions one by one, trying each unused element."
+      ],
+      "explanation": "Every position takes any element not yet used, which is a decision tree of depth n that the recursion walks.",
+      "rubric": {
+        "technique": "Backtracking that tries each unused element for the next position (or swaps in place)",
+        "aliases": [
+          "dfs with a used array",
+          "swap-based backtracking",
+          "recursive permutations",
+          "itertools.permutations"
+        ],
+        "alsoValid": [],
+        "clueTypes": [
+          "enumerate_all",
+          "small_constraints"
+        ],
+        "clue": "It asks for every ordering of at most 6 distinct numbers, so fill the positions one by one, trying each unused element."
+      }
+    },
+    {
       "id": "pe2-pattern-01",
       "category": "pattern",
       "type": "multiple_choice",

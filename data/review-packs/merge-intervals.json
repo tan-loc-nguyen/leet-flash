@@ -40,6 +40,41 @@
   "edgeCases": [],
   "cards": [
     {
+      "id": "recog-merge-intervals",
+      "category": "pattern",
+      "type": "free_recall",
+      "promptVariants": [
+        "Which technique solves this problem, and what in the statement or constraints points to it?",
+        "Name the technique you would use here and the clue in the problem that tells you.",
+        "What approach fits this problem, and which part of the statement gives it away?"
+      ],
+      "answer": "Sort by start, then sweep: extend the last merged interval when the next start is at most its end. Clue: Intervals can overlap in any input order, but after sorting by start every overlap involves the neighbouring interval, so one sweep merges them.",
+      "keyPoints": [
+        "Intervals can overlap in any input order, but after sorting by start every overlap involves the neighbouring interval, so one sweep merges them."
+      ],
+      "explanation": "Sorting by start puts every interval that could overlap the current one right after it, so a single pass extends or closes the running interval.",
+      "rubric": {
+        "technique": "Sort by start, then sweep: extend the last merged interval when the next start is at most its end",
+        "aliases": [
+          "sort and merge",
+          "sweep line",
+          "sort then linear scan",
+          "sort by start time"
+        ],
+        "alsoValid": [
+          {
+            "name": "Repeatedly merge any overlapping pair",
+            "note": "quadratic"
+          }
+        ],
+        "clueTypes": [
+          "intervals_overlap",
+          "sorted_or_ordered"
+        ],
+        "clue": "Intervals can overlap in any input order, but after sorting by start every overlap involves the neighbouring interval, so one sweep merges them."
+      }
+    },
+    {
       "id": "mi-pattern-01",
       "category": "pattern",
       "type": "multiple_choice",

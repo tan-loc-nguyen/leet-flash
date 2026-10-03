@@ -48,6 +48,41 @@
   "edgeCases": [],
   "cards": [
     {
+      "id": "recog-island-perimeter",
+      "category": "pattern",
+      "type": "free_recall",
+      "promptVariants": [
+        "Which technique solves this problem, and what in the statement or constraints points to it?",
+        "Name the technique you would use here and the clue in the problem that tells you.",
+        "What approach fits this problem, and which part of the statement gives it away?"
+      ],
+      "answer": "Count exposed edges: for each land cell add the sides facing water or the border (or 4 per cell minus 2 per adjacent pair). Clue: The perimeter is just the number of land edges that touch water or the grid border, so each land cell can be examined locally.",
+      "keyPoints": [
+        "The perimeter is just the number of land edges that touch water or the grid border, so each land cell can be examined locally."
+      ],
+      "explanation": "Each land cell contributes four sides minus those shared with other land, so a local count per cell adds up to the perimeter.",
+      "rubric": {
+        "technique": "Count exposed edges: for each land cell add the sides facing water or the border (or 4 per cell minus 2 per adjacent pair)",
+        "aliases": [
+          "count edges",
+          "4 minus shared sides",
+          "land cells and adjacent pairs",
+          "per-cell neighbour check"
+        ],
+        "alsoValid": [
+          {
+            "name": "DFS or BFS over the island",
+            "note": "correct, but a traversal is unnecessary for a single island"
+          }
+        ],
+        "clueTypes": [
+          "grid_connectivity",
+          "direct_simulation"
+        ],
+        "clue": "The perimeter is just the number of land edges that touch water or the grid border, so each land cell can be examined locally."
+      }
+    },
+    {
       "id": "ip-pattern-01",
       "category": "pattern",
       "type": "multiple_choice",

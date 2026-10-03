@@ -39,6 +39,40 @@
   "edgeCases": [],
   "cards": [
     {
+      "id": "recog-guess-number-higher-or-lower",
+      "category": "pattern",
+      "type": "free_recall",
+      "promptVariants": [
+        "Which technique solves this problem, and what in the statement or constraints points to it?",
+        "Name the technique you would use here and the clue in the problem that tells you.",
+        "What approach fits this problem, and which part of the statement gives it away?"
+      ],
+      "answer": "Binary search using the higher/lower feedback of each guess. Clue: Each guess tells you whether the pick is higher or lower, which rules out half of the range, and n can be about 2^31.",
+      "keyPoints": [
+        "Each guess tells you whether the pick is higher or lower, which rules out half of the range, and n can be about 2^31."
+      ],
+      "explanation": "The feedback is a three-way comparison against a sorted range 1..n, so every guess at the middle halves the candidates.",
+      "rubric": {
+        "technique": "Binary search using the higher/lower feedback of each guess",
+        "aliases": [
+          "binary search",
+          "bisect the range",
+          "halving guesses"
+        ],
+        "alsoValid": [
+          {
+            "name": "Guess 1, 2, 3, ... in turn",
+            "note": "linear, too slow for n near 2^31"
+          }
+        ],
+        "clueTypes": [
+          "monotonic_answer",
+          "sorted_or_ordered"
+        ],
+        "clue": "Each guess tells you whether the pick is higher or lower, which rules out half of the range, and n can be about 2^31."
+      }
+    },
+    {
       "id": "gn-pattern-01",
       "category": "pattern",
       "type": "multiple_choice",

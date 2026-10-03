@@ -7,6 +7,7 @@ review-pack models are strict so typos are caught by the validator.
 
 from __future__ import annotations
 
+import re
 from typing import Any, Literal
 
 from pydantic import BaseModel, ConfigDict, Field, model_validator
@@ -58,6 +59,46 @@ PATTERN_TAXONOMY = (
     "Sorting",
     "Divide and Conquer",
     "Queue",
+)
+
+# What in a problem points to its technique. A recognition card names the types its clue belongs to.
+CLUE_TYPES = (
+    "sorted_or_ordered",      # sorted input, or order is what matters
+    "contiguous",             # contiguous subarray / substring / window
+    "prefix_range",           # range sums, running totals, subarray sum equals k
+    "lookup_frequency",       # fast lookup, counting, duplicates, complements, grouping
+    "nesting_matching",       # nested / matched structure, last-in-first-out
+    "next_greater_range",     # nearest greater/smaller element, spans, ranges of influence
+    "in_place_pointers",      # in place, O(1) extra space, pointer manipulation on a structure
+    "tree_structure",         # recursive tree, subtree property, hierarchy
+    "grid_connectivity",      # grid or matrix of cells, regions, islands, flood fill
+    "dependencies_graph",     # relations, prerequisites, connectivity, cycles, components
+    "shortest_steps",         # fewest steps / shortest path / level by level
+    "optimization_overlap",   # min / max / count over choices with overlapping subproblems
+    "enumerate_all",          # generate all combinations / permutations / subsets
+    "small_constraints",      # tiny n makes exhaustive search feasible
+    "local_choice",           # a local rule is provably safe (greedy), exchange argument
+    "monotonic_answer",       # yes/no is monotone in the answer, or sorted/rotated search space
+    "top_k",                  # k largest / smallest, median, merging sorted streams
+    "intervals_overlap",      # intervals, meetings, merging and overlap
+    "stream_design",          # operations with amortised-time requirements, data-structure design
+    "bit_math",               # binary representation, parity, powers of two, number theory
+    "divide_halves",          # split, solve halves, combine
+    "direct_simulation",      # the statement spells out the procedure; implement it without overengineering
+    "math_observation",       # a counting, parity or closed-form argument replaces search or simulation
+)
+
+# Labels too coarse to count as a technique ("Tree" says where you are, not what you do).
+COARSE_TECHNIQUE_LABELS = frozenset({
+    "array", "array / hashing", "string", "hash table", "tree", "binary tree", "bst", "graph", "math", "design",
+    "matrix", "linked list", "stack", "queue", "dp", "technique", "pattern",
+})
+
+# Every pack has one free-recall pattern card with one of these prompts: they name no technique and no complexity.
+RECOGNITION_PROMPTS = (
+    "Which technique solves this problem, and what in the statement or constraints points to it?",
+    "Name the technique you would use here and the clue in the problem that tells you.",
+    "What approach fits this problem, and which part of the statement gives it away?",
 )
 
 # LeetCode topic tag -> suggested review pattern (used only to seed scaffolds).
@@ -165,6 +206,23 @@ class PersonalSolution(StrictModel):
     notes: str | None = None
 
 
+class AlsoValid(StrictModel):
+    """A technique that works but is not the intended answer (brute force, extra space, higher complexity)."""
+
+    name: str
+    note: str = ""
+
+
+class Rubric(StrictModel):
+    """Grading rubric of a recognition card: the user names a technique and the clue that points to it."""
+
+    technique: str
+    aliases: list[str] = Field(default_factory=list)
+    also_valid: list[AlsoValid] = Field(default_factory=list)
+    clue_types: list[str]
+    clue: str
+
+
 class Card(StrictModel):
     id: str
     category: str
@@ -177,6 +235,7 @@ class Card(StrictModel):
     code: str | None = None
     explanation: str = ""
     incorrect_option_explanations: dict[str, str] = Field(default_factory=dict)
+    rubric: Rubric | None = None  # recognition cards only (category pattern, type free_recall)
     enabled: bool = True
     source: Literal["generated", "manual"] = "generated"
 
@@ -184,6 +243,22 @@ class Card(StrictModel):
     def _check(self) -> Card:
         cid = self.id
         problems: list[str] = []
+        if self.rubric is not None:
+            rb = self.rubric
+            if self.category != "pattern" or self.type != "free_recall":
+                problems.append("a rubric is only allowed on a free_recall card of category 'pattern'")
+            if rb.technique.strip().lower() in COARSE_TECHNIQUE_LABELS or not rb.technique.strip():
+                problems.append(f"rubric technique '{rb.technique}' is too coarse; name the specific technique")
+            if not rb.aliases or any(not a.strip() for a in rb.aliases):
+                problems.append("rubric needs at least one alias (another way to name the technique)")
+            if not 1 <= len(rb.clue_types) <= 3 or any(t not in CLUE_TYPES for t in rb.clue_types):
+                problems.append(f"rubric clueTypes needs 1-3 values from: {', '.join(CLUE_TYPES)}")
+            if not rb.clue.strip():
+                problems.append("rubric clue is required")
+            elif re.search(r"O\(", rb.clue):
+                problems.append("rubric clue must not state a complexity")
+            if any(p not in RECOGNITION_PROMPTS for p in self.prompt_variants):
+                problems.append("a recognition card must use the standard prompts (RECOGNITION_PROMPTS)")
         if not cid or not all(c.isalnum() or c in "-_" for c in cid):
             problems.append("id must be non-empty and contain only letters, digits, '-' or '_'")
         if self.category not in CATEGORIES:

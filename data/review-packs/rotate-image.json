@@ -57,6 +57,35 @@
   "edgeCases": [],
   "cards": [
     {
+      "id": "recog-rotate-image",
+      "category": "pattern",
+      "type": "free_recall",
+      "promptVariants": [
+        "Which technique solves this problem, and what in the statement or constraints points to it?",
+        "Name the technique you would use here and the clue in the problem that tells you.",
+        "What approach fits this problem, and which part of the statement gives it away?"
+      ],
+      "answer": "Transpose, then reverse each row (or rotate four cells per step, ring by ring). Clue: The rotation must be done in place on a square matrix, so use the structure of a 90-degree turn: swap cells across the diagonal and reverse the rows, or cycle four cells at a time.",
+      "keyPoints": [
+        "The rotation must be done in place on a square matrix, so use the structure of a 90-degree turn: swap cells across the diagonal and reverse the rows, or cycle four cells at a time."
+      ],
+      "explanation": "A clockwise quarter turn equals a transpose followed by a row reversal, both of which are in-place swaps.",
+      "rubric": {
+        "technique": "Transpose, then reverse each row (or rotate four cells per step, ring by ring)",
+        "aliases": [
+          "transpose and reverse",
+          "ring by ring four-way swap",
+          "layer rotation",
+          "swap across the diagonal"
+        ],
+        "alsoValid": [],
+        "clueTypes": [
+          "in_place_pointers"
+        ],
+        "clue": "The rotation must be done in place on a square matrix, so use the structure of a 90-degree turn: swap cells across the diagonal and reverse the rows, or cycle four cells at a time."
+      }
+    },
+    {
       "id": "ri2-pattern-01",
       "category": "pattern",
       "type": "multiple_choice",

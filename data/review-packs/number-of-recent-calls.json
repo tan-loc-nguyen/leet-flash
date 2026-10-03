@@ -49,6 +49,41 @@
   "edgeCases": [],
   "cards": [
     {
+      "id": "recog-number-of-recent-calls",
+      "category": "pattern",
+      "type": "free_recall",
+      "promptVariants": [
+        "Which technique solves this problem, and what in the statement or constraints points to it?",
+        "Name the technique you would use here and the clue in the problem that tells you.",
+        "What approach fits this problem, and which part of the statement gives it away?"
+      ],
+      "answer": "Queue as a sliding window of timestamps: append t and drop timestamps older than t - 3000 from the front. Clue: Pings arrive in strictly increasing time and only the last 3000 milliseconds count, so old timestamps can be dropped from the front for good.",
+      "keyPoints": [
+        "Pings arrive in strictly increasing time and only the last 3000 milliseconds count, so old timestamps can be dropped from the front for good."
+      ],
+      "explanation": "Because time only grows, an expired timestamp never becomes valid again, so a queue front can be discarded permanently.",
+      "rubric": {
+        "technique": "Queue as a sliding window of timestamps: append t and drop timestamps older than t - 3000 from the front",
+        "aliases": [
+          "deque",
+          "sliding window over time",
+          "queue of timestamps",
+          "binary search on the history"
+        ],
+        "alsoValid": [
+          {
+            "name": "Store all calls and count the recent ones on every ping",
+            "note": "rescans the whole history each time"
+          }
+        ],
+        "clueTypes": [
+          "stream_design",
+          "contiguous"
+        ],
+        "clue": "Pings arrive in strictly increasing time and only the last 3000 milliseconds count, so old timestamps can be dropped from the front for good."
+      }
+    },
+    {
       "id": "rc-pattern-01",
       "category": "pattern",
       "type": "multiple_choice",

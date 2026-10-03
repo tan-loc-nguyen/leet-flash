@@ -46,6 +46,41 @@
   "edgeCases": [],
   "cards": [
     {
+      "id": "recog-number-of-substrings-containing-all-three-characters",
+      "category": "pattern",
+      "type": "free_recall",
+      "promptVariants": [
+        "Which technique solves this problem, and what in the statement or constraints points to it?",
+        "Name the technique you would use here and the clue in the problem that tells you.",
+        "What approach fits this problem, and which part of the statement gives it away?"
+      ],
+      "answer": "Sliding window (or last-seen indices): once a window has a, b and c, every longer extension does too, so add n - r. Clue: It counts substrings that contain all three letters, and once a substring does, extending it to the right keeps it valid, so count each window by its number of extensions.",
+      "keyPoints": [
+        "It counts substrings that contain all three letters, and once a substring does, extending it to the right keeps it valid, so count each window by its number of extensions."
+      ],
+      "explanation": "Validity is preserved when extending to the right, so one valid window end contributes all longer substrings at once.",
+      "rubric": {
+        "technique": "Sliding window (or last-seen indices): once a window has a, b and c, every longer extension does too, so add n - r",
+        "aliases": [
+          "sliding window",
+          "last seen positions of a, b and c",
+          "two pointers",
+          "min of last indices"
+        ],
+        "alsoValid": [
+          {
+            "name": "Check every substring",
+            "note": "cubic or quadratic"
+          }
+        ],
+        "clueTypes": [
+          "contiguous",
+          "lookup_frequency"
+        ],
+        "clue": "It counts substrings that contain all three letters, and once a substring does, extending it to the right keeps it valid, so count each window by its number of extensions."
+      }
+    },
+    {
       "id": "ns-pattern-01",
       "category": "pattern",
       "type": "multiple_choice",

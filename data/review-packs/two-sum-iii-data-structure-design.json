@@ -56,6 +56,41 @@
   "edgeCases": [],
   "cards": [
     {
+      "id": "recog-two-sum-iii-data-structure-design",
+      "category": "pattern",
+      "type": "free_recall",
+      "promptVariants": [
+        "Which technique solves this problem, and what in the statement or constraints points to it?",
+        "Name the technique you would use here and the clue in the problem that tells you.",
+        "What approach fits this problem, and which part of the statement gives it away?"
+      ],
+      "answer": "Hash map of counts of the numbers added; find looks up the complement of each distinct number. Clue: It is Two Sum over a growing stream, so keep counts of the numbers added and look for the complement on find (a number needs two copies to pair with itself).",
+      "keyPoints": [
+        "It is Two Sum over a growing stream, so keep counts of the numbers added and look for the complement on find (a number needs two copies to pair with itself)."
+      ],
+      "explanation": "Counts make add constant time and let find check each distinct value's complement, including the equal-pair case.",
+      "rubric": {
+        "technique": "Hash map of counts of the numbers added; find looks up the complement of each distinct number",
+        "aliases": [
+          "counter",
+          "hash map of counts",
+          "complement lookup",
+          "sorted list and two pointers"
+        ],
+        "alsoValid": [
+          {
+            "name": "A plain list that rebuilds a set on every find",
+            "note": "repeats the setup work on each call"
+          }
+        ],
+        "clueTypes": [
+          "stream_design",
+          "lookup_frequency"
+        ],
+        "clue": "It is Two Sum over a growing stream, so keep counts of the numbers added and look for the complement on find (a number needs two copies to pair with itself)."
+      }
+    },
+    {
       "id": "t3-pattern-01",
       "category": "pattern",
       "type": "multiple_choice",

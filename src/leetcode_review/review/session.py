@@ -28,6 +28,17 @@ from .scoring import core_blocking_failure, problem_score, record_card_result
 KEEP_FINISHED_SESSIONS = 20
 
 
+RECOGNITION_TEXT_LIMIT = 500
+RECOGNITION_GRADING = (
+    "Grade with `answer --text \"<what the user typed>\" --technique accepted|valid|wrong --clue valid|missing|wrong`. "
+    "technique: accepted = the rubric technique or an alias; valid = another approach that works but is weaker "
+    "(rubric alsoValid, or any correct brute force); wrong = anything else, including a coarse topic. "
+    "clue: valid = names a property of the statement or constraints of one of the rubric clueTypes; "
+    "missing = none given; wrong = a property that is not there or does not point to the technique. "
+    "The engine derives the result; do not be generous."
+)
+
+
 class SessionError(Exception):
     """A user-facing, actionable problem with the requested session operation."""
 
@@ -156,15 +167,35 @@ class ReviewEngine:
         ps = cat.state.get(p["slug"])
         rng = random.Random(f"{sess['seed']}-{idx}")
         boost = C.INTERVIEW_CATEGORY_BOOST if sess["mode"] == "interview" else None
-        chosen = cardlib.select_cards(
-            enabled_cards(pack), ps, int(self.settings["cardsPerProblem"]), cat.now, rng,
-            category_boost=boost, focus_categories=sess.get("focusCategories") or None,
-        )
+        chosen = self._choose_cards(sess, pack, ps, cat, rng, boost)
         p["cardIds"] = [c.id for c in chosen]
         p["presented"] = {
             c.id: {"prompt": cardlib.pick_prompt(c, ps), "options": cardlib.present_options(c, rng)} for c in chosen
         }
         p["status"] = "in_progress"
+
+    def _choose_cards(self, sess: dict, pack, ps, cat: Catalog, rng: random.Random, boost) -> list[Card]:
+        """The recognition card (when the pack has one) is always asked first, on top of cardsPerProblem.
+
+        It is skipped only when the user focuses on other categories. Generated pattern cards that are left
+        over from before the recognition card existed never compete for the remaining slots.
+        """
+        cards = enabled_cards(pack)
+        focus = sess.get("focusCategories") or None
+        rec = cardlib.recognition_card(cards)
+        if rec is None:
+            return cardlib.select_cards(cards, ps, int(self.settings["cardsPerProblem"]), cat.now, rng,
+                                        category_boost=boost, focus_categories=focus)
+        if sess["mode"] == "drill":
+            return [rec]
+        take_rec = not focus or "pattern" in focus
+        rest_focus = [f for f in (focus or []) if f != "pattern"] or None
+        pool = [c for c in cards if c is not rec and not (c.category == "pattern" and c.source == "generated")]
+        others: list[Card] = []
+        if not (focus and rest_focus is None):
+            others = cardlib.select_cards(pool, ps, int(self.settings["cardsPerProblem"]), cat.now, rng,
+                                          category_boost=boost, focus_categories=rest_focus)
+        return ([rec] if take_rec else []) + others
 
     def next_question(self) -> dict:
         data, sess = self._require_active()
@@ -213,6 +244,7 @@ class ReviewEngine:
                 "bucket": prob["bucket"],
                 "notes": [n.text for n in p.notes] if qn == 1 else [],
                 "statement": p.problem_statement if qn == 1 and self.settings.get("showStatement", True) else None,
+                "constraints": p.constraints if qn == 1 and self.settings.get("showStatement", True) else None,
             },
             "isFirstQuestion": qn == 1,
             "questionIndex": qn,
@@ -271,11 +303,16 @@ class ReviewEngine:
         if not cur or cur[1]["status"] != "in_progress":
             raise SessionError("No open question. Call `next` first.")
         card = self._current_card(cur[1], cat)
-        return {"card": card.id, "type": card.type, "category": card.category, "answer": card.answer,
-                "acceptedAnswers": card.accepted_answers, "keyPoints": card.key_points,
-                "explanation": card.explanation, "code": card.code}
+        out = {"card": card.id, "type": card.type, "category": card.category, "answer": card.answer,
+               "acceptedAnswers": card.accepted_answers, "keyPoints": card.key_points,
+               "explanation": card.explanation, "code": card.code}
+        if card.rubric:
+            out["rubric"] = card.rubric.to_json()
+            out["grading"] = RECOGNITION_GRADING
+        return out
 
-    def answer(self, *, result: str | None = None, choice: str | None = None, text: str | None = None) -> dict:
+    def answer(self, *, result: str | None = None, choice: str | None = None, text: str | None = None,
+               technique: str | None = None, clue: str | None = None) -> dict:
         data, sess = self._require_active()
         now = self.clock()
         cat = Catalog(self.paths, now)
@@ -289,7 +326,22 @@ class ReviewEngine:
 
         if result is not None and result not in C.RESULT_POINTS:
             raise SessionError(f"result must be one of: {', '.join(C.RESULT_POINTS)}")
-        if card.type == "multiple_choice" and choice is not None:
+        recognition: dict | None = None
+        if card.rubric is not None:
+            if not (text or "").strip() or technique is None or clue is None:
+                raise SessionError("This is a recognition card: pass --text (what the user typed), --technique "
+                                   "accepted|valid|wrong and --clue valid|missing|wrong. " + RECOGNITION_GRADING)
+            try:
+                result, capped = cardlib.grade_recognition(technique, clue, hints=prob["hintLevel"])
+            except ValueError as exc:
+                raise SessionError(str(exc)) from exc
+            rb = card.rubric
+            recognition = {"technique": technique, "clue": clue, "hintCapped": capped,
+                           "referenceTechnique": rb.technique, "aliases": rb.aliases,
+                           "alsoValid": [a.to_json() for a in rb.also_valid],
+                           "referenceClue": rb.clue, "clueTypes": rb.clue_types}
+            feedback["recognition"] = recognition
+        elif card.type == "multiple_choice" and choice is not None:
             picked = cardlib.match_choice(choice, pres["options"] or [])
             if picked is None:
                 raise SessionError(f"'{choice}' does not match any option; use a letter or the option text.")
@@ -320,6 +372,10 @@ class ReviewEngine:
                        "category": card.category, "result": result, "mode": sess["mode"]}
         if prob["hintLevel"]:
             event["hints"] = prob["hintLevel"]
+        if recognition:  # keep what the user typed and how it was judged, so the grading can be audited
+            event.update({"userText": text.strip()[:RECOGNITION_TEXT_LIMIT], "technique": technique, "clue": clue})
+            if recognition["hintCapped"]:
+                event["hintCapped"] = True
         append_event(self.paths, event)  # history first: it is the audit log
 
         store = ReviewStateStore(self.paths)
@@ -334,7 +390,11 @@ class ReviewEngine:
             out["patterns"] = self._patterns(cat, prob["slug"])  # now safe to show
         if len(prob["answers"]) >= len(prob["cardIds"]):
             out["problemFinished"] = True
-            out["problemResult"] = self._finish_problem(sess, prob, cat, store, now)
+            if sess["mode"] == "drill":  # a drill records the card result only: no level or schedule change
+                prob["status"] = "done"
+                out["problemResult"] = None
+            else:
+                out["problemResult"] = self._finish_problem(sess, prob, cat, store, now)
         else:
             out["problemFinished"] = False
         return self._commit_or_finish(data, sess, cat, out)

@@ -59,6 +59,37 @@
   ],
   "cards": [
     {
+      "id": "recog-cheapest-flights-within-k-stops",
+      "category": "pattern",
+      "type": "free_recall",
+      "promptVariants": [
+        "Which technique solves this problem, and what in the statement or constraints points to it?",
+        "Name the technique you would use here and the clue in the problem that tells you.",
+        "What approach fits this problem, and which part of the statement gives it away?"
+      ],
+      "answer": "Bellman-Ford limited to k + 1 rounds (or Dijkstra/BFS over (city, stops) states). Clue: It asks for the cheapest route with at most k stops on a weighted directed graph, so cost alone is not enough: the number of edges used also matters, which rounds of relaxation or a (city, stops) state track.",
+      "keyPoints": [
+        "It asks for the cheapest route with at most k stops on a weighted directed graph, so cost alone is not enough: the number of edges used also matters, which rounds of relaxation or a (city, stops) state track."
+      ],
+      "explanation": "A cheaper path that uses too many stops is useless, so the search has to carry the stop count, which k + 1 rounds of relaxation do naturally.",
+      "rubric": {
+        "technique": "Bellman-Ford limited to k + 1 rounds (or Dijkstra/BFS over (city, stops) states)",
+        "aliases": [
+          "bellman-ford",
+          "bfs over city and stops",
+          "dijkstra with stops",
+          "dp over number of edges",
+          "shortest path with a stop limit"
+        ],
+        "alsoValid": [],
+        "clueTypes": [
+          "shortest_steps",
+          "dependencies_graph"
+        ],
+        "clue": "It asks for the cheapest route with at most k stops on a weighted directed graph, so cost alone is not enough: the number of edges used also matters, which rounds of relaxation or a (city, stops) state track."
+      }
+    },
+    {
       "id": "cf-pattern-01",
       "category": "pattern",
       "type": "multiple_choice",

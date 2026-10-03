@@ -59,6 +59,41 @@
   ],
   "cards": [
     {
+      "id": "recog-sum-of-subarray-minimums",
+      "category": "pattern",
+      "type": "free_recall",
+      "promptVariants": [
+        "Which technique solves this problem, and what in the statement or constraints points to it?",
+        "Name the technique you would use here and the clue in the problem that tells you.",
+        "What approach fits this problem, and which part of the statement gives it away?"
+      ],
+      "answer": "Monotonic stack: for each element count the subarrays where it is the minimum (left span times right span). Clue: A sum over all subarrays of their minimum can be regrouped by element: each element is the minimum of exactly the subarrays that stay between its nearest smaller values.",
+      "keyPoints": [
+        "A sum over all subarrays of their minimum can be regrouped by element: each element is the minimum of exactly the subarrays that stay between its nearest smaller values."
+      ],
+      "explanation": "Counting how many subarrays each element minimises, with spans from a monotonic stack, replaces enumerating all subarrays.",
+      "rubric": {
+        "technique": "Monotonic stack: for each element count the subarrays where it is the minimum (left span times right span)",
+        "aliases": [
+          "contribution technique",
+          "monotonic stack",
+          "nearest smaller on both sides",
+          "dp with a monotonic stack"
+        ],
+        "alsoValid": [
+          {
+            "name": "Enumerate every subarray and take its minimum",
+            "note": "quadratic"
+          }
+        ],
+        "clueTypes": [
+          "next_greater_range",
+          "contiguous"
+        ],
+        "clue": "A sum over all subarrays of their minimum can be regrouped by element: each element is the minimum of exactly the subarrays that stay between its nearest smaller values."
+      }
+    },
+    {
       "id": "ssm-pattern-01",
       "category": "pattern",
       "type": "multiple_choice",

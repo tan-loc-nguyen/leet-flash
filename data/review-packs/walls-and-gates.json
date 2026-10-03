@@ -41,6 +41,40 @@
   "edgeCases": [],
   "cards": [
     {
+      "id": "recog-walls-and-gates",
+      "category": "pattern",
+      "type": "free_recall",
+      "promptVariants": [
+        "Which technique solves this problem, and what in the statement or constraints points to it?",
+        "Name the technique you would use here and the clue in the problem that tells you.",
+        "What approach fits this problem, and which part of the statement gives it away?"
+      ],
+      "answer": "Multi-source BFS starting from all gates at once. Clue: It asks for each room's distance to its nearest gate on a grid with walls, so start from all gates together and let the breadth-first levels give the distances.",
+      "keyPoints": [
+        "It asks for each room's distance to its nearest gate on a grid with walls, so start from all gates together and let the breadth-first levels give the distances."
+      ],
+      "explanation": "The first time a room is reached from the combined frontier is along a shortest path to some gate.",
+      "rubric": {
+        "technique": "Multi-source BFS starting from all gates at once",
+        "aliases": [
+          "bfs from all gates",
+          "multi-source bfs",
+          "level-order bfs on a grid"
+        ],
+        "alsoValid": [
+          {
+            "name": "BFS from every empty room",
+            "note": "repeats the search for each room, quadratic in the grid size"
+          }
+        ],
+        "clueTypes": [
+          "shortest_steps",
+          "grid_connectivity"
+        ],
+        "clue": "It asks for each room's distance to its nearest gate on a grid with walls, so start from all gates together and let the breadth-first levels give the distances."
+      }
+    },
+    {
       "id": "wg-pattern-01",
       "category": "pattern",
       "type": "multiple_choice",

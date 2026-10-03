@@ -36,6 +36,40 @@
   "edgeCases": [],
   "cards": [
     {
+      "id": "recog-next-greater-element-ii",
+      "category": "pattern",
+      "type": "free_recall",
+      "promptVariants": [
+        "Which technique solves this problem, and what in the statement or constraints points to it?",
+        "Name the technique you would use here and the clue in the problem that tells you.",
+        "What approach fits this problem, and which part of the statement gives it away?"
+      ],
+      "answer": "Monotonic stack over two laps (2n steps) to handle the circular wraparound. Clue: It asks for the next greater element in a circular array, so a stack that resolves waiting elements works if you pass over the array twice to cover the wraparound.",
+      "keyPoints": [
+        "It asks for the next greater element in a circular array, so a stack that resolves waiting elements works if you pass over the array twice to cover the wraparound."
+      ],
+      "explanation": "A second lap lets elements near the end find greater values at the start, and each index is still pushed only in the first lap.",
+      "rubric": {
+        "technique": "Monotonic stack over two laps (2n steps) to handle the circular wraparound",
+        "aliases": [
+          "monotonic stack",
+          "double the array",
+          "circular traversal with modulo",
+          "stack over 2n indices"
+        ],
+        "alsoValid": [
+          {
+            "name": "From each index scan up to n steps cyclically",
+            "note": "quadratic"
+          }
+        ],
+        "clueTypes": [
+          "next_greater_range"
+        ],
+        "clue": "It asks for the next greater element in a circular array, so a stack that resolves waiting elements works if you pass over the array twice to cover the wraparound."
+      }
+    },
+    {
       "id": "ng2-pattern-01",
       "category": "pattern",
       "type": "multiple_choice",

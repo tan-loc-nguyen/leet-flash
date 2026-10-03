@@ -37,6 +37,40 @@
   "edgeCases": [],
   "cards": [
     {
+      "id": "recog-length-of-longest-subarray-with-at-most-k-frequency",
+      "category": "pattern",
+      "type": "free_recall",
+      "promptVariants": [
+        "Which technique solves this problem, and what in the statement or constraints points to it?",
+        "Name the technique you would use here and the clue in the problem that tells you.",
+        "What approach fits this problem, and which part of the statement gives it away?"
+      ],
+      "answer": "Sliding window with counts: shrink from the left while the newest value occurs more than k times. Clue: It asks for the longest contiguous subarray in which every value appears at most k times, and only the value just added can break that, so expand to the right and shrink on the left when its count exceeds k.",
+      "keyPoints": [
+        "It asks for the longest contiguous subarray in which every value appears at most k times, and only the value just added can break that, so expand to the right and shrink on the left when its count exceeds k."
+      ],
+      "explanation": "Only the newly added value can violate the limit, so moving the left edge until its count is back to k restores a valid window.",
+      "rubric": {
+        "technique": "Sliding window with counts: shrink from the left while the newest value occurs more than k times",
+        "aliases": [
+          "sliding window",
+          "two pointers with a frequency map",
+          "longest window with bounded counts"
+        ],
+        "alsoValid": [
+          {
+            "name": "Check every subarray",
+            "note": "quadratic"
+          }
+        ],
+        "clueTypes": [
+          "contiguous",
+          "lookup_frequency"
+        ],
+        "clue": "It asks for the longest contiguous subarray in which every value appears at most k times, and only the value just added can break that, so expand to the right and shrink on the left when its count exceeds k."
+      }
+    },
+    {
       "id": "lk-pattern-01",
       "category": "pattern",
       "type": "multiple_choice",

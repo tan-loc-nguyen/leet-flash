@@ -40,6 +40,35 @@
   "edgeCases": [],
   "cards": [
     {
+      "id": "recog-middle-of-the-linked-list",
+      "category": "pattern",
+      "type": "free_recall",
+      "promptVariants": [
+        "Which technique solves this problem, and what in the statement or constraints points to it?",
+        "Name the technique you would use here and the clue in the problem that tells you.",
+        "What approach fits this problem, and which part of the statement gives it away?"
+      ],
+      "answer": "Slow and fast pointers: when fast reaches the end, slow is at the middle. Clue: The length of a singly linked list is unknown and you need the middle in one pass, so move one pointer at twice the speed of the other.",
+      "keyPoints": [
+        "The length of a singly linked list is unknown and you need the middle in one pass, so move one pointer at twice the speed of the other."
+      ],
+      "explanation": "The fast pointer covers twice the distance of the slow one, so when it reaches the end the slow pointer stands at the middle.",
+      "rubric": {
+        "technique": "Slow and fast pointers: when fast reaches the end, slow is at the middle",
+        "aliases": [
+          "fast and slow pointers",
+          "tortoise and hare",
+          "two pointers",
+          "count then walk"
+        ],
+        "alsoValid": [],
+        "clueTypes": [
+          "in_place_pointers"
+        ],
+        "clue": "The length of a singly linked list is unknown and you need the middle in one pass, so move one pointer at twice the speed of the other."
+      }
+    },
+    {
       "id": "mid-pattern-01",
       "category": "pattern",
       "type": "multiple_choice",

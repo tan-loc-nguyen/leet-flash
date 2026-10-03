@@ -60,6 +60,42 @@
   "edgeCases": [],
   "cards": [
     {
+      "id": "recog-two-sum-iv-input-is-a-bst",
+      "category": "pattern",
+      "type": "free_recall",
+      "promptVariants": [
+        "Which technique solves this problem, and what in the statement or constraints points to it?",
+        "Name the technique you would use here and the clue in the problem that tells you.",
+        "What approach fits this problem, and which part of the statement gives it away?"
+      ],
+      "answer": "Traverse the tree with a hash set of seen values, checking whether k - val was seen. Clue: It is Two Sum on a tree: each node needs the partner k - val, so remember the values already seen (or use the BST's inorder order with two pointers).",
+      "keyPoints": [
+        "It is Two Sum on a tree: each node needs the partner k - val, so remember the values already seen (or use the BST's inorder order with two pointers)."
+      ],
+      "explanation": "Knowing the partner value turns the search into a set lookup, and the BST's sorted inorder gives the two-pointer alternative.",
+      "rubric": {
+        "technique": "Traverse the tree with a hash set of seen values, checking whether k - val was seen",
+        "aliases": [
+          "hash set",
+          "two sum on a tree",
+          "dfs or bfs with a set",
+          "inorder array and two pointers",
+          "two bst iterators"
+        ],
+        "alsoValid": [
+          {
+            "name": "Check every pair of nodes",
+            "note": "O(n^2) brute force"
+          }
+        ],
+        "clueTypes": [
+          "lookup_frequency",
+          "sorted_or_ordered"
+        ],
+        "clue": "It is Two Sum on a tree: each node needs the partner k - val, so remember the values already seen (or use the BST's inorder order with two pointers)."
+      }
+    },
+    {
       "id": "tb-pattern-01",
       "category": "pattern",
       "type": "multiple_choice",

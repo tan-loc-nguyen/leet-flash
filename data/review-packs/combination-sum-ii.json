@@ -45,6 +45,39 @@
   "edgeCases": [],
   "cards": [
     {
+      "id": "recog-combination-sum-ii",
+      "category": "pattern",
+      "type": "free_recall",
+      "promptVariants": [
+        "Which technique solves this problem, and what in the statement or constraints points to it?",
+        "Name the technique you would use here and the clue in the problem that tells you.",
+        "What approach fits this problem, and which part of the statement gives it away?"
+      ],
+      "answer": "Sort, then backtrack with i + 1 and skip equal values at the same level. Clue: It asks for all unique combinations from a list that contains duplicates and each number may be used once, so enumerate and skip equal values at the same level.",
+      "keyPoints": [
+        "It asks for all unique combinations from a list that contains duplicates and each number may be used once, so enumerate and skip equal values at the same level."
+      ],
+      "explanation": "Sorting puts equal values together, so skipping repeats among siblings removes duplicate combinations without a set.",
+      "rubric": {
+        "technique": "Sort, then backtrack with i + 1 and skip equal values at the same level",
+        "aliases": [
+          "backtracking with duplicate skipping",
+          "sort and dfs",
+          "skip duplicates among siblings"
+        ],
+        "alsoValid": [
+          {
+            "name": "Generate every subset and de-duplicate with a set",
+            "note": "correct, but explores far more than necessary"
+          }
+        ],
+        "clueTypes": [
+          "enumerate_all"
+        ],
+        "clue": "It asks for all unique combinations from a list that contains duplicates and each number may be used once, so enumerate and skip equal values at the same level."
+      }
+    },
+    {
       "id": "c2-pattern-01",
       "category": "pattern",
       "type": "multiple_choice",

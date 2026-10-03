@@ -57,6 +57,41 @@
   "edgeCases": [],
   "cards": [
     {
+      "id": "recog-clone-graph",
+      "category": "pattern",
+      "type": "free_recall",
+      "promptVariants": [
+        "Which technique solves this problem, and what in the statement or constraints points to it?",
+        "Name the technique you would use here and the clue in the problem that tells you.",
+        "What approach fits this problem, and which part of the statement gives it away?"
+      ],
+      "answer": "Traverse with DFS or BFS and keep a hash map from each original node to its clone. Clue: It asks for a deep copy of a connected graph that may contain cycles, so visit each node once and remember its clone to link neighbours without revisiting.",
+      "keyPoints": [
+        "It asks for a deep copy of a connected graph that may contain cycles, so visit each node once and remember its clone to link neighbours without revisiting."
+      ],
+      "explanation": "The map from original to clone both avoids copying a node twice and breaks cycles.",
+      "rubric": {
+        "technique": "Traverse with DFS or BFS and keep a hash map from each original node to its clone",
+        "aliases": [
+          "dfs with a node map",
+          "bfs with a node map",
+          "memoised clone",
+          "hash map of clones"
+        ],
+        "alsoValid": [
+          {
+            "name": "copy.deepcopy",
+            "note": "works in Python, but skips the traversal the problem is testing"
+          }
+        ],
+        "clueTypes": [
+          "dependencies_graph",
+          "lookup_frequency"
+        ],
+        "clue": "It asks for a deep copy of a connected graph that may contain cycles, so visit each node once and remember its clone to link neighbours without revisiting."
+      }
+    },
+    {
       "id": "cg2-pattern-01",
       "category": "pattern",
       "type": "multiple_choice",

@@ -66,6 +66,41 @@
   "edgeCases": [],
   "cards": [
     {
+      "id": "recog-climbing-stairs",
+      "category": "pattern",
+      "type": "free_recall",
+      "promptVariants": [
+        "Which technique solves this problem, and what in the statement or constraints points to it?",
+        "Name the technique you would use here and the clue in the problem that tells you.",
+        "What approach fits this problem, and which part of the statement gives it away?"
+      ],
+      "answer": "Dynamic programming on ways(n) = ways(n-1) + ways(n-2), keeping two rolling values. Clue: The last move was a 1-step or a 2-step, so the count for n is the sum of the counts for n-1 and n-2, and the same subproblems repeat.",
+      "keyPoints": [
+        "The last move was a 1-step or a 2-step, so the count for n is the sum of the counts for n-1 and n-2, and the same subproblems repeat."
+      ],
+      "explanation": "Each count depends only on the previous two, which is a recurrence that caching or a loop evaluates in linear time.",
+      "rubric": {
+        "technique": "Dynamic programming on ways(n) = ways(n-1) + ways(n-2), keeping two rolling values",
+        "aliases": [
+          "fibonacci",
+          "dp",
+          "memoisation",
+          "bottom-up dp",
+          "recurrence"
+        ],
+        "alsoValid": [
+          {
+            "name": "Plain recursion without caching",
+            "note": "exponential, it recomputes the same subproblems"
+          }
+        ],
+        "clueTypes": [
+          "optimization_overlap"
+        ],
+        "clue": "The last move was a 1-step or a 2-step, so the count for n is the sum of the counts for n-1 and n-2, and the same subproblems repeat."
+      }
+    },
+    {
       "id": "cl-pattern-01",
       "category": "pattern",
       "type": "multiple_choice",

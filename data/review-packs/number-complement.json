@@ -49,6 +49,40 @@
   "edgeCases": [],
   "cards": [
     {
+      "id": "recog-number-complement",
+      "category": "pattern",
+      "type": "free_recall",
+      "promptVariants": [
+        "Which technique solves this problem, and what in the statement or constraints points to it?",
+        "Name the technique you would use here and the clue in the problem that tells you.",
+        "What approach fits this problem, and which part of the statement gives it away?"
+      ],
+      "answer": "XOR with an all-ones mask as long as the number's binary form, mask = (1 << bit_length) - 1. Clue: Only the significant bits are flipped (leading zeros stay zero), so XOR with a run of ones exactly as long as the binary representation.",
+      "keyPoints": [
+        "Only the significant bits are flipped (leading zeros stay zero), so XOR with a run of ones exactly as long as the binary representation."
+      ],
+      "explanation": "XOR with 1 flips a bit, and a mask exactly as long as the number flips the significant bits only.",
+      "rubric": {
+        "technique": "XOR with an all-ones mask as long as the number's binary form, mask = (1 << bit_length) - 1",
+        "aliases": [
+          "bit mask xor",
+          "flip bits with a mask",
+          "bit_length mask",
+          "run of ones"
+        ],
+        "alsoValid": [
+          {
+            "name": "Flip the characters of the binary string and parse it back",
+            "note": "correct, but uses extra string space"
+          }
+        ],
+        "clueTypes": [
+          "bit_math"
+        ],
+        "clue": "Only the significant bits are flipped (leading zeros stay zero), so XOR with a run of ones exactly as long as the binary representation."
+      }
+    },
+    {
       "id": "nc-pattern-01",
       "category": "pattern",
       "type": "multiple_choice",

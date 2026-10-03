@@ -47,6 +47,36 @@
   "edgeCases": [],
   "cards": [
     {
+      "id": "recog-max-chunks-to-make-sorted",
+      "category": "pattern",
+      "type": "free_recall",
+      "promptVariants": [
+        "Which technique solves this problem, and what in the statement or constraints points to it?",
+        "Name the technique you would use here and the clue in the problem that tells you.",
+        "What approach fits this problem, and which part of the statement gives it away?"
+      ],
+      "answer": "Running maximum: a chunk can end at index i exactly when the maximum so far equals i. Clue: The array is a permutation of 0..n-1, so a prefix can be sorted into place exactly when it contains the values 0..i, which happens when its maximum equals i.",
+      "keyPoints": [
+        "The array is a permutation of 0..n-1, so a prefix can be sorted into place exactly when it contains the values 0..i, which happens when its maximum equals i."
+      ],
+      "explanation": "A prefix of a permutation holds exactly 0..i only if its largest value is i, so each such index closes a chunk.",
+      "rubric": {
+        "technique": "Running maximum: a chunk can end at index i exactly when the maximum so far equals i",
+        "aliases": [
+          "prefix max equals index",
+          "greedy chunk counting",
+          "monotonic stack of chunk maxima",
+          "running max"
+        ],
+        "alsoValid": [],
+        "clueTypes": [
+          "local_choice",
+          "sorted_or_ordered"
+        ],
+        "clue": "The array is a permutation of 0..n-1, so a prefix can be sorted into place exactly when it contains the values 0..i, which happens when its maximum equals i."
+      }
+    },
+    {
       "id": "mc3-pattern-01",
       "category": "pattern",
       "type": "multiple_choice",

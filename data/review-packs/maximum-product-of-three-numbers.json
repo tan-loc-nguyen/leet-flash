@@ -53,6 +53,40 @@
   "edgeCases": [],
   "cards": [
     {
+      "id": "recog-maximum-product-of-three-numbers",
+      "category": "pattern",
+      "type": "free_recall",
+      "promptVariants": [
+        "Which technique solves this problem, and what in the statement or constraints points to it?",
+        "Name the technique you would use here and the clue in the problem that tells you.",
+        "What approach fits this problem, and which part of the statement gives it away?"
+      ],
+      "answer": "Compare the product of the three largest with the product of the two smallest and the largest. Clue: Values can be negative and two negatives multiply to a positive, so the best product is either the three largest values or the two smallest with the largest.",
+      "keyPoints": [
+        "Values can be negative and two negatives multiply to a positive, so the best product is either the three largest values or the two smallest with the largest."
+      ],
+      "explanation": "Only the extremes of the sorted order can give the largest product, so two candidates cover all cases.",
+      "rubric": {
+        "technique": "Compare the product of the three largest with the product of the two smallest and the largest",
+        "aliases": [
+          "sort and compare two candidates",
+          "track three largest and two smallest",
+          "case on negatives"
+        ],
+        "alsoValid": [
+          {
+            "name": "Try all triples",
+            "note": "cubic"
+          }
+        ],
+        "clueTypes": [
+          "sorted_or_ordered",
+          "top_k"
+        ],
+        "clue": "Values can be negative and two negatives multiply to a positive, so the best product is either the three largest values or the two smallest with the largest."
+      }
+    },
+    {
       "id": "mp3-pattern-01",
       "category": "pattern",
       "type": "multiple_choice",

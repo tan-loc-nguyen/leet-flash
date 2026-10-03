@@ -40,6 +40,41 @@
   "edgeCases": [],
   "cards": [
     {
+      "id": "recog-time-based-key-value-store",
+      "category": "pattern",
+      "type": "free_recall",
+      "promptVariants": [
+        "Which technique solves this problem, and what in the statement or constraints points to it?",
+        "Name the technique you would use here and the clue in the problem that tells you.",
+        "What approach fits this problem, and which part of the statement gives it away?"
+      ],
+      "answer": "Hash map from key to a list of (timestamp, value), with binary search on get. Clue: Timestamps for a key arrive in increasing order, so each key's history is already sorted, and get needs the latest entry at or before a time over many calls.",
+      "keyPoints": [
+        "Timestamps for a key arrive in increasing order, so each key's history is already sorted, and get needs the latest entry at or before a time over many calls."
+      ],
+      "explanation": "Appending keeps every history sorted for free, and the latest timestamp not after the query is a binary search.",
+      "rubric": {
+        "technique": "Hash map from key to a list of (timestamp, value), with binary search on get",
+        "aliases": [
+          "dict of sorted lists",
+          "bisect",
+          "hash map plus binary search",
+          "binary search on timestamps"
+        ],
+        "alsoValid": [
+          {
+            "name": "Scan the key's history backwards on every get",
+            "note": "linear per get, too slow for 2 * 10^5 calls"
+          }
+        ],
+        "clueTypes": [
+          "stream_design",
+          "sorted_or_ordered"
+        ],
+        "clue": "Timestamps for a key arrive in increasing order, so each key's history is already sorted, and get needs the latest entry at or before a time over many calls."
+      }
+    },
+    {
       "id": "tm-pattern-01",
       "category": "pattern",
       "type": "multiple_choice",

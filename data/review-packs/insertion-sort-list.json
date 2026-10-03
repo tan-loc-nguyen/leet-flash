@@ -47,6 +47,37 @@
   ],
   "cards": [
     {
+      "id": "recog-insertion-sort-list",
+      "category": "pattern",
+      "type": "free_recall",
+      "promptVariants": [
+        "Which technique solves this problem, and what in the statement or constraints points to it?",
+        "Name the technique you would use here and the clue in the problem that tells you.",
+        "What approach fits this problem, and which part of the statement gives it away?"
+      ],
+      "answer": "Insertion sort on the list: take each node and splice it into a sorted list built behind a dummy head. Clue: The statement names the algorithm (insertion sort) and a list can only be reordered by relinking nodes, so insert each node into a sorted part built from a dummy head.",
+      "keyPoints": [
+        "The statement names the algorithm (insertion sort) and a list can only be reordered by relinking nodes, so insert each node into a sorted part built from a dummy head."
+      ],
+      "explanation": "Inserting into a linked list is constant-time relinking once the spot is found, so insertion sort needs no shifting.",
+      "rubric": {
+        "technique": "Insertion sort on the list: take each node and splice it into a sorted list built behind a dummy head",
+        "aliases": [
+          "insertion sort",
+          "dummy head",
+          "sorted prefix insertion",
+          "splice nodes",
+          "merge sort on a list"
+        ],
+        "alsoValid": [],
+        "clueTypes": [
+          "direct_simulation",
+          "in_place_pointers"
+        ],
+        "clue": "The statement names the algorithm (insertion sort) and a list can only be reordered by relinking nodes, so insert each node into a sorted part built from a dummy head."
+      }
+    },
+    {
       "id": "isl-pattern-01",
       "category": "pattern",
       "type": "multiple_choice",

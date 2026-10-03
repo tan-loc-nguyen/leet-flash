@@ -42,6 +42,39 @@
   "edgeCases": [],
   "cards": [
     {
+      "id": "recog-last-stone-weight",
+      "category": "pattern",
+      "type": "free_recall",
+      "promptVariants": [
+        "Which technique solves this problem, and what in the statement or constraints points to it?",
+        "Name the technique you would use here and the clue in the problem that tells you.",
+        "What approach fits this problem, and which part of the statement gives it away?"
+      ],
+      "answer": "Max-heap (a negated min-heap in Python): pop the two heaviest stones and push back the difference. Clue: Each turn needs the two heaviest stones and then inserts a new weight, so use a structure that returns the maximum quickly and accepts insertions.",
+      "keyPoints": [
+        "Each turn needs the two heaviest stones and then inserts a new weight, so use a structure that returns the maximum quickly and accepts insertions."
+      ],
+      "explanation": "Repeatedly taking the largest and reinserting a smaller value is exactly what a max-heap supports in logarithmic time.",
+      "rubric": {
+        "technique": "Max-heap (a negated min-heap in Python): pop the two heaviest stones and push back the difference",
+        "aliases": [
+          "priority queue",
+          "heap",
+          "max heap with negation"
+        ],
+        "alsoValid": [
+          {
+            "name": "Sort the list every round",
+            "note": "re-sorts on every round"
+          }
+        ],
+        "clueTypes": [
+          "top_k"
+        ],
+        "clue": "Each turn needs the two heaviest stones and then inserts a new weight, so use a structure that returns the maximum quickly and accepts insertions."
+      }
+    },
+    {
       "id": "ls-pattern-01",
       "category": "pattern",
       "type": "multiple_choice",

@@ -51,6 +51,41 @@
   "edgeCases": [],
   "cards": [
     {
+      "id": "recog-longest-repeating-character-replacement",
+      "category": "pattern",
+      "type": "free_recall",
+      "promptVariants": [
+        "Which technique solves this problem, and what in the statement or constraints points to it?",
+        "Name the technique you would use here and the clue in the problem that tells you.",
+        "What approach fits this problem, and which part of the statement gives it away?"
+      ],
+      "answer": "Sliding window where the window length minus the count of its most frequent letter is at most k. Clue: A substring can become one repeated letter with at most k changes when its length minus its most frequent letter's count is at most k, so grow a window and track letter counts.",
+      "keyPoints": [
+        "A substring can become one repeated letter with at most k changes when its length minus its most frequent letter's count is at most k, so grow a window and track letter counts."
+      ],
+      "explanation": "The cost of unifying a window is everything except its most common letter, so keeping that count lets the window grow while the cost fits in k.",
+      "rubric": {
+        "technique": "Sliding window where the window length minus the count of its most frequent letter is at most k",
+        "aliases": [
+          "sliding window with max frequency",
+          "window with replacements",
+          "non-shrinking window",
+          "two pointers with counts"
+        ],
+        "alsoValid": [
+          {
+            "name": "Test every substring",
+            "note": "quadratic"
+          }
+        ],
+        "clueTypes": [
+          "contiguous",
+          "lookup_frequency"
+        ],
+        "clue": "A substring can become one repeated letter with at most k changes when its length minus its most frequent letter's count is at most k, so grow a window and track letter counts."
+      }
+    },
+    {
       "id": "lr-pattern-01",
       "category": "pattern",
       "type": "multiple_choice",

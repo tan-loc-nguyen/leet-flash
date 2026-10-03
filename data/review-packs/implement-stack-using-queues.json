@@ -49,6 +49,36 @@
   "edgeCases": [],
   "cards": [
     {
+      "id": "recog-implement-stack-using-queues",
+      "category": "pattern",
+      "type": "free_recall",
+      "promptVariants": [
+        "Which technique solves this problem, and what in the statement or constraints points to it?",
+        "Name the technique you would use here and the clue in the problem that tells you.",
+        "What approach fits this problem, and which part of the statement gives it away?"
+      ],
+      "answer": "One queue: after each push rotate the queue so the newest element sits at the front. Clue: A last-in-first-out stack must be built from first-in-first-out queues, so make the newest element reach the front by rotating the older ones behind it.",
+      "keyPoints": [
+        "A last-in-first-out stack must be built from first-in-first-out queues, so make the newest element reach the front by rotating the older ones behind it."
+      ],
+      "explanation": "After a rotation the queue front is the most recent element, so pop and top are plain queue operations.",
+      "rubric": {
+        "technique": "One queue: after each push rotate the queue so the newest element sits at the front",
+        "aliases": [
+          "rotate the queue",
+          "single queue",
+          "two queues",
+          "costly push",
+          "costly pop"
+        ],
+        "alsoValid": [],
+        "clueTypes": [
+          "stream_design"
+        ],
+        "clue": "A last-in-first-out stack must be built from first-in-first-out queues, so make the newest element reach the front by rotating the older ones behind it."
+      }
+    },
+    {
       "id": "sq2-pattern-01",
       "category": "pattern",
       "type": "multiple_choice",

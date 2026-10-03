@@ -43,6 +43,40 @@
   ],
   "cards": [
     {
+      "id": "recog-combination-sum-iii",
+      "category": "pattern",
+      "type": "free_recall",
+      "promptVariants": [
+        "Which technique solves this problem, and what in the statement or constraints points to it?",
+        "Name the technique you would use here and the clue in the problem that tells you.",
+        "What approach fits this problem, and which part of the statement gives it away?"
+      ],
+      "answer": "Backtracking over increasing digits 1 to 9, pruning on sum and length. Clue: It asks for every set of k distinct digits from 1 to 9 with a given sum, a tiny pool, so build combinations in increasing order and prune.",
+      "keyPoints": [
+        "It asks for every set of k distinct digits from 1 to 9 with a given sum, a tiny pool, so build combinations in increasing order and prune."
+      ],
+      "explanation": "Only nine digits exist, so enumerating in increasing order with pruning is cheap and gives each set once.",
+      "rubric": {
+        "technique": "Backtracking over increasing digits 1 to 9, pruning on sum and length",
+        "aliases": [
+          "dfs with a start digit",
+          "recursive combinations",
+          "choose digits in increasing order"
+        ],
+        "alsoValid": [
+          {
+            "name": "Generate all 512 subsets of 1..9 and filter",
+            "note": "correct, but no pruning"
+          }
+        ],
+        "clueTypes": [
+          "enumerate_all",
+          "small_constraints"
+        ],
+        "clue": "It asks for every set of k distinct digits from 1 to 9 with a given sum, a tiny pool, so build combinations in increasing order and prune."
+      }
+    },
+    {
       "id": "cs3x-pattern-01",
       "category": "pattern",
       "type": "multiple_choice",

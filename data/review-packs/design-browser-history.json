@@ -58,6 +58,43 @@
   "edgeCases": [],
   "cards": [
     {
+      "id": "recog-design-browser-history",
+      "category": "pattern",
+      "type": "free_recall",
+      "promptVariants": [
+        "Which technique solves this problem, and what in the statement or constraints points to it?",
+        "Name the technique you would use here and the clue in the problem that tells you.",
+        "What approach fits this problem, and which part of the statement gives it away?"
+      ],
+      "answer": "One array of pages with a cursor: visit truncates the forward history, back and forward move the cursor. Clue: It asks for a structure with visit, back and forward where a visit discards the forward pages, so keep one ordered list and the index of the current page.",
+      "keyPoints": [
+        "It asks for a structure with visit, back and forward where a visit discards the forward pages, so keep one ordered list and the index of the current page."
+      ],
+      "explanation": "A cursor into one list gives constant-time moves, and visiting simply cuts the list at the cursor.",
+      "rubric": {
+        "technique": "One array of pages with a cursor: visit truncates the forward history, back and forward move the cursor",
+        "aliases": [
+          "array and pointer",
+          "list with a current index",
+          "single list with cursor"
+        ],
+        "alsoValid": [
+          {
+            "name": "Two stacks for back and forward",
+            "note": "correct, but back and forward cost O(steps)"
+          },
+          {
+            "name": "Doubly linked list",
+            "note": "correct, but moving costs O(steps)"
+          }
+        ],
+        "clueTypes": [
+          "stream_design"
+        ],
+        "clue": "It asks for a structure with visit, back and forward where a visit discards the forward pages, so keep one ordered list and the index of the current page."
+      }
+    },
+    {
       "id": "bh-pattern-01",
       "category": "pattern",
       "type": "multiple_choice",

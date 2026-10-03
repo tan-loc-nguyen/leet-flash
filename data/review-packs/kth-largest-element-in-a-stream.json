@@ -53,6 +53,45 @@
   "edgeCases": [],
   "cards": [
     {
+      "id": "recog-kth-largest-element-in-a-stream",
+      "category": "pattern",
+      "type": "free_recall",
+      "promptVariants": [
+        "Which technique solves this problem, and what in the statement or constraints points to it?",
+        "Name the technique you would use here and the clue in the problem that tells you.",
+        "What approach fits this problem, and which part of the statement gives it away?"
+      ],
+      "answer": "Min-heap of size k whose root is the k-th largest, updated on every add. Clue: It asks for the k-th largest repeatedly while values keep arriving, so keep only the k largest seen so far with the smallest of them on top.",
+      "keyPoints": [
+        "It asks for the k-th largest repeatedly while values keep arriving, so keep only the k largest seen so far with the smallest of them on top."
+      ],
+      "explanation": "The k-th largest is the smallest of the top k, so a min-heap of size k exposes it at the root and a new value only matters if it beats the root.",
+      "rubric": {
+        "technique": "Min-heap of size k whose root is the k-th largest, updated on every add",
+        "aliases": [
+          "heap of size k",
+          "priority queue",
+          "min heap",
+          "bounded heap"
+        ],
+        "alsoValid": [
+          {
+            "name": "Append and sort after every add",
+            "note": "re-sorts everything on each call"
+          },
+          {
+            "name": "Keep a sorted list with insort",
+            "note": "linear insertion on each add"
+          }
+        ],
+        "clueTypes": [
+          "top_k",
+          "stream_design"
+        ],
+        "clue": "It asks for the k-th largest repeatedly while values keep arriving, so keep only the k largest seen so far with the smallest of them on top."
+      }
+    },
+    {
       "id": "kl-pattern-01",
       "category": "pattern",
       "type": "multiple_choice",

@@ -46,6 +46,40 @@
   ],
   "cards": [
     {
+      "id": "recog-capacity-to-ship-packages-within-d-days",
+      "category": "pattern",
+      "type": "free_recall",
+      "promptVariants": [
+        "Which technique solves this problem, and what in the statement or constraints points to it?",
+        "Name the technique you would use here and the clue in the problem that tells you.",
+        "What approach fits this problem, and which part of the statement gives it away?"
+      ],
+      "answer": "Binary search on the answer (the capacity) with a greedy feasibility check. Clue: A larger capacity never needs more days, so feasibility is monotone in the capacity and the smallest feasible value can be found by halving the range.",
+      "keyPoints": [
+        "A larger capacity never needs more days, so feasibility is monotone in the capacity and the smallest feasible value can be found by halving the range."
+      ],
+      "explanation": "Feasibility flips once from no to yes as the capacity grows, so binary search finds the boundary and a greedy pass tests each candidate.",
+      "rubric": {
+        "technique": "Binary search on the answer (the capacity) with a greedy feasibility check",
+        "aliases": [
+          "binary search on capacity",
+          "binary search on the answer",
+          "parametric search",
+          "search the answer space"
+        ],
+        "alsoValid": [
+          {
+            "name": "Try every capacity from the largest weight upwards",
+            "note": "correct, but linear in the size of the answer range"
+          }
+        ],
+        "clueTypes": [
+          "monotonic_answer"
+        ],
+        "clue": "A larger capacity never needs more days, so feasibility is monotone in the capacity and the smallest feasible value can be found by halving the range."
+      }
+    },
+    {
       "id": "csp-pattern-01",
       "category": "pattern",
       "type": "multiple_choice",

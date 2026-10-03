@@ -46,6 +46,40 @@
   "edgeCases": [],
   "cards": [
     {
+      "id": "recog-linked-list-cycle-ii",
+      "category": "pattern",
+      "type": "free_recall",
+      "promptVariants": [
+        "Which technique solves this problem, and what in the statement or constraints points to it?",
+        "Name the technique you would use here and the clue in the problem that tells you.",
+        "What approach fits this problem, and which part of the statement gives it away?"
+      ],
+      "answer": "Floyd's two phases: meet inside the cycle, then walk from the head and the meeting point together to the entrance. Clue: It asks for the node where the cycle starts, not just whether there is one, and the distances between the head, the entrance and the meeting point let two pointers find it without extra memory.",
+      "keyPoints": [
+        "It asks for the node where the cycle starts, not just whether there is one, and the distances between the head, the entrance and the meeting point let two pointers find it without extra memory."
+      ],
+      "explanation": "After the first meeting, the distance from the head to the entrance equals the distance from the meeting point to the entrance (modulo the cycle), so two pointers moving together collide there.",
+      "rubric": {
+        "technique": "Floyd's two phases: meet inside the cycle, then walk from the head and the meeting point together to the entrance",
+        "aliases": [
+          "tortoise and hare",
+          "floyd cycle detection",
+          "two pointers with a reset",
+          "fast and slow pointers"
+        ],
+        "alsoValid": [
+          {
+            "name": "Hash set of visited nodes",
+            "note": "correct, but uses O(n) extra space"
+          }
+        ],
+        "clueTypes": [
+          "in_place_pointers"
+        ],
+        "clue": "It asks for the node where the cycle starts, not just whether there is one, and the distances between the head, the entrance and the meeting point let two pointers find it without extra memory."
+      }
+    },
+    {
       "id": "lc3-pattern-01",
       "category": "pattern",
       "type": "multiple_choice",

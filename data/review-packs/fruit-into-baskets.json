@@ -49,6 +49,41 @@
   "edgeCases": [],
   "cards": [
     {
+      "id": "recog-fruit-into-baskets",
+      "category": "pattern",
+      "type": "free_recall",
+      "promptVariants": [
+        "Which technique solves this problem, and what in the statement or constraints points to it?",
+        "Name the technique you would use here and the clue in the problem that tells you.",
+        "What approach fits this problem, and which part of the statement gives it away?"
+      ],
+      "answer": "Sliding window with a count map: the longest subarray with at most two distinct values. Clue: The trees are visited in a row without skipping and only two fruit types fit, so it is the longest contiguous stretch with at most two distinct values.",
+      "keyPoints": [
+        "The trees are visited in a row without skipping and only two fruit types fit, so it is the longest contiguous stretch with at most two distinct values."
+      ],
+      "explanation": "Counting the types in the window and shrinking from the left when a third appears keeps a valid window at every step.",
+      "rubric": {
+        "technique": "Sliding window with a count map: the longest subarray with at most two distinct values",
+        "aliases": [
+          "sliding window",
+          "at most two distinct",
+          "two pointers with counts",
+          "longest window with two types"
+        ],
+        "alsoValid": [
+          {
+            "name": "Check every subarray",
+            "note": "quadratic"
+          }
+        ],
+        "clueTypes": [
+          "contiguous",
+          "lookup_frequency"
+        ],
+        "clue": "The trees are visited in a row without skipping and only two fruit types fit, so it is the longest contiguous stretch with at most two distinct values."
+      }
+    },
+    {
       "id": "fb-pattern-01",
       "category": "pattern",
       "type": "multiple_choice",

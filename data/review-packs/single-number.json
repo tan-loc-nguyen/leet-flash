@@ -57,6 +57,43 @@
   "edgeCases": [],
   "cards": [
     {
+      "id": "recog-single-number",
+      "category": "pattern",
+      "type": "free_recall",
+      "promptVariants": [
+        "Which technique solves this problem, and what in the statement or constraints points to it?",
+        "Name the technique you would use here and the clue in the problem that tells you.",
+        "What approach fits this problem, and which part of the statement gives it away?"
+      ],
+      "answer": "XOR all the elements: pairs cancel and the single element remains. Clue: Every value appears twice except one and only constant extra space is allowed, and equal values cancel under XOR.",
+      "keyPoints": [
+        "Every value appears twice except one and only constant extra space is allowed, and equal values cancel under XOR."
+      ],
+      "explanation": "XOR is commutative with x ^ x = 0, so the pairs vanish regardless of order and only the single value remains.",
+      "rubric": {
+        "technique": "XOR all the elements: pairs cancel and the single element remains",
+        "aliases": [
+          "xor",
+          "bitwise xor trick",
+          "xor cancellation"
+        ],
+        "alsoValid": [
+          {
+            "name": "Hash map or set of seen values",
+            "note": "correct, but O(n) extra space"
+          },
+          {
+            "name": "Twice the sum of distinct values minus the array sum",
+            "note": "correct, but O(n) extra space"
+          }
+        ],
+        "clueTypes": [
+          "bit_math"
+        ],
+        "clue": "Every value appears twice except one and only constant extra space is allowed, and equal values cancel under XOR."
+      }
+    },
+    {
       "id": "sn-pattern-01",
       "category": "pattern",
       "type": "multiple_choice",

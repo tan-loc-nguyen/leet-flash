@@ -57,6 +57,36 @@
   "edgeCases": [],
   "cards": [
     {
+      "id": "recog-number-of-provinces",
+      "category": "pattern",
+      "type": "free_recall",
+      "promptVariants": [
+        "Which technique solves this problem, and what in the statement or constraints points to it?",
+        "Name the technique you would use here and the clue in the problem that tells you.",
+        "What approach fits this problem, and which part of the statement gives it away?"
+      ],
+      "answer": "Count connected components of the graph given as an adjacency matrix (DFS/BFS from each unvisited city, or union-find). Clue: Direct or indirect connection groups cities into provinces, which are the connected components of the graph, so count traversals or unions.",
+      "keyPoints": [
+        "Direct or indirect connection groups cities into provinces, which are the connected components of the graph, so count traversals or unions."
+      ],
+      "explanation": "Indirect connections are transitive, so each group is a connected component and one traversal covers it.",
+      "rubric": {
+        "technique": "Count connected components of the graph given as an adjacency matrix (DFS/BFS from each unvisited city, or union-find)",
+        "aliases": [
+          "dfs",
+          "bfs",
+          "union find",
+          "connected components",
+          "disjoint set"
+        ],
+        "alsoValid": [],
+        "clueTypes": [
+          "dependencies_graph"
+        ],
+        "clue": "Direct or indirect connection groups cities into provinces, which are the connected components of the graph, so count traversals or unions."
+      }
+    },
+    {
       "id": "np2-pattern-01",
       "category": "pattern",
       "type": "multiple_choice",

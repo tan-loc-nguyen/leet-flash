@@ -56,6 +56,45 @@
   "edgeCases": [],
   "cards": [
     {
+      "id": "recog-random-pick-with-weight",
+      "category": "pattern",
+      "type": "free_recall",
+      "promptVariants": [
+        "Which technique solves this problem, and what in the statement or constraints points to it?",
+        "Name the technique you would use here and the clue in the problem that tells you.",
+        "What approach fits this problem, and which part of the statement gives it away?"
+      ],
+      "answer": "Prefix sums of the weights plus a binary search on a random target. Clue: An index must be chosen with probability proportional to its weight, which maps to consecutive intervals on a number line whose boundaries are prefix sums, searched in sorted order.",
+      "keyPoints": [
+        "An index must be chosen with probability proportional to its weight, which maps to consecutive intervals on a number line whose boundaries are prefix sums, searched in sorted order."
+      ],
+      "explanation": "A uniform random point on the line lands in index i's interval with probability w[i] over the total, and the sorted prefix sums let binary search find the interval.",
+      "rubric": {
+        "technique": "Prefix sums of the weights plus a binary search on a random target",
+        "aliases": [
+          "prefix sum and bisect",
+          "cumulative weights",
+          "weighted random with binary search",
+          "intervals on a number line"
+        ],
+        "alsoValid": [
+          {
+            "name": "Repeat each index w[i] times and pick uniformly",
+            "note": "memory grows with the sum of the weights"
+          },
+          {
+            "name": "Alias method",
+            "note": "constant-time picks, but a more complex build than needed here"
+          }
+        ],
+        "clueTypes": [
+          "prefix_range",
+          "monotonic_answer"
+        ],
+        "clue": "An index must be chosen with probability proportional to its weight, which maps to consecutive intervals on a number line whose boundaries are prefix sums, searched in sorted order."
+      }
+    },
+    {
       "id": "rw-pattern-01",
       "category": "pattern",
       "type": "multiple_choice",

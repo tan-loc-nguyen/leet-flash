@@ -43,6 +43,41 @@
   "edgeCases": [],
   "cards": [
     {
+      "id": "recog-open-the-lock",
+      "category": "pattern",
+      "type": "free_recall",
+      "promptVariants": [
+        "Which technique solves this problem, and what in the statement or constraints points to it?",
+        "Name the technique you would use here and the clue in the problem that tells you.",
+        "What approach fits this problem, and which part of the statement gives it away?"
+      ],
+      "answer": "BFS over the 4-digit states, skipping deadends and visited states. Clue: It asks for the minimum number of turns, each turn leads to one of 8 neighbouring combinations, and there are only 10^4 states, so search the state graph level by level.",
+      "keyPoints": [
+        "It asks for the minimum number of turns, each turn leads to one of 8 neighbouring combinations, and there are only 10^4 states, so search the state graph level by level."
+      ],
+      "explanation": "Every turn costs one step, so breadth-first search over the combinations reaches the target with the fewest turns.",
+      "rubric": {
+        "technique": "BFS over the 4-digit states, skipping deadends and visited states",
+        "aliases": [
+          "bfs",
+          "shortest path on states",
+          "bfs on a state graph",
+          "bidirectional bfs"
+        ],
+        "alsoValid": [
+          {
+            "name": "DFS or backtracking over the turns",
+            "note": "does not find the fewest turns and explores far too many states"
+          }
+        ],
+        "clueTypes": [
+          "shortest_steps",
+          "small_constraints"
+        ],
+        "clue": "It asks for the minimum number of turns, each turn leads to one of 8 neighbouring combinations, and there are only 10^4 states, so search the state graph level by level."
+      }
+    },
+    {
       "id": "ol-pattern-01",
       "category": "pattern",
       "type": "multiple_choice",

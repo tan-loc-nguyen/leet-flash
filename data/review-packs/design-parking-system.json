@@ -44,6 +44,41 @@
   ],
   "cards": [
     {
+      "id": "recog-design-parking-system",
+      "category": "pattern",
+      "type": "free_recall",
+      "promptVariants": [
+        "Which technique solves this problem, and what in the statement or constraints points to it?",
+        "Name the technique you would use here and the clue in the problem that tells you.",
+        "What approach fits this problem, and which part of the statement gives it away?"
+      ],
+      "answer": "Three counters of remaining slots, one per car type. Clue: There are only three car types with fixed capacities and addCar just checks and consumes one slot, so track a remaining count per type.",
+      "keyPoints": [
+        "There are only three car types with fixed capacities and addCar just checks and consumes one slot, so track a remaining count per type."
+      ],
+      "explanation": "Slots of one type are interchangeable, so a single counter per type is the whole state.",
+      "rubric": {
+        "technique": "Three counters of remaining slots, one per car type",
+        "aliases": [
+          "counters",
+          "array indexed by car type",
+          "remaining capacity per type",
+          "simulation"
+        ],
+        "alsoValid": [
+          {
+            "name": "Simulate every individual slot",
+            "note": "needs more memory and time than a counter"
+          }
+        ],
+        "clueTypes": [
+          "direct_simulation",
+          "stream_design"
+        ],
+        "clue": "There are only three car types with fixed capacities and addCar just checks and consumes one slot, so track a remaining count per type."
+      }
+    },
+    {
       "id": "dps-pattern-01",
       "category": "pattern",
       "type": "multiple_choice",

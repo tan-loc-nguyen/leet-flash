@@ -43,6 +43,41 @@
   "edgeCases": [],
   "cards": [
     {
+      "id": "recog-implement-queue-using-stacks",
+      "category": "pattern",
+      "type": "free_recall",
+      "promptVariants": [
+        "Which technique solves this problem, and what in the statement or constraints points to it?",
+        "Name the technique you would use here and the clue in the problem that tells you.",
+        "What approach fits this problem, and which part of the statement gives it away?"
+      ],
+      "answer": "Two stacks with lazy transfer: push onto an input stack and pour into the output stack only when it is empty. Clue: A first-in-first-out queue must be built from last-in-first-out stacks, and reversing the order twice restores it, so pour across only when the output side is empty.",
+      "keyPoints": [
+        "A first-in-first-out queue must be built from last-in-first-out stacks, and reversing the order twice restores it, so pour across only when the output side is empty."
+      ],
+      "explanation": "Pouring reverses the order once, which turns LIFO into FIFO, and each element is moved at most once, so operations are amortised constant time.",
+      "rubric": {
+        "technique": "Two stacks with lazy transfer: push onto an input stack and pour into the output stack only when it is empty",
+        "aliases": [
+          "input and output stacks",
+          "amortised queue",
+          "two stacks",
+          "lazy transfer"
+        ],
+        "alsoValid": [
+          {
+            "name": "Move all elements between the stacks on every push",
+            "note": "makes push cost O(n)"
+          }
+        ],
+        "clueTypes": [
+          "stream_design",
+          "nesting_matching"
+        ],
+        "clue": "A first-in-first-out queue must be built from last-in-first-out stacks, and reversing the order twice restores it, so pour across only when the output side is empty."
+      }
+    },
+    {
       "id": "qs-pattern-01",
       "category": "pattern",
       "type": "multiple_choice",
