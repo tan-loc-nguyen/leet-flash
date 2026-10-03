@@ -1186,8 +1186,12 @@
     }
   },
   "valid-subarrays-with-matching-sum-digits-i": {
-    "level": 0,
-    "reviewCount": 0,
+    "level": 1,
+    "lastReview": "2026-10-03T13:04:33Z",
+    "nextReview": "2026-10-04T00:00:00Z",
+    "recentAccuracy": 1.0,
+    "lastScore": 1.0,
+    "reviewCount": 1,
     "lapses": 0,
     "weakCategories": [],
     "cardStats": {
@@ -1220,6 +1224,16 @@
         "incorrectStreak": 0,
         "lastResult": "correct",
         "lastSeenAt": "2026-10-03T13:01:22Z"
+      },
+      "vs-space-01": {
+        "category": "space_complexity",
+        "seen": 1,
+        "correct": 1,
+        "partial": 0,
+        "failed": 0,
+        "incorrectStreak": 0,
+        "lastResult": "correct",
+        "lastSeenAt": "2026-10-03T13:04:33Z"
       }
     },
     "categoryStats": {
@@ -1255,6 +1269,18 @@
         "incorrectStreak": 0,
         "lastResult": "correct",
         "lastSeenAt": "2026-10-03T13:01:22Z",
+        "recent": [
+          "correct"
+        ]
+      },
+      "space_complexity": {
+        "seen": 1,
+        "correct": 1,
+        "partial": 0,
+        "failed": 0,
+        "incorrectStreak": 0,
+        "lastResult": "correct",
+        "lastSeenAt": "2026-10-03T13:04:33Z",
         "recent": [
           "correct"
         ]

@@ -1,5 +1,5 @@
 {
-  "activeSessionId": "daily-2026-10-03-2",
+  "activeSessionId": null,
   "sessions": {
     "daily-2026-10-02": {
       "id": "daily-2026-10-02",
@@ -1734,9 +1734,9 @@
     "daily-2026-10-03-2": {
       "id": "daily-2026-10-03-2",
       "mode": "daily",
-      "status": "active",
+      "status": "completed",
       "createdAt": "2026-10-03T12:55:14Z",
-      "updatedAt": "2026-10-03T13:01:22Z",
+      "updatedAt": "2026-10-03T13:04:34Z",
       "seed": 69908828,
       "target": 1,
       "filters": {},
@@ -1745,7 +1745,7 @@
         {
           "slug": "valid-subarrays-with-matching-sum-digits-i",
           "bucket": "new",
-          "status": "in_progress",
+          "status": "done",
           "cardIds": [
             "vs-pattern-01",
             "vs-insight-01",
@@ -1770,6 +1770,12 @@
               "category": "time_complexity",
               "result": "correct",
               "timestamp": "2026-10-03T13:01:22Z"
+            },
+            {
+              "cardId": "vs-space-01",
+              "category": "space_complexity",
+              "result": "correct",
+              "timestamp": "2026-10-03T13:04:33Z"
             }
           ],
           "hintLevel": 0,
@@ -1807,6 +1813,13 @@
               "prompt": "Extra space: ___",
               "options": null
             }
+          },
+          "outcome": {
+            "score": 1.0,
+            "outcome": "promote",
+            "levelBefore": 0,
+            "levelAfter": 1,
+            "nextReview": "2026-10-04T00:00:00Z"
           }
         }
       ]
