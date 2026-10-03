@@ -208,12 +208,12 @@
     }
   },
   "rotting-oranges": {
-    "level": 1,
-    "lastReview": "2026-10-02T02:16:18Z",
-    "nextReview": "2026-10-03T00:00:00Z",
-    "recentAccuracy": 0.872,
-    "lastScore": 0.872,
-    "reviewCount": 1,
+    "level": 2,
+    "lastReview": "2026-10-03T12:23:12Z",
+    "nextReview": "2026-10-06T00:00:00Z",
+    "recentAccuracy": 0.889,
+    "lastScore": 0.905,
+    "reviewCount": 2,
     "lapses": 0,
     "weakCategories": [],
     "cardStats": {
@@ -239,13 +239,13 @@
       },
       "ro2-time-01": {
         "category": "time_complexity",
-        "seen": 1,
-        "correct": 1,
+        "seen": 2,
+        "correct": 2,
         "partial": 0,
         "failed": 0,
         "incorrectStreak": 0,
         "lastResult": "correct",
-        "lastSeenAt": "2026-10-02T02:14:57Z"
+        "lastSeenAt": "2026-10-03T12:23:12Z"
       },
       "ro2-space-01": {
         "category": "space_complexity",
@@ -305,14 +305,15 @@
         ]
       },
       "time_complexity": {
-        "seen": 1,
-        "correct": 1,
+        "seen": 2,
+        "correct": 2,
         "partial": 0,
         "failed": 0,
         "incorrectStreak": 0,
         "lastResult": "correct",
-        "lastSeenAt": "2026-10-02T02:14:57Z",
+        "lastSeenAt": "2026-10-03T12:23:12Z",
         "recent": [
+          "correct",
           "correct"
         ]
       },

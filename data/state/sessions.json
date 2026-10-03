@@ -904,7 +904,7 @@
       "mode": "daily",
       "status": "active",
       "createdAt": "2026-10-03T12:00:20Z",
-      "updatedAt": "2026-10-03T12:22:10Z",
+      "updatedAt": "2026-10-03T12:23:16Z",
       "seed": 815821225,
       "target": 10,
       "filters": {},
@@ -1187,7 +1187,7 @@
         {
           "slug": "rotting-oranges",
           "bucket": "due",
-          "status": "in_progress",
+          "status": "done",
           "cardIds": [
             "ro2-pattern-01",
             "ro2-insight-01",
@@ -1212,6 +1212,12 @@
               "category": "code_reasoning",
               "result": "partial",
               "timestamp": "2026-10-03T12:22:10Z"
+            },
+            {
+              "cardId": "ro2-time-01",
+              "category": "time_complexity",
+              "result": "correct",
+              "timestamp": "2026-10-03T12:23:12Z"
             }
           ],
           "hintLevel": 0,
@@ -1249,16 +1255,62 @@
               "prompt": "Complete the statement: Time complexity: ___",
               "options": null
             }
+          },
+          "outcome": {
+            "score": 0.905,
+            "outcome": "promote",
+            "levelBefore": 1,
+            "levelAfter": 2,
+            "nextReview": "2026-10-06T00:00:00Z"
           }
         },
         {
           "slug": "insert-delete-getrandom-o1",
           "bucket": "due",
-          "status": "pending",
-          "cardIds": [],
+          "status": "in_progress",
+          "cardIds": [
+            "rs3-insight-01",
+            "rs3-edge-01",
+            "rs3-time-01",
+            "rs3-space-01"
+          ],
           "answers": [],
           "hintLevel": 0,
-          "presented": {}
+          "presented": {
+            "rs3-insight-01": {
+              "prompt": "Why swap with the last element before popping?",
+              "options": null
+            },
+            "rs3-edge-01": {
+              "prompt": "Which order of operations is safest?",
+              "options": [
+                {
+                  "label": "A",
+                  "text": "Nothing; the swap works the same when both indices are equal here"
+                },
+                {
+                  "label": "B",
+                  "text": "The dictionary would raise a KeyError on the very next insert call"
+                },
+                {
+                  "label": "C",
+                  "text": "A stale dict key can remain; move last into place, update, then delete"
+                },
+                {
+                  "label": "D",
+                  "text": "The list would become unsorted and getRandom would fail for good"
+                }
+              ]
+            },
+            "rs3-time-01": {
+              "prompt": "Complete the statement: Time complexity: ___",
+              "options": null
+            },
+            "rs3-space-01": {
+              "prompt": "Space complexity (excluding the input): ___",
+              "options": null
+            }
+          }
         },
         {
           "slug": "maximum-average-subarray-i",
