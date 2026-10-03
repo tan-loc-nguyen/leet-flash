@@ -623,17 +623,19 @@
     "lastScore": 0.847,
     "reviewCount": 1,
     "lapses": 0,
-    "weakCategories": [],
+    "weakCategories": [
+      "main_insight"
+    ],
     "cardStats": {
       "a2-insight-01": {
         "category": "main_insight",
-        "seen": 1,
+        "seen": 2,
         "correct": 0,
-        "partial": 1,
+        "partial": 2,
         "failed": 0,
-        "incorrectStreak": 1,
+        "incorrectStreak": 2,
         "lastResult": "partial",
-        "lastSeenAt": "2026-10-02T02:52:03Z"
+        "lastSeenAt": "2026-10-03T12:15:19Z"
       },
       "a2-edge-01": {
         "category": "edge_case",
@@ -678,14 +680,15 @@
     },
     "categoryStats": {
       "main_insight": {
-        "seen": 1,
+        "seen": 2,
         "correct": 0,
-        "partial": 1,
+        "partial": 2,
         "failed": 0,
-        "incorrectStreak": 1,
+        "incorrectStreak": 2,
         "lastResult": "partial",
-        "lastSeenAt": "2026-10-02T02:52:03Z",
+        "lastSeenAt": "2026-10-03T12:15:19Z",
         "recent": [
+          "partial",
           "partial"
         ]
       },
