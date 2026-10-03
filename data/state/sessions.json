@@ -904,7 +904,7 @@
       "mode": "daily",
       "status": "active",
       "createdAt": "2026-10-03T12:00:20Z",
-      "updatedAt": "2026-10-03T12:46:50Z",
+      "updatedAt": "2026-10-03T12:47:57Z",
       "seed": 815821225,
       "target": 10,
       "filters": {},
@@ -1507,7 +1507,7 @@
         {
           "slug": "valid-palindrome",
           "bucket": "overdue",
-          "status": "in_progress",
+          "status": "done",
           "cardIds": [
             "vp2-invariant-01",
             "vp2-edge-01",
@@ -1532,6 +1532,12 @@
               "category": "time_complexity",
               "result": "correct",
               "timestamp": "2026-10-03T12:46:50Z"
+            },
+            {
+              "cardId": "vp2-space-01",
+              "category": "space_complexity",
+              "result": "correct",
+              "timestamp": "2026-10-03T12:47:56Z"
             }
           ],
           "hintLevel": 0,
@@ -1569,16 +1575,62 @@
               "prompt": "How could you make your Valid Palindrome solution truly O(1) extra space?",
               "options": null
             }
+          },
+          "outcome": {
+            "score": 1.0,
+            "outcome": "promote",
+            "levelBefore": 0,
+            "levelAfter": 1,
+            "nextReview": "2026-10-04T00:00:00Z"
           }
         },
         {
           "slug": "kth-largest-element-in-an-array",
           "bucket": "due",
-          "status": "pending",
-          "cardIds": [],
+          "status": "in_progress",
+          "cardIds": [
+            "kt-pattern-02",
+            "kt-insight-02",
+            "kt-time-02",
+            "kt-space-02"
+          ],
           "answers": [],
           "hintLevel": 0,
-          "presented": {}
+          "presented": {
+            "kt-pattern-02": {
+              "prompt": "Which structure keeps only the k largest elements seen so far?",
+              "options": [
+                {
+                  "label": "A",
+                  "text": "Max-heap capped at size k"
+                },
+                {
+                  "label": "B",
+                  "text": "Queue holding the last k items"
+                },
+                {
+                  "label": "C",
+                  "text": "Min-heap capped at size k"
+                },
+                {
+                  "label": "D",
+                  "text": "Monotonic stack of size k"
+                }
+              ]
+            },
+            "kt-insight-02": {
+              "prompt": "Why a min-heap and not a max-heap for the k largest, and why is the root the answer?",
+              "options": null
+            },
+            "kt-time-02": {
+              "prompt": "Time complexity of the size-k min-heap solution for n elements: ___",
+              "options": null
+            },
+            "kt-space-02": {
+              "prompt": "Extra space of the size-k min-heap solution: ___",
+              "options": null
+            }
+          }
         },
         {
           "slug": "fizz-buzz",
