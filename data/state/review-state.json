@@ -219,13 +219,13 @@
     "cardStats": {
       "ro2-pattern-01": {
         "category": "pattern",
-        "seen": 1,
-        "correct": 1,
+        "seen": 2,
+        "correct": 2,
         "partial": 0,
         "failed": 0,
         "incorrectStreak": 0,
         "lastResult": "correct",
-        "lastSeenAt": "2026-10-02T02:12:30Z"
+        "lastSeenAt": "2026-10-03T12:17:52Z"
       },
       "ro2-edge-01": {
         "category": "edge_case",
@@ -260,14 +260,15 @@
     },
     "categoryStats": {
       "pattern": {
-        "seen": 1,
-        "correct": 1,
+        "seen": 2,
+        "correct": 2,
         "partial": 0,
         "failed": 0,
         "incorrectStreak": 0,
         "lastResult": "correct",
-        "lastSeenAt": "2026-10-02T02:12:30Z",
+        "lastSeenAt": "2026-10-03T12:17:52Z",
         "recent": [
+          "correct",
           "correct"
         ]
       },
