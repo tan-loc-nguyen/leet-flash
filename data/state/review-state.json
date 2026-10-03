@@ -127,13 +127,13 @@
       },
       "vp2-invariant-01": {
         "category": "invariant",
-        "seen": 1,
-        "correct": 0,
+        "seen": 2,
+        "correct": 1,
         "partial": 1,
         "failed": 0,
-        "incorrectStreak": 1,
-        "lastResult": "partial",
-        "lastSeenAt": "2026-10-02T02:02:55Z"
+        "incorrectStreak": 0,
+        "lastResult": "correct",
+        "lastSeenAt": "2026-10-03T12:45:51Z"
       },
       "vp2-edge-01": {
         "category": "edge_case",
@@ -170,15 +170,16 @@
         ]
       },
       "invariant": {
-        "seen": 1,
-        "correct": 0,
+        "seen": 2,
+        "correct": 1,
         "partial": 1,
         "failed": 0,
-        "incorrectStreak": 1,
-        "lastResult": "partial",
-        "lastSeenAt": "2026-10-02T02:02:55Z",
+        "incorrectStreak": 0,
+        "lastResult": "correct",
+        "lastSeenAt": "2026-10-03T12:45:51Z",
         "recent": [
-          "partial"
+          "partial",
+          "correct"
         ]
       },
       "edge_case": {

@@ -904,7 +904,7 @@
       "mode": "daily",
       "status": "active",
       "createdAt": "2026-10-03T12:00:20Z",
-      "updatedAt": "2026-10-03T12:43:47Z",
+      "updatedAt": "2026-10-03T12:45:51Z",
       "seed": 815821225,
       "target": 10,
       "filters": {},
@@ -1514,7 +1514,14 @@
             "vp2-time-01",
             "vp2-space-01"
           ],
-          "answers": [],
+          "answers": [
+            {
+              "cardId": "vp2-invariant-01",
+              "category": "invariant",
+              "result": "correct",
+              "timestamp": "2026-10-03T12:45:51Z"
+            }
+          ],
           "hintLevel": 0,
           "presented": {
             "vp2-invariant-01": {
