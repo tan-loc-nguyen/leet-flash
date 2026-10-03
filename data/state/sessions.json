@@ -1,5 +1,5 @@
 {
-  "activeSessionId": "daily-2026-10-03",
+  "activeSessionId": null,
   "sessions": {
     "daily-2026-10-02": {
       "id": "daily-2026-10-02",
@@ -902,9 +902,9 @@
     "daily-2026-10-03": {
       "id": "daily-2026-10-03",
       "mode": "daily",
-      "status": "active",
+      "status": "completed",
       "createdAt": "2026-10-03T12:00:20Z",
-      "updatedAt": "2026-10-03T12:51:19Z",
+      "updatedAt": "2026-10-03T12:52:07Z",
       "seed": 815821225,
       "target": 10,
       "filters": {},
@@ -1667,7 +1667,7 @@
         {
           "slug": "fizz-buzz",
           "bucket": "due",
-          "status": "in_progress",
+          "status": "skipped",
           "cardIds": [
             "fb3-pattern-01",
             "fb3-insight-01",
