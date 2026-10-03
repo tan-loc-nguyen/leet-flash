@@ -21,13 +21,13 @@
       },
       "cd2-edge-01": {
         "category": "edge_case",
-        "seen": 1,
-        "correct": 1,
+        "seen": 2,
+        "correct": 2,
         "partial": 0,
         "failed": 0,
         "incorrectStreak": 0,
         "lastResult": "correct",
-        "lastSeenAt": "2026-10-02T01:59:09Z"
+        "lastSeenAt": "2026-10-03T12:12:01Z"
       },
       "cd2-time-01": {
         "category": "time_complexity",
@@ -65,14 +65,15 @@
         ]
       },
       "edge_case": {
-        "seen": 1,
-        "correct": 1,
+        "seen": 2,
+        "correct": 2,
         "partial": 0,
         "failed": 0,
         "incorrectStreak": 0,
         "lastResult": "correct",
-        "lastSeenAt": "2026-10-02T01:59:09Z",
+        "lastSeenAt": "2026-10-03T12:12:01Z",
         "recent": [
+          "correct",
           "correct"
         ]
       },
