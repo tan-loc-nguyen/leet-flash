@@ -693,6 +693,16 @@
         "incorrectStreak": 0,
         "lastResult": "correct",
         "lastSeenAt": "2026-10-03T12:48:35Z"
+      },
+      "kt-insight-02": {
+        "category": "main_insight",
+        "seen": 1,
+        "correct": 1,
+        "partial": 0,
+        "failed": 0,
+        "incorrectStreak": 0,
+        "lastResult": "correct",
+        "lastSeenAt": "2026-10-03T12:50:29Z"
       }
     },
     "categoryStats": {
@@ -741,6 +751,18 @@
         "incorrectStreak": 0,
         "lastResult": "correct",
         "lastSeenAt": "2026-10-02T02:45:19Z",
+        "recent": [
+          "correct"
+        ]
+      },
+      "main_insight": {
+        "seen": 1,
+        "correct": 1,
+        "partial": 0,
+        "failed": 0,
+        "incorrectStreak": 0,
+        "lastResult": "correct",
+        "lastSeenAt": "2026-10-03T12:50:29Z",
         "recent": [
           "correct"
         ]
