@@ -1,5 +1,5 @@
 {
-  "activeSessionId": null,
+  "activeSessionId": "daily-2026-10-03-2",
   "sessions": {
     "daily-2026-10-02": {
       "id": "daily-2026-10-02",
@@ -1725,6 +1725,67 @@
             },
             "fb3-time-01": {
               "prompt": "Complete the statement: Time complexity: ___",
+              "options": null
+            }
+          }
+        }
+      ]
+    },
+    "daily-2026-10-03-2": {
+      "id": "daily-2026-10-03-2",
+      "mode": "daily",
+      "status": "active",
+      "createdAt": "2026-10-03T12:55:14Z",
+      "updatedAt": "2026-10-03T12:55:14Z",
+      "seed": 69908828,
+      "target": 1,
+      "filters": {},
+      "focusCategories": [],
+      "problems": [
+        {
+          "slug": "valid-subarrays-with-matching-sum-digits-i",
+          "bucket": "new",
+          "status": "in_progress",
+          "cardIds": [
+            "vs-pattern-01",
+            "vs-insight-01",
+            "vs-time-01",
+            "vs-space-01"
+          ],
+          "answers": [],
+          "hintLevel": 0,
+          "presented": {
+            "vs-pattern-01": {
+              "prompt": "How can the subarray sum be maintained as the end index grows?",
+              "options": [
+                {
+                  "label": "A",
+                  "text": "Sorting the array after every extension of the end"
+                },
+                {
+                  "label": "B",
+                  "text": "A heap of the elements currently in the subarray"
+                },
+                {
+                  "label": "C",
+                  "text": "Binary search for the best end index each time"
+                },
+                {
+                  "label": "D",
+                  "text": "Running sum extended by one element (or prefix sums)"
+                }
+              ]
+            },
+            "vs-insight-01": {
+              "prompt": "Why is brute force acceptable here?",
+              "options": null
+            },
+            "vs-time-01": {
+              "prompt": "Time complexity (digit conversion treated as O(1)): ___",
+              "options": null
+            },
+            "vs-space-01": {
+              "prompt": "Extra space: ___",
               "options": null
             }
           }
