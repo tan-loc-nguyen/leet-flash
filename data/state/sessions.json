@@ -1736,7 +1736,7 @@
       "mode": "daily",
       "status": "active",
       "createdAt": "2026-10-03T12:55:14Z",
-      "updatedAt": "2026-10-03T13:00:05Z",
+      "updatedAt": "2026-10-03T13:01:22Z",
       "seed": 69908828,
       "target": 1,
       "filters": {},
@@ -1764,6 +1764,12 @@
               "category": "main_insight",
               "result": "correct",
               "timestamp": "2026-10-03T13:00:05Z"
+            },
+            {
+              "cardId": "vs-time-01",
+              "category": "time_complexity",
+              "result": "correct",
+              "timestamp": "2026-10-03T13:01:22Z"
             }
           ],
           "hintLevel": 0,
