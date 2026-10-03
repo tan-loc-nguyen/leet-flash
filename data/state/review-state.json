@@ -31,13 +31,13 @@
       },
       "cd2-time-01": {
         "category": "time_complexity",
-        "seen": 1,
-        "correct": 1,
+        "seen": 2,
+        "correct": 2,
         "partial": 0,
         "failed": 0,
         "incorrectStreak": 0,
         "lastResult": "correct",
-        "lastSeenAt": "2026-10-02T01:59:36Z"
+        "lastSeenAt": "2026-10-03T12:12:38Z"
       },
       "cd2-space-01": {
         "category": "space_complexity",
@@ -78,14 +78,15 @@
         ]
       },
       "time_complexity": {
-        "seen": 1,
-        "correct": 1,
+        "seen": 2,
+        "correct": 2,
         "partial": 0,
         "failed": 0,
         "incorrectStreak": 0,
         "lastResult": "correct",
-        "lastSeenAt": "2026-10-02T01:59:36Z",
+        "lastSeenAt": "2026-10-03T12:12:38Z",
         "recent": [
+          "correct",
           "correct"
         ]
       },
