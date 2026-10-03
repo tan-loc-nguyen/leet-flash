@@ -904,7 +904,7 @@
       "mode": "daily",
       "status": "active",
       "createdAt": "2026-10-03T12:00:20Z",
-      "updatedAt": "2026-10-03T12:38:54Z",
+      "updatedAt": "2026-10-03T12:39:16Z",
       "seed": 815821225,
       "target": 10,
       "filters": {},
@@ -1347,7 +1347,7 @@
         {
           "slug": "maximum-average-subarray-i",
           "bucket": "due",
-          "status": "in_progress",
+          "status": "done",
           "cardIds": [
             "mas-insight-01",
             "mas-edge-01",
@@ -1372,6 +1372,12 @@
               "category": "time_complexity",
               "result": "correct",
               "timestamp": "2026-10-03T12:38:54Z"
+            },
+            {
+              "cardId": "mas-space-01",
+              "category": "space_complexity",
+              "result": "correct",
+              "timestamp": "2026-10-03T12:39:15Z"
             }
           ],
           "hintLevel": 0,
@@ -1409,16 +1415,62 @@
               "prompt": "Complete the statement: Space complexity (excluding the input): ___",
               "options": null
             }
+          },
+          "outcome": {
+            "score": 0.847,
+            "outcome": "hold",
+            "levelBefore": 1,
+            "levelAfter": 1,
+            "nextReview": "2026-10-04T00:00:00Z"
           }
         },
         {
           "slug": "koko-eating-bananas",
           "bucket": "due",
-          "status": "pending",
-          "cardIds": [],
+          "status": "in_progress",
+          "cardIds": [
+            "kb-insight-01",
+            "kb-edge-01",
+            "kb-time-01",
+            "kb-space-01"
+          ],
           "answers": [],
           "hintLevel": 0,
-          "presented": {}
+          "presented": {
+            "kb-insight-01": {
+              "prompt": "How do you choose low and high?",
+              "options": null
+            },
+            "kb-edge-01": {
+              "prompt": "What is the answer when h equals the number of piles?",
+              "options": [
+                {
+                  "label": "A",
+                  "text": "1"
+                },
+                {
+                  "label": "B",
+                  "text": "sum(piles)"
+                },
+                {
+                  "label": "C",
+                  "text": "min(piles)"
+                },
+                {
+                  "label": "D",
+                  "text": "max(piles)"
+                }
+              ]
+            },
+            "kb-time-01": {
+              "prompt": "Each of log M iterations scans all piles, giving ___.",
+              "options": null
+            },
+            "kb-space-01": {
+              "prompt": "Complete the statement: Extra space: ___",
+              "options": null
+            }
+          }
         },
         {
           "slug": "valid-palindrome",

@@ -76,3 +76,5 @@
 {"timestamp":"2026-10-03T12:35:23Z","sessionId":"daily-2026-10-03","problem":"maximum-average-subarray-i","card":"mas-insight-01","category":"main_insight","result":"partial","mode":"daily"}
 {"timestamp":"2026-10-03T12:38:25Z","sessionId":"daily-2026-10-03","problem":"maximum-average-subarray-i","card":"mas-edge-01","category":"edge_case","result":"correct","mode":"daily"}
 {"timestamp":"2026-10-03T12:38:54Z","sessionId":"daily-2026-10-03","problem":"maximum-average-subarray-i","card":"mas-time-01","category":"time_complexity","result":"correct","mode":"daily"}
+{"timestamp":"2026-10-03T12:39:15Z","sessionId":"daily-2026-10-03","problem":"maximum-average-subarray-i","card":"mas-space-01","category":"space_complexity","result":"correct","mode":"daily"}
+{"timestamp":"2026-10-03T12:39:15Z","event":"problem_review","sessionId":"daily-2026-10-03","problem":"maximum-average-subarray-i","mode":"daily","score":0.847,"outcome":"hold","levelBefore":1,"levelAfter":1,"nextReview":"2026-10-04T00:00:00Z","cards":4}

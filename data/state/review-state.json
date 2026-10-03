@@ -944,11 +944,11 @@
   },
   "maximum-average-subarray-i": {
     "level": 1,
-    "lastReview": "2026-10-02T03:13:29Z",
-    "nextReview": "2026-10-03T00:00:00Z",
-    "recentAccuracy": 1.0,
-    "lastScore": 1.0,
-    "reviewCount": 1,
+    "lastReview": "2026-10-03T12:39:15Z",
+    "nextReview": "2026-10-04T00:00:00Z",
+    "recentAccuracy": 0.923,
+    "lastScore": 0.847,
+    "reviewCount": 2,
     "lapses": 0,
     "weakCategories": [],
     "cardStats": {
@@ -984,13 +984,13 @@
       },
       "mas-space-01": {
         "category": "space_complexity",
-        "seen": 1,
-        "correct": 1,
+        "seen": 2,
+        "correct": 2,
         "partial": 0,
         "failed": 0,
         "incorrectStreak": 0,
         "lastResult": "correct",
-        "lastSeenAt": "2026-10-02T03:13:29Z"
+        "lastSeenAt": "2026-10-03T12:39:15Z"
       },
       "mas-insight-01": {
         "category": "main_insight",
@@ -1043,14 +1043,15 @@
         ]
       },
       "space_complexity": {
-        "seen": 1,
-        "correct": 1,
+        "seen": 2,
+        "correct": 2,
         "partial": 0,
         "failed": 0,
         "incorrectStreak": 0,
         "lastResult": "correct",
-        "lastSeenAt": "2026-10-02T03:13:29Z",
+        "lastSeenAt": "2026-10-03T12:39:15Z",
         "recent": [
+          "correct",
           "correct"
         ]
       },
