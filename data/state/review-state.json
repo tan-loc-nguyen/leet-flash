@@ -703,6 +703,16 @@
         "incorrectStreak": 0,
         "lastResult": "correct",
         "lastSeenAt": "2026-10-03T12:50:29Z"
+      },
+      "kt-time-02": {
+        "category": "time_complexity",
+        "seen": 1,
+        "correct": 1,
+        "partial": 0,
+        "failed": 0,
+        "incorrectStreak": 0,
+        "lastResult": "correct",
+        "lastSeenAt": "2026-10-03T12:50:56Z"
       }
     },
     "categoryStats": {
@@ -744,14 +754,15 @@
         ]
       },
       "time_complexity": {
-        "seen": 1,
-        "correct": 1,
+        "seen": 2,
+        "correct": 2,
         "partial": 0,
         "failed": 0,
         "incorrectStreak": 0,
         "lastResult": "correct",
-        "lastSeenAt": "2026-10-02T02:45:19Z",
+        "lastSeenAt": "2026-10-03T12:50:56Z",
         "recent": [
+          "correct",
           "correct"
         ]
       },

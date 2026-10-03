@@ -90,3 +90,4 @@
 {"timestamp":"2026-10-03T12:47:56Z","event":"problem_review","sessionId":"daily-2026-10-03","problem":"valid-palindrome","mode":"daily","score":1.0,"outcome":"promote","levelBefore":0,"levelAfter":1,"nextReview":"2026-10-04T00:00:00Z","cards":4}
 {"timestamp":"2026-10-03T12:48:35Z","sessionId":"daily-2026-10-03","problem":"kth-largest-element-in-an-array","card":"kt-pattern-02","category":"pattern","result":"correct","mode":"daily"}
 {"timestamp":"2026-10-03T12:50:29Z","sessionId":"daily-2026-10-03","problem":"kth-largest-element-in-an-array","card":"kt-insight-02","category":"main_insight","result":"correct","mode":"daily"}
+{"timestamp":"2026-10-03T12:50:56Z","sessionId":"daily-2026-10-03","problem":"kth-largest-element-in-an-array","card":"kt-time-02","category":"time_complexity","result":"correct","mode":"daily"}
