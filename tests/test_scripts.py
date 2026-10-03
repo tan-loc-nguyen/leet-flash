@@ -169,3 +169,37 @@ def test_audit_cards_script(paths, run):
              dict(cards[1], promptVariants=["What for [7,7,7]?", "Again?"])]
     make_pack(paths, "tell", cards=clean)
     assert run("audit_cards.py").returncode == 0
+
+
+def test_audit_flags_a_clue_number_the_problem_does_not_state(paths, run):
+    from tests.conftest import recog
+    make_problem(paths, "cn", leetcode_id=1, problem_statement="Return x.", constraints=["1 <= n <= 10^5"])
+    card = recog("recog-cn")
+    card["rubric"]["clue"] = "With n up to 10^6 comparing all pairs is too slow."
+    make_pack(paths, "cn", cards=[card])
+    p = run("audit_cards.py", check=False)
+    assert p.returncode == 1 and "clue cites ['10^6']" in p.stdout
+    card["rubric"]["clue"] = "With n up to 10^5 comparing all pairs is too slow."
+    make_pack(paths, "cn", cards=[card])
+    assert run("audit_cards.py").returncode == 0
+
+
+def test_review_cli_recognition_and_drill_flow(paths, run):
+    from tests.conftest import recog
+    make_problem(paths, "rc", leetcode_id=1, problem_statement="Find the pair.", constraints=["2 <= n <= 10"])
+    make_pack(paths, "rc", cards=[recog("recog-rc")])
+    started = json.loads(run("review.py", "start", "--mode", "drill", "--target", "1").stdout)
+    assert started["started"] and started["problems"][0]["slug"] == "rc"
+    q = json.loads(run("review.py", "next").stdout)
+    assert q["card"]["id"] == "recog-rc" and q["problem"]["constraints"] == ["2 <= n <= 10"] and q["problem"]["patterns"] is None
+    assert "rubric" not in q["card"]
+    refused = run("review.py", "answer", "--result", "correct", check=False)           # the engine does the grading
+    assert refused.returncode == 1 and "recognition card" in refused.stdout
+    revealed = json.loads(run("review.py", "reveal").stdout)
+    assert revealed["rubric"]["technique"] and "--technique" in revealed["grading"]
+    out = json.loads(run("review.py", "answer", "--text", "two pointers, sorted", "--technique", "accepted",
+                         "--clue", "valid").stdout)
+    assert out["result"] == "correct" and out["sessionFinished"] and out["problemResult"] is None
+    event = [json.loads(line) for line in paths.history.read_text().splitlines()][0]
+    assert event["userText"] == "two pointers, sorted" and event["technique"] == "accepted" and event["mode"] == "drill"
+    assert "Pattern recognition" in run("stats.py").stdout

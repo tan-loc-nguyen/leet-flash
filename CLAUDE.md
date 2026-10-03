@@ -108,7 +108,8 @@ When the user mentions a target ("10 problems"), pass `--target`; otherwise the 
    * Wrong/partial → show the correct answer, explain why (use `explanation`), explain why my choice was wrong
      (`whySelectedIsWrong`), mention missing key points, optionally other distractors. Keep it useful, not a lecture.
 6. When `problemFinished` is true, show `problemResult` in one line (level change, next review, any weak
-   categories), then `next`. When `sessionFinished` is true, give the `sessionSummary` (accuracy, per-problem
+   categories), then `next`. In a **drill** `problemResult` is `null` (a drill never changes levels or schedules): show
+   only the verdict and the feedback, then `next`. When `sessionFinished` is true, give the `sessionSummary` (accuracy, per-problem
    level changes, what to focus on).
 7. **"I don't remember this problem"** → `review.py forgot` (fails the problem, drops mastery, schedules it for the next
    session). Show the concise `summary` first and let me try to recall; offer statement / my Python solution /

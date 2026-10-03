@@ -22,5 +22,7 @@ if problem is None:
 pack, written = scaffold_pack(paths, problem, force=a.force)
 if written:
     print(f"Wrote skeleton data/review-packs/{slug}.json (suggested patterns: {pack.patterns or 'none'}).")
+    print("Next: write the pack, including its recognition card (id recog-<slug>, with a rubric); "
+          "see CLAUDE.md > Pack generation and docs/REVIEW_PACK_GUIDE.md.")
 else:
     print(f"data/review-packs/{slug}.json already exists; left untouched (use --force to overwrite).")

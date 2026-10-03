@@ -448,7 +448,7 @@ class ReviewEngine:
             "recorded": True, "problemFinished": True, "problemResult": result,
             "recallMaterial": {
                 "summary": pack.summary, "patterns": pack.patterns,
-                "problemStatement": p.problem_statement, "mainInsight": pack.main_insight,
+                "problemStatement": p.problem_statement, "constraints": p.constraints, "mainInsight": pack.main_insight,
                 "invariant": pack.invariant,
                 "approaches": [a.to_json() for a in pack.approaches],
                 "personalSolution": pack.personal_solution.to_json() if pack.personal_solution else None,

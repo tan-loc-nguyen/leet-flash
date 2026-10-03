@@ -130,3 +130,16 @@ def test_recognition_card_rules(paths):
 def test_disabled_pattern_cards_do_not_count_as_leftovers(paths):
     old = {**mcq("p-old", "pattern"), "enabled": False}
     assert errors(issues_for(paths, "p", base(cards=[recog("p-r"), old]))) == []
+
+
+def test_every_real_pack_passes_the_validator_and_has_a_recognition_card():
+    """Guards the shipped content: edits to data/review-packs must keep every pack valid."""
+    from leetcode_review.config import Paths
+    from leetcode_review.content.loader import list_pack_slugs, load_pack
+    real = Paths()
+    slugs = list_pack_slugs(real)
+    assert len(slugs) >= 275
+    issues = validate_all(real, {p.stem for p in real.problems.glob("*.json")})
+    assert [str(i) for i in issues if i.level == "error"] == []
+    missing = [s for s in slugs if not any(c.rubric and c.enabled for c in load_pack(real, s).cards)]
+    assert missing == []
