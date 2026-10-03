@@ -94,3 +94,4 @@
 {"timestamp":"2026-10-03T12:51:19Z","sessionId":"daily-2026-10-03","problem":"kth-largest-element-in-an-array","card":"kt-space-02","category":"space_complexity","result":"correct","mode":"daily"}
 {"timestamp":"2026-10-03T12:51:19Z","event":"problem_review","sessionId":"daily-2026-10-03","problem":"kth-largest-element-in-an-array","mode":"daily","score":1.0,"outcome":"promote","levelBefore":1,"levelAfter":2,"nextReview":"2026-10-06T00:00:00Z","cards":4}
 {"timestamp":"2026-10-03T12:59:15Z","sessionId":"daily-2026-10-03-2","problem":"valid-subarrays-with-matching-sum-digits-i","card":"vs-pattern-01","category":"pattern","result":"correct","mode":"daily"}
+{"timestamp":"2026-10-03T13:00:05Z","sessionId":"daily-2026-10-03-2","problem":"valid-subarrays-with-matching-sum-digits-i","card":"vs-insight-01","category":"main_insight","result":"correct","mode":"daily"}

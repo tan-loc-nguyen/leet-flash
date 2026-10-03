@@ -1200,6 +1200,16 @@
         "incorrectStreak": 0,
         "lastResult": "correct",
         "lastSeenAt": "2026-10-03T12:59:15Z"
+      },
+      "vs-insight-01": {
+        "category": "main_insight",
+        "seen": 1,
+        "correct": 1,
+        "partial": 0,
+        "failed": 0,
+        "incorrectStreak": 0,
+        "lastResult": "correct",
+        "lastSeenAt": "2026-10-03T13:00:05Z"
       }
     },
     "categoryStats": {
@@ -1211,6 +1221,18 @@
         "incorrectStreak": 0,
         "lastResult": "correct",
         "lastSeenAt": "2026-10-03T12:59:15Z",
+        "recent": [
+          "correct"
+        ]
+      },
+      "main_insight": {
+        "seen": 1,
+        "correct": 1,
+        "partial": 0,
+        "failed": 0,
+        "incorrectStreak": 0,
+        "lastResult": "correct",
+        "lastSeenAt": "2026-10-03T13:00:05Z",
         "recent": [
           "correct"
         ]
