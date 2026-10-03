@@ -904,7 +904,7 @@
       "mode": "daily",
       "status": "active",
       "createdAt": "2026-10-03T12:00:20Z",
-      "updatedAt": "2026-10-03T12:30:27Z",
+      "updatedAt": "2026-10-03T12:33:20Z",
       "seed": 815821225,
       "target": 10,
       "filters": {},
@@ -1267,7 +1267,7 @@
         {
           "slug": "insert-delete-getrandom-o1",
           "bucket": "due",
-          "status": "in_progress",
+          "status": "done",
           "cardIds": [
             "rs3-insight-01",
             "rs3-edge-01",
@@ -1292,6 +1292,12 @@
               "category": "time_complexity",
               "result": "correct",
               "timestamp": "2026-10-03T12:30:27Z"
+            },
+            {
+              "cardId": "rs3-space-01",
+              "category": "space_complexity",
+              "result": "correct",
+              "timestamp": "2026-10-03T12:33:19Z"
             }
           ],
           "hintLevel": 0,
@@ -1329,16 +1335,62 @@
               "prompt": "Space complexity (excluding the input): ___",
               "options": null
             }
+          },
+          "outcome": {
+            "score": 1.0,
+            "outcome": "promote",
+            "levelBefore": 1,
+            "levelAfter": 2,
+            "nextReview": "2026-10-06T00:00:00Z"
           }
         },
         {
           "slug": "maximum-average-subarray-i",
           "bucket": "due",
-          "status": "pending",
-          "cardIds": [],
+          "status": "in_progress",
+          "cardIds": [
+            "mas-insight-01",
+            "mas-edge-01",
+            "mas-time-01",
+            "mas-space-01"
+          ],
           "answers": [],
           "hintLevel": 0,
-          "presented": {}
+          "presented": {
+            "mas-insight-01": {
+              "prompt": "Why compare sums rather than averages while sliding?",
+              "options": null
+            },
+            "mas-edge-01": {
+              "prompt": "Which window is examined?",
+              "options": [
+                {
+                  "label": "A",
+                  "text": "1.0: the average is divided by k twice"
+                },
+                {
+                  "label": "B",
+                  "text": "An error: there is no element to subtract"
+                },
+                {
+                  "label": "C",
+                  "text": "0.0: there is no full window yet"
+                },
+                {
+                  "label": "D",
+                  "text": "5.0: the only window is the single element"
+                }
+              ]
+            },
+            "mas-time-01": {
+              "prompt": "Complete the statement: Time complexity: ___",
+              "options": null
+            },
+            "mas-space-01": {
+              "prompt": "Complete the statement: Space complexity (excluding the input): ___",
+              "options": null
+            }
+          }
         },
         {
           "slug": "koko-eating-bananas",
