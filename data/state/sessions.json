@@ -904,7 +904,7 @@
       "mode": "daily",
       "status": "active",
       "createdAt": "2026-10-03T12:00:20Z",
-      "updatedAt": "2026-10-03T12:41:25Z",
+      "updatedAt": "2026-10-03T12:42:22Z",
       "seed": 815821225,
       "target": 10,
       "filters": {},
@@ -1440,6 +1440,12 @@
               "category": "main_insight",
               "result": "correct",
               "timestamp": "2026-10-03T12:41:25Z"
+            },
+            {
+              "cardId": "kb-edge-01",
+              "category": "edge_case",
+              "result": "correct",
+              "timestamp": "2026-10-03T12:42:22Z"
             }
           ],
           "hintLevel": 0,
