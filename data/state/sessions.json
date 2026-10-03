@@ -904,7 +904,7 @@
       "mode": "daily",
       "status": "active",
       "createdAt": "2026-10-03T12:00:20Z",
-      "updatedAt": "2026-10-03T12:19:44Z",
+      "updatedAt": "2026-10-03T12:22:10Z",
       "seed": 815821225,
       "target": 10,
       "filters": {},
@@ -1206,6 +1206,12 @@
               "category": "main_insight",
               "result": "correct",
               "timestamp": "2026-10-03T12:19:44Z"
+            },
+            {
+              "cardId": "ro2-code-01",
+              "category": "code_reasoning",
+              "result": "partial",
+              "timestamp": "2026-10-03T12:22:10Z"
             }
           ],
           "hintLevel": 0,

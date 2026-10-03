@@ -266,6 +266,16 @@
         "incorrectStreak": 0,
         "lastResult": "correct",
         "lastSeenAt": "2026-10-03T12:19:44Z"
+      },
+      "ro2-code-01": {
+        "category": "code_reasoning",
+        "seen": 1,
+        "correct": 0,
+        "partial": 1,
+        "failed": 0,
+        "incorrectStreak": 1,
+        "lastResult": "partial",
+        "lastSeenAt": "2026-10-03T12:22:10Z"
       }
     },
     "categoryStats": {
@@ -328,6 +338,18 @@
         "lastSeenAt": "2026-10-03T12:19:44Z",
         "recent": [
           "correct"
+        ]
+      },
+      "code_reasoning": {
+        "seen": 1,
+        "correct": 0,
+        "partial": 1,
+        "failed": 0,
+        "incorrectStreak": 1,
+        "lastResult": "partial",
+        "lastSeenAt": "2026-10-03T12:22:10Z",
+        "recent": [
+          "partial"
         ]
       }
     }
