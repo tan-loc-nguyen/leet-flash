@@ -904,7 +904,7 @@
       "mode": "daily",
       "status": "active",
       "createdAt": "2026-10-03T12:00:20Z",
-      "updatedAt": "2026-10-03T12:13:03Z",
+      "updatedAt": "2026-10-03T12:14:20Z",
       "seed": 815821225,
       "target": 10,
       "filters": {},
@@ -1097,7 +1097,14 @@
             "a2-edge-01",
             "a2-time-01"
           ],
-          "answers": [],
+          "answers": [
+            {
+              "cardId": "a2-pattern-01",
+              "category": "pattern",
+              "result": "correct",
+              "timestamp": "2026-10-03T12:14:20Z"
+            }
+          ],
           "hintLevel": 0,
           "presented": {
             "a2-pattern-01": {

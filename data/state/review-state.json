@@ -664,6 +664,16 @@
         "incorrectStreak": 0,
         "lastResult": "correct",
         "lastSeenAt": "2026-10-02T02:54:52Z"
+      },
+      "a2-pattern-01": {
+        "category": "pattern",
+        "seen": 1,
+        "correct": 1,
+        "partial": 0,
+        "failed": 0,
+        "incorrectStreak": 0,
+        "lastResult": "correct",
+        "lastSeenAt": "2026-10-03T12:14:20Z"
       }
     },
     "categoryStats": {
@@ -711,6 +721,18 @@
         "incorrectStreak": 0,
         "lastResult": "correct",
         "lastSeenAt": "2026-10-02T02:54:52Z",
+        "recent": [
+          "correct"
+        ]
+      },
+      "pattern": {
+        "seen": 1,
+        "correct": 1,
+        "partial": 0,
+        "failed": 0,
+        "incorrectStreak": 0,
+        "lastResult": "correct",
+        "lastSeenAt": "2026-10-03T12:14:20Z",
         "recent": [
           "correct"
         ]
