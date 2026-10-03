@@ -46,7 +46,7 @@
       "type": "multiple_choice",
       "promptVariants": [
         "Which technique models simultaneous spreading from several sources?",
-        "What does one BFS level represent?"
+        "Which approach finds the minimum minutes until every orange has rotted?"
       ],
       "options": [
         "Multi-source BFS, where one level equals one minute",

@@ -131,7 +131,7 @@
       "type": "multiple_choice",
       "promptVariants": [
         "What goes wrong if you remove the last element without checking whether it is the one being removed?",
-        "Which order of operations is safest?"
+        "When the value being removed is already the last element, what can go wrong and which order of updates avoids it?"
       ],
       "options": [
         "A stale dict key can remain; move last into place, update, then delete",

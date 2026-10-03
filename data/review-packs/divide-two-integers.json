@@ -74,7 +74,7 @@
       "type": "free_recall",
       "promptVariants": [
         "Why is -2^31 / -1 a special case and how is the sign handled?",
-        "Which overflow must be clamped?"
+        "Which input overflows, what do you return for it, and how is the sign handled?"
       ],
       "answer": "The true quotient 2^31 does not fit in a 32-bit signed integer, so return 2^31 - 1. For the sign, compute with absolute values and negate the result when exactly one operand is negative; truncation toward zero follows from using the absolute quotient.",
       "keyPoints": [

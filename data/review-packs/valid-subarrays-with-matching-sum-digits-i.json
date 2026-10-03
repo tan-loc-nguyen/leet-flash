@@ -72,7 +72,7 @@
         "Why is brute force acceptable here?",
         "What in the constraints permits an O(n^2) solution?"
       ],
-      "answer": "The input size is small (hundreds), so n^2 is a few tens of thousands of operations. The condition depends on the digits of the full sum (not monotone), which makes a sliding window invalid and leaves enumeration as the straightforward choice.",
+      "answer": "n <= 1500, so all n(n+1)/2 ~ 1.1 million subarrays can be enumerated, each with a cheap digit check, which is well within limits. The condition depends on the digits of the full sum (not monotone), which makes a sliding window invalid and leaves enumeration as the straightforward choice.",
       "keyPoints": [
         "Small n",
         "Non-monotone digit condition",
