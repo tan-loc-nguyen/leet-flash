@@ -356,12 +356,12 @@
     }
   },
   "koko-eating-bananas": {
-    "level": 1,
-    "lastReview": "2026-10-02T02:29:43Z",
-    "nextReview": "2026-10-03T00:00:00Z",
-    "recentAccuracy": 0.9,
-    "lastScore": 0.9,
-    "reviewCount": 1,
+    "level": 2,
+    "lastReview": "2026-10-03T12:43:47Z",
+    "nextReview": "2026-10-06T00:00:00Z",
+    "recentAccuracy": 0.95,
+    "lastScore": 1.0,
+    "reviewCount": 2,
     "lapses": 0,
     "weakCategories": [],
     "cardStats": {
@@ -397,13 +397,13 @@
       },
       "kb-space-01": {
         "category": "space_complexity",
-        "seen": 1,
-        "correct": 1,
+        "seen": 2,
+        "correct": 2,
         "partial": 0,
         "failed": 0,
         "incorrectStreak": 0,
         "lastResult": "correct",
-        "lastSeenAt": "2026-10-02T02:29:43Z"
+        "lastSeenAt": "2026-10-03T12:43:47Z"
       },
       "kb-edge-01": {
         "category": "edge_case",
@@ -456,14 +456,15 @@
         ]
       },
       "space_complexity": {
-        "seen": 1,
-        "correct": 1,
+        "seen": 2,
+        "correct": 2,
         "partial": 0,
         "failed": 0,
         "incorrectStreak": 0,
         "lastResult": "correct",
-        "lastSeenAt": "2026-10-02T02:29:43Z",
+        "lastSeenAt": "2026-10-03T12:43:47Z",
         "recent": [
+          "correct",
           "correct"
         ]
       },

@@ -904,7 +904,7 @@
       "mode": "daily",
       "status": "active",
       "createdAt": "2026-10-03T12:00:20Z",
-      "updatedAt": "2026-10-03T12:43:19Z",
+      "updatedAt": "2026-10-03T12:43:47Z",
       "seed": 815821225,
       "target": 10,
       "filters": {},
@@ -1427,7 +1427,7 @@
         {
           "slug": "koko-eating-bananas",
           "bucket": "due",
-          "status": "in_progress",
+          "status": "done",
           "cardIds": [
             "kb-insight-01",
             "kb-edge-01",
@@ -1452,6 +1452,12 @@
               "category": "time_complexity",
               "result": "correct",
               "timestamp": "2026-10-03T12:43:19Z"
+            },
+            {
+              "cardId": "kb-space-01",
+              "category": "space_complexity",
+              "result": "correct",
+              "timestamp": "2026-10-03T12:43:47Z"
             }
           ],
           "hintLevel": 0,
@@ -1489,16 +1495,62 @@
               "prompt": "Complete the statement: Extra space: ___",
               "options": null
             }
+          },
+          "outcome": {
+            "score": 1.0,
+            "outcome": "promote",
+            "levelBefore": 1,
+            "levelAfter": 2,
+            "nextReview": "2026-10-06T00:00:00Z"
           }
         },
         {
           "slug": "valid-palindrome",
           "bucket": "overdue",
-          "status": "pending",
-          "cardIds": [],
+          "status": "in_progress",
+          "cardIds": [
+            "vp2-invariant-01",
+            "vp2-edge-01",
+            "vp2-time-01",
+            "vp2-space-01"
+          ],
           "answers": [],
           "hintLevel": 0,
-          "presented": {}
+          "presented": {
+            "vp2-invariant-01": {
+              "prompt": "What has already been verified outside the [l, r] range at each iteration?",
+              "options": null
+            },
+            "vp2-edge-01": {
+              "prompt": "How should a string with no alphanumerics be treated?",
+              "options": [
+                {
+                  "label": "A",
+                  "text": "Depends on the original length"
+                },
+                {
+                  "label": "B",
+                  "text": "True - the cleaned string is empty"
+                },
+                {
+                  "label": "C",
+                  "text": "False - there is nothing to compare"
+                },
+                {
+                  "label": "D",
+                  "text": "It raises an error on empty text"
+                }
+              ]
+            },
+            "vp2-time-01": {
+              "prompt": "Time complexity of the two-pointer solution: ___",
+              "options": null
+            },
+            "vp2-space-01": {
+              "prompt": "How could you make your Valid Palindrome solution truly O(1) extra space?",
+              "options": null
+            }
+          }
         },
         {
           "slug": "kth-largest-element-in-an-array",
