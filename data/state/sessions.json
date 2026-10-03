@@ -904,7 +904,7 @@
       "mode": "daily",
       "status": "active",
       "createdAt": "2026-10-03T12:00:20Z",
-      "updatedAt": "2026-10-03T12:12:38Z",
+      "updatedAt": "2026-10-03T12:13:03Z",
       "seed": 815821225,
       "target": 10,
       "filters": {},
@@ -1010,7 +1010,7 @@
         {
           "slug": "contains-duplicate-ii",
           "bucket": "overdue",
-          "status": "in_progress",
+          "status": "done",
           "cardIds": [
             "cd2-insight-01",
             "cd2-edge-01",
@@ -1035,6 +1035,12 @@
               "category": "time_complexity",
               "result": "correct",
               "timestamp": "2026-10-03T12:12:38Z"
+            },
+            {
+              "cardId": "cd2-space-01",
+              "category": "space_complexity",
+              "result": "correct",
+              "timestamp": "2026-10-03T12:12:58Z"
             }
           ],
           "hintLevel": 0,
@@ -1072,16 +1078,79 @@
               "prompt": "Memory use in terms of n and k: ___",
               "options": null
             }
+          },
+          "outcome": {
+            "score": 1.0,
+            "outcome": "promote",
+            "levelBefore": 0,
+            "levelAfter": 1,
+            "nextReview": "2026-10-04T00:00:00Z"
           }
         },
         {
           "slug": "add-two-numbers-ii",
           "bucket": "overdue",
-          "status": "pending",
-          "cardIds": [],
+          "status": "in_progress",
+          "cardIds": [
+            "a2-pattern-01",
+            "a2-insight-01",
+            "a2-edge-01",
+            "a2-time-01"
+          ],
           "answers": [],
           "hintLevel": 0,
-          "presented": {}
+          "presented": {
+            "a2-pattern-01": {
+              "prompt": "How do you add numbers whose digits are stored most significant first?",
+              "options": [
+                {
+                  "label": "A",
+                  "text": "Add directly from the head of both lists, carrying to the next node"
+                },
+                {
+                  "label": "B",
+                  "text": "Convert both lists to floating-point numbers and add them there"
+                },
+                {
+                  "label": "C",
+                  "text": "Sort the digits of both lists and add the two sorted sequences"
+                },
+                {
+                  "label": "D",
+                  "text": "Use stacks (or recursion) to process digits from the end"
+                }
+              ]
+            },
+            "a2-insight-01": {
+              "prompt": "What is the relationship between the two problems?",
+              "options": null
+            },
+            "a2-edge-01": {
+              "prompt": "Which node must be created after the main loop for [5] + [5]?",
+              "options": [
+                {
+                  "label": "A",
+                  "text": "[9,10]: digits are added without carrying"
+                },
+                {
+                  "label": "B",
+                  "text": "[1,0]: the carry is added only once"
+                },
+                {
+                  "label": "C",
+                  "text": "[0,0]: the last carry is dropped"
+                },
+                {
+                  "label": "D",
+                  "text": "[1,0,0]: the final carry becomes a new head node"
+                }
+              ]
+            },
+            "a2-time-01": {
+              "prompt": "Complete the statement: Time complexity: ___",
+              "options": null
+            }
+          }
         },
         {
           "slug": "rotting-oranges",
