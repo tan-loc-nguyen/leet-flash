@@ -256,6 +256,16 @@
         "incorrectStreak": 1,
         "lastResult": "partial",
         "lastSeenAt": "2026-10-02T02:16:18Z"
+      },
+      "ro2-insight-01": {
+        "category": "main_insight",
+        "seen": 1,
+        "correct": 1,
+        "partial": 0,
+        "failed": 0,
+        "incorrectStreak": 0,
+        "lastResult": "correct",
+        "lastSeenAt": "2026-10-03T12:19:44Z"
       }
     },
     "categoryStats": {
@@ -306,6 +316,18 @@
         "lastSeenAt": "2026-10-02T02:16:18Z",
         "recent": [
           "partial"
+        ]
+      },
+      "main_insight": {
+        "seen": 1,
+        "correct": 1,
+        "partial": 0,
+        "failed": 0,
+        "incorrectStreak": 0,
+        "lastResult": "correct",
+        "lastSeenAt": "2026-10-03T12:19:44Z",
+        "recent": [
+          "correct"
         ]
       }
     }

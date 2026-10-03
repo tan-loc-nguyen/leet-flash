@@ -64,3 +64,4 @@
 {"timestamp":"2026-10-03T12:17:07Z","sessionId":"daily-2026-10-03","problem":"add-two-numbers-ii","card":"a2-time-01","category":"time_complexity","result":"correct","mode":"daily"}
 {"timestamp":"2026-10-03T12:17:07Z","event":"problem_review","sessionId":"daily-2026-10-03","problem":"add-two-numbers-ii","mode":"daily","score":0.854,"outcome":"promote","levelBefore":0,"levelAfter":1,"nextReview":"2026-10-04T00:00:00Z","cards":4}
 {"timestamp":"2026-10-03T12:17:52Z","sessionId":"daily-2026-10-03","problem":"rotting-oranges","card":"ro2-pattern-01","category":"pattern","result":"correct","mode":"daily"}
+{"timestamp":"2026-10-03T12:19:44Z","sessionId":"daily-2026-10-03","problem":"rotting-oranges","card":"ro2-insight-01","category":"main_insight","result":"correct","mode":"daily"}
