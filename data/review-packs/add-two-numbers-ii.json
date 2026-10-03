@@ -178,7 +178,7 @@
       "type": "multiple_choice",
       "promptVariants": [
         "What does the algorithm return for [9,9] + [1], and why does the list get longer?",
-        "Which node must be created after the main loop for [5] + [5]?"
+        "For [9,9] + [1], what is returned and which node is created after the main loop?"
       ],
       "options": [
         "[1,0,0]: the final carry becomes a new head node",

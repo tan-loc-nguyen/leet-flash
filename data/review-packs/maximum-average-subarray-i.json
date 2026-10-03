@@ -159,21 +159,21 @@
       "category": "edge_case",
       "type": "multiple_choice",
       "promptVariants": [
-        "What does the algorithm return for nums = [5] and k = 1?",
-        "Which window is examined?"
+        "What does the algorithm return for nums = [-3,-5] and k = 2?",
+        "nums = [-3,-5], k = 2: which window is examined and what is returned?"
       ],
       "options": [
-        "5.0: the only window is the single element",
+        "-4.0: the only window is the whole array",
         "0.0: there is no full window yet",
         "An error: there is no element to subtract",
-        "1.0: the average is divided by k twice"
+        "-2.0: the sum is divided by k twice"
       ],
-      "answer": "5.0: the only window is the single element",
-      "explanation": "The initial window is also the best.",
+      "answer": "-4.0: the only window is the whole array",
+      "explanation": "When k == n the initial window is the only window, so the sliding loop never runs and -8 / 2 = -4.0 is returned.",
       "incorrectOptionExplanations": {
-        "0.0: there is no full window yet": "There is exactly one window.",
-        "An error: there is no element to subtract": "The loop simply does not run.",
-        "1.0: the average is divided by k twice": "The average is 5 / 1."
+        "0.0: there is no full window yet": "The first loop builds exactly one full window of length k.",
+        "An error: there is no element to subtract": "range(k, len(nums)) is empty, so the sliding loop simply does not run.",
+        "-2.0: the sum is divided by k twice": "The window sum -8 is divided by k once at the end: -8 / 2 = -4.0."
       }
     }
   ],

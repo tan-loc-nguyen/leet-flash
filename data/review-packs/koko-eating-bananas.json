@@ -116,7 +116,7 @@
       "type": "fill_blank",
       "promptVariants": [
         "Time complexity (n piles, max pile M): ___",
-        "Each of log M iterations scans all piles, giving ___."
+        "Time complexity in terms of n = len(piles) and M = max(piles): ___"
       ],
       "answer": "O(n log M)",
       "explanation": "log2(M) feasibility checks of O(n) each.",

@@ -138,7 +138,7 @@ def test_every_real_pack_passes_the_validator_and_has_a_recognition_card():
     from leetcode_review.content.loader import list_pack_slugs, load_pack
     real = Paths()
     slugs = list_pack_slugs(real)
-    assert len(slugs) >= 275
+    assert len(slugs) >= 274
     issues = validate_all(real, {p.stem for p in real.problems.glob("*.json")})
     assert [str(i) for i in issues if i.level == "error"] == []
     missing = [s for s in slugs if not any(c.rubric and c.enabled for c in load_pack(real, s).cards)]

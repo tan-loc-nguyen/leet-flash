@@ -171,6 +171,36 @@ def test_audit_cards_script(paths, run):
     assert run("audit_cards.py").returncode == 0
 
 
+def test_remove_problem_script(paths, run):
+    for slug in ("keep", "gone"):
+        make_problem(paths, slug)
+        make_pack(paths, slug)
+    (paths.lists / "mine.json").write_text(json.dumps({"name": "Mine", "slug": "mine", "problems": ["gone", "keep"]}))
+    run("flag_card.py", "add", "gone", "gone-pattern-01", "--reason", "bad")
+    run("review.py", "start", "--mode", "filtered", "--slug", "gone")
+    blocked = run("remove_problem.py", "gone", check=False)
+    assert blocked.returncode != 0 and "active session" in blocked.stderr
+    run("review.py", "next")
+    run("review.py", "answer", "--result", "correct", check=False)
+    run("review.py", "abort")
+    paths.review_state.write_text(json.dumps({"gone": {"level": 1}, "keep": {"level": 2}}))
+    sessions_before = paths.sessions.read_text()
+    history_before = paths.history.read_text() if paths.history.exists() else ""
+    assert "Would delete" in run("remove_problem.py", "gone", "--dry-run").stdout
+    assert (paths.problems / "gone.json").exists()
+    assert "Removed gone" in run("remove_problem.py", "gone").stdout
+    assert not (paths.problems / "gone.json").exists() and not (paths.review_packs / "gone.json").exists()
+    assert (paths.problems / "keep.json").exists() and (paths.review_packs / "keep.json").exists()
+    assert json.loads((paths.lists / "mine.json").read_text())["problems"] == ["keep"]
+    assert list(json.loads(paths.review_state.read_text())) == ["keep"]
+    assert "No open card flags" in run("flag_card.py", "list").stdout
+    assert paths.sessions.read_text() == sessions_before
+    assert (paths.history.read_text() if paths.history.exists() else "") == history_before
+    assert run("remove_problem.py", "gone", check=False).returncode != 0
+    plan = json.loads(run("review.py", "plan").stdout)
+    assert sum(plan["candidatesByBucket"].values()) == 1
+
+
 def test_audit_flags_a_clue_number_the_problem_does_not_state(paths, run):
     from tests.conftest import recog
     make_problem(paths, "cn", leetcode_id=1, problem_statement="Return x.", constraints=["1 <= n <= 10^5"])

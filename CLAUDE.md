@@ -21,6 +21,7 @@ Python only (I interview in Python). Run everything with `uv run python scripts/
 |---|---|
 | "Import my LeetCode problems" / "Sync LeetCode" | `scripts/import_leetcode.py` / `scripts/sync_leetcode.py`, then report the summary and how many problems lack review packs |
 | "Add problem <slug/url>" | `scripts/add_problem.py <slug>` |
+| "Remove / delete problem X" | `scripts/remove_problem.py <slug>` (`--dry-run` first; keeps history and sessions) |
 | "Generate review packs for new problems" | follow *Pack generation* below |
 | "Start today's review" / "Give me 10 problems" | `review.py plan`, then `review.py start --mode daily [--target N] [--all-due]` |
 | "Drill my patterns" / "Pattern drill" | `review.py start --mode drill --target 25 [--list unsolved-amazon] [--topic …]`: only the recognition question per problem, no levels or schedules change |

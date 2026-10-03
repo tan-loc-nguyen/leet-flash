@@ -898,6 +898,931 @@
           }
         }
       ]
+    },
+    "daily-2026-10-03": {
+      "id": "daily-2026-10-03",
+      "mode": "daily",
+      "status": "completed",
+      "createdAt": "2026-10-03T12:00:20Z",
+      "updatedAt": "2026-10-03T12:52:07Z",
+      "seed": 815821225,
+      "target": 10,
+      "filters": {},
+      "focusCategories": [],
+      "problems": [
+        {
+          "slug": "divide-two-integers",
+          "bucket": "overdue",
+          "status": "done",
+          "cardIds": [
+            "d2i-pattern-01",
+            "d2i-insight-01",
+            "d2i-edge-01",
+            "d2i-time-01"
+          ],
+          "answers": [
+            {
+              "cardId": "d2i-pattern-01",
+              "category": "pattern",
+              "result": "correct",
+              "timestamp": "2026-10-03T12:05:08Z"
+            },
+            {
+              "cardId": "d2i-insight-01",
+              "category": "main_insight",
+              "result": "correct",
+              "timestamp": "2026-10-03T12:06:00Z"
+            },
+            {
+              "cardId": "d2i-edge-01",
+              "category": "edge_case",
+              "result": "correct",
+              "timestamp": "2026-10-03T12:06:51Z"
+            },
+            {
+              "cardId": "d2i-time-01",
+              "category": "time_complexity",
+              "result": "correct",
+              "timestamp": "2026-10-03T12:08:25Z"
+            }
+          ],
+          "hintLevel": 0,
+          "presented": {
+            "d2i-pattern-01": {
+              "prompt": "What do you subtract on each step?",
+              "options": [
+                {
+                  "label": "A",
+                  "text": "Subtract the divisor once per loop and count it"
+                },
+                {
+                  "label": "B",
+                  "text": "Subtract the dividend from the divisor in turn"
+                },
+                {
+                  "label": "C",
+                  "text": "Multiply the dividend by the divisor's inverse"
+                },
+                {
+                  "label": "D",
+                  "text": "Subtract the biggest shifted divisor that fits"
+                }
+              ]
+            },
+            "d2i-insight-01": {
+              "prompt": "Which overflow must be clamped?",
+              "options": null
+            },
+            "d2i-edge-01": {
+              "prompt": "What does the function return for dividend = -7 and divisor = 2?",
+              "options": [
+                {
+                  "label": "A",
+                  "text": "-4: the floor of -3.5, as Python's // would give here"
+                },
+                {
+                  "label": "B",
+                  "text": "-3.5: the exact quotient without any truncation at all"
+                },
+                {
+                  "label": "C",
+                  "text": "-3: the quotient truncates toward zero, not minus infinity"
+                },
+                {
+                  "label": "D",
+                  "text": "3: the absolute quotient with the sign dropped by mistake"
+                }
+              ]
+            },
+            "d2i-time-01": {
+              "prompt": "Complete the statement: Time complexity: ___",
+              "options": null
+            }
+          },
+          "outcome": {
+            "score": 1.0,
+            "outcome": "promote",
+            "levelBefore": 0,
+            "levelAfter": 1,
+            "nextReview": "2026-10-04T00:00:00Z"
+          }
+        },
+        {
+          "slug": "contains-duplicate-ii",
+          "bucket": "overdue",
+          "status": "done",
+          "cardIds": [
+            "cd2-insight-01",
+            "cd2-edge-01",
+            "cd2-time-01",
+            "cd2-space-01"
+          ],
+          "answers": [
+            {
+              "cardId": "cd2-insight-01",
+              "category": "main_insight",
+              "result": "correct",
+              "timestamp": "2026-10-03T12:11:21Z"
+            },
+            {
+              "cardId": "cd2-edge-01",
+              "category": "edge_case",
+              "result": "correct",
+              "timestamp": "2026-10-03T12:12:01Z"
+            },
+            {
+              "cardId": "cd2-time-01",
+              "category": "time_complexity",
+              "result": "correct",
+              "timestamp": "2026-10-03T12:12:38Z"
+            },
+            {
+              "cardId": "cd2-space-01",
+              "category": "space_complexity",
+              "result": "correct",
+              "timestamp": "2026-10-03T12:12:58Z"
+            }
+          ],
+          "hintLevel": 0,
+          "presented": {
+            "cd2-insight-01": {
+              "prompt": "Why can older elements be forgotten?",
+              "options": null
+            },
+            "cd2-edge-01": {
+              "prompt": "Which distance shows the `<= k` boundary?",
+              "options": [
+                {
+                  "label": "A",
+                  "text": "False (the 4s are 3 apart, which exceeds k = 3)"
+                },
+                {
+                  "label": "B",
+                  "text": "False (equal values must be adjacent to count)"
+                },
+                {
+                  "label": "C",
+                  "text": "True (the 4s are exactly 3 apart, and 3 <= k)"
+                },
+                {
+                  "label": "D",
+                  "text": "True, but only after sorting the array first"
+                }
+              ]
+            },
+            "cd2-time-01": {
+              "prompt": "Complete the statement: Time complexity: ___",
+              "options": null
+            },
+            "cd2-space-01": {
+              "prompt": "Memory use in terms of n and k: ___",
+              "options": null
+            }
+          },
+          "outcome": {
+            "score": 1.0,
+            "outcome": "promote",
+            "levelBefore": 0,
+            "levelAfter": 1,
+            "nextReview": "2026-10-04T00:00:00Z"
+          }
+        },
+        {
+          "slug": "add-two-numbers-ii",
+          "bucket": "overdue",
+          "status": "done",
+          "cardIds": [
+            "a2-pattern-01",
+            "a2-insight-01",
+            "a2-edge-01",
+            "a2-time-01"
+          ],
+          "answers": [
+            {
+              "cardId": "a2-pattern-01",
+              "category": "pattern",
+              "result": "correct",
+              "timestamp": "2026-10-03T12:14:20Z"
+            },
+            {
+              "cardId": "a2-insight-01",
+              "category": "main_insight",
+              "result": "partial",
+              "timestamp": "2026-10-03T12:15:19Z"
+            },
+            {
+              "cardId": "a2-edge-01",
+              "category": "edge_case",
+              "result": "correct",
+              "timestamp": "2026-10-03T12:16:39Z"
+            },
+            {
+              "cardId": "a2-time-01",
+              "category": "time_complexity",
+              "result": "correct",
+              "timestamp": "2026-10-03T12:17:07Z"
+            }
+          ],
+          "hintLevel": 0,
+          "presented": {
+            "a2-pattern-01": {
+              "prompt": "How do you add numbers whose digits are stored most significant first?",
+              "options": [
+                {
+                  "label": "A",
+                  "text": "Add directly from the head of both lists, carrying to the next node"
+                },
+                {
+                  "label": "B",
+                  "text": "Convert both lists to floating-point numbers and add them there"
+                },
+                {
+                  "label": "C",
+                  "text": "Sort the digits of both lists and add the two sorted sequences"
+                },
+                {
+                  "label": "D",
+                  "text": "Use stacks (or recursion) to process digits from the end"
+                }
+              ]
+            },
+            "a2-insight-01": {
+              "prompt": "What is the relationship between the two problems?",
+              "options": null
+            },
+            "a2-edge-01": {
+              "prompt": "Which node must be created after the main loop for [5] + [5]?",
+              "options": [
+                {
+                  "label": "A",
+                  "text": "[9,10]: digits are added without carrying"
+                },
+                {
+                  "label": "B",
+                  "text": "[1,0]: the carry is added only once"
+                },
+                {
+                  "label": "C",
+                  "text": "[0,0]: the last carry is dropped"
+                },
+                {
+                  "label": "D",
+                  "text": "[1,0,0]: the final carry becomes a new head node"
+                }
+              ]
+            },
+            "a2-time-01": {
+              "prompt": "Complete the statement: Time complexity: ___",
+              "options": null
+            }
+          },
+          "outcome": {
+            "score": 0.854,
+            "outcome": "promote",
+            "levelBefore": 0,
+            "levelAfter": 1,
+            "nextReview": "2026-10-04T00:00:00Z"
+          }
+        },
+        {
+          "slug": "rotting-oranges",
+          "bucket": "due",
+          "status": "done",
+          "cardIds": [
+            "ro2-pattern-01",
+            "ro2-insight-01",
+            "ro2-code-01",
+            "ro2-time-01"
+          ],
+          "answers": [
+            {
+              "cardId": "ro2-pattern-01",
+              "category": "pattern",
+              "result": "correct",
+              "timestamp": "2026-10-03T12:17:52Z"
+            },
+            {
+              "cardId": "ro2-insight-01",
+              "category": "main_insight",
+              "result": "correct",
+              "timestamp": "2026-10-03T12:19:44Z"
+            },
+            {
+              "cardId": "ro2-code-01",
+              "category": "code_reasoning",
+              "result": "partial",
+              "timestamp": "2026-10-03T12:22:10Z"
+            },
+            {
+              "cardId": "ro2-time-01",
+              "category": "time_complexity",
+              "result": "correct",
+              "timestamp": "2026-10-03T12:23:12Z"
+            }
+          ],
+          "hintLevel": 0,
+          "presented": {
+            "ro2-pattern-01": {
+              "prompt": "What does one BFS level represent?",
+              "options": [
+                {
+                  "label": "A",
+                  "text": "DFS from the first rotten orange found in the grid"
+                },
+                {
+                  "label": "B",
+                  "text": "Binary search on time with a check for each guess"
+                },
+                {
+                  "label": "C",
+                  "text": "Sorting oranges by distance and spreading in order"
+                },
+                {
+                  "label": "D",
+                  "text": "Multi-source BFS, where one level equals one minute"
+                }
+              ]
+            },
+            "ro2-insight-01": {
+              "prompt": "How do you detect the impossible case?",
+              "options": null
+            },
+            "ro2-code-01": {
+              "prompt": "Why the loop condition `while queue and fresh > 0` and where is `time` incremented?",
+              "options": null
+            },
+            "ro2-time-01": {
+              "prompt": "Complete the statement: Time complexity: ___",
+              "options": null
+            }
+          },
+          "outcome": {
+            "score": 0.905,
+            "outcome": "promote",
+            "levelBefore": 1,
+            "levelAfter": 2,
+            "nextReview": "2026-10-06T00:00:00Z"
+          }
+        },
+        {
+          "slug": "insert-delete-getrandom-o1",
+          "bucket": "due",
+          "status": "done",
+          "cardIds": [
+            "rs3-insight-01",
+            "rs3-edge-01",
+            "rs3-time-01",
+            "rs3-space-01"
+          ],
+          "answers": [
+            {
+              "cardId": "rs3-insight-01",
+              "category": "main_insight",
+              "result": "correct",
+              "timestamp": "2026-10-03T12:24:30Z"
+            },
+            {
+              "cardId": "rs3-edge-01",
+              "category": "edge_case",
+              "result": "correct",
+              "timestamp": "2026-10-03T12:26:28Z"
+            },
+            {
+              "cardId": "rs3-time-01",
+              "category": "time_complexity",
+              "result": "correct",
+              "timestamp": "2026-10-03T12:30:27Z"
+            },
+            {
+              "cardId": "rs3-space-01",
+              "category": "space_complexity",
+              "result": "correct",
+              "timestamp": "2026-10-03T12:33:19Z"
+            }
+          ],
+          "hintLevel": 0,
+          "presented": {
+            "rs3-insight-01": {
+              "prompt": "Why swap with the last element before popping?",
+              "options": null
+            },
+            "rs3-edge-01": {
+              "prompt": "Which order of operations is safest?",
+              "options": [
+                {
+                  "label": "A",
+                  "text": "Nothing; the swap works the same when both indices are equal here"
+                },
+                {
+                  "label": "B",
+                  "text": "The dictionary would raise a KeyError on the very next insert call"
+                },
+                {
+                  "label": "C",
+                  "text": "A stale dict key can remain; move last into place, update, then delete"
+                },
+                {
+                  "label": "D",
+                  "text": "The list would become unsorted and getRandom would fail for good"
+                }
+              ]
+            },
+            "rs3-time-01": {
+              "prompt": "Complete the statement: Time complexity: ___",
+              "options": null
+            },
+            "rs3-space-01": {
+              "prompt": "Space complexity (excluding the input): ___",
+              "options": null
+            }
+          },
+          "outcome": {
+            "score": 1.0,
+            "outcome": "promote",
+            "levelBefore": 1,
+            "levelAfter": 2,
+            "nextReview": "2026-10-06T00:00:00Z"
+          }
+        },
+        {
+          "slug": "maximum-average-subarray-i",
+          "bucket": "due",
+          "status": "done",
+          "cardIds": [
+            "mas-insight-01",
+            "mas-edge-01",
+            "mas-time-01",
+            "mas-space-01"
+          ],
+          "answers": [
+            {
+              "cardId": "mas-insight-01",
+              "category": "main_insight",
+              "result": "partial",
+              "timestamp": "2026-10-03T12:35:23Z"
+            },
+            {
+              "cardId": "mas-edge-01",
+              "category": "edge_case",
+              "result": "correct",
+              "timestamp": "2026-10-03T12:38:25Z"
+            },
+            {
+              "cardId": "mas-time-01",
+              "category": "time_complexity",
+              "result": "correct",
+              "timestamp": "2026-10-03T12:38:54Z"
+            },
+            {
+              "cardId": "mas-space-01",
+              "category": "space_complexity",
+              "result": "correct",
+              "timestamp": "2026-10-03T12:39:15Z"
+            }
+          ],
+          "hintLevel": 0,
+          "presented": {
+            "mas-insight-01": {
+              "prompt": "Why compare sums rather than averages while sliding?",
+              "options": null
+            },
+            "mas-edge-01": {
+              "prompt": "Which window is examined?",
+              "options": [
+                {
+                  "label": "A",
+                  "text": "1.0: the average is divided by k twice"
+                },
+                {
+                  "label": "B",
+                  "text": "An error: there is no element to subtract"
+                },
+                {
+                  "label": "C",
+                  "text": "0.0: there is no full window yet"
+                },
+                {
+                  "label": "D",
+                  "text": "5.0: the only window is the single element"
+                }
+              ]
+            },
+            "mas-time-01": {
+              "prompt": "Complete the statement: Time complexity: ___",
+              "options": null
+            },
+            "mas-space-01": {
+              "prompt": "Complete the statement: Space complexity (excluding the input): ___",
+              "options": null
+            }
+          },
+          "outcome": {
+            "score": 0.847,
+            "outcome": "hold",
+            "levelBefore": 1,
+            "levelAfter": 1,
+            "nextReview": "2026-10-04T00:00:00Z"
+          }
+        },
+        {
+          "slug": "koko-eating-bananas",
+          "bucket": "due",
+          "status": "done",
+          "cardIds": [
+            "kb-insight-01",
+            "kb-edge-01",
+            "kb-time-01",
+            "kb-space-01"
+          ],
+          "answers": [
+            {
+              "cardId": "kb-insight-01",
+              "category": "main_insight",
+              "result": "correct",
+              "timestamp": "2026-10-03T12:41:25Z"
+            },
+            {
+              "cardId": "kb-edge-01",
+              "category": "edge_case",
+              "result": "correct",
+              "timestamp": "2026-10-03T12:42:22Z"
+            },
+            {
+              "cardId": "kb-time-01",
+              "category": "time_complexity",
+              "result": "correct",
+              "timestamp": "2026-10-03T12:43:19Z"
+            },
+            {
+              "cardId": "kb-space-01",
+              "category": "space_complexity",
+              "result": "correct",
+              "timestamp": "2026-10-03T12:43:47Z"
+            }
+          ],
+          "hintLevel": 0,
+          "presented": {
+            "kb-insight-01": {
+              "prompt": "How do you choose low and high?",
+              "options": null
+            },
+            "kb-edge-01": {
+              "prompt": "What is the answer when h equals the number of piles?",
+              "options": [
+                {
+                  "label": "A",
+                  "text": "1"
+                },
+                {
+                  "label": "B",
+                  "text": "sum(piles)"
+                },
+                {
+                  "label": "C",
+                  "text": "min(piles)"
+                },
+                {
+                  "label": "D",
+                  "text": "max(piles)"
+                }
+              ]
+            },
+            "kb-time-01": {
+              "prompt": "Each of log M iterations scans all piles, giving ___.",
+              "options": null
+            },
+            "kb-space-01": {
+              "prompt": "Complete the statement: Extra space: ___",
+              "options": null
+            }
+          },
+          "outcome": {
+            "score": 1.0,
+            "outcome": "promote",
+            "levelBefore": 1,
+            "levelAfter": 2,
+            "nextReview": "2026-10-06T00:00:00Z"
+          }
+        },
+        {
+          "slug": "valid-palindrome",
+          "bucket": "overdue",
+          "status": "done",
+          "cardIds": [
+            "vp2-invariant-01",
+            "vp2-edge-01",
+            "vp2-time-01",
+            "vp2-space-01"
+          ],
+          "answers": [
+            {
+              "cardId": "vp2-invariant-01",
+              "category": "invariant",
+              "result": "correct",
+              "timestamp": "2026-10-03T12:45:51Z"
+            },
+            {
+              "cardId": "vp2-edge-01",
+              "category": "edge_case",
+              "result": "correct",
+              "timestamp": "2026-10-03T12:46:12Z"
+            },
+            {
+              "cardId": "vp2-time-01",
+              "category": "time_complexity",
+              "result": "correct",
+              "timestamp": "2026-10-03T12:46:50Z"
+            },
+            {
+              "cardId": "vp2-space-01",
+              "category": "space_complexity",
+              "result": "correct",
+              "timestamp": "2026-10-03T12:47:56Z"
+            }
+          ],
+          "hintLevel": 0,
+          "presented": {
+            "vp2-invariant-01": {
+              "prompt": "What has already been verified outside the [l, r] range at each iteration?",
+              "options": null
+            },
+            "vp2-edge-01": {
+              "prompt": "How should a string with no alphanumerics be treated?",
+              "options": [
+                {
+                  "label": "A",
+                  "text": "Depends on the original length"
+                },
+                {
+                  "label": "B",
+                  "text": "True - the cleaned string is empty"
+                },
+                {
+                  "label": "C",
+                  "text": "False - there is nothing to compare"
+                },
+                {
+                  "label": "D",
+                  "text": "It raises an error on empty text"
+                }
+              ]
+            },
+            "vp2-time-01": {
+              "prompt": "Time complexity of the two-pointer solution: ___",
+              "options": null
+            },
+            "vp2-space-01": {
+              "prompt": "How could you make your Valid Palindrome solution truly O(1) extra space?",
+              "options": null
+            }
+          },
+          "outcome": {
+            "score": 1.0,
+            "outcome": "promote",
+            "levelBefore": 0,
+            "levelAfter": 1,
+            "nextReview": "2026-10-04T00:00:00Z"
+          }
+        },
+        {
+          "slug": "kth-largest-element-in-an-array",
+          "bucket": "due",
+          "status": "done",
+          "cardIds": [
+            "kt-pattern-02",
+            "kt-insight-02",
+            "kt-time-02",
+            "kt-space-02"
+          ],
+          "answers": [
+            {
+              "cardId": "kt-pattern-02",
+              "category": "pattern",
+              "result": "correct",
+              "timestamp": "2026-10-03T12:48:35Z"
+            },
+            {
+              "cardId": "kt-insight-02",
+              "category": "main_insight",
+              "result": "correct",
+              "timestamp": "2026-10-03T12:50:29Z"
+            },
+            {
+              "cardId": "kt-time-02",
+              "category": "time_complexity",
+              "result": "correct",
+              "timestamp": "2026-10-03T12:50:56Z"
+            },
+            {
+              "cardId": "kt-space-02",
+              "category": "space_complexity",
+              "result": "correct",
+              "timestamp": "2026-10-03T12:51:19Z"
+            }
+          ],
+          "hintLevel": 0,
+          "presented": {
+            "kt-pattern-02": {
+              "prompt": "Which structure keeps only the k largest elements seen so far?",
+              "options": [
+                {
+                  "label": "A",
+                  "text": "Max-heap capped at size k"
+                },
+                {
+                  "label": "B",
+                  "text": "Queue holding the last k items"
+                },
+                {
+                  "label": "C",
+                  "text": "Min-heap capped at size k"
+                },
+                {
+                  "label": "D",
+                  "text": "Monotonic stack of size k"
+                }
+              ]
+            },
+            "kt-insight-02": {
+              "prompt": "Why a min-heap and not a max-heap for the k largest, and why is the root the answer?",
+              "options": null
+            },
+            "kt-time-02": {
+              "prompt": "Time complexity of the size-k min-heap solution for n elements: ___",
+              "options": null
+            },
+            "kt-space-02": {
+              "prompt": "Extra space of the size-k min-heap solution: ___",
+              "options": null
+            }
+          },
+          "outcome": {
+            "score": 1.0,
+            "outcome": "promote",
+            "levelBefore": 1,
+            "levelAfter": 2,
+            "nextReview": "2026-10-06T00:00:00Z"
+          }
+        },
+        {
+          "slug": "fizz-buzz",
+          "bucket": "due",
+          "status": "skipped",
+          "cardIds": [
+            "fb3-pattern-01",
+            "fb3-insight-01",
+            "fb3-edge-01",
+            "fb3-time-01"
+          ],
+          "answers": [],
+          "hintLevel": 0,
+          "presented": {
+            "fb3-pattern-01": {
+              "prompt": "What goes wrong otherwise?",
+              "options": [
+                {
+                  "label": "A",
+                  "text": "Python raises an error when two branches both match"
+                },
+                {
+                  "label": "B",
+                  "text": "A multiple of 15 also passes the 3 test and prints Fizz"
+                },
+                {
+                  "label": "C",
+                  "text": "elif runs all matching branches, so 15 prints twice"
+                },
+                {
+                  "label": "D",
+                  "text": "Multiples of 15 are not divisible by 3 or by 5"
+                }
+              ]
+            },
+            "fb3-insight-01": {
+              "prompt": "How does the concatenation approach extend to more rules?",
+              "options": null
+            },
+            "fb3-edge-01": {
+              "prompt": "What is the last item?",
+              "options": [
+                {
+                  "label": "A",
+                  "text": "The last item is '15'"
+                },
+                {
+                  "label": "B",
+                  "text": "The last item is 'FizzBuzz'"
+                },
+                {
+                  "label": "C",
+                  "text": "The last item is 'Fizz'"
+                },
+                {
+                  "label": "D",
+                  "text": "The last item is 'Buzz'"
+                }
+              ]
+            },
+            "fb3-time-01": {
+              "prompt": "Complete the statement: Time complexity: ___",
+              "options": null
+            }
+          }
+        }
+      ]
+    },
+    "daily-2026-10-03-2": {
+      "id": "daily-2026-10-03-2",
+      "mode": "daily",
+      "status": "completed",
+      "createdAt": "2026-10-03T12:55:14Z",
+      "updatedAt": "2026-10-03T13:04:34Z",
+      "seed": 69908828,
+      "target": 1,
+      "filters": {},
+      "focusCategories": [],
+      "problems": [
+        {
+          "slug": "valid-subarrays-with-matching-sum-digits-i",
+          "bucket": "new",
+          "status": "done",
+          "cardIds": [
+            "vs-pattern-01",
+            "vs-insight-01",
+            "vs-time-01",
+            "vs-space-01"
+          ],
+          "answers": [
+            {
+              "cardId": "vs-pattern-01",
+              "category": "pattern",
+              "result": "correct",
+              "timestamp": "2026-10-03T12:59:15Z"
+            },
+            {
+              "cardId": "vs-insight-01",
+              "category": "main_insight",
+              "result": "correct",
+              "timestamp": "2026-10-03T13:00:05Z"
+            },
+            {
+              "cardId": "vs-time-01",
+              "category": "time_complexity",
+              "result": "correct",
+              "timestamp": "2026-10-03T13:01:22Z"
+            },
+            {
+              "cardId": "vs-space-01",
+              "category": "space_complexity",
+              "result": "correct",
+              "timestamp": "2026-10-03T13:04:33Z"
+            }
+          ],
+          "hintLevel": 0,
+          "presented": {
+            "vs-pattern-01": {
+              "prompt": "How can the subarray sum be maintained as the end index grows?",
+              "options": [
+                {
+                  "label": "A",
+                  "text": "Sorting the array after every extension of the end"
+                },
+                {
+                  "label": "B",
+                  "text": "A heap of the elements currently in the subarray"
+                },
+                {
+                  "label": "C",
+                  "text": "Binary search for the best end index each time"
+                },
+                {
+                  "label": "D",
+                  "text": "Running sum extended by one element (or prefix sums)"
+                }
+              ]
+            },
+            "vs-insight-01": {
+              "prompt": "Why is brute force acceptable here?",
+              "options": null
+            },
+            "vs-time-01": {
+              "prompt": "Time complexity (digit conversion treated as O(1)): ___",
+              "options": null
+            },
+            "vs-space-01": {
+              "prompt": "Extra space: ___",
+              "options": null
+            }
+          },
+          "outcome": {
+            "score": 1.0,
+            "outcome": "promote",
+            "levelBefore": 0,
+            "levelAfter": 1,
+            "nextReview": "2026-10-04T00:00:00Z"
+          }
+        }
+      ]
     }
   }
 }
