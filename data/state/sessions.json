@@ -904,7 +904,7 @@
       "mode": "daily",
       "status": "active",
       "createdAt": "2026-10-03T12:00:20Z",
-      "updatedAt": "2026-10-03T12:33:20Z",
+      "updatedAt": "2026-10-03T12:35:23Z",
       "seed": 815821225,
       "target": 10,
       "filters": {},
@@ -1354,7 +1354,14 @@
             "mas-time-01",
             "mas-space-01"
           ],
-          "answers": [],
+          "answers": [
+            {
+              "cardId": "mas-insight-01",
+              "category": "main_insight",
+              "result": "partial",
+              "timestamp": "2026-10-03T12:35:23Z"
+            }
+          ],
           "hintLevel": 0,
           "presented": {
             "mas-insight-01": {

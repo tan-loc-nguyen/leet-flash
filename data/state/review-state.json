@@ -991,6 +991,16 @@
         "incorrectStreak": 0,
         "lastResult": "correct",
         "lastSeenAt": "2026-10-02T03:13:29Z"
+      },
+      "mas-insight-01": {
+        "category": "main_insight",
+        "seen": 1,
+        "correct": 0,
+        "partial": 1,
+        "failed": 0,
+        "incorrectStreak": 1,
+        "lastResult": "partial",
+        "lastSeenAt": "2026-10-03T12:35:23Z"
       }
     },
     "categoryStats": {
@@ -1040,6 +1050,18 @@
         "lastSeenAt": "2026-10-02T03:13:29Z",
         "recent": [
           "correct"
+        ]
+      },
+      "main_insight": {
+        "seen": 1,
+        "correct": 0,
+        "partial": 1,
+        "failed": 0,
+        "incorrectStreak": 1,
+        "lastResult": "partial",
+        "lastSeenAt": "2026-10-03T12:35:23Z",
+        "recent": [
+          "partial"
         ]
       }
     }
