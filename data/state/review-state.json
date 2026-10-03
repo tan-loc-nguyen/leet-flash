@@ -489,13 +489,13 @@
       },
       "rs3-edge-01": {
         "category": "edge_case",
-        "seen": 1,
-        "correct": 1,
+        "seen": 2,
+        "correct": 2,
         "partial": 0,
         "failed": 0,
         "incorrectStreak": 0,
         "lastResult": "correct",
-        "lastSeenAt": "2026-10-02T02:38:43Z"
+        "lastSeenAt": "2026-10-03T12:26:28Z"
       },
       "rs3-time-01": {
         "category": "time_complexity",
@@ -535,14 +535,15 @@
         ]
       },
       "edge_case": {
-        "seen": 1,
-        "correct": 1,
+        "seen": 2,
+        "correct": 2,
         "partial": 0,
         "failed": 0,
         "incorrectStreak": 0,
         "lastResult": "correct",
-        "lastSeenAt": "2026-10-02T02:38:43Z",
+        "lastSeenAt": "2026-10-03T12:26:28Z",
         "recent": [
+          "correct",
           "correct"
         ]
       },
