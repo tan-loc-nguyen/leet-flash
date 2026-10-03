@@ -904,7 +904,7 @@
       "mode": "daily",
       "status": "active",
       "createdAt": "2026-10-03T12:00:20Z",
-      "updatedAt": "2026-10-03T12:26:28Z",
+      "updatedAt": "2026-10-03T12:30:27Z",
       "seed": 815821225,
       "target": 10,
       "filters": {},
@@ -1286,6 +1286,12 @@
               "category": "edge_case",
               "result": "correct",
               "timestamp": "2026-10-03T12:26:28Z"
+            },
+            {
+              "cardId": "rs3-time-01",
+              "category": "time_complexity",
+              "result": "correct",
+              "timestamp": "2026-10-03T12:30:27Z"
             }
           ],
           "hintLevel": 0,
