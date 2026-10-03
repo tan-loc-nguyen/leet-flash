@@ -60,3 +60,4 @@
 {"timestamp":"2026-10-03T12:12:58Z","event":"problem_review","sessionId":"daily-2026-10-03","problem":"contains-duplicate-ii","mode":"daily","score":1.0,"outcome":"promote","levelBefore":0,"levelAfter":1,"nextReview":"2026-10-04T00:00:00Z","cards":4}
 {"timestamp":"2026-10-03T12:14:20Z","sessionId":"daily-2026-10-03","problem":"add-two-numbers-ii","card":"a2-pattern-01","category":"pattern","result":"correct","mode":"daily"}
 {"timestamp":"2026-10-03T12:15:19Z","sessionId":"daily-2026-10-03","problem":"add-two-numbers-ii","card":"a2-insight-01","category":"main_insight","result":"partial","mode":"daily"}
+{"timestamp":"2026-10-03T12:16:39Z","sessionId":"daily-2026-10-03","problem":"add-two-numbers-ii","card":"a2-edge-01","category":"edge_case","result":"correct","mode":"daily"}
