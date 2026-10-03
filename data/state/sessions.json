@@ -1,5 +1,5 @@
 {
-  "activeSessionId": null,
+  "activeSessionId": "daily-2026-10-03",
   "sessions": {
     "daily-2026-10-02": {
       "id": "daily-2026-10-02",
@@ -896,6 +896,165 @@
             "levelAfter": 1,
             "nextReview": "2026-10-03T00:00:00Z"
           }
+        }
+      ]
+    },
+    "daily-2026-10-03": {
+      "id": "daily-2026-10-03",
+      "mode": "daily",
+      "status": "active",
+      "createdAt": "2026-10-03T12:00:20Z",
+      "updatedAt": "2026-10-03T12:00:21Z",
+      "seed": 815821225,
+      "target": 10,
+      "filters": {},
+      "focusCategories": [],
+      "problems": [
+        {
+          "slug": "divide-two-integers",
+          "bucket": "overdue",
+          "status": "in_progress",
+          "cardIds": [
+            "d2i-pattern-01",
+            "d2i-insight-01",
+            "d2i-edge-01",
+            "d2i-time-01"
+          ],
+          "answers": [],
+          "hintLevel": 0,
+          "presented": {
+            "d2i-pattern-01": {
+              "prompt": "What do you subtract on each step?",
+              "options": [
+                {
+                  "label": "A",
+                  "text": "Subtract the divisor once per loop and count it"
+                },
+                {
+                  "label": "B",
+                  "text": "Subtract the dividend from the divisor in turn"
+                },
+                {
+                  "label": "C",
+                  "text": "Multiply the dividend by the divisor's inverse"
+                },
+                {
+                  "label": "D",
+                  "text": "Subtract the biggest shifted divisor that fits"
+                }
+              ]
+            },
+            "d2i-insight-01": {
+              "prompt": "Which overflow must be clamped?",
+              "options": null
+            },
+            "d2i-edge-01": {
+              "prompt": "What does the function return for dividend = -7 and divisor = 2?",
+              "options": [
+                {
+                  "label": "A",
+                  "text": "-4: the floor of -3.5, as Python's // would give here"
+                },
+                {
+                  "label": "B",
+                  "text": "-3.5: the exact quotient without any truncation at all"
+                },
+                {
+                  "label": "C",
+                  "text": "-3: the quotient truncates toward zero, not minus infinity"
+                },
+                {
+                  "label": "D",
+                  "text": "3: the absolute quotient with the sign dropped by mistake"
+                }
+              ]
+            },
+            "d2i-time-01": {
+              "prompt": "Complete the statement: Time complexity: ___",
+              "options": null
+            }
+          }
+        },
+        {
+          "slug": "contains-duplicate-ii",
+          "bucket": "overdue",
+          "status": "pending",
+          "cardIds": [],
+          "answers": [],
+          "hintLevel": 0,
+          "presented": {}
+        },
+        {
+          "slug": "add-two-numbers-ii",
+          "bucket": "overdue",
+          "status": "pending",
+          "cardIds": [],
+          "answers": [],
+          "hintLevel": 0,
+          "presented": {}
+        },
+        {
+          "slug": "rotting-oranges",
+          "bucket": "due",
+          "status": "pending",
+          "cardIds": [],
+          "answers": [],
+          "hintLevel": 0,
+          "presented": {}
+        },
+        {
+          "slug": "insert-delete-getrandom-o1",
+          "bucket": "due",
+          "status": "pending",
+          "cardIds": [],
+          "answers": [],
+          "hintLevel": 0,
+          "presented": {}
+        },
+        {
+          "slug": "maximum-average-subarray-i",
+          "bucket": "due",
+          "status": "pending",
+          "cardIds": [],
+          "answers": [],
+          "hintLevel": 0,
+          "presented": {}
+        },
+        {
+          "slug": "koko-eating-bananas",
+          "bucket": "due",
+          "status": "pending",
+          "cardIds": [],
+          "answers": [],
+          "hintLevel": 0,
+          "presented": {}
+        },
+        {
+          "slug": "valid-palindrome",
+          "bucket": "overdue",
+          "status": "pending",
+          "cardIds": [],
+          "answers": [],
+          "hintLevel": 0,
+          "presented": {}
+        },
+        {
+          "slug": "kth-largest-element-in-an-array",
+          "bucket": "due",
+          "status": "pending",
+          "cardIds": [],
+          "answers": [],
+          "hintLevel": 0,
+          "presented": {}
+        },
+        {
+          "slug": "fizz-buzz",
+          "bucket": "due",
+          "status": "pending",
+          "cardIds": [],
+          "answers": [],
+          "hintLevel": 0,
+          "presented": {}
         }
       ]
     }
