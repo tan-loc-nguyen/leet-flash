@@ -51,3 +51,5 @@
 {"timestamp":"2026-10-03T12:05:08Z","sessionId":"daily-2026-10-03","problem":"divide-two-integers","card":"d2i-pattern-01","category":"pattern","result":"correct","mode":"daily"}
 {"timestamp":"2026-10-03T12:06:00Z","sessionId":"daily-2026-10-03","problem":"divide-two-integers","card":"d2i-insight-01","category":"main_insight","result":"correct","mode":"daily"}
 {"timestamp":"2026-10-03T12:06:51Z","sessionId":"daily-2026-10-03","problem":"divide-two-integers","card":"d2i-edge-01","category":"edge_case","result":"correct","mode":"daily"}
+{"timestamp":"2026-10-03T12:08:25Z","sessionId":"daily-2026-10-03","problem":"divide-two-integers","card":"d2i-time-01","category":"time_complexity","result":"correct","mode":"daily"}
+{"timestamp":"2026-10-03T12:08:25Z","event":"problem_review","sessionId":"daily-2026-10-03","problem":"divide-two-integers","mode":"daily","score":1.0,"outcome":"promote","levelBefore":0,"levelAfter":1,"nextReview":"2026-10-04T00:00:00Z","cards":4}

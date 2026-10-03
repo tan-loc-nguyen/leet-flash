@@ -714,12 +714,12 @@
     }
   },
   "divide-two-integers": {
-    "level": 0,
-    "lastReview": "2026-10-02T02:59:38Z",
-    "nextReview": "2026-10-02T02:59:38Z",
-    "recentAccuracy": 0.636,
-    "lastScore": 0.636,
-    "reviewCount": 1,
+    "level": 1,
+    "lastReview": "2026-10-03T12:08:25Z",
+    "nextReview": "2026-10-04T00:00:00Z",
+    "recentAccuracy": 0.818,
+    "lastScore": 1.0,
+    "reviewCount": 2,
     "lapses": 0,
     "weakCategories": [],
     "cardStats": {
@@ -745,13 +745,13 @@
       },
       "d2i-time-01": {
         "category": "time_complexity",
-        "seen": 1,
-        "correct": 0,
+        "seen": 2,
+        "correct": 1,
         "partial": 0,
         "failed": 1,
-        "incorrectStreak": 1,
-        "lastResult": "failed",
-        "lastSeenAt": "2026-10-02T02:59:22Z"
+        "incorrectStreak": 0,
+        "lastResult": "correct",
+        "lastSeenAt": "2026-10-03T12:08:25Z"
       },
       "d2i-space-01": {
         "category": "space_complexity",
@@ -802,15 +802,16 @@
         ]
       },
       "time_complexity": {
-        "seen": 1,
-        "correct": 0,
+        "seen": 2,
+        "correct": 1,
         "partial": 0,
         "failed": 1,
-        "incorrectStreak": 1,
-        "lastResult": "failed",
-        "lastSeenAt": "2026-10-02T02:59:22Z",
+        "incorrectStreak": 0,
+        "lastResult": "correct",
+        "lastSeenAt": "2026-10-03T12:08:25Z",
         "recent": [
-          "failed"
+          "failed",
+          "correct"
         ]
       },
       "space_complexity": {

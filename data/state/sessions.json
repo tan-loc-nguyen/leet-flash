@@ -904,7 +904,7 @@
       "mode": "daily",
       "status": "active",
       "createdAt": "2026-10-03T12:00:20Z",
-      "updatedAt": "2026-10-03T12:06:51Z",
+      "updatedAt": "2026-10-03T12:08:25Z",
       "seed": 815821225,
       "target": 10,
       "filters": {},
@@ -913,7 +913,7 @@
         {
           "slug": "divide-two-integers",
           "bucket": "overdue",
-          "status": "in_progress",
+          "status": "done",
           "cardIds": [
             "d2i-pattern-01",
             "d2i-insight-01",
@@ -938,6 +938,12 @@
               "category": "edge_case",
               "result": "correct",
               "timestamp": "2026-10-03T12:06:51Z"
+            },
+            {
+              "cardId": "d2i-time-01",
+              "category": "time_complexity",
+              "result": "correct",
+              "timestamp": "2026-10-03T12:08:25Z"
             }
           ],
           "hintLevel": 0,
@@ -992,6 +998,13 @@
               "prompt": "Complete the statement: Time complexity: ___",
               "options": null
             }
+          },
+          "outcome": {
+            "score": 1.0,
+            "outcome": "promote",
+            "levelBefore": 0,
+            "levelAfter": 1,
+            "nextReview": "2026-10-04T00:00:00Z"
           }
         },
         {
