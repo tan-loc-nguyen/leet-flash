@@ -387,13 +387,13 @@
       },
       "kb-time-01": {
         "category": "time_complexity",
-        "seen": 1,
-        "correct": 1,
+        "seen": 2,
+        "correct": 2,
         "partial": 0,
         "failed": 0,
         "incorrectStreak": 0,
         "lastResult": "correct",
-        "lastSeenAt": "2026-10-02T02:29:19Z"
+        "lastSeenAt": "2026-10-03T12:43:19Z"
       },
       "kb-space-01": {
         "category": "space_complexity",
@@ -443,14 +443,15 @@
         ]
       },
       "time_complexity": {
-        "seen": 1,
-        "correct": 1,
+        "seen": 2,
+        "correct": 2,
         "partial": 0,
         "failed": 0,
         "incorrectStreak": 0,
         "lastResult": "correct",
-        "lastSeenAt": "2026-10-02T02:29:19Z",
+        "lastSeenAt": "2026-10-03T12:43:19Z",
         "recent": [
+          "correct",
           "correct"
         ]
       },

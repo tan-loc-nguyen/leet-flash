@@ -904,7 +904,7 @@
       "mode": "daily",
       "status": "active",
       "createdAt": "2026-10-03T12:00:20Z",
-      "updatedAt": "2026-10-03T12:42:22Z",
+      "updatedAt": "2026-10-03T12:43:19Z",
       "seed": 815821225,
       "target": 10,
       "filters": {},
@@ -1446,6 +1446,12 @@
               "category": "edge_case",
               "result": "correct",
               "timestamp": "2026-10-03T12:42:22Z"
+            },
+            {
+              "cardId": "kb-time-01",
+              "category": "time_complexity",
+              "result": "correct",
+              "timestamp": "2026-10-03T12:43:19Z"
             }
           ],
           "hintLevel": 0,
