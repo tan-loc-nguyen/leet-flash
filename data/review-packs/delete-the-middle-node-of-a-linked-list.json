@@ -40,8 +40,37 @@
   "edgeCases": [],
   "cards": [
     {
-      "id": "dm-pattern-01",
+      "id": "recog-delete-the-middle-node-of-a-linked-list",
       "category": "pattern",
+      "type": "free_recall",
+      "promptVariants": [
+        "Which technique solves this problem, and what in the statement or constraints points to it?",
+        "Name the technique you would use here and the clue in the problem that tells you.",
+        "What approach fits this problem, and which part of the statement gives it away?"
+      ],
+      "answer": "Slow and fast pointers with the fast pointer starting ahead, so slow stops at the node before the middle. Clue: Deleting needs the node before the middle and the length is unknown in a singly linked list, so use two pointers at different speeds to find the position in one pass.",
+      "keyPoints": [
+        "Deleting needs the node before the middle and the length is unknown in a singly linked list, so use two pointers at different speeds to find the position in one pass."
+      ],
+      "explanation": "When the fast pointer reaches the end, the slow one is at the middle, and a head start makes it stop at the predecessor that has to be relinked.",
+      "rubric": {
+        "technique": "Slow and fast pointers with the fast pointer starting ahead, so slow stops at the node before the middle",
+        "aliases": [
+          "fast and slow pointers",
+          "two pointers",
+          "tortoise and hare",
+          "count then delete"
+        ],
+        "alsoValid": [],
+        "clueTypes": [
+          "in_place_pointers"
+        ],
+        "clue": "Deleting needs the node before the middle and the length is unknown in a singly linked list, so use two pointers at different speeds to find the position in one pass."
+      }
+    },
+    {
+      "id": "dm-pattern-01",
+      "category": "main_insight",
       "type": "multiple_choice",
       "promptVariants": [
         "Why does the fast pointer start two nodes ahead?",

@@ -43,6 +43,36 @@
   "edgeCases": [],
   "cards": [
     {
+      "id": "recog-reveal-cards-in-increasing-order",
+      "category": "pattern",
+      "type": "free_recall",
+      "promptVariants": [
+        "Which technique solves this problem, and what in the statement or constraints points to it?",
+        "Name the technique you would use here and the clue in the problem that tells you.",
+        "What approach fits this problem, and which part of the statement gives it away?"
+      ],
+      "answer": "Simulate the reveal process on positions with a queue and place the sorted cards in reveal order. Clue: The reveal procedure is fully specified (reveal a card, move the next one to the bottom) and you may order the deck freely, so simulate it on positions to learn which slot is revealed when, then fill in the sorted cards.",
+      "keyPoints": [
+        "The reveal procedure is fully specified (reveal a card, move the next one to the bottom) and you may order the deck freely, so simulate it on positions to learn which slot is revealed when, then fill in the sorted cards."
+      ],
+      "explanation": "Running the process on indices tells which position is revealed first, second and so on, so assigning the smallest card to the first revealed slot builds the order.",
+      "rubric": {
+        "technique": "Simulate the reveal process on positions with a queue and place the sorted cards in reveal order",
+        "aliases": [
+          "queue of indices",
+          "simulation on positions",
+          "deque simulation",
+          "work backwards with a deque"
+        ],
+        "alsoValid": [],
+        "clueTypes": [
+          "direct_simulation",
+          "sorted_or_ordered"
+        ],
+        "clue": "The reveal procedure is fully specified (reveal a card, move the next one to the bottom) and you may order the deck freely, so simulate it on positions to learn which slot is revealed when, then fill in the sorted cards."
+      }
+    },
+    {
       "id": "rv-pattern-01",
       "category": "pattern",
       "type": "multiple_choice",
@@ -62,7 +92,8 @@
         "Sort the deck in place and then read it in reveal order": "Sorted order is the reveal order, not the deck order.",
         "Binary search for each card's final position in the answer": "No search needed.",
         "Use a heap of positions and pop the smallest one each time": "The order of positions is determined by a fixed rotation, not by priority."
-      }
+      },
+      "enabled": false
     },
     {
       "id": "rv-insight-01",

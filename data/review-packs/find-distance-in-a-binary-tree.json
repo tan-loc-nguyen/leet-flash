@@ -59,8 +59,38 @@
   "edgeCases": [],
   "cards": [
     {
-      "id": "fd-pattern-01",
+      "id": "recog-find-distance-in-a-binary-tree",
       "category": "pattern",
+      "type": "free_recall",
+      "promptVariants": [
+        "Which technique solves this problem, and what in the statement or constraints points to it?",
+        "Name the technique you would use here and the clue in the problem that tells you.",
+        "What approach fits this problem, and which part of the statement gives it away?"
+      ],
+      "answer": "Find the lowest common ancestor and add the depths of p and q below it (or BFS with parent links). Clue: The distance between two nodes of a tree runs up to their lowest common ancestor and back down, so find the LCA and measure the two legs.",
+      "keyPoints": [
+        "The distance between two nodes of a tree runs up to their lowest common ancestor and back down, so find the LCA and measure the two legs."
+      ],
+      "explanation": "Any path in a tree goes through the lowest common ancestor, so its length is the sum of the two distances to it.",
+      "rubric": {
+        "technique": "Find the lowest common ancestor and add the depths of p and q below it (or BFS with parent links)",
+        "aliases": [
+          "lca and depths",
+          "distance via the lca",
+          "dfs returning distances",
+          "parent links and bfs"
+        ],
+        "alsoValid": [],
+        "clueTypes": [
+          "tree_structure",
+          "shortest_steps"
+        ],
+        "clue": "The distance between two nodes of a tree runs up to their lowest common ancestor and back down, so find the LCA and measure the two legs."
+      }
+    },
+    {
+      "id": "fd-pattern-01",
+      "category": "main_insight",
       "type": "multiple_choice",
       "promptVariants": [
         "What identity gives the distance between two nodes?",

@@ -60,6 +60,41 @@
   "edgeCases": [],
   "cards": [
     {
+      "id": "recog-valid-anagram",
+      "category": "pattern",
+      "type": "free_recall",
+      "promptVariants": [
+        "Which technique solves this problem, and what in the statement or constraints points to it?",
+        "Name the technique you would use here and the clue in the problem that tells you.",
+        "What approach fits this problem, and which part of the statement gives it away?"
+      ],
+      "answer": "Compare letter frequencies (a 26-slot count array or a counter). Clue: Anagrams are exactly the strings with identical letter counts, and the alphabet is only the lowercase letters, so compare counts.",
+      "keyPoints": [
+        "Anagrams are exactly the strings with identical letter counts, and the alphabet is only the lowercase letters, so compare counts."
+      ],
+      "explanation": "Equal multisets of letters is the definition of an anagram, and counting 26 letters checks it in one pass.",
+      "rubric": {
+        "technique": "Compare letter frequencies (a 26-slot count array or a counter)",
+        "aliases": [
+          "counter",
+          "frequency count",
+          "hash map of counts",
+          "count array"
+        ],
+        "alsoValid": [
+          {
+            "name": "Sort both strings and compare",
+            "note": "correct, but O(n log n)"
+          }
+        ],
+        "clueTypes": [
+          "lookup_frequency",
+          "small_constraints"
+        ],
+        "clue": "Anagrams are exactly the strings with identical letter counts, and the alphabet is only the lowercase letters, so compare counts."
+      }
+    },
+    {
       "id": "va-pattern-01",
       "category": "pattern",
       "type": "multiple_choice",
@@ -79,7 +114,8 @@
         "Two pointers from both ends": "That checks palindromes, not multiset equality.",
         "Sliding window": "No contiguous window constraint (that is the 'find anagrams in a string' variant).",
         "Binary search": "Nothing is sorted/monotonic."
-      }
+      },
+      "enabled": false
     },
     {
       "id": "va-insight-01",

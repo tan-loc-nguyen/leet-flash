@@ -39,8 +39,38 @@
   "edgeCases": [],
   "cards": [
     {
-      "id": "ro3-pattern-01",
+      "id": "recog-rectangle-overlap",
       "category": "pattern",
+      "type": "free_recall",
+      "promptVariants": [
+        "Which technique solves this problem, and what in the statement or constraints points to it?",
+        "Name the technique you would use here and the clue in the problem that tells you.",
+        "What approach fits this problem, and which part of the statement gives it away?"
+      ],
+      "answer": "Compare the projections on both axes with strict inequalities. Clue: Axis-aligned rectangles overlap exactly when their intervals overlap on both axes with positive length, so compare the x ranges and the y ranges.",
+      "keyPoints": [
+        "Axis-aligned rectangles overlap exactly when their intervals overlap on both axes with positive length, so compare the x ranges and the y ranges."
+      ],
+      "explanation": "Overlap in two dimensions is overlap in each dimension separately, and strict comparisons exclude touching edges and corners.",
+      "rubric": {
+        "technique": "Compare the projections on both axes with strict inequalities",
+        "aliases": [
+          "projection overlap",
+          "four comparisons",
+          "negate the no-overlap cases",
+          "interval overlap on x and y"
+        ],
+        "alsoValid": [],
+        "clueTypes": [
+          "intervals_overlap",
+          "math_observation"
+        ],
+        "clue": "Axis-aligned rectangles overlap exactly when their intervals overlap on both axes with positive length, so compare the x ranges and the y ranges."
+      }
+    },
+    {
+      "id": "ro3-pattern-01",
+      "category": "main_insight",
       "type": "multiple_choice",
       "promptVariants": [
         "What is the condition for 1D intervals [a1, b1] and [a2, b2] to overlap with positive length?",

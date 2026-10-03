@@ -59,6 +59,36 @@
   "edgeCases": [],
   "cards": [
     {
+      "id": "recog-happy-number",
+      "category": "pattern",
+      "type": "free_recall",
+      "promptVariants": [
+        "Which technique solves this problem, and what in the statement or constraints points to it?",
+        "Name the technique you would use here and the clue in the problem that tells you.",
+        "What approach fits this problem, and which part of the statement gives it away?"
+      ],
+      "answer": "Cycle detection on the digit-square sequence: a hash set of seen values or Floyd's slow and fast pointers. Clue: Repeating the digit-square step either reaches 1 or loops forever, so it is a cycle-detection question on a sequence of values.",
+      "keyPoints": [
+        "Repeating the digit-square step either reaches 1 or loops forever, so it is a cycle-detection question on a sequence of values."
+      ],
+      "explanation": "The sequence is deterministic, so it either hits 1 or revisits a value, and a seen-set or two pointers detects the revisit.",
+      "rubric": {
+        "technique": "Cycle detection on the digit-square sequence: a hash set of seen values or Floyd's slow and fast pointers",
+        "aliases": [
+          "hash set",
+          "floyd cycle detection",
+          "tortoise and hare",
+          "detect a repeated value"
+        ],
+        "alsoValid": [],
+        "clueTypes": [
+          "dependencies_graph",
+          "in_place_pointers"
+        ],
+        "clue": "Repeating the digit-square step either reaches 1 or loops forever, so it is a cycle-detection question on a sequence of values."
+      }
+    },
+    {
       "id": "hn-pattern-01",
       "category": "pattern",
       "type": "multiple_choice",
@@ -78,7 +108,8 @@
         "Binary search on the answer range of sums": "No sorted structure.",
         "Sliding window over the digit sequence": "No window.",
         "Prefix sums over the squared digits": "Not a range query."
-      }
+      },
+      "enabled": false
     },
     {
       "id": "hn-insight-01",

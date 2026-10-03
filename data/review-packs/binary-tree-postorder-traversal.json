@@ -55,8 +55,38 @@
   "edgeCases": [],
   "cards": [
     {
-      "id": "po2-pattern-01",
+      "id": "recog-binary-tree-postorder-traversal",
       "category": "pattern",
+      "type": "free_recall",
+      "promptVariants": [
+        "Which technique solves this problem, and what in the statement or constraints points to it?",
+        "Name the technique you would use here and the clue in the problem that tells you.",
+        "What approach fits this problem, and which part of the statement gives it away?"
+      ],
+      "answer": "DFS visiting the left subtree, the right subtree, then the node (recursively or with an explicit stack). Clue: The visiting order is defined by the problem (children before the node), so implement the DFS in that order.",
+      "keyPoints": [
+        "The visiting order is defined by the problem (children before the node), so implement the DFS in that order."
+      ],
+      "explanation": "Visiting children first is the natural recursion order, and a modified preorder reversed gives it iteratively.",
+      "rubric": {
+        "technique": "DFS visiting the left subtree, the right subtree, then the node (recursively or with an explicit stack)",
+        "aliases": [
+          "postorder dfs",
+          "iterative with two stacks",
+          "left right node",
+          "last visited pointer"
+        ],
+        "alsoValid": [],
+        "clueTypes": [
+          "tree_structure",
+          "direct_simulation"
+        ],
+        "clue": "The visiting order is defined by the problem (children before the node), so implement the DFS in that order."
+      }
+    },
+    {
+      "id": "po2-pattern-01",
+      "category": "main_insight",
       "type": "multiple_choice",
       "promptVariants": [
         "When is postorder the right traversal?",

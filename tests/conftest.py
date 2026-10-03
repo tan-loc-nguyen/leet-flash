@@ -56,6 +56,27 @@ def free(cid, category="main_insight"):
             "answer": "reference", "keyPoints": ["k1"], "explanation": "expl"}
 
 
+def recog(cid, technique="Two pointers on the sorted array", **kw):
+    """A recognition card: free-recall pattern card with a grading rubric."""
+    from leetcode_review.schemas import RECOGNITION_PROMPTS
+    card = {"id": cid, "category": "pattern", "type": "free_recall", "promptVariants": list(RECOGNITION_PROMPTS),
+            "answer": f"{technique}. Clue: the input is sorted.", "keyPoints": ["The input is sorted."],
+            "explanation": "Sorted order lets two pointers discard one end per step.",
+            "rubric": {"technique": technique, "aliases": ["two pointers", "left and right pointers"],
+                       "alsoValid": [{"name": "hash map of complements", "note": "uses O(n) extra space"}],
+                       "clueTypes": ["sorted_or_ordered"], "clue": "The input is sorted."}}
+    card.update(kw)
+    return card
+
+
+def valid_cards(slug):
+    """A complete card set that passes the validator: a recognition card plus the usual categories."""
+    return [recog(f"recog-{slug}"), free(f"{slug}-insight-01", "main_insight"),
+            {"id": f"{slug}-time-01", "category": "time_complexity", "type": "fill_blank",
+             "promptVariants": ["Time: ___", "Time complexity: ___"], "answer": "O(n)", "explanation": "linear"},
+            free(f"{slug}-space-01", "space_complexity")]
+
+
 def make_pack(paths: Paths, slug: str, *, patterns=("Array / Hashing",), cards=None) -> None:
     cards = cards if cards is not None else [
         mcq(f"{slug}-pattern-01", "pattern"), free(f"{slug}-insight-01", "main_insight"),

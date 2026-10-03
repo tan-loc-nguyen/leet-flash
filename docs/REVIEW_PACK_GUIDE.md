@@ -63,6 +63,26 @@ progressive hints (summary → pattern → invariant → main insight → approa
 
 `fill_blank` prompts must contain `___`.
 
+## The recognition card (exactly one per pack)
+
+Id `recog-<slug>`, category `pattern`, type `free_recall`, `promptVariants` = the three fixed prompts
+(`RECOGNITION_PROMPTS` in `schemas.py`; they name no technique and no complexity). `answer` = `"<technique>. Clue: <clue>"`,
+`keyPoints` = `[clue]`, `explanation` = why the clue points to the technique and why the alternatives are worse. The card
+carries a `rubric`:
+
+| Field | Notes |
+|---|---|
+| `technique` | The **specific** intended technique, e.g. "Two pointers on the sorted array". Never a topic ("Tree", "Math", "Design", "Array / Hashing" are rejected). |
+| `aliases` | At least one other way to name the same technique, plus other equally good answers (e.g. "kmp" next to "rolling hash"). Anything here is graded as *accepted*. |
+| `alsoValid` | `{name, note}` for approaches that work but are weaker (brute force, extra space, slower); graded Partial. Do not list equal-quality alternatives here, put them in `aliases`. |
+| `clueTypes` | 1–3 values of `CLUE_TYPES` (`sorted_or_ordered`, `contiguous`, `lookup_frequency`, `optimization_overlap`, `enumerate_all`, `shortest_steps`, …, `direct_simulation`, `math_observation`). |
+| `clue` | One sentence naming the real clue in *this* problem's statement or constraints (a number from the constraints is fine; check it is really there). No `O(…)` in it. |
+
+For problems with no real technique (`Fizz Buzz`, `To Lower Case`) the technique is "direct simulation of the stated
+rule" with the clue type `direct_simulation`: recognising that nothing clever is needed is the skill.
+The validator rejects a pack with cards but no recognition card, two of them, or any other enabled **generated**
+`pattern` card (retire it with `enabled: false` or move it to `main_insight` / `data_structure` / `implementation_detail`).
+
 ## What good cards look like
 
 BAD: *What LeetCode number is Two Sum?* / *Is Two Sum Easy?* — trivia.

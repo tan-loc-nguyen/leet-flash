@@ -46,8 +46,43 @@
   ],
   "cards": [
     {
-      "id": "pn2-pattern-01",
+      "id": "recog-perfect-number",
       "category": "pattern",
+      "type": "free_recall",
+      "promptVariants": [
+        "Which technique solves this problem, and what in the statement or constraints points to it?",
+        "Name the technique you would use here and the clue in the problem that tells you.",
+        "What approach fits this problem, and which part of the statement gives it away?"
+      ],
+      "answer": "Enumerate divisor pairs up to sqrt(n) and sum them, excluding n itself. Clue: It asks for the sum of the divisors of a number up to 10^8, and divisors come in pairs d and n / d, so checking up to the square root is enough.",
+      "keyPoints": [
+        "It asks for the sum of the divisors of a number up to 10^8, and divisors come in pairs d and n / d, so checking up to the square root is enough."
+      ],
+      "explanation": "Each divisor below the square root has a partner above it, so one loop up to sqrt(n) finds all of them.",
+      "rubric": {
+        "technique": "Enumerate divisor pairs up to sqrt(n) and sum them, excluding n itself",
+        "aliases": [
+          "divisors up to the square root",
+          "sum of divisors",
+          "sqrt loop",
+          "divisor pairs"
+        ],
+        "alsoValid": [
+          {
+            "name": "Test every number below n as a divisor",
+            "note": "linear in n, too slow for n up to 10^8"
+          }
+        ],
+        "clueTypes": [
+          "bit_math",
+          "math_observation"
+        ],
+        "clue": "It asks for the sum of the divisors of a number up to 10^8, and divisors come in pairs d and n / d, so checking up to the square root is enough."
+      }
+    },
+    {
+      "id": "pn2-pattern-01",
+      "category": "main_insight",
       "type": "multiple_choice",
       "promptVariants": [
         "How do you enumerate the divisors of n efficiently?",

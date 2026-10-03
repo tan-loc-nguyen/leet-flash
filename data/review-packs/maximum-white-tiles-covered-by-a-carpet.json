@@ -59,8 +59,43 @@
   ],
   "cards": [
     {
-      "id": "mw2-pattern-01",
+      "id": "recog-maximum-white-tiles-covered-by-a-carpet",
       "category": "pattern",
+      "type": "free_recall",
+      "promptVariants": [
+        "Which technique solves this problem, and what in the statement or constraints points to it?",
+        "Name the technique you would use here and the clue in the problem that tells you.",
+        "What approach fits this problem, and which part of the statement gives it away?"
+      ],
+      "answer": "Sort the tiles and use two pointers: start the carpet at each interval's left end and extend while intervals are fully covered. Clue: A carpet covers a contiguous stretch of tile intervals on a huge line and the best carpet can start at the left end of some interval, so sort the intervals and slide a window across them.",
+      "keyPoints": [
+        "A carpet covers a contiguous stretch of tile intervals on a huge line and the best carpet can start at the left end of some interval, so sort the intervals and slide a window across them."
+      ],
+      "explanation": "Moving the carpet left to an interval's start never reduces the covered tiles, so only those starts matter, and two pointers evaluate them in one sweep.",
+      "rubric": {
+        "technique": "Sort the tiles and use two pointers: start the carpet at each interval's left end and extend while intervals are fully covered",
+        "aliases": [
+          "sort and two pointers",
+          "sliding window over intervals",
+          "prefix sums and binary search",
+          "greedy carpet start"
+        ],
+        "alsoValid": [
+          {
+            "name": "Try every possible start position",
+            "note": "the coordinates reach 10^9"
+          }
+        ],
+        "clueTypes": [
+          "intervals_overlap",
+          "sorted_or_ordered"
+        ],
+        "clue": "A carpet covers a contiguous stretch of tile intervals on a huge line and the best carpet can start at the left end of some interval, so sort the intervals and slide a window across them."
+      }
+    },
+    {
+      "id": "mw2-pattern-01",
+      "category": "main_insight",
       "type": "multiple_choice",
       "promptVariants": [
         "Where can an optimal carpet start?",

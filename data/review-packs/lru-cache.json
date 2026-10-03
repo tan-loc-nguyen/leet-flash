@@ -57,8 +57,43 @@
   "edgeCases": [],
   "cards": [
     {
-      "id": "lru-pattern-01",
+      "id": "recog-lru-cache",
       "category": "pattern",
+      "type": "free_recall",
+      "promptVariants": [
+        "Which technique solves this problem, and what in the statement or constraints points to it?",
+        "Name the technique you would use here and the clue in the problem that tells you.",
+        "What approach fits this problem, and which part of the statement gives it away?"
+      ],
+      "answer": "Hash map from key to node plus a doubly linked list ordered by recency. Clue: Both get and put must be constant time while tracking which entry was used least recently, so combine a map for lookup with a linked list that can unlink and reinsert a node in constant time.",
+      "keyPoints": [
+        "Both get and put must be constant time while tracking which entry was used least recently, so combine a map for lookup with a linked list that can unlink and reinsert a node in constant time."
+      ],
+      "explanation": "The map finds a node instantly and the doubly linked list reorders or evicts it without searching.",
+      "rubric": {
+        "technique": "Hash map from key to node plus a doubly linked list ordered by recency",
+        "aliases": [
+          "hash map and doubly linked list",
+          "ordereddict",
+          "move to front list",
+          "dict plus linked list with sentinels"
+        ],
+        "alsoValid": [
+          {
+            "name": "A list ordered by recency, scanned on each operation",
+            "note": "each operation costs time linear in the capacity"
+          }
+        ],
+        "clueTypes": [
+          "stream_design",
+          "lookup_frequency"
+        ],
+        "clue": "Both get and put must be constant time while tracking which entry was used least recently, so combine a map for lookup with a linked list that can unlink and reinsert a node in constant time."
+      }
+    },
+    {
+      "id": "lru-pattern-01",
+      "category": "data_structure",
       "type": "multiple_choice",
       "promptVariants": [
         "Which two structures combine to give O(1) LRU operations?",

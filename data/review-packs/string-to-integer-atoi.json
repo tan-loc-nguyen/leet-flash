@@ -46,8 +46,37 @@
   ],
   "cards": [
     {
-      "id": "atoi-pattern-01",
+      "id": "recog-string-to-integer-atoi",
       "category": "pattern",
+      "type": "free_recall",
+      "promptVariants": [
+        "Which technique solves this problem, and what in the statement or constraints points to it?",
+        "Name the technique you would use here and the clue in the problem that tells you.",
+        "What approach fits this problem, and which part of the statement gives it away?"
+      ],
+      "answer": "Manual single-pass parser: skip spaces, read the sign, read digits, clamp to the 32-bit range. Clue: The statement lists the steps in order (whitespace, sign, digits, clamping), so implement that pipeline with a moving index.",
+      "keyPoints": [
+        "The statement lists the steps in order (whitespace, sign, digits, clamping), so implement that pipeline with a moving index."
+      ],
+      "explanation": "The algorithm is fully specified, so the work is a careful left-to-right pass with the stated stopping and clamping rules.",
+      "rubric": {
+        "technique": "Manual single-pass parser: skip spaces, read the sign, read digits, clamp to the 32-bit range",
+        "aliases": [
+          "state machine",
+          "parse step by step",
+          "index scan pipeline",
+          "regular expression"
+        ],
+        "alsoValid": [],
+        "clueTypes": [
+          "direct_simulation"
+        ],
+        "clue": "The statement lists the steps in order (whitespace, sign, digits, clamping), so implement that pipeline with a moving index."
+      }
+    },
+    {
+      "id": "atoi-pattern-01",
+      "category": "implementation_detail",
       "type": "multiple_choice",
       "promptVariants": [
         "What are the ordered steps of atoi?",

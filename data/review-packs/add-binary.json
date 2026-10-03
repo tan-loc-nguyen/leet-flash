@@ -47,8 +47,39 @@
   ],
   "cards": [
     {
-      "id": "ab-pattern-01",
+      "id": "recog-add-binary",
       "category": "pattern",
+      "type": "free_recall",
+      "promptVariants": [
+        "Which technique solves this problem, and what in the statement or constraints points to it?",
+        "Name the technique you would use here and the clue in the problem that tells you.",
+        "What approach fits this problem, and which part of the statement gives it away?"
+      ],
+      "answer": "Add digit by digit from the right with a carry. Clue: The numbers are binary strings that can be 10^4 characters long, so add from the least significant end with a carry, as you would on paper.",
+      "keyPoints": [
+        "The numbers are binary strings that can be 10^4 characters long, so add from the least significant end with a carry, as you would on paper."
+      ],
+      "explanation": "Each output bit depends only on the two input bits and the incoming carry, so a single backwards pass computes the sum.",
+      "rubric": {
+        "technique": "Add digit by digit from the right with a carry",
+        "aliases": [
+          "carry addition",
+          "grade-school addition",
+          "string addition",
+          "bit by bit with carry",
+          "int(a, 2) + int(b, 2)"
+        ],
+        "alsoValid": [],
+        "clueTypes": [
+          "direct_simulation",
+          "bit_math"
+        ],
+        "clue": "The numbers are binary strings that can be 10^4 characters long, so add from the least significant end with a carry, as you would on paper."
+      }
+    },
+    {
+      "id": "ab-pattern-01",
+      "category": "main_insight",
       "type": "multiple_choice",
       "promptVariants": [
         "How is each output bit and the carry computed?",

@@ -120,6 +120,8 @@ TOPIC_PATTERNS = {
     "Greedy": ("Greedy",),
     "Union-find": ("Union Find",),
 }
+DRILL_UNSEEN_WEIGHT = 3.0  # drill mode: weight of a problem whose recognition card was never asked
+DRILL_FAIL_WEIGHT = 3.0  # drill mode: extra weight at a 100% failure ratio
 SHARE_FACTOR_CAP = 6.0  # a topic that is rare in the candidate pool is boosted at most this much
 
 # LeetCode tags per topic: used only (a) as a fallback for problems whose pack lists no pattern and (b) by

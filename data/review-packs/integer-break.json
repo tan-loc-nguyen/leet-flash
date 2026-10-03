@@ -46,8 +46,43 @@
   "edgeCases": [],
   "cards": [
     {
-      "id": "ib-pattern-01",
+      "id": "recog-integer-break",
       "category": "pattern",
+      "type": "free_recall",
+      "promptVariants": [
+        "Which technique solves this problem, and what in the statement or constraints points to it?",
+        "Name the technique you would use here and the clue in the problem that tells you.",
+        "What approach fits this problem, and which part of the statement gives it away?"
+      ],
+      "answer": "Greedy math: split n into as many 3s as possible, adjusting the remainder (4 stays as 2 * 2). Clue: It maximises a product of parts that sum to n, and splitting any part of 5 or more increases the product, so the best parts are as many 3s as possible.",
+      "keyPoints": [
+        "It maximises a product of parts that sum to n, and splitting any part of 5 or more increases the product, so the best parts are as many 3s as possible."
+      ],
+      "explanation": "Parts of 4 or less cannot be improved by splitting and 3 is the most efficient part per unit of sum, so threes dominate the optimal split.",
+      "rubric": {
+        "technique": "Greedy math: split n into as many 3s as possible, adjusting the remainder (4 stays as 2 * 2)",
+        "aliases": [
+          "use threes",
+          "greedy with 3s",
+          "math with threes",
+          "maximise product with 3s"
+        ],
+        "alsoValid": [
+          {
+            "name": "DP over every split point",
+            "note": "correct, but quadratic"
+          }
+        ],
+        "clueTypes": [
+          "local_choice",
+          "math_observation"
+        ],
+        "clue": "It maximises a product of parts that sum to n, and splitting any part of 5 or more increases the product, so the best parts are as many 3s as possible."
+      }
+    },
+    {
+      "id": "ib-pattern-01",
+      "category": "main_insight",
       "type": "multiple_choice",
       "promptVariants": [
         "Which number should the product mostly be made of?",

@@ -47,8 +47,38 @@
   ],
   "cards": [
     {
-      "id": "r2i-pattern-01",
+      "id": "recog-roman-to-integer",
       "category": "pattern",
+      "type": "free_recall",
+      "promptVariants": [
+        "Which technique solves this problem, and what in the statement or constraints points to it?",
+        "Name the technique you would use here and the clue in the problem that tells you.",
+        "What approach fits this problem, and which part of the statement gives it away?"
+      ],
+      "answer": "Left-to-right scan with a symbol-value map, subtracting a value when it is less than the next one. Clue: The symbol values and the subtractive rule are given in the statement, so look up each symbol's value and compare it with its right neighbour.",
+      "keyPoints": [
+        "The symbol values and the subtractive rule are given in the statement, so look up each symbol's value and compare it with its right neighbour."
+      ],
+      "explanation": "A symbol is subtracted exactly when a larger one follows it, so a value table and one look-ahead decide every symbol.",
+      "rubric": {
+        "technique": "Left-to-right scan with a symbol-value map, subtracting a value when it is less than the next one",
+        "aliases": [
+          "lookup table scan",
+          "compare with the next symbol",
+          "dictionary of symbol values",
+          "greedy matching of subtractive pairs"
+        ],
+        "alsoValid": [],
+        "clueTypes": [
+          "lookup_frequency",
+          "direct_simulation"
+        ],
+        "clue": "The symbol values and the subtractive rule are given in the statement, so look up each symbol's value and compare it with its right neighbour."
+      }
+    },
+    {
+      "id": "r2i-pattern-01",
+      "category": "main_insight",
       "type": "multiple_choice",
       "promptVariants": [
         "How do you handle subtractive notation such as IV and CM when parsing?",

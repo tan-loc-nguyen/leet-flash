@@ -56,8 +56,38 @@
   ],
   "cards": [
     {
-      "id": "igb-pattern-01",
+      "id": "recog-is-graph-bipartite",
       "category": "pattern",
+      "type": "free_recall",
+      "promptVariants": [
+        "Which technique solves this problem, and what in the statement or constraints points to it?",
+        "Name the technique you would use here and the clue in the problem that tells you.",
+        "What approach fits this problem, and which part of the statement gives it away?"
+      ],
+      "answer": "Two-colour the graph with BFS or DFS from every unvisited node, failing on an edge between same-coloured nodes. Clue: Bipartite means the nodes split into two groups with every edge between the groups, which is two-colouring: neighbours must get opposite colours, and the graph may be disconnected.",
+      "keyPoints": [
+        "Bipartite means the nodes split into two groups with every edge between the groups, which is two-colouring: neighbours must get opposite colours, and the graph may be disconnected."
+      ],
+      "explanation": "Colouring a node's neighbours with the opposite colour either succeeds everywhere or hits an edge inside one group, which means an odd cycle.",
+      "rubric": {
+        "technique": "Two-colour the graph with BFS or DFS from every unvisited node, failing on an edge between same-coloured nodes",
+        "aliases": [
+          "graph colouring",
+          "bfs colouring",
+          "dfs colouring",
+          "odd cycle detection",
+          "union find"
+        ],
+        "alsoValid": [],
+        "clueTypes": [
+          "dependencies_graph"
+        ],
+        "clue": "Bipartite means the nodes split into two groups with every edge between the groups, which is two-colouring: neighbours must get opposite colours, and the graph may be disconnected."
+      }
+    },
+    {
+      "id": "igb-pattern-01",
+      "category": "main_insight",
       "type": "multiple_choice",
       "promptVariants": [
         "What property does a bipartite graph satisfy in terms of cycles?",

@@ -46,8 +46,43 @@
   ],
   "cards": [
     {
-      "id": "scmp-pattern-01",
+      "id": "recog-string-compression",
       "category": "pattern",
+      "type": "free_recall",
+      "promptVariants": [
+        "Which technique solves this problem, and what in the statement or constraints points to it?",
+        "Name the technique you would use here and the clue in the problem that tells you.",
+        "What approach fits this problem, and which part of the statement gives it away?"
+      ],
+      "answer": "Read pointer finds each run, write pointer writes the character and the digits of the count, in place. Clue: Runs of equal characters are replaced by the character and its count, written back into the same array, so scan runs with a read pointer and write the result with a write pointer.",
+      "keyPoints": [
+        "Runs of equal characters are replaced by the character and its count, written back into the same array, so scan runs with a read pointer and write the result with a write pointer."
+      ],
+      "explanation": "The compressed output is never longer than the input read so far, so the write pointer never overtakes the read pointer.",
+      "rubric": {
+        "technique": "Read pointer finds each run, write pointer writes the character and the digits of the count, in place",
+        "aliases": [
+          "two pointers",
+          "read and write pointers",
+          "in-place run length encoding",
+          "run length encoding"
+        ],
+        "alsoValid": [
+          {
+            "name": "Build a new string and copy it back",
+            "note": "uses O(n) extra space"
+          }
+        ],
+        "clueTypes": [
+          "in_place_pointers",
+          "contiguous"
+        ],
+        "clue": "Runs of equal characters are replaced by the character and its count, written back into the same array, so scan runs with a read pointer and write the result with a write pointer."
+      }
+    },
+    {
+      "id": "scmp-pattern-01",
+      "category": "main_insight",
       "type": "multiple_choice",
       "promptVariants": [
         "How do you compress the array in place?",

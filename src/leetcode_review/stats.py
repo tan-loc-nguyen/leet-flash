@@ -21,6 +21,27 @@ def _tally() -> dict:
     return {"seen": 0, "correct": 0, "partial": 0, "failed": 0}
 
 
+def recognition_stats(cards: list[dict]) -> dict | None:
+    """Accuracy on the recognition card (events carrying the typed answer and the technique/clue verdicts)."""
+    ev = [e for e in cards if "technique" in e]
+    if not ev:
+        return None
+    tech = {"accepted": 0, "valid": 0, "wrong": 0}
+    clue = {"valid": 0, "missing": 0, "wrong": 0}
+    tally = _tally()
+    for e in ev:
+        tech[e["technique"]] += 1
+        clue[e.get("clue", "missing")] += 1
+        tally["seen"] += 1
+        tally[e["result"]] += 1
+    misses = [{"problem": e["problem"], "timestamp": e["timestamp"], "said": e.get("userText"),
+               "technique": e["technique"], "clue": e.get("clue")} for e in ev if e["result"] != "correct"]
+    return {"answers": len(ev), "accuracy": _acc(tally), "correct": tally["correct"], "partial": tally["partial"],
+            "failed": tally["failed"], "technique": tech, "clue": clue,
+            "hintCapped": sum(1 for e in ev if e.get("hintCapped")),
+            "drillAnswers": sum(1 for e in ev if e.get("mode") == "drill"), "recentMisses": misses[-5:][::-1]}
+
+
 def compute_stats(cat: Catalog, events: list[dict], now: datetime) -> dict:
     cards = card_events(events)
     by_cat: dict[str, dict] = defaultdict(_tally)
@@ -86,6 +107,7 @@ def compute_stats(cat: Catalog, events: list[dict], now: datetime) -> dict:
         "overdue": overdue,
         "recent": {f"last{d}Days": {**t, "accuracy": _acc(t)} for d, t in recent.items()},
         "problemReviews": len(problem_events(events)),
+        "recognition": recognition_stats(cards),
     }
 
 
@@ -106,6 +128,15 @@ def format_stats(s: dict) -> str:
     for k, v in s["masteryDistribution"].items():
         name = "New (never reviewed)" if k == "new" else f"L{k} {C.LEVEL_NAMES[int(k)]}"
         L.append(f"  {name:<28}{v}")
+    rec = s.get("recognition")
+    if rec:
+        t, c = rec["technique"], rec["clue"]
+        L += ["", "Pattern recognition (free recall)",
+              f"  Answers: {rec['answers']} ({rec['drillAnswers']} in drills)   Accuracy: {pct(rec['accuracy']).strip()}",
+              f"  Technique: {t['accepted']} intended, {t['valid']} weaker but valid, {t['wrong']} wrong",
+              f"  Clue: {c['valid']} valid, {c['missing']} missing, {c['wrong']} wrong   Hint-capped: {rec['hintCapped']}"]
+        for m in rec["recentMisses"]:
+            L.append(f"  miss: {m['problem']} - you said \"{(m['said'] or '')[:70]}\" ({m['technique']}/{m['clue']})")
     if s["byPattern"]:
         L += ["", "Pattern performance (weakest first)"]
         L += [f"  {r['name']:<24}{pct(r['accuracy'])}  ({r['seen']} answers)" for r in s["byPattern"]]

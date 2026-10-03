@@ -45,8 +45,43 @@
   "edgeCases": [],
   "cards": [
     {
-      "id": "vb-pattern-01",
+      "id": "recog-validate-binary-search-tree",
       "category": "pattern",
+      "type": "free_recall",
+      "promptVariants": [
+        "Which technique solves this problem, and what in the statement or constraints points to it?",
+        "Name the technique you would use here and the clue in the problem that tells you.",
+        "What approach fits this problem, and which part of the statement gives it away?"
+      ],
+      "answer": "DFS passing (low, high) bounds down, or an inorder traversal checking strictly increasing values. Clue: The BST rule applies to every node in a subtree, not only direct children, so each node must stay inside bounds inherited from its ancestors, which is the same as inorder being strictly increasing.",
+      "keyPoints": [
+        "The BST rule applies to every node in a subtree, not only direct children, so each node must stay inside bounds inherited from its ancestors, which is the same as inorder being strictly increasing."
+      ],
+      "explanation": "Comparing only with children misses violations deeper down; carrying ancestor bounds or checking inorder order catches them in one pass.",
+      "rubric": {
+        "technique": "DFS passing (low, high) bounds down, or an inorder traversal checking strictly increasing values",
+        "aliases": [
+          "inorder with the previous value",
+          "bounds recursion",
+          "min and max range per node",
+          "inorder traversal"
+        ],
+        "alsoValid": [
+          {
+            "name": "Check every node against all nodes in its subtrees",
+            "note": "correct, but O(n^2)"
+          }
+        ],
+        "clueTypes": [
+          "tree_structure",
+          "sorted_or_ordered"
+        ],
+        "clue": "The BST rule applies to every node in a subtree, not only direct children, so each node must stay inside bounds inherited from its ancestors, which is the same as inorder being strictly increasing."
+      }
+    },
+    {
+      "id": "vb-pattern-01",
+      "category": "main_insight",
       "type": "multiple_choice",
       "promptVariants": [
         "What property of a BST do you exploit to validate it?",

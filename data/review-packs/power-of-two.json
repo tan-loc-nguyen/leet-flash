@@ -43,6 +43,40 @@
   "edgeCases": [],
   "cards": [
     {
+      "id": "recog-power-of-two",
+      "category": "pattern",
+      "type": "free_recall",
+      "promptVariants": [
+        "Which technique solves this problem, and what in the statement or constraints points to it?",
+        "Name the technique you would use here and the clue in the problem that tells you.",
+        "What approach fits this problem, and which part of the statement gives it away?"
+      ],
+      "answer": "Single-set-bit test: n > 0 and n & (n - 1) == 0. Clue: A power of two has exactly one set bit in binary, so clearing the lowest set bit must leave zero.",
+      "keyPoints": [
+        "A power of two has exactly one set bit in binary, so clearing the lowest set bit must leave zero."
+      ],
+      "explanation": "Clearing the only set bit gives zero, while any other positive number keeps a set bit.",
+      "rubric": {
+        "technique": "Single-set-bit test: n > 0 and n & (n - 1) == 0",
+        "aliases": [
+          "bit trick",
+          "n and n minus one",
+          "exactly one set bit",
+          "count bits equals one"
+        ],
+        "alsoValid": [
+          {
+            "name": "Keep dividing by 2 while divisible",
+            "note": "correct, loops log n times"
+          }
+        ],
+        "clueTypes": [
+          "bit_math"
+        ],
+        "clue": "A power of two has exactly one set bit in binary, so clearing the lowest set bit must leave zero."
+      }
+    },
+    {
       "id": "p2-pattern-01",
       "category": "pattern",
       "type": "multiple_choice",
@@ -62,7 +96,8 @@
         "n > 0 and n % 2 == 0 (is even)": "Every even number passes, including 6, which is not a power of two.",
         "n > 0 and n | (n - 1) == 0": "n | (n - 1) is at least n, so it is never 0 for n >= 1; the test is always false.",
         "n > 0 and n & (n + 1) == 0": "That is true for 1, 3, 7, 15 (all ones) but false for 2 and 4, so it is not a power-of-two test."
-      }
+      },
+      "enabled": false
     },
     {
       "id": "p2-insight-01",

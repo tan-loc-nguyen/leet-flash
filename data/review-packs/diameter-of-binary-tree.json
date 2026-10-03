@@ -43,6 +43,41 @@
   "edgeCases": [],
   "cards": [
     {
+      "id": "recog-diameter-of-binary-tree",
+      "category": "pattern",
+      "type": "free_recall",
+      "promptVariants": [
+        "Which technique solves this problem, and what in the statement or constraints points to it?",
+        "Name the technique you would use here and the clue in the problem that tells you.",
+        "What approach fits this problem, and which part of the statement gives it away?"
+      ],
+      "answer": "One-pass postorder DFS returning heights and updating the best of left height plus right height at each node. Clue: The longest path may bend at any node and its length is the sum of the two deepest descents there, so compute heights bottom-up and check every node.",
+      "keyPoints": [
+        "The longest path may bend at any node and its length is the sum of the two deepest descents there, so compute heights bottom-up and check every node."
+      ],
+      "explanation": "The longest path through a node uses its two deepest branches, and the same heights serve the parent, so one traversal gives the answer.",
+      "rubric": {
+        "technique": "One-pass postorder DFS returning heights and updating the best of left height plus right height at each node",
+        "aliases": [
+          "dfs with a global max",
+          "heights of subtrees",
+          "postorder",
+          "dp on trees"
+        ],
+        "alsoValid": [
+          {
+            "name": "Compute the left and right heights separately at every node",
+            "note": "repeats height work, quadratic in the worst case"
+          }
+        ],
+        "clueTypes": [
+          "tree_structure",
+          "optimization_overlap"
+        ],
+        "clue": "The longest path may bend at any node and its length is the sum of the two deepest descents there, so compute heights bottom-up and check every node."
+      }
+    },
+    {
       "id": "dm2-pattern-01",
       "category": "pattern",
       "type": "multiple_choice",
@@ -62,7 +97,8 @@
         "Return the diameter upward and take the maximum at the root": "The parent cannot extend a path that already uses both children.",
         "Use BFS depth only, taking the deepest two levels as the path": "The path may not pass through the root.",
         "Sort the node depths and add the two largest to get the answer": "Unrelated."
-      }
+      },
+      "enabled": false
     },
     {
       "id": "dm2-insight-01",

@@ -42,8 +42,37 @@
   "edgeCases": [],
   "cards": [
     {
-      "id": "rp-pattern-01",
+      "id": "recog-evaluate-reverse-polish-notation",
       "category": "pattern",
+      "type": "free_recall",
+      "promptVariants": [
+        "Which technique solves this problem, and what in the statement or constraints points to it?",
+        "Name the technique you would use here and the clue in the problem that tells you.",
+        "What approach fits this problem, and which part of the statement gives it away?"
+      ],
+      "answer": "Stack of operands: push numbers, and on an operator pop the right then the left operand, apply it and push the result. Clue: In postfix notation an operator applies to the two most recent operands, so keep the operands on a stack.",
+      "keyPoints": [
+        "In postfix notation an operator applies to the two most recent operands, so keep the operands on a stack."
+      ],
+      "explanation": "Postfix order guarantees the operands of an operator are the latest two results, so a stack evaluates the expression in one pass.",
+      "rubric": {
+        "technique": "Stack of operands: push numbers, and on an operator pop the right then the left operand, apply it and push the result",
+        "aliases": [
+          "stack evaluation",
+          "postfix evaluation",
+          "operand stack",
+          "recursion from the end"
+        ],
+        "alsoValid": [],
+        "clueTypes": [
+          "nesting_matching"
+        ],
+        "clue": "In postfix notation an operator applies to the two most recent operands, so keep the operands on a stack."
+      }
+    },
+    {
+      "id": "rp-pattern-01",
+      "category": "data_structure",
       "type": "multiple_choice",
       "promptVariants": [
         "Which data structure evaluates postfix expressions?",

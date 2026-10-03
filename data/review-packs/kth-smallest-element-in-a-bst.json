@@ -57,8 +57,43 @@
   "edgeCases": [],
   "cards": [
     {
-      "id": "ks-pattern-01",
+      "id": "recog-kth-smallest-element-in-a-bst",
       "category": "pattern",
+      "type": "free_recall",
+      "promptVariants": [
+        "Which technique solves this problem, and what in the statement or constraints points to it?",
+        "Name the technique you would use here and the clue in the problem that tells you.",
+        "What approach fits this problem, and which part of the statement gives it away?"
+      ],
+      "answer": "Inorder traversal with a counter, stopping at the k-th visited node. Clue: It is a binary search tree, so an inorder traversal visits values in ascending order and the k-th smallest is the k-th node visited.",
+      "keyPoints": [
+        "It is a binary search tree, so an inorder traversal visits values in ascending order and the k-th smallest is the k-th node visited."
+      ],
+      "explanation": "Inorder on a BST is sorted order, so counting visited nodes finds the k-th smallest and lets you stop early.",
+      "rubric": {
+        "technique": "Inorder traversal with a counter, stopping at the k-th visited node",
+        "aliases": [
+          "inorder dfs",
+          "iterative inorder with a stack",
+          "inorder and count",
+          "inorder to a list"
+        ],
+        "alsoValid": [
+          {
+            "name": "Collect all values and sort them",
+            "note": "correct, but ignores the BST order and costs O(n log n)"
+          }
+        ],
+        "clueTypes": [
+          "tree_structure",
+          "sorted_or_ordered"
+        ],
+        "clue": "It is a binary search tree, so an inorder traversal visits values in ascending order and the k-th smallest is the k-th node visited."
+      }
+    },
+    {
+      "id": "ks-pattern-01",
+      "category": "main_insight",
       "type": "multiple_choice",
       "promptVariants": [
         "Which traversal gives sorted order on a BST?",

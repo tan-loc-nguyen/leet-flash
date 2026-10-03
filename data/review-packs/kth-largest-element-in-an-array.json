@@ -74,8 +74,43 @@
   "edgeCases": [],
   "cards": [
     {
-      "id": "kt-pattern-02",
+      "id": "recog-kth-largest-element-in-an-array",
       "category": "pattern",
+      "type": "free_recall",
+      "promptVariants": [
+        "Which technique solves this problem, and what in the statement or constraints points to it?",
+        "Name the technique you would use here and the clue in the problem that tells you.",
+        "What approach fits this problem, and which part of the statement gives it away?"
+      ],
+      "answer": "Min-heap of size k (root is the k-th largest), or quickselect. Clue: It asks for one order statistic and hints at avoiding a full sort, so keep only the k largest seen so far or partition around a pivot.",
+      "keyPoints": [
+        "It asks for one order statistic and hints at avoiding a full sort, so keep only the k largest seen so far or partition around a pivot."
+      ],
+      "explanation": "A bounded heap or a partition finds the k-th largest without ordering the whole array.",
+      "rubric": {
+        "technique": "Min-heap of size k (root is the k-th largest), or quickselect",
+        "aliases": [
+          "heap of size k",
+          "priority queue",
+          "quickselect",
+          "counting array",
+          "nth element"
+        ],
+        "alsoValid": [
+          {
+            "name": "Sort and index k - 1",
+            "note": "sorts everything although only one position is needed"
+          }
+        ],
+        "clueTypes": [
+          "top_k"
+        ],
+        "clue": "It asks for one order statistic and hints at avoiding a full sort, so keep only the k largest seen so far or partition around a pivot."
+      }
+    },
+    {
+      "id": "kt-pattern-02",
+      "category": "data_structure",
       "type": "multiple_choice",
       "promptVariants": [
         "Which structure keeps only the k largest elements seen so far?",

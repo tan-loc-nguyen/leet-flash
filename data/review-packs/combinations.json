@@ -42,8 +42,38 @@
   "edgeCases": [],
   "cards": [
     {
-      "id": "cb-pattern-01",
+      "id": "recog-combinations",
       "category": "pattern",
+      "type": "free_recall",
+      "promptVariants": [
+        "Which technique solves this problem, and what in the statement or constraints points to it?",
+        "Name the technique you would use here and the clue in the problem that tells you.",
+        "What approach fits this problem, and which part of the statement gives it away?"
+      ],
+      "answer": "Backtracking with a start index, choosing numbers in increasing order until k are picked. Clue: It asks for all k-sized subsets of 1..n with n at most 20, so generate them in increasing order, which also avoids duplicates.",
+      "keyPoints": [
+        "It asks for all k-sized subsets of 1..n with n at most 20, so generate them in increasing order, which also avoids duplicates."
+      ],
+      "explanation": "Increasing order produces each subset exactly once, and the recursion depth is only k.",
+      "rubric": {
+        "technique": "Backtracking with a start index, choosing numbers in increasing order until k are picked",
+        "aliases": [
+          "dfs combinations",
+          "recursive choose",
+          "itertools combinations",
+          "start index recursion"
+        ],
+        "alsoValid": [],
+        "clueTypes": [
+          "enumerate_all",
+          "small_constraints"
+        ],
+        "clue": "It asks for all k-sized subsets of 1..n with n at most 20, so generate them in increasing order, which also avoids duplicates."
+      }
+    },
+    {
+      "id": "cb-pattern-01",
+      "category": "main_insight",
       "type": "multiple_choice",
       "promptVariants": [
         "What prevents [1,2] and [2,1] from both being generated?",

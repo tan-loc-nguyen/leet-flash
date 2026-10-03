@@ -44,8 +44,43 @@
   ],
   "cards": [
     {
-      "id": "mpt-pattern-01",
+      "id": "recog-most-profitable-path-in-a-tree",
       "category": "pattern",
+      "type": "free_recall",
+      "promptVariants": [
+        "Which technique solves this problem, and what in the statement or constraints points to it?",
+        "Name the technique you would use here and the clue in the problem that tells you.",
+        "What approach fits this problem, and which part of the statement gives it away?"
+      ],
+      "answer": "DFS from Bob's start to record his arrival time at each node on his path to 0, then DFS from 0 for Alice using those times. Clue: Bob's route to the root is forced because a tree has a unique path, so his arrival time at each node can be precomputed, and then Alice's income along a path only depends on comparing times.",
+      "keyPoints": [
+        "Bob's route to the root is forced because a tree has a unique path, so his arrival time at each node can be precomputed, and then Alice's income along a path only depends on comparing times."
+      ],
+      "explanation": "Bob's times are fixed by the tree, so a second DFS for Alice just compares her time with his at each node to decide the share.",
+      "rubric": {
+        "technique": "DFS from Bob's start to record his arrival time at each node on his path to 0, then DFS from 0 for Alice using those times",
+        "aliases": [
+          "two dfs",
+          "bob arrival times",
+          "dfs with timing",
+          "parent pointers and dfs"
+        ],
+        "alsoValid": [
+          {
+            "name": "Simulate both players step by step",
+            "note": "correct, but more complicated than precomputing Bob's times"
+          }
+        ],
+        "clueTypes": [
+          "tree_structure",
+          "shortest_steps"
+        ],
+        "clue": "Bob's route to the root is forced because a tree has a unique path, so his arrival time at each node can be precomputed, and then Alice's income along a path only depends on comparing times."
+      }
+    },
+    {
+      "id": "mpt-pattern-01",
+      "category": "main_insight",
       "type": "multiple_choice",
       "promptVariants": [
         "Why can Bob's path be computed independently of Alice's?",

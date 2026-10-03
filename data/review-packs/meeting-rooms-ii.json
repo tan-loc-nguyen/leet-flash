@@ -47,8 +47,39 @@
   ],
   "cards": [
     {
-      "id": "mr2-pattern-01",
+      "id": "recog-meeting-rooms-ii",
       "category": "pattern",
+      "type": "free_recall",
+      "promptVariants": [
+        "Which technique solves this problem, and what in the statement or constraints points to it?",
+        "Name the technique you would use here and the clue in the problem that tells you.",
+        "What approach fits this problem, and which part of the statement gives it away?"
+      ],
+      "answer": "Sort by start time and keep a min-heap of room end times (or sweep over sorted starts and ends). Clue: It asks for the most meetings overlapping at once, so process meetings by start time and track which room frees up first.",
+      "keyPoints": [
+        "It asks for the most meetings overlapping at once, so process meetings by start time and track which room frees up first."
+      ],
+      "explanation": "The earliest ending room is the only one worth reusing, and the heap size at its peak is the number of rooms needed.",
+      "rubric": {
+        "technique": "Sort by start time and keep a min-heap of room end times (or sweep over sorted starts and ends)",
+        "aliases": [
+          "min heap of end times",
+          "priority queue",
+          "sweep line",
+          "two sorted arrays",
+          "chronological ordering"
+        ],
+        "alsoValid": [],
+        "clueTypes": [
+          "intervals_overlap",
+          "top_k"
+        ],
+        "clue": "It asks for the most meetings overlapping at once, so process meetings by start time and track which room frees up first."
+      }
+    },
+    {
+      "id": "mr2-pattern-01",
+      "category": "data_structure",
       "type": "multiple_choice",
       "promptVariants": [
         "Which structure tracks the rooms currently in use?",

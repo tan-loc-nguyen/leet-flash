@@ -47,8 +47,43 @@
   ],
   "cards": [
     {
-      "id": "mmc-pattern-01",
+      "id": "recog-minimum-moves-to-clean-the-classroom",
       "category": "pattern",
+      "type": "free_recall",
+      "promptVariants": [
+        "Which technique solves this problem, and what in the statement or constraints points to it?",
+        "Name the technique you would use here and the clue in the problem that tells you.",
+        "What approach fits this problem, and which part of the statement gives it away?"
+      ],
+      "answer": "BFS over states (cell, bitmask of collected litter, remaining energy). Clue: It asks for the minimum number of moves on a grid while tracking which litter is collected and how much energy is left, and there are at most 10 litter cells, so a bitmask fits in the state.",
+      "keyPoints": [
+        "It asks for the minimum number of moves on a grid while tracking which litter is collected and how much energy is left, and there are at most 10 litter cells, so a bitmask fits in the state."
+      ],
+      "explanation": "Every move costs one step, so BFS over the full state finds the minimum; the few litter cells make the collected set a small bitmask.",
+      "rubric": {
+        "technique": "BFS over states (cell, bitmask of collected litter, remaining energy)",
+        "aliases": [
+          "bfs with a bitmask",
+          "state-space bfs",
+          "bitmask bfs",
+          "bfs over cell, mask and energy"
+        ],
+        "alsoValid": [
+          {
+            "name": "DFS or backtracking over routes",
+            "note": "does not give the fewest moves and blows up without memoisation"
+          }
+        ],
+        "clueTypes": [
+          "shortest_steps",
+          "small_constraints"
+        ],
+        "clue": "It asks for the minimum number of moves on a grid while tracking which litter is collected and how much energy is left, and there are at most 10 litter cells, so a bitmask fits in the state."
+      }
+    },
+    {
+      "id": "mmc-pattern-01",
+      "category": "main_insight",
       "type": "multiple_choice",
       "promptVariants": [
         "What is the state of the BFS and why is a bitmask used?",

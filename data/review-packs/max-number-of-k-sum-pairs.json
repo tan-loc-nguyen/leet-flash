@@ -46,6 +46,41 @@
   "edgeCases": [],
   "cards": [
     {
+      "id": "recog-max-number-of-k-sum-pairs",
+      "category": "pattern",
+      "type": "free_recall",
+      "promptVariants": [
+        "Which technique solves this problem, and what in the statement or constraints points to it?",
+        "Name the technique you would use here and the clue in the problem that tells you.",
+        "What approach fits this problem, and which part of the statement gives it away?"
+      ],
+      "answer": "Hash map of counts: pair each number with its complement k - x. Clue: Each number can only pair with k - x and there are up to 10^5 of them, so look the complement up instead of comparing every pair.",
+      "keyPoints": [
+        "Each number can only pair with k - x and there are up to 10^5 of them, so look the complement up instead of comparing every pair."
+      ],
+      "explanation": "A number's only possible partner is determined, so a count of waiting numbers (or sorted order with two pointers) finds pairs without comparing all of them.",
+      "rubric": {
+        "technique": "Hash map of counts: pair each number with its complement k - x",
+        "aliases": [
+          "hash map complement",
+          "counter of unmatched numbers",
+          "two sum with a counter",
+          "sort and two pointers"
+        ],
+        "alsoValid": [
+          {
+            "name": "Try every pair",
+            "note": "O(n^2), too slow for 10^5 elements"
+          }
+        ],
+        "clueTypes": [
+          "lookup_frequency",
+          "sorted_or_ordered"
+        ],
+        "clue": "Each number can only pair with k - x and there are up to 10^5 of them, so look the complement up instead of comparing every pair."
+      }
+    },
+    {
       "id": "mk-pattern-01",
       "category": "pattern",
       "type": "multiple_choice",
@@ -65,7 +100,8 @@
         "Sliding window over the sorted array with a running sum": "Elements need not be contiguous.",
         "Binary search on the answer, checking pair feasibility": "Not needed.",
         "Monotonic stack of the unmatched values seen so far": "No nearest-greater relation."
-      }
+      },
+      "enabled": false
     },
     {
       "id": "mk-insight-01",

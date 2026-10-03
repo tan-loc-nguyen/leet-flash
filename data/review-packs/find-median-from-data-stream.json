@@ -59,8 +59,46 @@
   "edgeCases": [],
   "cards": [
     {
-      "id": "fmd-pattern-01",
+      "id": "recog-find-median-from-data-stream",
       "category": "pattern",
+      "type": "free_recall",
+      "promptVariants": [
+        "Which technique solves this problem, and what in the statement or constraints points to it?",
+        "Name the technique you would use here and the clue in the problem that tells you.",
+        "What approach fits this problem, and which part of the statement gives it away?"
+      ],
+      "answer": "Two heaps: a max-heap for the lower half and a min-heap for the upper half, kept balanced in size. Clue: The median is needed repeatedly as numbers keep arriving, so keep the lower half and the upper half in structures that expose the middle values as the stream grows.",
+      "keyPoints": [
+        "The median is needed repeatedly as numbers keep arriving, so keep the lower half and the upper half in structures that expose the middle values as the stream grows."
+      ],
+      "explanation": "The median sits at the boundary between the halves, and the tops of a max-heap and a min-heap give exactly those two boundary values.",
+      "rubric": {
+        "technique": "Two heaps: a max-heap for the lower half and a min-heap for the upper half, kept balanced in size",
+        "aliases": [
+          "two heaps",
+          "max heap and min heap",
+          "heap split median"
+        ],
+        "alsoValid": [
+          {
+            "name": "Keep a sorted list and insert with bisect",
+            "note": "each insertion shifts elements, linear per add"
+          },
+          {
+            "name": "Count array when the values are bounded",
+            "note": "the median needs a walk over the whole value range"
+          }
+        ],
+        "clueTypes": [
+          "top_k",
+          "stream_design"
+        ],
+        "clue": "The median is needed repeatedly as numbers keep arriving, so keep the lower half and the upper half in structures that expose the middle values as the stream grows."
+      }
+    },
+    {
+      "id": "fmd-pattern-01",
+      "category": "data_structure",
       "type": "multiple_choice",
       "promptVariants": [
         "Which structure combination gives O(log n) insert and O(1) median?",

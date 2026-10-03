@@ -43,6 +43,35 @@
   "edgeCases": [],
   "cards": [
     {
+      "id": "recog-shortest-path-with-at-most-k-consecutive-identical-characters",
+      "category": "pattern",
+      "type": "free_recall",
+      "promptVariants": [
+        "Which technique solves this problem, and what in the statement or constraints points to it?",
+        "Name the technique you would use here and the clue in the problem that tells you.",
+        "What approach fits this problem, and which part of the statement gives it away?"
+      ],
+      "answer": "Dijkstra over expanded states (node, current run length of identical labels). Clue: It asks for a shortest path in a weighted graph with a limit on consecutive identical labels, so the weights call for Dijkstra and the run-length rule has to be part of the state.",
+      "keyPoints": [
+        "It asks for a shortest path in a weighted graph with a limit on consecutive identical labels, so the weights call for Dijkstra and the run-length rule has to be part of the state."
+      ],
+      "explanation": "The constraint depends on how long the current run is, so the node alone is not enough; adding the run length makes it an ordinary shortest-path problem.",
+      "rubric": {
+        "technique": "Dijkstra over expanded states (node, current run length of identical labels)",
+        "aliases": [
+          "dijkstra on a state graph",
+          "dijkstra with an extra state",
+          "shortest path with run length state"
+        ],
+        "alsoValid": [],
+        "clueTypes": [
+          "shortest_steps",
+          "dependencies_graph"
+        ],
+        "clue": "It asks for a shortest path in a weighted graph with a limit on consecutive identical labels, so the weights call for Dijkstra and the run-length rule has to be part of the state."
+      }
+    },
+    {
       "id": "sk-pattern-01",
       "category": "pattern",
       "type": "multiple_choice",
@@ -62,7 +91,8 @@
         "Plain Dijkstra on nodes only, ignoring the constraint": "It cannot know the current run length.",
         "DFS over all paths, keeping the shortest valid one": "Exponential.",
         "Topological sort of the nodes, then relaxing the edges": "The graph may have cycles."
-      }
+      },
+      "enabled": false
     },
     {
       "id": "sk-insight-01",

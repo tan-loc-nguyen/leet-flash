@@ -40,6 +40,40 @@
   "edgeCases": [],
   "cards": [
     {
+      "id": "recog-container-with-most-water",
+      "category": "pattern",
+      "type": "free_recall",
+      "promptVariants": [
+        "Which technique solves this problem, and what in the statement or constraints points to it?",
+        "Name the technique you would use here and the clue in the problem that tells you.",
+        "What approach fits this problem, and which part of the statement gives it away?"
+      ],
+      "answer": "Two pointers from both ends, always moving the shorter wall inward. Clue: The area is the width times the smaller height, so start with the widest container and shrink it; only moving the shorter wall can possibly improve the area.",
+      "keyPoints": [
+        "The area is the width times the smaller height, so start with the widest container and shrink it; only moving the shorter wall can possibly improve the area."
+      ],
+      "explanation": "Keeping the shorter wall while the width shrinks can never help, so discarding it is safe, and each step removes one candidate.",
+      "rubric": {
+        "technique": "Two pointers from both ends, always moving the shorter wall inward",
+        "aliases": [
+          "two pointers",
+          "greedy two pointers",
+          "move the shorter side",
+          "left and right pointers"
+        ],
+        "alsoValid": [
+          {
+            "name": "Try every pair of lines",
+            "note": "quadratic, too slow for 10^5 lines"
+          }
+        ],
+        "clueTypes": [
+          "local_choice"
+        ],
+        "clue": "The area is the width times the smaller height, so start with the widest container and shrink it; only moving the shorter wall can possibly improve the area."
+      }
+    },
+    {
       "id": "cw-pattern-01",
       "category": "pattern",
       "type": "multiple_choice",
@@ -59,7 +93,8 @@
         "Sliding window of fixed size that moves across the heights array": "The window width varies.",
         "Prefix sums of the heights to compute the water between two bars": "No range sum is needed.",
         "Dynamic programming over every pair of left and right walls": "No overlapping subproblems; greedy suffices."
-      }
+      },
+      "enabled": false
     },
     {
       "id": "cw-insight-01",

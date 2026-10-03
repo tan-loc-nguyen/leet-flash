@@ -65,6 +65,41 @@
   ],
   "cards": [
     {
+      "id": "recog-longest-substring-without-repeating-characters",
+      "category": "pattern",
+      "type": "free_recall",
+      "promptVariants": [
+        "Which technique solves this problem, and what in the statement or constraints points to it?",
+        "Name the technique you would use here and the clue in the problem that tells you.",
+        "What approach fits this problem, and which part of the statement gives it away?"
+      ],
+      "answer": "Sliding window with a set or last-seen index map, moving the left edge past the previous occurrence on a repeat. Clue: It asks for the longest contiguous substring with no repeated character, so grow a window and, when a character repeats, move the left edge past its previous occurrence.",
+      "keyPoints": [
+        "It asks for the longest contiguous substring with no repeated character, so grow a window and, when a character repeats, move the left edge past its previous occurrence."
+      ],
+      "explanation": "A repeat only matters inside the current window, so the window never needs to move backwards and each character is handled a constant number of times.",
+      "rubric": {
+        "technique": "Sliding window with a set or last-seen index map, moving the left edge past the previous occurrence on a repeat",
+        "aliases": [
+          "sliding window",
+          "two pointers with a set",
+          "last seen index",
+          "hash map of last positions"
+        ],
+        "alsoValid": [
+          {
+            "name": "Check every substring for duplicates",
+            "note": "quadratic or worse"
+          }
+        ],
+        "clueTypes": [
+          "contiguous",
+          "lookup_frequency"
+        ],
+        "clue": "It asks for the longest contiguous substring with no repeated character, so grow a window and, when a character repeats, move the left edge past its previous occurrence."
+      }
+    },
+    {
       "id": "lswrc-pattern-01",
       "category": "pattern",
       "type": "multiple_choice",
@@ -86,7 +121,7 @@
         "Dynamic programming over prefixes": "Overkill; the window already captures all the state needed.",
         "Monotonic stack": "There is no nearest-greater / smaller relationship to maintain."
       },
-      "enabled": true
+      "enabled": false
     },
     {
       "id": "lswrc-invariant-01",

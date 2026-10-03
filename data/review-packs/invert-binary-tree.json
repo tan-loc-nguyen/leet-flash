@@ -56,8 +56,38 @@
   "edgeCases": [],
   "cards": [
     {
-      "id": "it-pattern-01",
+      "id": "recog-invert-binary-tree",
       "category": "pattern",
+      "type": "free_recall",
+      "promptVariants": [
+        "Which technique solves this problem, and what in the statement or constraints points to it?",
+        "Name the technique you would use here and the clue in the problem that tells you.",
+        "What approach fits this problem, and which part of the statement gives it away?"
+      ],
+      "answer": "Swap the two children at every node with any traversal (recursive DFS, BFS or a stack). Clue: Inverting means mirroring each node's children, which is the same local swap at every node, so any traversal that visits each node once works.",
+      "keyPoints": [
+        "Inverting means mirroring each node's children, which is the same local swap at every node, so any traversal that visits each node once works."
+      ],
+      "explanation": "Mirroring a tree is the same swap repeated at each node, with no dependence between nodes.",
+      "rubric": {
+        "technique": "Swap the two children at every node with any traversal (recursive DFS, BFS or a stack)",
+        "aliases": [
+          "recursive swap",
+          "dfs",
+          "bfs with a queue",
+          "swap children"
+        ],
+        "alsoValid": [],
+        "clueTypes": [
+          "tree_structure",
+          "direct_simulation"
+        ],
+        "clue": "Inverting means mirroring each node's children, which is the same local swap at every node, so any traversal that visits each node once works."
+      }
+    },
+    {
+      "id": "it-pattern-01",
+      "category": "main_insight",
       "type": "multiple_choice",
       "promptVariants": [
         "What is the core operation of Invert Binary Tree?",

@@ -58,8 +58,43 @@
   ],
   "cards": [
     {
-      "id": "pes-pattern-01",
+      "id": "recog-partition-equal-subset-sum",
       "category": "pattern",
+      "type": "free_recall",
+      "promptVariants": [
+        "Which technique solves this problem, and what in the statement or constraints points to it?",
+        "Name the technique you would use here and the clue in the problem that tells you.",
+        "What approach fits this problem, and which part of the statement gives it away?"
+      ],
+      "answer": "0/1 knapsack subset-sum DP: if the total is even, find a subset reaching half of it with a boolean array filled downwards. Clue: Two equal-sum parts means finding a subset that sums to half the total, each number used once, and the sums are bounded (at most 200 numbers up to 100), so a table over sums fits.",
+      "keyPoints": [
+        "Two equal-sum parts means finding a subset that sums to half the total, each number used once, and the sums are bounded (at most 200 numbers up to 100), so a table over sums fits."
+      ],
+      "explanation": "Reaching half the total with each number used at most once is a subset-sum question, and iterating sums downwards keeps each number single-use.",
+      "rubric": {
+        "technique": "0/1 knapsack subset-sum DP: if the total is even, find a subset reaching half of it with a boolean array filled downwards",
+        "aliases": [
+          "subset sum dp",
+          "0-1 knapsack",
+          "boolean dp over sums",
+          "knapsack"
+        ],
+        "alsoValid": [
+          {
+            "name": "Try every subset",
+            "note": "exponential, too slow for 200 numbers"
+          }
+        ],
+        "clueTypes": [
+          "optimization_overlap",
+          "small_constraints"
+        ],
+        "clue": "Two equal-sum parts means finding a subset that sums to half the total, each number used once, and the sums are bounded (at most 200 numbers up to 100), so a table over sums fits."
+      }
+    },
+    {
+      "id": "pes-pattern-01",
+      "category": "main_insight",
       "type": "multiple_choice",
       "promptVariants": [
         "Why does the problem reduce to a subset-sum with target sum / 2?",

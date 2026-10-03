@@ -52,8 +52,43 @@
   "edgeCases": [],
   "cards": [
     {
-      "id": "sm-pattern-01",
+      "id": "recog-sliding-window-maximum",
       "category": "pattern",
+      "type": "free_recall",
+      "promptVariants": [
+        "Which technique solves this problem, and what in the statement or constraints points to it?",
+        "Name the technique you would use here and the clue in the problem that tells you.",
+        "What approach fits this problem, and which part of the statement gives it away?"
+      ],
+      "answer": "Monotonic decreasing deque of indices: pop smaller values from the back, expire old indices from the front, read the front. Clue: It asks for the maximum of every window of size k as the window slides, so keep a structure from which values that can never become the maximum are discarded when a larger value arrives.",
+      "keyPoints": [
+        "It asks for the maximum of every window of size k as the window slides, so keep a structure from which values that can never become the maximum are discarded when a larger value arrives."
+      ],
+      "explanation": "A smaller earlier value is useless once a larger value is inside the window, so the deque stays decreasing and its front is the maximum.",
+      "rubric": {
+        "technique": "Monotonic decreasing deque of indices: pop smaller values from the back, expire old indices from the front, read the front",
+        "aliases": [
+          "monotonic deque",
+          "deque of indices",
+          "sliding window with a deque",
+          "max heap with lazy deletion"
+        ],
+        "alsoValid": [
+          {
+            "name": "Scan each window for its maximum",
+            "note": "O(n * k)"
+          }
+        ],
+        "clueTypes": [
+          "next_greater_range",
+          "contiguous"
+        ],
+        "clue": "It asks for the maximum of every window of size k as the window slides, so keep a structure from which values that can never become the maximum are discarded when a larger value arrives."
+      }
+    },
+    {
+      "id": "sm-pattern-01",
+      "category": "data_structure",
       "type": "multiple_choice",
       "promptVariants": [
         "Which structure gives O(n) sliding-window maximum?",

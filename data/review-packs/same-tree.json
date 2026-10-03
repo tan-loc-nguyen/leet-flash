@@ -49,6 +49,40 @@
   "edgeCases": [],
   "cards": [
     {
+      "id": "recog-same-tree",
+      "category": "pattern",
+      "type": "free_recall",
+      "promptVariants": [
+        "Which technique solves this problem, and what in the statement or constraints points to it?",
+        "Name the technique you would use here and the clue in the problem that tells you.",
+        "What approach fits this problem, and which part of the statement gives it away?"
+      ],
+      "answer": "Simultaneous recursion on both trees, comparing values and then the left and right children. Clue: Two trees are the same when their roots match and so do their left and right subtrees, so walk both trees together.",
+      "keyPoints": [
+        "Two trees are the same when their roots match and so do their left and right subtrees, so walk both trees together."
+      ],
+      "explanation": "Equality of trees is recursive: equal roots plus equal subtrees, with two empty trees equal.",
+      "rubric": {
+        "technique": "Simultaneous recursion on both trees, comparing values and then the left and right children",
+        "aliases": [
+          "recursive comparison",
+          "dfs on two trees",
+          "parallel traversal",
+          "compare node by node"
+        ],
+        "alsoValid": [
+          {
+            "name": "Serialize both trees and compare the strings",
+            "note": "correct, but uses extra space"
+          }
+        ],
+        "clueTypes": [
+          "tree_structure"
+        ],
+        "clue": "Two trees are the same when their roots match and so do their left and right subtrees, so walk both trees together."
+      }
+    },
+    {
       "id": "st-pattern-01",
       "category": "pattern",
       "type": "multiple_choice",
@@ -68,7 +102,8 @@
         "Sort both trees by value and compare them": "Trees are not sorted collections.",
         "Inorder of one tree only, compared to the other": "Ignores the other tree.",
         "Count the nodes in each tree and compare the totals": "Equal counts do not imply equal shape or values."
-      }
+      },
+      "enabled": false
     },
     {
       "id": "st-insight-01",

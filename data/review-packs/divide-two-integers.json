@@ -47,8 +47,42 @@
   ],
   "cards": [
     {
-      "id": "d2i-pattern-01",
+      "id": "recog-divide-two-integers",
       "category": "pattern",
+      "type": "free_recall",
+      "promptVariants": [
+        "Which technique solves this problem, and what in the statement or constraints points to it?",
+        "Name the technique you would use here and the clue in the problem that tells you.",
+        "What approach fits this problem, and which part of the statement gives it away?"
+      ],
+      "answer": "Bit shifting: repeatedly subtract the largest divisor << k that fits and add 1 << k to the quotient. Clue: Multiplication, division and mod are forbidden and the values reach 2^31, so build the quotient from powers of two using shifts and subtraction.",
+      "keyPoints": [
+        "Multiplication, division and mod are forbidden and the values reach 2^31, so build the quotient from powers of two using shifts and subtraction."
+      ],
+      "explanation": "Doubling the divisor finds the largest chunk to subtract each round, which builds the quotient bit by bit like long division in binary.",
+      "rubric": {
+        "technique": "Bit shifting: repeatedly subtract the largest divisor << k that fits and add 1 << k to the quotient",
+        "aliases": [
+          "doubling the divisor",
+          "shift and subtract",
+          "binary long division",
+          "exponential search with subtraction"
+        ],
+        "alsoValid": [
+          {
+            "name": "Repeated subtraction",
+            "note": "linear in the quotient, far too slow for values up to 2^31"
+          }
+        ],
+        "clueTypes": [
+          "bit_math"
+        ],
+        "clue": "Multiplication, division and mod are forbidden and the values reach 2^31, so build the quotient from powers of two using shifts and subtraction."
+      }
+    },
+    {
+      "id": "d2i-pattern-01",
+      "category": "main_insight",
       "type": "multiple_choice",
       "promptVariants": [
         "How do you divide quickly without the division operator?",

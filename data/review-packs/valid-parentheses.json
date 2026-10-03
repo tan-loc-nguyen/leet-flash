@@ -50,8 +50,41 @@
   ],
   "cards": [
     {
-      "id": "valid-parentheses-pattern-01",
+      "id": "recog-valid-parentheses",
       "category": "pattern",
+      "type": "free_recall",
+      "promptVariants": [
+        "Which technique solves this problem, and what in the statement or constraints points to it?",
+        "Name the technique you would use here and the clue in the problem that tells you.",
+        "What approach fits this problem, and which part of the statement gives it away?"
+      ],
+      "answer": "Stack of opening brackets: each closing bracket must match the most recent opener. Clue: The most recently opened bracket must be the first one closed, which is last-in-first-out, so keep the open brackets on a stack.",
+      "keyPoints": [
+        "The most recently opened bracket must be the first one closed, which is last-in-first-out, so keep the open brackets on a stack."
+      ],
+      "explanation": "Nested brackets close in the reverse order of opening, which is the behaviour of a stack.",
+      "rubric": {
+        "technique": "Stack of opening brackets: each closing bracket must match the most recent opener",
+        "aliases": [
+          "stack",
+          "bracket matching",
+          "stack with a closer to opener map"
+        ],
+        "alsoValid": [
+          {
+            "name": "Repeatedly delete matched pairs until nothing changes",
+            "note": "quadratic"
+          }
+        ],
+        "clueTypes": [
+          "nesting_matching"
+        ],
+        "clue": "The most recently opened bracket must be the first one closed, which is last-in-first-out, so keep the open brackets on a stack."
+      }
+    },
+    {
+      "id": "valid-parentheses-pattern-01",
+      "category": "data_structure",
       "type": "multiple_choice",
       "promptVariants": [
         "Which data structure naturally solves bracket matching?",

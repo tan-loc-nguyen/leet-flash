@@ -43,8 +43,38 @@
   "edgeCases": [],
   "cards": [
     {
-      "id": "mp2-pattern-01",
+      "id": "recog-maximum-product-of-two-digits",
       "category": "pattern",
+      "type": "free_recall",
+      "promptVariants": [
+        "Which technique solves this problem, and what in the statement or constraints points to it?",
+        "Name the technique you would use here and the clue in the problem that tells you.",
+        "What approach fits this problem, and which part of the statement gives it away?"
+      ],
+      "answer": "Track the two largest digits while peeling digits off with % 10. Clue: Digits are never negative, so the maximum product of two digits uses the two largest digits, taking the same digit twice if it appears twice.",
+      "keyPoints": [
+        "Digits are never negative, so the maximum product of two digits uses the two largest digits, taking the same digit twice if it appears twice."
+      ],
+      "explanation": "A product of two non-negative numbers is largest for the two largest values, which one pass over the digits finds.",
+      "rubric": {
+        "technique": "Track the two largest digits while peeling digits off with % 10",
+        "aliases": [
+          "two largest digits",
+          "sort the digits",
+          "top two",
+          "digit scan"
+        ],
+        "alsoValid": [],
+        "clueTypes": [
+          "top_k",
+          "direct_simulation"
+        ],
+        "clue": "Digits are never negative, so the maximum product of two digits uses the two largest digits, taking the same digit twice if it appears twice."
+      }
+    },
+    {
+      "id": "mp2-pattern-01",
+      "category": "main_insight",
       "type": "multiple_choice",
       "promptVariants": [
         "Which digits maximise the product of two digits?",

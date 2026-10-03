@@ -56,6 +56,42 @@
   "edgeCases": [],
   "cards": [
     {
+      "id": "recog-sort-colors",
+      "category": "pattern",
+      "type": "free_recall",
+      "promptVariants": [
+        "Which technique solves this problem, and what in the statement or constraints points to it?",
+        "Name the technique you would use here and the clue in the problem that tells you.",
+        "What approach fits this problem, and which part of the statement gives it away?"
+      ],
+      "answer": "Dutch national flag: three pointers (low, mid, high) partition the array into three regions in one pass. Clue: Only three distinct values exist and the array must be sorted in place, so no comparison sort is needed: partition into three regions with pointers.",
+      "keyPoints": [
+        "Only three distinct values exist and the array must be sorted in place, so no comparison sort is needed: partition into three regions with pointers."
+      ],
+      "explanation": "With three values, swapping zeros to the front and twos to the back while scanning once sorts the array.",
+      "rubric": {
+        "technique": "Dutch national flag: three pointers (low, mid, high) partition the array into three regions in one pass",
+        "aliases": [
+          "three pointers",
+          "dutch flag",
+          "counting sort",
+          "partition into three regions",
+          "low mid high"
+        ],
+        "alsoValid": [
+          {
+            "name": "Call a comparison sort",
+            "note": "correct, but ignores that there are only three values"
+          }
+        ],
+        "clueTypes": [
+          "in_place_pointers",
+          "sorted_or_ordered"
+        ],
+        "clue": "Only three distinct values exist and the array must be sorted in place, so no comparison sort is needed: partition into three regions with pointers."
+      }
+    },
+    {
       "id": "sc-pattern-01",
       "category": "pattern",
       "type": "multiple_choice",
@@ -75,7 +111,8 @@
         "Binary search": "No searching.",
         "Merge sort": "O(n log n) and extra space.",
         "Heap sort": "O(n log n)."
-      }
+      },
+      "enabled": false
     },
     {
       "id": "sc-invariant-01",

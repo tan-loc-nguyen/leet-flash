@@ -57,6 +57,36 @@
   "edgeCases": [],
   "cards": [
     {
+      "id": "recog-word-search",
+      "category": "pattern",
+      "type": "free_recall",
+      "promptVariants": [
+        "Which technique solves this problem, and what in the statement or constraints points to it?",
+        "Name the technique you would use here and the clue in the problem that tells you.",
+        "What approach fits this problem, and which part of the statement gives it away?"
+      ],
+      "answer": "DFS from each matching cell, marking cells in place and undoing the mark on backtrack. Clue: The word is a path of adjacent cells in which no cell may be reused, and the board and word are tiny (at most 6 by 6 and 15 letters), so try paths with backtracking.",
+      "keyPoints": [
+        "The word is a path of adjacent cells in which no cell may be reused, and the board and word are tiny (at most 6 by 6 and 15 letters), so try paths with backtracking."
+      ],
+      "explanation": "A path with a no-reuse rule needs the visited marks undone on the way out, which is exactly backtracking on the grid.",
+      "rubric": {
+        "technique": "DFS from each matching cell, marking cells in place and undoing the mark on backtrack",
+        "aliases": [
+          "backtracking on the grid",
+          "dfs with a visited set",
+          "dfs with backtracking",
+          "recursive grid search"
+        ],
+        "alsoValid": [],
+        "clueTypes": [
+          "grid_connectivity",
+          "small_constraints"
+        ],
+        "clue": "The word is a path of adjacent cells in which no cell may be reused, and the board and word are tiny (at most 6 by 6 and 15 letters), so try paths with backtracking."
+      }
+    },
+    {
       "id": "ws-pattern-01",
       "category": "pattern",
       "type": "multiple_choice",
@@ -76,7 +106,8 @@
         "BFS started from every cell that matches the first letter": "BFS cannot easily forbid cell reuse per path.",
         "Dynamic programming over all of the board's cell pairs": "The path-dependent visited state prevents standard DP.",
         "Binary search over all of the board's rows and columns": "Not a search problem."
-      }
+      },
+      "enabled": false
     },
     {
       "id": "ws-insight-01",

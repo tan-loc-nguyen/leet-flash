@@ -52,6 +52,40 @@
   "edgeCases": [],
   "cards": [
     {
+      "id": "recog-rotate-list",
+      "category": "pattern",
+      "type": "free_recall",
+      "promptVariants": [
+        "Which technique solves this problem, and what in the statement or constraints points to it?",
+        "Name the technique you would use here and the clue in the problem that tells you.",
+        "What approach fits this problem, and which part of the statement gives it away?"
+      ],
+      "answer": "Close the list into a ring, reduce k modulo the length and cut at the new tail. Clue: Rotating right by k moves the last k nodes to the front, and k can far exceed the length (up to 2 * 10^9), so reduce it modulo the length and relink once.",
+      "keyPoints": [
+        "Rotating right by k moves the last k nodes to the front, and k can far exceed the length (up to 2 * 10^9), so reduce it modulo the length and relink once."
+      ],
+      "explanation": "A rotation by the length changes nothing, so k mod n is all that matters, and cutting the ring at the right place gives the new head.",
+      "rubric": {
+        "technique": "Close the list into a ring, reduce k modulo the length and cut at the new tail",
+        "aliases": [
+          "ring and cut",
+          "two pointers k apart",
+          "find the length and relink",
+          "circular list"
+        ],
+        "alsoValid": [
+          {
+            "name": "Move the tail to the front k times",
+            "note": "k is up to 2 * 10^9, so this is far too slow"
+          }
+        ],
+        "clueTypes": [
+          "in_place_pointers"
+        ],
+        "clue": "Rotating right by k moves the last k nodes to the front, and k can far exceed the length (up to 2 * 10^9), so reduce it modulo the length and relink once."
+      }
+    },
+    {
       "id": "rl-pattern-01",
       "category": "pattern",
       "type": "multiple_choice",
@@ -71,7 +105,8 @@
         "Reverse the list twice, once per half of the cut": "That returns the original order.",
         "Sort the nodes by position and relink them": "Order must be preserved cyclically.",
         "Use recursion k times, rotating by a single node each time": "O(k) work and stack."
-      }
+      },
+      "enabled": false
     },
     {
       "id": "rl-insight-01",

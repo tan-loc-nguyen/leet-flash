@@ -57,8 +57,37 @@
   "edgeCases": [],
   "cards": [
     {
-      "id": "tl-pattern-01",
+      "id": "recog-to-lower-case",
       "category": "pattern",
+      "type": "free_recall",
+      "promptVariants": [
+        "Which technique solves this problem, and what in the statement or constraints points to it?",
+        "Name the technique you would use here and the clue in the problem that tells you.",
+        "What approach fits this problem, and which part of the statement gives it away?"
+      ],
+      "answer": "Direct per-character mapping: shift uppercase ASCII letters by 32 (or call lower()). Clue: The mapping is stated outright (each uppercase letter becomes the same lowercase letter, everything else stays), so transform the string character by character.",
+      "keyPoints": [
+        "The mapping is stated outright (each uppercase letter becomes the same lowercase letter, everything else stays), so transform the string character by character."
+      ],
+      "explanation": "Each character is converted independently, so no structure beyond a pass over the string is needed.",
+      "rubric": {
+        "technique": "Direct per-character mapping: shift uppercase ASCII letters by 32 (or call lower())",
+        "aliases": [
+          "str.lower()",
+          "ascii shift",
+          "bit trick with 0x20",
+          "map each character"
+        ],
+        "alsoValid": [],
+        "clueTypes": [
+          "direct_simulation"
+        ],
+        "clue": "The mapping is stated outright (each uppercase letter becomes the same lowercase letter, everything else stays), so transform the string character by character."
+      }
+    },
+    {
+      "id": "tl-pattern-01",
+      "category": "implementation_detail",
       "type": "multiple_choice",
       "promptVariants": [
         "How do ASCII uppercase and lowercase letters relate?",

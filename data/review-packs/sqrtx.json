@@ -65,6 +65,40 @@
   "edgeCases": [],
   "cards": [
     {
+      "id": "recog-sqrtx",
+      "category": "pattern",
+      "type": "free_recall",
+      "promptVariants": [
+        "Which technique solves this problem, and what in the statement or constraints points to it?",
+        "Name the technique you would use here and the clue in the problem that tells you.",
+        "What approach fits this problem, and which part of the statement gives it away?"
+      ],
+      "answer": "Binary search on the answer: the largest integer whose square is at most x. Clue: i squared grows with i, so the largest integer whose square does not exceed x can be found by halving, and x can be as large as 2^31 - 1.",
+      "keyPoints": [
+        "i squared grows with i, so the largest integer whose square does not exceed x can be found by halving, and x can be as large as 2^31 - 1."
+      ],
+      "explanation": "The condition 'i squared is at most x' is true up to a point and false afterwards, so binary search finds the boundary.",
+      "rubric": {
+        "technique": "Binary search on the answer: the largest integer whose square is at most x",
+        "aliases": [
+          "binary search",
+          "binary search on the answer",
+          "integer square root by halving",
+          "newton's method"
+        ],
+        "alsoValid": [
+          {
+            "name": "Increase i until i * i exceeds x",
+            "note": "linear in sqrt(x), slow for large x"
+          }
+        ],
+        "clueTypes": [
+          "monotonic_answer"
+        ],
+        "clue": "i squared grows with i, so the largest integer whose square does not exceed x can be found by halving, and x can be as large as 2^31 - 1."
+      }
+    },
+    {
       "id": "sx-pattern-01",
       "category": "pattern",
       "type": "multiple_choice",
@@ -84,7 +118,8 @@
         "Dynamic programming": "No subproblem structure.",
         "Sliding window": "Not a subarray problem.",
         "Two pointers on a sorted array": "There is no array."
-      }
+      },
+      "enabled": false
     },
     {
       "id": "sx-insight-01",

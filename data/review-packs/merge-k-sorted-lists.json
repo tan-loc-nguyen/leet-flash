@@ -51,8 +51,43 @@
   "edgeCases": [],
   "cards": [
     {
-      "id": "mk2-pattern-01",
+      "id": "recog-merge-k-sorted-lists",
       "category": "pattern",
+      "type": "free_recall",
+      "promptVariants": [
+        "Which technique solves this problem, and what in the statement or constraints points to it?",
+        "Name the technique you would use here and the clue in the problem that tells you.",
+        "What approach fits this problem, and which part of the statement gives it away?"
+      ],
+      "answer": "Min-heap of the current heads of the k lists (or pairwise divide-and-conquer merging). Clue: Each of the k lists is sorted, so the next output node is always the smallest of the k current heads, which a min-heap supplies; alternatively merge pairs of lists repeatedly.",
+      "keyPoints": [
+        "Each of the k lists is sorted, so the next output node is always the smallest of the k current heads, which a min-heap supplies; alternatively merge pairs of lists repeatedly."
+      ],
+      "explanation": "Only the front of each list competes for the next place, so a heap of k heads picks the minimum in logarithmic time.",
+      "rubric": {
+        "technique": "Min-heap of the current heads of the k lists (or pairwise divide-and-conquer merging)",
+        "aliases": [
+          "priority queue of heads",
+          "min heap",
+          "divide and conquer merge",
+          "merge pairs of lists"
+        ],
+        "alsoValid": [
+          {
+            "name": "Merge the lists into the result one by one",
+            "note": "each merge rescans the growing result"
+          }
+        ],
+        "clueTypes": [
+          "top_k",
+          "sorted_or_ordered"
+        ],
+        "clue": "Each of the k lists is sorted, so the next output node is always the smallest of the k current heads, which a min-heap supplies; alternatively merge pairs of lists repeatedly."
+      }
+    },
+    {
+      "id": "mk2-pattern-01",
+      "category": "data_structure",
       "type": "multiple_choice",
       "promptVariants": [
         "Which structure gives the smallest of k list heads efficiently?",

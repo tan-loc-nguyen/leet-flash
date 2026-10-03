@@ -36,8 +36,42 @@
   "edgeCases": [],
   "cards": [
     {
-      "id": "lx-pattern-01",
+      "id": "recog-longest-subsequence-with-non-zero-bitwise-xor",
       "category": "pattern",
+      "type": "free_recall",
+      "promptVariants": [
+        "Which technique solves this problem, and what in the statement or constraints points to it?",
+        "Name the technique you would use here and the clue in the problem that tells you.",
+        "What approach fits this problem, and which part of the statement gives it away?"
+      ],
+      "answer": "Case analysis on the total XOR: the whole array if it is non-zero, else n - 1 if any element is non-zero, else 0. Clue: A subsequence may skip any elements and the XOR of what remains follows from the total XOR, so reason about the total instead of enumerating subsequences.",
+      "keyPoints": [
+        "A subsequence may skip any elements and the XOR of what remains follows from the total XOR, so reason about the total instead of enumerating subsequences."
+      ],
+      "explanation": "Removing one non-zero element from an array with total XOR zero leaves exactly that element as the XOR, so at most one element ever needs dropping.",
+      "rubric": {
+        "technique": "Case analysis on the total XOR: the whole array if it is non-zero, else n - 1 if any element is non-zero, else 0",
+        "aliases": [
+          "xor of the whole array",
+          "total xor reasoning",
+          "xor case analysis",
+          "drop one non-zero element"
+        ],
+        "alsoValid": [
+          {
+            "name": "Try every subsequence by brute force",
+            "note": "exponential"
+          }
+        ],
+        "clueTypes": [
+          "bit_math"
+        ],
+        "clue": "A subsequence may skip any elements and the XOR of what remains follows from the total XOR, so reason about the total instead of enumerating subsequences."
+      }
+    },
+    {
+      "id": "lx-pattern-01",
+      "category": "main_insight",
       "type": "multiple_choice",
       "promptVariants": [
         "What XOR property makes the case analysis work?",

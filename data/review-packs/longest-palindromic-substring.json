@@ -71,6 +71,42 @@
   ],
   "cards": [
     {
+      "id": "recog-longest-palindromic-substring",
+      "category": "pattern",
+      "type": "free_recall",
+      "promptVariants": [
+        "Which technique solves this problem, and what in the statement or constraints points to it?",
+        "Name the technique you would use here and the clue in the problem that tells you.",
+        "What approach fits this problem, and which part of the statement gives it away?"
+      ],
+      "answer": "Expand around each of the 2n - 1 centres while the two ends match. Clue: A palindrome mirrors around its centre, which is a character or a gap, and the string has at most 1000 characters, so expand outwards from every centre and keep the longest.",
+      "keyPoints": [
+        "A palindrome mirrors around its centre, which is a character or a gap, and the string has at most 1000 characters, so expand outwards from every centre and keep the longest."
+      ],
+      "explanation": "Every palindrome has a centre from which it grows symmetrically, so expanding from all centres finds the longest.",
+      "rubric": {
+        "technique": "Expand around each of the 2n - 1 centres while the two ends match",
+        "aliases": [
+          "expand around center",
+          "two pointers from the middle",
+          "center expansion",
+          "manacher",
+          "2d dp"
+        ],
+        "alsoValid": [
+          {
+            "name": "Check every substring",
+            "note": "cubic"
+          }
+        ],
+        "clueTypes": [
+          "contiguous",
+          "small_constraints"
+        ],
+        "clue": "A palindrome mirrors around its centre, which is a character or a gap, and the string has at most 1000 characters, so expand outwards from every centre and keep the longest."
+      }
+    },
+    {
       "id": "lps-pattern-01",
       "category": "pattern",
       "type": "multiple_choice",
@@ -90,7 +126,8 @@
         "Sort the characters and pair equal letters": "Sorting destroys the substring order.",
         "A sliding window that shrinks on mismatches": "Windows do not preserve palindromic structure.",
         "Binary search on the palindrome length": "Palindrome existence is not monotone in the length."
-      }
+      },
+      "enabled": false
     },
     {
       "id": "lps-insight-01",

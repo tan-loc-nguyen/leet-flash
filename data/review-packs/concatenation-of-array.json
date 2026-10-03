@@ -40,8 +40,37 @@
   "edgeCases": [],
   "cards": [
     {
-      "id": "ca-pattern-01",
+      "id": "recog-concatenation-of-array",
       "category": "pattern",
+      "type": "free_recall",
+      "promptVariants": [
+        "Which technique solves this problem, and what in the statement or constraints points to it?",
+        "Name the technique you would use here and the clue in the problem that tells you.",
+        "What approach fits this problem, and which part of the statement gives it away?"
+      ],
+      "answer": "Direct construction: write the array twice (nums + nums). Clue: The statement defines ans index by index (ans[i] == nums[i] and ans[i+n] == nums[i]), which is exactly nums followed by nums.",
+      "keyPoints": [
+        "The statement defines ans index by index (ans[i] == nums[i] and ans[i+n] == nums[i]), which is exactly nums followed by nums."
+      ],
+      "explanation": "The index rule describes the array written twice, so no technique beyond building the result is needed.",
+      "rubric": {
+        "technique": "Direct construction: write the array twice (nums + nums)",
+        "aliases": [
+          "list concatenation",
+          "copy the array twice",
+          "simulation",
+          "pre-allocate 2n and copy each element"
+        ],
+        "alsoValid": [],
+        "clueTypes": [
+          "direct_simulation"
+        ],
+        "clue": "The statement defines ans index by index (ans[i] == nums[i] and ans[i+n] == nums[i]), which is exactly nums followed by nums."
+      }
+    },
+    {
+      "id": "ca-pattern-01",
+      "category": "main_insight",
       "type": "multiple_choice",
       "promptVariants": [
         "What is the index relation of the concatenated array?",

@@ -52,6 +52,44 @@
   "edgeCases": [],
   "cards": [
     {
+      "id": "recog-range-sum-query-immutable",
+      "category": "pattern",
+      "type": "free_recall",
+      "promptVariants": [
+        "Which technique solves this problem, and what in the statement or constraints points to it?",
+        "Name the technique you would use here and the clue in the problem that tells you.",
+        "What approach fits this problem, and which part of the statement gives it away?"
+      ],
+      "answer": "Prefix sums built once, so each range sum is prefix[right + 1] - prefix[left]. Clue: Many sum queries on a fixed array call for precomputing: a cumulative sum array turns any range sum into one subtraction.",
+      "keyPoints": [
+        "Many sum queries on a fixed array call for precomputing: a cumulative sum array turns any range sum into one subtraction."
+      ],
+      "explanation": "The sum of a range is the difference of two prefixes, so one pass of preparation makes every query constant time.",
+      "rubric": {
+        "technique": "Prefix sums built once, so each range sum is prefix[right + 1] - prefix[left]",
+        "aliases": [
+          "prefix sum array",
+          "cumulative sums",
+          "precompute totals"
+        ],
+        "alsoValid": [
+          {
+            "name": "Add up the elements on every query",
+            "note": "linear per query"
+          },
+          {
+            "name": "Segment tree or Fenwick tree",
+            "note": "correct, but only needed if updates were allowed"
+          }
+        ],
+        "clueTypes": [
+          "prefix_range",
+          "stream_design"
+        ],
+        "clue": "Many sum queries on a fixed array call for precomputing: a cumulative sum array turns any range sum into one subtraction."
+      }
+    },
+    {
       "id": "rq-pattern-01",
       "category": "pattern",
       "type": "multiple_choice",
@@ -71,7 +109,8 @@
         "Sorting": "Order of elements matters.",
         "A hash set": "No lookups of values.",
         "A heap": "Not a range structure."
-      }
+      },
+      "enabled": false
     },
     {
       "id": "rq-insight-01",

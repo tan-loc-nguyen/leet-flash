@@ -40,8 +40,47 @@
   "edgeCases": [],
   "cards": [
     {
-      "id": "fl2-pattern-01",
+      "id": "recog-find-lucky-integer-in-an-array",
       "category": "pattern",
+      "type": "free_recall",
+      "promptVariants": [
+        "Which technique solves this problem, and what in the statement or constraints points to it?",
+        "Name the technique you would use here and the clue in the problem that tells you.",
+        "What approach fits this problem, and which part of the statement gives it away?"
+      ],
+      "answer": "Count frequencies (Counter / hash map), then take the largest value whose count equals itself. Clue: The definition compares each value with its own frequency, so count frequencies first; values are at most 500, so a count array also works.",
+      "keyPoints": [
+        "The definition compares each value with its own frequency, so count frequencies first; values are at most 500, so a count array also works."
+      ],
+      "explanation": "Luck is defined through frequency, so the frequency table is the first thing to build; one scan of it finds the maximum lucky value.",
+      "rubric": {
+        "technique": "Count frequencies (Counter / hash map), then take the largest value whose count equals itself",
+        "aliases": [
+          "counter",
+          "frequency table",
+          "hash map of counts",
+          "counting array"
+        ],
+        "alsoValid": [
+          {
+            "name": "Counter plus a heap of lucky values",
+            "note": "unnecessary; a running maximum is enough"
+          },
+          {
+            "name": "Sort and measure runs of equal values",
+            "note": "O(n log n)"
+          }
+        ],
+        "clueTypes": [
+          "lookup_frequency",
+          "small_constraints"
+        ],
+        "clue": "The definition compares each value with its own frequency, so count frequencies first; values are at most 500, so a count array also works."
+      }
+    },
+    {
+      "id": "fl2-pattern-01",
+      "category": "data_structure",
       "type": "multiple_choice",
       "promptVariants": [
         "Which structure gives frequencies in O(n)?",

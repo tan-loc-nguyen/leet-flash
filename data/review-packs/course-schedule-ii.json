@@ -44,8 +44,37 @@
   "edgeCases": [],
   "cards": [
     {
-      "id": "c2s-pattern-01",
+      "id": "recog-course-schedule-ii",
       "category": "pattern",
+      "type": "free_recall",
+      "promptVariants": [
+        "Which technique solves this problem, and what in the statement or constraints points to it?",
+        "Name the technique you would use here and the clue in the problem that tells you.",
+        "What approach fits this problem, and which part of the statement gives it away?"
+      ],
+      "answer": "Topological sort: Kahn's algorithm keeping the processing order (or reversed DFS postorder). Clue: Prerequisites form a directed graph and you need a valid order of all the courses, which is a topological ordering if the graph has no cycle.",
+      "keyPoints": [
+        "Prerequisites form a directed graph and you need a valid order of all the courses, which is a topological ordering if the graph has no cycle."
+      ],
+      "explanation": "The order in which courses become available is itself a valid schedule, and a leftover course means a cycle.",
+      "rubric": {
+        "technique": "Topological sort: Kahn's algorithm keeping the processing order (or reversed DFS postorder)",
+        "aliases": [
+          "topological sort",
+          "kahn's algorithm",
+          "indegree bfs",
+          "reversed dfs postorder"
+        ],
+        "alsoValid": [],
+        "clueTypes": [
+          "dependencies_graph"
+        ],
+        "clue": "Prerequisites form a directed graph and you need a valid order of all the courses, which is a topological ordering if the graph has no cycle."
+      }
+    },
+    {
+      "id": "c2s-pattern-01",
+      "category": "main_insight",
       "type": "multiple_choice",
       "promptVariants": [
         "What do you return for Course Schedule II?",

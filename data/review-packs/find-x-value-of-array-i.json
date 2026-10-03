@@ -47,8 +47,42 @@
   ],
   "cards": [
     {
-      "id": "fxv-pattern-01",
+      "id": "recog-find-x-value-of-array-i",
       "category": "pattern",
+      "type": "free_recall",
+      "promptVariants": [
+        "Which technique solves this problem, and what in the statement or constraints points to it?",
+        "Name the technique you would use here and the clue in the problem that tells you.",
+        "What approach fits this problem, and which part of the statement gives it away?"
+      ],
+      "answer": "DP over remainders: count subarrays ending at each index by product modulo k and roll the counts forward. Clue: It counts subarrays by their product modulo k with k at most 5, and subarrays ending at i extend those ending at i - 1, so keep one count per remainder.",
+      "keyPoints": [
+        "It counts subarrays by their product modulo k with k at most 5, and subarrays ending at i extend those ending at i - 1, so keep one count per remainder."
+      ],
+      "explanation": "Only the product modulo k matters and k is tiny, so the counts per remainder summarise all subarrays ending at the previous index.",
+      "rubric": {
+        "technique": "DP over remainders: count subarrays ending at each index by product modulo k and roll the counts forward",
+        "aliases": [
+          "dp on remainders",
+          "counts of product mod k",
+          "rolling dp over k remainders"
+        ],
+        "alsoValid": [
+          {
+            "name": "Compute the product of every subarray",
+            "note": "quadratic in n, too slow for 10^5 elements"
+          }
+        ],
+        "clueTypes": [
+          "contiguous",
+          "small_constraints"
+        ],
+        "clue": "It counts subarrays by their product modulo k with k at most 5, and subarrays ending at i extend those ending at i - 1, so keep one count per remainder."
+      }
+    },
+    {
+      "id": "fxv-pattern-01",
+      "category": "main_insight",
       "type": "multiple_choice",
       "promptVariants": [
         "What does dp[i][r] represent for Find X Value of Array I?",

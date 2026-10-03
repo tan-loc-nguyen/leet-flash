@@ -44,6 +44,36 @@
   "edgeCases": [],
   "cards": [
     {
+      "id": "recog-flood-fill",
+      "category": "pattern",
+      "type": "free_recall",
+      "promptVariants": [
+        "Which technique solves this problem, and what in the statement or constraints points to it?",
+        "Name the technique you would use here and the clue in the problem that tells you.",
+        "What approach fits this problem, and which part of the statement gives it away?"
+      ],
+      "answer": "DFS or BFS from the start pixel, recolouring connected pixels of the original colour. Clue: It recolours the region of connected same-coloured pixels around a start cell, which is a traversal of that connected region of the grid.",
+      "keyPoints": [
+        "It recolours the region of connected same-coloured pixels around a start cell, which is a traversal of that connected region of the grid."
+      ],
+      "explanation": "A connected region of equal values is found by spreading from the start cell to matching neighbours.",
+      "rubric": {
+        "technique": "DFS or BFS from the start pixel, recolouring connected pixels of the original colour",
+        "aliases": [
+          "dfs",
+          "bfs",
+          "flood fill",
+          "recursive fill",
+          "grid traversal"
+        ],
+        "alsoValid": [],
+        "clueTypes": [
+          "grid_connectivity"
+        ],
+        "clue": "It recolours the region of connected same-coloured pixels around a start cell, which is a traversal of that connected region of the grid."
+      }
+    },
+    {
       "id": "ff-pattern-01",
       "category": "pattern",
       "type": "multiple_choice",
@@ -63,7 +93,8 @@
         "Binary search over the pixel colour values": "Irrelevant.",
         "Sorting the pixels by their current colour": "Irrelevant.",
         "Dynamic programming over the grid cells": "Irrelevant."
-      }
+      },
+      "enabled": false
     },
     {
       "id": "ff-insight-01",

@@ -48,6 +48,40 @@
   "edgeCases": [],
   "cards": [
     {
+      "id": "recog-subarray-product-less-than-k",
+      "category": "pattern",
+      "type": "free_recall",
+      "promptVariants": [
+        "Which technique solves this problem, and what in the statement or constraints points to it?",
+        "Name the technique you would use here and the clue in the problem that tells you.",
+        "What approach fits this problem, and which part of the statement gives it away?"
+      ],
+      "answer": "Sliding window with a running product: shrink while the product is at least k and add the window size to the count. Clue: All numbers are positive, so extending a subarray only increases its product and removing from the left decreases it, which lets a window count the subarrays ending at each position.",
+      "keyPoints": [
+        "All numbers are positive, so extending a subarray only increases its product and removing from the left decreases it, which lets a window count the subarrays ending at each position."
+      ],
+      "explanation": "For each right end every start between the left edge and r gives a valid subarray, so r - l + 1 are added per step.",
+      "rubric": {
+        "technique": "Sliding window with a running product: shrink while the product is at least k and add the window size to the count",
+        "aliases": [
+          "sliding window",
+          "two pointers with a product",
+          "count windows ending at r",
+          "prefix logs with binary search"
+        ],
+        "alsoValid": [
+          {
+            "name": "Multiply every subarray",
+            "note": "quadratic"
+          }
+        ],
+        "clueTypes": [
+          "contiguous"
+        ],
+        "clue": "All numbers are positive, so extending a subarray only increases its product and removing from the left decreases it, which lets a window count the subarrays ending at each position."
+      }
+    },
+    {
       "id": "sp-pattern-01",
       "category": "pattern",
       "type": "multiple_choice",
@@ -67,7 +101,8 @@
         "Binary search on the array": "Subarray products are not searched in a sorted array.",
         "Monotonic stack": "No nearest-greater relation.",
         "Hash map of prefix products": "Used for exact products, not thresholds."
-      }
+      },
+      "enabled": false
     },
     {
       "id": "sp-insight-01",

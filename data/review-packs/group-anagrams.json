@@ -56,8 +56,42 @@
   "edgeCases": [],
   "cards": [
     {
-      "id": "ga-pattern-01",
+      "id": "recog-group-anagrams",
       "category": "pattern",
+      "type": "free_recall",
+      "promptVariants": [
+        "Which technique solves this problem, and what in the statement or constraints points to it?",
+        "Name the technique you would use here and the clue in the problem that tells you.",
+        "What approach fits this problem, and which part of the statement gives it away?"
+      ],
+      "answer": "Hash map keyed by a canonical signature (sorted letters or 26-count tuple). Clue: Anagrams are exactly the strings that share a canonical form (sorted letters or letter counts), and grouping items by a shared key is what a hash map does.",
+      "keyPoints": [
+        "Anagrams are exactly the strings that share a canonical form (sorted letters or letter counts), and grouping items by a shared key is what a hash map does."
+      ],
+      "explanation": "Reducing each word to a signature turns 'are these anagrams' into key equality, so one pass of bucketing replaces comparing all pairs.",
+      "rubric": {
+        "technique": "Hash map keyed by a canonical signature (sorted letters or 26-count tuple)",
+        "aliases": [
+          "group by sorted string",
+          "hash map of sorted keys",
+          "canonical form as key",
+          "bucket by letter counts"
+        ],
+        "alsoValid": [
+          {
+            "name": "Compare every pair of strings",
+            "note": "O(n^2 * k), too slow for 10^4 strings"
+          }
+        ],
+        "clueTypes": [
+          "lookup_frequency"
+        ],
+        "clue": "Anagrams are exactly the strings that share a canonical form (sorted letters or letter counts), and grouping items by a shared key is what a hash map does."
+      }
+    },
+    {
+      "id": "ga-pattern-01",
+      "category": "main_insight",
       "type": "multiple_choice",
       "promptVariants": [
         "What is the core technique for Group Anagrams?",

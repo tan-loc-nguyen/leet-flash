@@ -56,8 +56,44 @@
   ],
   "cards": [
     {
-      "id": "ptw-pattern-01",
+      "id": "recog-predict-the-winner",
       "category": "pattern",
+      "type": "free_recall",
+      "promptVariants": [
+        "Which technique solves this problem, and what in the statement or constraints points to it?",
+        "Name the technique you would use here and the clue in the problem that tells you.",
+        "What approach fits this problem, and which part of the statement gives it away?"
+      ],
+      "answer": "Interval DP on the score difference: dp[i][j] = max(nums[i] - dp[i+1][j], nums[j] - dp[i][j-1]). Clue: Two players alternately take from either end and both play optimally, and the state is only the remaining range, so many positions repeat; track the best score difference for each range.",
+      "keyPoints": [
+        "Two players alternately take from either end and both play optimally, and the state is only the remaining range, so many positions repeat; track the best score difference for each range."
+      ],
+      "explanation": "The current player's best margin over the opponent on a range follows from the margins on the two smaller ranges, so a table over ranges solves it.",
+      "rubric": {
+        "technique": "Interval DP on the score difference: dp[i][j] = max(nums[i] - dp[i+1][j], nums[j] - dp[i][j-1])",
+        "aliases": [
+          "minimax dp",
+          "interval dp",
+          "game dp",
+          "memoised minimax",
+          "score difference dp"
+        ],
+        "alsoValid": [
+          {
+            "name": "Plain minimax recursion without caching",
+            "note": "exponential branching, repeats the same ranges"
+          }
+        ],
+        "clueTypes": [
+          "optimization_overlap",
+          "small_constraints"
+        ],
+        "clue": "Two players alternately take from either end and both play optimally, and the state is only the remaining range, so many positions repeat; track the best score difference for each range."
+      }
+    },
+    {
+      "id": "ptw-pattern-01",
+      "category": "main_insight",
       "type": "multiple_choice",
       "promptVariants": [
         "What does dp[i][j] represent in Predict the Winner?",

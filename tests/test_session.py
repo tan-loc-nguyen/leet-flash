@@ -278,3 +278,21 @@ def test_patterns_stay_hidden_when_no_pattern_card_is_drawn(engine):
     assert q["problem"]["patterns"] is None
     out = engine.answer(result="correct")
     assert out["problemFinished"] and out["patterns"]            # shown once the problem is over
+
+
+def test_stats_report_recognition_answers(paths, now):
+    from leetcode_review.catalog import Catalog
+    from leetcode_review.stats import compute_stats, format_stats
+    from tests.conftest import recog
+    make_problem(paths, "rs", problem_statement="S")
+    make_pack(paths, "rs", cards=[recog("recog-rs")])
+    eng = ReviewEngine(paths, clock=lambda: now)
+    eng.start("drill", target=1, seed=1)
+    eng.next_question()
+    eng.answer(text="no idea", technique="wrong", clue="missing")
+    s = compute_stats(Catalog(paths, now), read_events(paths), now)
+    rec = s["recognition"]
+    assert rec["answers"] == 1 and rec["drillAnswers"] == 1 and rec["technique"]["wrong"] == 1
+    assert rec["recentMisses"][0]["said"] == "no idea"
+    assert "Pattern recognition" in format_stats(s) and "no idea" in format_stats(s)
+    assert compute_stats(Catalog(paths, now), [], now)["recognition"] is None

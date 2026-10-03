@@ -43,8 +43,37 @@
   "edgeCases": [],
   "cards": [
     {
-      "id": "lt-pattern-01",
+      "id": "recog-lowest-common-ancestor-of-a-binary-tree",
       "category": "pattern",
+      "type": "free_recall",
+      "promptVariants": [
+        "Which technique solves this problem, and what in the statement or constraints points to it?",
+        "Name the technique you would use here and the clue in the problem that tells you.",
+        "What approach fits this problem, and which part of the statement gives it away?"
+      ],
+      "answer": "Postorder recursion: return the node if it is p or q, and the node that receives targets from both sides is the LCA. Clue: The lowest common ancestor is the first node that has the two targets in different subtrees (or is one of them), so search both subtrees and combine the results on the way up.",
+      "keyPoints": [
+        "The lowest common ancestor is the first node that has the two targets in different subtrees (or is one of them), so search both subtrees and combine the results on the way up."
+      ],
+      "explanation": "A node that receives a target from each side must be where the two paths split, and it is the lowest such node.",
+      "rubric": {
+        "technique": "Postorder recursion: return the node if it is p or q, and the node that receives targets from both sides is the LCA",
+        "aliases": [
+          "recursive lca",
+          "dfs returning found targets",
+          "postorder search",
+          "parent pointers and ancestor set"
+        ],
+        "alsoValid": [],
+        "clueTypes": [
+          "tree_structure"
+        ],
+        "clue": "The lowest common ancestor is the first node that has the two targets in different subtrees (or is one of them), so search both subtrees and combine the results on the way up."
+      }
+    },
+    {
+      "id": "lt-pattern-01",
+      "category": "main_insight",
       "type": "multiple_choice",
       "promptVariants": [
         "How do you detect the LCA in a recursive search?",

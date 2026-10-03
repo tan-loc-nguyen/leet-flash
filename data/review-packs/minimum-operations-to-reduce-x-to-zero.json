@@ -47,8 +47,38 @@
   ],
   "cards": [
     {
-      "id": "mox-pattern-01",
+      "id": "recog-minimum-operations-to-reduce-x-to-zero",
       "category": "pattern",
+      "type": "free_recall",
+      "promptVariants": [
+        "Which technique solves this problem, and what in the statement or constraints points to it?",
+        "Name the technique you would use here and the clue in the problem that tells you.",
+        "What approach fits this problem, and which part of the statement gives it away?"
+      ],
+      "answer": "Reframe as the longest middle subarray with sum total - x and find it with a sliding window. Clue: Removing from both ends leaves a contiguous middle part whose sum is the total minus x, so the task becomes finding the longest subarray with that sum; values are positive, so a window works.",
+      "keyPoints": [
+        "Removing from both ends leaves a contiguous middle part whose sum is the total minus x, so the task becomes finding the longest subarray with that sum; values are positive, so a window works."
+      ],
+      "explanation": "Fewest removals means the longest remaining middle, and positive values make the subarray sum monotone in the window size, so two pointers find it.",
+      "rubric": {
+        "technique": "Reframe as the longest middle subarray with sum total - x and find it with a sliding window",
+        "aliases": [
+          "sliding window",
+          "longest subarray with a target sum",
+          "prefix sums and hash map",
+          "complement subarray"
+        ],
+        "alsoValid": [],
+        "clueTypes": [
+          "contiguous",
+          "prefix_range"
+        ],
+        "clue": "Removing from both ends leaves a contiguous middle part whose sum is the total minus x, so the task becomes finding the longest subarray with that sum; values are positive, so a window works."
+      }
+    },
+    {
+      "id": "mox-pattern-01",
+      "category": "main_insight",
       "type": "multiple_choice",
       "promptVariants": [
         "How can you reformulate 'remove from both ends to reach x'?",

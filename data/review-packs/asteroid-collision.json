@@ -46,8 +46,43 @@
   ],
   "cards": [
     {
-      "id": "ac3-pattern-01",
+      "id": "recog-asteroid-collision",
       "category": "pattern",
+      "type": "free_recall",
+      "promptVariants": [
+        "Which technique solves this problem, and what in the statement or constraints points to it?",
+        "Name the technique you would use here and the clue in the problem that tells you.",
+        "What approach fits this problem, and which part of the statement gives it away?"
+      ],
+      "answer": "Stack of surviving asteroids: resolve each incoming left-moving asteroid against the top of the stack. Clue: Asteroids only interact when a right-moving one is followed by a left-moving one, and a new asteroid can only hit the most recent survivors, which is last-in-first-out.",
+      "keyPoints": [
+        "Asteroids only interact when a right-moving one is followed by a left-moving one, and a new asteroid can only hit the most recent survivors, which is last-in-first-out."
+      ],
+      "explanation": "Each incoming asteroid fights only the nearest surviving right-mover, so a stack of survivors resolves all collisions in one pass.",
+      "rubric": {
+        "technique": "Stack of surviving asteroids: resolve each incoming left-moving asteroid against the top of the stack",
+        "aliases": [
+          "stack",
+          "stack simulation",
+          "collision stack",
+          "monotonic stack"
+        ],
+        "alsoValid": [
+          {
+            "name": "Repeatedly scan for collisions until none remain",
+            "note": "quadratic"
+          }
+        ],
+        "clueTypes": [
+          "nesting_matching",
+          "direct_simulation"
+        ],
+        "clue": "Asteroids only interact when a right-moving one is followed by a left-moving one, and a new asteroid can only hit the most recent survivors, which is last-in-first-out."
+      }
+    },
+    {
+      "id": "ac3-pattern-01",
+      "category": "data_structure",
       "type": "multiple_choice",
       "promptVariants": [
         "Which data structure resolves chain collisions in one pass?",

@@ -42,6 +42,39 @@
   "edgeCases": [],
   "cards": [
     {
+      "id": "recog-reverse-string",
+      "category": "pattern",
+      "type": "free_recall",
+      "promptVariants": [
+        "Which technique solves this problem, and what in the statement or constraints points to it?",
+        "Name the technique you would use here and the clue in the problem that tells you.",
+        "What approach fits this problem, and which part of the statement gives it away?"
+      ],
+      "answer": "Two pointers swapping mirrored elements while moving inwards. Clue: The string must be reversed in place with constant extra memory, so swap the first and last characters and move both pointers inwards.",
+      "keyPoints": [
+        "The string must be reversed in place with constant extra memory, so swap the first and last characters and move both pointers inwards."
+      ],
+      "explanation": "Each element only needs to trade places with its mirror, which two converging pointers do in one pass.",
+      "rubric": {
+        "technique": "Two pointers swapping mirrored elements while moving inwards",
+        "aliases": [
+          "two pointers",
+          "swap from both ends",
+          "in-place reversal"
+        ],
+        "alsoValid": [
+          {
+            "name": "Slice copy s[::-1]",
+            "note": "uses O(n) extra space, but the statement asks for constant memory"
+          }
+        ],
+        "clueTypes": [
+          "in_place_pointers"
+        ],
+        "clue": "The string must be reversed in place with constant extra memory, so swap the first and last characters and move both pointers inwards."
+      }
+    },
+    {
       "id": "rs-pattern-01",
       "category": "pattern",
       "type": "multiple_choice",
@@ -61,7 +94,8 @@
         "Sliding window over the array from the left": "No window.",
         "Binary search for the swap positions in the array": "No search.",
         "A stack that pops the elements back in reverse": "Would require O(n) extra space."
-      }
+      },
+      "enabled": false
     },
     {
       "id": "rs-time-01",

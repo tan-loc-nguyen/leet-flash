@@ -40,8 +40,38 @@
   "edgeCases": [],
   "cards": [
     {
-      "id": "mn2-pattern-01",
+      "id": "recog-minimum-number-of-pushes-to-type-word-i",
       "category": "pattern",
+      "type": "free_recall",
+      "promptVariants": [
+        "Which technique solves this problem, and what in the statement or constraints points to it?",
+        "Name the technique you would use here and the clue in the problem that tells you.",
+        "What approach fits this problem, and which part of the statement gives it away?"
+      ],
+      "answer": "Greedy counting: the i-th letter costs i // 8 + 1 pushes, since there are 8 remappable keys. Clue: The keys 2 to 9 can be remapped and each extra letter on a key costs one more push, so fill the cheapest positions first: the first 8 letters cost 1, the next 8 cost 2, and so on.",
+      "keyPoints": [
+        "The keys 2 to 9 can be remapped and each extra letter on a key costs one more push, so fill the cheapest positions first: the first 8 letters cost 1, the next 8 cost 2, and so on."
+      ],
+      "explanation": "Every letter must sit on some key, so the cheapest assignment fills one-push slots first, then two-push slots, which follows a simple pattern in groups of eight.",
+      "rubric": {
+        "technique": "Greedy counting: the i-th letter costs i // 8 + 1 pushes, since there are 8 remappable keys",
+        "aliases": [
+          "closed form",
+          "assign letters to keys in groups of eight",
+          "arithmetic series",
+          "greedy by position"
+        ],
+        "alsoValid": [],
+        "clueTypes": [
+          "local_choice",
+          "math_observation"
+        ],
+        "clue": "The keys 2 to 9 can be remapped and each extra letter on a key costs one more push, so fill the cheapest positions first: the first 8 letters cost 1, the next 8 cost 2, and so on."
+      }
+    },
+    {
+      "id": "mn2-pattern-01",
+      "category": "main_insight",
       "type": "multiple_choice",
       "promptVariants": [
         "How many pushes does the i-th distinct letter need when 8 keys can be remapped?",

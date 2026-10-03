@@ -59,6 +59,44 @@
   ],
   "cards": [
     {
+      "id": "recog-4sum",
+      "category": "pattern",
+      "type": "free_recall",
+      "promptVariants": [
+        "Which technique solves this problem, and what in the statement or constraints points to it?",
+        "Name the technique you would use here and the clue in the problem that tells you.",
+        "What approach fits this problem, and which part of the statement gives it away?"
+      ],
+      "answer": "Sort, fix two numbers with nested loops, then use two pointers, skipping duplicates at every level. Clue: It asks for unique quadruplets with a given sum, which reduces to a two-sum on a sorted suffix after fixing two numbers, and sorting lets duplicates be skipped.",
+      "keyPoints": [
+        "It asks for unique quadruplets with a given sum, which reduces to a two-sum on a sorted suffix after fixing two numbers, and sorting lets duplicates be skipped."
+      ],
+      "explanation": "Each extra fixed number adds one loop around the two-pointer core, and sorting keeps the results unique.",
+      "rubric": {
+        "technique": "Sort, fix two numbers with nested loops, then use two pointers, skipping duplicates at every level",
+        "aliases": [
+          "ksum",
+          "sort and two pointers",
+          "nested loops with two pointers",
+          "generalised k sum"
+        ],
+        "alsoValid": [
+          {
+            "name": "Four nested loops over all combinations",
+            "note": "quartic"
+          },
+          {
+            "name": "Hash map of pair sums",
+            "note": "correct, but heavy on space and on handling duplicates"
+          }
+        ],
+        "clueTypes": [
+          "sorted_or_ordered"
+        ],
+        "clue": "It asks for unique quadruplets with a given sum, which reduces to a two-sum on a sorted suffix after fixing two numbers, and sorting lets duplicates be skipped."
+      }
+    },
+    {
       "id": "fs4-pattern-01",
       "category": "pattern",
       "type": "multiple_choice",
@@ -78,7 +116,8 @@
         "Sort, fix one number, then binary search the remaining three": "Three unknowns cannot be binary searched directly.",
         "Use a sliding window of size four over the sorted array": "Sum quadruplets are not contiguous.",
         "Use a max-heap of the four largest sums found so far": "Heaps do not enumerate all unique quadruplets."
-      }
+      },
+      "enabled": false
     },
     {
       "id": "fs4-insight-01",

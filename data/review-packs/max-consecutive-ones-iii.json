@@ -36,6 +36,39 @@
   "edgeCases": [],
   "cards": [
     {
+      "id": "recog-max-consecutive-ones-iii",
+      "category": "pattern",
+      "type": "free_recall",
+      "promptVariants": [
+        "Which technique solves this problem, and what in the statement or constraints points to it?",
+        "Name the technique you would use here and the clue in the problem that tells you.",
+        "What approach fits this problem, and which part of the statement gives it away?"
+      ],
+      "answer": "Sliding window containing at most k zeros: expand right and shrink when the zeros exceed k. Clue: Flipping at most k zeros means the longest contiguous subarray that contains at most k zeros, so grow a window and shrink it when it holds too many zeros.",
+      "keyPoints": [
+        "Flipping at most k zeros means the longest contiguous subarray that contains at most k zeros, so grow a window and shrink it when it holds too many zeros."
+      ],
+      "explanation": "Every flipped zero lies in the window, so the window with at most k zeros is exactly a run that can become all ones.",
+      "rubric": {
+        "technique": "Sliding window containing at most k zeros: expand right and shrink when the zeros exceed k",
+        "aliases": [
+          "sliding window",
+          "two pointers counting zeros",
+          "longest window with k flips"
+        ],
+        "alsoValid": [
+          {
+            "name": "Count the zeros in every subarray",
+            "note": "quadratic"
+          }
+        ],
+        "clueTypes": [
+          "contiguous"
+        ],
+        "clue": "Flipping at most k zeros means the longest contiguous subarray that contains at most k zeros, so grow a window and shrink it when it holds too many zeros."
+      }
+    },
+    {
       "id": "mo-pattern-01",
       "category": "pattern",
       "type": "multiple_choice",
@@ -55,7 +88,8 @@
         "Prefix sums only": "Binary search over prefix sums can work but sliding window is simpler.",
         "Greedy flipping the first k zeros": "The best flips depend on the window position.",
         "Binary search": "Possible on window length but O(n log n)."
-      }
+      },
+      "enabled": false
     },
     {
       "id": "mo-insight-01",

@@ -45,6 +45,40 @@
   "edgeCases": [],
   "cards": [
     {
+      "id": "recog-valid-palindrome",
+      "category": "pattern",
+      "type": "free_recall",
+      "promptVariants": [
+        "Which technique solves this problem, and what in the statement or constraints points to it?",
+        "Name the technique you would use here and the clue in the problem that tells you.",
+        "What approach fits this problem, and which part of the statement gives it away?"
+      ],
+      "answer": "Two pointers from both ends moving inwards, skipping non-alphanumeric characters and comparing lowercase. Clue: A palindrome reads the same from both ends, so compare characters from both ends moving inwards and skip the ones that do not count.",
+      "keyPoints": [
+        "A palindrome reads the same from both ends, so compare characters from both ends moving inwards and skip the ones that do not count."
+      ],
+      "explanation": "Mirrored positions must match, so two converging pointers check the whole string in one pass without a copy.",
+      "rubric": {
+        "technique": "Two pointers from both ends moving inwards, skipping non-alphanumeric characters and comparing lowercase",
+        "aliases": [
+          "two pointers",
+          "compare from both ends",
+          "left and right pointers"
+        ],
+        "alsoValid": [
+          {
+            "name": "Filter and lowercase the string, then compare it with its reverse",
+            "note": "correct, but builds a cleaned copy (extra space)"
+          }
+        ],
+        "clueTypes": [
+          "in_place_pointers",
+          "direct_simulation"
+        ],
+        "clue": "A palindrome reads the same from both ends, so compare characters from both ends moving inwards and skip the ones that do not count."
+      }
+    },
+    {
       "id": "vp2-pattern-01",
       "category": "pattern",
       "type": "multiple_choice",
@@ -64,7 +98,8 @@
         "Sliding window": "No expanding/shrinking window.",
         "Hash map of counts": "Counts ignore order (that tests rearrangeability, not palindromes).",
         "Recursion with memoisation": "No overlapping subproblems."
-      }
+      },
+      "enabled": false
     },
     {
       "id": "vp2-invariant-01",

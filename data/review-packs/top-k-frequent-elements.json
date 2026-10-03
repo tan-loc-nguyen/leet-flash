@@ -60,6 +60,42 @@
   "edgeCases": [],
   "cards": [
     {
+      "id": "recog-top-k-frequent-elements",
+      "category": "pattern",
+      "type": "free_recall",
+      "promptVariants": [
+        "Which technique solves this problem, and what in the statement or constraints points to it?",
+        "Name the technique you would use here and the clue in the problem that tells you.",
+        "What approach fits this problem, and which part of the statement gives it away?"
+      ],
+      "answer": "Count frequencies, then a size-k min-heap on frequency (or bucket sort by frequency). Clue: It asks for the k most frequent values rather than a full ranking, so count occurrences first and then keep only the k best; frequencies are bounded by n, which also allows bucketing.",
+      "keyPoints": [
+        "It asks for the k most frequent values rather than a full ranking, so count occurrences first and then keep only the k best; frequencies are bounded by n, which also allows bucketing."
+      ],
+      "explanation": "Frequencies come from a count, and only the top k of them are needed, which a bounded heap or frequency buckets provide cheaply.",
+      "rubric": {
+        "technique": "Count frequencies, then a size-k min-heap on frequency (or bucket sort by frequency)",
+        "aliases": [
+          "hash map and heap",
+          "counter and heap",
+          "bucket sort",
+          "frequency buckets",
+          "quickselect on counts"
+        ],
+        "alsoValid": [
+          {
+            "name": "Count and sort all distinct values by frequency",
+            "note": "sorts everything although only k are needed"
+          }
+        ],
+        "clueTypes": [
+          "top_k",
+          "lookup_frequency"
+        ],
+        "clue": "It asks for the k most frequent values rather than a full ranking, so count occurrences first and then keep only the k best; frequencies are bounded by n, which also allows bucketing."
+      }
+    },
+    {
       "id": "tk-pattern-01",
       "category": "pattern",
       "type": "multiple_choice",
@@ -79,7 +115,8 @@
         "Stack": "A stack has no ordering by score.",
         "Two pointers": "Not applicable to unsorted frequencies.",
         "Union find": "No connectivity merging."
-      }
+      },
+      "enabled": false
     },
     {
       "id": "tk-insight-01",

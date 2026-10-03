@@ -49,8 +49,43 @@
   "edgeCases": [],
   "cards": [
     {
-      "id": "cd2-pattern-01",
+      "id": "recog-contains-duplicate-ii",
       "category": "pattern",
+      "type": "free_recall",
+      "promptVariants": [
+        "Which technique solves this problem, and what in the statement or constraints points to it?",
+        "Name the technique you would use here and the clue in the problem that tells you.",
+        "What approach fits this problem, and which part of the statement gives it away?"
+      ],
+      "answer": "Sliding window of the last k elements kept in a set (or a map of last indices). Clue: Two equal values must be at most k positions apart, so only the last k elements matter: keep them in a set that slides along the array.",
+      "keyPoints": [
+        "Two equal values must be at most k positions apart, so only the last k elements matter: keep them in a set that slides along the array."
+      ],
+      "explanation": "Equal values within distance k lie inside one window, so membership in the current window decides the answer.",
+      "rubric": {
+        "technique": "Sliding window of the last k elements kept in a set (or a map of last indices)",
+        "aliases": [
+          "sliding window set",
+          "hash map of last index",
+          "window of size k",
+          "hash set window"
+        ],
+        "alsoValid": [
+          {
+            "name": "Compare every pair within distance k",
+            "note": "O(n * k), too slow when both are large"
+          }
+        ],
+        "clueTypes": [
+          "contiguous",
+          "lookup_frequency"
+        ],
+        "clue": "Two equal values must be at most k positions apart, so only the last k elements matter: keep them in a set that slides along the array."
+      }
+    },
+    {
+      "id": "cd2-pattern-01",
+      "category": "data_structure",
       "type": "multiple_choice",
       "promptVariants": [
         "Which structure detects a repeat within a distance k?",

@@ -44,8 +44,36 @@
   ],
   "cards": [
     {
-      "id": "vs3-pattern-01",
+      "id": "recog-valid-sudoku",
       "category": "pattern",
+      "type": "free_recall",
+      "promptVariants": [
+        "Which technique solves this problem, and what in the statement or constraints points to it?",
+        "Name the technique you would use here and the clue in the problem that tells you.",
+        "What approach fits this problem, and which part of the statement gives it away?"
+      ],
+      "answer": "One pass with a set per row, per column and per 3x3 box. Clue: Every rule is 'no repeated digit within a row, column or box', so remember the digits already seen in each row, column and box.",
+      "keyPoints": [
+        "Every rule is 'no repeated digit within a row, column or box', so remember the digits already seen in each row, column and box."
+      ],
+      "explanation": "Each filled cell only needs a membership check in the sets of its own row, column and box.",
+      "rubric": {
+        "technique": "One pass with a set per row, per column and per 3x3 box",
+        "aliases": [
+          "hash sets for rows, columns and boxes",
+          "track seen digits per group",
+          "box index (r // 3) * 3 + c // 3"
+        ],
+        "alsoValid": [],
+        "clueTypes": [
+          "lookup_frequency"
+        ],
+        "clue": "Every rule is 'no repeated digit within a row, column or box', so remember the digits already seen in each row, column and box."
+      }
+    },
+    {
+      "id": "vs3-pattern-01",
+      "category": "implementation_detail",
       "type": "multiple_choice",
       "promptVariants": [
         "How do you map a cell to its 3x3 box?",

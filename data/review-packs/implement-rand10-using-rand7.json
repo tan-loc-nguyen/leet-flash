@@ -46,8 +46,37 @@
   ],
   "cards": [
     {
-      "id": "r10-pattern-01",
+      "id": "recog-implement-rand10-using-rand7",
       "category": "pattern",
+      "type": "free_recall",
+      "promptVariants": [
+        "Which technique solves this problem, and what in the statement or constraints points to it?",
+        "Name the technique you would use here and the clue in the problem that tells you.",
+        "What approach fits this problem, and which part of the statement gives it away?"
+      ],
+      "answer": "Rejection sampling: build a uniform 1..49 from two rand7 calls, reject above 40 and map the rest to 1..10. Clue: A uniform value from 1 to 10 cannot be made by adding or combining 7 outcomes directly because the counts do not divide evenly, so build a larger uniform range and discard the leftover values.",
+      "keyPoints": [
+        "A uniform value from 1 to 10 cannot be made by adding or combining 7 outcomes directly because the counts do not divide evenly, so build a larger uniform range and discard the leftover values."
+      ],
+      "explanation": "Two calls give 49 equally likely outcomes, 40 of which split evenly into 10 groups; discarding the other 9 and retrying keeps the result uniform.",
+      "rubric": {
+        "technique": "Rejection sampling: build a uniform 1..49 from two rand7 calls, reject above 40 and map the rest to 1..10",
+        "aliases": [
+          "rejection sampling",
+          "two calls of rand7",
+          "uniform 49 outcomes",
+          "accept and reject"
+        ],
+        "alsoValid": [],
+        "clueTypes": [
+          "math_observation"
+        ],
+        "clue": "A uniform value from 1 to 10 cannot be made by adding or combining 7 outcomes directly because the counts do not divide evenly, so build a larger uniform range and discard the leftover values."
+      }
+    },
+    {
+      "id": "r10-pattern-01",
+      "category": "main_insight",
       "type": "multiple_choice",
       "promptVariants": [
         "How do two rand7() calls become a uniform value in 1..49?",

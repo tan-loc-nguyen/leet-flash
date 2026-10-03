@@ -55,8 +55,43 @@
   ],
   "cards": [
     {
-      "id": "mps-pattern-01",
+      "id": "recog-maximum-product-subarray",
       "category": "pattern",
+      "type": "free_recall",
+      "promptVariants": [
+        "Which technique solves this problem, and what in the statement or constraints points to it?",
+        "Name the technique you would use here and the clue in the problem that tells you.",
+        "What approach fits this problem, and which part of the statement gives it away?"
+      ],
+      "answer": "Track the maximum and the minimum product of subarrays ending at each index. Clue: It asks for the best contiguous product, and a negative number can turn the smallest product into the largest, so carry both extremes ending at each index.",
+      "keyPoints": [
+        "It asks for the best contiguous product, and a negative number can turn the smallest product into the largest, so carry both extremes ending at each index."
+      ],
+      "explanation": "A negative factor swaps the roles of the largest and smallest products, so both must be kept to extend a subarray correctly.",
+      "rubric": {
+        "technique": "Track the maximum and the minimum product of subarrays ending at each index",
+        "aliases": [
+          "running max and min",
+          "kadane variant",
+          "dp with two states",
+          "prefix and suffix products"
+        ],
+        "alsoValid": [
+          {
+            "name": "Compute the product of every subarray",
+            "note": "quadratic in n"
+          }
+        ],
+        "clueTypes": [
+          "contiguous",
+          "optimization_overlap"
+        ],
+        "clue": "It asks for the best contiguous product, and a negative number can turn the smallest product into the largest, so carry both extremes ending at each index."
+      }
+    },
+    {
+      "id": "mps-pattern-01",
+      "category": "main_insight",
       "type": "multiple_choice",
       "promptVariants": [
         "Why does Maximum Product Subarray need both a running max and a running min?",

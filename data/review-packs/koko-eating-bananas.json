@@ -39,6 +39,39 @@
   "edgeCases": [],
   "cards": [
     {
+      "id": "recog-koko-eating-bananas",
+      "category": "pattern",
+      "type": "free_recall",
+      "promptVariants": [
+        "Which technique solves this problem, and what in the statement or constraints points to it?",
+        "Name the technique you would use here and the clue in the problem that tells you.",
+        "What approach fits this problem, and which part of the statement gives it away?"
+      ],
+      "answer": "Binary search on the eating speed with a feasibility check (hours needed <= h). Clue: A faster speed never needs more hours, so feasibility is monotone in the speed, and the answer lies in a huge range (piles up to 10^9).",
+      "keyPoints": [
+        "A faster speed never needs more hours, so feasibility is monotone in the speed, and the answer lies in a huge range (piles up to 10^9)."
+      ],
+      "explanation": "Feasibility flips once as the speed grows, so binary search finds the smallest feasible speed and each check is one pass over the piles.",
+      "rubric": {
+        "technique": "Binary search on the eating speed with a feasibility check (hours needed <= h)",
+        "aliases": [
+          "binary search on the answer",
+          "binary search on speed",
+          "parametric search"
+        ],
+        "alsoValid": [
+          {
+            "name": "Try every speed from 1 to the largest pile",
+            "note": "linear in the speed range, too slow for piles up to 10^9"
+          }
+        ],
+        "clueTypes": [
+          "monotonic_answer"
+        ],
+        "clue": "A faster speed never needs more hours, so feasibility is monotone in the speed, and the answer lies in a huge range (piles up to 10^9)."
+      }
+    },
+    {
       "id": "kb-pattern-01",
       "category": "pattern",
       "type": "multiple_choice",
@@ -58,7 +91,8 @@
         "Sliding window over the pile sizes in their given order": "No subarray.",
         "Greedy sorting of the piles then a single scan over them": "Order of piles does not matter for the time calculation.",
         "Heap simulation of every single hour, one hour at a time": "Unneeded and slower."
-      }
+      },
+      "enabled": false
     },
     {
       "id": "kb-insight-01",

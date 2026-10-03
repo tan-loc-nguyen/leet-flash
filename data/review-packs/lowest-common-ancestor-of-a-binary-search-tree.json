@@ -41,8 +41,43 @@
   "edgeCases": [],
   "cards": [
     {
-      "id": "lb-pattern-01",
+      "id": "recog-lowest-common-ancestor-of-a-binary-search-tree",
       "category": "pattern",
+      "type": "free_recall",
+      "promptVariants": [
+        "Which technique solves this problem, and what in the statement or constraints points to it?",
+        "Name the technique you would use here and the clue in the problem that tells you.",
+        "What approach fits this problem, and which part of the statement gives it away?"
+      ],
+      "answer": "Walk down from the root using the BST order until p and q fall on different sides. Clue: It is a BST, so comparing p and q with the current value says which side holds both; the first node where they separate is the lowest common ancestor.",
+      "keyPoints": [
+        "It is a BST, so comparing p and q with the current value says which side holds both; the first node where they separate is the lowest common ancestor."
+      ],
+      "explanation": "The BST order tells you where each target lies, so the first node between p and q is the answer and one root-to-node walk suffices.",
+      "rubric": {
+        "technique": "Walk down from the root using the BST order until p and q fall on different sides",
+        "aliases": [
+          "bst descent",
+          "iterative walk",
+          "compare values with p and q",
+          "find the split point"
+        ],
+        "alsoValid": [
+          {
+            "name": "Generic binary-tree LCA that searches both subtrees",
+            "note": "works, but ignores the BST property and visits O(n) nodes"
+          }
+        ],
+        "clueTypes": [
+          "tree_structure",
+          "sorted_or_ordered"
+        ],
+        "clue": "It is a BST, so comparing p and q with the current value says which side holds both; the first node where they separate is the lowest common ancestor."
+      }
+    },
+    {
+      "id": "lb-pattern-01",
+      "category": "main_insight",
       "type": "multiple_choice",
       "promptVariants": [
         "How does the BST property simplify the LCA?",

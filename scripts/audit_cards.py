@@ -2,6 +2,9 @@
 
 Checks
   * length tell:    an MCQ answer that is >= --gap characters longer (or shorter) than every distractor
+  * clue numbers:   a recognition card whose clue cites a number that appears nowhere in the problem's statement or
+                    constraints (a typo or an invented limit); numbers derived from the problem (26 letters, 60 s) are
+                    allow-listed in DERIVED_NUMBERS
   * example reuse:  an edge_case / code_reasoning card whose prompt reuses an input literal from the problem
                     statement's examples (the statement is shown first, so the card would test reading, not recall)
 
@@ -38,6 +41,16 @@ def example_literals(statement: str) -> set[str]:
     return out
 
 
+# numbers a clue may cite although the text only implies them (alphabet size, time units, 10 slots ** 4 wheels, 8 keys)
+DERIVED_NUMBERS = {"26", "60", "3600", "8", "10^4"}
+DERIVED_BY_SLUG = {"integer-break": {"5"}}  # a mathematical fact the clue relies on (parts of 5 or more should be split)
+
+
+def numbers_in(text: str) -> set[str]:
+    text = re.sub(r"10\s*\^\s*(\d+)", r"10^\1", text.replace("×", "*"))
+    return set(re.findall(r"\d+(?:\^\d+)?", text))
+
+
 findings = []
 for slug in list_pack_slugs(paths):
     pack = load_pack(paths, slug)
@@ -46,6 +59,12 @@ for slug in list_pack_slugs(paths):
     for c in pack.cards:
         if not c.enabled:
             continue
+        if c.rubric is not None and prob:
+            known = numbers_in(prob.problem_statement + " " + " ".join(prob.constraints))
+            stray = sorted(n for n in numbers_in(c.rubric.clue) - known - DERIVED_NUMBERS - DERIVED_BY_SLUG.get(slug, set())
+                           if not re.search(rf"(?<!\d){re.escape(n)}(?!\d)", prob.problem_statement))
+            if stray:
+                findings.append({"slug": slug, "card": c.id, "kind": f"clue cites {stray} which the problem does not state"})
         if c.type == "multiple_choice" and c.options and c.answer:
             ds = [len(o) for o in c.options if o != c.answer]
             if ds and len(c.answer) - max(ds) >= a.gap:

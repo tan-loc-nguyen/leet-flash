@@ -52,6 +52,44 @@
   "edgeCases": [],
   "cards": [
     {
+      "id": "recog-two-sum-ii-input-array-is-sorted",
+      "category": "pattern",
+      "type": "free_recall",
+      "promptVariants": [
+        "Which technique solves this problem, and what in the statement or constraints points to it?",
+        "Name the technique you would use here and the clue in the problem that tells you.",
+        "What approach fits this problem, and which part of the statement gives it away?"
+      ],
+      "answer": "Two pointers from both ends of the sorted array, moving by comparing the sum with the target. Clue: The array is already sorted, so the sum of the two end elements tells which end has to move, which lets two converging pointers find the pair.",
+      "keyPoints": [
+        "The array is already sorted, so the sum of the two end elements tells which end has to move, which lets two converging pointers find the pair."
+      ],
+      "explanation": "If the sum is too big the right element can never be part of the answer, and if too small the left one cannot, so each step discards one element.",
+      "rubric": {
+        "technique": "Two pointers from both ends of the sorted array, moving by comparing the sum with the target",
+        "aliases": [
+          "two pointers",
+          "left and right pointers",
+          "sorted two sum",
+          "converging pointers"
+        ],
+        "alsoValid": [
+          {
+            "name": "Hash map of complements",
+            "note": "correct, but uses O(n) extra space and ignores the sorted order"
+          },
+          {
+            "name": "Binary search for each complement",
+            "note": "correct, but O(n log n)"
+          }
+        ],
+        "clueTypes": [
+          "sorted_or_ordered"
+        ],
+        "clue": "The array is already sorted, so the sum of the two end elements tells which end has to move, which lets two converging pointers find the pair."
+      }
+    },
+    {
       "id": "ts2-pattern-01",
       "category": "pattern",
       "type": "multiple_choice",
@@ -71,7 +109,8 @@
         "Hash map of complements": "Works, but O(n) space - the problem asks for O(1).",
         "Sliding window": "A window assumes contiguity.",
         "Monotonic stack": "No nearest-greater relation."
-      }
+      },
+      "enabled": false
     },
     {
       "id": "ts2-invariant-01",

@@ -43,8 +43,38 @@
   "edgeCases": [],
   "cards": [
     {
-      "id": "vs-pattern-01",
+      "id": "recog-valid-subarrays-with-matching-sum-digits-i",
       "category": "pattern",
+      "type": "free_recall",
+      "promptVariants": [
+        "Which technique solves this problem, and what in the statement or constraints points to it?",
+        "Name the technique you would use here and the clue in the problem that tells you.",
+        "What approach fits this problem, and which part of the statement gives it away?"
+      ],
+      "answer": "Enumerate every subarray with a running sum and test the first and last digit of each sum. Clue: The test is on the first and last digit of each subarray sum, which no sliding or hashing trick maintains, and n is at most 1500, so try all subarrays.",
+      "keyPoints": [
+        "The test is on the first and last digit of each subarray sum, which no sliding or hashing trick maintains, and n is at most 1500, so try all subarrays."
+      ],
+      "explanation": "With a few thousand elements all subarrays can be tried, and a running sum makes each check cheap.",
+      "rubric": {
+        "technique": "Enumerate every subarray with a running sum and test the first and last digit of each sum",
+        "aliases": [
+          "brute force with a running sum",
+          "nested loops over subarrays",
+          "enumeration",
+          "prefix sums with nested loops"
+        ],
+        "alsoValid": [],
+        "clueTypes": [
+          "small_constraints",
+          "contiguous"
+        ],
+        "clue": "The test is on the first and last digit of each subarray sum, which no sliding or hashing trick maintains, and n is at most 1500, so try all subarrays."
+      }
+    },
+    {
+      "id": "vs-pattern-01",
+      "category": "main_insight",
       "type": "multiple_choice",
       "promptVariants": [
         "How can the subarray sum be maintained as the end index grows?",

@@ -37,8 +37,43 @@
   "edgeCases": [],
   "cards": [
     {
-      "id": "sm2-pattern-01",
+      "id": "recog-maximum-subarray-min-product",
       "category": "pattern",
+      "type": "free_recall",
+      "promptVariants": [
+        "Which technique solves this problem, and what in the statement or constraints points to it?",
+        "Name the technique you would use here and the clue in the problem that tells you.",
+        "What approach fits this problem, and which part of the statement gives it away?"
+      ],
+      "answer": "Monotonic stack for each element's range as the minimum, with prefix sums for the range sum. Clue: The min-product fixes the minimum element and wants the largest sum around it, so find how far each element extends as the minimum and use prefix sums for that range's sum.",
+      "keyPoints": [
+        "The min-product fixes the minimum element and wants the largest sum around it, so find how far each element extends as the minimum and use prefix sums for that range's sum."
+      ],
+      "explanation": "For a fixed minimum the best subarray is the widest one in which it stays the minimum, which the nearest smaller values on both sides give.",
+      "rubric": {
+        "technique": "Monotonic stack for each element's range as the minimum, with prefix sums for the range sum",
+        "aliases": [
+          "monotonic stack and prefix sums",
+          "nearest smaller on both sides",
+          "cartesian tree",
+          "min product with prefix sums"
+        ],
+        "alsoValid": [
+          {
+            "name": "Compute the minimum and the sum of every subarray",
+            "note": "quadratic"
+          }
+        ],
+        "clueTypes": [
+          "next_greater_range",
+          "prefix_range"
+        ],
+        "clue": "The min-product fixes the minimum element and wants the largest sum around it, so find how far each element extends as the minimum and use prefix sums for that range's sum."
+      }
+    },
+    {
+      "id": "sm2-pattern-01",
+      "category": "main_insight",
       "type": "multiple_choice",
       "promptVariants": [
         "Which combination solves 'min x sum over subarrays' in O(n)?",

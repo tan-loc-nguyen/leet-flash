@@ -43,8 +43,42 @@
   ],
   "cards": [
     {
-      "id": "llw-pattern-01",
+      "id": "recog-length-of-last-word",
       "category": "pattern",
+      "type": "free_recall",
+      "promptVariants": [
+        "Which technique solves this problem, and what in the statement or constraints points to it?",
+        "Name the technique you would use here and the clue in the problem that tells you.",
+        "What approach fits this problem, and which part of the statement gives it away?"
+      ],
+      "answer": "Scan backwards from the end: skip trailing spaces, then count characters. Clue: Only the last word matters and trailing spaces are allowed, so start at the end instead of splitting the whole string.",
+      "keyPoints": [
+        "Only the last word matters and trailing spaces are allowed, so start at the end instead of splitting the whole string."
+      ],
+      "explanation": "The answer lives at the end of the string, so a short backwards scan with O(1) extra space is enough.",
+      "rubric": {
+        "technique": "Scan backwards from the end: skip trailing spaces, then count characters",
+        "aliases": [
+          "reverse scan",
+          "iterate from the end",
+          "two-phase backwards loop"
+        ],
+        "alsoValid": [
+          {
+            "name": "split() and take the last word",
+            "note": "works, but builds the whole list of words (O(n) extra space)"
+          }
+        ],
+        "clueTypes": [
+          "direct_simulation",
+          "in_place_pointers"
+        ],
+        "clue": "Only the last word matters and trailing spaces are allowed, so start at the end instead of splitting the whole string."
+      }
+    },
+    {
+      "id": "llw-pattern-01",
+      "category": "main_insight",
       "type": "multiple_choice",
       "promptVariants": [
         "How can you find the last word's length without splitting the string?",

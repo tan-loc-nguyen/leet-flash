@@ -62,8 +62,42 @@
   "edgeCases": [],
   "cards": [
     {
-      "id": "lv-pattern-01",
+      "id": "recog-longest-valid-parentheses",
       "category": "pattern",
+      "type": "free_recall",
+      "promptVariants": [
+        "Which technique solves this problem, and what in the statement or constraints points to it?",
+        "Name the technique you would use here and the clue in the problem that tells you.",
+        "What approach fits this problem, and which part of the statement gives it away?"
+      ],
+      "answer": "Stack of indices with a base marker: push the index of '(', pop on ')', and measure from the new top. Clue: It involves matching parentheses and asks for the longest well-formed stretch, so keep the positions of unmatched brackets on a stack and measure the gaps between them.",
+      "keyPoints": [
+        "It involves matching parentheses and asks for the longest well-formed stretch, so keep the positions of unmatched brackets on a stack and measure the gaps between them."
+      ],
+      "explanation": "The stack top after each pop marks the last unmatched position, so the current index minus it is the length of the valid run.",
+      "rubric": {
+        "technique": "Stack of indices with a base marker: push the index of '(', pop on ')', and measure from the new top",
+        "aliases": [
+          "stack of indices",
+          "stack with a -1 base",
+          "dynamic programming",
+          "two counter passes"
+        ],
+        "alsoValid": [
+          {
+            "name": "Check every substring for validity",
+            "note": "cubic or quadratic"
+          }
+        ],
+        "clueTypes": [
+          "nesting_matching"
+        ],
+        "clue": "It involves matching parentheses and asks for the longest well-formed stretch, so keep the positions of unmatched brackets on a stack and measure the gaps between them."
+      }
+    },
+    {
+      "id": "lv-pattern-01",
+      "category": "main_insight",
       "type": "multiple_choice",
       "promptVariants": [
         "What do you store on the stack for Longest Valid Parentheses?",

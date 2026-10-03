@@ -46,8 +46,38 @@
   "edgeCases": [],
   "cards": [
     {
-      "id": "mi2-pattern-01",
+      "id": "recog-maximum-ice-cream-bars",
       "category": "pattern",
+      "type": "free_recall",
+      "promptVariants": [
+        "Which technique solves this problem, and what in the statement or constraints points to it?",
+        "Name the technique you would use here and the clue in the problem that tells you.",
+        "What approach fits this problem, and which part of the statement gives it away?"
+      ],
+      "answer": "Greedy: sort the costs (or counting sort) and buy the cheapest bars first until the coins run out. Clue: You want the maximum number of items within a budget and every bar counts the same, so buy the cheapest ones first.",
+      "keyPoints": [
+        "You want the maximum number of items within a budget and every bar counts the same, so buy the cheapest ones first."
+      ],
+      "explanation": "Swapping any bought bar for a cheaper one never increases the cost, so taking the cheapest first maximises the count.",
+      "rubric": {
+        "technique": "Greedy: sort the costs (or counting sort) and buy the cheapest bars first until the coins run out",
+        "aliases": [
+          "sort and greedy",
+          "cheapest first",
+          "counting sort",
+          "greedy"
+        ],
+        "alsoValid": [],
+        "clueTypes": [
+          "local_choice",
+          "sorted_or_ordered"
+        ],
+        "clue": "You want the maximum number of items within a budget and every bar counts the same, so buy the cheapest ones first."
+      }
+    },
+    {
+      "id": "mi2-pattern-01",
+      "category": "main_insight",
       "type": "multiple_choice",
       "promptVariants": [
         "What greedy rule maximises the number of bars?",

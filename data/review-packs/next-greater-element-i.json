@@ -40,6 +40,41 @@
   "edgeCases": [],
   "cards": [
     {
+      "id": "recog-next-greater-element-i",
+      "category": "pattern",
+      "type": "free_recall",
+      "promptVariants": [
+        "Which technique solves this problem, and what in the statement or constraints points to it?",
+        "Name the technique you would use here and the clue in the problem that tells you.",
+        "What approach fits this problem, and which part of the statement gives it away?"
+      ],
+      "answer": "Monotonic stack over nums2 with a hash map from value to its next greater element. Clue: Each value needs the first greater element to its right, so one pass over nums2 with a stack of waiting values resolves them all and a map answers the queries from nums1.",
+      "keyPoints": [
+        "Each value needs the first greater element to its right, so one pass over nums2 with a stack of waiting values resolves them all and a map answers the queries from nums1."
+      ],
+      "explanation": "A stack of values still waiting for a greater one is resolved as soon as a larger value arrives, and the map keeps the answers for lookup.",
+      "rubric": {
+        "technique": "Monotonic stack over nums2 with a hash map from value to its next greater element",
+        "aliases": [
+          "monotonic stack",
+          "stack and dictionary",
+          "next greater element",
+          "decreasing stack"
+        ],
+        "alsoValid": [
+          {
+            "name": "For each value of nums1 scan nums2 to its right",
+            "note": "O(n * m)"
+          }
+        ],
+        "clueTypes": [
+          "next_greater_range",
+          "lookup_frequency"
+        ],
+        "clue": "Each value needs the first greater element to its right, so one pass over nums2 with a stack of waiting values resolves them all and a map answers the queries from nums1."
+      }
+    },
+    {
       "id": "ng1-pattern-01",
       "category": "pattern",
       "type": "multiple_choice",
@@ -59,7 +94,8 @@
         "Sorting nums2": "Loses the positions that define 'to the right'.",
         "Binary search": "Not sorted.",
         "Heap": "Order by value does not capture position."
-      }
+      },
+      "enabled": false
     },
     {
       "id": "ng1-insight-01",

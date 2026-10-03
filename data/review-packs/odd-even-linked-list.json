@@ -46,8 +46,42 @@
   ],
   "cards": [
     {
-      "id": "oel-pattern-01",
+      "id": "recog-odd-even-linked-list",
       "category": "pattern",
+      "type": "free_recall",
+      "promptVariants": [
+        "Which technique solves this problem, and what in the statement or constraints points to it?",
+        "Name the technique you would use here and the clue in the problem that tells you.",
+        "What approach fits this problem, and which part of the statement gives it away?"
+      ],
+      "answer": "Rewire with an odd pointer and an even pointer to build two chains, then attach the even chain after the odd chain. Clue: Nodes must be regrouped by the parity of their position with the relative order kept, so build an odd chain and an even chain with two pointers and join them.",
+      "keyPoints": [
+        "Nodes must be regrouped by the parity of their position with the relative order kept, so build an odd chain and an even chain with two pointers and join them."
+      ],
+      "explanation": "Each node only needs its next pointer redirected to the node two steps ahead, which splits the list into the two chains without moving values.",
+      "rubric": {
+        "technique": "Rewire with an odd pointer and an even pointer to build two chains, then attach the even chain after the odd chain",
+        "aliases": [
+          "two pointers",
+          "odd and even sublists",
+          "relink in place",
+          "split and join"
+        ],
+        "alsoValid": [
+          {
+            "name": "Copy the values into two arrays and rewrite the list",
+            "note": "uses O(n) extra space"
+          }
+        ],
+        "clueTypes": [
+          "in_place_pointers"
+        ],
+        "clue": "Nodes must be regrouped by the parity of their position with the relative order kept, so build an odd chain and an even chain with two pointers and join them."
+      }
+    },
+    {
+      "id": "oel-pattern-01",
+      "category": "implementation_detail",
       "type": "multiple_choice",
       "promptVariants": [
         "Which pointers do you need to separate the odd and even nodes?",

@@ -69,8 +69,46 @@
   "edgeCases": [],
   "cards": [
     {
-      "id": "lcp-pattern-01",
+      "id": "recog-longest-common-prefix",
       "category": "pattern",
+      "type": "free_recall",
+      "promptVariants": [
+        "Which technique solves this problem, and what in the statement or constraints points to it?",
+        "Name the technique you would use here and the clue in the problem that tells you.",
+        "What approach fits this problem, and which part of the statement gives it away?"
+      ],
+      "answer": "Vertical scan: compare position by position across all strings and stop at the first mismatch. Clue: The prefix can be no longer than the shortest string and must match at the same position in every string, so compare position by position.",
+      "keyPoints": [
+        "The prefix can be no longer than the shortest string and must match at the same position in every string, so compare position by position."
+      ],
+      "explanation": "A common prefix is defined position by position, so scanning columns and stopping at the first disagreement needs no extra structure.",
+      "rubric": {
+        "technique": "Vertical scan: compare position by position across all strings and stop at the first mismatch",
+        "aliases": [
+          "column by column",
+          "vertical scanning",
+          "character-by-character comparison",
+          "horizontal scan shrinking the prefix"
+        ],
+        "alsoValid": [
+          {
+            "name": "Insert every string into a trie and walk while a node has one child",
+            "note": "correct, but needs O(total length) extra space"
+          },
+          {
+            "name": "Sort the strings and compare only the first and last",
+            "note": "correct, adds the cost of sorting"
+          }
+        ],
+        "clueTypes": [
+          "direct_simulation"
+        ],
+        "clue": "The prefix can be no longer than the shortest string and must match at the same position in every string, so compare position by position."
+      }
+    },
+    {
+      "id": "lcp-pattern-01",
+      "category": "main_insight",
       "type": "multiple_choice",
       "promptVariants": [
         "How do you find the longest common prefix efficiently?",

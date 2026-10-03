@@ -43,8 +43,37 @@
   "edgeCases": [],
   "cards": [
     {
-      "id": "nq-pattern-01",
+      "id": "recog-n-ary-tree-postorder-traversal",
       "category": "pattern",
+      "type": "free_recall",
+      "promptVariants": [
+        "Which technique solves this problem, and what in the statement or constraints points to it?",
+        "Name the technique you would use here and the clue in the problem that tells you.",
+        "What approach fits this problem, and which part of the statement gives it away?"
+      ],
+      "answer": "DFS visiting every child first and then the node (recursively, or a reversed modified preorder). Clue: The order is defined by the problem (all children before the node), so implement that DFS order.",
+      "keyPoints": [
+        "The order is defined by the problem (all children before the node), so implement that DFS order."
+      ],
+      "explanation": "Visiting all children before the node is the natural recursion for any number of children.",
+      "rubric": {
+        "technique": "DFS visiting every child first and then the node (recursively, or a reversed modified preorder)",
+        "aliases": [
+          "postorder dfs",
+          "recursive dfs",
+          "iterative with a stack and reversal"
+        ],
+        "alsoValid": [],
+        "clueTypes": [
+          "tree_structure",
+          "direct_simulation"
+        ],
+        "clue": "The order is defined by the problem (all children before the node), so implement that DFS order."
+      }
+    },
+    {
+      "id": "nq-pattern-01",
+      "category": "implementation_detail",
       "type": "multiple_choice",
       "promptVariants": [
         "What is the order of postorder on an N-ary tree?",

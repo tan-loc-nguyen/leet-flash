@@ -36,6 +36,40 @@
   "edgeCases": [],
   "cards": [
     {
+      "id": "recog-maximum-length-substring-with-two-occurrences",
+      "category": "pattern",
+      "type": "free_recall",
+      "promptVariants": [
+        "Which technique solves this problem, and what in the statement or constraints points to it?",
+        "Name the technique you would use here and the clue in the problem that tells you.",
+        "What approach fits this problem, and which part of the statement gives it away?"
+      ],
+      "answer": "Sliding window with counts: shrink from the left while a character occurs more than twice. Clue: It asks for the longest contiguous substring in which each character occurs at most twice, and only the character just added can break that, so slide a window with counts.",
+      "keyPoints": [
+        "It asks for the longest contiguous substring in which each character occurs at most twice, and only the character just added can break that, so slide a window with counts."
+      ],
+      "explanation": "Only the newest character can exceed its limit, so shrinking until its count is back to two keeps the window valid.",
+      "rubric": {
+        "technique": "Sliding window with counts: shrink from the left while a character occurs more than twice",
+        "aliases": [
+          "sliding window",
+          "two pointers with counts",
+          "window with at most two of each"
+        ],
+        "alsoValid": [
+          {
+            "name": "Check every substring",
+            "note": "quadratic"
+          }
+        ],
+        "clueTypes": [
+          "contiguous",
+          "lookup_frequency"
+        ],
+        "clue": "It asks for the longest contiguous substring in which each character occurs at most twice, and only the character just added can break that, so slide a window with counts."
+      }
+    },
+    {
       "id": "mt-pattern-01",
       "category": "pattern",
       "type": "multiple_choice",
@@ -55,7 +89,8 @@
         "Binary search on the substring length with a check": "Not needed.",
         "Dynamic programming over all prefixes with two states each": "No overlapping states.",
         "A trie that stores every substring seen so far in the scan": "Not about prefixes."
-      }
+      },
+      "enabled": false
     },
     {
       "id": "mt-insight-01",

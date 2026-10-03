@@ -56,8 +56,42 @@
   "edgeCases": [],
   "cards": [
     {
-      "id": "s2-pattern-01",
+      "id": "recog-subsets-ii",
       "category": "pattern",
+      "type": "free_recall",
+      "promptVariants": [
+        "Which technique solves this problem, and what in the statement or constraints points to it?",
+        "Name the technique you would use here and the clue in the problem that tells you.",
+        "What approach fits this problem, and which part of the statement gives it away?"
+      ],
+      "answer": "Sort, then backtrack and skip a value equal to the previous one at the same level. Clue: It asks for all subsets of an array with duplicates without repeating a subset, so sort and skip equal values among siblings.",
+      "keyPoints": [
+        "It asks for all subsets of an array with duplicates without repeating a subset, so sort and skip equal values among siblings."
+      ],
+      "explanation": "After sorting, a repeated value at the same level can only produce subsets already built, so skipping it removes the duplicates.",
+      "rubric": {
+        "technique": "Sort, then backtrack and skip a value equal to the previous one at the same level",
+        "aliases": [
+          "backtracking with duplicate skipping",
+          "sort and dfs",
+          "bitmask with a duplicate rule",
+          "skip equal siblings"
+        ],
+        "alsoValid": [
+          {
+            "name": "Generate every subset and de-duplicate with a set",
+            "note": "correct, but builds the duplicates first"
+          }
+        ],
+        "clueTypes": [
+          "enumerate_all"
+        ],
+        "clue": "It asks for all subsets of an array with duplicates without repeating a subset, so sort and skip equal values among siblings."
+      }
+    },
+    {
+      "id": "s2-pattern-01",
+      "category": "main_insight",
       "type": "multiple_choice",
       "promptVariants": [
         "What is the rule that removes duplicate subsets after sorting?",

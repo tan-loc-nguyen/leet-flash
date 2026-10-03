@@ -55,8 +55,39 @@
   "edgeCases": [],
   "cards": [
     {
-      "id": "ob-pattern-01",
+      "id": "recog-number-of-1-bits",
       "category": "pattern",
+      "type": "free_recall",
+      "promptVariants": [
+        "Which technique solves this problem, and what in the statement or constraints points to it?",
+        "Name the technique you would use here and the clue in the problem that tells you.",
+        "What approach fits this problem, and which part of the statement gives it away?"
+      ],
+      "answer": "Brian Kernighan's trick: n & (n - 1) clears the lowest set bit, so count the iterations. Clue: It counts the set bits of the binary representation, and n & (n - 1) removes exactly one set bit per step.",
+      "keyPoints": [
+        "It counts the set bits of the binary representation, and n & (n - 1) removes exactly one set bit per step."
+      ],
+      "explanation": "Each n & (n - 1) clears the lowest set bit, so the number of steps until zero equals the number of set bits.",
+      "rubric": {
+        "technique": "Brian Kernighan's trick: n & (n - 1) clears the lowest set bit, so count the iterations",
+        "aliases": [
+          "kernighan",
+          "clear the lowest set bit",
+          "n and n minus one",
+          "hamming weight",
+          "shift and test 32 bits",
+          "bin(n).count('1')"
+        ],
+        "alsoValid": [],
+        "clueTypes": [
+          "bit_math"
+        ],
+        "clue": "It counts the set bits of the binary representation, and n & (n - 1) removes exactly one set bit per step."
+      }
+    },
+    {
+      "id": "ob-pattern-01",
+      "category": "implementation_detail",
       "type": "multiple_choice",
       "promptVariants": [
         "What does n & (n - 1) do?",

@@ -58,6 +58,37 @@
   "edgeCases": [],
   "cards": [
     {
+      "id": "recog-find-the-index-of-the-first-occurrence-in-a-string",
+      "category": "pattern",
+      "type": "free_recall",
+      "promptVariants": [
+        "Which technique solves this problem, and what in the statement or constraints points to it?",
+        "Name the technique you would use here and the clue in the problem that tells you.",
+        "What approach fits this problem, and which part of the statement gives it away?"
+      ],
+      "answer": "Substring matching: compare the needle with each window of the haystack (KMP or a rolling hash for guaranteed linear time). Clue: It asks where a pattern first occurs inside a text, which is substring matching: slide a window over the haystack and compare, using KMP or a rolling hash if the worst case matters.",
+      "keyPoints": [
+        "It asks where a pattern first occurs inside a text, which is substring matching: slide a window over the haystack and compare, using KMP or a rolling hash if the worst case matters."
+      ],
+      "explanation": "Each window of the haystack is a candidate, and KMP or hashing avoid re-comparing characters that are already known to match.",
+      "rubric": {
+        "technique": "Substring matching: compare the needle with each window of the haystack (KMP or a rolling hash for guaranteed linear time)",
+        "aliases": [
+          "naive window comparison",
+          "kmp",
+          "rabin-karp",
+          "rolling hash",
+          "sliding window comparison"
+        ],
+        "alsoValid": [],
+        "clueTypes": [
+          "contiguous",
+          "direct_simulation"
+        ],
+        "clue": "It asks where a pattern first occurs inside a text, which is substring matching: slide a window over the haystack and compare, using KMP or a rolling hash if the worst case matters."
+      }
+    },
+    {
       "id": "fs-pattern-01",
       "category": "pattern",
       "type": "multiple_choice",
@@ -77,7 +108,8 @@
         "Sliding window maximum": "Unrelated.",
         "Binary search": "Strings are not sorted.",
         "Union find": "Not applicable."
-      }
+      },
+      "enabled": false
     },
     {
       "id": "fs-insight-01",

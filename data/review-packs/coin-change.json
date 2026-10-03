@@ -59,8 +59,43 @@
   ],
   "cards": [
     {
-      "id": "cc2-pattern-01",
+      "id": "recog-coin-change",
       "category": "pattern",
+      "type": "free_recall",
+      "promptVariants": [
+        "Which technique solves this problem, and what in the statement or constraints points to it?",
+        "Name the technique you would use here and the clue in the problem that tells you.",
+        "What approach fits this problem, and which part of the statement gives it away?"
+      ],
+      "answer": "Bottom-up DP over amounts: dp[a] = min(dp[a - c] + 1) over the coins (or BFS over amounts). Clue: It asks for the fewest coins with arbitrary denominations, where taking the largest coin first can fail, and the same sub-amounts recur, so build the answer from smaller amounts.",
+      "keyPoints": [
+        "It asks for the fewest coins with arbitrary denominations, where taking the largest coin first can fail, and the same sub-amounts recur, so build the answer from smaller amounts."
+      ],
+      "explanation": "The best way to make an amount is one coin plus the best way to make the remainder, and the sub-amounts repeat across choices.",
+      "rubric": {
+        "technique": "Bottom-up DP over amounts: dp[a] = min(dp[a - c] + 1) over the coins (or BFS over amounts)",
+        "aliases": [
+          "unbounded knapsack",
+          "dp over amounts",
+          "coin dp",
+          "bfs over amounts"
+        ],
+        "alsoValid": [
+          {
+            "name": "Plain recursion without caching",
+            "note": "exponential, it recomputes the same sub-amounts"
+          }
+        ],
+        "clueTypes": [
+          "optimization_overlap",
+          "shortest_steps"
+        ],
+        "clue": "It asks for the fewest coins with arbitrary denominations, where taking the largest coin first can fail, and the same sub-amounts recur, so build the answer from smaller amounts."
+      }
+    },
+    {
+      "id": "cc2-pattern-01",
+      "category": "main_insight",
       "type": "multiple_choice",
       "promptVariants": [
         "What recurrence solves Coin Change?",

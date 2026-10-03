@@ -65,6 +65,44 @@
   ],
   "cards": [
     {
+      "id": "recog-two-sum",
+      "category": "pattern",
+      "type": "free_recall",
+      "promptVariants": [
+        "Which technique solves this problem, and what in the statement or constraints points to it?",
+        "Name the technique you would use here and the clue in the problem that tells you.",
+        "What approach fits this problem, and which part of the statement gives it away?"
+      ],
+      "answer": "One-pass hash map from value to index, looking up target - x. Clue: For each number the partner needed is fixed (target - x) and the array is unsorted with up to 10^4 elements, so look the partner up instead of comparing every pair.",
+      "keyPoints": [
+        "For each number the partner needed is fixed (target - x) and the array is unsorted with up to 10^4 elements, so look the partner up instead of comparing every pair."
+      ],
+      "explanation": "Knowing exactly which partner you need turns the search into a constant-time lookup of earlier values.",
+      "rubric": {
+        "technique": "One-pass hash map from value to index, looking up target - x",
+        "aliases": [
+          "hash map",
+          "complement lookup",
+          "dictionary of seen values",
+          "hash table"
+        ],
+        "alsoValid": [
+          {
+            "name": "Sort value-index pairs and use two pointers",
+            "note": "correct, but O(n log n) and must carry the original indices"
+          },
+          {
+            "name": "Check every pair",
+            "note": "O(n^2) brute force"
+          }
+        ],
+        "clueTypes": [
+          "lookup_frequency"
+        ],
+        "clue": "For each number the partner needed is fixed (target - x) and the array is unsorted with up to 10^4 elements, so look the partner up instead of comparing every pair."
+      }
+    },
+    {
       "id": "two-sum-pattern-01",
       "category": "pattern",
       "type": "multiple_choice",
@@ -86,7 +124,7 @@
         "Binary search": "It needs sorted data; sorting would destroy the original indices you must return.",
         "Monotonic stack": "There is no nearest-greater / nearest-smaller structure in the problem."
       },
-      "enabled": true
+      "enabled": false
     },
     {
       "id": "two-sum-main-insight-01",

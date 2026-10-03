@@ -42,8 +42,38 @@
   "edgeCases": [],
   "cards": [
     {
-      "id": "fa2-pattern-01",
+      "id": "recog-final-array-state-after-k-multiplication-operations-i",
       "category": "pattern",
+      "type": "free_recall",
+      "promptVariants": [
+        "Which technique solves this problem, and what in the statement or constraints points to it?",
+        "Name the technique you would use here and the clue in the problem that tells you.",
+        "What approach fits this problem, and which part of the statement gives it away?"
+      ],
+      "answer": "Min-heap of (value, index) pairs: pop the minimum, multiply it, push it back, k times. Clue: Each of the k operations needs the current minimum (leftmost on ties) and the array changes in between, so a min-heap of (value, index) supplies it; with such small limits a plain scan also works.",
+      "keyPoints": [
+        "Each of the k operations needs the current minimum (leftmost on ties) and the array changes in between, so a min-heap of (value, index) supplies it; with such small limits a plain scan also works."
+      ],
+      "explanation": "The minimum is requested repeatedly after updates, which is what a heap keyed by (value, index) provides, ties included.",
+      "rubric": {
+        "technique": "Min-heap of (value, index) pairs: pop the minimum, multiply it, push it back, k times",
+        "aliases": [
+          "priority queue",
+          "heap",
+          "simulation with a heap",
+          "scan for the minimum each time"
+        ],
+        "alsoValid": [],
+        "clueTypes": [
+          "top_k",
+          "small_constraints"
+        ],
+        "clue": "Each of the k operations needs the current minimum (leftmost on ties) and the array changes in between, so a min-heap of (value, index) supplies it; with such small limits a plain scan also works."
+      }
+    },
+    {
+      "id": "fa2-pattern-01",
+      "category": "data_structure",
       "type": "multiple_choice",
       "promptVariants": [
         "Which structure gives the repeated minimum efficiently?",

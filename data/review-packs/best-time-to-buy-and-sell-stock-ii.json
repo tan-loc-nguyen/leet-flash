@@ -43,6 +43,36 @@
   "edgeCases": [],
   "cards": [
     {
+      "id": "recog-best-time-to-buy-and-sell-stock-ii",
+      "category": "pattern",
+      "type": "free_recall",
+      "promptVariants": [
+        "Which technique solves this problem, and what in the statement or constraints points to it?",
+        "Name the technique you would use here and the clue in the problem that tells you.",
+        "What approach fits this problem, and which part of the statement gives it away?"
+      ],
+      "answer": "Greedy: sum every positive day-to-day price increase. Clue: You may trade as often as you like, so any profit is a sum of daily rises, and taking each rise and skipping each fall is optimal.",
+      "keyPoints": [
+        "You may trade as often as you like, so any profit is a sum of daily rises, and taking each rise and skipping each fall is optimal."
+      ],
+      "explanation": "Profit over any period equals the sum of its daily changes, so collecting only the positive ones is the best possible.",
+      "rubric": {
+        "technique": "Greedy: sum every positive day-to-day price increase",
+        "aliases": [
+          "greedy",
+          "sum of positive differences",
+          "collect every upswing",
+          "dp with hold and sold states"
+        ],
+        "alsoValid": [],
+        "clueTypes": [
+          "local_choice",
+          "optimization_overlap"
+        ],
+        "clue": "You may trade as often as you like, so any profit is a sum of daily rises, and taking each rise and skipping each fall is optimal."
+      }
+    },
+    {
       "id": "b2-pattern-01",
       "category": "pattern",
       "type": "multiple_choice",
@@ -62,7 +92,8 @@
         "Buy at the global minimum price and sell at the global maximum price": "The maximum may come before the minimum and multiple swings are possible.",
         "Sell on every single day regardless of the earlier prices": "Not valid without buying.",
         "Buy only on the first day and sell on the last day": "Misses later opportunities."
-      }
+      },
+      "enabled": false
     },
     {
       "id": "b2-insight-01",

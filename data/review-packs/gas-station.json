@@ -46,8 +46,42 @@
   ],
   "cards": [
     {
-      "id": "gs-pattern-01",
+      "id": "recog-gas-station",
       "category": "pattern",
+      "type": "free_recall",
+      "promptVariants": [
+        "Which technique solves this problem, and what in the statement or constraints points to it?",
+        "Name the technique you would use here and the clue in the problem that tells you.",
+        "What approach fits this problem, and which part of the statement gives it away?"
+      ],
+      "answer": "One-pass greedy: no answer if total gas is below total cost; otherwise reset the start whenever the tank goes negative. Clue: On a circular route, running dry at station i rules out every start between the previous start and i, and a total shortfall rules out all starts, so one pass with a reset suffices.",
+      "keyPoints": [
+        "On a circular route, running dry at station i rules out every start between the previous start and i, and a total shortfall rules out all starts, so one pass with a reset suffices."
+      ],
+      "explanation": "A failure at i proves no start in between can work, so the next candidate is i + 1 and the scan never has to go back.",
+      "rubric": {
+        "technique": "One-pass greedy: no answer if total gas is below total cost; otherwise reset the start whenever the tank goes negative",
+        "aliases": [
+          "greedy",
+          "reset the start",
+          "running tank",
+          "one pass with a total check"
+        ],
+        "alsoValid": [
+          {
+            "name": "Simulate the circuit from every station",
+            "note": "quadratic, too slow for 10^5 stations"
+          }
+        ],
+        "clueTypes": [
+          "local_choice"
+        ],
+        "clue": "On a circular route, running dry at station i rules out every start between the previous start and i, and a total shortfall rules out all starts, so one pass with a reset suffices."
+      }
+    },
+    {
+      "id": "gs-pattern-01",
+      "category": "main_insight",
       "type": "multiple_choice",
       "promptVariants": [
         "How does the greedy approach choose the starting station?",

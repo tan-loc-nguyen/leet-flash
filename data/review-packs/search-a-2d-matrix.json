@@ -52,8 +52,47 @@
   "edgeCases": [],
   "cards": [
     {
-      "id": "sm3-pattern-01",
+      "id": "recog-search-a-2d-matrix",
       "category": "pattern",
+      "type": "free_recall",
+      "promptVariants": [
+        "Which technique solves this problem, and what in the statement or constraints points to it?",
+        "Name the technique you would use here and the clue in the problem that tells you.",
+        "What approach fits this problem, and which part of the statement gives it away?"
+      ],
+      "answer": "One binary search over the flattened index (row = mid // n, column = mid % n). Clue: Each row is sorted and each row starts above the end of the previous row, so read row by row the matrix is one sorted array.",
+      "keyPoints": [
+        "Each row is sorted and each row starts above the end of the previous row, so read row by row the matrix is one sorted array."
+      ],
+      "explanation": "Reading the rows in order gives one sorted sequence, so binary search works on the virtual index without building it.",
+      "rubric": {
+        "technique": "One binary search over the flattened index (row = mid // n, column = mid % n)",
+        "aliases": [
+          "binary search on the matrix as one sorted array",
+          "virtual flattening",
+          "binary search rows then the row",
+          "two binary searches"
+        ],
+        "alsoValid": [
+          {
+            "name": "Put all values in a hash set",
+            "note": "ignores the sorted order and uses O(mn) extra space"
+          },
+          {
+            "name": "Scan every cell",
+            "note": "touches all m * n cells"
+          }
+        ],
+        "clueTypes": [
+          "sorted_or_ordered",
+          "monotonic_answer"
+        ],
+        "clue": "Each row is sorted and each row starts above the end of the previous row, so read row by row the matrix is one sorted array."
+      }
+    },
+    {
+      "id": "sm3-pattern-01",
+      "category": "main_insight",
       "type": "multiple_choice",
       "promptVariants": [
         "How can a fully sorted matrix be searched with one binary search?",

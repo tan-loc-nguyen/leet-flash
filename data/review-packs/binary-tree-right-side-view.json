@@ -43,8 +43,38 @@
   "edgeCases": [],
   "cards": [
     {
-      "id": "rv2-pattern-01",
+      "id": "recog-binary-tree-right-side-view",
       "category": "pattern",
+      "type": "free_recall",
+      "promptVariants": [
+        "Which technique solves this problem, and what in the statement or constraints points to it?",
+        "Name the technique you would use here and the clue in the problem that tells you.",
+        "What approach fits this problem, and which part of the statement gives it away?"
+      ],
+      "answer": "BFS by level taking the last node of each level (or DFS visiting the right child first). Clue: What is visible from the right is the rightmost node at each depth, so work level by level, or visit right children first and record the first node seen at each depth.",
+      "keyPoints": [
+        "What is visible from the right is the rightmost node at each depth, so work level by level, or visit right children first and record the first node seen at each depth."
+      ],
+      "explanation": "The visible node on a level is the last one in left-to-right order, which level-order traversal exposes directly.",
+      "rubric": {
+        "technique": "BFS by level taking the last node of each level (or DFS visiting the right child first)",
+        "aliases": [
+          "bfs last node of the level",
+          "dfs right first",
+          "level order",
+          "rightmost node per level"
+        ],
+        "alsoValid": [],
+        "clueTypes": [
+          "tree_structure",
+          "shortest_steps"
+        ],
+        "clue": "What is visible from the right is the rightmost node at each depth, so work level by level, or visit right children first and record the first node seen at each depth."
+      }
+    },
+    {
+      "id": "rv2-pattern-01",
+      "category": "main_insight",
       "type": "multiple_choice",
       "promptVariants": [
         "What node of each level is visible from the right?",

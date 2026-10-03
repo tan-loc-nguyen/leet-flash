@@ -37,7 +37,8 @@ never lost across versions; pack models are strict so typos are caught by the va
 * `catalog.py` — loads everything in memory; `Filters` (id, title, slug, difficulty, status, tag, pattern, list, level, due, pack…).
 * `review/scoring.py` — points, weights, card/category stats, weak categories.
 * `review/scheduler.py` — levels, intervals, outcomes; `apply_problem_event` is shared by live updates and rebuild.
-* `review/queue.py` — buckets, strict-priority + weighted-random selection, diversity ordering, all modes.
+* `review/queue.py` — buckets, strict-priority + weighted-random selection, diversity ordering, all modes (daily, weak, cram, filtered, interview, drill).
+* `review/cards.py` — card selection; the recognition card (`recognition_card`, `grade_recognition`) is always drawn first by `session._choose_cards` and graded from the agent's technique/clue verdicts.
 * `review/cards.py` — card selection, prompt rotation, MCQ shuffling, fill-blank normalisation.
 * `review/session.py` — `ReviewEngine`: start/next/answer/reveal/hint/forgot/skip/abort with immediate persistence.
 * `stats.py`, `rebuild.py`, `cli.py` — reporting, state rebuild, script helpers.

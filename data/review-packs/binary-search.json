@@ -62,6 +62,41 @@
   ],
   "cards": [
     {
+      "id": "recog-binary-search",
+      "category": "pattern",
+      "type": "free_recall",
+      "promptVariants": [
+        "Which technique solves this problem, and what in the statement or constraints points to it?",
+        "Name the technique you would use here and the clue in the problem that tells you.",
+        "What approach fits this problem, and which part of the statement gives it away?"
+      ],
+      "answer": "Binary search on the sorted array, discarding half the range each step. Clue: The array is sorted in ascending order and the statement asks for logarithmic time, so compare with the middle element and discard half.",
+      "keyPoints": [
+        "The array is sorted in ascending order and the statement asks for logarithmic time, so compare with the middle element and discard half."
+      ],
+      "explanation": "Sorted order means one comparison with the middle rules out half of the remaining candidates.",
+      "rubric": {
+        "technique": "Binary search on the sorted array, discarding half the range each step",
+        "aliases": [
+          "binary search",
+          "halving the range",
+          "lo hi mid search",
+          "divide the search range"
+        ],
+        "alsoValid": [
+          {
+            "name": "Linear scan",
+            "note": "correct, but ignores the sorted order"
+          }
+        ],
+        "clueTypes": [
+          "sorted_or_ordered",
+          "monotonic_answer"
+        ],
+        "clue": "The array is sorted in ascending order and the statement asks for logarithmic time, so compare with the middle element and discard half."
+      }
+    },
+    {
       "id": "binary-search-pattern-01",
       "category": "pattern",
       "type": "multiple_choice",
@@ -83,7 +118,7 @@
         "Two pointers from both ends": "That gives O(n); it does not exploit sorted order for halving.",
         "Heap": "A heap does not support efficient arbitrary lookup."
       },
-      "enabled": true
+      "enabled": false
     },
     {
       "id": "binary-search-invariant-01",

@@ -47,8 +47,38 @@
   ],
   "cards": [
     {
-      "id": "ts3-pattern-01",
+      "id": "recog-task-scheduler",
       "category": "pattern",
+      "type": "free_recall",
+      "promptVariants": [
+        "Which technique solves this problem, and what in the statement or constraints points to it?",
+        "Name the technique you would use here and the clue in the problem that tells you.",
+        "What approach fits this problem, and which part of the statement gives it away?"
+      ],
+      "answer": "Greedy on the most frequent task: (max count - 1) * (n + 1) + tasks with that count, at least the number of tasks. Clue: Equal tasks must be at least n intervals apart, so the most frequent task dictates the schedule's frame and the other tasks fill the gaps, with idle time only when they run out.",
+      "keyPoints": [
+        "Equal tasks must be at least n intervals apart, so the most frequent task dictates the schedule's frame and the other tasks fill the gaps, with idle time only when they run out."
+      ],
+      "explanation": "The busiest task forces (count - 1) gaps of length n; filling them with other tasks and counting leftovers gives the minimum time.",
+      "rubric": {
+        "technique": "Greedy on the most frequent task: (max count - 1) * (n + 1) + tasks with that count, at least the number of tasks",
+        "aliases": [
+          "formula from max frequency",
+          "max heap simulation",
+          "frame and idle slots",
+          "greedy with counts"
+        ],
+        "alsoValid": [],
+        "clueTypes": [
+          "local_choice",
+          "lookup_frequency"
+        ],
+        "clue": "Equal tasks must be at least n intervals apart, so the most frequent task dictates the schedule's frame and the other tasks fill the gaps, with idle time only when they run out."
+      }
+    },
+    {
+      "id": "ts3-pattern-01",
+      "category": "main_insight",
       "type": "multiple_choice",
       "promptVariants": [
         "How do you compute the minimum time from task frequencies?",

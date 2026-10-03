@@ -55,6 +55,40 @@
   ],
   "cards": [
     {
+      "id": "recog-maximum-average-subarray-i",
+      "category": "pattern",
+      "type": "free_recall",
+      "promptVariants": [
+        "Which technique solves this problem, and what in the statement or constraints points to it?",
+        "Name the technique you would use here and the clue in the problem that tells you.",
+        "What approach fits this problem, and which part of the statement gives it away?"
+      ],
+      "answer": "Fixed-size sliding window sum: add the entering element and subtract the leaving one. Clue: It asks for the best average over contiguous subarrays of one fixed length k, so slide a window of size k and update its sum incrementally.",
+      "keyPoints": [
+        "It asks for the best average over contiguous subarrays of one fixed length k, so slide a window of size k and update its sum incrementally."
+      ],
+      "explanation": "Moving the window changes only two elements, so its sum is updated in constant time and the maximum sum gives the maximum average.",
+      "rubric": {
+        "technique": "Fixed-size sliding window sum: add the entering element and subtract the leaving one",
+        "aliases": [
+          "sliding window",
+          "fixed window sum",
+          "prefix sums",
+          "running window total"
+        ],
+        "alsoValid": [
+          {
+            "name": "Recompute each window's sum from scratch",
+            "note": "O(n * k)"
+          }
+        ],
+        "clueTypes": [
+          "contiguous"
+        ],
+        "clue": "It asks for the best average over contiguous subarrays of one fixed length k, so slide a window of size k and update its sum incrementally."
+      }
+    },
+    {
       "id": "mas-pattern-01",
       "category": "pattern",
       "type": "multiple_choice",
@@ -74,7 +108,8 @@
         "Sort the array and take the k largest elements": "The subarray must be contiguous; sorting destroys the order.",
         "Binary search on the best possible average value": "That is a harder variant (the length is not fixed there); not needed here.",
         "Keep a heap of the k best windows seen so far": "A heap does not preserve contiguity and adds a log factor."
-      }
+      },
+      "enabled": false
     },
     {
       "id": "mas-insight-01",

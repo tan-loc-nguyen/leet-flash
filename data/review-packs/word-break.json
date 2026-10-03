@@ -56,8 +56,43 @@
   ],
   "cards": [
     {
-      "id": "wb-pattern-01",
+      "id": "recog-word-break",
       "category": "pattern",
+      "type": "free_recall",
+      "promptVariants": [
+        "Which technique solves this problem, and what in the statement or constraints points to it?",
+        "Name the technique you would use here and the clue in the problem that tells you.",
+        "What approach fits this problem, and which part of the statement gives it away?"
+      ],
+      "answer": "DP over prefixes: dp[i] is true if some j < i has dp[j] true and s[j:i] is in the dictionary. Clue: It asks whether the string can be split into dictionary words that may repeat, and the same suffix is re-examined along many splits, so remember for each prefix whether it can be segmented.",
+      "keyPoints": [
+        "It asks whether the string can be split into dictionary words that may repeat, and the same suffix is re-examined along many splits, so remember for each prefix whether it can be segmented."
+      ],
+      "explanation": "A prefix is segmentable if a shorter segmentable prefix is followed by a dictionary word, so the prefix results can be reused.",
+      "rubric": {
+        "technique": "DP over prefixes: dp[i] is true if some j < i has dp[j] true and s[j:i] is in the dictionary",
+        "aliases": [
+          "dp",
+          "memoised dfs",
+          "bottom-up over prefixes",
+          "trie with dp",
+          "segmentation dp"
+        ],
+        "alsoValid": [
+          {
+            "name": "Plain recursion trying every prefix word",
+            "note": "exponential, it re-examines the same suffixes"
+          }
+        ],
+        "clueTypes": [
+          "optimization_overlap"
+        ],
+        "clue": "It asks whether the string can be split into dictionary words that may repeat, and the same suffix is re-examined along many splits, so remember for each prefix whether it can be segmented."
+      }
+    },
+    {
+      "id": "wb-pattern-01",
+      "category": "main_insight",
       "type": "multiple_choice",
       "promptVariants": [
         "What does dp[i] mean for Word Break?",

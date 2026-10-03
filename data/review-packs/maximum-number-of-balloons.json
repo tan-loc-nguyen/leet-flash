@@ -39,8 +39,37 @@
   "edgeCases": [],
   "cards": [
     {
-      "id": "mb-pattern-01",
+      "id": "recog-maximum-number-of-balloons",
       "category": "pattern",
+      "type": "free_recall",
+      "promptVariants": [
+        "Which technique solves this problem, and what in the statement or constraints points to it?",
+        "Name the technique you would use here and the clue in the problem that tells you.",
+        "What approach fits this problem, and which part of the statement gives it away?"
+      ],
+      "answer": "Count the letters of 'balloon' and take the minimum of count divided by the amount needed. Clue: Each copy of the word needs a fixed number of each letter (l and o twice) and every character is used at most once, so the scarcest letter decides the answer.",
+      "keyPoints": [
+        "Each copy of the word needs a fixed number of each letter (l and o twice) and every character is used at most once, so the scarcest letter decides the answer."
+      ],
+      "explanation": "Copies are limited by the letter with the smallest count relative to its need, which a frequency count gives directly.",
+      "rubric": {
+        "technique": "Count the letters of 'balloon' and take the minimum of count divided by the amount needed",
+        "aliases": [
+          "frequency count",
+          "counter",
+          "count b, a, l, o, n",
+          "limiting letter"
+        ],
+        "alsoValid": [],
+        "clueTypes": [
+          "lookup_frequency"
+        ],
+        "clue": "Each copy of the word needs a fixed number of each letter (l and o twice) and every character is used at most once, so the scarcest letter decides the answer."
+      }
+    },
+    {
+      "id": "mb-pattern-01",
+      "category": "main_insight",
       "type": "multiple_choice",
       "promptVariants": [
         "What is the answer in terms of letter counts?",

@@ -8,11 +8,13 @@ from datetime import datetime
 
 from .. import config as C
 from ..catalog import Catalog, Filters
+from ..content.loader import enabled_cards
 from ..timeutil import day_start, parse_iso
+from . import cards as cardlib
 from . import topics
 from .scheduler import days_overdue
 
-MODES = ("daily", "weak", "cram", "interview", "filtered")
+MODES = ("daily", "weak", "cram", "interview", "filtered", "drill")
 
 
 @dataclass
@@ -235,6 +237,32 @@ def build_filtered(cat: Catalog, target: int, rng: random.Random, f: Filters | N
     return plan
 
 
+def build_drill(cat: Catalog, target: int, rng: random.Random, f: Filters | None = None) -> QueuePlan:
+    """Pattern drill: one recognition card per problem, no scheduling. Favours problems whose recognition card
+    was failed or has never been asked (this includes unsolved problems), then the least recently drilled."""
+    slugs = [s for s in _candidates(cat, f or Filters()) if cardlib.recognition_card(enabled_cards(cat.packs[s]))]
+    factors = topics.share_factors(cat, slugs)
+    entries = []
+    for slug in slugs:
+        rec = cardlib.recognition_card(enabled_cards(cat.packs[slug]))
+        ps = cat.state.get(slug)
+        cs = ps.card_stats.get(rec.id) if ps else None
+        if cs is None or not cs.seen:
+            w, bucket = C.DRILL_UNSEEN_WEIGHT, "new"
+        else:
+            w = 1.0 + C.DRILL_FAIL_WEIGHT * (cs.failed + 0.5 * cs.partial) / cs.seen
+            if cs.last_seen_at:
+                w *= 1 + min((cat.now - parse_iso(cs.last_seen_at)).days, 60) / 30
+            bucket = "weak" if cs.last_result == "failed" else "retention"
+        entries.append(QueueEntry(slug, bucket, w * factors[slug]))
+    chosen = order_for_diversity(cat, _select(cat, [], entries, target, rng), rng)
+    plan = QueuePlan("drill", target, chosen, {"candidates": len(slugs)})
+    if not slugs:
+        plan.notes.append("No problem has a recognition card yet.")
+    _note_missing_list_coverage(cat, f, plan)
+    return plan
+
+
 def build_interview(cat: Catalog, target: int, rng: random.Random, f: Filters | None = None) -> QueuePlan:
     """Sample previously studied (solved or already reviewed) problems, favouring ones not seen recently."""
     studied = []
@@ -265,7 +293,8 @@ def build_queue(cat: Catalog, mode: str, target: int, rng: random.Random, f: Fil
                 *, all_due: bool = False) -> QueuePlan:
     if mode == "daily":
         return build_daily(cat, target, rng, f, all_due=all_due)
-    builder = {"weak": build_weak, "cram": build_cram, "filtered": build_filtered, "interview": build_interview}.get(mode)
+    builder = {"weak": build_weak, "cram": build_cram, "filtered": build_filtered, "interview": build_interview,
+               "drill": build_drill}.get(mode)
     if builder is None:
         raise ValueError(f"unknown mode '{mode}' (choose from {', '.join(MODES)})")
     return builder(cat, target, rng, f)

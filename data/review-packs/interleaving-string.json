@@ -58,8 +58,42 @@
   ],
   "cards": [
     {
-      "id": "is3-pattern-01",
+      "id": "recog-interleaving-string",
       "category": "pattern",
+      "type": "free_recall",
+      "promptVariants": [
+        "Which technique solves this problem, and what in the statement or constraints points to it?",
+        "Name the technique you would use here and the clue in the problem that tells you.",
+        "What approach fits this problem, and which part of the statement gives it away?"
+      ],
+      "answer": "2D DP: dp[i][j] says whether s3's first i + j characters can be formed from the first i of s1 and the first j of s2. Clue: The next character of s3 comes from either s1 or s2 while each string keeps its order, and the same pair of positions recurs, so keep a state for every pair of prefix lengths.",
+      "keyPoints": [
+        "The next character of s3 comes from either s1 or s2 while each string keeps its order, and the same pair of positions recurs, so keep a state for every pair of prefix lengths."
+      ],
+      "explanation": "Whether a prefix of s3 can be formed depends only on how many characters were taken from each string, which gives a table of m by n states.",
+      "rubric": {
+        "technique": "2D DP: dp[i][j] says whether s3's first i + j characters can be formed from the first i of s1 and the first j of s2",
+        "aliases": [
+          "dp table",
+          "2d dp over prefixes",
+          "dp on two strings",
+          "rolling 1d dp"
+        ],
+        "alsoValid": [
+          {
+            "name": "Recursion that tries s1 or s2 at each step",
+            "note": "exponential without caching"
+          }
+        ],
+        "clueTypes": [
+          "optimization_overlap"
+        ],
+        "clue": "The next character of s3 comes from either s1 or s2 while each string keeps its order, and the same pair of positions recurs, so keep a state for every pair of prefix lengths."
+      }
+    },
+    {
+      "id": "is3-pattern-01",
+      "category": "main_insight",
       "type": "multiple_choice",
       "promptVariants": [
         "How is dp[i][j] defined for Interleaving String?",

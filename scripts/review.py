@@ -5,6 +5,8 @@
   review.py answer --choice B         # multiple choice (auto-graded)
   review.py answer --text "O(n)"      # fill_blank (auto-checked; mismatch => you judge)
   review.py answer --result partial   # free_recall / code_question / judged fill_blank
+  review.py answer --text "<typed>" --technique accepted|valid|wrong --clue valid|missing|wrong
+                                      # recognition card (first card of every problem): the engine grades it
   review.py reveal                    # reference answer for the current card (not recorded)
   review.py hint                      # next progressive hint for the current problem
   review.py forgot                    # "I don't remember this problem"
@@ -44,6 +46,8 @@ an = sub.add_parser("answer", help="record an answer for the current card")
 an.add_argument("--choice")
 an.add_argument("--text")
 an.add_argument("--result", choices=["failed", "partial", "correct"])
+an.add_argument("--technique", choices=["accepted", "valid", "wrong"], help="recognition card: verdict on the technique")
+an.add_argument("--clue", choices=["valid", "missing", "wrong"], help="recognition card: verdict on the clue")
 for name in ("reveal", "hint", "forgot", "skip", "status", "abort"):
     sub.add_parser(name)
 sub.add_parser("plan", help="preview today's queue and due counts without starting a session")
@@ -58,7 +62,7 @@ try:
     elif a.cmd == "next":
         emit(engine.next_question())
     elif a.cmd == "answer":
-        emit(engine.answer(result=a.result, choice=a.choice, text=a.text))
+        emit(engine.answer(result=a.result, choice=a.choice, text=a.text, technique=a.technique, clue=a.clue))
     elif a.cmd == "reveal":
         emit(engine.reveal())
     elif a.cmd == "hint":

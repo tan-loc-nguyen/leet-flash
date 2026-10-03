@@ -58,8 +58,43 @@
   "edgeCases": [],
   "cards": [
     {
-      "id": "kc-pattern-01",
+      "id": "recog-k-closest-points-to-origin",
       "category": "pattern",
+      "type": "free_recall",
+      "promptVariants": [
+        "Which technique solves this problem, and what in the statement or constraints points to it?",
+        "Name the technique you would use here and the clue in the problem that tells you.",
+        "What approach fits this problem, and which part of the statement gives it away?"
+      ],
+      "answer": "Max-heap of size k on squared distance (or quickselect). Clue: It asks for the k closest of up to 10^4 points, not a full ordering, so keep only the k best seen so far; squared distances avoid the square root.",
+      "keyPoints": [
+        "It asks for the k closest of up to 10^4 points, not a full ordering, so keep only the k best seen so far; squared distances avoid the square root."
+      ],
+      "explanation": "Only the k smallest distances matter, so a bounded heap evicting the farthest point does less work than sorting.",
+      "rubric": {
+        "technique": "Max-heap of size k on squared distance (or quickselect)",
+        "aliases": [
+          "heap of size k",
+          "priority queue",
+          "quickselect",
+          "nth element",
+          "bounded heap"
+        ],
+        "alsoValid": [
+          {
+            "name": "Sort all points by distance",
+            "note": "sorts everything although only k points are needed"
+          }
+        ],
+        "clueTypes": [
+          "top_k"
+        ],
+        "clue": "It asks for the k closest of up to 10^4 points, not a full ordering, so keep only the k best seen so far; squared distances avoid the square root."
+      }
+    },
+    {
+      "id": "kc-pattern-01",
+      "category": "data_structure",
       "type": "multiple_choice",
       "promptVariants": [
         "Which structure keeps the k closest points as you scan?",

@@ -42,8 +42,42 @@
   "edgeCases": [],
   "cards": [
     {
-      "id": "ad-pattern-01",
+      "id": "recog-verifying-an-alien-dictionary",
       "category": "pattern",
+      "type": "free_recall",
+      "promptVariants": [
+        "Which technique solves this problem, and what in the statement or constraints points to it?",
+        "Name the technique you would use here and the clue in the problem that tells you.",
+        "What approach fits this problem, and which part of the statement gives it away?"
+      ],
+      "answer": "Map each letter to its rank, then check each adjacent pair of words. Clue: Words are sorted exactly when every adjacent pair is in order under the given alphabet, so map letters to their positions and compare neighbours.",
+      "keyPoints": [
+        "Words are sorted exactly when every adjacent pair is in order under the given alphabet, so map letters to their positions and compare neighbours."
+      ],
+      "explanation": "Order is transitive, so checking neighbours with a letter-rank lookup is enough; no sorting needed.",
+      "rubric": {
+        "technique": "Map each letter to its rank, then check each adjacent pair of words",
+        "aliases": [
+          "rank map",
+          "custom comparison of neighbours",
+          "letter to index dictionary"
+        ],
+        "alsoValid": [
+          {
+            "name": "Sort the words with a custom key and compare with the original order",
+            "note": "correct, adds the cost of sorting"
+          }
+        ],
+        "clueTypes": [
+          "lookup_frequency",
+          "sorted_or_ordered"
+        ],
+        "clue": "Words are sorted exactly when every adjacent pair is in order under the given alphabet, so map letters to their positions and compare neighbours."
+      }
+    },
+    {
+      "id": "ad-pattern-01",
+      "category": "main_insight",
       "type": "multiple_choice",
       "promptVariants": [
         "How do you compare words in a custom alphabet?",
