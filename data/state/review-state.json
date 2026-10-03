@@ -154,6 +154,16 @@
         "incorrectStreak": 1,
         "lastResult": "partial",
         "lastSeenAt": "2026-10-02T02:08:27Z"
+      },
+      "vp2-time-01": {
+        "category": "time_complexity",
+        "seen": 1,
+        "correct": 1,
+        "partial": 0,
+        "failed": 0,
+        "incorrectStreak": 0,
+        "lastResult": "correct",
+        "lastSeenAt": "2026-10-03T12:46:50Z"
       }
     },
     "categoryStats": {
@@ -205,6 +215,18 @@
         "lastSeenAt": "2026-10-02T02:08:27Z",
         "recent": [
           "partial"
+        ]
+      },
+      "time_complexity": {
+        "seen": 1,
+        "correct": 1,
+        "partial": 0,
+        "failed": 0,
+        "incorrectStreak": 0,
+        "lastResult": "correct",
+        "lastSeenAt": "2026-10-03T12:46:50Z",
+        "recent": [
+          "correct"
         ]
       }
     }
