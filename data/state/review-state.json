@@ -725,13 +725,13 @@
     "cardStats": {
       "d2i-pattern-01": {
         "category": "pattern",
-        "seen": 1,
-        "correct": 1,
+        "seen": 2,
+        "correct": 2,
         "partial": 0,
         "failed": 0,
         "incorrectStreak": 0,
         "lastResult": "correct",
-        "lastSeenAt": "2026-10-02T02:56:10Z"
+        "lastSeenAt": "2026-10-03T12:05:08Z"
       },
       "d2i-insight-01": {
         "category": "main_insight",
@@ -766,14 +766,15 @@
     },
     "categoryStats": {
       "pattern": {
-        "seen": 1,
-        "correct": 1,
+        "seen": 2,
+        "correct": 2,
         "partial": 0,
         "failed": 0,
         "incorrectStreak": 0,
         "lastResult": "correct",
-        "lastSeenAt": "2026-10-02T02:56:10Z",
+        "lastSeenAt": "2026-10-03T12:05:08Z",
         "recent": [
+          "correct",
           "correct"
         ]
       },
