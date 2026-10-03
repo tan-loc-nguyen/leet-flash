@@ -904,7 +904,7 @@
       "mode": "daily",
       "status": "active",
       "createdAt": "2026-10-03T12:00:20Z",
-      "updatedAt": "2026-10-03T12:50:56Z",
+      "updatedAt": "2026-10-03T12:51:19Z",
       "seed": 815821225,
       "target": 10,
       "filters": {},
@@ -1587,7 +1587,7 @@
         {
           "slug": "kth-largest-element-in-an-array",
           "bucket": "due",
-          "status": "in_progress",
+          "status": "done",
           "cardIds": [
             "kt-pattern-02",
             "kt-insight-02",
@@ -1612,6 +1612,12 @@
               "category": "time_complexity",
               "result": "correct",
               "timestamp": "2026-10-03T12:50:56Z"
+            },
+            {
+              "cardId": "kt-space-02",
+              "category": "space_complexity",
+              "result": "correct",
+              "timestamp": "2026-10-03T12:51:19Z"
             }
           ],
           "hintLevel": 0,
@@ -1649,16 +1655,79 @@
               "prompt": "Extra space of the size-k min-heap solution: ___",
               "options": null
             }
+          },
+          "outcome": {
+            "score": 1.0,
+            "outcome": "promote",
+            "levelBefore": 1,
+            "levelAfter": 2,
+            "nextReview": "2026-10-06T00:00:00Z"
           }
         },
         {
           "slug": "fizz-buzz",
           "bucket": "due",
-          "status": "pending",
-          "cardIds": [],
+          "status": "in_progress",
+          "cardIds": [
+            "fb3-pattern-01",
+            "fb3-insight-01",
+            "fb3-edge-01",
+            "fb3-time-01"
+          ],
           "answers": [],
           "hintLevel": 0,
-          "presented": {}
+          "presented": {
+            "fb3-pattern-01": {
+              "prompt": "What goes wrong otherwise?",
+              "options": [
+                {
+                  "label": "A",
+                  "text": "Python raises an error when two branches both match"
+                },
+                {
+                  "label": "B",
+                  "text": "A multiple of 15 also passes the 3 test and prints Fizz"
+                },
+                {
+                  "label": "C",
+                  "text": "elif runs all matching branches, so 15 prints twice"
+                },
+                {
+                  "label": "D",
+                  "text": "Multiples of 15 are not divisible by 3 or by 5"
+                }
+              ]
+            },
+            "fb3-insight-01": {
+              "prompt": "How does the concatenation approach extend to more rules?",
+              "options": null
+            },
+            "fb3-edge-01": {
+              "prompt": "What is the last item?",
+              "options": [
+                {
+                  "label": "A",
+                  "text": "The last item is '15'"
+                },
+                {
+                  "label": "B",
+                  "text": "The last item is 'FizzBuzz'"
+                },
+                {
+                  "label": "C",
+                  "text": "The last item is 'Fizz'"
+                },
+                {
+                  "label": "D",
+                  "text": "The last item is 'Buzz'"
+                }
+              ]
+            },
+            "fb3-time-01": {
+              "prompt": "Complete the statement: Time complexity: ___",
+              "options": null
+            }
+          }
         }
       ]
     }

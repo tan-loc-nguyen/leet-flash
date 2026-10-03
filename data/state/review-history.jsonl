@@ -91,3 +91,5 @@
 {"timestamp":"2026-10-03T12:48:35Z","sessionId":"daily-2026-10-03","problem":"kth-largest-element-in-an-array","card":"kt-pattern-02","category":"pattern","result":"correct","mode":"daily"}
 {"timestamp":"2026-10-03T12:50:29Z","sessionId":"daily-2026-10-03","problem":"kth-largest-element-in-an-array","card":"kt-insight-02","category":"main_insight","result":"correct","mode":"daily"}
 {"timestamp":"2026-10-03T12:50:56Z","sessionId":"daily-2026-10-03","problem":"kth-largest-element-in-an-array","card":"kt-time-02","category":"time_complexity","result":"correct","mode":"daily"}
+{"timestamp":"2026-10-03T12:51:19Z","sessionId":"daily-2026-10-03","problem":"kth-largest-element-in-an-array","card":"kt-space-02","category":"space_complexity","result":"correct","mode":"daily"}
+{"timestamp":"2026-10-03T12:51:19Z","event":"problem_review","sessionId":"daily-2026-10-03","problem":"kth-largest-element-in-an-array","mode":"daily","score":1.0,"outcome":"promote","levelBefore":1,"levelAfter":2,"nextReview":"2026-10-06T00:00:00Z","cards":4}

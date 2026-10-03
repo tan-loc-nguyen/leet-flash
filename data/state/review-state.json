@@ -635,12 +635,12 @@
     }
   },
   "kth-largest-element-in-an-array": {
-    "level": 1,
-    "lastReview": "2026-10-02T02:45:19Z",
-    "nextReview": "2026-10-03T00:00:00Z",
-    "recentAccuracy": 0.892,
-    "lastScore": 0.892,
-    "reviewCount": 1,
+    "level": 2,
+    "lastReview": "2026-10-03T12:51:19Z",
+    "nextReview": "2026-10-06T00:00:00Z",
+    "recentAccuracy": 0.946,
+    "lastScore": 1.0,
+    "reviewCount": 2,
     "lapses": 0,
     "weakCategories": [],
     "cardStats": {
@@ -713,6 +713,16 @@
         "incorrectStreak": 0,
         "lastResult": "correct",
         "lastSeenAt": "2026-10-03T12:50:56Z"
+      },
+      "kt-space-02": {
+        "category": "space_complexity",
+        "seen": 1,
+        "correct": 1,
+        "partial": 0,
+        "failed": 0,
+        "incorrectStreak": 0,
+        "lastResult": "correct",
+        "lastSeenAt": "2026-10-03T12:51:19Z"
       }
     },
     "categoryStats": {
@@ -774,6 +784,18 @@
         "incorrectStreak": 0,
         "lastResult": "correct",
         "lastSeenAt": "2026-10-03T12:50:29Z",
+        "recent": [
+          "correct"
+        ]
+      },
+      "space_complexity": {
+        "seen": 1,
+        "correct": 1,
+        "partial": 0,
+        "failed": 0,
+        "incorrectStreak": 0,
+        "lastResult": "correct",
+        "lastSeenAt": "2026-10-03T12:51:19Z",
         "recent": [
           "correct"
         ]
