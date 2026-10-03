@@ -48,21 +48,6 @@ Topic aliases (`dp`, `bfs`, `heap`, …) are understood. Lists: `data/lists/*.js
 If a session is already active, `start` refuses: offer to **resume** (`next`) or restart (`--force`).
 When the user mentions a target ("10 problems"), pass `--target`; otherwise the default is `settings.json → dailyProblemTarget` (10).
 
-## Session branches and PRs (every review session)
-
-A review session is any `review.py start` run (daily, drill, cram, weak, interview, filtered). Each one lives on its own branch:
-
-1. **Before doing anything else** (before `review.py plan`/`start`, before touching data): `git checkout main && git pull origin main`, then
-   `git checkout -b <mode>/<YYYY-MM-DD>` (UTC date), e.g. `daily/2026-10-04`, `drill/2026-10-04`, `cram/2026-10-04`. The prefix is the
-   session's mode; a second session of the same mode on the same day gets `-2` (`daily/2026-10-04-2`). Work on this branch only: never on `main`,
-   and not on a platform-assigned branch.
-2. Run the session as described below. Commit the resulting `data/` changes (history, state, sessions, flags) on the session branch as you go or at the end.
-3. **When the session finishes (or I stop it): push the branch and open a PR into `main`.** The description states what I did in the session:
-   mode and filters, problems covered (count and difficulty mix), accuracy, per-problem level changes (the `sessionSummary`),
-   weak categories and what to focus on next, cards flagged or fixed, and anything left unfinished. Never merge it: I merge.
-4. The next session starts again from fresh `main` (step 1). Code, docs and pack changes that are not part of a review session
-   (this file, scripts, fixes I ask for) are committed straight to `main`, unless I say otherwise.
-
 ## Running a review session
 
 1. **Before choosing anything inspect persisted state**: `review.py status`, and for daily `review.py plan`
@@ -173,7 +158,7 @@ Never overwrite a hand-edited pack without `--force` and my say-so. Never touch 
 
 * Sync is idempotent and preserves notes, packs, history, state. After a sync, report new/updated/unchanged and missing packs.
 * Credentials missing → ask me for `LEETCODE_SESSION` (and optionally `csrftoken`), store with `scripts/set_credentials.py` (never echo them).
-* Commit data changes (`data/`) when asked; during a review session commit them on the session branch (see *Session branches and PRs*); `.local/` is ignored. Back up = copy/commit `data/`.
+* Commit data changes (`data/`) when asked; `.local/` is ignored. Back up = copy/commit `data/`.
 * Run `uv run pytest` after changing code; keep behaviour aligned with `docs/SRS.md` (update docs if tunables change in `config.py`).
 
 ## Repository map
