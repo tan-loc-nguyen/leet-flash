@@ -137,13 +137,13 @@
       },
       "vp2-edge-01": {
         "category": "edge_case",
-        "seen": 1,
-        "correct": 1,
+        "seen": 2,
+        "correct": 2,
         "partial": 0,
         "failed": 0,
         "incorrectStreak": 0,
         "lastResult": "correct",
-        "lastSeenAt": "2026-10-02T02:07:05Z"
+        "lastSeenAt": "2026-10-03T12:46:12Z"
       },
       "vp2-space-01": {
         "category": "space_complexity",
@@ -183,14 +183,15 @@
         ]
       },
       "edge_case": {
-        "seen": 1,
-        "correct": 1,
+        "seen": 2,
+        "correct": 2,
         "partial": 0,
         "failed": 0,
         "incorrectStreak": 0,
         "lastResult": "correct",
-        "lastSeenAt": "2026-10-02T02:07:05Z",
+        "lastSeenAt": "2026-10-03T12:46:12Z",
         "recent": [
+          "correct",
           "correct"
         ]
       },
