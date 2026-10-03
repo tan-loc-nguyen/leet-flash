@@ -683,18 +683,29 @@
         "incorrectStreak": 0,
         "lastResult": "correct",
         "lastSeenAt": "2026-10-02T02:45:19Z"
-      }
-    },
-    "categoryStats": {
-      "pattern": {
+      },
+      "kt-pattern-02": {
+        "category": "pattern",
         "seen": 1,
         "correct": 1,
         "partial": 0,
         "failed": 0,
         "incorrectStreak": 0,
         "lastResult": "correct",
-        "lastSeenAt": "2026-10-02T02:40:06Z",
+        "lastSeenAt": "2026-10-03T12:48:35Z"
+      }
+    },
+    "categoryStats": {
+      "pattern": {
+        "seen": 2,
+        "correct": 2,
+        "partial": 0,
+        "failed": 0,
+        "incorrectStreak": 0,
+        "lastResult": "correct",
+        "lastSeenAt": "2026-10-03T12:48:35Z",
         "recent": [
+          "correct",
           "correct"
         ]
       },

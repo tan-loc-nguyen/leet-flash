@@ -904,7 +904,7 @@
       "mode": "daily",
       "status": "active",
       "createdAt": "2026-10-03T12:00:20Z",
-      "updatedAt": "2026-10-03T12:47:57Z",
+      "updatedAt": "2026-10-03T12:48:35Z",
       "seed": 815821225,
       "target": 10,
       "filters": {},
@@ -1594,7 +1594,14 @@
             "kt-time-02",
             "kt-space-02"
           ],
-          "answers": [],
+          "answers": [
+            {
+              "cardId": "kt-pattern-02",
+              "category": "pattern",
+              "result": "correct",
+              "timestamp": "2026-10-03T12:48:35Z"
+            }
+          ],
           "hintLevel": 0,
           "presented": {
             "kt-pattern-02": {
