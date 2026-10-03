@@ -904,7 +904,7 @@
       "mode": "daily",
       "status": "active",
       "createdAt": "2026-10-03T12:00:20Z",
-      "updatedAt": "2026-10-03T12:08:25Z",
+      "updatedAt": "2026-10-03T12:08:53Z",
       "seed": 815821225,
       "target": 10,
       "filters": {},
@@ -1010,11 +1010,50 @@
         {
           "slug": "contains-duplicate-ii",
           "bucket": "overdue",
-          "status": "pending",
-          "cardIds": [],
+          "status": "in_progress",
+          "cardIds": [
+            "cd2-insight-01",
+            "cd2-edge-01",
+            "cd2-time-01",
+            "cd2-space-01"
+          ],
           "answers": [],
           "hintLevel": 0,
-          "presented": {}
+          "presented": {
+            "cd2-insight-01": {
+              "prompt": "Why can older elements be forgotten?",
+              "options": null
+            },
+            "cd2-edge-01": {
+              "prompt": "Which distance shows the `<= k` boundary?",
+              "options": [
+                {
+                  "label": "A",
+                  "text": "False (the 4s are 3 apart, which exceeds k = 3)"
+                },
+                {
+                  "label": "B",
+                  "text": "False (equal values must be adjacent to count)"
+                },
+                {
+                  "label": "C",
+                  "text": "True (the 4s are exactly 3 apart, and 3 <= k)"
+                },
+                {
+                  "label": "D",
+                  "text": "True, but only after sorting the array first"
+                }
+              ]
+            },
+            "cd2-time-01": {
+              "prompt": "Complete the statement: Time complexity: ___",
+              "options": null
+            },
+            "cd2-space-01": {
+              "prompt": "Memory use in terms of n and k: ___",
+              "options": null
+            }
+          }
         },
         {
           "slug": "add-two-numbers-ii",
