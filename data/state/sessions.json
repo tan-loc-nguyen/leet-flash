@@ -904,7 +904,7 @@
       "mode": "daily",
       "status": "active",
       "createdAt": "2026-10-03T12:00:20Z",
-      "updatedAt": "2026-10-03T12:05:09Z",
+      "updatedAt": "2026-10-03T12:06:00Z",
       "seed": 815821225,
       "target": 10,
       "filters": {},
@@ -926,6 +926,12 @@
               "category": "pattern",
               "result": "correct",
               "timestamp": "2026-10-03T12:05:08Z"
+            },
+            {
+              "cardId": "d2i-insight-01",
+              "category": "main_insight",
+              "result": "correct",
+              "timestamp": "2026-10-03T12:06:00Z"
             }
           ],
           "hintLevel": 0,

@@ -49,3 +49,4 @@
 {"timestamp":"2026-10-02T03:16:05Z","sessionId":"daily-2026-10-02","problem":"fizz-buzz","card":"fb3-space-01","category":"space_complexity","result":"correct","mode":"daily"}
 {"timestamp":"2026-10-02T03:16:05Z","event":"problem_review","sessionId":"daily-2026-10-02","problem":"fizz-buzz","mode":"daily","score":1.0,"outcome":"promote","levelBefore":0,"levelAfter":1,"nextReview":"2026-10-03T00:00:00Z","cards":4}
 {"timestamp":"2026-10-03T12:05:08Z","sessionId":"daily-2026-10-03","problem":"divide-two-integers","card":"d2i-pattern-01","category":"pattern","result":"correct","mode":"daily"}
+{"timestamp":"2026-10-03T12:06:00Z","sessionId":"daily-2026-10-03","problem":"divide-two-integers","card":"d2i-insight-01","category":"main_insight","result":"correct","mode":"daily"}

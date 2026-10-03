@@ -735,13 +735,13 @@
       },
       "d2i-insight-01": {
         "category": "main_insight",
-        "seen": 1,
-        "correct": 0,
+        "seen": 2,
+        "correct": 1,
         "partial": 1,
         "failed": 0,
-        "incorrectStreak": 1,
-        "lastResult": "partial",
-        "lastSeenAt": "2026-10-02T02:58:51Z"
+        "incorrectStreak": 0,
+        "lastResult": "correct",
+        "lastSeenAt": "2026-10-03T12:06:00Z"
       },
       "d2i-time-01": {
         "category": "time_complexity",
@@ -779,15 +779,16 @@
         ]
       },
       "main_insight": {
-        "seen": 1,
-        "correct": 0,
+        "seen": 2,
+        "correct": 1,
         "partial": 1,
         "failed": 0,
-        "incorrectStreak": 1,
-        "lastResult": "partial",
-        "lastSeenAt": "2026-10-02T02:58:51Z",
+        "incorrectStreak": 0,
+        "lastResult": "correct",
+        "lastSeenAt": "2026-10-03T12:06:00Z",
         "recent": [
-          "partial"
+          "partial",
+          "correct"
         ]
       },
       "time_complexity": {
