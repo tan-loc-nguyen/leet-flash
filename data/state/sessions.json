@@ -904,7 +904,7 @@
       "mode": "daily",
       "status": "active",
       "createdAt": "2026-10-03T12:00:20Z",
-      "updatedAt": "2026-10-03T12:23:16Z",
+      "updatedAt": "2026-10-03T12:24:30Z",
       "seed": 815821225,
       "target": 10,
       "filters": {},
@@ -1274,7 +1274,14 @@
             "rs3-time-01",
             "rs3-space-01"
           ],
-          "answers": [],
+          "answers": [
+            {
+              "cardId": "rs3-insight-01",
+              "category": "main_insight",
+              "result": "correct",
+              "timestamp": "2026-10-03T12:24:30Z"
+            }
+          ],
           "hintLevel": 0,
           "presented": {
             "rs3-insight-01": {
