@@ -1,23 +1,23 @@
 {
   "contains-duplicate-ii": {
-    "level": 1,
-    "lastReview": "2026-10-03T12:12:58Z",
-    "nextReview": "2026-10-04T00:00:00Z",
-    "recentAccuracy": 0.859,
-    "lastScore": 1.0,
-    "reviewCount": 2,
+    "level": 2,
+    "lastReview": "2026-10-04T04:06:20Z",
+    "nextReview": "2026-10-07T00:00:00Z",
+    "recentAccuracy": 0.872,
+    "lastScore": 0.885,
+    "reviewCount": 3,
     "lapses": 0,
     "weakCategories": [],
     "cardStats": {
       "cd2-insight-01": {
         "category": "main_insight",
-        "seen": 2,
+        "seen": 3,
         "correct": 1,
-        "partial": 1,
+        "partial": 2,
         "failed": 0,
-        "incorrectStreak": 0,
-        "lastResult": "correct",
-        "lastSeenAt": "2026-10-03T12:11:21Z"
+        "incorrectStreak": 1,
+        "lastResult": "partial",
+        "lastSeenAt": "2026-10-04T03:50:58Z"
       },
       "cd2-edge-01": {
         "category": "edge_case",
@@ -31,37 +31,58 @@
       },
       "cd2-time-01": {
         "category": "time_complexity",
-        "seen": 2,
-        "correct": 2,
+        "seen": 3,
+        "correct": 3,
         "partial": 0,
         "failed": 0,
         "incorrectStreak": 0,
         "lastResult": "correct",
-        "lastSeenAt": "2026-10-03T12:12:38Z"
+        "lastSeenAt": "2026-10-04T04:06:14Z"
       },
       "cd2-space-01": {
         "category": "space_complexity",
-        "seen": 2,
-        "correct": 1,
+        "seen": 3,
+        "correct": 2,
         "partial": 1,
         "failed": 0,
         "incorrectStreak": 0,
         "lastResult": "correct",
-        "lastSeenAt": "2026-10-03T12:12:58Z"
+        "lastSeenAt": "2026-10-04T04:06:20Z"
+      },
+      "recog-contains-duplicate-ii": {
+        "category": "pattern",
+        "seen": 1,
+        "correct": 1,
+        "partial": 0,
+        "failed": 0,
+        "incorrectStreak": 0,
+        "lastResult": "correct",
+        "lastSeenAt": "2026-10-04T03:04:39Z"
+      },
+      "cd2-code-01": {
+        "category": "code_reasoning",
+        "seen": 1,
+        "correct": 1,
+        "partial": 0,
+        "failed": 0,
+        "incorrectStreak": 0,
+        "lastResult": "correct",
+        "lastSeenAt": "2026-10-04T04:03:57Z"
       }
     },
     "categoryStats": {
       "main_insight": {
-        "seen": 2,
+        "seen": 3,
         "correct": 1,
-        "partial": 1,
+        "partial": 2,
         "failed": 0,
-        "incorrectStreak": 0,
-        "lastResult": "correct",
-        "lastSeenAt": "2026-10-03T12:11:21Z",
+        "incorrectStreak": 1,
+        "lastResult": "partial",
+        "lastSeenAt": "2026-10-04T03:50:58Z",
         "recent": [
           "partial",
-          "correct"
+          "correct",
+          "partial"
         ]
       },
       "edge_case": {
@@ -78,40 +99,66 @@
         ]
       },
       "time_complexity": {
-        "seen": 2,
-        "correct": 2,
+        "seen": 3,
+        "correct": 3,
         "partial": 0,
         "failed": 0,
         "incorrectStreak": 0,
         "lastResult": "correct",
-        "lastSeenAt": "2026-10-03T12:12:38Z",
+        "lastSeenAt": "2026-10-04T04:06:14Z",
         "recent": [
+          "correct",
           "correct",
           "correct"
         ]
       },
       "space_complexity": {
-        "seen": 2,
-        "correct": 1,
+        "seen": 3,
+        "correct": 2,
         "partial": 1,
         "failed": 0,
         "incorrectStreak": 0,
         "lastResult": "correct",
-        "lastSeenAt": "2026-10-03T12:12:58Z",
+        "lastSeenAt": "2026-10-04T04:06:20Z",
         "recent": [
           "partial",
+          "correct",
+          "correct"
+        ]
+      },
+      "pattern": {
+        "seen": 1,
+        "correct": 1,
+        "partial": 0,
+        "failed": 0,
+        "incorrectStreak": 0,
+        "lastResult": "correct",
+        "lastSeenAt": "2026-10-04T03:04:39Z",
+        "recent": [
+          "correct"
+        ]
+      },
+      "code_reasoning": {
+        "seen": 1,
+        "correct": 1,
+        "partial": 0,
+        "failed": 0,
+        "incorrectStreak": 0,
+        "lastResult": "correct",
+        "lastSeenAt": "2026-10-04T04:03:57Z",
+        "recent": [
           "correct"
         ]
       }
     }
   },
   "valid-palindrome": {
-    "level": 1,
-    "lastReview": "2026-10-03T12:47:56Z",
-    "nextReview": "2026-10-04T00:00:00Z",
-    "recentAccuracy": 0.873,
-    "lastScore": 1.0,
-    "reviewCount": 2,
+    "level": 2,
+    "lastReview": "2026-10-04T05:11:49Z",
+    "nextReview": "2026-10-07T00:00:00Z",
+    "recentAccuracy": 0.877,
+    "lastScore": 0.88,
+    "reviewCount": 3,
     "lapses": 0,
     "weakCategories": [],
     "cardStats": {
@@ -127,13 +174,13 @@
       },
       "vp2-invariant-01": {
         "category": "invariant",
-        "seen": 2,
-        "correct": 1,
+        "seen": 3,
+        "correct": 2,
         "partial": 1,
         "failed": 0,
         "incorrectStreak": 0,
         "lastResult": "correct",
-        "lastSeenAt": "2026-10-03T12:45:51Z"
+        "lastSeenAt": "2026-10-04T04:08:54Z"
       },
       "vp2-edge-01": {
         "category": "edge_case",
@@ -147,48 +194,70 @@
       },
       "vp2-space-01": {
         "category": "space_complexity",
-        "seen": 2,
-        "correct": 1,
+        "seen": 3,
+        "correct": 2,
         "partial": 1,
         "failed": 0,
         "incorrectStreak": 0,
         "lastResult": "correct",
-        "lastSeenAt": "2026-10-03T12:47:56Z"
+        "lastSeenAt": "2026-10-04T05:11:49Z"
       },
       "vp2-time-01": {
         "category": "time_complexity",
+        "seen": 2,
+        "correct": 2,
+        "partial": 0,
+        "failed": 0,
+        "incorrectStreak": 0,
+        "lastResult": "correct",
+        "lastSeenAt": "2026-10-04T04:13:49Z"
+      },
+      "recog-valid-palindrome": {
+        "category": "pattern",
+        "seen": 1,
+        "correct": 0,
+        "partial": 1,
+        "failed": 0,
+        "incorrectStreak": 1,
+        "lastResult": "partial",
+        "lastSeenAt": "2026-10-04T04:06:57Z"
+      },
+      "vp2-code-01": {
+        "category": "code_reasoning",
         "seen": 1,
         "correct": 1,
         "partial": 0,
         "failed": 0,
         "incorrectStreak": 0,
         "lastResult": "correct",
-        "lastSeenAt": "2026-10-03T12:46:50Z"
+        "lastSeenAt": "2026-10-04T04:13:15Z"
       }
     },
     "categoryStats": {
       "pattern": {
-        "seen": 1,
-        "correct": 1,
-        "partial": 0,
-        "failed": 0,
-        "incorrectStreak": 0,
-        "lastResult": "correct",
-        "lastSeenAt": "2026-10-02T02:01:26Z",
-        "recent": [
-          "correct"
-        ]
-      },
-      "invariant": {
         "seen": 2,
         "correct": 1,
         "partial": 1,
         "failed": 0,
+        "incorrectStreak": 1,
+        "lastResult": "partial",
+        "lastSeenAt": "2026-10-04T04:06:57Z",
+        "recent": [
+          "correct",
+          "partial"
+        ]
+      },
+      "invariant": {
+        "seen": 3,
+        "correct": 2,
+        "partial": 1,
+        "failed": 0,
         "incorrectStreak": 0,
         "lastResult": "correct",
-        "lastSeenAt": "2026-10-03T12:45:51Z",
+        "lastSeenAt": "2026-10-04T04:08:54Z",
         "recent": [
           "partial",
+          "correct",
           "correct"
         ]
       },
@@ -206,26 +275,40 @@
         ]
       },
       "space_complexity": {
-        "seen": 2,
-        "correct": 1,
+        "seen": 3,
+        "correct": 2,
         "partial": 1,
         "failed": 0,
         "incorrectStreak": 0,
         "lastResult": "correct",
-        "lastSeenAt": "2026-10-03T12:47:56Z",
+        "lastSeenAt": "2026-10-04T05:11:49Z",
         "recent": [
           "partial",
+          "correct",
           "correct"
         ]
       },
       "time_complexity": {
+        "seen": 2,
+        "correct": 2,
+        "partial": 0,
+        "failed": 0,
+        "incorrectStreak": 0,
+        "lastResult": "correct",
+        "lastSeenAt": "2026-10-04T04:13:49Z",
+        "recent": [
+          "correct",
+          "correct"
+        ]
+      },
+      "code_reasoning": {
         "seen": 1,
         "correct": 1,
         "partial": 0,
         "failed": 0,
         "incorrectStreak": 0,
         "lastResult": "correct",
-        "lastSeenAt": "2026-10-03T12:46:50Z",
+        "lastSeenAt": "2026-10-04T04:13:15Z",
         "recent": [
           "correct"
         ]
@@ -803,26 +886,24 @@
     }
   },
   "add-two-numbers-ii": {
-    "level": 1,
-    "lastReview": "2026-10-03T12:17:07Z",
-    "nextReview": "2026-10-04T00:00:00Z",
-    "recentAccuracy": 0.851,
-    "lastScore": 0.854,
-    "reviewCount": 2,
+    "level": 2,
+    "lastReview": "2026-10-04T03:00:59Z",
+    "nextReview": "2026-10-07T00:00:00Z",
+    "recentAccuracy": 0.925,
+    "lastScore": 1.0,
+    "reviewCount": 3,
     "lapses": 0,
-    "weakCategories": [
-      "main_insight"
-    ],
+    "weakCategories": [],
     "cardStats": {
       "a2-insight-01": {
         "category": "main_insight",
-        "seen": 2,
-        "correct": 0,
+        "seen": 3,
+        "correct": 1,
         "partial": 2,
         "failed": 0,
-        "incorrectStreak": 2,
-        "lastResult": "partial",
-        "lastSeenAt": "2026-10-03T12:15:19Z"
+        "incorrectStreak": 0,
+        "lastResult": "correct",
+        "lastSeenAt": "2026-10-04T02:47:40Z"
       },
       "a2-edge-01": {
         "category": "edge_case",
@@ -846,15 +927,25 @@
       },
       "a2-space-01": {
         "category": "space_complexity",
-        "seen": 1,
-        "correct": 1,
+        "seen": 2,
+        "correct": 2,
         "partial": 0,
         "failed": 0,
         "incorrectStreak": 0,
         "lastResult": "correct",
-        "lastSeenAt": "2026-10-02T02:54:52Z"
+        "lastSeenAt": "2026-10-04T03:00:59Z"
       },
       "a2-pattern-01": {
+        "category": "main_insight",
+        "seen": 2,
+        "correct": 2,
+        "partial": 0,
+        "failed": 0,
+        "incorrectStreak": 0,
+        "lastResult": "correct",
+        "lastSeenAt": "2026-10-04T02:47:00Z"
+      },
+      "recog-add-two-numbers-ii": {
         "category": "pattern",
         "seen": 1,
         "correct": 1,
@@ -862,21 +953,33 @@
         "failed": 0,
         "incorrectStreak": 0,
         "lastResult": "correct",
-        "lastSeenAt": "2026-10-03T12:14:20Z"
+        "lastSeenAt": "2026-10-04T02:46:15Z"
+      },
+      "a2-code-01": {
+        "category": "code_reasoning",
+        "seen": 1,
+        "correct": 1,
+        "partial": 0,
+        "failed": 0,
+        "incorrectStreak": 0,
+        "lastResult": "correct",
+        "lastSeenAt": "2026-10-04T02:59:44Z"
       }
     },
     "categoryStats": {
       "main_insight": {
-        "seen": 2,
-        "correct": 0,
+        "seen": 4,
+        "correct": 2,
         "partial": 2,
         "failed": 0,
-        "incorrectStreak": 2,
-        "lastResult": "partial",
-        "lastSeenAt": "2026-10-03T12:15:19Z",
+        "incorrectStreak": 0,
+        "lastResult": "correct",
+        "lastSeenAt": "2026-10-04T02:47:40Z",
         "recent": [
           "partial",
-          "partial"
+          "partial",
+          "correct",
+          "correct"
         ]
       },
       "edge_case": {
@@ -906,25 +1009,39 @@
         ]
       },
       "space_complexity": {
-        "seen": 1,
-        "correct": 1,
+        "seen": 2,
+        "correct": 2,
         "partial": 0,
         "failed": 0,
         "incorrectStreak": 0,
         "lastResult": "correct",
-        "lastSeenAt": "2026-10-02T02:54:52Z",
+        "lastSeenAt": "2026-10-04T03:00:59Z",
         "recent": [
+          "correct",
           "correct"
         ]
       },
       "pattern": {
+        "seen": 2,
+        "correct": 2,
+        "partial": 0,
+        "failed": 0,
+        "incorrectStreak": 0,
+        "lastResult": "correct",
+        "lastSeenAt": "2026-10-04T02:46:15Z",
+        "recent": [
+          "correct",
+          "correct"
+        ]
+      },
+      "code_reasoning": {
         "seen": 1,
         "correct": 1,
         "partial": 0,
         "failed": 0,
         "incorrectStreak": 0,
         "lastResult": "correct",
-        "lastSeenAt": "2026-10-03T12:14:20Z",
+        "lastSeenAt": "2026-10-04T02:59:44Z",
         "recent": [
           "correct"
         ]
@@ -932,24 +1049,24 @@
     }
   },
   "divide-two-integers": {
-    "level": 1,
-    "lastReview": "2026-10-03T12:08:25Z",
-    "nextReview": "2026-10-04T00:00:00Z",
-    "recentAccuracy": 0.818,
+    "level": 2,
+    "lastReview": "2026-10-04T05:50:12Z",
+    "nextReview": "2026-10-07T00:00:00Z",
+    "recentAccuracy": 0.909,
     "lastScore": 1.0,
-    "reviewCount": 2,
+    "reviewCount": 3,
     "lapses": 0,
     "weakCategories": [],
     "cardStats": {
       "d2i-pattern-01": {
-        "category": "pattern",
-        "seen": 2,
-        "correct": 2,
+        "category": "main_insight",
+        "seen": 3,
+        "correct": 3,
         "partial": 0,
         "failed": 0,
         "incorrectStreak": 0,
         "lastResult": "correct",
-        "lastSeenAt": "2026-10-03T12:05:08Z"
+        "lastSeenAt": "2026-10-04T05:44:30Z"
       },
       "d2i-insight-01": {
         "category": "main_insight",
@@ -963,96 +1080,111 @@
       },
       "d2i-time-01": {
         "category": "time_complexity",
-        "seen": 2,
-        "correct": 1,
+        "seen": 3,
+        "correct": 2,
         "partial": 0,
         "failed": 1,
         "incorrectStreak": 0,
         "lastResult": "correct",
-        "lastSeenAt": "2026-10-03T12:08:25Z"
+        "lastSeenAt": "2026-10-04T05:48:58Z"
       },
       "d2i-space-01": {
         "category": "space_complexity",
-        "seen": 1,
-        "correct": 1,
-        "partial": 0,
-        "failed": 0,
-        "incorrectStreak": 0,
-        "lastResult": "correct",
-        "lastSeenAt": "2026-10-02T02:59:38Z"
-      },
-      "d2i-edge-01": {
-        "category": "edge_case",
-        "seen": 1,
-        "correct": 1,
-        "partial": 0,
-        "failed": 0,
-        "incorrectStreak": 0,
-        "lastResult": "correct",
-        "lastSeenAt": "2026-10-03T12:06:51Z"
-      }
-    },
-    "categoryStats": {
-      "pattern": {
         "seen": 2,
         "correct": 2,
         "partial": 0,
         "failed": 0,
         "incorrectStreak": 0,
         "lastResult": "correct",
-        "lastSeenAt": "2026-10-03T12:05:08Z",
+        "lastSeenAt": "2026-10-04T05:50:12Z"
+      },
+      "d2i-edge-01": {
+        "category": "edge_case",
+        "seen": 2,
+        "correct": 2,
+        "partial": 0,
+        "failed": 0,
+        "incorrectStreak": 0,
+        "lastResult": "correct",
+        "lastSeenAt": "2026-10-04T05:44:56Z"
+      },
+      "recog-divide-two-integers": {
+        "category": "pattern",
+        "seen": 1,
+        "correct": 1,
+        "partial": 0,
+        "failed": 0,
+        "incorrectStreak": 0,
+        "lastResult": "correct",
+        "lastSeenAt": "2026-10-04T05:42:38Z"
+      }
+    },
+    "categoryStats": {
+      "pattern": {
+        "seen": 3,
+        "correct": 3,
+        "partial": 0,
+        "failed": 0,
+        "incorrectStreak": 0,
+        "lastResult": "correct",
+        "lastSeenAt": "2026-10-04T05:42:38Z",
         "recent": [
+          "correct",
           "correct",
           "correct"
         ]
       },
       "main_insight": {
-        "seen": 2,
-        "correct": 1,
+        "seen": 3,
+        "correct": 2,
         "partial": 1,
         "failed": 0,
         "incorrectStreak": 0,
         "lastResult": "correct",
-        "lastSeenAt": "2026-10-03T12:06:00Z",
+        "lastSeenAt": "2026-10-04T05:44:30Z",
         "recent": [
           "partial",
+          "correct",
           "correct"
         ]
       },
       "time_complexity": {
-        "seen": 2,
-        "correct": 1,
+        "seen": 3,
+        "correct": 2,
         "partial": 0,
         "failed": 1,
         "incorrectStreak": 0,
         "lastResult": "correct",
-        "lastSeenAt": "2026-10-03T12:08:25Z",
+        "lastSeenAt": "2026-10-04T05:48:58Z",
         "recent": [
           "failed",
+          "correct",
           "correct"
         ]
       },
       "space_complexity": {
-        "seen": 1,
-        "correct": 1,
+        "seen": 2,
+        "correct": 2,
         "partial": 0,
         "failed": 0,
         "incorrectStreak": 0,
         "lastResult": "correct",
-        "lastSeenAt": "2026-10-02T02:59:38Z",
+        "lastSeenAt": "2026-10-04T05:50:12Z",
         "recent": [
+          "correct",
           "correct"
         ]
       },
       "edge_case": {
-        "seen": 1,
-        "correct": 1,
+        "seen": 2,
+        "correct": 2,
         "partial": 0,
         "failed": 0,
         "incorrectStreak": 0,
         "lastResult": "correct",
-        "lastSeenAt": "2026-10-03T12:06:51Z",
+        "lastSeenAt": "2026-10-04T05:44:56Z",
         "recent": [
+          "correct",
           "correct"
         ]
       }
@@ -1060,11 +1192,11 @@
   },
   "maximum-average-subarray-i": {
     "level": 1,
-    "lastReview": "2026-10-03T12:39:15Z",
-    "nextReview": "2026-10-04T00:00:00Z",
-    "recentAccuracy": 0.923,
-    "lastScore": 0.847,
-    "reviewCount": 2,
+    "lastReview": "2026-10-04T05:28:22Z",
+    "nextReview": "2026-10-05T00:00:00Z",
+    "recentAccuracy": 0.864,
+    "lastScore": 0.805,
+    "reviewCount": 3,
     "lapses": 0,
     "weakCategories": [],
     "cardStats": {
@@ -1080,122 +1212,45 @@
       },
       "mas-edge-01": {
         "category": "edge_case",
-        "seen": 2,
-        "correct": 2,
+        "seen": 3,
+        "correct": 3,
         "partial": 0,
         "failed": 0,
         "incorrectStreak": 0,
         "lastResult": "correct",
-        "lastSeenAt": "2026-10-03T12:38:25Z"
+        "lastSeenAt": "2026-10-04T05:27:24Z"
       },
       "mas-time-01": {
         "category": "time_complexity",
-        "seen": 2,
-        "correct": 2,
+        "seen": 3,
+        "correct": 3,
         "partial": 0,
         "failed": 0,
         "incorrectStreak": 0,
         "lastResult": "correct",
-        "lastSeenAt": "2026-10-03T12:38:54Z"
+        "lastSeenAt": "2026-10-04T05:27:49Z"
       },
       "mas-space-01": {
         "category": "space_complexity",
-        "seen": 2,
+        "seen": 3,
         "correct": 2,
         "partial": 0,
-        "failed": 0,
-        "incorrectStreak": 0,
-        "lastResult": "correct",
-        "lastSeenAt": "2026-10-03T12:39:15Z"
+        "failed": 1,
+        "incorrectStreak": 1,
+        "lastResult": "failed",
+        "lastSeenAt": "2026-10-04T05:28:22Z"
       },
       "mas-insight-01": {
         "category": "main_insight",
-        "seen": 1,
-        "correct": 0,
-        "partial": 1,
-        "failed": 0,
-        "incorrectStreak": 1,
-        "lastResult": "partial",
-        "lastSeenAt": "2026-10-03T12:35:23Z"
-      }
-    },
-    "categoryStats": {
-      "pattern": {
-        "seen": 1,
+        "seen": 2,
         "correct": 1,
-        "partial": 0,
-        "failed": 0,
-        "incorrectStreak": 0,
-        "lastResult": "correct",
-        "lastSeenAt": "2026-10-02T03:12:40Z",
-        "recent": [
-          "correct"
-        ]
-      },
-      "edge_case": {
-        "seen": 2,
-        "correct": 2,
-        "partial": 0,
-        "failed": 0,
-        "incorrectStreak": 0,
-        "lastResult": "correct",
-        "lastSeenAt": "2026-10-03T12:38:25Z",
-        "recent": [
-          "correct",
-          "correct"
-        ]
-      },
-      "time_complexity": {
-        "seen": 2,
-        "correct": 2,
-        "partial": 0,
-        "failed": 0,
-        "incorrectStreak": 0,
-        "lastResult": "correct",
-        "lastSeenAt": "2026-10-03T12:38:54Z",
-        "recent": [
-          "correct",
-          "correct"
-        ]
-      },
-      "space_complexity": {
-        "seen": 2,
-        "correct": 2,
-        "partial": 0,
-        "failed": 0,
-        "incorrectStreak": 0,
-        "lastResult": "correct",
-        "lastSeenAt": "2026-10-03T12:39:15Z",
-        "recent": [
-          "correct",
-          "correct"
-        ]
-      },
-      "main_insight": {
-        "seen": 1,
-        "correct": 0,
         "partial": 1,
         "failed": 0,
-        "incorrectStreak": 1,
-        "lastResult": "partial",
-        "lastSeenAt": "2026-10-03T12:35:23Z",
-        "recent": [
-          "partial"
-        ]
-      }
-    }
-  },
-  "valid-subarrays-with-matching-sum-digits-i": {
-    "level": 1,
-    "lastReview": "2026-10-03T13:04:33Z",
-    "nextReview": "2026-10-04T00:00:00Z",
-    "recentAccuracy": 1.0,
-    "lastScore": 1.0,
-    "reviewCount": 1,
-    "lapses": 0,
-    "weakCategories": [],
-    "cardStats": {
-      "vs-pattern-01": {
+        "incorrectStreak": 0,
+        "lastResult": "correct",
+        "lastSeenAt": "2026-10-04T05:26:29Z"
+      },
+      "recog-maximum-average-subarray-i": {
         "category": "pattern",
         "seen": 1,
         "correct": 1,
@@ -1203,17 +1258,109 @@
         "failed": 0,
         "incorrectStreak": 0,
         "lastResult": "correct",
-        "lastSeenAt": "2026-10-03T12:59:15Z"
-      },
-      "vs-insight-01": {
-        "category": "main_insight",
-        "seen": 1,
-        "correct": 1,
+        "lastSeenAt": "2026-10-04T05:25:20Z"
+      }
+    },
+    "categoryStats": {
+      "pattern": {
+        "seen": 2,
+        "correct": 2,
         "partial": 0,
         "failed": 0,
         "incorrectStreak": 0,
         "lastResult": "correct",
-        "lastSeenAt": "2026-10-03T13:00:05Z"
+        "lastSeenAt": "2026-10-04T05:25:20Z",
+        "recent": [
+          "correct",
+          "correct"
+        ]
+      },
+      "edge_case": {
+        "seen": 3,
+        "correct": 3,
+        "partial": 0,
+        "failed": 0,
+        "incorrectStreak": 0,
+        "lastResult": "correct",
+        "lastSeenAt": "2026-10-04T05:27:24Z",
+        "recent": [
+          "correct",
+          "correct",
+          "correct"
+        ]
+      },
+      "time_complexity": {
+        "seen": 3,
+        "correct": 3,
+        "partial": 0,
+        "failed": 0,
+        "incorrectStreak": 0,
+        "lastResult": "correct",
+        "lastSeenAt": "2026-10-04T05:27:49Z",
+        "recent": [
+          "correct",
+          "correct",
+          "correct"
+        ]
+      },
+      "space_complexity": {
+        "seen": 3,
+        "correct": 2,
+        "partial": 0,
+        "failed": 1,
+        "incorrectStreak": 1,
+        "lastResult": "failed",
+        "lastSeenAt": "2026-10-04T05:28:22Z",
+        "recent": [
+          "correct",
+          "correct",
+          "failed"
+        ]
+      },
+      "main_insight": {
+        "seen": 2,
+        "correct": 1,
+        "partial": 1,
+        "failed": 0,
+        "incorrectStreak": 0,
+        "lastResult": "correct",
+        "lastSeenAt": "2026-10-04T05:26:29Z",
+        "recent": [
+          "partial",
+          "correct"
+        ]
+      }
+    }
+  },
+  "valid-subarrays-with-matching-sum-digits-i": {
+    "level": 1,
+    "lastReview": "2026-10-04T06:12:51Z",
+    "nextReview": "2026-10-05T00:00:00Z",
+    "recentAccuracy": 0.883,
+    "lastScore": 0.766,
+    "reviewCount": 2,
+    "lapses": 0,
+    "weakCategories": [],
+    "cardStats": {
+      "vs-pattern-01": {
+        "category": "main_insight",
+        "seen": 2,
+        "correct": 2,
+        "partial": 0,
+        "failed": 0,
+        "incorrectStreak": 0,
+        "lastResult": "correct",
+        "lastSeenAt": "2026-10-04T06:11:35Z"
+      },
+      "vs-insight-01": {
+        "category": "main_insight",
+        "seen": 2,
+        "correct": 2,
+        "partial": 0,
+        "failed": 0,
+        "incorrectStreak": 0,
+        "lastResult": "correct",
+        "lastSeenAt": "2026-10-04T06:10:57Z"
       },
       "vs-time-01": {
         "category": "time_complexity",
@@ -1234,30 +1381,63 @@
         "incorrectStreak": 0,
         "lastResult": "correct",
         "lastSeenAt": "2026-10-03T13:04:33Z"
+      },
+      "recog-valid-subarrays-with-matching-sum-digits-i": {
+        "category": "pattern",
+        "seen": 1,
+        "correct": 0,
+        "partial": 0,
+        "failed": 1,
+        "incorrectStreak": 1,
+        "lastResult": "failed",
+        "lastSeenAt": "2026-10-04T06:10:19Z"
+      },
+      "vs-code-01": {
+        "category": "code_reasoning",
+        "seen": 1,
+        "correct": 1,
+        "partial": 0,
+        "failed": 0,
+        "incorrectStreak": 0,
+        "lastResult": "correct",
+        "lastSeenAt": "2026-10-04T06:12:28Z"
+      },
+      "vs-edge-01": {
+        "category": "edge_case",
+        "seen": 1,
+        "correct": 1,
+        "partial": 0,
+        "failed": 0,
+        "incorrectStreak": 0,
+        "lastResult": "correct",
+        "lastSeenAt": "2026-10-04T06:12:51Z"
       }
     },
     "categoryStats": {
       "pattern": {
-        "seen": 1,
+        "seen": 2,
         "correct": 1,
         "partial": 0,
-        "failed": 0,
-        "incorrectStreak": 0,
-        "lastResult": "correct",
-        "lastSeenAt": "2026-10-03T12:59:15Z",
+        "failed": 1,
+        "incorrectStreak": 1,
+        "lastResult": "failed",
+        "lastSeenAt": "2026-10-04T06:10:19Z",
         "recent": [
-          "correct"
+          "correct",
+          "failed"
         ]
       },
       "main_insight": {
-        "seen": 1,
-        "correct": 1,
+        "seen": 3,
+        "correct": 3,
         "partial": 0,
         "failed": 0,
         "incorrectStreak": 0,
         "lastResult": "correct",
-        "lastSeenAt": "2026-10-03T13:00:05Z",
+        "lastSeenAt": "2026-10-04T06:11:35Z",
         "recent": [
+          "correct",
+          "correct",
           "correct"
         ]
       },
@@ -1283,6 +1463,526 @@
         "lastSeenAt": "2026-10-03T13:04:33Z",
         "recent": [
           "correct"
+        ]
+      },
+      "code_reasoning": {
+        "seen": 1,
+        "correct": 1,
+        "partial": 0,
+        "failed": 0,
+        "incorrectStreak": 0,
+        "lastResult": "correct",
+        "lastSeenAt": "2026-10-04T06:12:28Z",
+        "recent": [
+          "correct"
+        ]
+      },
+      "edge_case": {
+        "seen": 1,
+        "correct": 1,
+        "partial": 0,
+        "failed": 0,
+        "incorrectStreak": 0,
+        "lastResult": "correct",
+        "lastSeenAt": "2026-10-04T06:12:51Z",
+        "recent": [
+          "correct"
+        ]
+      }
+    }
+  },
+  "top-k-frequent-elements": {
+    "level": 1,
+    "lastReview": "2026-10-04T05:21:01Z",
+    "nextReview": "2026-10-05T00:00:00Z",
+    "recentAccuracy": 0.92,
+    "lastScore": 0.92,
+    "reviewCount": 1,
+    "lapses": 0,
+    "weakCategories": [],
+    "cardStats": {
+      "recog-top-k-frequent-elements": {
+        "category": "pattern",
+        "seen": 1,
+        "correct": 1,
+        "partial": 0,
+        "failed": 0,
+        "incorrectStreak": 0,
+        "lastResult": "correct",
+        "lastSeenAt": "2026-10-04T05:16:09Z"
+      },
+      "tk-insight-01": {
+        "category": "main_insight",
+        "seen": 1,
+        "correct": 1,
+        "partial": 0,
+        "failed": 0,
+        "incorrectStreak": 0,
+        "lastResult": "correct",
+        "lastSeenAt": "2026-10-04T05:17:37Z"
+      },
+      "tk-ds-01": {
+        "category": "data_structure",
+        "seen": 1,
+        "correct": 1,
+        "partial": 0,
+        "failed": 0,
+        "incorrectStreak": 0,
+        "lastResult": "correct",
+        "lastSeenAt": "2026-10-04T05:18:15Z"
+      },
+      "tk-alt-01": {
+        "category": "alternative_approach",
+        "seen": 1,
+        "correct": 0,
+        "partial": 1,
+        "failed": 0,
+        "incorrectStreak": 1,
+        "lastResult": "partial",
+        "lastSeenAt": "2026-10-04T05:20:06Z"
+      },
+      "tk-time-01": {
+        "category": "time_complexity",
+        "seen": 1,
+        "correct": 1,
+        "partial": 0,
+        "failed": 0,
+        "incorrectStreak": 0,
+        "lastResult": "correct",
+        "lastSeenAt": "2026-10-04T05:21:01Z"
+      }
+    },
+    "categoryStats": {
+      "pattern": {
+        "seen": 1,
+        "correct": 1,
+        "partial": 0,
+        "failed": 0,
+        "incorrectStreak": 0,
+        "lastResult": "correct",
+        "lastSeenAt": "2026-10-04T05:16:09Z",
+        "recent": [
+          "correct"
+        ]
+      },
+      "main_insight": {
+        "seen": 1,
+        "correct": 1,
+        "partial": 0,
+        "failed": 0,
+        "incorrectStreak": 0,
+        "lastResult": "correct",
+        "lastSeenAt": "2026-10-04T05:17:37Z",
+        "recent": [
+          "correct"
+        ]
+      },
+      "data_structure": {
+        "seen": 1,
+        "correct": 1,
+        "partial": 0,
+        "failed": 0,
+        "incorrectStreak": 0,
+        "lastResult": "correct",
+        "lastSeenAt": "2026-10-04T05:18:15Z",
+        "recent": [
+          "correct"
+        ]
+      },
+      "alternative_approach": {
+        "seen": 1,
+        "correct": 0,
+        "partial": 1,
+        "failed": 0,
+        "incorrectStreak": 1,
+        "lastResult": "partial",
+        "lastSeenAt": "2026-10-04T05:20:06Z",
+        "recent": [
+          "partial"
+        ]
+      },
+      "time_complexity": {
+        "seen": 1,
+        "correct": 1,
+        "partial": 0,
+        "failed": 0,
+        "incorrectStreak": 0,
+        "lastResult": "correct",
+        "lastSeenAt": "2026-10-04T05:21:01Z",
+        "recent": [
+          "correct"
+        ]
+      }
+    }
+  },
+  "kth-largest-element-in-a-stream": {
+    "level": 0,
+    "lastReview": "2026-10-04T05:42:01Z",
+    "nextReview": "2026-10-04T05:42:01Z",
+    "recentAccuracy": 0.788,
+    "lastScore": 0.788,
+    "reviewCount": 1,
+    "lapses": 0,
+    "weakCategories": [],
+    "cardStats": {
+      "recog-kth-largest-element-in-a-stream": {
+        "category": "pattern",
+        "seen": 1,
+        "correct": 1,
+        "partial": 0,
+        "failed": 0,
+        "incorrectStreak": 0,
+        "lastResult": "correct",
+        "lastSeenAt": "2026-10-04T05:29:55Z"
+      },
+      "kl-code-01": {
+        "category": "code_reasoning",
+        "seen": 1,
+        "correct": 1,
+        "partial": 0,
+        "failed": 0,
+        "incorrectStreak": 0,
+        "lastResult": "correct",
+        "lastSeenAt": "2026-10-04T05:39:18Z"
+      },
+      "kl-edge-01": {
+        "category": "edge_case",
+        "seen": 1,
+        "correct": 1,
+        "partial": 0,
+        "failed": 0,
+        "incorrectStreak": 0,
+        "lastResult": "correct",
+        "lastSeenAt": "2026-10-04T05:40:12Z"
+      },
+      "kl-time-01": {
+        "category": "time_complexity",
+        "seen": 1,
+        "correct": 0,
+        "partial": 1,
+        "failed": 0,
+        "incorrectStreak": 1,
+        "lastResult": "partial",
+        "lastSeenAt": "2026-10-04T05:40:45Z"
+      },
+      "kl-space-01": {
+        "category": "space_complexity",
+        "seen": 1,
+        "correct": 0,
+        "partial": 1,
+        "failed": 0,
+        "incorrectStreak": 1,
+        "lastResult": "partial",
+        "lastSeenAt": "2026-10-04T05:42:01Z"
+      }
+    },
+    "categoryStats": {
+      "pattern": {
+        "seen": 1,
+        "correct": 1,
+        "partial": 0,
+        "failed": 0,
+        "incorrectStreak": 0,
+        "lastResult": "correct",
+        "lastSeenAt": "2026-10-04T05:29:55Z",
+        "recent": [
+          "correct"
+        ]
+      },
+      "code_reasoning": {
+        "seen": 1,
+        "correct": 1,
+        "partial": 0,
+        "failed": 0,
+        "incorrectStreak": 0,
+        "lastResult": "correct",
+        "lastSeenAt": "2026-10-04T05:39:18Z",
+        "recent": [
+          "correct"
+        ]
+      },
+      "edge_case": {
+        "seen": 1,
+        "correct": 1,
+        "partial": 0,
+        "failed": 0,
+        "incorrectStreak": 0,
+        "lastResult": "correct",
+        "lastSeenAt": "2026-10-04T05:40:12Z",
+        "recent": [
+          "correct"
+        ]
+      },
+      "time_complexity": {
+        "seen": 1,
+        "correct": 0,
+        "partial": 1,
+        "failed": 0,
+        "incorrectStreak": 1,
+        "lastResult": "partial",
+        "lastSeenAt": "2026-10-04T05:40:45Z",
+        "recent": [
+          "partial"
+        ]
+      },
+      "space_complexity": {
+        "seen": 1,
+        "correct": 0,
+        "partial": 1,
+        "failed": 0,
+        "incorrectStreak": 1,
+        "lastResult": "partial",
+        "lastSeenAt": "2026-10-04T05:42:01Z",
+        "recent": [
+          "partial"
+        ]
+      }
+    }
+  },
+  "random-pick-with-weight": {
+    "level": 0,
+    "lastReview": "2026-10-04T06:04:18Z",
+    "nextReview": "2026-10-04T06:04:18Z",
+    "recentAccuracy": 0.692,
+    "lastScore": 0.692,
+    "reviewCount": 1,
+    "lapses": 0,
+    "weakCategories": [],
+    "cardStats": {
+      "recog-random-pick-with-weight": {
+        "category": "pattern",
+        "seen": 1,
+        "correct": 0,
+        "partial": 1,
+        "failed": 0,
+        "incorrectStreak": 1,
+        "lastResult": "partial",
+        "lastSeenAt": "2026-10-04T05:58:16Z"
+      },
+      "rw-insight-01": {
+        "category": "main_insight",
+        "seen": 1,
+        "correct": 0,
+        "partial": 1,
+        "failed": 0,
+        "incorrectStreak": 1,
+        "lastResult": "partial",
+        "lastSeenAt": "2026-10-04T06:00:13Z"
+      },
+      "rw-code-01": {
+        "category": "code_reasoning",
+        "seen": 1,
+        "correct": 0,
+        "partial": 1,
+        "failed": 0,
+        "incorrectStreak": 1,
+        "lastResult": "partial",
+        "lastSeenAt": "2026-10-04T06:02:08Z"
+      },
+      "rw-time-01": {
+        "category": "time_complexity",
+        "seen": 1,
+        "correct": 1,
+        "partial": 0,
+        "failed": 0,
+        "incorrectStreak": 0,
+        "lastResult": "correct",
+        "lastSeenAt": "2026-10-04T06:03:08Z"
+      },
+      "rw-space-01": {
+        "category": "space_complexity",
+        "seen": 1,
+        "correct": 1,
+        "partial": 0,
+        "failed": 0,
+        "incorrectStreak": 0,
+        "lastResult": "correct",
+        "lastSeenAt": "2026-10-04T06:04:18Z"
+      }
+    },
+    "categoryStats": {
+      "pattern": {
+        "seen": 1,
+        "correct": 0,
+        "partial": 1,
+        "failed": 0,
+        "incorrectStreak": 1,
+        "lastResult": "partial",
+        "lastSeenAt": "2026-10-04T05:58:16Z",
+        "recent": [
+          "partial"
+        ]
+      },
+      "main_insight": {
+        "seen": 1,
+        "correct": 0,
+        "partial": 1,
+        "failed": 0,
+        "incorrectStreak": 1,
+        "lastResult": "partial",
+        "lastSeenAt": "2026-10-04T06:00:13Z",
+        "recent": [
+          "partial"
+        ]
+      },
+      "code_reasoning": {
+        "seen": 1,
+        "correct": 0,
+        "partial": 1,
+        "failed": 0,
+        "incorrectStreak": 1,
+        "lastResult": "partial",
+        "lastSeenAt": "2026-10-04T06:02:08Z",
+        "recent": [
+          "partial"
+        ]
+      },
+      "time_complexity": {
+        "seen": 1,
+        "correct": 1,
+        "partial": 0,
+        "failed": 0,
+        "incorrectStreak": 0,
+        "lastResult": "correct",
+        "lastSeenAt": "2026-10-04T06:03:08Z",
+        "recent": [
+          "correct"
+        ]
+      },
+      "space_complexity": {
+        "seen": 1,
+        "correct": 1,
+        "partial": 0,
+        "failed": 0,
+        "incorrectStreak": 0,
+        "lastResult": "correct",
+        "lastSeenAt": "2026-10-04T06:04:18Z",
+        "recent": [
+          "correct"
+        ]
+      }
+    }
+  },
+  "contains-duplicate": {
+    "level": 1,
+    "lastReview": "2026-10-04T06:17:20Z",
+    "nextReview": "2026-10-05T00:00:00Z",
+    "recentAccuracy": 0.902,
+    "lastScore": 0.902,
+    "reviewCount": 1,
+    "lapses": 0,
+    "weakCategories": [],
+    "cardStats": {
+      "recog-contains-duplicate": {
+        "category": "pattern",
+        "seen": 1,
+        "correct": 1,
+        "partial": 0,
+        "failed": 0,
+        "incorrectStreak": 0,
+        "lastResult": "correct",
+        "lastSeenAt": "2026-10-04T06:14:34Z"
+      },
+      "cd-insight-01": {
+        "category": "main_insight",
+        "seen": 1,
+        "correct": 1,
+        "partial": 0,
+        "failed": 0,
+        "incorrectStreak": 0,
+        "lastResult": "correct",
+        "lastSeenAt": "2026-10-04T06:15:41Z"
+      },
+      "cd-edge-01": {
+        "category": "edge_case",
+        "seen": 1,
+        "correct": 1,
+        "partial": 0,
+        "failed": 0,
+        "incorrectStreak": 0,
+        "lastResult": "correct",
+        "lastSeenAt": "2026-10-04T06:15:53Z"
+      },
+      "cd-time-01": {
+        "category": "time_complexity",
+        "seen": 1,
+        "correct": 1,
+        "partial": 0,
+        "failed": 0,
+        "incorrectStreak": 0,
+        "lastResult": "correct",
+        "lastSeenAt": "2026-10-04T06:16:12Z"
+      },
+      "cd-space-01": {
+        "category": "space_complexity",
+        "seen": 1,
+        "correct": 0,
+        "partial": 1,
+        "failed": 0,
+        "incorrectStreak": 1,
+        "lastResult": "partial",
+        "lastSeenAt": "2026-10-04T06:17:20Z"
+      }
+    },
+    "categoryStats": {
+      "pattern": {
+        "seen": 1,
+        "correct": 1,
+        "partial": 0,
+        "failed": 0,
+        "incorrectStreak": 0,
+        "lastResult": "correct",
+        "lastSeenAt": "2026-10-04T06:14:34Z",
+        "recent": [
+          "correct"
+        ]
+      },
+      "main_insight": {
+        "seen": 1,
+        "correct": 1,
+        "partial": 0,
+        "failed": 0,
+        "incorrectStreak": 0,
+        "lastResult": "correct",
+        "lastSeenAt": "2026-10-04T06:15:41Z",
+        "recent": [
+          "correct"
+        ]
+      },
+      "edge_case": {
+        "seen": 1,
+        "correct": 1,
+        "partial": 0,
+        "failed": 0,
+        "incorrectStreak": 0,
+        "lastResult": "correct",
+        "lastSeenAt": "2026-10-04T06:15:53Z",
+        "recent": [
+          "correct"
+        ]
+      },
+      "time_complexity": {
+        "seen": 1,
+        "correct": 1,
+        "partial": 0,
+        "failed": 0,
+        "incorrectStreak": 0,
+        "lastResult": "correct",
+        "lastSeenAt": "2026-10-04T06:16:12Z",
+        "recent": [
+          "correct"
+        ]
+      },
+      "space_complexity": {
+        "seen": 1,
+        "correct": 0,
+        "partial": 1,
+        "failed": 0,
+        "incorrectStreak": 1,
+        "lastResult": "partial",
+        "lastSeenAt": "2026-10-04T06:17:20Z",
+        "recent": [
+          "partial"
         ]
       }
     }

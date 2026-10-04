@@ -7,6 +7,7 @@
     "Design"
   ],
   "mainInsight": "You only ever need the k largest values: keep them in a min-heap of size k whose root is the k-th largest; a new value matters only if it beats the root.",
+  "invariant": "Between calls the heap holds the k largest values seen so far (all of them if fewer than k have arrived); its root, the minimum, is the k-th largest.",
   "canonicalApproach": "Min-heap of size k",
   "approaches": [
     {
@@ -20,7 +21,7 @@
       "weaknesses": [
         "Slow, stores everything"
       ],
-      "interviewRelevance": "Your approach: correct but not optimal."
+      "interviewRelevance": "A fine first brute force; interviewers expect you to move on to the heap."
     },
     {
       "name": "Sorted list + insort",
@@ -28,7 +29,8 @@
       "timeComplexity": "O(n) per add",
       "spaceComplexity": "O(n)",
       "weaknesses": [
-        "Shifting elements"
+        "Shifting elements",
+        "Stores every value"
       ]
     },
     {
@@ -37,20 +39,31 @@
       "timeComplexity": "O(log k) per add",
       "spaceComplexity": "O(k)",
       "strengths": [
-        "Optimal"
+        "Optimal",
+        "Bounded memory"
       ],
       "interviewRelevance": "The expected answer."
     }
   ],
   "personalSolution": {
-    "approach": "Append and sort on every add",
-    "timeComplexity": "O(n log n) per add",
-    "spaceComplexity": "O(n)",
-    "isOptimal": false,
-    "notes": "Correct but slow. Use a min-heap of size k for O(log k) updates."
+    "approach": "Min-heap of size k (heapify the initial list, then trim to k)",
+    "timeComplexity": "O(n + (n - k) log n) to build, O(log k) per add",
+    "spaceComplexity": "O(n) while building, O(k) afterwards",
+    "isOptimal": true,
+    "notes": "Optimal per add. Trimming with heappop costs (n - k) log n in __init__; feeding each initial number through add instead costs n log k."
   },
-  "commonMistakes": [],
-  "edgeCases": [],
+  "commonMistakes": [
+    "Using a max-heap, which needs all n items or k pops per query",
+    "Forgetting to pop after the push, so the heap keeps growing and heap[0] is the minimum of everything",
+    "Reading heap[-k] on a heapq list, which is not sorted",
+    "Keeping an extra list of every number, which defeats the O(k) memory"
+  ],
+  "edgeCases": [
+    "Initial list shorter than k, or empty",
+    "k = 1: the answer is the running maximum",
+    "Duplicates each occupy a slot in the heap",
+    "Negative values"
+  ],
   "cards": [
     {
       "id": "recog-kth-largest-element-in-a-stream",
@@ -100,17 +113,17 @@
         "What data structure gives O(log k) per update?"
       ],
       "options": [
-        "Min-heap of size k",
-        "Max-heap of all elements",
-        "Sorted array",
-        "Stack"
+        "Min-heap holding only k items",
+        "Max-heap holding all n items",
+        "Sorted array rebuilt per add",
+        "Stack of the k latest values"
       ],
-      "answer": "Min-heap of size k",
-      "explanation": "The root of a size-k min-heap is the smallest of the k largest, i.e. the k-th largest.",
+      "answer": "Min-heap holding only k items",
+      "explanation": "The root of a size-k min-heap is the smallest of the k largest values, i.e. the k-th largest.",
       "incorrectOptionExplanations": {
-        "Max-heap of all elements": "Extracting the k-th largest would take k pops.",
-        "Sorted array": "Insertion costs O(n).",
-        "Stack": "No ordering."
+        "Max-heap holding all n items": "Reading the k-th largest would take k pops, and all n values must be stored.",
+        "Sorted array rebuilt per add": "Rebuilding costs O(n log n) per add, and inserting in place costs O(n).",
+        "Stack of the k latest values": "A stack orders by arrival, not by value, so the k-th largest is not at an end."
       }
     },
     {
@@ -118,16 +131,115 @@
       "category": "main_insight",
       "type": "free_recall",
       "promptVariants": [
-        "Why is a MIN-heap used to track the k LARGEST elements?",
-        "Why can everything below the k-th largest be discarded?"
+        "Why use a MIN-heap, not a max-heap, to track the k LARGEST values? Say what the root represents and why the rest can be discarded.",
+        "Why can every value below the current k-th largest be thrown away, and why does that make a min-heap of size k the right tool?"
       ],
-      "answer": "The element that would be displaced next is the smallest of the current top k, so it must be at the root. Elements smaller than the k-th largest can never become the k-th largest later (new values only push the threshold up), so they can be discarded.",
+      "answer": "The value that would be displaced next is the smallest of the current top k, so it must sit at the root: it is the k-th largest, and it is the one to pop when the size exceeds k. Values smaller than the k-th largest can never become the k-th largest later, because new values only push the threshold up, so they can be discarded.",
       "keyPoints": [
-        "Root = smallest of the top k",
-        "Threshold only increases",
-        "Discard smaller elements"
+        "Root = smallest of the top k, which is the k-th largest",
+        "Threshold only increases, so smaller values never matter again",
+        "Pop the minimum when the size exceeds k"
       ],
-      "explanation": "Hence O(k) memory."
+      "explanation": "Hence O(k) memory and O(log k) per add. A max-heap would put the largest value at the root, which is the one we never need to evict."
+    },
+    {
+      "id": "kl-invariant-01",
+      "category": "invariant",
+      "type": "free_recall",
+      "promptVariants": [
+        "After every call to add, what exactly does the heap contain, and what does heap[0] represent?",
+        "State the invariant that holds for the heap between two calls to add."
+      ],
+      "answer": "The heap holds the k largest values seen so far (every value, if fewer than k have arrived). Its minimum, heap[0], is therefore the k-th largest.",
+      "keyPoints": [
+        "Contains the k largest values seen so far",
+        "heap[0] is the minimum, i.e. the k-th largest",
+        "With fewer than k values it holds all of them"
+      ],
+      "explanation": "Push-then-pop-if-too-big preserves this invariant on every add."
+    },
+    {
+      "id": "kl-impl-01",
+      "category": "implementation_detail",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "Why does add push the new value first and only then pop when the size exceeds k?",
+        "What is the point of the push-then-pop order in add?"
+      ],
+      "options": [
+        "One pop then evicts the true smallest of the k + 1",
+        "heappush is O(1), so it must run before any pop",
+        "heappop on a heap with k items raises an error",
+        "heapq allows pushes only before the first pop"
+      ],
+      "answer": "One pop then evicts the true smallest of the k + 1",
+      "explanation": "After the push the heap holds the k old values plus the new one; popping the minimum removes whichever of those k + 1 is smallest, whether or not it is the new value.",
+      "incorrectOptionExplanations": {
+        "heappush is O(1), so it must run before any pop": "heappush is O(log k), and its cost does not decide the order.",
+        "heappop on a heap with k items raises an error": "heappop only raises on an empty heap.",
+        "heapq allows pushes only before the first pop": "heapq allows any mix of pushes and pops."
+      }
+    },
+    {
+      "id": "kl-code-02",
+      "category": "code_reasoning",
+      "type": "code_question",
+      "promptVariants": [
+        "This __init__ heapifies a copy of nums and pops while the heap is larger than k. Why does that leave exactly the k largest values, and how does its cost compare with calling add once per initial number?",
+        "Explain what the while loop in __init__ does, why the result is correct, and what the construction costs."
+      ],
+      "code": "def __init__(self, k, nums):\n    self.heap = nums[:]\n    self.k = k\n    heapify(self.heap)\n    while len(self.heap) > k:\n        heappop(self.heap)",
+      "answer": "Each heappop removes the current minimum, so after n - k pops the k largest values remain with the smallest of them at the root. Cost: heapify is O(n) and each of the n - k pops is O(log n), so O(n + (n - k) log n). Feeding every initial number through add keeps the heap at size k and costs O(n log k), which has the smaller log factor when k is much smaller than n.",
+      "keyPoints": [
+        "Popping the minimum n - k times leaves the k largest",
+        "heapify is O(n)",
+        "O(n + (n - k) log n) versus O(n log k) via add"
+      ],
+      "explanation": "Neither choice changes the per-add cost of O(log k)."
+    },
+    {
+      "id": "kl-edge-01",
+      "category": "edge_case",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "What if the initial array has fewer than k elements?",
+        "How does the heap version behave until k elements exist?"
+      ],
+      "options": [
+        "It keeps every value until k exist; nothing is popped yet",
+        "It raises an error because the heap has fewer than k items",
+        "It returns 0 for every query until the heap holds k values",
+        "It pads the heap with -inf values until its size reaches k"
+      ],
+      "answer": "It keeps every value until k exist; nothing is popped yet",
+      "explanation": "The problem guarantees at least k elements when add is called, so heap[0] is valid; before that nothing is popped.",
+      "incorrectOptionExplanations": {
+        "It raises an error because the heap has fewer than k items": "Not with the constraints given.",
+        "It returns 0 for every query until the heap holds k values": "No such rule.",
+        "It pads the heap with -inf values until its size reaches k": "Unnecessary under the guarantee."
+      }
+    },
+    {
+      "id": "kl-edge-02",
+      "category": "edge_case",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "With k = 1 and an empty starting list, what do add(-3), add(-7) and add(5) return, in order?",
+        "For KthLargest(1, []), what are the results of add(-3), add(-7), add(5)?"
+      ],
+      "options": [
+        "-3, -3, 5",
+        "-3, -7, 5",
+        "-3, -7, -7",
+        "-3, -3, -3"
+      ],
+      "answer": "-3, -3, 5",
+      "explanation": "With k = 1 the heap holds one value, the running maximum: -3, then -3 (the pushed -7 is the one popped), then 5.",
+      "incorrectOptionExplanations": {
+        "-3, -7, 5": "That returns the newest value, ignoring the larger earlier one.",
+        "-3, -7, -7": "That tracks the running minimum, not the maximum.",
+        "-3, -3, -3": "That never lets a larger value replace the root."
+      }
     },
     {
       "id": "kl-time-01",
@@ -148,21 +260,37 @@
       "category": "space_complexity",
       "type": "free_recall",
       "promptVariants": [
-        "Your solution keeps all numbers. What does the heap version store and why is it enough?",
-        "Compare the memory of the two approaches."
+        "What does the size-k heap store, how much memory is that, and why is discarding every other value safe?",
+        "Compare the memory of the size-k heap with keeping every number seen."
       ],
-      "answer": "Yours stores every number O(n) and re-sorts on each add. The heap keeps only the k largest, O(k), which is sufficient because no smaller number can ever be the k-th largest again.",
+      "answer": "The heap stores only the k largest values seen, so O(k) memory instead of O(n) for every value. It is enough because a value outside the top k can never become the k-th largest later: the stream only adds values, so the k-th largest never decreases.",
       "keyPoints": [
-        "O(n) vs O(k)",
-        "Smaller values can never matter again"
+        "O(k) versus O(n)",
+        "Values outside the top k can never matter again"
       ],
-      "explanation": "The constructor must heapify then trim to size k.",
-      "code": "class KthLargest:\n\n    def __init__(self, k: int, nums: List[int]):\n        self.heap = nums[:]\n        self.k = k\n\n    def add(self, val: int) -> int:\n        self.heap.append(val)\n\n        self.heap.sort()\n        return self.heap[-self.k]\n\n\n# Your KthLargest object will be instantiated and called as such:\n# obj = KthLargest(k, nums)\n# param_1 = obj.add(val)\n"
+      "explanation": "The k-th largest only moves up as values arrive, so discarded values stay irrelevant. Building from the initial list can briefly hold all n of them before trimming to k."
+    },
+    {
+      "id": "kl-alt-01",
+      "category": "alternative_approach",
+      "type": "free_recall",
+      "promptVariants": [
+        "Two simpler designs are appending and sorting on every add, or keeping a sorted list with bisect.insort. What does each cost per add, and why does the size-k heap beat both?",
+        "Why is a size-k heap better than re-sorting the list, or inserting into a sorted list, on every add?"
+      ],
+      "answer": "Append and sort costs O(n log n) per add (Timsort is near-linear on almost-sorted data, but still O(n)) and stores all n values. bisect.insort finds the spot in O(log n), but shifting the list makes the insert O(n). The size-k heap does one push and at most one pop, O(log k), and stores only k values.",
+      "keyPoints": [
+        "Sort per add: O(n log n)",
+        "insort: O(n) because of shifting",
+        "Heap: O(log k) time and O(k) space"
+      ],
+      "explanation": "Interviewers often probe both brute forces before the heap; know why each loses."
     },
     {
       "id": "kl-code-01",
       "category": "code_reasoning",
       "type": "code_question",
+      "enabled": false,
       "promptVariants": [
         "Your add appends and sorts the whole list. What is the cost and how would a size-k heap change `__init__` and `add`?",
         "Rewrite add with heapq."
@@ -174,31 +302,9 @@
         "Heapify + trim to k",
         "push, pop if > k, return heap[0]"
       ],
-      "explanation": "The list called `heap` is not actually a heap in your code - naming matters."
-    },
-    {
-      "id": "kl-edge-01",
-      "category": "edge_case",
-      "type": "multiple_choice",
-      "promptVariants": [
-        "What if the initial array has fewer than k elements?",
-        "How does the heap version behave until k elements exist?"
-      ],
-      "options": [
-        "The heap holds them all; the k-th largest exists once k values arrive",
-        "It raises an error right away when fewer than k values exist yet",
-        "It returns 0 for every single query until the heap reaches size k",
-        "It requires padding the heap with -inf values up to size k first"
-      ],
-      "answer": "The heap holds them all; the k-th largest exists once k values arrive",
-      "explanation": "The problem guarantees at least k elements when add is called, so heap[0] is valid; before that nothing is popped.",
-      "incorrectOptionExplanations": {
-        "It raises an error right away when fewer than k values exist yet": "Not with the constraints given.",
-        "It returns 0 for every single query until the heap reaches size k": "No such rule.",
-        "It requires padding the heap with -inf values up to size k first": "Unnecessary under the guarantee."
-      }
+      "explanation": "The list called `heap` is not actually a heap in that code - naming matters."
     }
   ],
-  "generatedAt": "2026-10-01T14:19:52Z",
+  "generatedAt": "2026-10-04T06:30:00Z",
   "canonicalCode": "class KthLargest:\n    def __init__(self, k: int, nums: List[int]):\n        self.k = k\n        self.heap = []                           # min-heap holding the k largest values seen\n        for x in nums:\n            self.add(x)\n\n    def add(self, val: int) -> int:\n        heapq.heappush(self.heap, val)\n        if len(self.heap) > self.k:\n            heapq.heappop(self.heap)             # drop the smallest\n        return self.heap[0]                      # the root is the k-th largest\n"
 }

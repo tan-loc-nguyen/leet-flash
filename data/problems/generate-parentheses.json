@@ -18,14 +18,14 @@
   ],
   "hints": [],
   "acRate": 79.25,
-  "lastSubmittedAt": "2026-09-19T06:20:10Z",
+  "lastSubmittedAt": "2026-10-02T10:21:20Z",
   "latestSubmission": {
-    "submissionId": "2146363357",
+    "submissionId": "2160033730",
     "language": "Python3",
-    "code": "class Solution:\n    def generateParenthesis(self, n: int) -> list[str]:\n        ans = []\n        path = []\n\n        def choose(opens: int, closes: int) -> None:\n            if opens < closes or opens > n or closes > n:\n                return\n            if opens + closes == 2 * n:\n                ans.append(\"\".join(path))\n            \n            for p in \"()\":\n                path.append(p)\n                if p == \")\":\n                    choose(opens, closes + 1)\n                else:\n                    choose(opens + 1, closes)\n                path.pop()\n            \n        choose(0, 0)\n        return ans"
+    "code": "class Solution:\n    def generateParenthesis(self, n: int) -> list[str]:\n        path = []\n        ans = []\n\n        def choose(opens, closes):\n            if opens < closes or opens > n or closes > n:\n                return\n            \n            if opens + closes == 2*n:\n                ans.append(\"\".join(path[:]))\n                return\n            \n            for p in \"()\":\n                path.append(p)\n                if p == \"(\":\n                    choose(opens + 1, closes)\n                else:\n                    choose(opens, closes + 1)\n                path.pop()\n            \n        choose(0, 0)\n        return ans"
   },
   "notes": [],
   "source": "leetcode",
   "importedAt": "2026-10-01T13:44:25Z",
-  "lastSyncedAt": "2026-10-01T13:44:25Z"
+  "lastSyncedAt": "2026-10-04T06:19:22Z"
 }

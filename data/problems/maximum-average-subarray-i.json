@@ -4,7 +4,7 @@
   "slug": "maximum-average-subarray-i",
   "url": "https://leetcode.com/problems/maximum-average-subarray-i/",
   "difficulty": "Easy",
-  "status": "unsolved",
+  "status": "solved",
   "premium": false,
   "tags": [
     "Array",
@@ -18,8 +18,14 @@
   ],
   "hints": [],
   "acRate": 49.3,
+  "lastSubmittedAt": "2026-10-04T05:24:16Z",
+  "latestSubmission": {
+    "submissionId": "2161756900",
+    "language": "Python3",
+    "code": "class Solution:\n    def findMaxAverage(self, nums: list[int], k: int) -> float:\n        n = len(nums)\n        if n <= k:\n            return sum(nums) / k\n        \n        curSum = sum(nums[:k])\n        best = curSum\n        for i in range(k, n):\n            curSum += nums[i] - nums[i - k]\n            best = max(curSum, best)\n        \n        return best / k"
+  },
   "notes": [],
   "source": "manual",
   "importedAt": "2026-10-01T14:11:37Z",
-  "lastSyncedAt": "2026-10-01T14:11:37Z"
+  "lastSyncedAt": "2026-10-04T06:19:22Z"
 }
