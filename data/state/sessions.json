@@ -2729,6 +2729,148 @@
           }
         }
       ]
+    },
+    "cram-2026-10-04": {
+      "id": "cram-2026-10-04",
+      "mode": "cram",
+      "status": "completed",
+      "createdAt": "2026-10-04T09:49:03Z",
+      "updatedAt": "2026-10-04T10:09:57Z",
+      "seed": 387048664,
+      "target": 1,
+      "filters": {
+        "slugs": [
+          "find-peak-element"
+        ]
+      },
+      "focusCategories": [],
+      "problems": [
+        {
+          "slug": "find-peak-element",
+          "bucket": "sampled",
+          "status": "done",
+          "cardIds": [
+            "recog-find-peak-element",
+            "find-peak-element-insight-01",
+            "find-peak-element-alt-01",
+            "find-peak-element-impl-01",
+            "find-peak-element-space-01"
+          ],
+          "answers": [
+            {
+              "cardId": "recog-find-peak-element",
+              "category": "pattern",
+              "result": "partial",
+              "timestamp": "2026-10-04T09:49:57Z"
+            },
+            {
+              "cardId": "find-peak-element-insight-01",
+              "category": "main_insight",
+              "result": "partial",
+              "timestamp": "2026-10-04T10:03:52Z"
+            },
+            {
+              "cardId": "find-peak-element-alt-01",
+              "category": "alternative_approach",
+              "result": "correct",
+              "timestamp": "2026-10-04T10:08:11Z"
+            },
+            {
+              "cardId": "find-peak-element-impl-01",
+              "category": "implementation_detail",
+              "result": "correct",
+              "timestamp": "2026-10-04T10:09:12Z"
+            },
+            {
+              "cardId": "find-peak-element-space-01",
+              "category": "space_complexity",
+              "result": "failed",
+              "timestamp": "2026-10-04T10:09:57Z"
+            }
+          ],
+          "hintLevel": 0,
+          "presented": {
+            "recog-find-peak-element": {
+              "prompt": "Which technique solves this problem, and what in the statement or constraints points to it?",
+              "options": null
+            },
+            "find-peak-element-insight-01": {
+              "prompt": "If nums[mid] < nums[mid + 1], why is a peak guaranteed somewhere to the right of mid?",
+              "options": null
+            },
+            "find-peak-element-alt-01": {
+              "prompt": "A linear scan returning the first i with nums[i] > nums[i + 1] (else n - 1) is correct. Why is it not acceptable here?",
+              "options": [
+                {
+                  "label": "A",
+                  "text": "It can return a valley when the array starts out decreasing"
+                },
+                {
+                  "label": "B",
+                  "text": "It is correct but linear, and the statement demands log time"
+                },
+                {
+                  "label": "C",
+                  "text": "It fails when the only peak is the last element of the array"
+                },
+                {
+                  "label": "D",
+                  "text": "It needs extra memory to remember every previous value seen"
+                }
+              ]
+            },
+            "find-peak-element-impl-01": {
+              "prompt": "On a falling slope (nums[mid] > nums[mid + 1]) the code sets hi = mid, not mid - 1. Why?",
+              "options": [
+                {
+                  "label": "A",
+                  "text": "hi = mid keeps the range odd-sized so mid is always central"
+                },
+                {
+                  "label": "B",
+                  "text": "hi = mid - 1 would read past the end of the array later"
+                },
+                {
+                  "label": "C",
+                  "text": "hi = mid - 1 makes the loop run forever on a falling slope"
+                },
+                {
+                  "label": "D",
+                  "text": "mid itself may be the peak, so it must stay in the range"
+                }
+              ]
+            },
+            "find-peak-element-space-01": {
+              "prompt": "What is the extra space complexity of this code?",
+              "options": [
+                {
+                  "label": "A",
+                  "text": "O(1): only lo, hi and mid are stored"
+                },
+                {
+                  "label": "B",
+                  "text": "O(n): the array is copied for the search"
+                },
+                {
+                  "label": "C",
+                  "text": "O(log n): one frame per halving step"
+                },
+                {
+                  "label": "D",
+                  "text": "O(n): visited indices are tracked in a set"
+                }
+              ]
+            }
+          },
+          "outcome": {
+            "score": 0.542,
+            "outcome": "demote",
+            "levelBefore": 0,
+            "levelAfter": 0,
+            "nextReview": "2026-10-04T10:09:57Z"
+          }
+        }
+      ]
     }
   }
 }

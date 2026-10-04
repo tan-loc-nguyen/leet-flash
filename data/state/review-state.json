@@ -1986,5 +1986,129 @@
         ]
       }
     }
+  },
+  "find-peak-element": {
+    "level": 0,
+    "lastReview": "2026-10-04T10:09:57Z",
+    "nextReview": "2026-10-04T10:09:57Z",
+    "recentAccuracy": 0.542,
+    "lastScore": 0.542,
+    "reviewCount": 1,
+    "lapses": 0,
+    "weakCategories": [],
+    "cardStats": {
+      "recog-find-peak-element": {
+        "category": "pattern",
+        "seen": 1,
+        "correct": 0,
+        "partial": 1,
+        "failed": 0,
+        "incorrectStreak": 1,
+        "lastResult": "partial",
+        "lastSeenAt": "2026-10-04T09:49:57Z"
+      },
+      "find-peak-element-insight-01": {
+        "category": "main_insight",
+        "seen": 1,
+        "correct": 0,
+        "partial": 1,
+        "failed": 0,
+        "incorrectStreak": 1,
+        "lastResult": "partial",
+        "lastSeenAt": "2026-10-04T10:03:52Z"
+      },
+      "find-peak-element-alt-01": {
+        "category": "alternative_approach",
+        "seen": 1,
+        "correct": 1,
+        "partial": 0,
+        "failed": 0,
+        "incorrectStreak": 0,
+        "lastResult": "correct",
+        "lastSeenAt": "2026-10-04T10:08:11Z"
+      },
+      "find-peak-element-impl-01": {
+        "category": "implementation_detail",
+        "seen": 1,
+        "correct": 1,
+        "partial": 0,
+        "failed": 0,
+        "incorrectStreak": 0,
+        "lastResult": "correct",
+        "lastSeenAt": "2026-10-04T10:09:12Z"
+      },
+      "find-peak-element-space-01": {
+        "category": "space_complexity",
+        "seen": 1,
+        "correct": 0,
+        "partial": 0,
+        "failed": 1,
+        "incorrectStreak": 1,
+        "lastResult": "failed",
+        "lastSeenAt": "2026-10-04T10:09:57Z"
+      }
+    },
+    "categoryStats": {
+      "pattern": {
+        "seen": 1,
+        "correct": 0,
+        "partial": 1,
+        "failed": 0,
+        "incorrectStreak": 1,
+        "lastResult": "partial",
+        "lastSeenAt": "2026-10-04T09:49:57Z",
+        "recent": [
+          "partial"
+        ]
+      },
+      "main_insight": {
+        "seen": 1,
+        "correct": 0,
+        "partial": 1,
+        "failed": 0,
+        "incorrectStreak": 1,
+        "lastResult": "partial",
+        "lastSeenAt": "2026-10-04T10:03:52Z",
+        "recent": [
+          "partial"
+        ]
+      },
+      "alternative_approach": {
+        "seen": 1,
+        "correct": 1,
+        "partial": 0,
+        "failed": 0,
+        "incorrectStreak": 0,
+        "lastResult": "correct",
+        "lastSeenAt": "2026-10-04T10:08:11Z",
+        "recent": [
+          "correct"
+        ]
+      },
+      "implementation_detail": {
+        "seen": 1,
+        "correct": 1,
+        "partial": 0,
+        "failed": 0,
+        "incorrectStreak": 0,
+        "lastResult": "correct",
+        "lastSeenAt": "2026-10-04T10:09:12Z",
+        "recent": [
+          "correct"
+        ]
+      },
+      "space_complexity": {
+        "seen": 1,
+        "correct": 0,
+        "partial": 0,
+        "failed": 1,
+        "incorrectStreak": 1,
+        "lastResult": "failed",
+        "lastSeenAt": "2026-10-04T10:09:57Z",
+        "recent": [
+          "failed"
+        ]
+      }
+    }
   }
 }
