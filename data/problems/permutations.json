@@ -18,14 +18,14 @@
   ],
   "hints": [],
   "acRate": 82.39,
-  "lastSubmittedAt": "2026-09-19T06:24:50Z",
+  "lastSubmittedAt": "2026-10-03T11:00:18Z",
   "latestSubmission": {
-    "submissionId": "2146367662",
+    "submissionId": "2160995579",
     "language": "Python3",
-    "code": "class Solution:\n    def permute(self, nums: List[int]) -> List[List[int]]:\n        ans = []\n        path = []\n        seen = set()\n\n        def choose() -> None:\n            if len(path) == len(nums):\n                ans.append(path[:])\n                return\n\n            for num in nums:\n                if num in seen:\n                    continue\n                seen.add(num)\n                path.append(num)\n                choose()\n                seen.remove(path.pop())\n        \n        choose()\n        return ans\n                \n\n        \n        choose(0)\n        return ans"
+    "code": "class Solution:\n    def permute(self, nums: list[int]) -> list[list[int]]:\n        ans = []\n        path = []\n\n        def choose():\n            if len(path) == len(nums):\n                ans.append(path[:])\n                return\n            \n            for num in nums:\n                if num in path:\n                    continue\n                path.append(num)\n                choose()\n                path.pop()\n        \n        choose()\n        return ans"
   },
   "notes": [],
   "source": "leetcode",
   "importedAt": "2026-10-01T13:44:25Z",
-  "lastSyncedAt": "2026-10-01T13:44:25Z"
+  "lastSyncedAt": "2026-10-04T06:19:22Z"
 }

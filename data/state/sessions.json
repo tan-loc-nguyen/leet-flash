@@ -1823,6 +1823,912 @@
           }
         }
       ]
+    },
+    "daily-2026-10-04": {
+      "id": "daily-2026-10-04",
+      "mode": "daily",
+      "status": "completed",
+      "createdAt": "2026-10-04T02:38:45Z",
+      "updatedAt": "2026-10-04T06:17:20Z",
+      "seed": 362103688,
+      "target": 10,
+      "filters": {},
+      "focusCategories": [],
+      "problems": [
+        {
+          "slug": "add-two-numbers-ii",
+          "bucket": "due",
+          "status": "done",
+          "cardIds": [
+            "recog-add-two-numbers-ii",
+            "a2-pattern-01",
+            "a2-insight-01",
+            "a2-code-01",
+            "a2-space-01"
+          ],
+          "answers": [
+            {
+              "cardId": "recog-add-two-numbers-ii",
+              "category": "pattern",
+              "result": "correct",
+              "timestamp": "2026-10-04T02:46:15Z"
+            },
+            {
+              "cardId": "a2-pattern-01",
+              "category": "main_insight",
+              "result": "correct",
+              "timestamp": "2026-10-04T02:47:00Z"
+            },
+            {
+              "cardId": "a2-insight-01",
+              "category": "main_insight",
+              "result": "correct",
+              "timestamp": "2026-10-04T02:47:40Z"
+            },
+            {
+              "cardId": "a2-code-01",
+              "category": "code_reasoning",
+              "result": "correct",
+              "timestamp": "2026-10-04T02:59:44Z"
+            },
+            {
+              "cardId": "a2-space-01",
+              "category": "space_complexity",
+              "result": "correct",
+              "timestamp": "2026-10-04T03:00:59Z"
+            }
+          ],
+          "hintLevel": 0,
+          "presented": {
+            "recog-add-two-numbers-ii": {
+              "prompt": "Which technique solves this problem, and what in the statement or constraints points to it?",
+              "options": null
+            },
+            "a2-pattern-01": {
+              "prompt": "Which approach avoids modifying the inputs?",
+              "options": [
+                {
+                  "label": "A",
+                  "text": "Add directly from the head of both lists, carrying to the next node"
+                },
+                {
+                  "label": "B",
+                  "text": "Use stacks (or recursion) to process digits from the end"
+                },
+                {
+                  "label": "C",
+                  "text": "Convert both lists to floating-point numbers and add them there"
+                },
+                {
+                  "label": "D",
+                  "text": "Sort the digits of both lists and add the two sorted sequences"
+                }
+              ]
+            },
+            "a2-insight-01": {
+              "prompt": "Why is a reversal (or stack) required here but not in Add Two Numbers I?",
+              "options": null
+            },
+            "a2-code-01": {
+              "prompt": "Why is the result reversed at the end and what is `dummy.next`?",
+              "options": null
+            },
+            "a2-space-01": {
+              "prompt": "What does your solution allocate?",
+              "options": null
+            }
+          },
+          "outcome": {
+            "score": 1.0,
+            "outcome": "promote",
+            "levelBefore": 1,
+            "levelAfter": 2,
+            "nextReview": "2026-10-07T00:00:00Z"
+          }
+        },
+        {
+          "slug": "contains-duplicate-ii",
+          "bucket": "due",
+          "status": "done",
+          "cardIds": [
+            "recog-contains-duplicate-ii",
+            "cd2-insight-01",
+            "cd2-code-01",
+            "cd2-time-01",
+            "cd2-space-01"
+          ],
+          "answers": [
+            {
+              "cardId": "recog-contains-duplicate-ii",
+              "category": "pattern",
+              "result": "correct",
+              "timestamp": "2026-10-04T03:04:39Z"
+            },
+            {
+              "cardId": "cd2-insight-01",
+              "category": "main_insight",
+              "result": "partial",
+              "timestamp": "2026-10-04T03:50:58Z"
+            },
+            {
+              "cardId": "cd2-code-01",
+              "category": "code_reasoning",
+              "result": "correct",
+              "timestamp": "2026-10-04T04:03:57Z"
+            },
+            {
+              "cardId": "cd2-time-01",
+              "category": "time_complexity",
+              "result": "correct",
+              "timestamp": "2026-10-04T04:06:14Z"
+            },
+            {
+              "cardId": "cd2-space-01",
+              "category": "space_complexity",
+              "result": "correct",
+              "timestamp": "2026-10-04T04:06:20Z"
+            }
+          ],
+          "hintLevel": 0,
+          "presented": {
+            "recog-contains-duplicate-ii": {
+              "prompt": "Which technique solves this problem, and what in the statement or constraints points to it?",
+              "options": null
+            },
+            "cd2-insight-01": {
+              "prompt": "Why is a window of the last k elements enough?",
+              "options": null
+            },
+            "cd2-code-01": {
+              "prompt": "Why is the eviction `if r - l > k` placed before the membership check, and what does the window contain at the check?",
+              "options": null
+            },
+            "cd2-time-01": {
+              "prompt": "Time complexity: ___",
+              "options": null
+            },
+            "cd2-space-01": {
+              "prompt": "Space complexity of the window-set approach: ___",
+              "options": null
+            }
+          },
+          "outcome": {
+            "score": 0.885,
+            "outcome": "promote",
+            "levelBefore": 1,
+            "levelAfter": 2,
+            "nextReview": "2026-10-07T00:00:00Z"
+          }
+        },
+        {
+          "slug": "valid-palindrome",
+          "bucket": "due",
+          "status": "done",
+          "cardIds": [
+            "recog-valid-palindrome",
+            "vp2-invariant-01",
+            "vp2-code-01",
+            "vp2-time-01",
+            "vp2-space-01"
+          ],
+          "answers": [
+            {
+              "cardId": "recog-valid-palindrome",
+              "category": "pattern",
+              "result": "partial",
+              "timestamp": "2026-10-04T04:06:57Z"
+            },
+            {
+              "cardId": "vp2-invariant-01",
+              "category": "invariant",
+              "result": "correct",
+              "timestamp": "2026-10-04T04:08:54Z"
+            },
+            {
+              "cardId": "vp2-code-01",
+              "category": "code_reasoning",
+              "result": "correct",
+              "timestamp": "2026-10-04T04:13:15Z"
+            },
+            {
+              "cardId": "vp2-time-01",
+              "category": "time_complexity",
+              "result": "correct",
+              "timestamp": "2026-10-04T04:13:49Z"
+            },
+            {
+              "cardId": "vp2-space-01",
+              "category": "space_complexity",
+              "result": "correct",
+              "timestamp": "2026-10-04T05:11:49Z"
+            }
+          ],
+          "hintLevel": 0,
+          "presented": {
+            "recog-valid-palindrome": {
+              "prompt": "Which technique solves this problem, and what in the statement or constraints points to it?",
+              "options": null
+            },
+            "vp2-invariant-01": {
+              "prompt": "What is true about s[0..l-1] and s[r+1..n-1] at every step?",
+              "options": null
+            },
+            "vp2-code-01": {
+              "prompt": "Why does the loop skip with `elif`s in this order, and why `while l <= r` vs `l < r`?",
+              "options": null
+            },
+            "vp2-time-01": {
+              "prompt": "Valid Palindrome with two pointers runs in ___ time.",
+              "options": null
+            },
+            "vp2-space-01": {
+              "prompt": "Your solution calls s.lower(). What does that do to space, and how could you avoid it?",
+              "options": null
+            }
+          },
+          "outcome": {
+            "score": 0.88,
+            "outcome": "promote",
+            "levelBefore": 1,
+            "levelAfter": 2,
+            "nextReview": "2026-10-07T00:00:00Z"
+          }
+        },
+        {
+          "slug": "top-k-frequent-elements",
+          "bucket": "new",
+          "status": "done",
+          "cardIds": [
+            "recog-top-k-frequent-elements",
+            "tk-insight-01",
+            "tk-ds-01",
+            "tk-alt-01",
+            "tk-time-01"
+          ],
+          "answers": [
+            {
+              "cardId": "recog-top-k-frequent-elements",
+              "category": "pattern",
+              "result": "correct",
+              "timestamp": "2026-10-04T05:16:09Z"
+            },
+            {
+              "cardId": "tk-insight-01",
+              "category": "main_insight",
+              "result": "correct",
+              "timestamp": "2026-10-04T05:17:37Z"
+            },
+            {
+              "cardId": "tk-ds-01",
+              "category": "data_structure",
+              "result": "correct",
+              "timestamp": "2026-10-04T05:18:15Z"
+            },
+            {
+              "cardId": "tk-alt-01",
+              "category": "alternative_approach",
+              "result": "partial",
+              "timestamp": "2026-10-04T05:20:06Z"
+            },
+            {
+              "cardId": "tk-time-01",
+              "category": "time_complexity",
+              "result": "correct",
+              "timestamp": "2026-10-04T05:21:01Z"
+            }
+          ],
+          "hintLevel": 0,
+          "presented": {
+            "recog-top-k-frequent-elements": {
+              "prompt": "Which technique solves this problem, and what in the statement or constraints points to it?",
+              "options": null
+            },
+            "tk-insight-01": {
+              "prompt": "Why a MIN-heap (not a max-heap) of size k for the k LARGEST?",
+              "options": null
+            },
+            "tk-ds-01": {
+              "prompt": "Why push tuples `(freq, num)` onto the heap?",
+              "options": [
+                {
+                  "label": "A",
+                  "text": "Tuples make every heap operation O(1) instead of O(log k)"
+                },
+                {
+                  "label": "B",
+                  "text": "Heap orders by the first element: frequency decides eviction"
+                },
+                {
+                  "label": "C",
+                  "text": "Tuples sort by num first, then by the frequency"
+                },
+                {
+                  "label": "D",
+                  "text": "Tuples remove duplicate numbers from the heap"
+                }
+              ]
+            },
+            "tk-alt-01": {
+              "prompt": "How does bucket sort beat the heap, and what is the catch?",
+              "options": null
+            },
+            "tk-time-01": {
+              "prompt": "Time complexity of the size-k heap solution: ___",
+              "options": null
+            }
+          },
+          "outcome": {
+            "score": 0.92,
+            "outcome": "promote",
+            "levelBefore": 0,
+            "levelAfter": 1,
+            "nextReview": "2026-10-05T00:00:00Z"
+          }
+        },
+        {
+          "slug": "maximum-average-subarray-i",
+          "bucket": "due",
+          "status": "done",
+          "cardIds": [
+            "recog-maximum-average-subarray-i",
+            "mas-insight-01",
+            "mas-edge-01",
+            "mas-time-01",
+            "mas-space-01"
+          ],
+          "answers": [
+            {
+              "cardId": "recog-maximum-average-subarray-i",
+              "category": "pattern",
+              "result": "correct",
+              "timestamp": "2026-10-04T05:25:20Z"
+            },
+            {
+              "cardId": "mas-insight-01",
+              "category": "main_insight",
+              "result": "correct",
+              "timestamp": "2026-10-04T05:26:29Z"
+            },
+            {
+              "cardId": "mas-edge-01",
+              "category": "edge_case",
+              "result": "correct",
+              "timestamp": "2026-10-04T05:27:24Z"
+            },
+            {
+              "cardId": "mas-time-01",
+              "category": "time_complexity",
+              "result": "correct",
+              "timestamp": "2026-10-04T05:27:49Z"
+            },
+            {
+              "cardId": "mas-space-01",
+              "category": "space_complexity",
+              "result": "failed",
+              "timestamp": "2026-10-04T05:28:22Z"
+            }
+          ],
+          "hintLevel": 0,
+          "presented": {
+            "recog-maximum-average-subarray-i": {
+              "prompt": "Which technique solves this problem, and what in the statement or constraints points to it?",
+              "options": null
+            },
+            "mas-insight-01": {
+              "prompt": "When should the division by k happen?",
+              "options": null
+            },
+            "mas-edge-01": {
+              "prompt": "What does the algorithm return for nums = [-3,-5] and k = 2?",
+              "options": [
+                {
+                  "label": "A",
+                  "text": "-4.0: the only window is the whole array"
+                },
+                {
+                  "label": "B",
+                  "text": "0.0: there is no full window yet"
+                },
+                {
+                  "label": "C",
+                  "text": "An error: there is no element to subtract"
+                },
+                {
+                  "label": "D",
+                  "text": "-2.0: the sum is divided by k twice"
+                }
+              ]
+            },
+            "mas-time-01": {
+              "prompt": "Time complexity: ___",
+              "options": null
+            },
+            "mas-space-01": {
+              "prompt": "Space complexity (excluding the input): ___",
+              "options": null
+            }
+          },
+          "outcome": {
+            "score": 0.805,
+            "outcome": "hold",
+            "levelBefore": 1,
+            "levelAfter": 1,
+            "nextReview": "2026-10-05T00:00:00Z"
+          }
+        },
+        {
+          "slug": "kth-largest-element-in-a-stream",
+          "bucket": "new",
+          "status": "done",
+          "cardIds": [
+            "recog-kth-largest-element-in-a-stream",
+            "kl-code-01",
+            "kl-edge-01",
+            "kl-time-01",
+            "kl-space-01"
+          ],
+          "answers": [
+            {
+              "cardId": "recog-kth-largest-element-in-a-stream",
+              "category": "pattern",
+              "result": "correct",
+              "timestamp": "2026-10-04T05:29:55Z"
+            },
+            {
+              "cardId": "kl-code-01",
+              "category": "code_reasoning",
+              "result": "correct",
+              "timestamp": "2026-10-04T05:39:18Z"
+            },
+            {
+              "cardId": "kl-edge-01",
+              "category": "edge_case",
+              "result": "correct",
+              "timestamp": "2026-10-04T05:40:12Z"
+            },
+            {
+              "cardId": "kl-time-01",
+              "category": "time_complexity",
+              "result": "partial",
+              "timestamp": "2026-10-04T05:40:45Z"
+            },
+            {
+              "cardId": "kl-space-01",
+              "category": "space_complexity",
+              "result": "partial",
+              "timestamp": "2026-10-04T05:42:01Z"
+            }
+          ],
+          "hintLevel": 0,
+          "presented": {
+            "recog-kth-largest-element-in-a-stream": {
+              "prompt": "Which technique solves this problem, and what in the statement or constraints points to it?",
+              "options": null
+            },
+            "kl-code-01": {
+              "prompt": "Your add appends and sorts the whole list. What is the cost and how would a size-k heap change `__init__` and `add`?",
+              "options": null
+            },
+            "kl-edge-01": {
+              "prompt": "What if the initial array has fewer than k elements?",
+              "options": [
+                {
+                  "label": "A",
+                  "text": "It raises an error right away when fewer than k values exist yet"
+                },
+                {
+                  "label": "B",
+                  "text": "The heap holds them all; the k-th largest exists once k values arrive"
+                },
+                {
+                  "label": "C",
+                  "text": "It requires padding the heap with -inf values up to size k first"
+                },
+                {
+                  "label": "D",
+                  "text": "It returns 0 for every single query until the heap reaches size k"
+                }
+              ]
+            },
+            "kl-time-01": {
+              "prompt": "Time of add with a size-k min-heap: ___",
+              "options": null
+            },
+            "kl-space-01": {
+              "prompt": "Your solution keeps all numbers. What does the heap version store and why is it enough?",
+              "options": null
+            }
+          },
+          "outcome": {
+            "score": 0.788,
+            "outcome": "hold",
+            "levelBefore": 0,
+            "levelAfter": 0,
+            "nextReview": "2026-10-04T05:42:01Z"
+          }
+        },
+        {
+          "slug": "divide-two-integers",
+          "bucket": "due",
+          "status": "done",
+          "cardIds": [
+            "recog-divide-two-integers",
+            "d2i-pattern-01",
+            "d2i-edge-01",
+            "d2i-time-01",
+            "d2i-space-01"
+          ],
+          "answers": [
+            {
+              "cardId": "recog-divide-two-integers",
+              "category": "pattern",
+              "result": "correct",
+              "timestamp": "2026-10-04T05:42:38Z"
+            },
+            {
+              "cardId": "d2i-pattern-01",
+              "category": "main_insight",
+              "result": "correct",
+              "timestamp": "2026-10-04T05:44:30Z"
+            },
+            {
+              "cardId": "d2i-edge-01",
+              "category": "edge_case",
+              "result": "correct",
+              "timestamp": "2026-10-04T05:44:56Z"
+            },
+            {
+              "cardId": "d2i-time-01",
+              "category": "time_complexity",
+              "result": "correct",
+              "timestamp": "2026-10-04T05:48:58Z"
+            },
+            {
+              "cardId": "d2i-space-01",
+              "category": "space_complexity",
+              "result": "correct",
+              "timestamp": "2026-10-04T05:50:12Z"
+            }
+          ],
+          "hintLevel": 0,
+          "presented": {
+            "recog-divide-two-integers": {
+              "prompt": "Which technique solves this problem, and what in the statement or constraints points to it?",
+              "options": null
+            },
+            "d2i-pattern-01": {
+              "prompt": "How do you divide quickly without the division operator?",
+              "options": [
+                {
+                  "label": "A",
+                  "text": "Multiply the dividend by the divisor's inverse"
+                },
+                {
+                  "label": "B",
+                  "text": "Subtract the divisor once per loop and count it"
+                },
+                {
+                  "label": "C",
+                  "text": "Subtract the biggest shifted divisor that fits"
+                },
+                {
+                  "label": "D",
+                  "text": "Subtract the dividend from the divisor in turn"
+                }
+              ]
+            },
+            "d2i-edge-01": {
+              "prompt": "In which direction is the quotient truncated?",
+              "options": [
+                {
+                  "label": "A",
+                  "text": "-3: the quotient truncates toward zero, not minus infinity"
+                },
+                {
+                  "label": "B",
+                  "text": "-4: the floor of -3.5, as Python's // would give here"
+                },
+                {
+                  "label": "C",
+                  "text": "3: the absolute quotient with the sign dropped by mistake"
+                },
+                {
+                  "label": "D",
+                  "text": "-3.5: the exact quotient without any truncation at all"
+                }
+              ]
+            },
+            "d2i-time-01": {
+              "prompt": "Time complexity: ___",
+              "options": null
+            },
+            "d2i-space-01": {
+              "prompt": "Complete the statement: Space complexity (excluding the input): ___",
+              "options": null
+            }
+          },
+          "outcome": {
+            "score": 1.0,
+            "outcome": "promote",
+            "levelBefore": 1,
+            "levelAfter": 2,
+            "nextReview": "2026-10-07T00:00:00Z"
+          }
+        },
+        {
+          "slug": "random-pick-with-weight",
+          "bucket": "new",
+          "status": "done",
+          "cardIds": [
+            "recog-random-pick-with-weight",
+            "rw-insight-01",
+            "rw-code-01",
+            "rw-time-01",
+            "rw-space-01"
+          ],
+          "answers": [
+            {
+              "cardId": "recog-random-pick-with-weight",
+              "category": "pattern",
+              "result": "partial",
+              "timestamp": "2026-10-04T05:58:16Z"
+            },
+            {
+              "cardId": "rw-insight-01",
+              "category": "main_insight",
+              "result": "partial",
+              "timestamp": "2026-10-04T06:00:13Z"
+            },
+            {
+              "cardId": "rw-code-01",
+              "category": "code_reasoning",
+              "result": "partial",
+              "timestamp": "2026-10-04T06:02:08Z"
+            },
+            {
+              "cardId": "rw-time-01",
+              "category": "time_complexity",
+              "result": "correct",
+              "timestamp": "2026-10-04T06:03:08Z"
+            },
+            {
+              "cardId": "rw-space-01",
+              "category": "space_complexity",
+              "result": "correct",
+              "timestamp": "2026-10-04T06:04:18Z"
+            }
+          ],
+          "hintLevel": 0,
+          "presented": {
+            "recog-random-pick-with-weight": {
+              "prompt": "Which technique solves this problem, and what in the statement or constraints points to it?",
+              "options": null
+            },
+            "rw-insight-01": {
+              "prompt": "Why does a uniform random integer over the total weight give the right probabilities?",
+              "options": null
+            },
+            "rw-code-01": {
+              "prompt": "Your binary search finds the first prefix value greater than pick. Why return idx - 1 and why randrange(0, total)?",
+              "options": null
+            },
+            "rw-time-01": {
+              "prompt": "Time of pickIndex: ___",
+              "options": null
+            },
+            "rw-space-01": {
+              "prompt": "What do you store and how does it compare with expanding weights into an array?",
+              "options": null
+            }
+          },
+          "outcome": {
+            "score": 0.692,
+            "outcome": "hold",
+            "levelBefore": 0,
+            "levelAfter": 0,
+            "nextReview": "2026-10-04T06:04:18Z"
+          }
+        },
+        {
+          "slug": "valid-subarrays-with-matching-sum-digits-i",
+          "bucket": "due",
+          "status": "done",
+          "cardIds": [
+            "recog-valid-subarrays-with-matching-sum-digits-i",
+            "vs-insight-01",
+            "vs-pattern-01",
+            "vs-code-01",
+            "vs-edge-01"
+          ],
+          "answers": [
+            {
+              "cardId": "recog-valid-subarrays-with-matching-sum-digits-i",
+              "category": "pattern",
+              "result": "failed",
+              "timestamp": "2026-10-04T06:10:19Z"
+            },
+            {
+              "cardId": "vs-insight-01",
+              "category": "main_insight",
+              "result": "correct",
+              "timestamp": "2026-10-04T06:10:57Z"
+            },
+            {
+              "cardId": "vs-pattern-01",
+              "category": "main_insight",
+              "result": "correct",
+              "timestamp": "2026-10-04T06:11:35Z"
+            },
+            {
+              "cardId": "vs-code-01",
+              "category": "code_reasoning",
+              "result": "correct",
+              "timestamp": "2026-10-04T06:12:28Z"
+            },
+            {
+              "cardId": "vs-edge-01",
+              "category": "edge_case",
+              "result": "correct",
+              "timestamp": "2026-10-04T06:12:51Z"
+            }
+          ],
+          "hintLevel": 0,
+          "presented": {
+            "recog-valid-subarrays-with-matching-sum-digits-i": {
+              "prompt": "Which technique solves this problem, and what in the statement or constraints points to it?",
+              "options": null
+            },
+            "vs-insight-01": {
+              "prompt": "What in the constraints permits an O(n^2) solution?",
+              "options": null
+            },
+            "vs-pattern-01": {
+              "prompt": "Which technique avoids recomputing sums from scratch?",
+              "options": [
+                {
+                  "label": "A",
+                  "text": "Sorting the array after every extension of the end"
+                },
+                {
+                  "label": "B",
+                  "text": "Running sum extended by one element (or prefix sums)"
+                },
+                {
+                  "label": "C",
+                  "text": "A heap of the elements currently in the subarray"
+                },
+                {
+                  "label": "D",
+                  "text": "Binary search for the best end index each time"
+                }
+              ]
+            },
+            "vs-code-01": {
+              "prompt": "Why does `isValid` compare `sumStr[0] == targetStr`, and what could go wrong with negative sums?",
+              "options": null
+            },
+            "vs-edge-01": {
+              "prompt": "Which sum can satisfy the condition for x = 3?",
+              "options": [
+                {
+                  "label": "A",
+                  "text": "303"
+                },
+                {
+                  "label": "B",
+                  "text": "13"
+                },
+                {
+                  "label": "C",
+                  "text": "-3"
+                },
+                {
+                  "label": "D",
+                  "text": "30"
+                }
+              ]
+            }
+          },
+          "outcome": {
+            "score": 0.766,
+            "outcome": "hold",
+            "levelBefore": 1,
+            "levelAfter": 1,
+            "nextReview": "2026-10-05T00:00:00Z"
+          }
+        },
+        {
+          "slug": "contains-duplicate",
+          "bucket": "new",
+          "status": "done",
+          "cardIds": [
+            "recog-contains-duplicate",
+            "cd-insight-01",
+            "cd-edge-01",
+            "cd-time-01",
+            "cd-space-01"
+          ],
+          "answers": [
+            {
+              "cardId": "recog-contains-duplicate",
+              "category": "pattern",
+              "result": "correct",
+              "timestamp": "2026-10-04T06:14:34Z"
+            },
+            {
+              "cardId": "cd-insight-01",
+              "category": "main_insight",
+              "result": "correct",
+              "timestamp": "2026-10-04T06:15:41Z"
+            },
+            {
+              "cardId": "cd-edge-01",
+              "category": "edge_case",
+              "result": "correct",
+              "timestamp": "2026-10-04T06:15:53Z"
+            },
+            {
+              "cardId": "cd-time-01",
+              "category": "time_complexity",
+              "result": "correct",
+              "timestamp": "2026-10-04T06:16:12Z"
+            },
+            {
+              "cardId": "cd-space-01",
+              "category": "space_complexity",
+              "result": "partial",
+              "timestamp": "2026-10-04T06:17:20Z"
+            }
+          ],
+          "hintLevel": 0,
+          "presented": {
+            "recog-contains-duplicate": {
+              "prompt": "Which technique solves this problem, and what in the statement or constraints points to it?",
+              "options": null
+            },
+            "cd-insight-01": {
+              "prompt": "Why is a set enough to solve Contains Duplicate?",
+              "options": null
+            },
+            "cd-edge-01": {
+              "prompt": "Which input should return False?",
+              "options": [
+                {
+                  "label": "A",
+                  "text": "[2,2,2]"
+                },
+                {
+                  "label": "B",
+                  "text": "[1]"
+                },
+                {
+                  "label": "C",
+                  "text": "[3,1,3]"
+                },
+                {
+                  "label": "D",
+                  "text": "[1,1]"
+                }
+              ]
+            },
+            "cd-time-01": {
+              "prompt": "Time complexity of the hash-set solution: ___",
+              "options": null
+            },
+            "cd-space-01": {
+              "prompt": "What is the time-space trade-off between sorting and the hash-set approach?",
+              "options": null
+            }
+          },
+          "outcome": {
+            "score": 0.902,
+            "outcome": "promote",
+            "levelBefore": 0,
+            "levelAfter": 1,
+            "nextReview": "2026-10-05T00:00:00Z"
+          }
+        }
+      ]
     }
   }
 }

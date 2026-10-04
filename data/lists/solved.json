@@ -207,6 +207,8 @@
     "valid-subarrays-with-matching-sum-digits-i",
     "shortest-path-with-at-most-k-consecutive-identical-characters",
     "number-of-elapsed-seconds-between-two-times",
-    "minimum-total-cost-to-process-all-elements"
+    "minimum-total-cost-to-process-all-elements",
+    "roman-to-integer",
+    "maximum-average-subarray-i"
   ]
 }

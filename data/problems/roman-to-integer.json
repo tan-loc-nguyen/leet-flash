@@ -4,7 +4,7 @@
   "slug": "roman-to-integer",
   "url": "https://leetcode.com/problems/roman-to-integer/",
   "difficulty": "Easy",
-  "status": "unsolved",
+  "status": "solved",
   "premium": false,
   "tags": [
     "Hash Table",
@@ -21,8 +21,14 @@
     "Problem is simpler to solve by working the string from back to front and using a map."
   ],
   "acRate": 67.25,
+  "lastSubmittedAt": "2026-10-03T13:42:44Z",
+  "latestSubmission": {
+    "submissionId": "2161114836",
+    "language": "Python3",
+    "code": "values = {\n    \"I\": 1,\n    \"V\": 5,\n    \"X\": 10,\n    \"L\": 50,\n    \"C\": 100,\n    \"D\": 500,\n    \"M\": 1000,\n}\n\n\nclass Solution:\n    def romanToInt(self, s: str) -> int:\n        total = values.get(s[-1])\n        for i in reversed(range(len(s) - 1)):\n            if values[s[i]] < values[s[i + 1]]:\n                total -= values[s[i]]\n            else:\n                total += values[s[i]]\n        return total"
+  },
   "notes": [],
   "source": "manual",
   "importedAt": "2026-10-01T14:11:25Z",
-  "lastSyncedAt": "2026-10-01T14:11:25Z"
+  "lastSyncedAt": "2026-10-04T06:19:22Z"
 }

@@ -19,14 +19,14 @@
   ],
   "hints": [],
   "acRate": 82.87,
-  "lastSubmittedAt": "2026-09-19T06:16:03Z",
+  "lastSubmittedAt": "2026-10-02T10:13:27Z",
   "latestSubmission": {
-    "submissionId": "2146359379",
+    "submissionId": "2160027770",
     "language": "Python3",
-    "code": "class Solution:\n    def subsets(self, nums: list[int]) -> list[list[int]]:\n        ans = []\n        path = []\n\n        def choose(start: int) -> None:\n            ans.append(path[:])\n\n            for i in range(start, len(nums)):\n                path.append(nums[i])\n                choose(i + 1)\n                path.pop()\n\n        choose(0)\n        return ans"
+    "code": "class Solution:\n    def subsets(self, nums: list[int]) -> list[list[int]]:\n        ans = []\n        path = []\n\n        def choose(start):\n            ans.append(path[:])\n            for i in range(start, len(nums)):\n                path.append(nums[i])\n                choose(i + 1)\n                path.pop()\n        \n        choose(0)\n        return ans"
   },
   "notes": [],
   "source": "leetcode",
   "importedAt": "2026-10-01T13:44:25Z",
-  "lastSyncedAt": "2026-10-01T13:44:25Z"
+  "lastSyncedAt": "2026-10-04T06:19:22Z"
 }

@@ -117,7 +117,7 @@
       "type": "free_recall",
       "promptVariants": [
         "Why compare sums rather than averages while sliding?",
-        "When should the division by k happen?"
+        "When should the division by k happen, and why is it safe to compare window sums instead of averages?"
       ],
       "answer": "All windows have the same length k, so comparing sums gives the same ordering as comparing averages. Divide once at the end, which avoids repeated floating point work and rounding noise.",
       "keyPoints": [

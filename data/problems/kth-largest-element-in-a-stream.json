@@ -24,14 +24,14 @@
   ],
   "hints": [],
   "acRate": 61.64,
-  "lastSubmittedAt": "2026-06-28T22:54:09Z",
+  "lastSubmittedAt": "2026-10-04T05:39:45Z",
   "latestSubmission": {
-    "submissionId": "2049393377",
+    "submissionId": "2161769114",
     "language": "Python3",
-    "code": "class KthLargest:\n\n    def __init__(self, k: int, nums: List[int]):\n        self.heap = nums[:]\n        self.k = k\n\n    def add(self, val: int) -> int:\n        self.heap.append(val)\n\n        self.heap.sort()\n        return self.heap[-self.k]\n\n\n# Your KthLargest object will be instantiated and called as such:\n# obj = KthLargest(k, nums)\n# param_1 = obj.add(val)"
+    "code": "class KthLargest:\n\n    def __init__(self, k: int, nums: list[int]):\n        self.heap = nums[:]\n        self.k = k\n        heapify(self.heap)\n        while len(self.heap) > k:\n            heappop(self.heap)\n\n    def add(self, val: int) -> int:\n        heappush(self.heap, val)\n        if len(self.heap) > self.k:\n            heappop(self.heap)\n        return self.heap[0]\n\n\n# Your KthLargest object will be instantiated and called as such:\n# obj = KthLargest(k, nums)\n# param_1 = obj.add(val)"
   },
   "notes": [],
   "source": "leetcode",
   "importedAt": "2026-10-01T13:44:25Z",
-  "lastSyncedAt": "2026-10-01T13:44:25Z"
+  "lastSyncedAt": "2026-10-04T06:19:22Z"
 }
