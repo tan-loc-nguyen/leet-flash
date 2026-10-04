@@ -1,0 +1,282 @@
+{
+  "schemaVersion": 1,
+  "problemSlug": "find-peak-element",
+  "summary": "Return the index of any element strictly greater than its neighbours (out-of-range neighbours count as -infinity), in O(log n) time.",
+  "patterns": [
+    "Binary Search"
+  ],
+  "mainInsight": "If nums[mid] < nums[mid + 1], walking right from mid either keeps rising until the last element (a peak, since nums[n] = -inf) or eventually turns down (a peak at the turn), so the right side must contain a peak; otherwise mid or something to its left is a peak. One comparison discards half the array even though it is not sorted.",
+  "invariant": "The range [lo, hi] always contains at least one peak of the whole array; the loop stops when lo == hi, and that index is the peak.",
+  "canonicalApproach": "Binary search on the slope",
+  "canonicalCode": "class Solution:\n    def findPeakElement(self, nums: List[int]) -> int:\n        lo, hi = 0, len(nums) - 1\n        while lo < hi:  # each iteration halves [lo, hi]\n            mid = (lo + hi) // 2\n            if nums[mid] < nums[mid + 1]:\n                lo = mid + 1  # rising slope: a peak exists right of mid\n            else:\n                hi = mid      # falling slope: mid or something left of it is a peak\n        return lo  # the single remaining index is a peak",
+  "approaches": [
+    {
+      "name": "Linear scan",
+      "summary": "Return the first i with nums[i] > nums[i + 1]; if none, return n - 1.",
+      "timeComplexity": "O(n)",
+      "spaceComplexity": "O(1)",
+      "strengths": [
+        "Trivially correct",
+        "Easy to write"
+      ],
+      "weaknesses": [
+        "Violates the stated O(log n) requirement"
+      ],
+      "interviewRelevance": "Mention as the baseline, then move to binary search; the statement explicitly rules it out."
+    },
+    {
+      "name": "Binary search on the slope",
+      "summary": "lo=0, hi=n-1; while lo < hi compare nums[mid] with nums[mid + 1]; move lo = mid + 1 on a rising slope, else hi = mid.",
+      "timeComplexity": "O(log n)",
+      "spaceComplexity": "O(1)",
+      "strengths": [
+        "Meets the O(log n) requirement",
+        "No extra memory"
+      ],
+      "weaknesses": [
+        "Less obvious: binary search on unsorted data needs the existence argument"
+      ],
+      "interviewRelevance": "The expected answer; the interviewer will ask why it works on an unsorted array."
+    }
+  ],
+  "commonMistakes": [
+    "Thinking binary search needs a sorted array and giving up on O(log n).",
+    "Using `while lo <= hi` with `hi = mid` (infinite loop or IndexError on nums[mid + 1]).",
+    "Setting hi = mid - 1 on a falling slope, which can discard the peak at mid.",
+    "Comparing with nums[mid - 1] and reading index -1 (Python silently wraps to the last element)."
+  ],
+  "edgeCases": [
+    "Single element: index 0 is a peak.",
+    "Strictly increasing array: the last index is the peak.",
+    "Strictly decreasing array: index 0 is the peak.",
+    "Multiple peaks: any one is accepted."
+  ],
+  "cards": [
+    {
+      "id": "recog-find-peak-element",
+      "category": "pattern",
+      "type": "free_recall",
+      "promptVariants": [
+        "Which technique solves this problem, and what in the statement or constraints points to it?",
+        "Name the technique you would use here and the clue in the problem that tells you.",
+        "What approach fits this problem, and which part of the statement gives it away?"
+      ],
+      "answer": "Binary search on the slope, comparing nums[mid] with nums[mid + 1] and moving toward the larger neighbour. Clue: The statement demands logarithmic time, and with nums[-1] = nums[n] = -infinity and no equal neighbours, the rising side of any mid is guaranteed to contain a peak.",
+      "keyPoints": [
+        "The statement demands logarithmic time, and with nums[-1] = nums[n] = -infinity and no equal neighbours, the rising side of any mid is guaranteed to contain a peak."
+      ],
+      "explanation": "The array is unsorted, but binary search only needs a test that tells you which half still holds an answer. Comparing mid with its right neighbour is that test: the uphill side must reach a peak because the boundary is -infinity. A linear scan works but ignores the explicit logarithmic-time requirement.",
+      "rubric": {
+        "technique": "Binary search on the slope, comparing nums[mid] with nums[mid + 1] and moving toward the larger neighbour",
+        "aliases": [
+          "binary search",
+          "binary search on slope",
+          "binary search comparing mid and mid+1",
+          "climb uphill with binary search",
+          "binary search toward the larger neighbour"
+        ],
+        "alsoValid": [
+          {
+            "name": "Linear scan for the first descent",
+            "note": "correct, but linear time; the statement explicitly requires logarithmic time"
+          }
+        ],
+        "clueTypes": [
+          "monotonic_answer",
+          "math_observation"
+        ],
+        "clue": "The statement demands logarithmic time, and with nums[-1] = nums[n] = -infinity and no equal neighbours, the rising side of any mid is guaranteed to contain a peak."
+      },
+      "enabled": true
+    },
+    {
+      "id": "find-peak-element-insight-01",
+      "category": "main_insight",
+      "type": "free_recall",
+      "promptVariants": [
+        "If nums[mid] < nums[mid + 1], why is a peak guaranteed somewhere to the right of mid?",
+        "Prove that moving toward the larger neighbour of mid can never miss every peak.",
+        "Why does the uphill side of mid always contain a peak?"
+      ],
+      "answer": "Walk right from mid + 1. Either the values keep rising to the last element, which is a peak because nums[n] = -infinity, or they turn down at some index, and that turning point is larger than both neighbours. Equal neighbours are forbidden, so there is no flat stretch to get stuck on.",
+      "keyPoints": [
+        "Keep rising -> last element is a peak (nums[n] = -inf)",
+        "Turn down -> the turning point is a peak",
+        "No equal neighbours, so no plateaus"
+      ],
+      "explanation": "This existence argument is what licenses binary search on unsorted data: you do not need order, only a test that tells you which half is guaranteed to hold an answer.",
+      "enabled": true
+    },
+    {
+      "id": "find-peak-element-invariant-01",
+      "category": "invariant",
+      "type": "free_recall",
+      "promptVariants": [
+        "What invariant do lo and hi maintain in the canonical loop?",
+        "State the loop invariant that makes `return lo` correct.",
+        "What is always true about the range [lo, hi] during the search?"
+      ],
+      "answer": "[lo, hi] always contains a peak of the whole array. lo = mid + 1 keeps the rising side (which has a peak); hi = mid keeps mid itself, which may be the peak. The range strictly shrinks, and when lo == hi the single remaining index is a peak.",
+      "keyPoints": [
+        "[lo, hi] always contains a peak",
+        "Both updates keep a peak inside",
+        "lo == hi -> that index is the peak"
+      ],
+      "explanation": "Initially [0, n-1] holds a peak because the boundary is -infinity. Each update keeps the half that provably holds one, so the invariant survives until one index is left.",
+      "enabled": true
+    },
+    {
+      "id": "find-peak-element-whynot-01",
+      "category": "why_not",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "The array is not sorted. Why is binary search still valid here?",
+        "Binary search usually needs sorted input. What makes it work on this unsorted array?",
+        "Why can one comparison discard half of an unsorted array in this problem?"
+      ],
+      "options": [
+        "We need any peak, and the rising side of mid always has one",
+        "No equal neighbours means the array is sorted between peaks",
+        "The -infinity boundary makes the whole array unimodal overall",
+        "The statement promises exactly one peak, so it can be located"
+      ],
+      "answer": "We need any peak, and the rising side of mid always has one",
+      "explanation": "Binary search needs a decision that says which half still holds an answer, not sorted data. Since any peak is accepted and the uphill side must end at a peak, one comparison is enough to choose a half.",
+      "incorrectOptionExplanations": {
+        "No equal neighbours means the array is sorted between peaks": "Distinct neighbours rule out plateaus; they say nothing about order between peaks, and the search never relies on such order.",
+        "The -infinity boundary makes the whole array unimodal overall": "The array can have many peaks and valleys ([1,2,1,3,5,6,4]); it is not unimodal.",
+        "The statement promises exactly one peak, so it can be located": "The statement allows multiple peaks and accepts any of them."
+      },
+      "enabled": true
+    },
+    {
+      "id": "find-peak-element-impl-01",
+      "category": "implementation_detail",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "On a falling slope (nums[mid] > nums[mid + 1]) the code sets hi = mid, not mid - 1. Why?",
+        "Why must the falling-slope branch keep mid in the range?",
+        "What goes wrong with hi = mid - 1 when nums[mid] > nums[mid + 1]?"
+      ],
+      "options": [
+        "mid itself may be the peak, so it must stay in the range",
+        "hi = mid - 1 would read past the end of the array later",
+        "hi = mid - 1 makes the loop run forever on a falling slope",
+        "hi = mid keeps the range odd-sized so mid is always central"
+      ],
+      "answer": "mid itself may be the peak, so it must stay in the range",
+      "explanation": "nums[mid] > nums[mid + 1] only proves mid beats its right neighbour; it may also beat its left one and be the peak. Dropping it can lose the only peak in the range, e.g. nums = [1, 3, 2].",
+      "incorrectOptionExplanations": {
+        "hi = mid - 1 would read past the end of the array later": "Shrinking hi moves away from the end; the out-of-range risk is nums[mid + 1] when mid == n - 1.",
+        "hi = mid - 1 makes the loop run forever on a falling slope": "mid - 1 strictly shrinks the range; the problem is correctness, not termination.",
+        "hi = mid keeps the range odd-sized so mid is always central": "Range parity is irrelevant; the update is about not discarding a possible peak."
+      },
+      "enabled": true
+    },
+    {
+      "id": "find-peak-element-code-01",
+      "category": "code_reasoning",
+      "type": "code_question",
+      "promptVariants": [
+        "What happens if `while lo < hi` is changed to `while lo <= hi` in this code? Try nums = [5, 4, 3, 2, 1] and nums = [2, 4, 6, 8, 10].",
+        "Why does this loop use `lo < hi` instead of `lo <= hi`? Trace both inputs: [5, 4, 3, 2, 1] and [2, 4, 6, 8, 10]."
+      ],
+      "code": "lo, hi = 0, len(nums) - 1\nwhile lo <= hi:  # changed from lo < hi\n    mid = (lo + hi) // 2\n    if nums[mid] < nums[mid + 1]:\n        lo = mid + 1\n    else:\n        hi = mid\nreturn lo",
+      "answer": "When lo == hi the loop keeps going with mid == hi. On [5, 4, 3, 2, 1] the range reaches lo == hi == 0, the else branch sets hi = mid = 0 again, and it loops forever. On [2, 4, 6, 8, 10] it reaches lo == hi == 4 and nums[mid + 1] = nums[5] raises IndexError. `lo < hi` stops at one candidate, which by the invariant is the peak, and guarantees mid + 1 <= hi stays in range.",
+      "keyPoints": [
+        "lo == hi with hi = mid never shrinks -> infinite loop",
+        "mid == n - 1 makes nums[mid + 1] out of range",
+        "lo < hi guarantees mid < hi, so mid + 1 is valid"
+      ],
+      "explanation": "With hi = mid (not mid - 1) the loop must stop at a one-element range, since hi = mid cannot shrink it. That is also what keeps mid + 1 in range.",
+      "enabled": true
+    },
+    {
+      "id": "find-peak-element-edge-01",
+      "category": "edge_case",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "For nums = [2, 4, 6, 8, 10], what does the canonical code return, and why?",
+        "Strictly increasing input [2, 4, 6, 8, 10]: which index is returned as the peak?"
+      ],
+      "options": [
+        "4, since nums[n] = -infinity makes the last element a peak",
+        "0, since the first element has no left neighbour to beat",
+        "2, the middle index, where the binary search first looks",
+        "-1, since a strictly increasing array contains no peak"
+      ],
+      "answer": "4, since nums[n] = -infinity makes the last element a peak",
+      "explanation": "Every comparison is rising, so lo keeps moving right until lo == hi == 4. The imaginary nums[5] = -infinity makes 10 a peak.",
+      "incorrectOptionExplanations": {
+        "0, since the first element has no left neighbour to beat": "nums[0] = 2 < nums[1] = 4, so index 0 is not a peak.",
+        "2, the middle index, where the binary search first looks": "nums[2] = 6 < nums[3] = 8, so the search moves right past it.",
+        "-1, since a strictly increasing array contains no peak": "A peak always exists because both boundaries are -infinity; the function never returns -1."
+      },
+      "enabled": true
+    },
+    {
+      "id": "find-peak-element-time-01",
+      "category": "time_complexity",
+      "type": "free_recall",
+      "promptVariants": [
+        "Derive the time complexity of this code.",
+        "What is the running time of this code, and which lines determine it?"
+      ],
+      "answer": "O(log n). Each iteration sets lo = mid + 1 or hi = mid, so the range [lo, hi] roughly halves every time, and each iteration does O(1) work (one comparison). After about log2(n) iterations, lo == hi.",
+      "keyPoints": [
+        "Range halves each iteration (lo = mid + 1 or hi = mid)",
+        "~log2(n) iterations",
+        "O(1) work per iteration"
+      ],
+      "explanation": "Same halving argument as classic binary search; the only difference is the comparison (mid vs mid + 1 instead of mid vs target).",
+      "enabled": true
+    },
+    {
+      "id": "find-peak-element-space-01",
+      "category": "space_complexity",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "What is the extra space complexity of this code?",
+        "How much additional memory does this code use?"
+      ],
+      "options": [
+        "O(1): only lo, hi and mid are stored",
+        "O(log n): one frame per halving step",
+        "O(n): the array is copied for the search",
+        "O(n): visited indices are tracked in a set"
+      ],
+      "answer": "O(1): only lo, hi and mid are stored",
+      "explanation": "The loop is iterative and indexes into nums in place; three integers are all it keeps.",
+      "incorrectOptionExplanations": {
+        "O(log n): one frame per halving step": "That would be a recursive version; this loop is iterative.",
+        "O(n): the array is copied for the search": "Nothing is copied or sliced; the code reads nums by index.",
+        "O(n): visited indices are tracked in a set": "No set is used; the invariant makes tracking visits unnecessary."
+      },
+      "enabled": true
+    },
+    {
+      "id": "find-peak-element-alt-01",
+      "category": "alternative_approach",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "A linear scan returning the first i with nums[i] > nums[i + 1] (else n - 1) is correct. Why is it not acceptable here?",
+        "Why should you not stop at the first-descent linear scan for this problem?"
+      ],
+      "options": [
+        "It is correct but linear, and the statement demands log time",
+        "It can return a valley when the array starts out decreasing",
+        "It fails when the only peak is the last element of the array",
+        "It needs extra memory to remember every previous value seen"
+      ],
+      "answer": "It is correct but linear, and the statement demands log time",
+      "explanation": "The scan always finds a peak (the first descent, or the last index), but it runs in O(n). The statement explicitly requires O(log n), which only the slope binary search gives.",
+      "incorrectOptionExplanations": {
+        "It can return a valley when the array starts out decreasing": "If nums[0] > nums[1] it returns 0, which is a peak because nums[-1] = -infinity.",
+        "It fails when the only peak is the last element of the array": "The fallback returns n - 1 when no descent is found.",
+        "It needs extra memory to remember every previous value seen": "It only compares adjacent elements; O(1) space."
+      },
+      "enabled": true
+    }
+  ],
+  "generatedAt": "2026-10-04T09:47:24Z"
+}

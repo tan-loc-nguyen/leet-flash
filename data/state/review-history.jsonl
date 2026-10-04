@@ -158,3 +158,9 @@
 {"timestamp":"2026-10-04T06:16:12Z","sessionId":"daily-2026-10-04","problem":"contains-duplicate","card":"cd-time-01","category":"time_complexity","result":"correct","mode":"daily"}
 {"timestamp":"2026-10-04T06:17:20Z","sessionId":"daily-2026-10-04","problem":"contains-duplicate","card":"cd-space-01","category":"space_complexity","result":"partial","mode":"daily"}
 {"timestamp":"2026-10-04T06:17:20Z","event":"problem_review","sessionId":"daily-2026-10-04","problem":"contains-duplicate","mode":"daily","score":0.902,"outcome":"promote","levelBefore":0,"levelAfter":1,"nextReview":"2026-10-05T00:00:00Z","cards":5}
+{"timestamp":"2026-10-04T09:49:57Z","sessionId":"cram-2026-10-04","problem":"find-peak-element","card":"recog-find-peak-element","category":"pattern","result":"partial","mode":"cram","userText":"It's binary search. But I can say that because I looked at the tag","technique":"accepted","clue":"missing"}
+{"timestamp":"2026-10-04T10:03:52Z","sessionId":"cram-2026-10-04","problem":"find-peak-element","card":"find-peak-element-insight-01","category":"main_insight","result":"partial","mode":"cram"}
+{"timestamp":"2026-10-04T10:08:11Z","sessionId":"cram-2026-10-04","problem":"find-peak-element","card":"find-peak-element-alt-01","category":"alternative_approach","result":"correct","mode":"cram"}
+{"timestamp":"2026-10-04T10:09:12Z","sessionId":"cram-2026-10-04","problem":"find-peak-element","card":"find-peak-element-impl-01","category":"implementation_detail","result":"correct","mode":"cram"}
+{"timestamp":"2026-10-04T10:09:57Z","sessionId":"cram-2026-10-04","problem":"find-peak-element","card":"find-peak-element-space-01","category":"space_complexity","result":"failed","mode":"cram"}
+{"timestamp":"2026-10-04T10:09:57Z","event":"problem_review","sessionId":"cram-2026-10-04","problem":"find-peak-element","mode":"cram","score":0.542,"outcome":"demote","levelBefore":0,"levelAfter":0,"nextReview":"2026-10-04T10:09:57Z","cards":5}
