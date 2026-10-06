@@ -229,7 +229,7 @@
       "type": "multiple_choice",
       "promptVariants": [
         "What is the 2nd largest of [9,4,9,7,1]?",
-        "Do duplicates count separately?"
+        "Do duplicates count separately? What is the 2nd largest of [9,4,9,7,1]?"
       ],
       "options": [
         "9",

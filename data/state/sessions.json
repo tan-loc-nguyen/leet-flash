@@ -2871,6 +2871,878 @@
           }
         }
       ]
+    },
+    "daily-2026-10-06": {
+      "id": "daily-2026-10-06",
+      "mode": "daily",
+      "status": "completed",
+      "createdAt": "2026-10-06T13:25:10Z",
+      "updatedAt": "2026-10-06T15:21:56Z",
+      "seed": 919247922,
+      "target": 10,
+      "filters": {},
+      "focusCategories": [],
+      "problems": [
+        {
+          "slug": "rotting-oranges",
+          "bucket": "due",
+          "status": "done",
+          "cardIds": [
+            "recog-rotting-oranges",
+            "ro2-code-01",
+            "ro2-edge-01",
+            "ro2-time-01",
+            "ro2-space-01"
+          ],
+          "answers": [
+            {
+              "cardId": "recog-rotting-oranges",
+              "category": "pattern",
+              "result": "correct",
+              "timestamp": "2026-10-06T13:30:26Z"
+            },
+            {
+              "cardId": "ro2-code-01",
+              "category": "code_reasoning",
+              "result": "correct",
+              "timestamp": "2026-10-06T13:31:12Z"
+            },
+            {
+              "cardId": "ro2-edge-01",
+              "category": "edge_case",
+              "result": "correct",
+              "timestamp": "2026-10-06T13:31:34Z"
+            },
+            {
+              "cardId": "ro2-time-01",
+              "category": "time_complexity",
+              "result": "correct",
+              "timestamp": "2026-10-06T13:31:48Z"
+            },
+            {
+              "cardId": "ro2-space-01",
+              "category": "space_complexity",
+              "result": "correct",
+              "timestamp": "2026-10-06T13:32:56Z"
+            }
+          ],
+          "hintLevel": 0,
+          "presented": {
+            "recog-rotting-oranges": {
+              "prompt": "Which technique solves this problem, and what in the statement or constraints points to it?",
+              "options": null
+            },
+            "ro2-code-01": {
+              "prompt": "What would return -1?",
+              "options": null
+            },
+            "ro2-edge-01": {
+              "prompt": "What do you return for (1) a grid with no fresh oranges, and (2) a fresh orange with no rotten orange anywhere?",
+              "options": [
+                {
+                  "label": "A",
+                  "text": "-1, and -1"
+                },
+                {
+                  "label": "B",
+                  "text": "0, and -1"
+                },
+                {
+                  "label": "C",
+                  "text": "1, and -1"
+                },
+                {
+                  "label": "D",
+                  "text": "0, and 0"
+                }
+              ]
+            },
+            "ro2-time-01": {
+              "prompt": "Time complexity: ___",
+              "options": null
+            },
+            "ro2-space-01": {
+              "prompt": "How large can the Rotting Oranges queue get, and what replaces a visited structure?",
+              "options": null
+            }
+          },
+          "outcome": {
+            "score": 1.0,
+            "outcome": "promote",
+            "levelBefore": 2,
+            "levelAfter": 3,
+            "nextReview": "2026-10-13T00:00:00Z"
+          }
+        },
+        {
+          "slug": "random-pick-with-weight",
+          "bucket": "overdue",
+          "status": "done",
+          "cardIds": [
+            "recog-random-pick-with-weight",
+            "rw-insight-01",
+            "rw-code-01",
+            "rw-time-01",
+            "rw-space-01"
+          ],
+          "answers": [
+            {
+              "cardId": "recog-random-pick-with-weight",
+              "category": "pattern",
+              "result": "partial",
+              "timestamp": "2026-10-06T13:35:11Z"
+            },
+            {
+              "cardId": "rw-insight-01",
+              "category": "main_insight",
+              "result": "partial",
+              "timestamp": "2026-10-06T13:43:56Z"
+            },
+            {
+              "cardId": "rw-code-01",
+              "category": "code_reasoning",
+              "result": "partial",
+              "timestamp": "2026-10-06T13:54:45Z"
+            },
+            {
+              "cardId": "rw-time-01",
+              "category": "time_complexity",
+              "result": "correct",
+              "timestamp": "2026-10-06T13:56:25Z"
+            },
+            {
+              "cardId": "rw-space-01",
+              "category": "space_complexity",
+              "result": "partial",
+              "timestamp": "2026-10-06T13:58:22Z"
+            }
+          ],
+          "hintLevel": 1,
+          "presented": {
+            "recog-random-pick-with-weight": {
+              "prompt": "Name the technique you would use here and the clue in the problem that tells you.",
+              "options": null
+            },
+            "rw-insight-01": {
+              "prompt": "Explain the number-line model.",
+              "options": null
+            },
+            "rw-code-01": {
+              "prompt": "What is the invariant of the search?",
+              "options": null
+            },
+            "rw-time-01": {
+              "prompt": "Each pick performs a binary search, costing ___.",
+              "options": null
+            },
+            "rw-space-01": {
+              "prompt": "Why is the prefix array better than repeating indices?",
+              "options": null
+            }
+          },
+          "outcome": {
+            "score": 0.596,
+            "outcome": "demote",
+            "levelBefore": 0,
+            "levelAfter": 0,
+            "nextReview": "2026-10-06T13:58:22Z"
+          }
+        },
+        {
+          "slug": "valid-subarrays-with-matching-sum-digits-i",
+          "bucket": "overdue",
+          "status": "done",
+          "cardIds": [
+            "recog-valid-subarrays-with-matching-sum-digits-i",
+            "vs-insight-01",
+            "vs-code-01",
+            "vs-edge-01",
+            "vs-time-01"
+          ],
+          "answers": [
+            {
+              "cardId": "recog-valid-subarrays-with-matching-sum-digits-i",
+              "category": "pattern",
+              "result": "partial",
+              "timestamp": "2026-10-06T14:03:34Z"
+            },
+            {
+              "cardId": "vs-insight-01",
+              "category": "main_insight",
+              "result": "partial",
+              "timestamp": "2026-10-06T14:04:50Z"
+            },
+            {
+              "cardId": "vs-code-01",
+              "category": "code_reasoning",
+              "result": "partial",
+              "timestamp": "2026-10-06T14:09:51Z"
+            },
+            {
+              "cardId": "vs-edge-01",
+              "category": "edge_case",
+              "result": "correct",
+              "timestamp": "2026-10-06T14:10:57Z"
+            },
+            {
+              "cardId": "vs-time-01",
+              "category": "time_complexity",
+              "result": "correct",
+              "timestamp": "2026-10-06T14:11:46Z"
+            }
+          ],
+          "hintLevel": 0,
+          "presented": {
+            "recog-valid-subarrays-with-matching-sum-digits-i": {
+              "prompt": "Name the technique you would use here and the clue in the problem that tells you.",
+              "options": null
+            },
+            "vs-insight-01": {
+              "prompt": "Why is brute force acceptable here?",
+              "options": null
+            },
+            "vs-code-01": {
+              "prompt": "How is the digit test performed?",
+              "options": null
+            },
+            "vs-edge-01": {
+              "prompt": "Which sum is valid?",
+              "options": [
+                {
+                  "label": "A",
+                  "text": "-3"
+                },
+                {
+                  "label": "B",
+                  "text": "303"
+                },
+                {
+                  "label": "C",
+                  "text": "30"
+                },
+                {
+                  "label": "D",
+                  "text": "13"
+                }
+              ]
+            },
+            "vs-time-01": {
+              "prompt": "Complete the statement: Time complexity (digit conversion treated as O(1)): ___",
+              "options": null
+            }
+          },
+          "outcome": {
+            "score": 0.675,
+            "outcome": "hold",
+            "levelBefore": 1,
+            "levelAfter": 1,
+            "nextReview": "2026-10-07T00:00:00Z"
+          }
+        },
+        {
+          "slug": "insert-delete-getrandom-o1",
+          "bucket": "due",
+          "status": "done",
+          "cardIds": [
+            "recog-insert-delete-getrandom-o1",
+            "rs3-insight-01",
+            "rs3-pattern-01",
+            "rs3-time-01",
+            "rs3-space-01"
+          ],
+          "answers": [
+            {
+              "cardId": "recog-insert-delete-getrandom-o1",
+              "category": "pattern",
+              "result": "correct",
+              "timestamp": "2026-10-06T14:42:59Z"
+            },
+            {
+              "cardId": "rs3-insight-01",
+              "category": "main_insight",
+              "result": "correct",
+              "timestamp": "2026-10-06T14:44:07Z"
+            },
+            {
+              "cardId": "rs3-pattern-01",
+              "category": "data_structure",
+              "result": "correct",
+              "timestamp": "2026-10-06T14:44:34Z"
+            },
+            {
+              "cardId": "rs3-time-01",
+              "category": "time_complexity",
+              "result": "correct",
+              "timestamp": "2026-10-06T14:45:30Z"
+            },
+            {
+              "cardId": "rs3-space-01",
+              "category": "space_complexity",
+              "result": "correct",
+              "timestamp": "2026-10-06T14:45:58Z"
+            }
+          ],
+          "hintLevel": 0,
+          "presented": {
+            "recog-insert-delete-getrandom-o1": {
+              "prompt": "Which technique solves this problem, and what in the statement or constraints points to it?",
+              "options": null
+            },
+            "rs3-insight-01": {
+              "prompt": "How does removal stay O(1)?",
+              "options": null
+            },
+            "rs3-pattern-01": {
+              "prompt": "Why is one data structure not enough?",
+              "options": [
+                {
+                  "label": "A",
+                  "text": "A sorted array and a binary search tree"
+                },
+                {
+                  "label": "B",
+                  "text": "A heap for removal and a stack for random choice"
+                },
+                {
+                  "label": "C",
+                  "text": "A list for indexing and a dict from value to index"
+                },
+                {
+                  "label": "D",
+                  "text": "Two hash sets that mirror each other"
+                }
+              ]
+            },
+            "rs3-time-01": {
+              "prompt": "Time complexity: ___",
+              "options": null
+            },
+            "rs3-space-01": {
+              "prompt": "Complete the statement: Space complexity (excluding the input): ___",
+              "options": null
+            }
+          },
+          "outcome": {
+            "score": 1.0,
+            "outcome": "promote",
+            "levelBefore": 2,
+            "levelAfter": 3,
+            "nextReview": "2026-10-13T00:00:00Z"
+          }
+        },
+        {
+          "slug": "maximum-average-subarray-i",
+          "bucket": "overdue",
+          "status": "done",
+          "cardIds": [
+            "recog-maximum-average-subarray-i",
+            "mas-insight-01",
+            "mas-edge-01",
+            "mas-time-01",
+            "mas-space-01"
+          ],
+          "answers": [
+            {
+              "cardId": "recog-maximum-average-subarray-i",
+              "category": "pattern",
+              "result": "correct",
+              "timestamp": "2026-10-06T14:48:09Z"
+            },
+            {
+              "cardId": "mas-insight-01",
+              "category": "main_insight",
+              "result": "correct",
+              "timestamp": "2026-10-06T14:49:08Z"
+            },
+            {
+              "cardId": "mas-edge-01",
+              "category": "edge_case",
+              "result": "correct",
+              "timestamp": "2026-10-06T14:49:33Z"
+            },
+            {
+              "cardId": "mas-time-01",
+              "category": "time_complexity",
+              "result": "correct",
+              "timestamp": "2026-10-06T14:49:46Z"
+            },
+            {
+              "cardId": "mas-space-01",
+              "category": "space_complexity",
+              "result": "correct",
+              "timestamp": "2026-10-06T14:50:26Z"
+            }
+          ],
+          "hintLevel": 0,
+          "presented": {
+            "recog-maximum-average-subarray-i": {
+              "prompt": "Name the technique you would use here and the clue in the problem that tells you.",
+              "options": null
+            },
+            "mas-insight-01": {
+              "prompt": "Why compare sums rather than averages while sliding?",
+              "options": null
+            },
+            "mas-edge-01": {
+              "prompt": "nums = [-3,-5], k = 2: which window is examined and what is returned?",
+              "options": [
+                {
+                  "label": "A",
+                  "text": "-4.0: the only window is the whole array"
+                },
+                {
+                  "label": "B",
+                  "text": "0.0: there is no full window yet"
+                },
+                {
+                  "label": "C",
+                  "text": "An error: there is no element to subtract"
+                },
+                {
+                  "label": "D",
+                  "text": "-2.0: the sum is divided by k twice"
+                }
+              ]
+            },
+            "mas-time-01": {
+              "prompt": "Complete the statement: Time complexity: ___",
+              "options": null
+            },
+            "mas-space-01": {
+              "prompt": "Complete the statement: Space complexity (excluding the input): ___",
+              "options": null
+            }
+          },
+          "outcome": {
+            "score": 1.0,
+            "outcome": "promote",
+            "levelBefore": 1,
+            "levelAfter": 2,
+            "nextReview": "2026-10-09T00:00:00Z"
+          }
+        },
+        {
+          "slug": "find-peak-element",
+          "bucket": "overdue",
+          "status": "done",
+          "cardIds": [
+            "recog-find-peak-element",
+            "find-peak-element-insight-01",
+            "find-peak-element-invariant-01",
+            "find-peak-element-time-01",
+            "find-peak-element-space-01"
+          ],
+          "answers": [
+            {
+              "cardId": "recog-find-peak-element",
+              "category": "pattern",
+              "result": "correct",
+              "timestamp": "2026-10-06T14:53:00Z"
+            },
+            {
+              "cardId": "find-peak-element-insight-01",
+              "category": "main_insight",
+              "result": "partial",
+              "timestamp": "2026-10-06T14:55:35Z"
+            },
+            {
+              "cardId": "find-peak-element-invariant-01",
+              "category": "invariant",
+              "result": "partial",
+              "timestamp": "2026-10-06T14:57:03Z"
+            },
+            {
+              "cardId": "find-peak-element-time-01",
+              "category": "time_complexity",
+              "result": "partial",
+              "timestamp": "2026-10-06T14:57:32Z"
+            },
+            {
+              "cardId": "find-peak-element-space-01",
+              "category": "space_complexity",
+              "result": "correct",
+              "timestamp": "2026-10-06T14:57:56Z"
+            }
+          ],
+          "hintLevel": 0,
+          "presented": {
+            "recog-find-peak-element": {
+              "prompt": "Name the technique you would use here and the clue in the problem that tells you.",
+              "options": null
+            },
+            "find-peak-element-insight-01": {
+              "prompt": "Prove that moving toward the larger neighbour of mid can never miss every peak.",
+              "options": null
+            },
+            "find-peak-element-invariant-01": {
+              "prompt": "What invariant do lo and hi maintain in the canonical loop?",
+              "options": null
+            },
+            "find-peak-element-time-01": {
+              "prompt": "Derive the time complexity of this code.",
+              "options": null
+            },
+            "find-peak-element-space-01": {
+              "prompt": "How much additional memory does this code use?",
+              "options": [
+                {
+                  "label": "A",
+                  "text": "O(n): visited indices are tracked in a set"
+                },
+                {
+                  "label": "B",
+                  "text": "O(n): the array is copied for the search"
+                },
+                {
+                  "label": "C",
+                  "text": "O(1): only lo, hi and mid are stored"
+                },
+                {
+                  "label": "D",
+                  "text": "O(log n): one frame per halving step"
+                }
+              ]
+            }
+          },
+          "outcome": {
+            "score": 0.704,
+            "outcome": "hold",
+            "levelBefore": 0,
+            "levelAfter": 0,
+            "nextReview": "2026-10-06T14:57:56Z"
+          }
+        },
+        {
+          "slug": "top-k-frequent-elements",
+          "bucket": "overdue",
+          "status": "done",
+          "cardIds": [
+            "recog-top-k-frequent-elements",
+            "tk-insight-01",
+            "tk-code-01",
+            "tk-time-01",
+            "tk-space-01"
+          ],
+          "answers": [
+            {
+              "cardId": "recog-top-k-frequent-elements",
+              "category": "pattern",
+              "result": "correct",
+              "timestamp": "2026-10-06T14:58:57Z"
+            },
+            {
+              "cardId": "tk-insight-01",
+              "category": "main_insight",
+              "result": "correct",
+              "timestamp": "2026-10-06T15:01:09Z"
+            },
+            {
+              "cardId": "tk-code-01",
+              "category": "code_reasoning",
+              "result": "partial",
+              "timestamp": "2026-10-06T15:03:55Z"
+            },
+            {
+              "cardId": "tk-time-01",
+              "category": "time_complexity",
+              "result": "correct",
+              "timestamp": "2026-10-06T15:05:26Z"
+            },
+            {
+              "cardId": "tk-space-01",
+              "category": "space_complexity",
+              "result": "partial",
+              "timestamp": "2026-10-06T15:05:59Z"
+            }
+          ],
+          "hintLevel": 0,
+          "presented": {
+            "recog-top-k-frequent-elements": {
+              "prompt": "Name the technique you would use here and the clue in the problem that tells you.",
+              "options": null
+            },
+            "tk-insight-01": {
+              "prompt": "Why evict the smallest element to keep the top k?",
+              "options": null
+            },
+            "tk-code-01": {
+              "prompt": "Why is it safe to `heappop` immediately after pushing when len > k?",
+              "options": null
+            },
+            "tk-time-01": {
+              "prompt": "Counting + a heap of size k costs ___.",
+              "options": null
+            },
+            "tk-space-01": {
+              "prompt": "What is the extra space of Counter + size-k heap?",
+              "options": null
+            }
+          },
+          "outcome": {
+            "score": 0.827,
+            "outcome": "hold",
+            "levelBefore": 1,
+            "levelAfter": 1,
+            "nextReview": "2026-10-07T00:00:00Z"
+          }
+        },
+        {
+          "slug": "contains-duplicate",
+          "bucket": "overdue",
+          "status": "done",
+          "cardIds": [
+            "recog-contains-duplicate",
+            "cd-insight-01",
+            "cd-code-01",
+            "cd-time-01",
+            "cd-space-01"
+          ],
+          "answers": [
+            {
+              "cardId": "recog-contains-duplicate",
+              "category": "pattern",
+              "result": "correct",
+              "timestamp": "2026-10-06T15:06:56Z"
+            },
+            {
+              "cardId": "cd-insight-01",
+              "category": "main_insight",
+              "result": "partial",
+              "timestamp": "2026-10-06T15:08:04Z"
+            },
+            {
+              "cardId": "cd-code-01",
+              "category": "code_reasoning",
+              "result": "correct",
+              "timestamp": "2026-10-06T15:09:24Z"
+            },
+            {
+              "cardId": "cd-time-01",
+              "category": "time_complexity",
+              "result": "correct",
+              "timestamp": "2026-10-06T15:09:43Z"
+            },
+            {
+              "cardId": "cd-space-01",
+              "category": "space_complexity",
+              "result": "partial",
+              "timestamp": "2026-10-06T15:11:33Z"
+            }
+          ],
+          "hintLevel": 0,
+          "presented": {
+            "recog-contains-duplicate": {
+              "prompt": "Name the technique you would use here and the clue in the problem that tells you.",
+              "options": null
+            },
+            "cd-insight-01": {
+              "prompt": "Explain the O(n) idea.",
+              "options": null
+            },
+            "cd-code-01": {
+              "prompt": "Your solution stores `counter[num] = 1` in a dict but never reads the value. What simpler structure expresses the same idea, and why is the return inside the loop correct?",
+              "options": null
+            },
+            "cd-time-01": {
+              "prompt": "Contains Duplicate with a set runs in ___ time.",
+              "options": null
+            },
+            "cd-space-01": {
+              "prompt": "Compare sort-based and set-based Contains Duplicate.",
+              "options": null
+            }
+          },
+          "outcome": {
+            "score": 0.788,
+            "outcome": "hold",
+            "levelBefore": 1,
+            "levelAfter": 1,
+            "nextReview": "2026-10-07T00:00:00Z"
+          }
+        },
+        {
+          "slug": "kth-largest-element-in-an-array",
+          "bucket": "due",
+          "status": "done",
+          "cardIds": [
+            "recog-kth-largest-element-in-an-array",
+            "kt-insight-02",
+            "kt-code-01",
+            "kt-edge-01",
+            "kt-space-02"
+          ],
+          "answers": [
+            {
+              "cardId": "recog-kth-largest-element-in-an-array",
+              "category": "pattern",
+              "result": "correct",
+              "timestamp": "2026-10-06T15:13:07Z"
+            },
+            {
+              "cardId": "kt-insight-02",
+              "category": "main_insight",
+              "result": "correct",
+              "timestamp": "2026-10-06T15:14:07Z"
+            },
+            {
+              "cardId": "kt-code-01",
+              "category": "code_reasoning",
+              "result": "partial",
+              "timestamp": "2026-10-06T15:15:44Z"
+            },
+            {
+              "cardId": "kt-edge-01",
+              "category": "edge_case",
+              "result": "correct",
+              "timestamp": "2026-10-06T15:16:55Z"
+            },
+            {
+              "cardId": "kt-space-02",
+              "category": "space_complexity",
+              "result": "correct",
+              "timestamp": "2026-10-06T15:17:27Z"
+            }
+          ],
+          "hintLevel": 0,
+          "presented": {
+            "recog-kth-largest-element-in-an-array": {
+              "prompt": "Which technique solves this problem, and what in the statement or constraints points to it?",
+              "options": null
+            },
+            "kt-insight-02": {
+              "prompt": "Why is the root of a size-k min-heap of the largest values the k-th largest?",
+              "options": null
+            },
+            "kt-code-01": {
+              "prompt": "Why does the scan return the k-th largest including duplicates?",
+              "options": null
+            },
+            "kt-edge-01": {
+              "prompt": "Do duplicates count separately?",
+              "options": [
+                {
+                  "label": "A",
+                  "text": "9"
+                },
+                {
+                  "label": "B",
+                  "text": "1"
+                },
+                {
+                  "label": "C",
+                  "text": "7"
+                },
+                {
+                  "label": "D",
+                  "text": "4"
+                }
+              ]
+            },
+            "kt-space-02": {
+              "prompt": "How much memory does a heap capped at size k use? ___",
+              "options": null
+            }
+          },
+          "outcome": {
+            "score": 0.919,
+            "outcome": "promote",
+            "levelBefore": 2,
+            "levelAfter": 3,
+            "nextReview": "2026-10-11T00:00:00Z"
+          }
+        },
+        {
+          "slug": "kth-largest-element-in-a-stream",
+          "bucket": "overdue",
+          "status": "done",
+          "cardIds": [
+            "recog-kth-largest-element-in-a-stream",
+            "kl-insight-01",
+            "kl-pattern-01",
+            "kl-invariant-01",
+            "kl-time-01"
+          ],
+          "answers": [
+            {
+              "cardId": "recog-kth-largest-element-in-a-stream",
+              "category": "pattern",
+              "result": "correct",
+              "timestamp": "2026-10-06T15:18:04Z"
+            },
+            {
+              "cardId": "kl-insight-01",
+              "category": "main_insight",
+              "result": "partial",
+              "timestamp": "2026-10-06T15:19:58Z"
+            },
+            {
+              "cardId": "kl-pattern-01",
+              "category": "data_structure",
+              "result": "correct",
+              "timestamp": "2026-10-06T15:20:40Z"
+            },
+            {
+              "cardId": "kl-invariant-01",
+              "category": "invariant",
+              "result": "correct",
+              "timestamp": "2026-10-06T15:21:15Z"
+            },
+            {
+              "cardId": "kl-time-01",
+              "category": "time_complexity",
+              "result": "correct",
+              "timestamp": "2026-10-06T15:21:56Z"
+            }
+          ],
+          "hintLevel": 0,
+          "presented": {
+            "recog-kth-largest-element-in-a-stream": {
+              "prompt": "Name the technique you would use here and the clue in the problem that tells you.",
+              "options": null
+            },
+            "kl-insight-01": {
+              "prompt": "Why use a MIN-heap, not a max-heap, to track the k LARGEST values? Say what the root represents and why the rest can be discarded.",
+              "options": null
+            },
+            "kl-pattern-01": {
+              "prompt": "Which structure maintains the k-th largest of a stream?",
+              "options": [
+                {
+                  "label": "A",
+                  "text": "Min-heap holding only k items"
+                },
+                {
+                  "label": "B",
+                  "text": "Sorted array rebuilt per add"
+                },
+                {
+                  "label": "C",
+                  "text": "Stack of the k latest values"
+                },
+                {
+                  "label": "D",
+                  "text": "Max-heap holding all n items"
+                }
+              ]
+            },
+            "kl-invariant-01": {
+              "prompt": "After every call to add, what exactly does the heap contain, and what does heap[0] represent?",
+              "options": null
+            },
+            "kl-time-01": {
+              "prompt": "Complete the statement: Time of add with a size-k min-heap: ___",
+              "options": null
+            }
+          },
+          "outcome": {
+            "score": 0.885,
+            "outcome": "promote",
+            "levelBefore": 0,
+            "levelAfter": 1,
+            "nextReview": "2026-10-07T00:00:00Z"
+          }
+        }
+      ]
     }
   }
 }

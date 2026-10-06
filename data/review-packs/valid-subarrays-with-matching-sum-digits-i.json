@@ -162,7 +162,7 @@
       "type": "multiple_choice",
       "promptVariants": [
         "Which sum can satisfy the condition for x = 3?",
-        "Which sum is valid?"
+        "With x = 3, which sum is valid?"
       ],
       "options": [
         "303",
