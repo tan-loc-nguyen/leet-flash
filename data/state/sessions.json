@@ -3743,6 +3743,929 @@
           }
         }
       ]
+    },
+    "daily-2026-10-07": {
+      "id": "daily-2026-10-07",
+      "mode": "daily",
+      "status": "completed",
+      "createdAt": "2026-10-07T05:15:30Z",
+      "updatedAt": "2026-10-07T08:33:38Z",
+      "seed": 710790914,
+      "target": 10,
+      "filters": {},
+      "focusCategories": [],
+      "problems": [
+        {
+          "slug": "top-k-frequent-elements",
+          "bucket": "due",
+          "status": "done",
+          "cardIds": [
+            "recog-top-k-frequent-elements",
+            "tk-alt-01",
+            "tk-code-01",
+            "tk-time-01",
+            "tk-space-01"
+          ],
+          "answers": [
+            {
+              "cardId": "recog-top-k-frequent-elements",
+              "category": "pattern",
+              "result": "correct",
+              "timestamp": "2026-10-07T07:24:05Z"
+            },
+            {
+              "cardId": "tk-alt-01",
+              "category": "alternative_approach",
+              "result": "partial",
+              "timestamp": "2026-10-07T07:24:44Z"
+            },
+            {
+              "cardId": "tk-code-01",
+              "category": "code_reasoning",
+              "result": "correct",
+              "timestamp": "2026-10-07T07:28:30Z"
+            },
+            {
+              "cardId": "tk-time-01",
+              "category": "time_complexity",
+              "result": "correct",
+              "timestamp": "2026-10-07T07:29:02Z"
+            },
+            {
+              "cardId": "tk-space-01",
+              "category": "space_complexity",
+              "result": "partial",
+              "timestamp": "2026-10-07T07:29:34Z"
+            }
+          ],
+          "hintLevel": 0,
+          "presented": {
+            "recog-top-k-frequent-elements": {
+              "prompt": "What approach fits this problem, and which part of the statement gives it away?",
+              "options": null
+            },
+            "tk-alt-01": {
+              "prompt": "How can you find the top k frequent elements in O(n) without a heap?",
+              "options": null
+            },
+            "tk-code-01": {
+              "prompt": "Explain the invariant behind pushing then popping when the heap exceeds size k.",
+              "options": null
+            },
+            "tk-time-01": {
+              "prompt": "Time complexity of the size-k heap solution: ___",
+              "options": null
+            },
+            "tk-space-01": {
+              "prompt": "What does the heap solution store, and how large can each structure get?",
+              "options": null
+            }
+          },
+          "outcome": {
+            "score": 0.812,
+            "outcome": "hold",
+            "levelBefore": 1,
+            "levelAfter": 1,
+            "nextReview": "2026-10-08T00:00:00Z"
+          }
+        },
+        {
+          "slug": "find-peak-element",
+          "bucket": "overdue",
+          "status": "done",
+          "cardIds": [
+            "recog-find-peak-element",
+            "find-peak-element-insight-01",
+            "find-peak-element-whynot-01",
+            "find-peak-element-impl-01",
+            "find-peak-element-edge-01"
+          ],
+          "answers": [
+            {
+              "cardId": "recog-find-peak-element",
+              "category": "pattern",
+              "result": "correct",
+              "timestamp": "2026-10-07T07:30:35Z"
+            },
+            {
+              "cardId": "find-peak-element-insight-01",
+              "category": "main_insight",
+              "result": "partial",
+              "timestamp": "2026-10-07T07:31:32Z"
+            },
+            {
+              "cardId": "find-peak-element-whynot-01",
+              "category": "why_not",
+              "result": "failed",
+              "timestamp": "2026-10-07T07:32:16Z"
+            },
+            {
+              "cardId": "find-peak-element-impl-01",
+              "category": "implementation_detail",
+              "result": "failed",
+              "timestamp": "2026-10-07T07:33:24Z"
+            },
+            {
+              "cardId": "find-peak-element-edge-01",
+              "category": "edge_case",
+              "result": "correct",
+              "timestamp": "2026-10-07T07:34:22Z"
+            }
+          ],
+          "hintLevel": 0,
+          "presented": {
+            "recog-find-peak-element": {
+              "prompt": "What approach fits this problem, and which part of the statement gives it away?",
+              "options": null
+            },
+            "find-peak-element-insight-01": {
+              "prompt": "Why does the uphill side of mid always contain a peak?",
+              "options": null
+            },
+            "find-peak-element-whynot-01": {
+              "prompt": "The array is not sorted. Why is binary search still valid here?",
+              "options": [
+                {
+                  "label": "A",
+                  "text": "The statement promises exactly one peak, so it can be located"
+                },
+                {
+                  "label": "B",
+                  "text": "No equal neighbours means the array is sorted between peaks"
+                },
+                {
+                  "label": "C",
+                  "text": "The -infinity boundary makes the whole array unimodal overall"
+                },
+                {
+                  "label": "D",
+                  "text": "We need any peak, and the rising side of mid always has one"
+                }
+              ]
+            },
+            "find-peak-element-impl-01": {
+              "prompt": "Why must the falling-slope branch keep mid in the range?",
+              "options": [
+                {
+                  "label": "A",
+                  "text": "mid itself may be the peak, so it must stay in the range"
+                },
+                {
+                  "label": "B",
+                  "text": "hi = mid - 1 would read past the end of the array later"
+                },
+                {
+                  "label": "C",
+                  "text": "hi = mid keeps the range odd-sized so mid is always central"
+                },
+                {
+                  "label": "D",
+                  "text": "hi = mid - 1 makes the loop run forever on a falling slope"
+                }
+              ]
+            },
+            "find-peak-element-edge-01": {
+              "prompt": "For nums = [2, 4, 6, 8, 10], what does the canonical code return, and why?",
+              "options": [
+                {
+                  "label": "A",
+                  "text": "2, the middle index, where the binary search first looks"
+                },
+                {
+                  "label": "B",
+                  "text": "4, since nums[n] = -infinity makes the last element a peak"
+                },
+                {
+                  "label": "C",
+                  "text": "0, since the first element has no left neighbour to beat"
+                },
+                {
+                  "label": "D",
+                  "text": "-1, since a strictly increasing array contains no peak"
+                }
+              ]
+            }
+          },
+          "outcome": {
+            "score": 0.558,
+            "outcome": "demote",
+            "levelBefore": 0,
+            "levelAfter": 0,
+            "nextReview": "2026-10-07T07:34:22Z"
+          }
+        },
+        {
+          "slug": "contains-duplicate",
+          "bucket": "due",
+          "status": "done",
+          "cardIds": [
+            "recog-contains-duplicate",
+            "cd-code-01",
+            "cd-edge-01",
+            "cd-time-01",
+            "cd-space-01"
+          ],
+          "answers": [
+            {
+              "cardId": "recog-contains-duplicate",
+              "category": "pattern",
+              "result": "correct",
+              "timestamp": "2026-10-07T07:37:51Z"
+            },
+            {
+              "cardId": "cd-code-01",
+              "category": "code_reasoning",
+              "result": "correct",
+              "timestamp": "2026-10-07T07:44:18Z"
+            },
+            {
+              "cardId": "cd-edge-01",
+              "category": "edge_case",
+              "result": "correct",
+              "timestamp": "2026-10-07T07:44:35Z"
+            },
+            {
+              "cardId": "cd-time-01",
+              "category": "time_complexity",
+              "result": "correct",
+              "timestamp": "2026-10-07T07:44:46Z"
+            },
+            {
+              "cardId": "cd-space-01",
+              "category": "space_complexity",
+              "result": "partial",
+              "timestamp": "2026-10-07T07:45:56Z"
+            }
+          ],
+          "hintLevel": 0,
+          "presented": {
+            "recog-contains-duplicate": {
+              "prompt": "What approach fits this problem, and which part of the statement gives it away?",
+              "options": null
+            },
+            "cd-code-01": {
+              "prompt": "Why can the loop return True the moment it sees a repeat, and what is a cleaner structure than a dict with dummy values?",
+              "options": null
+            },
+            "cd-edge-01": {
+              "prompt": "Which array has no duplicates?",
+              "options": [
+                {
+                  "label": "A",
+                  "text": "[1]"
+                },
+                {
+                  "label": "B",
+                  "text": "[1,1]"
+                },
+                {
+                  "label": "C",
+                  "text": "[3,1,3]"
+                },
+                {
+                  "label": "D",
+                  "text": "[2,2,2]"
+                }
+              ]
+            },
+            "cd-time-01": {
+              "prompt": "Time complexity of the hash-set solution: ___",
+              "options": null
+            },
+            "cd-space-01": {
+              "prompt": "What is the time-space trade-off between sorting and the hash-set approach?",
+              "options": null
+            }
+          },
+          "outcome": {
+            "score": 0.894,
+            "outcome": "promote",
+            "levelBefore": 1,
+            "levelAfter": 2,
+            "nextReview": "2026-10-09T00:00:00Z"
+          }
+        },
+        {
+          "slug": "contains-duplicate-ii",
+          "bucket": "due",
+          "status": "done",
+          "cardIds": [
+            "recog-contains-duplicate-ii",
+            "cd2-insight-01",
+            "cd2-code-01",
+            "cd2-time-01",
+            "cd2-space-01"
+          ],
+          "answers": [
+            {
+              "cardId": "recog-contains-duplicate-ii",
+              "category": "pattern",
+              "result": "correct",
+              "timestamp": "2026-10-07T07:47:07Z"
+            },
+            {
+              "cardId": "cd2-insight-01",
+              "category": "main_insight",
+              "result": "correct",
+              "timestamp": "2026-10-07T07:48:07Z"
+            },
+            {
+              "cardId": "cd2-code-01",
+              "category": "code_reasoning",
+              "result": "partial",
+              "timestamp": "2026-10-07T07:48:45Z"
+            },
+            {
+              "cardId": "cd2-time-01",
+              "category": "time_complexity",
+              "result": "correct",
+              "timestamp": "2026-10-07T07:49:15Z"
+            },
+            {
+              "cardId": "cd2-space-01",
+              "category": "space_complexity",
+              "result": "correct",
+              "timestamp": "2026-10-07T07:49:30Z"
+            }
+          ],
+          "hintLevel": 0,
+          "presented": {
+            "recog-contains-duplicate-ii": {
+              "prompt": "Name the technique you would use here and the clue in the problem that tells you.",
+              "options": null
+            },
+            "cd2-insight-01": {
+              "prompt": "Why can older elements be forgotten?",
+              "options": null
+            },
+            "cd2-code-01": {
+              "prompt": "How many elements are in the set when `nums[r] in sett` is evaluated?",
+              "options": null
+            },
+            "cd2-time-01": {
+              "prompt": "Complete the statement: Time complexity: ___",
+              "options": null
+            },
+            "cd2-space-01": {
+              "prompt": "Memory use in terms of n and k: ___",
+              "options": null
+            }
+          },
+          "outcome": {
+            "score": 0.923,
+            "outcome": "promote",
+            "levelBefore": 2,
+            "levelAfter": 3,
+            "nextReview": "2026-10-14T00:00:00Z"
+          }
+        },
+        {
+          "slug": "koko-eating-bananas",
+          "bucket": "overdue",
+          "status": "done",
+          "cardIds": [
+            "recog-koko-eating-bananas",
+            "kb-insight-01",
+            "kb-code-01",
+            "kb-time-01",
+            "kb-space-01"
+          ],
+          "answers": [
+            {
+              "cardId": "recog-koko-eating-bananas",
+              "category": "pattern",
+              "result": "correct",
+              "timestamp": "2026-10-07T07:51:48Z"
+            },
+            {
+              "cardId": "kb-insight-01",
+              "category": "main_insight",
+              "result": "partial",
+              "timestamp": "2026-10-07T07:54:54Z"
+            },
+            {
+              "cardId": "kb-code-01",
+              "category": "code_reasoning",
+              "result": "correct",
+              "timestamp": "2026-10-07T07:58:09Z"
+            },
+            {
+              "cardId": "kb-time-01",
+              "category": "time_complexity",
+              "result": "correct",
+              "timestamp": "2026-10-07T07:58:44Z"
+            },
+            {
+              "cardId": "kb-space-01",
+              "category": "space_complexity",
+              "result": "correct",
+              "timestamp": "2026-10-07T07:58:58Z"
+            }
+          ],
+          "hintLevel": 0,
+          "presented": {
+            "recog-koko-eating-bananas": {
+              "prompt": "Which technique solves this problem, and what in the statement or constraints points to it?",
+              "options": null
+            },
+            "kb-insight-01": {
+              "prompt": "Why is binary search valid on the speed and what are its bounds?",
+              "options": null
+            },
+            "kb-code-01": {
+              "prompt": "What happens when time <= h?",
+              "options": null
+            },
+            "kb-time-01": {
+              "prompt": "Time complexity (n piles, max pile M): ___",
+              "options": null
+            },
+            "kb-space-01": {
+              "prompt": "Extra space: ___",
+              "options": null
+            }
+          },
+          "outcome": {
+            "score": 0.885,
+            "outcome": "promote",
+            "levelBefore": 2,
+            "levelAfter": 3,
+            "nextReview": "2026-10-14T00:00:00Z"
+          }
+        },
+        {
+          "slug": "add-two-numbers-ii",
+          "bucket": "due",
+          "status": "done",
+          "cardIds": [
+            "recog-add-two-numbers-ii",
+            "a2-pattern-01",
+            "a2-code-01",
+            "a2-edge-01",
+            "a2-time-01"
+          ],
+          "answers": [
+            {
+              "cardId": "recog-add-two-numbers-ii",
+              "category": "pattern",
+              "result": "correct",
+              "timestamp": "2026-10-07T08:00:34Z"
+            },
+            {
+              "cardId": "a2-pattern-01",
+              "category": "main_insight",
+              "result": "correct",
+              "timestamp": "2026-10-07T08:00:57Z"
+            },
+            {
+              "cardId": "a2-code-01",
+              "category": "code_reasoning",
+              "result": "correct",
+              "timestamp": "2026-10-07T08:02:29Z"
+            },
+            {
+              "cardId": "a2-edge-01",
+              "category": "edge_case",
+              "result": "correct",
+              "timestamp": "2026-10-07T08:02:42Z"
+            },
+            {
+              "cardId": "a2-time-01",
+              "category": "time_complexity",
+              "result": "correct",
+              "timestamp": "2026-10-07T08:04:09Z"
+            }
+          ],
+          "hintLevel": 0,
+          "presented": {
+            "recog-add-two-numbers-ii": {
+              "prompt": "Name the technique you would use here and the clue in the problem that tells you.",
+              "options": null
+            },
+            "a2-pattern-01": {
+              "prompt": "How do you add numbers whose digits are stored most significant first?",
+              "options": [
+                {
+                  "label": "A",
+                  "text": "Sort the digits of both lists and add the two sorted sequences"
+                },
+                {
+                  "label": "B",
+                  "text": "Use stacks (or recursion) to process digits from the end"
+                },
+                {
+                  "label": "C",
+                  "text": "Add directly from the head of both lists, carrying to the next node"
+                },
+                {
+                  "label": "D",
+                  "text": "Convert both lists to floating-point numbers and add them there"
+                }
+              ]
+            },
+            "a2-code-01": {
+              "prompt": "What happens to the original lists l1 and l2?",
+              "options": null
+            },
+            "a2-edge-01": {
+              "prompt": "What does the algorithm return for [9,9] + [1], and why does the list get longer?",
+              "options": [
+                {
+                  "label": "A",
+                  "text": "[9,10]: digits are added without carrying"
+                },
+                {
+                  "label": "B",
+                  "text": "[1,0]: the carry is added only once"
+                },
+                {
+                  "label": "C",
+                  "text": "[1,0,0]: the final carry becomes a new head node"
+                },
+                {
+                  "label": "D",
+                  "text": "[0,0]: the last carry is dropped"
+                }
+              ]
+            },
+            "a2-time-01": {
+              "prompt": "Time complexity: ___",
+              "options": null
+            }
+          },
+          "outcome": {
+            "score": 1.0,
+            "outcome": "promote",
+            "levelBefore": 2,
+            "levelAfter": 3,
+            "nextReview": "2026-10-14T00:00:00Z"
+          }
+        },
+        {
+          "slug": "valid-subarrays-with-matching-sum-digits-i",
+          "bucket": "due",
+          "status": "done",
+          "cardIds": [
+            "recog-valid-subarrays-with-matching-sum-digits-i",
+            "vs-pattern-01",
+            "vs-code-01",
+            "vs-time-01",
+            "vs-space-01"
+          ],
+          "answers": [
+            {
+              "cardId": "recog-valid-subarrays-with-matching-sum-digits-i",
+              "category": "pattern",
+              "result": "correct",
+              "timestamp": "2026-10-07T08:05:38Z"
+            },
+            {
+              "cardId": "vs-pattern-01",
+              "category": "main_insight",
+              "result": "correct",
+              "timestamp": "2026-10-07T08:06:32Z"
+            },
+            {
+              "cardId": "vs-code-01",
+              "category": "code_reasoning",
+              "result": "partial",
+              "timestamp": "2026-10-07T08:09:03Z"
+            },
+            {
+              "cardId": "vs-time-01",
+              "category": "time_complexity",
+              "result": "correct",
+              "timestamp": "2026-10-07T08:09:24Z"
+            },
+            {
+              "cardId": "vs-space-01",
+              "category": "space_complexity",
+              "result": "correct",
+              "timestamp": "2026-10-07T08:09:36Z"
+            }
+          ],
+          "hintLevel": 0,
+          "presented": {
+            "recog-valid-subarrays-with-matching-sum-digits-i": {
+              "prompt": "What approach fits this problem, and which part of the statement gives it away?",
+              "options": null
+            },
+            "vs-pattern-01": {
+              "prompt": "How can the subarray sum be maintained as the end index grows?",
+              "options": [
+                {
+                  "label": "A",
+                  "text": "A heap of the elements currently in the subarray"
+                },
+                {
+                  "label": "B",
+                  "text": "Binary search for the best end index each time"
+                },
+                {
+                  "label": "C",
+                  "text": "Running sum extended by one element (or prefix sums)"
+                },
+                {
+                  "label": "D",
+                  "text": "Sorting the array after every extension of the end"
+                }
+              ]
+            },
+            "vs-code-01": {
+              "prompt": "Why does `isValid` compare `sumStr[0] == targetStr`, and what could go wrong with negative sums?",
+              "options": null
+            },
+            "vs-time-01": {
+              "prompt": "Time complexity (digit conversion treated as O(1)): ___",
+              "options": null
+            },
+            "vs-space-01": {
+              "prompt": "Complete the statement: Extra space: ___",
+              "options": null
+            }
+          },
+          "outcome": {
+            "score": 0.923,
+            "outcome": "promote",
+            "levelBefore": 1,
+            "levelAfter": 2,
+            "nextReview": "2026-10-09T00:00:00Z"
+          }
+        },
+        {
+          "slug": "random-pick-with-weight",
+          "bucket": "overdue",
+          "status": "done",
+          "cardIds": [
+            "recog-random-pick-with-weight",
+            "rw-insight-01",
+            "rw-code-01",
+            "rw-edge-01",
+            "rw-space-01"
+          ],
+          "answers": [
+            {
+              "cardId": "recog-random-pick-with-weight",
+              "category": "pattern",
+              "result": "correct",
+              "timestamp": "2026-10-07T08:19:52Z"
+            },
+            {
+              "cardId": "rw-insight-01",
+              "category": "main_insight",
+              "result": "partial",
+              "timestamp": "2026-10-07T08:24:26Z"
+            },
+            {
+              "cardId": "rw-code-01",
+              "category": "code_reasoning",
+              "result": "partial",
+              "timestamp": "2026-10-07T08:25:00Z"
+            },
+            {
+              "cardId": "rw-edge-01",
+              "category": "edge_case",
+              "result": "correct",
+              "timestamp": "2026-10-07T08:25:18Z"
+            },
+            {
+              "cardId": "rw-space-01",
+              "category": "space_complexity",
+              "result": "partial",
+              "timestamp": "2026-10-07T08:26:04Z"
+            }
+          ],
+          "hintLevel": 0,
+          "presented": {
+            "recog-random-pick-with-weight": {
+              "prompt": "What approach fits this problem, and which part of the statement gives it away?",
+              "options": null
+            },
+            "rw-insight-01": {
+              "prompt": "Why does a uniform random integer over the total weight give the right probabilities?",
+              "options": null
+            },
+            "rw-code-01": {
+              "prompt": "Your binary search finds the first prefix value greater than pick. Why return idx - 1 and why randrange(0, total)?",
+              "options": null
+            },
+            "rw-edge-01": {
+              "prompt": "What happens with a single weight w = [5]?",
+              "options": [
+                {
+                  "label": "A",
+                  "text": "An error"
+                },
+                {
+                  "label": "B",
+                  "text": "It depends on the random value"
+                },
+                {
+                  "label": "C",
+                  "text": "Always index 0"
+                },
+                {
+                  "label": "D",
+                  "text": "Index 1"
+                }
+              ]
+            },
+            "rw-space-01": {
+              "prompt": "What do you store and how does it compare with expanding weights into an array?",
+              "options": null
+            }
+          },
+          "outcome": {
+            "score": 0.695,
+            "outcome": "hold",
+            "levelBefore": 0,
+            "levelAfter": 0,
+            "nextReview": "2026-10-07T08:26:04Z"
+          }
+        },
+        {
+          "slug": "valid-palindrome",
+          "bucket": "due",
+          "status": "done",
+          "cardIds": [
+            "recog-valid-palindrome",
+            "vp2-code-01",
+            "vp2-edge-01",
+            "vp2-time-01",
+            "vp2-space-01"
+          ],
+          "answers": [
+            {
+              "cardId": "recog-valid-palindrome",
+              "category": "pattern",
+              "result": "correct",
+              "timestamp": "2026-10-07T08:26:56Z"
+            },
+            {
+              "cardId": "vp2-code-01",
+              "category": "code_reasoning",
+              "result": "partial",
+              "timestamp": "2026-10-07T08:27:50Z"
+            },
+            {
+              "cardId": "vp2-edge-01",
+              "category": "edge_case",
+              "result": "correct",
+              "timestamp": "2026-10-07T08:28:11Z"
+            },
+            {
+              "cardId": "vp2-time-01",
+              "category": "time_complexity",
+              "result": "correct",
+              "timestamp": "2026-10-07T08:28:23Z"
+            },
+            {
+              "cardId": "vp2-space-01",
+              "category": "space_complexity",
+              "result": "correct",
+              "timestamp": "2026-10-07T08:28:58Z"
+            }
+          ],
+          "hintLevel": 0,
+          "presented": {
+            "recog-valid-palindrome": {
+              "prompt": "Name the technique you would use here and the clue in the problem that tells you.",
+              "options": null
+            },
+            "vp2-code-01": {
+              "prompt": "How does the two-pointer loop handle punctuation, and what happens when l == r?",
+              "options": null
+            },
+            "vp2-edge-01": {
+              "prompt": "What should the function return for the string \" \" or \".,\"?",
+              "options": [
+                {
+                  "label": "A",
+                  "text": "False - there is nothing to compare"
+                },
+                {
+                  "label": "B",
+                  "text": "It raises an error on empty text"
+                },
+                {
+                  "label": "C",
+                  "text": "True - the cleaned string is empty"
+                },
+                {
+                  "label": "D",
+                  "text": "Depends on the original length"
+                }
+              ]
+            },
+            "vp2-time-01": {
+              "prompt": "Time complexity of the two-pointer solution: ___",
+              "options": null
+            },
+            "vp2-space-01": {
+              "prompt": "How could you make your Valid Palindrome solution truly O(1) extra space?",
+              "options": null
+            }
+          },
+          "outcome": {
+            "score": 0.915,
+            "outcome": "promote",
+            "levelBefore": 2,
+            "levelAfter": 3,
+            "nextReview": "2026-10-14T00:00:00Z"
+          }
+        },
+        {
+          "slug": "kth-largest-element-in-a-stream",
+          "bucket": "due",
+          "status": "done",
+          "cardIds": [
+            "recog-kth-largest-element-in-a-stream",
+            "kl-insight-01",
+            "kl-alt-01",
+            "kl-edge-02",
+            "kl-space-01"
+          ],
+          "answers": [
+            {
+              "cardId": "recog-kth-largest-element-in-a-stream",
+              "category": "pattern",
+              "result": "correct",
+              "timestamp": "2026-10-07T08:29:26Z"
+            },
+            {
+              "cardId": "kl-insight-01",
+              "category": "main_insight",
+              "result": "partial",
+              "timestamp": "2026-10-07T08:30:50Z"
+            },
+            {
+              "cardId": "kl-alt-01",
+              "category": "alternative_approach",
+              "result": "correct",
+              "timestamp": "2026-10-07T08:32:40Z"
+            },
+            {
+              "cardId": "kl-edge-02",
+              "category": "edge_case",
+              "result": "correct",
+              "timestamp": "2026-10-07T08:33:09Z"
+            },
+            {
+              "cardId": "kl-space-01",
+              "category": "space_complexity",
+              "result": "partial",
+              "timestamp": "2026-10-07T08:33:38Z"
+            }
+          ],
+          "hintLevel": 0,
+          "presented": {
+            "recog-kth-largest-element-in-a-stream": {
+              "prompt": "What approach fits this problem, and which part of the statement gives it away?",
+              "options": null
+            },
+            "kl-insight-01": {
+              "prompt": "Why can every value below the current k-th largest be thrown away, and why does that make a min-heap of size k the right tool?",
+              "options": null
+            },
+            "kl-alt-01": {
+              "prompt": "Two simpler designs are appending and sorting on every add, or keeping a sorted list with bisect.insort. What does each cost per add, and why does the size-k heap beat both?",
+              "options": null
+            },
+            "kl-edge-02": {
+              "prompt": "With k = 1 and an empty starting list, what do add(-3), add(-7) and add(5) return, in order?",
+              "options": [
+                {
+                  "label": "A",
+                  "text": "-3, -7, 5"
+                },
+                {
+                  "label": "B",
+                  "text": "-3, -3, -3"
+                },
+                {
+                  "label": "C",
+                  "text": "-3, -7, -7"
+                },
+                {
+                  "label": "D",
+                  "text": "-3, -3, 5"
+                }
+              ]
+            },
+            "kl-space-01": {
+              "prompt": "Compare the memory of the size-k heap with keeping every number seen.",
+              "options": null
+            }
+          },
+          "outcome": {
+            "score": 0.776,
+            "outcome": "hold",
+            "levelBefore": 1,
+            "levelAfter": 1,
+            "nextReview": "2026-10-08T00:00:00Z"
+          }
+        }
+      ]
     }
   }
 }
