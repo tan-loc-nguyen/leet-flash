@@ -1,0 +1,33 @@
+{
+  "leetcodeId": "1832",
+  "title": "Check if the Sentence Is Pangram",
+  "slug": "check-if-the-sentence-is-pangram",
+  "url": "https://leetcode.com/problems/check-if-the-sentence-is-pangram/",
+  "difficulty": "Easy",
+  "status": "solved",
+  "premium": false,
+  "tags": [
+    "Hash Table",
+    "String"
+  ],
+  "problemStatement": "A pangram is a sentence where every letter of the English alphabet appears at least once.\n\nGiven a string sentence containing only lowercase English letters, return true if sentence is a pangram, or false otherwise.\n\nExample 1:\n\nInput: sentence = \"thequickbrownfoxjumpsoverthelazydog\"\nOutput: true\nExplanation: sentence contains at least one of every letter of the English alphabet.\n\nExample 2:\n\nInput: sentence = \"leetcode\"\nOutput: false\n\nConstraints:\n\n- 1 <= sentence.length <= 1000\n\n- sentence consists of lowercase English letters.",
+  "constraints": [
+    "1 <= sentence.length <= 1000",
+    "sentence consists of lowercase English letters."
+  ],
+  "hints": [
+    "Iterate over the string and mark each character as found (using a boolean array, bitmask, or any other similar way).",
+    "Check if the number of found characters equals the alphabet length."
+  ],
+  "acRate": 84.4,
+  "lastSubmittedAt": "2026-10-22T15:46:33Z",
+  "latestSubmission": {
+    "submissionId": "2178947841",
+    "language": "Python3",
+    "code": "class Solution:\n    def checkIfPangram(self, sentence: str) -> bool:\n        letters = [0] * 26\n        for c in sentence:\n            letters[ord(c) - ord('a')] += 1\n        \n        for l in letters:\n            if l == 0:\n                return False\n        return True"
+  },
+  "notes": [],
+  "source": "leetcode",
+  "importedAt": "2026-10-23T05:55:47Z",
+  "lastSyncedAt": "2026-10-23T05:55:47Z"
+}

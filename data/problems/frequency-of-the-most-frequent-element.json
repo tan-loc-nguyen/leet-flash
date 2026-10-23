@@ -25,14 +25,14 @@
     "To find the maximum frequency of a value consider the biggest elements smaller than or equal to this value"
   ],
   "acRate": 45.25,
-  "lastSubmittedAt": "2026-07-28T10:34:03Z",
+  "lastSubmittedAt": "2026-10-21T11:19:18Z",
   "latestSubmission": {
-    "submissionId": "2084620383",
+    "submissionId": "2177880975",
     "language": "Python3",
-    "code": "class Solution:\n    def maxFrequency(self, nums: List[int], k: int) -> int:\n        nums.sort(reverse=True)\n        best = 1\n        l = 0\n        ops = k\n\n        for r in range(len(nums)):\n            gap = nums[l] - nums[r]\n            ops -= gap\n\n            anchor = nums[l]\n            while ops < 0:\n                ops += (r - l) * (nums[l] - nums[l + 1]) \n                l += 1\n\n            best = max(best, r - l + 1)\n\n        return best"
+    "code": "class Solution:\n    def maxFrequency(self, nums: list[int], k: int) -> int:\n        nums.sort()\n        l = 0\n        ans = 0\n        curr = 0\n        \n        for r in range(len(nums)):\n            target = nums[r]\n            curr += target\n\n            while (r - l + 1) * target - curr > k:\n                curr -= nums[l]\n                l += 1\n            \n            ans = max(ans, r - l + 1)\n        \n        return ans\n"
   },
   "notes": [],
   "source": "leetcode",
   "importedAt": "2026-10-01T13:44:25Z",
-  "lastSyncedAt": "2026-10-01T13:44:25Z"
+  "lastSyncedAt": "2026-10-23T05:55:47Z"
 }

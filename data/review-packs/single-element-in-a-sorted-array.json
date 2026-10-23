@@ -1,0 +1,204 @@
+{
+  "schemaVersion": 1,
+  "problemSlug": "single-element-in-a-sorted-array",
+  "summary": "Find the one element that appears once in a sorted array where all others appear twice, in O(log n).",
+  "patterns": [
+    "Binary Search"
+  ],
+  "mainInsight": "Before the single element, pairs start at even indices (nums[2k] == nums[2k + 1]); after it, the pairing shifts to odd indices. Binary search on even indices: if nums[mid] equals its partner, the single element is to the right, otherwise it is at mid or to the left.",
+  "canonicalApproach": "Binary search on pair parity",
+  "approaches": [
+    {
+      "name": "XOR all elements",
+      "summary": "Pairs cancel.",
+      "timeComplexity": "O(n)",
+      "spaceComplexity": "O(1)",
+      "strengths": [
+        "Two lines"
+      ],
+      "weaknesses": [
+        "Ignores sortedness; linear"
+      ],
+      "interviewRelevance": "Baseline."
+    },
+    {
+      "name": "Binary search on pair parity",
+      "summary": "Compare nums[mid] with the partner at mid ^ 1.",
+      "timeComplexity": "O(log n)",
+      "spaceComplexity": "O(1)",
+      "strengths": [
+        "Meets the requirement"
+      ],
+      "weaknesses": [
+        "Parity bookkeeping"
+      ],
+      "interviewRelevance": "The expected answer."
+    }
+  ],
+  "personalSolution": {
+    "approach": "Binary search comparing nums[mid] with both neighbours and branching on the parity of mid",
+    "timeComplexity": "O(log n)",
+    "spaceComplexity": "O(1)",
+    "isOptimal": true,
+    "notes": "Optimal complexity, but the boundary special cases make it error-prone; aligning mid to the first slot of a pair needs only one comparison."
+  },
+  "canonicalCode": "class Solution:\n    def singleNonDuplicate(self, nums: list[int]) -> int:\n        lo, hi = 0, len(nums) - 1\n        while lo < hi:\n            mid = (lo + hi) // 2\n            if mid % 2 == 1:\n                mid -= 1                    # always look at the first slot of a pair\n            if nums[mid] == nums[mid + 1]:  # pairs still aligned: single is to the right\n                lo = mid + 2\n            else:\n                hi = mid\n        return nums[lo]\n",
+  "commonMistakes": [
+    "Not forcing mid to be even",
+    "Using nums[mid + 1] without a bounds check",
+    "Returning the index"
+  ],
+  "edgeCases": [
+    "Single element",
+    "Single at the start",
+    "Single at the end"
+  ],
+  "cards": [
+    {
+      "id": "recog-single-element-in-a-sorted-array",
+      "category": "pattern",
+      "type": "free_recall",
+      "promptVariants": [
+        "Which technique solves this problem, and what in the statement or constraints points to it?",
+        "Name the technique you would use here and the clue in the problem that tells you.",
+        "What approach fits this problem, and which part of the statement gives it away?"
+      ],
+      "answer": "Binary search on pair parity: compare nums[mid] with its partner and keep the half containing the odd one out. Clue: The array is sorted with every value paired except one and the statement requires logarithmic time, so look for where the pairs shift from even to odd positions.",
+      "keyPoints": [
+        "The array is sorted with every value paired except one and the statement requires logarithmic time, so look for where the pairs shift from even to odd positions."
+      ],
+      "explanation": "Before the single element pairs start at even indices and afterwards at odd ones, so a comparison at the middle tells which side holds it.",
+      "rubric": {
+        "technique": "Binary search on pair parity: compare nums[mid] with its partner and keep the half containing the odd one out",
+        "aliases": [
+          "binary search on even indices",
+          "pairing parity",
+          "binary search with mid xor 1"
+        ],
+        "alsoValid": [
+          {
+            "name": "XOR all the elements",
+            "note": "correct, but linear time instead of logarithmic"
+          }
+        ],
+        "clueTypes": [
+          "sorted_or_ordered",
+          "monotonic_answer"
+        ],
+        "clue": "The array is sorted with every value paired except one and the statement requires logarithmic time, so look for where the pairs shift from even to odd positions."
+      }
+    },
+    {
+      "id": "sea-pattern-01",
+      "category": "main_insight",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "How does binary search locate the single element?",
+        "What changes after the single element in a sorted pair array?"
+      ],
+      "options": [
+        "Pairs start on even indices before it and on odd ones after",
+        "The single element is always the middle element of the array",
+        "The values before it are smaller than the values after it",
+        "The sum of the left half is even before the single one"
+      ],
+      "answer": "Pairs start on even indices before it and on odd ones after",
+      "explanation": "Check whether nums[mid] pairs with its even-aligned partner.",
+      "incorrectOptionExplanations": {
+        "The single element is always the middle element of the array": "It can be anywhere.",
+        "The values before it are smaller than the values after it": "Sortedness does not tell where the single lies.",
+        "The sum of the left half is even before the single one": "Sums do not locate it reliably."
+      },
+      "enabled": true
+    },
+    {
+      "id": "sea-insight-01",
+      "category": "main_insight",
+      "type": "free_recall",
+      "promptVariants": [
+        "Why force mid to be even and compare nums[mid] with nums[mid + 1]?",
+        "What does a match imply about where the single element is?"
+      ],
+      "answer": "If mid is odd, step back to the even index mid - 1, so mid is always the first slot of a pair. If nums[mid] == nums[mid + 1] the pairs are still aligned up to mid + 1, so the single element lies to the right (lo = mid + 2); otherwise the alignment has already shifted, so the single element is at mid or to its left (hi = mid). (Equivalently compare nums[mid] with nums[mid ^ 1].)",
+      "keyPoints": [
+        "Force mid to the first slot of a pair",
+        "Match => single is to the right",
+        "Mismatch => single at mid or left"
+      ],
+      "explanation": "XOR of all elements is the O(n) alternative.",
+      "enabled": true
+    },
+    {
+      "id": "sea-code-01",
+      "category": "code_reasoning",
+      "type": "code_question",
+      "promptVariants": [
+        "Your solution handles the boundaries with several special cases. How does the pair-aligned version avoid them?",
+        "Which part of your condition could be removed by forcing mid onto an even index?"
+      ],
+      "code": "if n == 1 or (mid == 0 and nums[mid] != nums[mid + 1]) or (mid == n - 1 and nums[mid] != nums[mid - 1]) or nums[mid - 1] != nums[mid] != nums[mid +1]:\n    return nums[mid]\nif nums[mid] == nums[mid - 1]:\n    if mid % 2 == 1:\n        lo = mid + 1\n    else:\n        hi = mid - 1\nelif nums[mid] == nums[mid + 1]:\n    if mid % 2 == 1:\n        hi = mid - 1\n    else:\n        lo = mid + 1",
+      "answer": "Your code checks neighbours on both sides, so it needs separate cases for n == 1, mid == 0 and mid == n - 1 to avoid reading outside the array and an explicit chained test for 'neither neighbour equals nums[mid]'. Forcing mid onto the first slot of a pair and comparing only with nums[mid + 1] needs a single comparison with no boundary cases, because the array length is odd and the search range always keeps an odd number of elements.",
+      "keyPoints": [
+        "Special cases for the ends",
+        "Compare only with the partner mid + 1",
+        "Odd length and even mid keep indices in range"
+      ],
+      "explanation": "Choosing an invariant (pair alignment) can replace several case checks.",
+      "enabled": true
+    },
+    {
+      "id": "sea-time-01",
+      "category": "time_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Time complexity: ___",
+        "Complete the statement: Time complexity: ___"
+      ],
+      "answer": "O(log n)",
+      "explanation": "Halving the search range each step.",
+      "enabled": true,
+      "acceptedAnswers": [
+        "logarithmic"
+      ]
+    },
+    {
+      "id": "sea-space-01",
+      "category": "space_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Space complexity (excluding the input): ___",
+        "Complete the statement: Space complexity (excluding the input): ___"
+      ],
+      "answer": "O(1)",
+      "explanation": "Only index variables.",
+      "enabled": true,
+      "acceptedAnswers": [
+        "constant"
+      ]
+    },
+    {
+      "id": "sea-edge-01",
+      "category": "edge_case",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "What does the search return for [1]?",
+        "How does the loop handle a one-element array?"
+      ],
+      "options": [
+        "1: lo == hi == 0 immediately",
+        "-1: no pair exists to compare",
+        "0: the index of the element is returned",
+        "An error: mid ^ 1 is out of range"
+      ],
+      "answer": "1: lo == hi == 0 immediately",
+      "explanation": "The length is odd, so a single element always exists.",
+      "incorrectOptionExplanations": {
+        "-1: no pair exists to compare": "The single element is the answer.",
+        "0: the index of the element is returned": "The value, not the index, is returned.",
+        "An error: mid ^ 1 is out of range": "The loop ends before it is evaluated."
+      },
+      "enabled": true
+    }
+  ],
+  "generatedAt": "2026-10-23T07:59:18Z"
+}

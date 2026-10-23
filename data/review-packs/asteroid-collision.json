@@ -1,0 +1,234 @@
+{
+  "schemaVersion": 1,
+  "problemSlug": "asteroid-collision",
+  "summary": "Simulate collisions of asteroids moving along a line; positive moves right, negative left; the smaller explodes.",
+  "patterns": [
+    "Stack"
+  ],
+  "mainInsight": "A stack holds surviving asteroids. A collision occurs only when the top is moving right (positive) and the incoming one is moving left (negative). Pop smaller tops, destroy both on a tie, and push the incoming asteroid only if it survives.",
+  "canonicalApproach": "Stack",
+  "approaches": [
+    {
+      "name": "Repeated pass simulation",
+      "summary": "Scan for collisions until none remain.",
+      "timeComplexity": "O(n^2)",
+      "spaceComplexity": "O(1)",
+      "strengths": [
+        "No extra structure"
+      ],
+      "weaknesses": [
+        "Quadratic"
+      ],
+      "interviewRelevance": "Baseline."
+    },
+    {
+      "name": "Stack",
+      "summary": "Resolve each incoming negative asteroid against the top of the stack.",
+      "timeComplexity": "O(n)",
+      "spaceComplexity": "O(n)",
+      "strengths": [
+        "Linear",
+        "One pass"
+      ],
+      "weaknesses": [
+        "Several cases"
+      ],
+      "interviewRelevance": "The expected answer."
+    }
+  ],
+  "personalSolution": {
+    "approach": "Stack; pop smaller right-movers, then handle the tie and the survive-or-explode decision",
+    "timeComplexity": "O(n)",
+    "spaceComplexity": "O(n)",
+    "isOptimal": true,
+    "notes": "Optimal. The post-loop branches (tie, then push if the top is a left-mover or the stack is empty) are correct but split the cases across two conditions; a single alive flag may read more clearly."
+  },
+  "canonicalCode": "class Solution:\n    def asteroidCollision(self, asteroids: list[int]) -> list[int]:\n        stack = []\n        for a in asteroids:\n            alive = True\n            while alive and a < 0 and stack and stack[-1] > 0:   # right-mover meets left-mover\n                if stack[-1] < -a:\n                    stack.pop()              # top explodes, keep checking\n                elif stack[-1] == -a:\n                    stack.pop()              # both explode\n                    alive = False\n                else:\n                    alive = False            # incoming explodes\n            if alive:\n                stack.append(a)\n        return stack\n",
+  "commonMistakes": [
+    "Colliding two negatives or two positives",
+    "Not looping after popping",
+    "Forgetting the equal-size case"
+  ],
+  "edgeCases": [
+    "All same direction",
+    "Left-movers first (never collide)",
+    "Equal sizes"
+  ],
+  "cards": [
+    {
+      "id": "recog-asteroid-collision",
+      "category": "pattern",
+      "type": "free_recall",
+      "promptVariants": [
+        "Which technique solves this problem, and what in the statement or constraints points to it?",
+        "Name the technique you would use here and the clue in the problem that tells you.",
+        "What approach fits this problem, and which part of the statement gives it away?"
+      ],
+      "answer": "Stack of surviving asteroids: resolve each incoming left-moving asteroid against the top of the stack. Clue: Asteroids only interact when a right-moving one is followed by a left-moving one, and a new asteroid can only hit the most recent survivors, which is last-in-first-out.",
+      "keyPoints": [
+        "Asteroids only interact when a right-moving one is followed by a left-moving one, and a new asteroid can only hit the most recent survivors, which is last-in-first-out."
+      ],
+      "explanation": "Each incoming asteroid fights only the nearest surviving right-mover, so a stack of survivors resolves all collisions in one pass.",
+      "rubric": {
+        "technique": "Stack of surviving asteroids: resolve each incoming left-moving asteroid against the top of the stack",
+        "aliases": [
+          "stack",
+          "stack simulation",
+          "collision stack",
+          "monotonic stack"
+        ],
+        "alsoValid": [
+          {
+            "name": "Repeatedly scan for collisions until none remain",
+            "note": "quadratic"
+          }
+        ],
+        "clueTypes": [
+          "nesting_matching",
+          "direct_simulation"
+        ],
+        "clue": "Asteroids only interact when a right-moving one is followed by a left-moving one, and a new asteroid can only hit the most recent survivors, which is last-in-first-out."
+      }
+    },
+    {
+      "id": "ac3-pattern-01",
+      "category": "data_structure",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "Which data structure resolves chain collisions in one pass?",
+        "How do you decide whether two neighbouring asteroids collide?"
+      ],
+      "options": [
+        "A stack; collide when the top is positive and the new one negative",
+        "A queue; collide when the front and back differ in sign each time",
+        "A min-heap by size; always collide the two smallest asteroids first",
+        "A hash map from size to count; cancel equal sizes with each other"
+      ],
+      "answer": "A stack; collide when the top is positive and the new one negative",
+      "explanation": "Only a right-mover followed by a left-mover can meet.",
+      "incorrectOptionExplanations": {
+        "A queue; collide when the front and back differ in sign each time": "Asteroids interact with their neighbours, not the ends.",
+        "A min-heap by size; always collide the two smallest asteroids first": "Position order matters, not size order.",
+        "A hash map from size to count; cancel equal sizes with each other": "Positions determine collisions."
+      },
+      "enabled": true
+    },
+    {
+      "id": "ac3-insight-01",
+      "category": "main_insight",
+      "type": "free_recall",
+      "promptVariants": [
+        "Why does each asteroid need a while loop against the stack?",
+        "What are the three outcomes of a collision?"
+      ],
+      "answer": "A single left-moving asteroid may destroy several right-moving asteroids in a row, so it must keep colliding with the new top until it is destroyed, ties with it, or the top is no longer a right-mover. The outcomes are: the incoming one explodes, the top explodes (pop and continue), or both explode (pop and stop).",
+      "keyPoints": [
+        "While loop against the top",
+        "Incoming loses / top loses / tie",
+        "Push only if it survives"
+      ],
+      "explanation": "Amortised O(n) because each asteroid is popped at most once.",
+      "enabled": true
+    },
+    {
+      "id": "ac3-code-01",
+      "category": "code_reasoning",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "In your loop, why does the last branch test `stack[-1] < 0` (or an empty stack) before pushing a?",
+        "After the while loop and the equality check, when is it correct to append the left-moving asteroid?"
+      ],
+      "options": [
+        "The top is a left-mover or nothing is left, so no collision can happen",
+        "The top is a right-mover that was smaller, so the incoming one survives",
+        "The top has the same size and both asteroids must be kept on the stack",
+        "The incoming asteroid always survives, so the test is only a safety check"
+      ],
+      "answer": "The top is a left-mover or nothing is left, so no collision can happen",
+      "explanation": "After popping smaller right-movers, the top is either a larger right-mover (the incoming asteroid explodes and is not pushed), an equal one (both explode, handled by the equality branch), or a left-mover or nothing, in which case there is no collision and a survives.",
+      "incorrectOptionExplanations": {
+        "The top is a right-mover that was smaller, so the incoming one survives": "Smaller right-movers were already popped by the while loop.",
+        "The top has the same size and both asteroids must be kept on the stack": "Equal sizes destroy each other, handled by the equality branch.",
+        "The incoming asteroid always survives, so the test is only a safety check": "A larger right-mover on top destroys it, so the test is essential."
+      },
+      "enabled": true
+    },
+    {
+      "id": "ac3-time-01",
+      "category": "time_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Time complexity: ___",
+        "Complete the statement: Time complexity: ___"
+      ],
+      "answer": "O(n)",
+      "explanation": "Every asteroid is pushed once and popped at most once.",
+      "enabled": true,
+      "acceptedAnswers": [
+        "linear"
+      ]
+    },
+    {
+      "id": "ac3-space-01",
+      "category": "space_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Space complexity (excluding the input): ___",
+        "Complete the statement: Space complexity (excluding the input): ___"
+      ],
+      "answer": "O(n)",
+      "explanation": "The stack of survivors.",
+      "enabled": true,
+      "acceptedAnswers": [
+        "linear"
+      ]
+    },
+    {
+      "id": "ac3-edge-01",
+      "category": "edge_case",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "What remains for [8, 3, -4, -9]?",
+        "Which asteroids survive?"
+      ],
+      "options": [
+        "[-9]: -4 dies against 8, then -9 destroys 8",
+        "[8]: 8 survives both left-moving asteroids",
+        "[8, -9]: -9 never meets the 8 on its way left",
+        "[]: all the asteroids cancel each other out"
+      ],
+      "answer": "[-9]: -4 dies against 8, then -9 destroys 8",
+      "explanation": "-4 destroys 3 and then loses to 8; the 8 is still on the stack when -9 arrives, and -9 is bigger, so it destroys 8 and survives.",
+      "incorrectOptionExplanations": {
+        "[8]: 8 survives both left-moving asteroids": "-9 is larger than 8, so 8 cannot survive it.",
+        "[8, -9]: -9 never meets the 8 on its way left": "They move towards each other along the line, so they do meet.",
+        "[]: all the asteroids cancel each other out": "Only equal sizes cancel; -9 is larger than 8."
+      },
+      "enabled": true
+    },
+    {
+      "id": "ac3-edge-02",
+      "category": "edge_case",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "Which input leaves every asteroid in place with no collisions?",
+        "When can two asteroids never meet?"
+      ],
+      "options": [
+        "[-2, -3, 4, 5]: left-movers first, right-movers after",
+        "[2, 3, -4, -5]: right-movers first, left-movers after",
+        "[3, -3, 4, -4]: alternating directions with equal sizes",
+        "[5, -2, 3, -1]: alternating directions of unequal sizes"
+      ],
+      "answer": "[-2, -3, 4, 5]: left-movers first, right-movers after",
+      "explanation": "Left-movers drift away from the right-movers that follow them, so no pair ever approaches. Any right-mover followed later by a left-mover will collide.",
+      "incorrectOptionExplanations": {
+        "[2, 3, -4, -5]: right-movers first, left-movers after": "-4 meets 3, and so on; collisions happen.",
+        "[3, -3, 4, -4]: alternating directions with equal sizes": "Each pair collides and both explode.",
+        "[5, -2, 3, -1]: alternating directions of unequal sizes": "Each left-mover hits the right-mover before it."
+      },
+      "enabled": true
+    }
+  ],
+  "generatedAt": "2026-10-23T07:59:26Z"
+}

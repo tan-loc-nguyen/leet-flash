@@ -1,0 +1,34 @@
+{
+  "leetcodeId": "1021",
+  "title": "Remove Outermost Parentheses",
+  "slug": "remove-outermost-parentheses",
+  "url": "https://leetcode.com/problems/remove-outermost-parentheses/",
+  "difficulty": "Easy",
+  "status": "solved",
+  "premium": false,
+  "tags": [
+    "String",
+    "Stack",
+    "Bracket Sequences"
+  ],
+  "problemStatement": "A valid parentheses string is either empty \"\", \"(\" + A + \")\", or A + B, where A and B are valid parentheses strings, and + represents string concatenation.\n\n- For example, \"\", \"()\", \"(())()\", and \"(()(()))\" are all valid parentheses strings.\n\nA valid parentheses string s is primitive if it is nonempty, and there does not exist a way to split it into s = A + B, with A and B nonempty valid parentheses strings.\n\nGiven a valid parentheses string s, consider its primitive decomposition: s = P1 + P2 + ... + Pk, where Pi are primitive valid parentheses strings.\n\nReturn s after removing the outermost parentheses of every primitive string in the primitive decomposition of s.\n\nExample 1:\n\nInput: s = \"(()())(())\"\nOutput: \"()()()\"\nExplanation:\nThe input string is \"(()())(())\", with primitive decomposition \"(()())\" + \"(())\".\nAfter removing outer parentheses of each part, this is \"()()\" + \"()\" = \"()()()\".\n\nExample 2:\n\nInput: s = \"(()())(())(()(()))\"\nOutput: \"()()()()(())\"\nExplanation:\nThe input string is \"(()())(())(()(()))\", with primitive decomposition \"(()())\" + \"(())\" + \"(()(()))\".\nAfter removing outer parentheses of each part, this is \"()()\" + \"()\" + \"()(())\" = \"()()()()(())\".\n\nExample 3:\n\nInput: s = \"()()\"\nOutput: \"\"\nExplanation:\nThe input string is \"()()\", with primitive decomposition \"()\" + \"()\".\nAfter removing outer parentheses of each part, this is \"\" + \"\" = \"\".\n\nConstraints:\n\n- 1 <= s.length <= 10^5\n\n- s[i] is either '(' or ')'.\n\n- s is a valid parentheses string.",
+  "constraints": [
+    "1 <= s.length <= 10^5",
+    "s[i] is either '(' or ')'.",
+    "s is a valid parentheses string."
+  ],
+  "hints": [
+    "Can you find the primitive decomposition?  The number of ( and ) characters must be equal."
+  ],
+  "acRate": 88.39,
+  "lastSubmittedAt": "2026-10-13T10:39:09Z",
+  "latestSubmission": {
+    "submissionId": "2171085084",
+    "language": "Python3",
+    "code": "class Solution:\n    def removeOuterParentheses(self, s: str) -> str:\n        res, stack = [], []\n        for c in s:\n            if c == \")\":\n                stack.pop()\n            if stack:\n                res.append(c)\n            if c == \"(\":\n                stack.append(c)\n        return \"\".join(res)\n"
+  },
+  "notes": [],
+  "source": "leetcode",
+  "importedAt": "2026-10-23T05:55:47Z",
+  "lastSyncedAt": "2026-10-23T05:55:47Z"
+}

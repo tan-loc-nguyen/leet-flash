@@ -21,14 +21,14 @@
   ],
   "hints": [],
   "acRate": 49.28,
-  "lastSubmittedAt": "2026-08-16T02:03:06Z",
+  "lastSubmittedAt": "2026-10-06T13:40:08Z",
   "latestSubmission": {
-    "submissionId": "2108341801",
+    "submissionId": "2164276779",
     "language": "Python3",
-    "code": "class Solution:\n\n    def __init__(self, w: List[int]):\n        self.prefix = [0]\n        for val in w:\n            self.prefix.append(val + self.prefix[-1])\n\n    def pickIndex(self) -> int:\n        pick = random.randrange(0, self.prefix[-1])\n\n        low, high = 0, len(self.prefix) - 1\n        idx = -1\n        while low <= high:\n            mid = low + (high - low) // 2\n\n            if self.prefix[mid] > pick:\n                idx = mid\n                high = mid - 1\n            else:\n                low = mid + 1\n        return idx - 1\n        \n\n\n# Your Solution object will be instantiated and called as such:\n# obj = Solution(w)\n# param_1 = obj.pickIndex()"
+    "code": "class Solution:\n\n    def __init__(self, w: list[int]):\n        self.presum = [0]\n        for weight in w:\n            self.presum.append(self.presum[-1] + weight)\n\n    def pickIndex(self) -> int:\n        pick = random.randrange(0, self.presum[-1])\n\n        low, high = 0, len(self.presum)\n        idx = -1\n        while low <= high:\n            mid = (low + high) // 2\n\n            if self.presum[mid] > pick:\n                high = mid - 1\n                idx = mid\n            else:\n                low = mid + 1\n        \n        return idx - 1\n\n\n# Your Solution object will be instantiated and called as such:\n# obj = Solution(w)\n# param_1 = obj.pickIndex()"
   },
   "notes": [],
   "source": "leetcode",
   "importedAt": "2026-10-01T13:44:25Z",
-  "lastSyncedAt": "2026-10-01T13:44:25Z"
+  "lastSyncedAt": "2026-10-23T05:55:47Z"
 }

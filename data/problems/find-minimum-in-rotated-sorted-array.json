@@ -24,14 +24,14 @@
     "- All the elements to the left of inflection point > first element of the array.\n\r\n\n- All the elements to the right of inflection point < first element of the array."
   ],
   "acRate": 55.39,
-  "lastSubmittedAt": "2026-08-01T13:19:46Z",
+  "lastSubmittedAt": "2026-10-09T12:07:56Z",
   "latestSubmission": {
-    "submissionId": "2089982022",
+    "submissionId": "2167260511",
     "language": "Python3",
-    "code": "class Solution:\n    def findMin(self, nums: List[int]) -> int:\n        return min(nums)"
+    "code": "class Solution:\n    def findMin(self, nums: list[int]) -> int:\n        if nums[0] <= nums[-1]:\n            return nums[0]\n\n        lo, hi = 1, len(nums) - 1\n        while lo <= hi:\n            mid = (lo + hi) // 2\n\n            if nums[mid] < nums[mid - 1]:\n                return nums[mid]\n            elif nums[mid] > nums[hi]:\n                lo = mid + 1\n            else:\n                hi = mid - 1\n"
   },
   "notes": [],
   "source": "leetcode",
   "importedAt": "2026-10-01T13:44:25Z",
-  "lastSyncedAt": "2026-10-01T13:44:25Z"
+  "lastSyncedAt": "2026-10-23T05:55:47Z"
 }

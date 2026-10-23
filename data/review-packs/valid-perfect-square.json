@@ -1,0 +1,252 @@
+{
+  "schemaVersion": 1,
+  "problemSlug": "valid-perfect-square",
+  "summary": "Return whether a positive integer is a perfect square without using a library square root.",
+  "patterns": [
+    "Binary Search",
+    "Math"
+  ],
+  "mainInsight": "i * i increases with i, so binary search the integer range 1..num for a root whose square equals num.",
+  "invariant": "If num has an integer root, it lies within [lo, hi] at the start of every iteration.",
+  "canonicalApproach": "Binary search on the root",
+  "approaches": [
+    {
+      "name": "Linear scan of candidates",
+      "summary": "Try i = 1, 2, 3, ... until i * i >= num.",
+      "timeComplexity": "O(sqrt(num))",
+      "spaceComplexity": "O(1)",
+      "strengths": [
+        "Trivial"
+      ],
+      "weaknesses": [
+        "About 46,000 steps at the limit"
+      ],
+      "interviewRelevance": "Baseline."
+    },
+    {
+      "name": "Binary search on the root",
+      "summary": "Search [1, num] comparing mid * mid with num.",
+      "timeComplexity": "O(log num)",
+      "spaceComplexity": "O(1)",
+      "strengths": [
+        "Simple",
+        "Optimal enough"
+      ],
+      "weaknesses": [
+        "Overflow in fixed-width languages"
+      ],
+      "interviewRelevance": "The expected answer."
+    },
+    {
+      "name": "Newton's method",
+      "summary": "Iterate x = (x + num // x) // 2 until convergence.",
+      "timeComplexity": "O(log num)",
+      "spaceComplexity": "O(1)",
+      "strengths": [
+        "Very fast"
+      ],
+      "weaknesses": [
+        "Harder to justify"
+      ],
+      "interviewRelevance": "A good follow-up."
+    }
+  ],
+  "personalSolution": {
+    "approach": "Binary search for the largest mid with mid * mid <= num, then check equality",
+    "timeComplexity": "O(log num)",
+    "spaceComplexity": "O(1)",
+    "isOptimal": true,
+    "notes": "Optimal. Returning True as soon as mid * mid == num saves the final check, and in fixed-width languages compare mid with num // mid to avoid overflow."
+  },
+  "canonicalCode": "class Solution:\n    def isPerfectSquare(self, num: int) -> bool:\n        lo, hi = 1, num                    # the root, if it exists, lies in [1, num]\n        while lo <= hi:                    # range halves each step: O(log num)\n            mid = (lo + hi) // 2\n            sq = mid * mid\n            if sq == num:\n                return True\n            if sq < num:\n                lo = mid + 1               # root must be larger\n            else:\n                hi = mid - 1               # root must be smaller\n        return False\n",
+  "commonMistakes": [
+    "Using floating-point sqrt, which is forbidden and imprecise.",
+    "mid * mid overflow in C++/Java.",
+    "Starting hi at num // 2, which fails for num = 1."
+  ],
+  "edgeCases": [
+    "num = 1.",
+    "The largest perfect square below 2^31 (46340^2).",
+    "A number one below a perfect square."
+  ],
+  "cards": [
+    {
+      "id": "recog-valid-perfect-square",
+      "category": "pattern",
+      "type": "free_recall",
+      "promptVariants": [
+        "Which technique solves this problem, and what in the statement or constraints points to it?",
+        "Name the technique you would use here and the clue in the problem that tells you.",
+        "What approach fits this problem, and which part of the statement gives it away?"
+      ],
+      "answer": "Binary search on the integer square root. Clue: The statement forbids sqrt, and i * i grows steadily with i, so the root can be located by halving a candidate range up to 2^31 - 1.",
+      "keyPoints": [
+        "The statement forbids sqrt, and i * i grows steadily with i, so the root can be located by halving a candidate range up to 2^31 - 1."
+      ],
+      "explanation": "i * i is monotone in i, so comparing mid * mid with num tells which half of the range may still contain the root.",
+      "rubric": {
+        "technique": "Binary search on the integer square root",
+        "aliases": [
+          "binary search on the answer",
+          "binary search over candidate roots",
+          "bisect between 1 and num",
+          "Newton's method for the integer square root"
+        ],
+        "alsoValid": [
+          {
+            "name": "Try every integer i while i * i <= num",
+            "note": "correct, but about 46,000 iterations at the upper limit instead of about 31"
+          },
+          {
+            "name": "Compute num ** 0.5 and compare",
+            "note": "forbidden by the statement and unreliable with floating point"
+          }
+        ],
+        "clueTypes": [
+          "monotonic_answer",
+          "math_observation"
+        ],
+        "clue": "The statement forbids sqrt, and i * i grows steadily with i, so the root can be located by halving a candidate range up to 2^31 - 1."
+      }
+    },
+    {
+      "id": "valid-perfect-square-insight-01",
+      "category": "main_insight",
+      "type": "free_recall",
+      "promptVariants": [
+        "Why can a binary search decide whether num is a perfect square?",
+        "What is the search space of the binary search and why is it ordered?"
+      ],
+      "answer": "The candidates are the integers 1..num, and mid * mid is strictly increasing in mid. If mid * mid is below num the root must be larger, if above it must be smaller, and if equal we are done. Each comparison discards half of the candidates.",
+      "keyPoints": [
+        "Candidates are integers 1..num",
+        "mid * mid is monotone",
+        "Compare and discard half"
+      ],
+      "explanation": "Searching over the answer rather than over an array is the key reframing.",
+      "enabled": true
+    },
+    {
+      "id": "valid-perfect-square-impl-01",
+      "category": "implementation_detail",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "In C++ or Java mid * mid can overflow near 2^31 - 1. How do you avoid it?",
+        "Which rewrite avoids overflow when comparing mid * mid with num?"
+      ],
+      "options": [
+        "Compare mid with num // mid instead of squaring",
+        "Set hi = num // 2 so that mid stays small enough",
+        "Declare mid as an unsigned 32-bit integer",
+        "Convert num to a float before the comparison"
+      ],
+      "answer": "Compare mid with num // mid instead of squaring",
+      "explanation": "mid <= num // mid avoids the product, and an exact check needs mid * mid == num or num % mid == 0 with num // mid == mid.",
+      "incorrectOptionExplanations": {
+        "Set hi = num // 2 so that mid stays small enough": "mid can still be about 10^9, and 10^9 squared overflows a 32-bit integer.",
+        "Declare mid as an unsigned 32-bit integer": "An unsigned 32-bit product still overflows for mid above 65535.",
+        "Convert num to a float before the comparison": "Floating-point rounding can make large squares compare equal incorrectly."
+      },
+      "enabled": true
+    },
+    {
+      "id": "valid-perfect-square-edge-01",
+      "category": "edge_case",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "Which initial bounds return the wrong answer for num = 1?",
+        "Which choice of lo and hi breaks the smallest valid input, num = 1?"
+      ],
+      "options": [
+        "lo = 1, hi = num // 2",
+        "lo = 1, hi = num",
+        "lo = 0, hi = num",
+        "lo = 1, hi = min(num, 46341)"
+      ],
+      "answer": "lo = 1, hi = num // 2",
+      "explanation": "For num = 1, num // 2 is 0, so the loop never runs and the function returns False although 1 = 1 * 1.",
+      "incorrectOptionExplanations": {
+        "lo = 1, hi = num": "The range [1, 1] contains the root, so mid = 1 matches immediately.",
+        "lo = 0, hi = num": "mid = 0 gives 0 < 1, then lo moves to 1 and mid = 1 matches.",
+        "lo = 1, hi = min(num, 46341)": "For num = 1 the range is [1, 1], so the root is found."
+      },
+      "enabled": true
+    },
+    {
+      "id": "valid-perfect-square-code-01",
+      "category": "code_reasoning",
+      "type": "code_question",
+      "promptVariants": [
+        "Your loop records the largest mid with mid * mid <= num. What does it compute and how could it stop earlier?",
+        "What does `ans` hold when your loop ends and why does the final check work?"
+      ],
+      "code": "low, high = 0, num\nans = 0\nwhile low <= high:\n    mid = (low + high) // 2\n    if mid*mid <= num:\n        ans = mid\n        low = mid + 1\n    else:\n        high = mid - 1\n\nreturn ans * ans == num",
+      "answer": "ans ends as floor(sqrt(num)), the largest integer whose square does not exceed num, so num is a perfect square exactly when ans * ans == num. It could return True as soon as mid * mid == num, but both versions run in O(log num).",
+      "keyPoints": [
+        "ans is the integer square root (floor)",
+        "Final equality check decides",
+        "Early return on equality is optional"
+      ],
+      "explanation": "This is the 'last true' template for monotone predicates.",
+      "enabled": true
+    },
+    {
+      "id": "valid-perfect-square-time-01",
+      "category": "time_complexity",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "What is the time complexity of the canonical code in terms of num?",
+        "Derive the running time from the loop in canonicalCode."
+      ],
+      "options": [
+        "O(log num)",
+        "O(sqrt(num))",
+        "O(num)",
+        "O(1)"
+      ],
+      "answer": "O(log num)",
+      "explanation": "The range [lo, hi] halves each iteration and each iteration does constant work.",
+      "incorrectOptionExplanations": {
+        "O(sqrt(num))": "That is the cost of trying every candidate root in order.",
+        "O(num)": "A linear scan over 1..num would be this slow; binary search skips half each time.",
+        "O(1)": "The loop count depends on num, even if it is only about 31 iterations at most."
+      },
+      "enabled": true
+    },
+    {
+      "id": "valid-perfect-square-space-01",
+      "category": "space_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "The search keeps only lo, hi, mid and sq, so the extra space is O(___).",
+        "Extra space of the binary search on the root: O(___)."
+      ],
+      "answer": "1",
+      "explanation": "No arrays or recursion; a fixed number of integers.",
+      "enabled": true,
+      "acceptedAnswers": [
+        "O(1)",
+        "constant",
+        "1"
+      ]
+    },
+    {
+      "id": "valid-perfect-square-alt-01",
+      "category": "alternative_approach",
+      "type": "free_recall",
+      "promptVariants": [
+        "Name two other ways to test for a perfect square without sqrt and say what each costs.",
+        "How else could you decide perfect squares without sqrt or binary search?"
+      ],
+      "answer": "Newton's method: iterate x = (x + num // x) // 2 starting from num; it converges in O(log num) steps and ends at the integer square root. The odd-number identity: n^2 = 1 + 3 + 5 + ... + (2n - 1), so subtract 1, 3, 5, ... from num until it reaches 0 (perfect square) or goes below 0; that takes O(sqrt(num)) steps.",
+      "keyPoints": [
+        "Newton iteration x = (x + num // x) // 2",
+        "Subtract consecutive odd numbers",
+        "Odd-number method is slower"
+      ],
+      "explanation": "Binary search is the simplest to get right under pressure; Newton is a nice follow-up.",
+      "enabled": true
+    }
+  ],
+  "generatedAt": "2026-10-23T06:13:41Z"
+}

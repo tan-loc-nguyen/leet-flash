@@ -1,0 +1,205 @@
+{
+  "schemaVersion": 1,
+  "problemSlug": "squares-of-a-sorted-array",
+  "summary": "Return the squares of a non-decreasing array sorted in non-decreasing order.",
+  "patterns": [
+    "Two Pointers",
+    "Sorting"
+  ],
+  "mainInsight": "The largest square is at one of the ends. Use two pointers at both ends and fill the result from the back, taking the larger square each time and moving that pointer inward. This is O(n) instead of squaring and sorting in O(n log n).",
+  "canonicalApproach": "Two pointers from both ends",
+  "approaches": [
+    {
+      "name": "Square then sort",
+      "summary": "sorted(x * x for x in nums).",
+      "timeComplexity": "O(n log n)",
+      "spaceComplexity": "O(n)",
+      "strengths": [
+        "One line"
+      ],
+      "weaknesses": [
+        "Ignores sorted input"
+      ],
+      "interviewRelevance": "Baseline."
+    },
+    {
+      "name": "Two pointers from both ends",
+      "summary": "Fill the result from the end with the larger square.",
+      "timeComplexity": "O(n)",
+      "spaceComplexity": "O(n)",
+      "strengths": [
+        "Linear"
+      ],
+      "weaknesses": [
+        "Direction of filling is easy to get wrong"
+      ],
+      "interviewRelevance": "The expected answer."
+    }
+  ],
+  "personalSolution": {
+    "approach": "Two pointers from both ends, filling from the back",
+    "timeComplexity": "O(n)",
+    "spaceComplexity": "O(n)",
+    "isOptimal": true,
+    "notes": "Optimal. The comparison direction (>) differs from the canonical one but the tie case is irrelevant here."
+  },
+  "canonicalCode": "class Solution:\n    def sortedSquares(self, nums: list[int]) -> list[int]:\n        n = len(nums)\n        out = [0] * n\n        l, r = 0, n - 1\n        for i in range(n - 1, -1, -1):           # fill from the back with the largest square\n            if abs(nums[l]) > abs(nums[r]):\n                out[i] = nums[l] ** 2\n                l += 1\n            else:\n                out[i] = nums[r] ** 2\n                r -= 1\n        return out\n",
+  "commonMistakes": [
+    "Using absolute values in the wrong order",
+    "Filling from the front",
+    "Forgetting that all-negative or all-positive arrays are valid"
+  ],
+  "edgeCases": [
+    "All negative",
+    "All non-negative",
+    "Single element"
+  ],
+  "cards": [
+    {
+      "id": "recog-squares-of-a-sorted-array",
+      "category": "pattern",
+      "type": "free_recall",
+      "promptVariants": [
+        "Which technique solves this problem, and what in the statement or constraints points to it?",
+        "Name the technique you would use here and the clue in the problem that tells you.",
+        "What approach fits this problem, and which part of the statement gives it away?"
+      ],
+      "answer": "Two pointers at both ends, filling the result from the back with the larger square. Clue: The input is sorted but contains negatives, so the largest square is at one of the two ends; compare the ends and fill the output from the largest down.",
+      "keyPoints": [
+        "The input is sorted but contains negatives, so the largest square is at one of the two ends; compare the ends and fill the output from the largest down."
+      ],
+      "explanation": "Squares are largest at the extremes of a sorted array, so each step takes the bigger of the two end squares.",
+      "rubric": {
+        "technique": "Two pointers at both ends, filling the result from the back with the larger square",
+        "aliases": [
+          "two pointers",
+          "merge from both ends",
+          "largest square at the ends",
+          "fill from the back"
+        ],
+        "alsoValid": [
+          {
+            "name": "Square every element and sort",
+            "note": "correct, but slower and ignores the sorted input"
+          }
+        ],
+        "clueTypes": [
+          "sorted_or_ordered",
+          "in_place_pointers"
+        ],
+        "clue": "The input is sorted but contains negatives, so the largest square is at one of the two ends; compare the ends and fill the output from the largest down."
+      }
+    },
+    {
+      "id": "ssa-pattern-01",
+      "category": "main_insight",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "Why does the largest square always lie at one of the two ends?",
+        "Where do the negatives matter?"
+      ],
+      "options": [
+        "Large negatives square to large values, so a maximum sits at an end",
+        "The largest square is always the last element of the array",
+        "The largest square always sits somewhere in the array's middle",
+        "The largest square always belongs to the value nearest zero"
+      ],
+      "answer": "Large negatives square to large values, so a maximum sits at an end",
+      "explanation": "The array is sorted by value, not by absolute value.",
+      "incorrectOptionExplanations": {
+        "The largest square is always the last element of the array": "A large negative at the front can be larger in magnitude.",
+        "The largest square always sits somewhere in the array's middle": "Near zero the squares are smallest.",
+        "The largest square always belongs to the value nearest zero": "That gives the smallest square."
+      },
+      "enabled": true
+    },
+    {
+      "id": "ssa-insight-01",
+      "category": "main_insight",
+      "type": "free_recall",
+      "promptVariants": [
+        "Why fill the result from the back?",
+        "What would happen if you filled it from the front?"
+      ],
+      "answer": "The pointers at the ends give the largest remaining square, so each step determines the next largest value. Filling from the front would need the smallest square, which lies in the middle near zero and requires a different pointer strategy.",
+      "keyPoints": [
+        "Ends give the largest",
+        "Fill positions n - 1 down to 0",
+        "Middle gives the smallest"
+      ],
+      "explanation": "Alternative: start at the sign change and merge outward.",
+      "enabled": true
+    },
+    {
+      "id": "ssa-time-01",
+      "category": "time_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Time complexity: ___",
+        "Complete the statement: Time complexity: ___"
+      ],
+      "answer": "O(n)",
+      "explanation": "Each element is placed once.",
+      "enabled": true,
+      "acceptedAnswers": [
+        "linear"
+      ]
+    },
+    {
+      "id": "ssa-space-01",
+      "category": "space_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Space complexity (excluding the input): ___",
+        "Complete the statement: Space complexity (excluding the input): ___"
+      ],
+      "answer": "O(n)",
+      "explanation": "The output array.",
+      "enabled": true,
+      "acceptedAnswers": [
+        "linear"
+      ]
+    },
+    {
+      "id": "ssa-edge-01",
+      "category": "edge_case",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "What is the result for [-6, -2, 1, 5, 7]?",
+        "Which values are compared first?"
+      ],
+      "options": [
+        "[1, 4, 25, 36, 49]: 49 beats 36 first, placed last",
+        "[36, 4, 1, 25, 49]: the squares in the original order",
+        "[1, 4, 25, 36, 49] after comparing 36 and 1 first",
+        "[4, 1, 25, 36, 49]: the sign change is not handled"
+      ],
+      "answer": "[1, 4, 25, 36, 49]: 49 beats 36 first, placed last",
+      "explanation": "Compare |-6| = 6 and 7; 49 is placed at the end, then 36 vs 25, and so on.",
+      "incorrectOptionExplanations": {
+        "[36, 4, 1, 25, 49]: the squares in the original order": "The output must be sorted.",
+        "[1, 4, 25, 36, 49] after comparing 36 and 1 first": "The result is right, but the comparison starts at both ends: 6 vs 7.",
+        "[4, 1, 25, 36, 49]: the sign change is not handled": "1 is smaller than 4, so 1 must come first."
+      },
+      "enabled": true
+    },
+    {
+      "id": "ssa-alt-01",
+      "category": "alternative_approach",
+      "type": "free_recall",
+      "promptVariants": [
+        "Name two other approaches and their costs.",
+        "Besides the end pointers, how else can the sorted order of squares be produced?"
+      ],
+      "answer": "Square everything and sort: O(n log n) time. Find the sign change, then merge two sorted runs outward from it (negatives squared in reverse order, non-negatives in order) with a standard merge: O(n) time and O(n) output. The end-pointer approach is the shortest because it needs no split point.",
+      "keyPoints": [
+        "Square then sort is n log n",
+        "Merge outward from the sign change",
+        "End pointers need no split point"
+      ],
+      "explanation": "Squares of a sorted array form two sorted runs, a decreasing and an increasing one.",
+      "enabled": true
+    }
+  ],
+  "generatedAt": "2026-10-23T07:59:18Z"
+}

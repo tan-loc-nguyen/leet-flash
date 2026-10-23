@@ -1,0 +1,39 @@
+{
+  "leetcodeId": "567",
+  "title": "Permutation in String",
+  "slug": "permutation-in-string",
+  "url": "https://leetcode.com/problems/permutation-in-string/",
+  "difficulty": "Medium",
+  "status": "solved",
+  "premium": false,
+  "tags": [
+    "Hash Table",
+    "Two Pointers",
+    "String",
+    "Sliding Window"
+  ],
+  "problemStatement": "Given two strings s1 and s2, return true if s2 contains a permutation of s1, or false otherwise.\n\nIn other words, return true if one of s1's permutations is the substring of s2.\n\nExample 1:\n\nInput: s1 = \"ab\", s2 = \"eidbaooo\"\nOutput: true\nExplanation: s2 contains one permutation of s1 (\"ba\").\n\nExample 2:\n\nInput: s1 = \"ab\", s2 = \"eidboaoo\"\nOutput: false\n\nConstraints:\n\n- 1 <= s1.length, s2.length <= 10^4\n\n- s1 and s2 consist of lowercase English letters.",
+  "constraints": [
+    "1 <= s1.length, s2.length <= 10^4",
+    "s1 and s2 consist of lowercase English letters."
+  ],
+  "hints": [
+    "Obviously, brute force will result in TLE. Think of something else.",
+    "How will you check whether one string is a permutation of another string?",
+    "One way is to sort the string and then compare. But, Is there a better way?",
+    "If one string is a permutation of another string then they must have one common metric. What is that?",
+    "Both strings must have same character frequencies, if  one is permutation of another. Which data structure should be used to store frequencies?",
+    "What about hash table?  An array of size 26?"
+  ],
+  "acRate": 49.94,
+  "lastSubmittedAt": "2026-10-20T14:47:46Z",
+  "latestSubmission": {
+    "submissionId": "2177160493",
+    "language": "Python3",
+    "code": "class Solution:\n    def checkInclusion(self, s1: str, s2: str) -> bool:\n        m, n = len(s1), len(s2)\n        if m > n:\n            return False\n        \n        count = Counter(s1)\n        s = 0\n        l = 0\n    \n        for r in range(n):\n            if s2[r] in count:\n                count[s2[r]] -= 1\n            s += 1\n\n            if s == m:\n                flag = True\n                for freq in count.values():\n                    if freq != 0:\n                        flag = False\n                if flag:\n                    return flag\n                \n                if s2[l] in count:\n                    count[s2[l]] += 1\n                l += 1\n                s -= 1\n            \n        return False\n"
+  },
+  "notes": [],
+  "source": "leetcode",
+  "importedAt": "2026-10-23T05:55:47Z",
+  "lastSyncedAt": "2026-10-23T05:55:47Z"
+}

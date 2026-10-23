@@ -1,0 +1,36 @@
+{
+  "leetcodeId": "658",
+  "title": "Find K Closest Elements",
+  "slug": "find-k-closest-elements",
+  "url": "https://leetcode.com/problems/find-k-closest-elements/",
+  "difficulty": "Medium",
+  "status": "solved",
+  "premium": false,
+  "tags": [
+    "Array",
+    "Two Pointers",
+    "Binary Search",
+    "Sliding Window",
+    "Sorting",
+    "Heap (Priority Queue)"
+  ],
+  "problemStatement": "Given a sorted integer array arr, two integers k and x, return the k closest integers to x in the array. The result should also be sorted in ascending order.\n\nAn integer a is closer to x than an integer b if:\n\n- |a - x| < |b - x|, or\n\n- |a - x| == |b - x| and a < b\n\nExample 1:\n\nInput: arr = [1,2,3,4,5], k = 4, x = 3\n\nOutput: [1,2,3,4]\n\nExample 2:\n\nInput: arr = [1,1,2,3,4,5], k = 4, x = -1\n\nOutput: [1,1,2,3]\n\nConstraints:\n\n- 1 <= k <= arr.length\n\n- 1 <= arr.length <= 10^4\n\n- arr is sorted in ascending order.\n\n- -10^4 <= arr[i], x <= 10^4",
+  "constraints": [
+    "1 <= k <= arr.length",
+    "1 <= arr.length <= 10^4",
+    "arr is sorted in ascending order.",
+    "-10^4 <= arr[i], x <= 10^4"
+  ],
+  "hints": [],
+  "acRate": 50.21,
+  "lastSubmittedAt": "2026-10-08T14:35:35Z",
+  "latestSubmission": {
+    "submissionId": "2166414319",
+    "language": "Python3",
+    "code": "class Solution:\n    def findClosestElements(self, arr: List[int], k: int, x: int) -> List[int]:\n        lo, hi = 0, len(arr) - 1\n        while lo <= hi:\n            mid = (lo + hi) // 2\n\n            if arr[mid] >= x:\n                hi = mid - 1\n            else:\n                lo = mid + 1\n\n        idx = lo\n\n        left, right = idx - 1, idx\n\n        while right - left - 1 < k:\n            if left < 0:\n                right += 1\n            elif right >= len(arr):\n                left -= 1\n            elif x - arr[left] <= arr[right] - x:\n                left -= 1\n            else:\n                right += 1\n\n        return arr[left + 1:right]"
+  },
+  "notes": [],
+  "source": "leetcode",
+  "importedAt": "2026-10-23T05:55:47Z",
+  "lastSyncedAt": "2026-10-23T05:55:47Z"
+}

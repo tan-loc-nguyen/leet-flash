@@ -1,0 +1,247 @@
+{
+  "schemaVersion": 1,
+  "problemSlug": "remove-outermost-parentheses",
+  "summary": "Remove the outermost pair of parentheses from every primitive of a valid parentheses string.",
+  "patterns": [
+    "Stack"
+  ],
+  "mainInsight": "The outer pair of each primitive is the '(' read at depth 0 and the ')' that returns the depth to 0; keep everything else.",
+  "invariant": "depth equals the number of unmatched '(' in the prefix read so far.",
+  "canonicalApproach": "Depth counter",
+  "approaches": [
+    {
+      "name": "Split into primitives, then strip",
+      "summary": "Find primitive boundaries with a balance counter, then slice off first and last characters.",
+      "timeComplexity": "O(n)",
+      "spaceComplexity": "O(n)",
+      "strengths": [
+        "Matches the statement"
+      ],
+      "weaknesses": [
+        "Extra substrings"
+      ],
+      "interviewRelevance": "Fine."
+    },
+    {
+      "name": "Stack of open parentheses",
+      "summary": "Push '(' and pop on ')', keeping a character if the stack is non-empty at the right moment.",
+      "timeComplexity": "O(n)",
+      "spaceComplexity": "O(depth)",
+      "strengths": [
+        "Familiar"
+      ],
+      "weaknesses": [
+        "The stack stores only identical characters"
+      ],
+      "interviewRelevance": "Works; a counter is leaner."
+    },
+    {
+      "name": "Depth counter",
+      "summary": "Maintain depth and append inner '(' before incrementing and inner ')' after decrementing.",
+      "timeComplexity": "O(n)",
+      "spaceComplexity": "O(1) extra",
+      "strengths": [
+        "Single pass",
+        "Constant extra space"
+      ],
+      "weaknesses": [
+        "Order of check and update matters"
+      ],
+      "interviewRelevance": "The expected answer."
+    }
+  ],
+  "personalSolution": {
+    "approach": "Stack of '(' used as a depth counter",
+    "timeComplexity": "O(n)",
+    "spaceComplexity": "O(depth)",
+    "isOptimal": true,
+    "notes": "Correct and linear. The stack only stores identical characters, so an integer counter gives the same logic in constant extra space."
+  },
+  "canonicalCode": "class Solution:\n    def removeOuterParentheses(self, s: str) -> str:\n        res = []\n        depth = 0                          # number of currently unmatched '('\n        for ch in s:                       # single pass: O(n)\n            if ch == \"(\":\n                if depth > 0:              # an inner '(' is kept; the outer one opens at depth 0\n                    res.append(ch)\n                depth += 1\n            else:\n                depth -= 1\n                if depth > 0:              # an inner ')' is kept; the outer one closes back to depth 0\n                    res.append(ch)\n        return \"\".join(res)\n",
+  "commonMistakes": [
+    "Updating the depth before the check for '(' (keeps the outer '(').",
+    "Checking the depth before decrementing for ')'.",
+    "Using string slicing in a loop, which makes it quadratic."
+  ],
+  "edgeCases": [
+    "A single primitive '()'.",
+    "Only primitives of length 2.",
+    "Deep nesting.",
+    "A mix of deep and shallow primitives."
+  ],
+  "cards": [
+    {
+      "id": "recog-remove-outermost-parentheses",
+      "category": "pattern",
+      "type": "free_recall",
+      "promptVariants": [
+        "Which technique solves this problem, and what in the statement or constraints points to it?",
+        "Name the technique you would use here and the clue in the problem that tells you.",
+        "What approach fits this problem, and which part of the statement gives it away?"
+      ],
+      "answer": "Track nesting depth with a counter and drop the parentheses that open at depth 0 or close back to depth 0. Clue: The input is a valid parentheses string and each primitive is exactly a stretch where the nesting depth leaves zero and returns to zero, so a running depth finds the outer pair of each primitive.",
+      "keyPoints": [
+        "The input is a valid parentheses string and each primitive is exactly a stretch where the nesting depth leaves zero and returns to zero, so a running depth finds the outer pair of each primitive."
+      ],
+      "explanation": "Outer parentheses are the ones at depth boundary 0, so only the running depth matters.",
+      "rubric": {
+        "technique": "Track nesting depth with a counter and drop the parentheses that open at depth 0 or close back to depth 0",
+        "aliases": [
+          "running balance counter",
+          "stack of open parentheses",
+          "counter of unmatched open brackets",
+          "track the nesting level while scanning"
+        ],
+        "alsoValid": [
+          {
+            "name": "Split the string into primitives first, then strip each one",
+            "note": "correct, but builds intermediate substrings instead of a single pass"
+          }
+        ],
+        "clueTypes": [
+          "nesting_matching"
+        ],
+        "clue": "The input is a valid parentheses string and each primitive is exactly a stretch where the nesting depth leaves zero and returns to zero, so a running depth finds the outer pair of each primitive."
+      }
+    },
+    {
+      "id": "remove-outermost-parentheses-insight-01",
+      "category": "main_insight",
+      "type": "free_recall",
+      "promptVariants": [
+        "How do you recognise the outermost parentheses of each primitive in a single pass?",
+        "Why is a depth counter enough to find the outer pair?"
+      ],
+      "answer": "Keep the number of currently unmatched '('. A primitive starts when a '(' is read at depth 0 and ends when a ')' brings the depth back to 0. Those two characters are exactly the outer pair, and every other character belongs inside.",
+      "keyPoints": [
+        "Depth = unmatched '('",
+        "Outer '(' is read at depth 0",
+        "Outer ')' returns depth to 0"
+      ],
+      "explanation": "Primitive decomposition is just the points where the depth is zero.",
+      "enabled": true
+    },
+    {
+      "id": "remove-outermost-parentheses-impl-01",
+      "category": "implementation_detail",
+      "type": "fill_blank",
+      "promptVariants": [
+        "A '(' is kept only if the depth before it is at least ___.",
+        "Before incrementing for a '(', it is an inner parenthesis when depth >= ___."
+      ],
+      "answer": "1",
+      "explanation": "At depth 0 the '(' opens a new primitive and is the outer one, so it is dropped.",
+      "enabled": true,
+      "acceptedAnswers": [
+        "1",
+        "one",
+        "1."
+      ]
+    },
+    {
+      "id": "remove-outermost-parentheses-code-01",
+      "category": "code_reasoning",
+      "type": "code_question",
+      "promptVariants": [
+        "In your loop, why does the ')' pop come before the `if stack` check while the '(' push comes after it?",
+        "What would change if you pushed '(' before the `if stack` check?"
+      ],
+      "code": "res, stack = [], []\nfor c in s:\n    if c == \")\":\n        stack.pop()\n    if stack:\n        res.append(c)\n    if c == \"(\":\n        stack.append(c)\nreturn \"\".join(res)",
+      "answer": "For ')' we first pop, so an outer ')' leaves the stack empty and is skipped; an inner ')' leaves it non-empty and is kept. For '(' we check before pushing, so an outer '(' sees an empty stack and is skipped. Pushing first would make every '(' look inner and keep the outermost '(' in the output.",
+      "keyPoints": [
+        "Pop first for ')'",
+        "Check before push for '('",
+        "Wrong order keeps outer '('"
+      ],
+      "explanation": "The order of check and update decides which side of the boundary a character falls on.",
+      "enabled": true
+    },
+    {
+      "id": "remove-outermost-parentheses-why-01",
+      "category": "why_not",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "Your solution uses a stack of '(' characters. Why is a plain integer enough?",
+        "What does the stack contain that a counter does not?"
+      ],
+      "options": [
+        "Only one bracket type exists, so only the count of unmatched '(' matters",
+        "A stack cannot be popped when the string is a valid parentheses string",
+        "An integer remembers the positions of the matching brackets as well",
+        "Counters are required because the string may contain unmatched brackets"
+      ],
+      "answer": "Only one bracket type exists, so only the count of unmatched '(' matters",
+      "explanation": "The stack only ever holds identical '(' characters, so its size is all the information it carries; a counter stores exactly that size in constant space.",
+      "incorrectOptionExplanations": {
+        "A stack cannot be popped when the string is a valid parentheses string": "A valid string can always be popped when a ')' is read.",
+        "An integer remembers the positions of the matching brackets as well": "A counter has no positions; they are not needed to answer this problem.",
+        "Counters are required because the string may contain unmatched brackets": "The input is guaranteed to be a valid parentheses string."
+      },
+      "enabled": true
+    },
+    {
+      "id": "remove-outermost-parentheses-edge-01",
+      "category": "edge_case",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "Which input makes the function return an empty string?",
+        "For which valid string is every character an outer parenthesis?"
+      ],
+      "options": [
+        "()()()",
+        "(()())",
+        "(())",
+        "((()))"
+      ],
+      "answer": "()()()",
+      "explanation": "Each '()' is its own primitive with no interior, so every character is an outer parenthesis and the result is empty.",
+      "incorrectOptionExplanations": {
+        "(()())": "One primitive with interior '()()'; the result is '()()'.",
+        "(())": "One primitive with interior '()'; the result is '()'.",
+        "((()))": "One primitive with interior '(())'; the result is '(())'."
+      },
+      "enabled": true
+    },
+    {
+      "id": "remove-outermost-parentheses-time-01",
+      "category": "time_complexity",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "What is the time complexity of the canonical code?",
+        "Derive the running time from the loop over s."
+      ],
+      "options": [
+        "O(n)",
+        "O(n^2)",
+        "O(n log n)",
+        "O(depth * n)"
+      ],
+      "answer": "O(n)",
+      "explanation": "One pass with constant work per character and a final join that is linear in the output length.",
+      "incorrectOptionExplanations": {
+        "O(n^2)": "No character is revisited; there are no nested scans.",
+        "O(n log n)": "There is no sorting or divide step.",
+        "O(depth * n)": "Depth only appears as a counter value, never as work per character."
+      },
+      "enabled": true
+    },
+    {
+      "id": "remove-outermost-parentheses-space-01",
+      "category": "space_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Besides the output list, the counter version needs O(___) extra space.",
+        "Extra space of the depth counter, excluding the result: O(___)."
+      ],
+      "answer": "1",
+      "explanation": "A single integer replaces the stack, whose size could grow to the nesting depth.",
+      "enabled": true,
+      "acceptedAnswers": [
+        "O(1)",
+        "constant",
+        "1"
+      ]
+    }
+  ],
+  "generatedAt": "2026-10-23T06:18:28Z"
+}

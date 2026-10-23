@@ -1,0 +1,305 @@
+{
+  "schemaVersion": 1,
+  "problemSlug": "range-sum-query-mutable",
+  "summary": "Design a structure supporting point updates and inclusive range sums over an array.",
+  "patterns": [
+    "Design",
+    "Design"
+  ],
+  "mainInsight": "Store sums over power-of-two blocks so that any prefix is a combination of O(log n) blocks and any single update changes O(log n) blocks.",
+  "invariant": "bit[i] is the sum of nums over (i - lowbit(i), i]; the tree always reflects the current values.",
+  "canonicalApproach": "Fenwick (binary indexed) tree",
+  "approaches": [
+    {
+      "name": "Plain array",
+      "summary": "Update in place, sum the slice for each query.",
+      "timeComplexity": "O(1) update, O(n) query",
+      "spaceComplexity": "O(n)",
+      "strengths": [
+        "Trivial"
+      ],
+      "weaknesses": [
+        "Too slow for many queries"
+      ],
+      "interviewRelevance": "Baseline."
+    },
+    {
+      "name": "Prefix sum array",
+      "summary": "Precompute prefix sums, rebuild after each update.",
+      "timeComplexity": "O(n) update, O(1) query",
+      "spaceComplexity": "O(n)",
+      "strengths": [
+        "Fast queries"
+      ],
+      "weaknesses": [
+        "Updates are linear"
+      ],
+      "interviewRelevance": "Good for static arrays only."
+    },
+    {
+      "name": "Fenwick (binary indexed) tree",
+      "summary": "Block sums addressed by lowest set bit; update and prefix by bit jumps.",
+      "timeComplexity": "O(log n) update and query",
+      "spaceComplexity": "O(n)",
+      "strengths": [
+        "Short code",
+        "Small constant"
+      ],
+      "weaknesses": [
+        "Needs an invertible operation",
+        "1-indexed"
+      ],
+      "interviewRelevance": "Standard answer for sums."
+    },
+    {
+      "name": "Segment tree",
+      "summary": "Recursive tree over index ranges; query splits into disjoint, covered, partial cases.",
+      "timeComplexity": "O(log n) update and query",
+      "spaceComplexity": "O(n)",
+      "strengths": [
+        "General operations",
+        "Supports lazy propagation"
+      ],
+      "weaknesses": [
+        "More code, 4n array"
+      ],
+      "interviewRelevance": "Equally accepted; more general."
+    }
+  ],
+  "personalSolution": {
+    "approach": "Recursive segment tree on a 4n array",
+    "timeComplexity": "O(log n)",
+    "spaceComplexity": "O(n)",
+    "isOptimal": true,
+    "notes": "Optimal complexity. A Fenwick tree does the same job in about a third of the code if only sums are needed."
+  },
+  "canonicalCode": "class NumArray:\n    def __init__(self, nums: list[int]):\n        self.n = len(nums)\n        self.nums = nums[:]                # current values, needed to turn an update into a delta\n        self.bit = [0] * (self.n + 1)      # Fenwick tree, 1-indexed; bit[i] covers (i - lowbit(i), i]\n        for i, v in enumerate(nums):\n            self._add(i + 1, v)            # n adds of O(log n) each\n\n    def _add(self, i: int, delta: int) -> None:\n        while i <= self.n:\n            self.bit[i] += delta\n            i += i & -i                    # jump to the next node whose block contains i\n\n    def _prefix(self, i: int) -> int:\n        total = 0\n        while i > 0:\n            total += self.bit[i]\n            i -= i & -i                    # strip the lowest set bit: at most log n steps\n        return total\n\n    def update(self, index: int, val: int) -> None:\n        self._add(index + 1, val - self.nums[index])   # blocks store sums, so add the change\n        self.nums[index] = val\n\n    def sumRange(self, left: int, right: int) -> int:\n        return self._prefix(right + 1) - self._prefix(left)\n",
+  "commonMistakes": [
+    "Writing val into the tree instead of the delta.",
+    "Using index 0 in a Fenwick tree (infinite loop).",
+    "Off-by-one: prefix(right + 1) - prefix(left).",
+    "Allocating a segment tree array that is too small (needs about 4n)."
+  ],
+  "edgeCases": [
+    "Single-element array.",
+    "Update that does not change the value.",
+    "Query over the whole array.",
+    "Negative values."
+  ],
+  "cards": [
+    {
+      "id": "recog-range-sum-query-mutable",
+      "category": "pattern",
+      "type": "free_recall",
+      "promptVariants": [
+        "Which technique solves this problem, and what in the statement or constraints points to it?",
+        "Name the technique you would use here and the clue in the problem that tells you.",
+        "What approach fits this problem, and which part of the statement gives it away?"
+      ],
+      "answer": "Fenwick tree or segment tree storing partial sums, for logarithmic point updates and range queries. Clue: Range sums are queried repeatedly between point updates, and with up to 3 * 10^4 calls on up to 3 * 10^4 elements both operations have to be cheaper than a linear scan.",
+      "keyPoints": [
+        "Range sums are queried repeatedly between point updates, and with up to 3 * 10^4 calls on up to 3 * 10^4 elements both operations have to be cheaper than a linear scan."
+      ],
+      "explanation": "A static array wants prefix sums, but updates make them stale. Trees of partial sums keep both operations at logarithmic cost.",
+      "rubric": {
+        "technique": "Fenwick tree or segment tree storing partial sums, for logarithmic point updates and range queries",
+        "aliases": [
+          "binary indexed tree",
+          "fenwick tree",
+          "segment tree",
+          "tree of partial sums",
+          "bit"
+        ],
+        "alsoValid": [
+          {
+            "name": "Prefix sum array rebuilt after every update",
+            "note": "queries are constant time but each update costs linear time"
+          },
+          {
+            "name": "Plain array, sum the slice on every query",
+            "note": "updates are constant time but each query costs linear time; too slow for 3 * 10^4 calls on 3 * 10^4 elements"
+          }
+        ],
+        "clueTypes": [
+          "prefix_range",
+          "stream_design"
+        ],
+        "clue": "Range sums are queried repeatedly between point updates, and with up to 3 * 10^4 calls on up to 3 * 10^4 elements both operations have to be cheaper than a linear scan."
+      }
+    },
+    {
+      "id": "range-sum-query-mutable-insight-01",
+      "category": "main_insight",
+      "type": "free_recall",
+      "promptVariants": [
+        "Why do prefix sums fail here and what does a tree of partial sums change?",
+        "What trade-off do Fenwick and segment trees make compared with a plain array and prefix sums?"
+      ],
+      "answer": "A plain array updates in constant time but sums in linear time; a prefix-sum array sums in constant time but one update changes up to n prefixes. A Fenwick or segment tree stores sums over power-of-two blocks, so a range sum touches O(log n) blocks and an update changes only the O(log n) blocks that contain the index: both operations become logarithmic.",
+      "keyPoints": [
+        "Array: fast update, slow query",
+        "Prefix sums: fast query, slow update",
+        "Tree: both logarithmic via block sums"
+      ],
+      "explanation": "Balancing the two costs is the whole point of the data structure.",
+      "enabled": true
+    },
+    {
+      "id": "range-sum-query-mutable-invariant-01",
+      "category": "invariant",
+      "type": "free_recall",
+      "promptVariants": [
+        "What does bit[i] store in a Fenwick tree?",
+        "State the invariant of the Fenwick array."
+      ],
+      "answer": "bit[i] holds the sum of nums over the block (i - lowbit(i), i], where lowbit(i) = i & -i. A prefix sum is the sum of the blocks reached by repeatedly subtracting the lowest set bit, and an update adds its delta to the blocks reached by repeatedly adding the lowest set bit.",
+      "keyPoints": [
+        "Block (i - lowbit(i), i]",
+        "lowbit = i & -i",
+        "Query walks down, update walks up"
+      ],
+      "explanation": "Every index belongs to O(log n) blocks and every prefix decomposes into O(log n) blocks.",
+      "enabled": true
+    },
+    {
+      "id": "range-sum-query-mutable-impl-01",
+      "category": "implementation_detail",
+      "type": "fill_blank",
+      "promptVariants": [
+        "In a Fenwick tree the next node to update after i is i += i & ___.",
+        "Complete the lowest-set-bit trick: i & ___ isolates the lowest set bit of i."
+      ],
+      "answer": "-i",
+      "explanation": "In two's complement -i flips all bits above the lowest set bit, so i & -i keeps only that bit.",
+      "enabled": true,
+      "acceptedAnswers": [
+        "-i",
+        "(-i)",
+        "~i + 1",
+        "-i."
+      ]
+    },
+    {
+      "id": "range-sum-query-mutable-impl-02",
+      "category": "implementation_detail",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "Why does update(index, val) add val - nums[index] instead of writing val into the tree?",
+        "What goes wrong if update adds val to the tree nodes?"
+      ],
+      "options": [
+        "Blocks hold sums, so each changes by the delta, which needs the old value",
+        "Nodes hold values, and the delta avoids writing the same cell twice",
+        "Adding the delta keeps the tree balanced, writing val would unbalance it",
+        "val - nums[index] is cheaper to compute than val for large indexes"
+      ],
+      "answer": "Blocks hold sums, so each changes by the delta, which needs the old value",
+      "explanation": "Each block stores a sum of several elements. Overwriting would erase the other elements' contribution, while adding (new - old) corrects exactly the changed element.",
+      "incorrectOptionExplanations": {
+        "Nodes hold values, and the delta avoids writing the same cell twice": "Nodes hold block sums, not single values.",
+        "Adding the delta keeps the tree balanced, writing val would unbalance it": "Fenwick trees have a fixed shape; there is nothing to balance.",
+        "val - nums[index] is cheaper to compute than val for large indexes": "Computing the delta is not about speed; it is required for correctness."
+      },
+      "enabled": true
+    },
+    {
+      "id": "range-sum-query-mutable-edge-01",
+      "category": "edge_case",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "What happens if the canonical code calls _add(0, d), i.e. forgets the + 1 for 1-indexing?",
+        "Why must a Fenwick tree be 1-indexed?"
+      ],
+      "options": [
+        "Infinite loop: 0 & -0 is 0, so i never moves",
+        "IndexError raised on the very first loop iteration",
+        "The update is silently ignored",
+        "Only the first block is updated"
+      ],
+      "answer": "Infinite loop: 0 & -0 is 0, so i never moves",
+      "explanation": "i += i & -i never changes 0, and 0 <= n keeps the loop running forever. 1-indexing is required for the lowest-bit jumps to work.",
+      "incorrectOptionExplanations": {
+        "IndexError raised on the very first loop iteration": "bit[0] exists, so there is no error; the loop just never ends.",
+        "The update is silently ignored": "The loop would keep adding to bit[0] forever.",
+        "Only the first block is updated": "i stays at 0, so no other block is ever reached."
+      },
+      "enabled": true
+    },
+    {
+      "id": "range-sum-query-mutable-code-01",
+      "category": "code_reasoning",
+      "type": "code_question",
+      "promptVariants": [
+        "In your segment tree query, what do the two base cases return, and why does the recursion visit only O(log n) nodes?",
+        "Explain the three cases of query: disjoint, fully covered, partial overlap."
+      ],
+      "code": "def query(self, left, right, idx, qLeft, qRight):\n    # out of range\n    if qRight < left or qLeft > right:\n        return 0\n\n    if qLeft <= left and right <= qRight:\n        return self.tree[idx]\n\n    mid = (left + right) // 2\n    resLeft = self.query(left, mid, 2*idx + 1, qLeft, qRight)\n    resRight = self.query(mid + 1, right, 2*idx + 2, qLeft, qRight)\n    return resLeft + resRight",
+      "answer": "Disjoint ranges return 0, the identity for addition; a node fully inside the query returns its stored sum without recursing; a partially overlapping node recurses into both children. At each level at most two nodes partially overlap, so the recursion touches O(log n) nodes in total.",
+      "keyPoints": [
+        "Disjoint returns 0 (identity)",
+        "Fully covered returns the stored sum",
+        "At most two partial nodes per level"
+      ],
+      "explanation": "The same 'identity, covered, split' pattern works for min, max, gcd, etc.",
+      "enabled": true
+    },
+    {
+      "id": "range-sum-query-mutable-time-01",
+      "category": "time_complexity",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "What are the costs of the canonical Fenwick tree?",
+        "Time complexity of build, update and sumRange in canonicalCode."
+      ],
+      "options": [
+        "O(n log n) build, O(log n) per update and per sumRange",
+        "O(n) build, O(1) per update, O(log n) per sumRange",
+        "O(n) build, O(log n) per update, O(1) per sumRange",
+        "O(n log n) build, O(log n) per update, O(n) per sumRange"
+      ],
+      "answer": "O(n log n) build, O(log n) per update and per sumRange",
+      "explanation": "The constructor performs n adds of O(log n) each. update and _prefix move by lowest-set-bit jumps, so both run in O(log n). (A linear-time build also exists.)",
+      "incorrectOptionExplanations": {
+        "O(n) build, O(1) per update, O(log n) per sumRange": "An update must touch every block that contains the index, which is O(log n).",
+        "O(n) build, O(log n) per update, O(1) per sumRange": "A query combines up to log n blocks, so it is not constant.",
+        "O(n log n) build, O(log n) per update, O(n) per sumRange": "A query reads at most log n blocks, never n."
+      },
+      "enabled": true
+    },
+    {
+      "id": "range-sum-query-mutable-space-01",
+      "category": "space_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "A Fenwick tree (n + 1 cells) and the recursive segment tree on a 4n array both use O(___) extra space.",
+        "Extra space for the tree structure: O(___)."
+      ],
+      "answer": "n",
+      "explanation": "Both are arrays proportional to n; the segment tree just has a larger constant (4n).",
+      "enabled": true,
+      "acceptedAnswers": [
+        "O(n)",
+        "linear",
+        "N"
+      ]
+    },
+    {
+      "id": "range-sum-query-mutable-alt-01",
+      "category": "alternative_approach",
+      "type": "free_recall",
+      "promptVariants": [
+        "When would you prefer a segment tree over a Fenwick tree, and vice versa?",
+        "Your accepted solution uses a segment tree. Why might a Fenwick tree be a better choice here?"
+      ],
+      "answer": "Both give logarithmic updates and queries. A Fenwick tree is shorter, uses n + 1 cells and has smaller constants, and fits sums (invertible operations) via prefix(right) - prefix(left - 1). A segment tree is more general (min, max, gcd, lazy range updates) at the price of more code and a 4n array.",
+      "keyPoints": [
+        "Same complexity",
+        "Fenwick: less code and memory, needs invertible operation",
+        "Segment tree: general operations and range updates"
+      ],
+      "explanation": "Knowing both and picking the simpler one for sums is a good interview signal.",
+      "enabled": true
+    }
+  ],
+  "generatedAt": "2026-10-23T06:09:41Z"
+}

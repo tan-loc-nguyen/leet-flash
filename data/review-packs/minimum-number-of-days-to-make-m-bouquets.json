@@ -1,0 +1,229 @@
+{
+  "schemaVersion": 1,
+  "problemSlug": "minimum-number-of-days-to-make-m-bouquets",
+  "summary": "Find the minimum number of days to wait so that m bouquets of k adjacent bloomed flowers can be made, or -1.",
+  "patterns": [
+    "Binary Search"
+  ],
+  "mainInsight": "Waiting longer never hurts, so 'can make m bouquets by day d' is monotone in d. Binary search the day and test each candidate with a greedy scan counting runs of k bloomed flowers.",
+  "invariant": "lo is infeasible or the smallest candidate, hi is always feasible, and the first feasible day lies in [lo, hi].",
+  "canonicalApproach": "Binary search on days with greedy check",
+  "approaches": [
+    {
+      "name": "Test every day",
+      "summary": "For each day in order, run the greedy check.",
+      "timeComplexity": "O(n * D)",
+      "spaceComplexity": "O(1)",
+      "strengths": [
+        "Easy"
+      ],
+      "weaknesses": [
+        "D can be 10^9"
+      ],
+      "interviewRelevance": "Baseline."
+    },
+    {
+      "name": "Binary search on days with greedy check",
+      "summary": "Search the minimal day with bouquets(day) >= m.",
+      "timeComplexity": "O(n log D)",
+      "spaceComplexity": "O(1)",
+      "strengths": [
+        "Fast",
+        "Standard pattern"
+      ],
+      "weaknesses": [
+        "Boundary conditions"
+      ],
+      "interviewRelevance": "The expected answer."
+    }
+  ],
+  "personalSolution": {
+    "approach": "Binary search on days with a greedy adjacency scan and an ans variable",
+    "timeComplexity": "O(n log D)",
+    "spaceComplexity": "O(1)",
+    "isOptimal": true,
+    "notes": "Optimal. The commented-out m * k > n guard is a good O(1) early exit that you can keep."
+  },
+  "canonicalCode": "class Solution:\n    def minDays(self, bloomDay: list[int], m: int, k: int) -> int:\n        if m * k > len(bloomDay):          # not enough flowers: no day can work\n            return -1\n\n        def bouquets(day: int) -> int:     # greedy scan: O(n)\n            made = run = 0\n            for d in bloomDay:\n                if d <= day:\n                    run += 1               # one more adjacent bloomed flower\n                    if run == k:\n                        made += 1          # form a bouquet and start a new run\n                        run = 0\n                else:\n                    run = 0                # an unbloomed flower breaks adjacency\n            return made\n\n        lo, hi = min(bloomDay), max(bloomDay)   # at hi every flower has bloomed, so hi is feasible\n        while lo < hi:                     # O(log(max day)) iterations\n            mid = (lo + hi) // 2\n            if bouquets(mid) >= m:\n                hi = mid                   # feasible: try fewer days\n            else:\n                lo = mid + 1               # infeasible: need more days\n        return lo\n",
+  "commonMistakes": [
+    "Not resetting the run after forming a bouquet.",
+    "Forgetting the impossibility case (m * k > n).",
+    "Counting bloomed flowers instead of adjacent runs.",
+    "Overflow of m * k in 32-bit languages."
+  ],
+  "edgeCases": [
+    "m * k greater than n.",
+    "k = 1 (adjacency does not matter).",
+    "All flowers bloom on the same day.",
+    "A single late flower splits runs."
+  ],
+  "cards": [
+    {
+      "id": "recog-minimum-number-of-days-to-make-m-bouquets",
+      "category": "pattern",
+      "type": "free_recall",
+      "promptVariants": [
+        "Which technique solves this problem, and what in the statement or constraints points to it?",
+        "Name the technique you would use here and the clue in the problem that tells you.",
+        "What approach fits this problem, and which part of the statement gives it away?"
+      ],
+      "answer": "Binary search on the number of days with a greedy feasibility scan. Clue: The question asks for the minimum waiting time, and waiting longer can only help, so feasibility is monotone in the number of days and the range up to 10^9 must be searched by halving.",
+      "keyPoints": [
+        "The question asks for the minimum waiting time, and waiting longer can only help, so feasibility is monotone in the number of days and the range up to 10^9 must be searched by halving."
+      ],
+      "explanation": "More days means more bloomed flowers, so 'can make m bouquets' flips from false to true exactly once; the check itself is a linear greedy pass.",
+      "rubric": {
+        "technique": "Binary search on the number of days with a greedy feasibility scan",
+        "aliases": [
+          "binary search on the answer",
+          "binary search on days",
+          "parametric search",
+          "bisect days with a greedy check"
+        ],
+        "alsoValid": [
+          {
+            "name": "Simulate day by day and test each day",
+            "note": "correct, but bloom days go up to 10^9, so a linear scan over days is far too slow"
+          }
+        ],
+        "clueTypes": [
+          "monotonic_answer"
+        ],
+        "clue": "The question asks for the minimum waiting time, and waiting longer can only help, so feasibility is monotone in the number of days and the range up to 10^9 must be searched by halving."
+      }
+    },
+    {
+      "id": "minimum-number-of-days-to-make-m-bouquets-insight-01",
+      "category": "main_insight",
+      "type": "free_recall",
+      "promptVariants": [
+        "Why can you binary search on the number of days?",
+        "What property of the days makes the feasibility test monotone?"
+      ],
+      "answer": "If m bouquets can be made after d days, they can also be made after d + 1 days, because flowers never un-bloom. So the feasibility predicate is false for small d and true from some day onward, and we want the first true day. Each test is a greedy left-to-right scan that forms a bouquet whenever k adjacent flowers have bloomed.",
+      "keyPoints": [
+        "Flowers never un-bloom",
+        "False then true predicate",
+        "Find the first true day"
+      ],
+      "explanation": "Binary search on the answer needs a monotone yes/no check that is cheap to evaluate.",
+      "enabled": true
+    },
+    {
+      "id": "minimum-number-of-days-to-make-m-bouquets-code-01",
+      "category": "code_reasoning",
+      "type": "code_question",
+      "promptVariants": [
+        "Why does your feasibility scan reset `adjacency` to 0 after counting a bouquet?",
+        "What would happen in your makeBouquets if adjacency were not reset after a bouquet?"
+      ],
+      "code": "def makeBouquets(day: int) -> int:\n    count = 0\n    adjacency = 0\n\n    for r in range(len(days)):\n        if days[r] <= day:\n            adjacency += 1\n        else:\n            adjacency = 0\n\n        if adjacency == k:\n            count += 1\n            adjacency = 0\n\n    return count",
+      "answer": "A flower can belong to only one bouquet, so after k adjacent flowers form a bouquet the run must start over. Without the reset, the count would reach k + 1, k + 2, ... and never equal k again, so at most one bouquet would be counted in a long run of bloomed flowers.",
+      "keyPoints": [
+        "Each flower is used once",
+        "Run restarts after a bouquet",
+        "Without reset only one bouquet per run"
+      ],
+      "explanation": "Greedy: forming a bouquet as soon as possible never hurts the later flowers.",
+      "enabled": true
+    },
+    {
+      "id": "minimum-number-of-days-to-make-m-bouquets-why-01",
+      "category": "why_not",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "For bloomDay = [1, 2, 9, 3, 4, 9, 5, 6], m = 2, k = 3, why is returning the 6th smallest day (6) wrong?",
+        "Why can't the answer be the (m * k)-th smallest bloom day?"
+      ],
+      "options": [
+        "Bloomed flowers must be adjacent, and on day 6 they form runs of length 2 only",
+        "Bloomed flowers must be distinct, and day 6 repeats a day from earlier flowers",
+        "The sixth smallest day is smaller than the largest bloom day among all flowers",
+        "A bouquet needs one flower from each of the days sorted in increasing order"
+      ],
+      "answer": "Bloomed flowers must be adjacent, and on day 6 they form runs of length 2 only",
+      "explanation": "On day 6 six flowers have bloomed but the two 9s split them into runs of 2, 2 and 2, so no bouquet of 3 adjacent flowers exists. The first day with two runs of 3 is day 9.",
+      "incorrectOptionExplanations": {
+        "Bloomed flowers must be distinct, and day 6 repeats a day from earlier flowers": "Bloom days may repeat; distinctness is not required.",
+        "The sixth smallest day is smaller than the largest bloom day among all flowers": "That is true but irrelevant; the answer is not constrained to be the largest day.",
+        "A bouquet needs one flower from each of the days sorted in increasing order": "A bouquet is any k adjacent bloomed flowers, regardless of their days."
+      },
+      "enabled": true
+    },
+    {
+      "id": "minimum-number-of-days-to-make-m-bouquets-edge-01",
+      "category": "edge_case",
+      "type": "free_recall",
+      "promptVariants": [
+        "When does the problem return -1, and how can you detect it before searching?",
+        "What is the cheap impossibility test for this problem?"
+      ],
+      "answer": "It returns -1 exactly when m * k > n, because even when every flower has bloomed we can make only n // k bouquets. Checking this first avoids a search whose upper bound is not feasible; in a fixed-width language also compute m * k with a 64-bit type because m and k can multiply beyond 32 bits.",
+      "keyPoints": [
+        "Impossible iff m * k > n",
+        "On the last day all flowers are bloomed",
+        "Check first; beware overflow of m * k"
+      ],
+      "explanation": "The test is also what guarantees that hi = max(bloomDay) is a feasible upper bound.",
+      "enabled": true
+    },
+    {
+      "id": "minimum-number-of-days-to-make-m-bouquets-time-01",
+      "category": "time_complexity",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "What is the time complexity of the canonical code, with D the largest bloom day?",
+        "Combine the number of search steps with the cost of each check."
+      ],
+      "options": [
+        "O(n log D)",
+        "O(n * D)",
+        "O(n log n)",
+        "O(log D)"
+      ],
+      "answer": "O(n log D)",
+      "explanation": "The binary search over [min, max] takes about log D iterations and each runs the O(n) greedy scan.",
+      "incorrectOptionExplanations": {
+        "O(n * D)": "That would test every day in turn instead of halving the range.",
+        "O(n log n)": "There is no sorting; the search range is the day values, not the array size.",
+        "O(log D)": "Each iteration still scans all n flowers."
+      },
+      "enabled": true
+    },
+    {
+      "id": "minimum-number-of-days-to-make-m-bouquets-space-01",
+      "category": "space_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "The binary search and the greedy scan use only a few integers, so the extra space is O(___).",
+        "Extra space of canonicalCode: O(___)."
+      ],
+      "answer": "1",
+      "explanation": "No auxiliary arrays are built.",
+      "enabled": true,
+      "acceptedAnswers": [
+        "O(1)",
+        "constant",
+        "1"
+      ]
+    },
+    {
+      "id": "minimum-number-of-days-to-make-m-bouquets-alt-01",
+      "category": "alternative_approach",
+      "type": "free_recall",
+      "promptVariants": [
+        "Your search uses lo, hi = 1, max(days) with an ans variable. How does it differ from the lo < hi template, and what is the trade-off?",
+        "Compare the 'record the answer' template with the 'shrink to the first true' template."
+      ],
+      "answer": "Your version loops while lo <= hi and records ans whenever the check passes, returning -1 if it never does, so it needs no separate impossibility test. The lo < hi version needs the m * k > n guard first, but ends with lo exactly at the first feasible day and has a tighter range [min, max]. Both are O(n log D).",
+      "keyPoints": [
+        "lo <= hi with ans variable",
+        "lo < hi converges to the first true",
+        "Same complexity"
+      ],
+      "explanation": "Pick one template and use it consistently; mixing them is a common source of off-by-one errors.",
+      "enabled": true
+    }
+  ],
+  "generatedAt": "2026-10-23T06:18:28Z"
+}

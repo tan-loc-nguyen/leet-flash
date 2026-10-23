@@ -1,0 +1,233 @@
+{
+  "schemaVersion": 1,
+  "problemSlug": "reverse-words-in-a-string-ii",
+  "summary": "Reverse the order of the single-space-separated words in a character array, in place.",
+  "patterns": [
+    "Two Pointers"
+  ],
+  "mainInsight": "Reverse the entire array so the words land in the right order (mirrored), then reverse each word to restore its spelling. Both steps are in-place swaps.",
+  "invariant": "After the first reversal the word order is final; each later per-word reversal only touches that word's own range.",
+  "canonicalApproach": "Reverse the whole array, then each word",
+  "approaches": [
+    {
+      "name": "Split, reverse, join",
+      "summary": "Convert to a string, split on spaces, reverse the list, join, write back.",
+      "timeComplexity": "O(n)",
+      "spaceComplexity": "O(n)",
+      "strengths": [
+        "Very short"
+      ],
+      "weaknesses": [
+        "Not in place"
+      ],
+      "interviewRelevance": "Mention as the baseline, then do better."
+    },
+    {
+      "name": "Reverse the whole array, then each word",
+      "summary": "reverse(0, n-1); then reverse every maximal run of non-space characters.",
+      "timeComplexity": "O(n)",
+      "spaceComplexity": "O(1)",
+      "strengths": [
+        "In place",
+        "Simple invariant"
+      ],
+      "weaknesses": [
+        "Last word needs special handling"
+      ],
+      "interviewRelevance": "The expected answer."
+    }
+  ],
+  "personalSolution": {
+    "approach": "Reverse whole array then each word, with a special case for the last word",
+    "timeComplexity": "O(n)",
+    "spaceComplexity": "O(1)",
+    "isOptimal": true,
+    "notes": "Optimal. Looping to n + 1 with an `i == n` sentinel would remove the `elif i == n - 1` branch."
+  },
+  "canonicalCode": "class Solution:\n    def reverseWords(self, s: list[str]) -> None:\n        \"\"\"Do not return anything, modify s in-place instead.\"\"\"\n        def reverse(l: int, r: int) -> None:\n            while l < r:\n                s[l], s[r] = s[r], s[l]\n                l += 1\n                r -= 1\n\n        n = len(s)\n        reverse(0, n - 1)                  # words now in the right order, but each one mirrored\n        start = 0\n        for i in range(n + 1):             # i == n acts as a sentinel that closes the last word\n            if i == n or s[i] == \" \":\n                reverse(start, i - 1)      # every char is swapped at most twice overall\n                start = i + 1\n",
+  "commonMistakes": [
+    "Forgetting to reverse the last word because it has no trailing space.",
+    "Allocating a new list, which breaks the in-place requirement.",
+    "Reversing the words with one shared index and overlapping ranges."
+  ],
+  "edgeCases": [
+    "A single word.",
+    "A single character.",
+    "Many single-letter words.",
+    "One very long word."
+  ],
+  "cards": [
+    {
+      "id": "recog-reverse-words-in-a-string-ii",
+      "category": "pattern",
+      "type": "free_recall",
+      "promptVariants": [
+        "Which technique solves this problem, and what in the statement or constraints points to it?",
+        "Name the technique you would use here and the clue in the problem that tells you.",
+        "What approach fits this problem, and which part of the statement gives it away?"
+      ],
+      "answer": "Reverse the whole array, then reverse each word in place with two pointers. Clue: The input is a character array that must be rearranged in place without extra space, so words can only move by swapping characters.",
+      "keyPoints": [
+        "The input is a character array that must be rearranged in place without extra space, so words can only move by swapping characters."
+      ],
+      "explanation": "In-place plus a flat character array points to reversal by swapping: reversing the whole array and then each word restores each word's spelling.",
+      "rubric": {
+        "technique": "Reverse the whole array, then reverse each word in place with two pointers",
+        "aliases": [
+          "double reversal",
+          "reverse everything then reverse every word",
+          "in-place reversal with swaps",
+          "reverse the array and then each word"
+        ],
+        "alsoValid": [
+          {
+            "name": "Split on spaces, reverse the list of words and join them",
+            "note": "correct, but it allocates new strings and lists, so it breaks the in-place requirement"
+          },
+          {
+            "name": "Build the answer in a new array by copying words from the back",
+            "note": "correct, but needs linear extra space"
+          }
+        ],
+        "clueTypes": [
+          "in_place_pointers"
+        ],
+        "clue": "The input is a character array that must be rearranged in place without extra space, so words can only move by swapping characters."
+      }
+    },
+    {
+      "id": "reverse-words-in-a-string-ii-insight-01",
+      "category": "main_insight",
+      "type": "free_recall",
+      "promptVariants": [
+        "Why does reversing the whole array and then each word produce the answer?",
+        "Explain the double-reversal trick."
+      ],
+      "answer": "Reversing the whole array puts the words in the opposite order, which is what we want, but it also mirrors the letters inside each word. Reversing each word again undoes only that mirroring, because reversing twice is the identity on the letters of a word while the word positions stay swapped.",
+      "keyPoints": [
+        "Whole reversal fixes word order",
+        "It also mirrors each word",
+        "Second per-word reversal undoes the mirroring"
+      ],
+      "explanation": "Two cheap in-place operations compose to a permutation that would otherwise need extra space.",
+      "enabled": true
+    },
+    {
+      "id": "reverse-words-in-a-string-ii-fill-01",
+      "category": "invariant",
+      "type": "fill_blank",
+      "promptVariants": [
+        "After reversing the whole array, the words are in the correct order but each word is ___.",
+        "State of s after the first reverse(0, n - 1): the word order is final and each word is ___."
+      ],
+      "answer": "mirrored",
+      "explanation": "Reversal mirrors every character range it touches, including the interior of each word.",
+      "enabled": true,
+      "acceptedAnswers": [
+        "reversed",
+        "backwards",
+        "flipped",
+        "spelled backwards"
+      ]
+    },
+    {
+      "id": "reverse-words-in-a-string-ii-code-01",
+      "category": "code_reasoning",
+      "type": "code_question",
+      "promptVariants": [
+        "Why does your loop need the `elif i == n - 1` branch?",
+        "What goes wrong in your solution if the `elif i == n - 1` branch is deleted?"
+      ],
+      "code": "n = len(s)\nself.reverse(s, 0, n - 1)\nstart = 0\nfor i in range(n):\n    if s[i] == \" \":\n        self.reverse(s, start, i - 1)\n        start = i + 1\n    elif i == n - 1:\n        self.reverse(s, start, i)",
+      "answer": "Words are closed when a space is reached, but the last word has no space after it, so without the elif it would stay mirrored. Example: 'abc' becomes 'cba' after the first reversal, no space is ever seen, and 'cba' is returned. A loop over range(n + 1) with an `i == n` sentinel avoids the special case.",
+      "keyPoints": [
+        "Last word has no trailing space",
+        "Single word 'abc' returns 'cba'",
+        "Sentinel i == n is an alternative"
+      ],
+      "explanation": "Every boundary-triggered loop needs a way to flush the final group.",
+      "enabled": true
+    },
+    {
+      "id": "reverse-words-in-a-string-ii-edge-01",
+      "category": "edge_case",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "If the last word were never reversed again, which input would still return the correct result?",
+        "Which of these inputs does a missing last-word reversal fail on?"
+      ],
+      "options": [
+        "abc (a single three-letter word)",
+        "a b (two one-letter words)",
+        "a (a single letter)",
+        "a b c (three one-letter words)"
+      ],
+      "answer": "abc (a single three-letter word)",
+      "explanation": "Single-letter words are unchanged by reversal, so a missing last-word pass is invisible for them. A last word of length 2 or more stays mirrored: 'abc' ends up as 'cba'.",
+      "incorrectOptionExplanations": {
+        "a b (two one-letter words)": "The last word has length 1, so leaving it mirrored changes nothing.",
+        "a (a single letter)": "A one-character array is its own reversal.",
+        "a b c (three one-letter words)": "Every word has length 1, so the missing per-word pass is not visible."
+      },
+      "enabled": true
+    },
+    {
+      "id": "reverse-words-in-a-string-ii-time-01",
+      "category": "time_complexity",
+      "type": "free_recall",
+      "promptVariants": [
+        "Why is the algorithm linear even though it reverses once per word?",
+        "Derive the time complexity of canonicalCode."
+      ],
+      "answer": "The full reversal costs n/2 swaps. Each character belongs to exactly one word, so the per-word reversals together do at most n/2 more swaps; the loop scans n+1 positions. Total is linear in n, not n times the number of words.",
+      "keyPoints": [
+        "One full reversal",
+        "Word ranges are disjoint so they sum to n",
+        "Total linear"
+      ],
+      "explanation": "Disjoint ranges mean the per-word work adds up to the array length.",
+      "enabled": true
+    },
+    {
+      "id": "reverse-words-in-a-string-ii-space-01",
+      "category": "space_complexity",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "What extra space does the canonical code use?",
+        "How much auxiliary memory does the in-place reversal approach need?"
+      ],
+      "options": [
+        "O(1): only indices and a swap temporary",
+        "O(n): a reversed copy of the characters",
+        "O(w): one entry per word for start indices",
+        "O(log n): the depth of recursive reversals"
+      ],
+      "answer": "O(1): only indices and a swap temporary",
+      "explanation": "Swaps happen inside s, and the loop keeps just start, i and the two reversal pointers.",
+      "incorrectOptionExplanations": {
+        "O(n): a reversed copy of the characters": "Nothing is copied; the array is mutated directly.",
+        "O(w): one entry per word for start indices": "Only the current start index is kept, not all of them.",
+        "O(log n): the depth of recursive reversals": "The reverse helper is an iterative loop, so there is no call stack growth."
+      },
+      "enabled": true
+    },
+    {
+      "id": "reverse-words-in-a-string-ii-alt-01",
+      "category": "alternative_approach",
+      "type": "free_recall",
+      "promptVariants": [
+        "How would you solve this if the in-place requirement were dropped, and what does the requirement change?",
+        "Without the in-place constraint, what is the simplest solution and what does it cost?"
+      ],
+      "answer": "''.join(s).split(' '), reverse the list, join with spaces and write back. It is linear in time but uses linear extra space for the strings and the list. The in-place constraint forces the reverse-twice approach, which keeps the same time with constant space.",
+      "keyPoints": [
+        "Split, reverse, join",
+        "Linear extra space",
+        "In-place version trades clarity for O(1) space"
+      ],
+      "explanation": "Naming the simple solution and the one thing the constraint changes is a strong interview answer.",
+      "enabled": true
+    }
+  ],
+  "generatedAt": "2026-10-23T06:09:41Z"
+}

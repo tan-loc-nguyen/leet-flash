@@ -1,0 +1,276 @@
+{
+  "schemaVersion": 1,
+  "problemSlug": "find-k-closest-elements",
+  "summary": "Return the k elements of a sorted array closest to x (ties prefer the smaller value), in ascending order.",
+  "patterns": [
+    "Binary Search",
+    "Two Pointers"
+  ],
+  "mainInsight": "The k closest elements of a sorted array form a contiguous window. Binary search its start by comparing the element about to leave on the left with the element about to enter on the right.",
+  "invariant": "The best window start lies in [lo, hi] at the start of every iteration.",
+  "canonicalApproach": "Binary search on the window start",
+  "approaches": [
+    {
+      "name": "Sort by distance",
+      "summary": "Sort by (distance, value), take k, sort the result.",
+      "timeComplexity": "O(n log n)",
+      "spaceComplexity": "O(n)",
+      "strengths": [
+        "Short"
+      ],
+      "weaknesses": [
+        "Ignores sorted input"
+      ],
+      "interviewRelevance": "Baseline."
+    },
+    {
+      "name": "Two pointers shrinking",
+      "summary": "Drop whichever end of the array is farther from x until k remain.",
+      "timeComplexity": "O(n)",
+      "spaceComplexity": "O(1)",
+      "strengths": [
+        "Simple"
+      ],
+      "weaknesses": [
+        "Linear in n"
+      ],
+      "interviewRelevance": "Fine, but not optimal."
+    },
+    {
+      "name": "Binary search on the window start",
+      "summary": "Search i in [0, n - k] using x - arr[i] versus arr[i + k] - x.",
+      "timeComplexity": "O(log(n - k) + k)",
+      "spaceComplexity": "O(1)",
+      "strengths": [
+        "Optimal",
+        "Short"
+      ],
+      "weaknesses": [
+        "Tie rule needs care"
+      ],
+      "interviewRelevance": "The expected answer."
+    },
+    {
+      "name": "Insertion point then expand",
+      "summary": "Binary search for x, expand two pointers outward k times.",
+      "timeComplexity": "O(log n + k)",
+      "spaceComplexity": "O(1)",
+      "strengths": [
+        "Intuitive"
+      ],
+      "weaknesses": [
+        "More branches at the boundaries"
+      ],
+      "interviewRelevance": "Equally good in complexity."
+    }
+  ],
+  "personalSolution": {
+    "approach": "Binary search for x's insertion point, then expand two pointers k times",
+    "timeComplexity": "O(log n + k)",
+    "spaceComplexity": "O(1)",
+    "isOptimal": true,
+    "notes": "Optimal complexity. Searching the window start directly (canonical) avoids the three-way branching at the array boundaries."
+  },
+  "canonicalCode": "class Solution:\n    def findClosestElements(self, arr: list[int], k: int, x: int) -> list[int]:\n        lo, hi = 0, len(arr) - k           # the window [i, i + k) can start at 0 .. n - k\n        while lo < hi:                     # O(log(n - k)) iterations\n            mid = (lo + hi) // 2\n            if x - arr[mid] > arr[mid + k] - x:\n                lo = mid + 1               # arr[mid + k] is strictly closer: slide the window right\n            else:\n                hi = mid                   # ties keep the smaller values, so stay left\n        return arr[lo:lo + k]              # O(k) to build the answer\n",
+  "commonMistakes": [
+    "Using >= in the comparison, which breaks the tie rule.",
+    "Searching up to n - 1 so arr[mid + k] goes out of range.",
+    "Forgetting that the output must be sorted (the slice already is)."
+  ],
+  "edgeCases": [
+    "k equals n.",
+    "x smaller than every element.",
+    "x larger than every element.",
+    "Ties around x."
+  ],
+  "cards": [
+    {
+      "id": "recog-find-k-closest-elements",
+      "category": "pattern",
+      "type": "free_recall",
+      "promptVariants": [
+        "Which technique solves this problem, and what in the statement or constraints points to it?",
+        "Name the technique you would use here and the clue in the problem that tells you.",
+        "What approach fits this problem, and which part of the statement gives it away?"
+      ],
+      "answer": "Binary search for the start of the length-k window in the sorted array. Clue: The array is sorted, so the k closest values to x always form one contiguous block, and only the start index of that block has to be found.",
+      "keyPoints": [
+        "The array is sorted, so the k closest values to x always form one contiguous block, and only the start index of that block has to be found."
+      ],
+      "explanation": "Sortedness makes the answer a window of length k; each comparison of the two boundary distances tells which side of the window is wasteful.",
+      "rubric": {
+        "technique": "Binary search for the start of the length-k window in the sorted array",
+        "aliases": [
+          "binary search on the window start",
+          "binary search for x then expand two pointers",
+          "find the insertion point and expand outward",
+          "binary search on the left bound"
+        ],
+        "alsoValid": [
+          {
+            "name": "Sort all elements by distance to x and take k",
+            "note": "correct, but ignores that the input is already sorted and costs O(n log n)"
+          },
+          {
+            "name": "Max-heap of size k keyed by distance",
+            "note": "correct, but O(n log k) and does not use the sorted order"
+          },
+          {
+            "name": "Two pointers dropping the farther end until k remain",
+            "note": "correct and simple, but linear in n instead of logarithmic"
+          }
+        ],
+        "clueTypes": [
+          "sorted_or_ordered",
+          "contiguous"
+        ],
+        "clue": "The array is sorted, so the k closest values to x always form one contiguous block, and only the start index of that block has to be found."
+      }
+    },
+    {
+      "id": "find-k-closest-elements-insight-01",
+      "category": "main_insight",
+      "type": "free_recall",
+      "promptVariants": [
+        "Why is the answer always a contiguous block of the array?",
+        "What does a comparison at the window boundary tell you?"
+      ],
+      "answer": "In a sorted array, distance to x decreases then increases, so if a value is among the k closest then every value between it and x is also at least as close. Hence the k closest form a block arr[i : i + k]. For a candidate start mid, compare the first element of the window with the first element after it: if arr[mid + k] is closer to x, the window must slide right; otherwise it can stay or move left.",
+      "keyPoints": [
+        "Distance is unimodal in a sorted array",
+        "Answer is a window of length k",
+        "Compare arr[mid] with arr[mid + k]"
+      ],
+      "explanation": "Searching the window start turns the problem into a one-dimensional binary search.",
+      "enabled": true
+    },
+    {
+      "id": "find-k-closest-elements-impl-01",
+      "category": "implementation_detail",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "Why does the search run over [0, len(arr) - k] rather than [0, len(arr) - 1]?",
+        "What is the largest valid start of the window and why?"
+      ],
+      "options": [
+        "A window starting after n - k would run past the end of the array",
+        "A window starting after n - k would contain elements farther than x",
+        "The last k elements are always the closest ones to x in the array",
+        "The upper bound keeps mid + k from equalling the array length by chance"
+      ],
+      "answer": "A window starting after n - k would run past the end of the array",
+      "explanation": "The window [i, i + k) needs i + k <= n, so i <= n - k. It also keeps arr[mid + k] a valid index since mid < hi <= n - k.",
+      "incorrectOptionExplanations": {
+        "A window starting after n - k would contain elements farther than x": "Distance has nothing to do with the bound; it is an array length limit.",
+        "The last k elements are always the closest ones to x in the array": "They are only the closest if x is larger than every element.",
+        "The upper bound keeps mid + k from equalling the array length by chance": "mid < hi <= n - k guarantees mid + k <= n - 1, which is a structural fact."
+      },
+      "enabled": true
+    },
+    {
+      "id": "find-k-closest-elements-impl-02",
+      "category": "implementation_detail",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "Which test moves the window right at mid in the canonical code?",
+        "What comparison decides between window [mid, mid + k) and [mid + 1, mid + k + 1)?"
+      ],
+      "options": [
+        "x - arr[mid] > arr[mid + k] - x",
+        "arr[mid] < x",
+        "arr[mid + k] > x",
+        "abs(arr[mid] - x) < abs(arr[mid + k - 1] - x)"
+      ],
+      "answer": "x - arr[mid] > arr[mid + k] - x",
+      "explanation": "The windows differ by dropping arr[mid] and adding arr[mid + k]; the right-shifted window is better exactly when the added element is strictly closer to x.",
+      "incorrectOptionExplanations": {
+        "arr[mid] < x": "Only says arr[mid] is left of x, not that the next window is better.",
+        "arr[mid + k] > x": "Says the new element is right of x, but not that it is closer than arr[mid].",
+        "abs(arr[mid] - x) < abs(arr[mid + k - 1] - x)": "That compares with an element that stays in both windows."
+      },
+      "enabled": true
+    },
+    {
+      "id": "find-k-closest-elements-edge-01",
+      "category": "edge_case",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "For arr = [1, 3], k = 1, x = 2, what happens if the comparison uses >= instead of >?",
+        "How does changing the strict > to >= affect ties?"
+      ],
+      "options": [
+        "It returns [3] and violates the tie rule, which prefers the smaller value",
+        "It returns [1] and violates the tie rule, which prefers the larger value",
+        "It returns [1, 3] because both are equally close to the target",
+        "It loops forever because lo never reaches hi on a tie"
+      ],
+      "answer": "It returns [3] and violates the tie rule, which prefers the smaller value",
+      "explanation": "1 and 3 are both at distance 1 from 2. The statement says the smaller value wins ties, so we must not slide right on equality; with >= the window slides to [3].",
+      "incorrectOptionExplanations": {
+        "It returns [1] and violates the tie rule, which prefers the larger value": "The tie rule prefers the smaller value, and [1] is what the correct code returns.",
+        "It returns [1, 3] because both are equally close to the target": "The answer always has exactly k = 1 elements.",
+        "It loops forever because lo never reaches hi on a tie": "lo or hi moves on every iteration, so it terminates."
+      },
+      "enabled": true
+    },
+    {
+      "id": "find-k-closest-elements-code-01",
+      "category": "code_reasoning",
+      "type": "code_question",
+      "promptVariants": [
+        "In your expansion loop, why is the comparison `x - arr[left] <= arr[right] - x` and not `<`?",
+        "What does the tie case of your expansion step decide?"
+      ],
+      "code": "left, right = idx - 1, idx\n\nwhile right - left - 1 < k:\n    if left < 0:\n        right += 1\n    elif right >= len(arr):\n        left -= 1\n    elif x - arr[left] <= arr[right] - x:\n        left -= 1\n    else:\n        right += 1\n\nreturn arr[left + 1:right]",
+      "answer": "On a tie both elements are equally close, and the statement prefers the smaller value, which is arr[left]. Taking left when the distances are equal implements that rule; with strict < a tie would take arr[right] and return larger values.",
+      "keyPoints": [
+        "Tie means equal distance",
+        "Smaller value wins ties",
+        "<= takes the left element on ties"
+      ],
+      "explanation": "Tie-breaking rules are common sources of off-by-one-style bugs.",
+      "enabled": true
+    },
+    {
+      "id": "find-k-closest-elements-time-01",
+      "category": "time_complexity",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "What is the time complexity of the canonical code?",
+        "Derive the running time from the loop and the slice."
+      ],
+      "options": [
+        "O(log(n - k) + k)",
+        "O(n log n)",
+        "O(n)",
+        "O(k log n)"
+      ],
+      "answer": "O(log(n - k) + k)",
+      "explanation": "The binary search halves a range of size n - k + 1, and the final slice copies k elements.",
+      "incorrectOptionExplanations": {
+        "O(n log n)": "That is the cost of sorting by distance.",
+        "O(n)": "The search is logarithmic and only the output is linear in k.",
+        "O(k log n)": "A single binary search is performed, not one per output element."
+      },
+      "enabled": true
+    },
+    {
+      "id": "find-k-closest-elements-space-01",
+      "category": "space_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Besides the returned list of size k, the canonical code uses O(___) extra space.",
+        "Auxiliary space of the window binary search, excluding the output: O(___)."
+      ],
+      "answer": "1",
+      "explanation": "Only lo, hi and mid are stored.",
+      "enabled": true,
+      "acceptedAnswers": [
+        "O(1)",
+        "constant",
+        "1"
+      ]
+    }
+  ],
+  "generatedAt": "2026-10-23T06:13:41Z"
+}

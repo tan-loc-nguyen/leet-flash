@@ -1,0 +1,39 @@
+{
+  "leetcodeId": "1162",
+  "title": "As Far from Land as Possible",
+  "slug": "as-far-from-land-as-possible",
+  "url": "https://leetcode.com/problems/as-far-from-land-as-possible/",
+  "difficulty": "Medium",
+  "status": "solved",
+  "premium": false,
+  "tags": [
+    "Array",
+    "Dynamic Programming",
+    "Breadth-First Search",
+    "Matrix"
+  ],
+  "problemStatement": "Given an n x n grid containing only values 0 and 1, where 0 represents water and 1 represents land, find a water cell such that its distance to the nearest land cell is maximized, and return the distance. If no land or water exists in the grid, return -1.\n\nThe distance used in this problem is the Manhattan distance: the distance between two cells (x0, y0) and (x1, y1) is |x0 - x1| + |y0 - y1|.\n\nExample 1:\n\nInput: grid = [[1,0,1],[0,0,0],[1,0,1]]\nOutput: 2\nExplanation: The cell (1, 1) is as far as possible from all the land with distance 2.\n\nExample 2:\n\nInput: grid = [[1,0,0],[0,0,0],[0,0,0]]\nOutput: 4\nExplanation: The cell (2, 2) is as far as possible from all the land with distance 4.\n\nConstraints:\n\n- n == grid.length\n\n- n == grid[i].length\n\n- 1 <= n <= 100\n\n- grid[i][j] is 0 or 1",
+  "constraints": [
+    "n == grid.length",
+    "n == grid[i].length",
+    "1 <= n <= 100",
+    "grid[i][j] is 0 or 1"
+  ],
+  "hints": [
+    "Can you think of this problem in a backwards way ?",
+    "Imagine expanding outward from each land cell. What kind of search does that ?",
+    "Use BFS starting from all land cells in the same time.",
+    "When do you reach the furthest water cell?"
+  ],
+  "acRate": 52.6,
+  "lastSubmittedAt": "2026-10-07T07:17:19Z",
+  "latestSubmission": {
+    "submissionId": "2165035484",
+    "language": "Python3",
+    "code": "class Solution:\n    def calDis(self, origin: tuple[int], destination: tuple[int]) -> int:\n        return abs(origin[0] - destination[0]) + abs(origin[1] - destination[1])\n\n    def maxDistance(self, grid: list[list[int]]) -> int:\n        n = len(grid)\n        DIRS = [(-1, 0), (0, -1), (1, 0), (0, 1), ]\n        queue = deque()\n\n        for i in range(n):\n            for j in range(n):\n                if grid[i][j] == 1:\n                    queue.append((i, j))\n        \n        if len(queue) == 0 or len(queue) == n**2:\n            return -1\n        \n        best = 0\n        while queue:\n            k = len(queue)\n            for _ in range(k):\n                r, c = queue.popleft()\n                for dr, dc in DIRS:\n                    nr, nc = r + dr, c + dc\n                    if 0 <= nr < n and 0 <= nc < n and grid[nr][nc] == 0:\n                        grid[nr][nc] = self.calDis((r, c), (nr, nc)) + grid[r][c]\n                        best = max(best, grid[nr][nc])\n                        queue.append((nr, nc))\n        \n        return best - 1"
+  },
+  "notes": [],
+  "source": "leetcode",
+  "importedAt": "2026-10-23T05:55:47Z",
+  "lastSyncedAt": "2026-10-23T05:55:47Z"
+}

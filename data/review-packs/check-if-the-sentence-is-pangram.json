@@ -1,0 +1,242 @@
+{
+  "schemaVersion": 1,
+  "problemSlug": "check-if-the-sentence-is-pangram",
+  "summary": "Return whether a lowercase sentence contains every letter of the alphabet at least once.",
+  "patterns": [
+    "Array / Hashing"
+  ],
+  "mainInsight": "Only presence of each of the 26 letters matters, so collect the distinct letters and check there are 26.",
+  "canonicalApproach": "Set of seen letters",
+  "approaches": [
+    {
+      "name": "Search for each letter",
+      "summary": "For each of the 26 letters check whether it occurs in the sentence.",
+      "timeComplexity": "O(26 * n)",
+      "spaceComplexity": "O(1)",
+      "strengths": [
+        "Obvious"
+      ],
+      "weaknesses": [
+        "Several passes"
+      ],
+      "interviewRelevance": "Fine."
+    },
+    {
+      "name": "Count array",
+      "summary": "Count occurrences in a 26-slot array and check none is zero.",
+      "timeComplexity": "O(n)",
+      "spaceComplexity": "O(1)",
+      "strengths": [
+        "Explicit"
+      ],
+      "weaknesses": [
+        "Stores counts that are not needed"
+      ],
+      "interviewRelevance": "Accepted."
+    },
+    {
+      "name": "Set of seen letters",
+      "summary": "len(set(sentence)) == 26.",
+      "timeComplexity": "O(n)",
+      "spaceComplexity": "O(1)",
+      "strengths": [
+        "One line"
+      ],
+      "weaknesses": [
+        "None"
+      ],
+      "interviewRelevance": "The expected answer."
+    },
+    {
+      "name": "Bitmask",
+      "summary": "OR a bit per letter and compare with 2^26 - 1.",
+      "timeComplexity": "O(n)",
+      "spaceComplexity": "O(1)",
+      "strengths": [
+        "No hashing"
+      ],
+      "weaknesses": [
+        "Slightly cryptic"
+      ],
+      "interviewRelevance": "Nice follow-up."
+    }
+  ],
+  "personalSolution": {
+    "approach": "Count array of 26 letters, then check that no count is zero",
+    "timeComplexity": "O(n)",
+    "spaceComplexity": "O(1)",
+    "isOptimal": true,
+    "notes": "Optimal in complexity. You only need presence, so a set or booleans is enough: len(set(sentence)) == 26."
+  },
+  "canonicalCode": "class Solution:\n    def checkIfPangram(self, sentence: str) -> bool:\n        return len(set(sentence)) == 26    # one pass to build the set: O(n); at most 26 entries\n",
+  "commonMistakes": [
+    "Checking only the length of the sentence.",
+    "Forgetting to compare with 26 distinct letters instead of the length.",
+    "Using counts when presence is enough."
+  ],
+  "edgeCases": [
+    "Fewer than 26 characters.",
+    "Exactly the alphabet once.",
+    "Alphabet missing one letter repeated many times.",
+    "One letter repeated 1000 times."
+  ],
+  "cards": [
+    {
+      "id": "recog-check-if-the-sentence-is-pangram",
+      "category": "pattern",
+      "type": "free_recall",
+      "promptVariants": [
+        "Which technique solves this problem, and what in the statement or constraints points to it?",
+        "Name the technique you would use here and the clue in the problem that tells you.",
+        "What approach fits this problem, and which part of the statement gives it away?"
+      ],
+      "answer": "Record which of the 26 letters have been seen, using a set or a 26-slot table. Clue: The statement asks whether each of the 26 lowercase letters appears at least once, so only presence matters and a set or a 26-entry table of seen letters answers it.",
+      "keyPoints": [
+        "The statement asks whether each of the 26 lowercase letters appears at least once, so only presence matters and a set or a 26-entry table of seen letters answers it."
+      ],
+      "explanation": "Presence of each letter of a fixed alphabet is a membership question; a set counts distinct letters directly.",
+      "rubric": {
+        "technique": "Record which of the 26 letters have been seen, using a set or a 26-slot table",
+        "aliases": [
+          "set of seen letters",
+          "boolean array of 26 letters",
+          "bitmask of seen letters",
+          "count distinct letters and compare with 26"
+        ],
+        "alsoValid": [
+          {
+            "name": "For each letter of the alphabet search the sentence",
+            "note": "correct, but scans the sentence up to 26 times"
+          }
+        ],
+        "clueTypes": [
+          "lookup_frequency"
+        ],
+        "clue": "The statement asks whether each of the 26 lowercase letters appears at least once, so only presence matters and a set or a 26-entry table of seen letters answers it."
+      }
+    },
+    {
+      "id": "check-if-the-sentence-is-pangram-insight-01",
+      "category": "main_insight",
+      "type": "free_recall",
+      "promptVariants": [
+        "Do you need letter counts for this problem?",
+        "What is the minimal information to keep per letter?"
+      ],
+      "answer": "No. A pangram only needs each letter to appear at least once, so one bit per letter is enough. A set of seen letters (or a 26-bit mask) stores exactly that; the sentence is a pangram when the set has 26 members.",
+      "keyPoints": [
+        "Presence, not frequency",
+        "One bit per letter",
+        "Set size equals 26"
+      ],
+      "explanation": "Your counts array works, but it stores more information than the question needs.",
+      "enabled": true
+    },
+    {
+      "id": "check-if-the-sentence-is-pangram-why-01",
+      "category": "why_not",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "Why is `len(sentence) >= 26` not a sufficient test?",
+        "Which sentence shows that length alone cannot decide the answer?"
+      ],
+      "options": [
+        "Letters can repeat: 'a' repeated 30 times is long but misses 25 letters",
+        "Letters are uppercase and lowercase, so the length is counted twice",
+        "A sentence of length 26 may contain spaces that reduce the letter count",
+        "Sorting the sentence first is required to compare against the alphabet"
+      ],
+      "answer": "Letters can repeat: 'a' repeated 30 times is long but misses 25 letters",
+      "explanation": "Length counts characters, not distinct letters. The condition is about the number of distinct letters being 26.",
+      "incorrectOptionExplanations": {
+        "Letters are uppercase and lowercase, so the length is counted twice": "The input contains lowercase letters only.",
+        "A sentence of length 26 may contain spaces that reduce the letter count": "The input contains only lowercase letters, with no spaces.",
+        "Sorting the sentence first is required to compare against the alphabet": "No sorting is needed; a set answers it directly."
+      },
+      "enabled": true
+    },
+    {
+      "id": "check-if-the-sentence-is-pangram-edge-01",
+      "category": "edge_case",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "Which input can be rejected immediately without reading it, because of its length?",
+        "What cheap early exit is always valid?"
+      ],
+      "options": [
+        "Any sentence shorter than 26 characters",
+        "Any sentence longer than 26 characters",
+        "Any sentence that starts with the letter 'a'",
+        "Any sentence whose length is not a multiple of 26"
+      ],
+      "answer": "Any sentence shorter than 26 characters",
+      "explanation": "26 distinct letters need at least 26 characters, so a shorter sentence cannot be a pangram.",
+      "incorrectOptionExplanations": {
+        "Any sentence longer than 26 characters": "Longer sentences may be pangrams, with repeats.",
+        "Any sentence that starts with the letter 'a'": "The first letter says nothing about the others.",
+        "Any sentence whose length is not a multiple of 26": "Pangrams can have any length of at least 26."
+      },
+      "enabled": true
+    },
+    {
+      "id": "check-if-the-sentence-is-pangram-code-01",
+      "category": "code_reasoning",
+      "type": "code_question",
+      "promptVariants": [
+        "Your loop increments letters[...]. What would you change to store less information, and what is the benefit?",
+        "Is the counting in your solution necessary? What replaces it?"
+      ],
+      "code": "letters = [0] * 26\nfor c in sentence:\n    letters[ord(c) - ord('a')] += 1\n\nfor l in letters:\n    if l == 0:\n        return False\nreturn True",
+      "answer": "Counting is unnecessary: replace the counts with booleans (letters[i] = True), a set, or a bitmask seen |= 1 << i, and compare with all 26 present. Time and space are unchanged asymptotically, but the code states the intent (presence) and a set solution is one line.",
+      "keyPoints": [
+        "Only presence matters",
+        "Boolean array, set or bitmask",
+        "Same complexity, clearer intent"
+      ],
+      "explanation": "Match the data structure to the question being asked.",
+      "enabled": true
+    },
+    {
+      "id": "check-if-the-sentence-is-pangram-time-01",
+      "category": "time_complexity",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "What is the time complexity of the set-based solution for a sentence of length n?",
+        "Derive the running time of canonicalCode."
+      ],
+      "options": [
+        "O(n)",
+        "O(n log n)",
+        "O(26 * n)",
+        "O(1)"
+      ],
+      "answer": "O(n)",
+      "explanation": "Building the set reads each character once with an O(1) average insertion; len and comparison are constant.",
+      "incorrectOptionExplanations": {
+        "O(n log n)": "There is no sorting.",
+        "O(26 * n)": "That would be the cost of searching for every letter separately; the set needs one pass, and constants are dropped anyway.",
+        "O(1)": "The input is read once, so the cost grows with its length."
+      },
+      "enabled": true
+    },
+    {
+      "id": "check-if-the-sentence-is-pangram-space-01",
+      "category": "space_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "The set holds at most 26 distinct letters, so the extra space is O(___).",
+        "Space of the set of seen letters: O(___)."
+      ],
+      "answer": "1",
+      "explanation": "The alphabet size is fixed, so the set never grows beyond 26 entries.",
+      "enabled": true,
+      "acceptedAnswers": [
+        "O(1)",
+        "constant",
+        "1",
+        "26"
+      ]
+    }
+  ],
+  "generatedAt": "2026-10-23T06:18:28Z"
+}

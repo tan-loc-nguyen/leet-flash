@@ -1,0 +1,196 @@
+{
+  "schemaVersion": 1,
+  "problemSlug": "maximum-bags-with-full-capacity-of-rocks",
+  "summary": "Given capacities, current rocks and extra rocks, return the maximum number of bags that can be made full.",
+  "patterns": [
+    "Greedy",
+    "Sorting"
+  ],
+  "mainInsight": "Each bag costs (capacity - rocks) to fill and filling it gives one full bag. Spend the extra rocks on the cheapest bags first.",
+  "invariant": "After handling the first i sorted needs, the rocks left are the best possible for filling i bags.",
+  "canonicalApproach": "Greedy on sorted needs",
+  "approaches": [
+    {
+      "name": "Subset search",
+      "summary": "Try all subsets of bags and keep those whose total need fits.",
+      "timeComplexity": "O(2^n * n)",
+      "spaceComplexity": "O(1)",
+      "strengths": [
+        "Obvious"
+      ],
+      "weaknesses": [
+        "Exponential"
+      ],
+      "interviewRelevance": "Never."
+    },
+    {
+      "name": "Greedy on sorted needs",
+      "summary": "Sort needs ascending; subtract while the budget allows.",
+      "timeComplexity": "O(n log n)",
+      "spaceComplexity": "O(n)",
+      "strengths": [
+        "Simple",
+        "Provably optimal"
+      ],
+      "weaknesses": [
+        "Needs the exchange argument"
+      ],
+      "interviewRelevance": "The expected answer."
+    }
+  ],
+  "personalSolution": {
+    "approach": "Sort the needs and fill from the smallest",
+    "timeComplexity": "O(n log n)",
+    "spaceComplexity": "O(n)",
+    "isOptimal": true,
+    "notes": "Optimal. The branch for need == 0 is correct because zeros sort first; a simple `if need > rocks: break` loop is shorter."
+  },
+  "canonicalCode": "class Solution:\n    def maximumBags(self, capacity: list[int], rocks: list[int], additionalRocks: int) -> int:\n        need = sorted(c - r for c, r in zip(capacity, rocks))    # rocks missing from each bag; O(n log n)\n        full = 0\n        for d in need:                     # cheapest bags first\n            if d > additionalRocks:\n                break                      # every later bag needs at least as much\n            additionalRocks -= d\n            full += 1                      # bags with d == 0 are counted for free\n        return full\n",
+  "commonMistakes": [
+    "Filling bags in index order.",
+    "Sorting capacities instead of needs.",
+    "Forgetting that already-full bags count.",
+    "Partially filling bags, which gains nothing."
+  ],
+  "edgeCases": [
+    "All bags already full.",
+    "More extra rocks than total need.",
+    "Fewer rocks than the smallest need.",
+    "Single bag."
+  ],
+  "cards": [
+    {
+      "id": "recog-maximum-bags-with-full-capacity-of-rocks",
+      "category": "pattern",
+      "type": "free_recall",
+      "promptVariants": [
+        "Which technique solves this problem, and what in the statement or constraints points to it?",
+        "Name the technique you would use here and the clue in the problem that tells you.",
+        "What approach fits this problem, and which part of the statement gives it away?"
+      ],
+      "answer": "Greedy: sort the number of rocks each bag is missing and fill the smallest needs first. Clue: A bag only counts when it is completely full and filling it costs its missing rocks, so to maximise the number of full bags we should spend the extra rocks on the cheapest bags first.",
+      "keyPoints": [
+        "A bag only counts when it is completely full and filling it costs its missing rocks, so to maximise the number of full bags we should spend the extra rocks on the cheapest bags first."
+      ],
+      "explanation": "This is a selection problem with item costs and a budget; picking the cheapest items first maximises the count.",
+      "rubric": {
+        "technique": "Greedy: sort the number of rocks each bag is missing and fill the smallest needs first",
+        "aliases": [
+          "smallest deficit first",
+          "sort by remaining capacity",
+          "greedy by cost",
+          "fill the cheapest bags first"
+        ],
+        "alsoValid": [
+          {
+            "name": "Try every subset of bags",
+            "note": "correct, but exponential in the number of bags"
+          }
+        ],
+        "clueTypes": [
+          "local_choice"
+        ],
+        "clue": "A bag only counts when it is completely full and filling it costs its missing rocks, so to maximise the number of full bags we should spend the extra rocks on the cheapest bags first."
+      }
+    },
+    {
+      "id": "maximum-bags-with-full-capacity-of-rocks-insight-01",
+      "category": "main_insight",
+      "type": "free_recall",
+      "promptVariants": [
+        "Why is filling the bags with the smallest need first optimal?",
+        "Give the exchange argument for the greedy choice."
+      ],
+      "answer": "Each bag has a cost (capacity - rocks) and gives one unit of value if it is filled completely. Suppose an optimal solution fills a bag with cost b but skips a cheaper bag with cost a <= b. Swapping them keeps the number of full bags and frees b - a rocks, so filling the cheapest bags first is never worse. Partial filling is wasted, so only whole-bag costs matter.",
+      "keyPoints": [
+        "Cost of a bag = missing rocks",
+        "Swapping a costlier bag for a cheaper one is never worse",
+        "Partial fills are useless"
+      ],
+      "explanation": "Maximising a count under a budget is solved by taking the cheapest items first.",
+      "enabled": true
+    },
+    {
+      "id": "maximum-bags-with-full-capacity-of-rocks-why-01",
+      "category": "why_not",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "Why is processing the bags in their original order wrong?",
+        "Which input defeats filling bags in index order?"
+      ],
+      "options": [
+        "With needs [4, 1, 1, 1] and 3 rocks, index order fills none while sorting fills three",
+        "With needs [1, 1, 1, 4] and 3 rocks, index order fills one while sorting fills three",
+        "With needs [2, 2, 2, 2] and 4 rocks, index order fills one while sorting fills two",
+        "With needs [1, 2, 3, 4] and 6 rocks, index order and sorting both fill three"
+      ],
+      "answer": "With needs [4, 1, 1, 1] and 3 rocks, index order fills none while sorting fills three",
+      "explanation": "The first bag needs 4 > 3 rocks, so an in-order greedy stops immediately, while sorted needs [1, 1, 1, 4] let three cheap bags be filled.",
+      "incorrectOptionExplanations": {
+        "With needs [1, 1, 1, 4] and 3 rocks, index order fills one while sorting fills three": "In index order the first three bags are the cheap ones, so it also fills three.",
+        "With needs [2, 2, 2, 2] and 4 rocks, index order fills one while sorting fills two": "Equal needs make the order irrelevant; both fill two bags.",
+        "With needs [1, 2, 3, 4] and 6 rocks, index order and sorting both fill three": "True, but it is not a counterexample: the order is already sorted."
+      },
+      "enabled": true
+    },
+    {
+      "id": "maximum-bags-with-full-capacity-of-rocks-code-01",
+      "category": "code_reasoning",
+      "type": "code_question",
+      "promptVariants": [
+        "Your loop condition is `while additionalRocks > 0`. Why does it not miss bags that are already full?",
+        "What guarantees that stopping when additionalRocks reaches 0 is safe in your loop?"
+      ],
+      "code": "needed.sort()\ncount = 0\ni = 0\nwhile additionalRocks > 0 and i < n:\n    if needed[i] == 0:\n        count += 1\n    elif needed[i] <= additionalRocks:\n        count += 1\n        additionalRocks -= needed[i]\n    else:\n        break\n    i += 1\n\nreturn count",
+      "answer": "After sorting ascending, all bags with need 0 come first and are counted before any rocks are spent, so the loop reaches them while additionalRocks is still positive (the constraints give additionalRocks >= 1). Once additionalRocks becomes 0, every remaining bag has need > 0 and cannot be filled, so stopping is safe.",
+      "keyPoints": [
+        "Sorted ascending: zeros first",
+        "Need 0 counted before spending rocks",
+        "Remaining needs are all positive"
+      ],
+      "explanation": "The sort order is what makes the early stop correct.",
+      "enabled": true
+    },
+    {
+      "id": "maximum-bags-with-full-capacity-of-rocks-time-01",
+      "category": "time_complexity",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "What is the time complexity of the canonical code?",
+        "Which step dominates the running time?"
+      ],
+      "options": [
+        "O(n log n), dominated by the sort",
+        "O(n), one pass over the bags",
+        "O(n^2), comparing every pair",
+        "O(n log n), from a heap of all needs"
+      ],
+      "answer": "O(n log n), dominated by the sort",
+      "explanation": "Building the needs is linear and the greedy loop is linear after sorting; the sort costs O(n log n).",
+      "incorrectOptionExplanations": {
+        "O(n), one pass over the bags": "The sort of the needs adds a log factor.",
+        "O(n^2), comparing every pair": "No pair is compared; the sort handles the ordering.",
+        "O(n log n), from a heap of all needs": "No heap is used; a plain sort is simpler."
+      },
+      "enabled": true
+    },
+    {
+      "id": "maximum-bags-with-full-capacity-of-rocks-space-01",
+      "category": "space_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "The sorted list of needs has one entry per bag, so the extra space is O(___).",
+        "Auxiliary space of canonicalCode: O(___)."
+      ],
+      "answer": "n",
+      "explanation": "One stored need per bag; sorting in place would not change that.",
+      "enabled": true,
+      "acceptedAnswers": [
+        "O(n)",
+        "linear",
+        "N"
+      ]
+    }
+  ],
+  "generatedAt": "2026-10-23T06:18:28Z"
+}

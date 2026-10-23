@@ -1,0 +1,228 @@
+{
+  "schemaVersion": 1,
+  "problemSlug": "capacity-to-ship-packages-within-d-days",
+  "summary": "Find the least ship capacity that delivers all packages in order within D days.",
+  "patterns": [
+    "Binary Search"
+  ],
+  "mainInsight": "Feasibility is monotone in the capacity: a larger ship never needs more days. Binary search the capacity in [max(weights), sum(weights)], and test each candidate with a greedy simulation that loads packages until the next would overflow.",
+  "canonicalApproach": "Binary search on the answer",
+  "approaches": [
+    {
+      "name": "Linear search on capacity",
+      "summary": "Try capacities from max(weights) upwards.",
+      "timeComplexity": "O(n * sum)",
+      "spaceComplexity": "O(1)",
+      "strengths": [
+        "Simple"
+      ],
+      "weaknesses": [
+        "Slow"
+      ],
+      "interviewRelevance": "Baseline."
+    },
+    {
+      "name": "Binary search on the answer",
+      "summary": "Check feasibility with a greedy pass and shrink the range.",
+      "timeComplexity": "O(n log(sum))",
+      "spaceComplexity": "O(1)",
+      "strengths": [
+        "Fast"
+      ],
+      "weaknesses": [
+        "Boundary conditions"
+      ],
+      "interviewRelevance": "The expected answer."
+    }
+  ],
+  "personalSolution": {
+    "approach": "Binary search on capacity with a greedy day count (lo <= hi template)",
+    "timeComplexity": "O(n log S)",
+    "spaceComplexity": "O(1)",
+    "isOptimal": true,
+    "notes": "Optimal. The `ans` variable is unused because you return lo, which is correct; pick one of the two."
+  },
+  "canonicalCode": "class Solution:\n    def shipWithinDays(self, weights: list[int], days: int) -> int:\n        def feasible(cap: int) -> bool:\n            used, load = 1, 0\n            for w in weights:                 # one pass: greedily fill each day\n                if load + w > cap:\n                    used += 1\n                    load = 0\n                load += w\n            return used <= days\n\n        lo, hi = max(weights), sum(weights)   # smallest possible / one-day capacity\n        while lo < hi:                        # binary search on the capacity\n            mid = (lo + hi) // 2\n            if feasible(mid):\n                hi = mid\n            else:\n                lo = mid + 1\n        return lo\n",
+  "commonMistakes": [
+    "Starting lo at 1 or 0",
+    "Reordering the packages",
+    "Using `<` vs `<=` incorrectly when starting a new day"
+  ],
+  "edgeCases": [
+    "D = 1 (answer is the sum)",
+    "D = len(weights) (answer is the max)",
+    "Single package"
+  ],
+  "cards": [
+    {
+      "id": "recog-capacity-to-ship-packages-within-d-days",
+      "category": "pattern",
+      "type": "free_recall",
+      "promptVariants": [
+        "Which technique solves this problem, and what in the statement or constraints points to it?",
+        "Name the technique you would use here and the clue in the problem that tells you.",
+        "What approach fits this problem, and which part of the statement gives it away?"
+      ],
+      "answer": "Binary search on the answer (the capacity) with a greedy feasibility check. Clue: A larger capacity never needs more days, so feasibility is monotone in the capacity and the smallest feasible value can be found by halving the range.",
+      "keyPoints": [
+        "A larger capacity never needs more days, so feasibility is monotone in the capacity and the smallest feasible value can be found by halving the range."
+      ],
+      "explanation": "Feasibility flips once from no to yes as the capacity grows, so binary search finds the boundary and a greedy pass tests each candidate.",
+      "rubric": {
+        "technique": "Binary search on the answer (the capacity) with a greedy feasibility check",
+        "aliases": [
+          "binary search on capacity",
+          "binary search on the answer",
+          "parametric search",
+          "search the answer space"
+        ],
+        "alsoValid": [
+          {
+            "name": "Try every capacity from the largest weight upwards",
+            "note": "correct, but linear in the size of the answer range"
+          }
+        ],
+        "clueTypes": [
+          "monotonic_answer"
+        ],
+        "clue": "A larger capacity never needs more days, so feasibility is monotone in the capacity and the smallest feasible value can be found by halving the range."
+      }
+    },
+    {
+      "id": "csp-pattern-01",
+      "category": "pattern",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "Which pattern solves 'smallest capacity so that the shipment finishes in D days'?",
+        "What makes binary search applicable here?"
+      ],
+      "options": [
+        "Binary search on the capacity with a greedy day-count check",
+        "Sliding window over the package weights in their order",
+        "A max-heap of the heaviest packages for each day",
+        "Prefix sums with a hash map of the running totals"
+      ],
+      "answer": "Binary search on the capacity with a greedy day-count check",
+      "explanation": "Feasible capacities form a suffix: if C works, C + 1 works.",
+      "incorrectOptionExplanations": {
+        "Sliding window over the package weights in their order": "The ship's capacity is not a window length.",
+        "A max-heap of the heaviest packages for each day": "Packages must ship in order.",
+        "Prefix sums with a hash map of the running totals": "That finds subarrays with an exact sum."
+      },
+      "enabled": false
+    },
+    {
+      "id": "csp-insight-01",
+      "category": "main_insight",
+      "type": "free_recall",
+      "promptVariants": [
+        "What are the correct bounds for the capacity search and why?",
+        "Why is max(weights) the lower bound?"
+      ],
+      "answer": "The lower bound is max(weights) because every package must fit on the ship; the upper bound is sum(weights), which ships everything in one day. Between them feasibility is monotone, so binary search finds the minimum feasible capacity.",
+      "keyPoints": [
+        "lo = max(weights)",
+        "hi = sum(weights)",
+        "Monotone feasibility"
+      ],
+      "explanation": "Using lo = 1 would test impossible capacities.",
+      "enabled": true
+    },
+    {
+      "id": "csp-code-01",
+      "category": "code_reasoning",
+      "type": "code_question",
+      "promptVariants": [
+        "Your loop records `ans` but returns `lo`. Why is that still correct?",
+        "What does lo equal when your `while lo <= hi` loop ends?"
+      ],
+      "code": "lo, hi = maxW, total\nans = 0\nwhile lo <= hi:\n    capacity = (lo + hi) // 2\n    d = self.calDays(weights, capacity)\n    if d <= days:\n        ans = capacity\n        hi = capacity - 1\n    else:\n        lo = capacity + 1\n\nreturn lo",
+      "answer": "The loop uses `lo <= hi` and moves hi to capacity - 1 on every feasible capacity, so it ends with lo == hi + 1 where lo is the smallest feasible capacity, which is exactly ans. The `ans` variable is therefore redundant; either return ans or drop it.",
+      "keyPoints": [
+        "Loop ends with lo = hi + 1",
+        "lo is the first feasible capacity",
+        "ans is redundant"
+      ],
+      "explanation": "In the 'first true' template the final lo is the answer.",
+      "enabled": true
+    },
+    {
+      "id": "csp-time-01",
+      "category": "time_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Time complexity: ___",
+        "Complete the statement: Time complexity: ___"
+      ],
+      "answer": "O(n log S)",
+      "explanation": "Each check is O(n); the capacity range has size about sum(weights), so log S iterations.",
+      "enabled": true,
+      "acceptedAnswers": [
+        "O(n log(sum))",
+        "O(n * log(sum))"
+      ]
+    },
+    {
+      "id": "csp-space-01",
+      "category": "space_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Space complexity (excluding the input): ___",
+        "Complete the statement: Space complexity (excluding the input): ___"
+      ],
+      "answer": "O(1)",
+      "explanation": "Only counters are kept.",
+      "enabled": true,
+      "acceptedAnswers": [
+        "constant"
+      ]
+    },
+    {
+      "id": "csp-edge-01",
+      "category": "edge_case",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "What happens if the lower bound is set to 1 instead of max(weights)?",
+        "Which capacities must the check reject?"
+      ],
+      "options": [
+        "Capacities below the heaviest package never work, so the check must reject them",
+        "Nothing changes; the greedy check already handles tiny capacities well",
+        "The search stops being monotone, so it may loop forever or misbehave",
+        "The answer always becomes sum(weights), the one-day capacity, in that case"
+      ],
+      "answer": "Capacities below the heaviest package never work, so the check must reject them",
+      "explanation": "Without the bound, a package heavier than C could be 'loaded' by the simple counter and give a wrong day count.",
+      "incorrectOptionExplanations": {
+        "Nothing changes; the greedy check already handles tiny capacities well": "A heavy package would be loaded onto a too-small ship.",
+        "The search stops being monotone, so it may loop forever or misbehave": "It stays monotone; it may just return a wrong value.",
+        "The answer always becomes sum(weights), the one-day capacity, in that case": "That is only the upper bound."
+      },
+      "enabled": true
+    },
+    {
+      "id": "csp-edge-02",
+      "category": "edge_case",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "For weights = [3, 2, 7, 5], what is the answer when days = 4, and when days = 1?",
+        "What do the extreme values of days give?"
+      ],
+      "options": [
+        "7 for four days (the heaviest package) and 17 for one day (the total)",
+        "3 for four days (the lightest package) and 17 for one day (the total)",
+        "7 for four days (the heaviest package) and 7 for one day (the heaviest)",
+        "17 for four days (the total) and 7 for one day (the heaviest package)"
+      ],
+      "answer": "7 for four days (the heaviest package) and 17 for one day (the total)",
+      "explanation": "With a day per package the ship only needs to carry the heaviest one; with one day it must carry everything. These are exactly the two bounds of the search.",
+      "incorrectOptionExplanations": {
+        "3 for four days (the lightest package) and 17 for one day (the total)": "The ship must carry the heaviest package, not the lightest.",
+        "7 for four days (the heaviest package) and 7 for one day (the heaviest)": "With one day the ship has to carry everything at once.",
+        "17 for four days (the total) and 7 for one day (the heaviest package)": "The two extremes are swapped."
+      },
+      "enabled": true
+    }
+  ],
+  "generatedAt": "2026-10-23T07:59:18Z"
+}

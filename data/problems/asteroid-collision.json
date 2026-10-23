@@ -1,0 +1,34 @@
+{
+  "leetcodeId": "735",
+  "title": "Asteroid Collision",
+  "slug": "asteroid-collision",
+  "url": "https://leetcode.com/problems/asteroid-collision/",
+  "difficulty": "Medium",
+  "status": "solved",
+  "premium": false,
+  "tags": [
+    "Array",
+    "Stack",
+    "Simulation"
+  ],
+  "problemStatement": "We are given an array asteroids of integers representing asteroids in a row. The indices of the asteroid in the array represent their relative position in space.\n\nFor each asteroid, the absolute value represents its size, and the sign represents its direction (positive meaning right, negative meaning left). Each asteroid moves at the same speed.\n\nFind out the state of the asteroids after all collisions. If two asteroids meet, the smaller one will explode. If both are the same size, both will explode. Two asteroids moving in the same direction will never meet.\n\nExample 1:\n\nInput: asteroids = [5,10,-5]\nOutput: [5,10]\nExplanation: The 10 and -5 collide resulting in 10. The 5 and 10 never collide.\n\nExample 2:\n\nInput: asteroids = [8,-8]\nOutput: []\nExplanation: The 8 and -8 collide exploding each other.\n\nExample 3:\n\nInput: asteroids = [10,2,-5]\nOutput: [10]\nExplanation: The 2 and -5 collide resulting in -5. The 10 and -5 collide resulting in 10.\n\nExample 4:\n\nInput: asteroids = [3,5,-6,2,-1,4]​​​​​​​\nOutput: [-6,2,4]\nExplanation: The asteroid -6 makes the asteroid 3 and 5 explode, and then continues going left. On the other side, the asteroid 2 destroys -1. Since 2 and 4 are both moving right, they never collide.\n\nConstraints:\n\n- 2 <= asteroids.length <= 10^4\n\n- -1000 <= asteroids[i] <= 1000\n\n- asteroids[i] != 0",
+  "constraints": [
+    "2 <= asteroids.length <= 10^4",
+    "-1000 <= asteroids[i] <= 1000",
+    "asteroids[i] != 0"
+  ],
+  "hints": [
+    "Say a row of asteroids is stable.  What happens when a new asteroid is added on the right?"
+  ],
+  "acRate": 49.35,
+  "lastSubmittedAt": "2026-10-17T04:29:22Z",
+  "latestSubmission": {
+    "submissionId": "2174277293",
+    "language": "Python3",
+    "code": "class Solution:\n    def asteroidCollision(self, asteroids: list[int]) -> list[int]:\n        stack = []\n        # collision:\n        # a -> <- b ==> a > 0 and b < 0\n        # case abs(a) > abs(b): b is destroyed => nothing\n        # case abs(a) < abs(b): a is destroyed => pop out of the stack\n        # non-collision:\n        # a <- <- b or a -> -> b ==> a * b > 0\n        # a <- -> b ==> a < 0 and b > 0\n        # only a, no b ==> empty stack\n\n        for a in asteroids:\n            if a > 0:\n                stack.append(a)\n            else:\n                while stack and stack[-1] > 0 and abs(a) > stack[-1]:\n                    stack.pop()\n                if stack and stack[-1] == abs(a):\n                    stack.pop()\n                elif not stack or stack[-1] < 0:\n                    stack.append(a)\n        \n        return stack"
+  },
+  "notes": [],
+  "source": "leetcode",
+  "importedAt": "2026-10-23T05:55:47Z",
+  "lastSyncedAt": "2026-10-23T05:55:47Z"
+}

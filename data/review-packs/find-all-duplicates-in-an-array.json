@@ -1,0 +1,269 @@
+{
+  "schemaVersion": 1,
+  "problemSlug": "find-all-duplicates-in-an-array",
+  "summary": "Return every value that appears twice in an array of length n whose values lie in [1, n], in linear time and constant extra space.",
+  "patterns": [
+    "Array / Hashing"
+  ],
+  "mainInsight": "Value v belongs at index v - 1, so the array can store a visited mark for each value in its own sign bit: meeting an already negative slot means the value is a duplicate.",
+  "invariant": "nums[v - 1] is negative exactly when value v has been seen once; magnitudes are never changed.",
+  "canonicalApproach": "Sign marking in place",
+  "approaches": [
+    {
+      "name": "Counter or set",
+      "summary": "Count values and report those seen twice.",
+      "timeComplexity": "O(n)",
+      "spaceComplexity": "O(n)",
+      "strengths": [
+        "Simple"
+      ],
+      "weaknesses": [
+        "Linear extra space"
+      ],
+      "interviewRelevance": "Fine as a first answer, not allowed here."
+    },
+    {
+      "name": "Sort and compare neighbours",
+      "summary": "Sort and report values equal to their predecessor.",
+      "timeComplexity": "O(n log n)",
+      "spaceComplexity": "O(1) extra",
+      "strengths": [
+        "No extra structure"
+      ],
+      "weaknesses": [
+        "Not linear"
+      ],
+      "interviewRelevance": "Fallback."
+    },
+    {
+      "name": "Sign marking in place",
+      "summary": "Use nums[|x| - 1] < 0 as a visited flag and negate on first sight.",
+      "timeComplexity": "O(n)",
+      "spaceComplexity": "O(1) extra",
+      "strengths": [
+        "Meets both limits"
+      ],
+      "weaknesses": [
+        "Mutates the input",
+        "Needs positive values in [1, n]"
+      ],
+      "interviewRelevance": "The expected answer."
+    }
+  ],
+  "personalSolution": {
+    "approach": "Sign marking (negate nums[|x| - 1])",
+    "timeComplexity": "O(n)",
+    "spaceComplexity": "O(1)",
+    "isOptimal": true,
+    "notes": "Optimal. You also wrote the counter and sort variants in comments, which is the right way to reason towards it. It mutates nums, so mention that."
+  },
+  "canonicalCode": "class Solution:\n    def findDuplicates(self, nums: list[int]) -> list[int]:\n        res = []\n        for x in nums:                     # one pass, O(n)\n            i = abs(x) - 1                 # value v is recorded at index v - 1; x may already be negated\n            if nums[i] < 0:                # sign already flipped => v was seen before\n                res.append(abs(x))\n            else:\n                nums[i] = -nums[i]         # mark v as seen using the spare sign bit\n        return res\n",
+  "commonMistakes": [
+    "Forgetting abs() when reading a possibly negated value.",
+    "Using x instead of x - 1 as the index (IndexError for x = n).",
+    "Reporting a duplicate more than once by flipping again."
+  ],
+  "edgeCases": [
+    "n = 1.",
+    "Every value duplicated or none.",
+    "The duplicate at the boundary values 1 and n."
+  ],
+  "cards": [
+    {
+      "id": "recog-find-all-duplicates-in-an-array",
+      "category": "pattern",
+      "type": "free_recall",
+      "promptVariants": [
+        "Which technique solves this problem, and what in the statement or constraints points to it?",
+        "Name the technique you would use here and the clue in the problem that tells you.",
+        "What approach fits this problem, and which part of the statement gives it away?"
+      ],
+      "answer": "Use the array itself as a visited set by negating nums[|x| - 1] to mark that value x was seen. Clue: Every value lies in [1, n] for an array of length n and the statement demands linear time with constant extra space, so values can act as indices of an in-place visited marker.",
+      "keyPoints": [
+        "Every value lies in [1, n] for an array of length n and the statement demands linear time with constant extra space, so values can act as indices of an in-place visited marker."
+      ],
+      "explanation": "A value in [1, n] names exactly one index, so the array can be its own hash table; the sign of each entry is a free one-bit marker.",
+      "rubric": {
+        "technique": "Use the array itself as a visited set by negating nums[|x| - 1] to mark that value x was seen",
+        "aliases": [
+          "sign marking",
+          "negate to mark visited",
+          "index as hash",
+          "in-place hashing",
+          "cyclic sort",
+          "use values as indices"
+        ],
+        "alsoValid": [
+          {
+            "name": "Hash set or counter of seen values",
+            "note": "correct and linear in time, but uses linear extra space, which the statement forbids"
+          },
+          {
+            "name": "Sort and compare neighbours",
+            "note": "correct with constant extra space, but O(n log n) instead of linear time"
+          }
+        ],
+        "clueTypes": [
+          "in_place_pointers",
+          "lookup_frequency"
+        ],
+        "clue": "Every value lies in [1, n] for an array of length n and the statement demands linear time with constant extra space, so values can act as indices of an in-place visited marker."
+      }
+    },
+    {
+      "id": "find-all-duplicates-in-an-array-insight-01",
+      "category": "main_insight",
+      "type": "free_recall",
+      "promptVariants": [
+        "How can the input array replace a hash set here?",
+        "Why does the range [1, n] enable a constant-space solution?"
+      ],
+      "answer": "Values 1..n map one-to-one onto indices 0..n-1, so the position v - 1 can record whether v has been seen. Since every value is positive, the sign of nums[v - 1] is an unused bit: negative means v has appeared. The second time a value appears its slot is already negative, which identifies a duplicate.",
+      "keyPoints": [
+        "Value v maps to index v - 1",
+        "Sign bit is free because values are positive",
+        "Already negative means seen twice"
+      ],
+      "explanation": "The range constraint plus the positivity of the values is what the trick relies on.",
+      "enabled": true
+    },
+    {
+      "id": "find-all-duplicates-in-an-array-invariant-01",
+      "category": "invariant",
+      "type": "free_recall",
+      "promptVariants": [
+        "After processing a prefix of the array, what does the sign of nums[v - 1] tell you?",
+        "State the invariant of the sign marking."
+      ],
+      "answer": "For every value v, nums[v - 1] is negative exactly when v has appeared at least once in the processed prefix (a value appears at most twice, and a second sighting does not flip the sign back). Reading an entry therefore needs abs() because it may already be a mark.",
+      "keyPoints": [
+        "Negative means seen at least once",
+        "Magnitudes are never changed",
+        "Read values with abs()"
+      ],
+      "explanation": "The magnitude keeps the original value, the sign carries the new information.",
+      "enabled": true
+    },
+    {
+      "id": "find-all-duplicates-in-an-array-code-01",
+      "category": "code_reasoning",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "Why does the code use `abs(x)` when computing the index?",
+        "What goes wrong if the index is computed as `x - 1` without abs?"
+      ],
+      "options": [
+        "x may already have been negated by an earlier iteration",
+        "The input is allowed to contain negative numbers as values",
+        "abs rounds the index to the nearest valid slot",
+        "abs prevents the same slot from being flipped twice in a row"
+      ],
+      "answer": "x may already have been negated by an earlier iteration",
+      "explanation": "When a slot was flipped earlier and later its own value is read as x, x is negative, and x - 1 would index from the end of the list. abs(x) recovers the original value.",
+      "incorrectOptionExplanations": {
+        "The input is allowed to contain negative numbers as values": "The constraints say 1 <= nums[i] <= n, so the input has none.",
+        "abs rounds the index to the nearest valid slot": "abs never rounds anything; it just removes the sign.",
+        "abs prevents the same slot from being flipped twice in a row": "The flip is guarded by the nums[i] < 0 test, not by abs."
+      },
+      "enabled": true
+    },
+    {
+      "id": "find-all-duplicates-in-an-array-why-01",
+      "category": "why_not",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "Why does the sign trick break if the array may contain 0 or negative numbers?",
+        "Which assumption of the sign-marking approach would be violated by non-positive values?"
+      ],
+      "options": [
+        "The sign bit would no longer be free, and 0 cannot be negated",
+        "The values would no longer map to valid indices of the array",
+        "The array could no longer be traversed in a single pass",
+        "The duplicates would appear more than twice in the array"
+      ],
+      "answer": "The sign bit would no longer be free, and 0 cannot be negated",
+      "explanation": "Marks are negative numbers, so an originally negative entry would look already marked, and 0 stays 0 when negated. The approach needs every value to be positive.",
+      "incorrectOptionExplanations": {
+        "The values would no longer map to valid indices of the array": "This is about the range [1, n], a separate requirement from positivity.",
+        "The array could no longer be traversed in a single pass": "The pass count is unrelated to the sign of the values.",
+        "The duplicates would appear more than twice in the array": "The number of repeats is bounded by the statement, not by the sign."
+      },
+      "enabled": true
+    },
+    {
+      "id": "find-all-duplicates-in-an-array-edge-01",
+      "category": "edge_case",
+      "type": "free_recall",
+      "promptVariants": [
+        "The algorithm negates entries of nums. What side effect does that have and how would you undo it?",
+        "What would you do if the caller needs the original array back?"
+      ],
+      "answer": "It leaves the input mutated with negative entries. If the original is needed, run a final pass setting nums[i] = abs(nums[i]) (linear time, constant space) before returning, or say that you modify the input and ask whether that is allowed.",
+      "keyPoints": [
+        "Input array is mutated",
+        "Restore with abs in a final pass",
+        "Mention it to the interviewer"
+      ],
+      "explanation": "Stating the mutation proactively is a good interview habit.",
+      "enabled": true
+    },
+    {
+      "id": "find-all-duplicates-in-an-array-time-01",
+      "category": "time_complexity",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "What is the time complexity of the canonical code?",
+        "Derive the running time from canonicalCode."
+      ],
+      "options": [
+        "O(n)",
+        "O(n log n)",
+        "O(n^2)",
+        "O(n + k log k) for k duplicates"
+      ],
+      "answer": "O(n)",
+      "explanation": "A single pass with constant work per element: one index computation, one comparison and at most one negation.",
+      "incorrectOptionExplanations": {
+        "O(n log n)": "That is the sorting approach; the marking approach never sorts.",
+        "O(n^2)": "No element is compared against all the others.",
+        "O(n + k log k) for k duplicates": "The duplicates are appended directly, with no sorting step after the pass."
+      },
+      "enabled": true
+    },
+    {
+      "id": "find-all-duplicates-in-an-array-space-01",
+      "category": "space_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Excluding the output list, the sign-marking approach uses O(___) extra space.",
+        "Auxiliary space of canonicalCode, not counting the result: O(___)."
+      ],
+      "answer": "1",
+      "explanation": "The marks live inside nums itself, so only a few integer variables are added.",
+      "enabled": true,
+      "acceptedAnswers": [
+        "O(1)",
+        "constant",
+        "1"
+      ]
+    },
+    {
+      "id": "find-all-duplicates-in-an-array-alt-01",
+      "category": "alternative_approach",
+      "type": "free_recall",
+      "promptVariants": [
+        "Compare the three approaches in your comments: counter, sort and sign marking.",
+        "Give time and space of the counter, sort and sign-marking solutions and say when each is acceptable."
+      ],
+      "answer": "Counter or set: O(n) time, O(n) space, no mutation, simplest. Sort and compare neighbours: O(n log n) time, O(1) extra space apart from sorting, mutates order. Sign marking: O(n) time, O(1) extra space, mutates signs. Only sign marking meets the statement's linear time and constant space limits.",
+      "keyPoints": [
+        "Counter: linear time and space",
+        "Sort: n log n time",
+        "Sign marking: linear time, constant space"
+      ],
+      "explanation": "The statement's constraints select the answer.",
+      "enabled": true
+    }
+  ],
+  "generatedAt": "2026-10-23T06:13:57Z"
+}

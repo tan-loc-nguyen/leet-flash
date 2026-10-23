@@ -1,0 +1,238 @@
+{
+  "schemaVersion": 1,
+  "problemSlug": "as-far-from-land-as-possible",
+  "summary": "Find the water cell with the greatest Manhattan distance to its nearest land cell, or -1 if there is no land or no water.",
+  "patterns": [
+    "BFS",
+    "Matrix"
+  ],
+  "mainInsight": "Start one BFS from all land cells together. The first time a water cell is reached gives its nearest land distance, and the last BFS level is the answer.",
+  "invariant": "When level d is processed, the queue holds exactly the cells whose nearest land is at distance d, each enqueued once.",
+  "canonicalApproach": "Multi-source BFS",
+  "approaches": [
+    {
+      "name": "BFS from each water cell",
+      "summary": "For every water cell, BFS until land is found.",
+      "timeComplexity": "O(n^4)",
+      "spaceComplexity": "O(n^2)",
+      "strengths": [
+        "Obvious"
+      ],
+      "weaknesses": [
+        "Repeats work per cell"
+      ],
+      "interviewRelevance": "Baseline."
+    },
+    {
+      "name": "Distance DP in two passes",
+      "summary": "Sweep top-left to bottom-right and back, relaxing distances from neighbours.",
+      "timeComplexity": "O(n^2)",
+      "spaceComplexity": "O(n^2)",
+      "strengths": [
+        "No queue"
+      ],
+      "weaknesses": [
+        "Less intuitive"
+      ],
+      "interviewRelevance": "Equally optimal."
+    },
+    {
+      "name": "Multi-source BFS",
+      "summary": "Queue all land cells and expand level by level.",
+      "timeComplexity": "O(n^2)",
+      "spaceComplexity": "O(n^2)",
+      "strengths": [
+        "Natural",
+        "Level number is the answer"
+      ],
+      "weaknesses": [
+        "Needs the all-land and all-water guard"
+      ],
+      "interviewRelevance": "The expected answer."
+    }
+  ],
+  "personalSolution": {
+    "approach": "Multi-source BFS reusing the grid to store distance + 1",
+    "timeComplexity": "O(n^2)",
+    "spaceComplexity": "O(n^2)",
+    "isOptimal": true,
+    "notes": "Optimal. calDis always returns 1 for neighbouring cells, so it can be removed, and a level counter avoids encoding distance + 1 in the input grid."
+  },
+  "canonicalCode": "from collections import deque\n\n\nclass Solution:\n    def maxDistance(self, grid: list[list[int]]) -> int:\n        n = len(grid)\n        queue = deque((r, c) for r in range(n) for c in range(n) if grid[r][c])   # all land cells are sources\n        if len(queue) in (0, n * n):       # no land or no water\n            return -1\n        seen = [[bool(v) for v in row] for row in grid]\n        dist = -1\n        while queue:                       # each cell is enqueued at most once: O(n^2)\n            dist += 1                      # one BFS level = one more step away from the nearest land\n            for _ in range(len(queue)):\n                r, c = queue.popleft()\n                for nr, nc in ((r + 1, c), (r - 1, c), (r, c + 1), (r, c - 1)):\n                    if 0 <= nr < n and 0 <= nc < n and not seen[nr][nc]:\n                        seen[nr][nc] = True    # mark on enqueue so no cell is queued twice\n                        queue.append((nr, nc))\n        return dist                        # the last level is the farthest water cell\n",
+  "commonMistakes": [
+    "Forgetting the all-land and all-water cases.",
+    "Marking visited when popped, causing duplicate queue entries.",
+    "Returning the number of levels instead of levels - 1 (off by one).",
+    "Running a separate BFS for each water cell."
+  ],
+  "edgeCases": [
+    "No land.",
+    "No water.",
+    "Single land cell in a corner.",
+    "Land on a checkerboard pattern."
+  ],
+  "cards": [
+    {
+      "id": "recog-as-far-from-land-as-possible",
+      "category": "pattern",
+      "type": "free_recall",
+      "promptVariants": [
+        "Which technique solves this problem, and what in the statement or constraints points to it?",
+        "Name the technique you would use here and the clue in the problem that tells you.",
+        "What approach fits this problem, and which part of the statement gives it away?"
+      ],
+      "answer": "Multi-source BFS that starts from all land cells at once. Clue: Each water cell needs its distance to the nearest land cell on a grid, which is a shortest-steps question from many sources, so all land cells can start the search together.",
+      "keyPoints": [
+        "Each water cell needs its distance to the nearest land cell on a grid, which is a shortest-steps question from many sources, so all land cells can start the search together."
+      ],
+      "explanation": "Nearest-source distances on a grid come from a single BFS whose initial queue holds every source.",
+      "rubric": {
+        "technique": "Multi-source BFS that starts from all land cells at once",
+        "aliases": [
+          "multi-source bfs",
+          "bfs from every land cell simultaneously",
+          "bfs layers from all land",
+          "two-pass distance dp",
+          "manhattan distance transform"
+        ],
+        "alsoValid": [
+          {
+            "name": "Run a BFS from every water cell until it reaches land",
+            "note": "correct, but repeats the search for each water cell and costs far more than one pass"
+          },
+          {
+            "name": "Compare every water cell with every land cell",
+            "note": "correct, but quartic in the grid side"
+          }
+        ],
+        "clueTypes": [
+          "grid_connectivity",
+          "shortest_steps"
+        ],
+        "clue": "Each water cell needs its distance to the nearest land cell on a grid, which is a shortest-steps question from many sources, so all land cells can start the search together."
+      }
+    },
+    {
+      "id": "as-far-from-land-as-possible-insight-01",
+      "category": "main_insight",
+      "type": "free_recall",
+      "promptVariants": [
+        "Why is one BFS from all land cells enough to answer for every water cell?",
+        "How do you get the answer out of a multi-source BFS?"
+      ],
+      "answer": "Put every land cell in the queue at distance 0. BFS reaches cells in non-decreasing distance, so the first time a water cell is reached is via its nearest land cell. The farthest water cell is therefore reached in the last BFS level, and that level number is the answer.",
+      "keyPoints": [
+        "All land cells start together",
+        "First visit = nearest land",
+        "Answer is the number of the last level"
+      ],
+      "explanation": "Reversing the direction (from land to water) turns many searches into one.",
+      "enabled": true
+    },
+    {
+      "id": "as-far-from-land-as-possible-impl-01",
+      "category": "implementation_detail",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "Why is a cell marked as seen when it is enqueued rather than when it is popped?",
+        "What goes wrong if cells are marked only when popped?"
+      ],
+      "options": [
+        "A cell would be queued by several neighbours and processed repeatedly",
+        "A cell would get the wrong distance because levels would be skipped",
+        "The first land cell would never be popped from the starting queue",
+        "A cell on the border would be missed by the bounds check entirely"
+      ],
+      "answer": "A cell would be queued by several neighbours and processed repeatedly",
+      "explanation": "Several cells of one level can reach the same neighbour before it is popped. Marking on enqueue guarantees each cell enters the queue once, which keeps the work at O(n^2).",
+      "incorrectOptionExplanations": {
+        "A cell would get the wrong distance because levels would be skipped": "Distances stay correct; only duplicate queue entries and wasted work appear.",
+        "The first land cell would never be popped from the starting queue": "Land cells are popped normally; marking time concerns water cells.",
+        "A cell on the border would be missed by the bounds check entirely": "The bounds check is independent of when cells are marked."
+      },
+      "enabled": true
+    },
+    {
+      "id": "as-far-from-land-as-possible-edge-01",
+      "category": "edge_case",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "Which grid must return -1?",
+        "For which input is no answer defined?"
+      ],
+      "options": [
+        "[[0, 0], [0, 0]]",
+        "[[1, 0], [0, 0]]",
+        "[[0, 1], [1, 0]]",
+        "[[0, 0], [0, 1]]"
+      ],
+      "answer": "[[0, 0], [0, 0]]",
+      "explanation": "With no land cell the queue starts empty, and nothing has a nearest land. An all-land grid has no water cell either; both return -1.",
+      "incorrectOptionExplanations": {
+        "[[1, 0], [0, 0]]": "One land cell and three water cells: the farthest water is at distance 2.",
+        "[[0, 1], [1, 0]]": "Every water cell touches land, so the answer is 1.",
+        "[[0, 0], [0, 1]]": "Land exists, so water cells have a nearest land; the answer is 2."
+      },
+      "enabled": true
+    },
+    {
+      "id": "as-far-from-land-as-possible-code-01",
+      "category": "code_reasoning",
+      "type": "code_question",
+      "promptVariants": [
+        "In your BFS, what does `self.calDis((r, c), (nr, nc))` return and what does the grid cell store afterwards?",
+        "Why does your solution return `best - 1`?"
+      ],
+      "code": "while queue:\n    k = len(queue)\n    for _ in range(k):\n        r, c = queue.popleft()\n        for dr, dc in DIRS:\n            nr, nc = r + dr, c + dc\n            if 0 <= nr < n and 0 <= nc < n and grid[nr][nc] == 0:\n                grid[nr][nc] = self.calDis((r, c), (nr, nc)) + grid[r][c]\n                best = max(best, grid[nr][nc])\n                queue.append((nr, nc))\n\nreturn best - 1",
+      "answer": "Neighbouring cells are always at Manhattan distance 1, so calDis is just 1 and the helper is redundant. Land cells hold 1, so a water cell stores (distance + 1), which is why the final answer is best - 1. The grid is reused as the visited marker, which mutates the input.",
+      "keyPoints": [
+        "calDis between neighbours is always 1",
+        "Cells store distance + 1 because land is 1",
+        "Grid is mutated as visited marker"
+      ],
+      "explanation": "Encoding distance in the grid is neat but hides the +1; a separate seen array or level counter is clearer.",
+      "enabled": true
+    },
+    {
+      "id": "as-far-from-land-as-possible-time-01",
+      "category": "time_complexity",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "What is the time complexity of the canonical code for an n x n grid?",
+        "Derive the running time from the BFS."
+      ],
+      "options": [
+        "O(n^2)",
+        "O(n^4)",
+        "O(n^3)",
+        "O(n^2 log n)"
+      ],
+      "answer": "O(n^2)",
+      "explanation": "Each of the n^2 cells enters the queue at most once and each is expanded with four constant-time neighbour checks.",
+      "incorrectOptionExplanations": {
+        "O(n^4)": "That is a separate search from each water cell, or all pairs of cells.",
+        "O(n^3)": "That would come from a BFS or scan per row or per column.",
+        "O(n^2 log n)": "A plain deque BFS has no logarithmic factor; there is no heap."
+      },
+      "enabled": true
+    },
+    {
+      "id": "as-far-from-land-as-possible-space-01",
+      "category": "space_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "The queue and the seen matrix together hold O(n^___) cells in the worst case.",
+        "Extra space of the BFS on an n x n grid: O(n^___)."
+      ],
+      "answer": "2",
+      "explanation": "The seen matrix has n^2 cells and the queue can hold a large fraction of them.",
+      "enabled": true,
+      "acceptedAnswers": [
+        "2",
+        "two",
+        "n^2"
+      ]
+    }
+  ],
+  "generatedAt": "2026-10-23T06:18:28Z"
+}

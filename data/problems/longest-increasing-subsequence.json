@@ -1,0 +1,32 @@
+{
+  "leetcodeId": "300",
+  "title": "Longest Increasing Subsequence",
+  "slug": "longest-increasing-subsequence",
+  "url": "https://leetcode.com/problems/longest-increasing-subsequence/",
+  "difficulty": "Medium",
+  "status": "solved",
+  "premium": false,
+  "tags": [
+    "Array",
+    "Binary Search",
+    "Dynamic Programming",
+    "Longest Increasing Subsequence"
+  ],
+  "problemStatement": "Given an integer array nums, return the length of the longest strictly increasing subsequence.\n\nExample 1:\n\nInput: nums = [10,9,2,5,3,7,101,18]\nOutput: 4\nExplanation: The longest increasing subsequence is [2,3,7,101], therefore the length is 4.\n\nExample 2:\n\nInput: nums = [0,1,0,3,2,3]\nOutput: 4\n\nExample 3:\n\nInput: nums = [7,7,7,7,7,7,7]\nOutput: 1\n\nConstraints:\n\n- 1 <= nums.length <= 2500\n\n- -10^4 <= nums[i] <= 10^4\n\nFollow up: Can you come up with an algorithm that runs in O(n log(n)) time complexity?",
+  "constraints": [
+    "1 <= nums.length <= 2500",
+    "-10^4 <= nums[i] <= 10^4"
+  ],
+  "hints": [],
+  "acRate": 60.11,
+  "lastSubmittedAt": "2026-10-11T11:31:48Z",
+  "latestSubmission": {
+    "submissionId": "2169212217",
+    "language": "Python3",
+    "code": "class Solution:\n    def lengthOfLIS(self, nums: List[int]) -> int:\n        # approach 1: brute-force\n        # accumulate multiple non-decreasing subarrays that follow the order of array\n        # return the length of the longest subarray\n\n        # approach 2: dynamic programming\n        n = len(nums)\n        dp = [1] * n\n        for i in range(n):\n\n            for j in range(i):\n                if nums[j] < nums[i]:\n                    dp[i] = max(dp[i], dp[j] + 1)\n            # ^ we can do binary search instead of this loop tho\n\n        return max(dp)\n"
+  },
+  "notes": [],
+  "source": "leetcode",
+  "importedAt": "2026-10-23T05:55:47Z",
+  "lastSyncedAt": "2026-10-23T05:55:47Z"
+}

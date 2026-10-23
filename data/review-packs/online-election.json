@@ -1,0 +1,248 @@
+{
+  "schemaVersion": 1,
+  "problemSlug": "online-election",
+  "summary": "Design a class that answers who was leading the election at any time t, with ties going to the most recent vote.",
+  "patterns": [
+    "Binary Search",
+    "Design"
+  ],
+  "mainInsight": "Scan the votes once and store the leader after each vote; a query then binary searches the vote times for the last vote at or before t.",
+  "invariant": "After processing vote i, leaders[i] is the leader of the first i + 1 votes under the tie rule.",
+  "canonicalApproach": "Precomputed leaders plus binary search on times",
+  "approaches": [
+    {
+      "name": "Recount per query",
+      "summary": "On each q(t), count votes with time <= t and pick the leader.",
+      "timeComplexity": "O(n) per query",
+      "spaceComplexity": "O(n)",
+      "strengths": [
+        "No preprocessing"
+      ],
+      "weaknesses": [
+        "Slow with many queries"
+      ],
+      "interviewRelevance": "Baseline."
+    },
+    {
+      "name": "Precomputed leaders plus binary search on times",
+      "summary": "Store the leader after each vote and bisect_right the times.",
+      "timeComplexity": "O(n) build, O(log n) per query",
+      "spaceComplexity": "O(n)",
+      "strengths": [
+        "Fast queries",
+        "Simple"
+      ],
+      "weaknesses": [
+        "Needs the right bisect side"
+      ],
+      "interviewRelevance": "The expected answer."
+    },
+    {
+      "name": "Hash map from time to leader",
+      "summary": "Same preprocessing but store leaders by time key.",
+      "timeComplexity": "O(n) build, O(log n) per query",
+      "spaceComplexity": "O(n)",
+      "strengths": [
+        "Works"
+      ],
+      "weaknesses": [
+        "Needs a second lookup after the search"
+      ],
+      "interviewRelevance": "Equivalent; the parallel list is cleaner."
+    }
+  ],
+  "personalSolution": {
+    "approach": "Precomputed leaders stored by vote time, hand-written binary search for the last time <= t",
+    "timeComplexity": "O(n) build, O(log n) per query",
+    "spaceComplexity": "O(n)",
+    "isOptimal": true,
+    "notes": "Optimal. A leaders list parallel to times removes the dictionary and the key variable (and the defaultdict's silent 0 default)."
+  },
+  "canonicalCode": "from bisect import bisect_right\nfrom collections import defaultdict\n\n\nclass TopVotedCandidate:\n    def __init__(self, persons: list[int], times: list[int]):\n        self.times = times\n        self.leaders = []                  # leaders[i] = leader right after vote i\n        count = defaultdict(int)\n        lead = persons[0]\n        for p in persons:                  # O(n) preprocessing\n            count[p] += 1\n            if count[p] >= count[lead]:    # >= because ties go to the most recent vote\n                lead = p\n            self.leaders.append(lead)\n\n    def q(self, t: int) -> int:\n        i = bisect_right(self.times, t) - 1    # last vote with time <= t, O(log n)\n        return self.leaders[i]\n",
+  "commonMistakes": [
+    "Using > instead of >=, which gives ties to the older vote.",
+    "Using bisect_left, which skips a vote cast exactly at t.",
+    "Recounting votes inside q."
+  ],
+  "edgeCases": [
+    "Query exactly at a vote time.",
+    "Query after the last vote.",
+    "A single vote.",
+    "Ties after the most recent vote."
+  ],
+  "cards": [
+    {
+      "id": "recog-online-election",
+      "category": "pattern",
+      "type": "free_recall",
+      "promptVariants": [
+        "Which technique solves this problem, and what in the statement or constraints points to it?",
+        "Name the technique you would use here and the clue in the problem that tells you.",
+        "What approach fits this problem, and which part of the statement gives it away?"
+      ],
+      "answer": "Precompute the leader after each vote, then binary search the query time. Clue: There are many queries but times is strictly increasing, so the leader after each vote can be computed once and every query reduces to finding the last vote at or before t.",
+      "keyPoints": [
+        "There are many queries but times is strictly increasing, so the leader after each vote can be computed once and every query reduces to finding the last vote at or before t."
+      ],
+      "explanation": "Preprocessing is cheap because the votes arrive in time order; sorted times then make each query a binary search.",
+      "rubric": {
+        "technique": "Precompute the leader after each vote, then binary search the query time",
+        "aliases": [
+          "prefix leader array plus bisect",
+          "precompute winners then binary search",
+          "running leader with binary search on times",
+          "offline preprocessing then bisect"
+        ],
+        "alsoValid": [
+          {
+            "name": "Recount the votes up to time t on every query",
+            "note": "correct, but linear per query; wasteful with many queries on the same votes"
+          }
+        ],
+        "clueTypes": [
+          "stream_design",
+          "sorted_or_ordered"
+        ],
+        "clue": "There are many queries but times is strictly increasing, so the leader after each vote can be computed once and every query reduces to finding the last vote at or before t."
+      }
+    },
+    {
+      "id": "online-election-insight-01",
+      "category": "main_insight",
+      "type": "free_recall",
+      "promptVariants": [
+        "Why can the leader be computed once, before any query arrives?",
+        "What does a query q(t) reduce to?"
+      ],
+      "answer": "The leader at time t depends only on the votes up to t, and votes are given in increasing time order. So we can scan the votes once, keep running counts and record the leader after each vote. A query then only needs the index of the last vote with time <= t, found with a binary search on times, and returns the stored leader.",
+      "keyPoints": [
+        "Leader depends on votes up to t",
+        "One pass records leader after each vote",
+        "Query = binary search for last time <= t"
+      ],
+      "explanation": "Trading preprocessing for fast queries is the standard design move.",
+      "enabled": true
+    },
+    {
+      "id": "online-election-invariant-01",
+      "category": "invariant",
+      "type": "fill_blank",
+      "promptVariants": [
+        "After processing vote i, lead is the candidate with the most votes, and in a tie it is the candidate who got the ___ vote.",
+        "Tie rule of the election: the leader is whoever received the ___ vote among the tied candidates."
+      ],
+      "answer": "most recent",
+      "explanation": "The statement says the most recent vote breaks ties.",
+      "enabled": true,
+      "acceptedAnswers": [
+        "latest",
+        "last",
+        "newest"
+      ]
+    },
+    {
+      "id": "online-election-impl-01",
+      "category": "implementation_detail",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "Why does the preprocessing compare count[p] >= count[lead] instead of >?",
+        "What does >= implement in the leader update?"
+      ],
+      "options": [
+        "The candidate who just voted ties the leader and wins as the latest vote",
+        "The candidate who just voted must be ahead of every other candidate",
+        "The previous leader keeps the lead on ties because it got there first",
+        "It avoids updating the leader when two candidates have zero votes"
+      ],
+      "answer": "The candidate who just voted ties the leader and wins as the latest vote",
+      "explanation": "count[p] was just incremented, so equality means p has just tied with the leader. The statement gives such ties to the most recent vote, so p becomes the leader.",
+      "incorrectOptionExplanations": {
+        "The candidate who just voted must be ahead of every other candidate": "That describes strict >, which would keep the old leader on ties.",
+        "The previous leader keeps the lead on ties because it got there first": "The statement's rule is the opposite: the latest vote wins ties.",
+        "It avoids updating the leader when two candidates have zero votes": "Counts start at one for the voting candidate, so zero ties do not arise."
+      },
+      "enabled": true
+    },
+    {
+      "id": "online-election-edge-01",
+      "category": "edge_case",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "For persons = [0, 1] and times = [3, 7], q(7) must return 1. Which lookup returns the wrong leader?",
+        "Votes cast at time t count toward the query. Which index computation violates that rule?"
+      ],
+      "options": [
+        "bisect_left(times, t) - 1",
+        "bisect_right(times, t) - 1",
+        "bisect_left(times, t + 1) - 1",
+        "bisect_right(times, t, 0, len(times)) - 1"
+      ],
+      "answer": "bisect_left(times, t) - 1",
+      "explanation": "bisect_left returns the index of the vote at time t itself, and subtracting 1 skips it, so q(7) would read the leader after the first vote (0).",
+      "incorrectOptionExplanations": {
+        "bisect_right(times, t) - 1": "bisect_right passes over equal times, so the vote at exactly t is included.",
+        "bisect_left(times, t + 1) - 1": "For integer times this is equivalent to bisect_right(times, t) - 1.",
+        "bisect_right(times, t, 0, len(times)) - 1": "Same as bisect_right over the whole list; correct."
+      },
+      "enabled": true
+    },
+    {
+      "id": "online-election-time-01",
+      "category": "time_complexity",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "What are the costs of the constructor and of q in the canonical code?",
+        "Time complexity of preprocessing and of each query."
+      ],
+      "options": [
+        "O(n) construction and O(log n) per query",
+        "O(n log n) construction and O(1) per query",
+        "O(n) construction and O(n) per query",
+        "O(n^2) construction and O(log n) per query"
+      ],
+      "answer": "O(n) construction and O(log n) per query",
+      "explanation": "One pass with a dictionary builds the leaders in linear time; each query is a single binary search over the times.",
+      "incorrectOptionExplanations": {
+        "O(n log n) construction and O(1) per query": "Construction has no sort, and a query needs a binary search to find the vote.",
+        "O(n) construction and O(n) per query": "That would recount votes per query instead of using stored leaders.",
+        "O(n^2) construction and O(log n) per query": "Construction is one pass with O(1) dictionary updates."
+      },
+      "enabled": true
+    },
+    {
+      "id": "online-election-space-01",
+      "category": "space_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "The leaders list and the count dictionary each hold at most n entries, so the extra space is O(___).",
+        "Space used by the precomputed leaders and the counts: O(___)."
+      ],
+      "answer": "n",
+      "explanation": "One stored leader per vote plus counts for at most n candidates.",
+      "enabled": true,
+      "acceptedAnswers": [
+        "O(n)",
+        "linear",
+        "N"
+      ]
+    },
+    {
+      "id": "online-election-alt-01",
+      "category": "alternative_approach",
+      "type": "free_recall",
+      "promptVariants": [
+        "Your solution keeps a dictionary from vote time to leader. What simpler structure can replace it?",
+        "How can the lookup of the leader after the binary search be simplified?"
+      ],
+      "answer": "Store the leaders in a list parallel to times. bisect_right(times, t) - 1 is an index into both lists, so no dictionary and no separate key variable are needed. It also avoids the default-value trap of a defaultdict returning 0 for an unseen key.",
+      "keyPoints": [
+        "Parallel list indexed by the vote position",
+        "Binary search result is an index",
+        "No dictionary lookup needed"
+      ],
+      "explanation": "Searching for an index rather than a value keeps the data layout simple.",
+      "enabled": true
+    }
+  ],
+  "generatedAt": "2026-10-23T06:13:41Z"
+}
