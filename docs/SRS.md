@@ -180,7 +180,7 @@ mean level by under 0.05), so recognition is simply a harder, truer question. Tu
 * **drill** – one recognition card per problem, nothing else. Weight `3` for a problem whose card was never asked (this
   includes unsolved problems), else `1 + 3 × failure ratio`, × recency (`1 + min(days since asked, 60)/30`), × topic share
   factor. A drill records history and card statistics but **never changes a level or a schedule**, so it can be run as
-  often as wanted. Filters work (`--list unsolved-amazon`, `--topic graph`).
+  often as wanted. Filters work (`--topic graph`).
 
 * **weak** – ranks problems with history by `10 × (1 − recentAccuracy) + 4 × #weak categories + 2 × lapses (+3 if last score < 0.35)`.
 * **cram / filtered** – ignore the schedule; sampling weight `1 + (6 − level)/6` (+0.5 if weak

@@ -24,11 +24,10 @@ Python only (I interview in Python). Run everything with `uv run python scripts/
 | "Remove / delete problem X" | `scripts/remove_problem.py <slug>` (`--dry-run` first; keeps history and sessions) |
 | "Generate review packs for new problems" | follow *Pack generation* below |
 | "Start today's review" / "Give me 10 problems" | `review.py plan`, then `review.py start --mode daily [--target N] [--all-due]` |
-| "Drill my patterns" / "Pattern drill" | `review.py start --mode drill --target 25 [--list unsolved-amazon] [--topic …]`: only the recognition question per problem, no levels or schedules change |
+| "Drill my patterns" / "Pattern drill" | `review.py start --mode drill --target 25 [--topic …]`: only the recognition question per problem, no levels or schedules change |
 | "Quiz me on my weak problems" | `review.py start --mode weak` (optionally `--focus-category space_complexity`) |
 | "Review Graph and DP problems" | `review.py start --mode filtered --topic graph --topic dp` |
 | "Cram my solved list" | `review.py start --mode cram --list solved --target 20` (cram ignores due dates; still records) |
-| "Review my Unsolved Amazon list" | `review.py start --mode filtered --list unsolved-amazon --target 10` (packs there have no `personalSolution`; use the canonical approach) |
 | "Interview mode: 8 Medium problems" | `review.py start --mode interview --difficulty Medium --target 8` |
 | "Show my stats" / "What am I weakest at?" | `scripts/stats.py` (add `--json` if you need to reason over it) |
 | "Add this card to X: …" | `scripts/add_card.py <slug> "<question>" --answer "…" --category …` (or `--json`) |
