@@ -3,8 +3,8 @@
   "problemSlug": "minimum-number-of-pushes-to-type-word-i",
   "summary": "Remap the 8 telephone keys freely to minimise the total key pushes to type a word of distinct letters.",
   "patterns": [
-    "Math",
-    "Greedy"
+    "Greedy",
+    "Math"
   ],
   "mainInsight": "With 8 keys, the first 8 letters take 1 push, the next 8 take 2 pushes, and so on; assign the most frequent letters to the cheapest positions (here all letters are distinct, so order does not matter). The total follows an arithmetic pattern.",
   "canonicalApproach": "Closed form",

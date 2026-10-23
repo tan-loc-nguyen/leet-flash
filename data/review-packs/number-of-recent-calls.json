@@ -3,8 +3,8 @@
   "problemSlug": "number-of-recent-calls",
   "summary": "Count the number of requests in the last 3000 ms for each new ping(t) (times strictly increasing).",
   "patterns": [
-    "Design",
-    "Sliding Window"
+    "Sliding Window",
+    "Design"
   ],
   "mainInsight": "Requests arrive in increasing time order, so a queue works as a sliding window: append t, drop timestamps older than t - 3000 from the front, and the queue length is the answer.",
   "canonicalApproach": "Queue as sliding window",

@@ -3,8 +3,8 @@
   "problemSlug": "lru-cache",
   "summary": "Design a cache with O(1) get and put that evicts the least recently used entry when full.",
   "patterns": [
-    "Design",
     "Linked List",
+    "Design",
     "Array / Hashing"
   ],
   "mainInsight": "A hash map gives O(1) lookup by key; a doubly linked list orders entries by recency with O(1) insert/removal at known nodes. The map stores key -> node, so touching an entry means unlinking its node and re-inserting it at the head; eviction removes the tail.",

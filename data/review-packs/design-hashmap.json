@@ -3,8 +3,8 @@
   "problemSlug": "design-hashmap",
   "summary": "Implement a hash map (put, get, remove) without built-in hash tables.",
   "patterns": [
-    "Design",
-    "Array / Hashing"
+    "Array / Hashing",
+    "Design"
   ],
   "mainInsight": "With bounded integer keys a direct-address table works (value or sentinel per key); the general solution uses hashed buckets of (key, value) pairs with chaining and resizing.",
   "canonicalApproach": "Bucket array with chaining",
