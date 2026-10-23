@@ -3,8 +3,8 @@
   "problemSlug": "design-hashset",
   "summary": "Implement a hash set (add, remove, contains) without built-in hash tables.",
   "patterns": [
-    "Design",
-    "Array / Hashing"
+    "Array / Hashing",
+    "Design"
   ],
   "mainInsight": "With a bounded key range (0..10^6) a direct-address table (boolean array) is trivial and O(1); the general solution is an array of buckets indexed by hash(key) % size, resolving collisions with chaining or probing and resizing by load factor.",
   "canonicalApproach": "Bucket array with chaining",

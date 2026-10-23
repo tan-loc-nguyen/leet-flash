@@ -3,8 +3,8 @@
   "problemSlug": "design-browser-history",
   "summary": "Design a browser history supporting visit, back(steps) and forward(steps).",
   "patterns": [
-    "Design",
-    "Stack"
+    "Stack",
+    "Design"
   ],
   "mainInsight": "Keep the pages in an array with a cursor. Visiting a new page truncates everything ahead of the cursor and adds the page; back/forward just move the cursor, clamped to the valid range.",
   "canonicalApproach": "Array + cursor",

@@ -3,8 +3,8 @@
   "problemSlug": "implement-stack-using-queues",
   "summary": "Implement a LIFO stack using only queue operations.",
   "patterns": [
-    "Design",
-    "Stack"
+    "Stack",
+    "Design"
   ],
   "mainInsight": "A queue is FIFO, so make the newest element reach the front by rotating the queue after each push: push x, then move the previous n elements behind it. Pop and top are then plain queue operations.",
   "canonicalApproach": "One queue, costly push",

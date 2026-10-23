@@ -3,8 +3,8 @@
   "problemSlug": "insert-delete-getrandom-o1",
   "summary": "Design a set with O(1) average insert, remove and getRandom.",
   "patterns": [
-    "Design",
-    "Array / Hashing"
+    "Array / Hashing",
+    "Design"
   ],
   "mainInsight": "Keep values in a list for O(1) random indexing plus a dict from value to its list index. To remove, swap the element with the last one, update the moved element's index, pop the last, and delete the key.",
   "canonicalApproach": "List + dict of indices",

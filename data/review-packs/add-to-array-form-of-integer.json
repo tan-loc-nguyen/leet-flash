@@ -3,8 +3,8 @@
   "problemSlug": "add-to-array-form-of-integer",
   "summary": "Add an integer k to a number given as an array of digits and return the digits of the sum.",
   "patterns": [
-    "Math",
-    "Array / Hashing"
+    "Array / Hashing",
+    "Math"
   ],
   "mainInsight": "Digit-by-digit addition with a carry, consuming k's digits with % 10 and // 10 as you walk the array from the least significant end; no need to build a second digit array.",
   "canonicalApproach": "Add k's digits as you go",

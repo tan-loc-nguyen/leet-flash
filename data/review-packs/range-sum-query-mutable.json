@@ -3,7 +3,6 @@
   "problemSlug": "range-sum-query-mutable",
   "summary": "Design a structure supporting point updates and inclusive range sums over an array.",
   "patterns": [
-    "Design",
     "Design"
   ],
   "mainInsight": "Store sums over power-of-two blocks so that any prefix is a combination of O(log n) blocks and any single update changes O(log n) blocks.",

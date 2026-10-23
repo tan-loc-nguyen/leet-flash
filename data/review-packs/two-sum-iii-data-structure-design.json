@@ -3,8 +3,8 @@
   "problemSlug": "two-sum-iii-data-structure-design",
   "summary": "Design a structure supporting add(number) and find(value) (is there a pair summing to value).",
   "patterns": [
-    "Design",
-    "Array / Hashing"
+    "Array / Hashing",
+    "Design"
   ],
   "mainInsight": "Choose which operation to optimise: store counts in a hash map so find is a single O(n) scan with complement lookups (add O(1)), or keep a sorted list so find is a two-pointer pass but add costs O(n).",
   "canonicalApproach": "Counter map",
