@@ -1,0 +1,234 @@
+{
+  "schemaVersion": 1,
+  "problemSlug": "find-target-indices-after-sorting-array",
+  "summary": "Return the indices at which the target would sit after sorting nums in non-decreasing order.",
+  "patterns": [
+    "Sorting",
+    "Binary Search"
+  ],
+  "mainInsight": "After sorting, the target copies sit right after all smaller elements. Count smaller and equal elements and return range(less, less + equal), no sort needed.",
+  "canonicalApproach": "Counting smaller and equal elements",
+  "approaches": [
+    {
+      "name": "Sort and scan",
+      "summary": "Sort nums, then collect indices where the value equals target.",
+      "timeComplexity": "O(n log n)",
+      "spaceComplexity": "O(1) or O(n)",
+      "strengths": [
+        "Direct"
+      ],
+      "weaknesses": [
+        "Sorts more than needed"
+      ],
+      "interviewRelevance": "Fine for n <= 100."
+    },
+    {
+      "name": "Sort and binary search",
+      "summary": "Sort, then binary search the lower and upper bound of the target.",
+      "timeComplexity": "O(n log n)",
+      "spaceComplexity": "O(1) or O(n)",
+      "strengths": [
+        "Shows binary search"
+      ],
+      "weaknesses": [
+        "Still sorts"
+      ],
+      "interviewRelevance": "Overkill here."
+    },
+    {
+      "name": "Counting smaller and equal elements",
+      "summary": "Count less and equal; return range(less, less + equal).",
+      "timeComplexity": "O(n)",
+      "spaceComplexity": "O(1)",
+      "strengths": [
+        "Linear",
+        "Constant space"
+      ],
+      "weaknesses": [
+        "Needs the sorted-order insight"
+      ],
+      "interviewRelevance": "The expected answer."
+    }
+  ],
+  "personalSolution": {
+    "approach": "Count smaller and equal elements, return range(less, less + count)",
+    "timeComplexity": "O(n)",
+    "spaceComplexity": "O(1)",
+    "isOptimal": true,
+    "notes": "Optimal. The list comprehension around range() is redundant: list(range(less, less + count))."
+  },
+  "canonicalCode": "class Solution:\n    def targetIndices(self, nums: list[int], target: int) -> list[int]:\n        less = equal = 0\n        for v in nums:                     # one pass, no sorting: O(n)\n            if v < target:\n                less += 1                  # these occupy the indices before the target block\n            elif v == target:\n                equal += 1                 # these occupy the block itself\n        return list(range(less, less + equal))   # sorted position of the target copies\n",
+  "commonMistakes": [
+    "Counting elements <= target into less.",
+    "Returning the original indices instead of the sorted ones.",
+    "Sorting needlessly and then scanning."
+  ],
+  "edgeCases": [
+    "Target absent.",
+    "Target is the minimum or the maximum.",
+    "All elements equal the target.",
+    "A single element."
+  ],
+  "cards": [
+    {
+      "id": "recog-find-target-indices-after-sorting-array",
+      "category": "pattern",
+      "type": "free_recall",
+      "promptVariants": [
+        "Which technique solves this problem, and what in the statement or constraints points to it?",
+        "Name the technique you would use here and the clue in the problem that tells you.",
+        "What approach fits this problem, and which part of the statement gives it away?"
+      ],
+      "answer": "Counting: the target occupies the index range starting at the number of smaller elements, with length equal to its count. Clue: The answer depends only on how many elements are smaller than the target and how many equal it, because in sorted order the equal elements occupy a contiguous block right after all smaller ones.",
+      "keyPoints": [
+        "The answer depends only on how many elements are smaller than the target and how many equal it, because in sorted order the equal elements occupy a contiguous block right after all smaller ones."
+      ],
+      "explanation": "Position in sorted order is determined by the number of smaller elements, so the sort itself can be skipped.",
+      "rubric": {
+        "technique": "Counting: the target occupies the index range starting at the number of smaller elements, with length equal to its count",
+        "aliases": [
+          "count smaller elements",
+          "rank of the target",
+          "counting instead of sorting",
+          "count less than target and count equal"
+        ],
+        "alsoValid": [
+          {
+            "name": "Sort the array and scan for the target",
+            "note": "correct, but sorting costs more than a counting pass for the same answer"
+          },
+          {
+            "name": "Sort and binary search both ends of the target block",
+            "note": "correct, but still pays for a sort that the counts make unnecessary"
+          }
+        ],
+        "clueTypes": [
+          "sorted_or_ordered",
+          "math_observation"
+        ],
+        "clue": "The answer depends only on how many elements are smaller than the target and how many equal it, because in sorted order the equal elements occupy a contiguous block right after all smaller ones."
+      }
+    },
+    {
+      "id": "find-target-indices-after-sorting-array-insight-01",
+      "category": "main_insight",
+      "type": "free_recall",
+      "promptVariants": [
+        "Why do you not need to sort the array?",
+        "How do the counts determine the answer?"
+      ],
+      "answer": "In sorted order, all elements smaller than the target come first, then all copies of the target, then the larger ones. If `less` elements are smaller and `equal` equal the target, the target occupies exactly the indices less, less + 1, ..., less + equal - 1.",
+      "keyPoints": [
+        "Smaller elements come first",
+        "Equal elements form one block",
+        "Block = range(less, less + equal)"
+      ],
+      "explanation": "Rank queries on a multiset need counts, not the sorted array.",
+      "enabled": true
+    },
+    {
+      "id": "find-target-indices-after-sorting-array-edge-01",
+      "category": "edge_case",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "For nums = [1, 3, 5] and target = 4, what does the canonical code return and why?",
+        "What does the code return when the target is not present?"
+      ],
+      "options": [
+        "[], because equal is 0 and the range is empty",
+        "[2], because 4 would be inserted at index 2",
+        "[1], because 3 is the closest element to the target",
+        "[-1], because the target is missing"
+      ],
+      "answer": "[], because equal is 0 and the range is empty",
+      "explanation": "less is 2 and equal is 0, so range(2, 2) is empty. Only existing copies of the target produce indices.",
+      "incorrectOptionExplanations": {
+        "[2], because 4 would be inserted at index 2": "That is the insertion point (a lower-bound answer), not a target index.",
+        "[1], because 3 is the closest element to the target": "Only indices of elements equal to the target are returned.",
+        "[-1], because the target is missing": "The problem asks for an empty list when there is no target index."
+      },
+      "enabled": true
+    },
+    {
+      "id": "find-target-indices-after-sorting-array-why-01",
+      "category": "why_not",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "Why does `less` count only elements strictly smaller than the target?",
+        "What goes wrong if elements equal to the target are counted into `less`?"
+      ],
+      "options": [
+        "The block would start too late, after some copies of the target",
+        "The block would start too early, before the smaller elements",
+        "The block would contain smaller elements as well as the target",
+        "The block would be empty because equal becomes zero afterwards"
+      ],
+      "answer": "The block would start too late, after some copies of the target",
+      "explanation": "Copies of the target must be part of the block, not part of the prefix before it. Counting them in less shifts the starting index right by that many positions.",
+      "incorrectOptionExplanations": {
+        "The block would start too early, before the smaller elements": "Counting more elements into less moves the start later, not earlier.",
+        "The block would contain smaller elements as well as the target": "The block length still equals the number of equal elements.",
+        "The block would be empty because equal becomes zero afterwards": "equal is counted separately and keeps its value."
+      },
+      "enabled": true
+    },
+    {
+      "id": "find-target-indices-after-sorting-array-time-01",
+      "category": "time_complexity",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "What is the time complexity of the canonical code, and how does it compare with sorting?",
+        "Derive the running time of canonicalCode."
+      ],
+      "options": [
+        "O(n), better than O(n log n) for sorting",
+        "O(n log n), same as sorting the array",
+        "O(log n), because only the target block matters",
+        "O(n^2) for building the answer list"
+      ],
+      "answer": "O(n), better than O(n log n) for sorting",
+      "explanation": "A single counting pass is linear; building the result list is linear in its length, which is at most n.",
+      "incorrectOptionExplanations": {
+        "O(n log n), same as sorting the array": "There is no sort; the counting pass avoids that log factor.",
+        "O(log n), because only the target block matters": "Counting must read every element at least once.",
+        "O(n^2) for building the answer list": "range() builds the result in time linear in its size."
+      },
+      "enabled": true
+    },
+    {
+      "id": "find-target-indices-after-sorting-array-space-01",
+      "category": "space_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Excluding the returned list, the counting approach uses O(___) extra space.",
+        "Auxiliary space of canonicalCode, not counting the result: O(___)."
+      ],
+      "answer": "1",
+      "explanation": "Two counters; the sorted array is never built.",
+      "enabled": true,
+      "acceptedAnswers": [
+        "O(1)",
+        "constant",
+        "1"
+      ]
+    },
+    {
+      "id": "find-target-indices-after-sorting-array-alt-01",
+      "category": "alternative_approach",
+      "type": "free_recall",
+      "promptVariants": [
+        "The array is already sorted in a follow-up. How would you find the block faster than a counting pass?",
+        "If nums were sorted, how would you find the target indices?"
+      ],
+      "answer": "Use binary search for the lower bound (first index with value >= target) and the upper bound (first index with value > target); the answer is range(lower, upper). That is O(log n) plus the output size.",
+      "keyPoints": [
+        "Two binary searches",
+        "Lower and upper bound",
+        "Logarithmic plus output size"
+      ],
+      "explanation": "Sortedness would make the counts cheaper to get than scanning the array.",
+      "enabled": true
+    }
+  ],
+  "generatedAt": "2026-10-23T06:18:28Z"
+}

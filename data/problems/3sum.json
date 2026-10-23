@@ -22,14 +22,14 @@
     "The second train of thought for two-sum is, without changing the array, can we use additional space somehow? Like maybe a hash map to speed up the search?"
   ],
   "acRate": 39.97,
-  "lastSubmittedAt": "2026-10-01T02:35:42Z",
+  "lastSubmittedAt": "2026-10-20T12:50:51Z",
   "latestSubmission": {
-    "submissionId": "2158707545",
+    "submissionId": "2177067073",
     "language": "Python3",
-    "code": "class Solution:\n    def twoSum(self, nums, targetIdx) -> list[list[int]]:\n        target = -nums[targetIdx]\n        l, r = targetIdx + 1, len(nums) - 1\n        triplets = []\n\n        while l < r:\n            total = nums[l] + nums[r]\n            if total == target:\n                triplets.append([nums[targetIdx], nums[l], nums[r]])\n                l += 1\n                r -= 1\n\n                while l < r and nums[l] == nums[l - 1]:\n                    l += 1\n\n            elif total > target:\n                r -= 1\n            else:\n                l += 1\n\n        return triplets\n\n    def threeSum(self, nums: list[int]) -> list[list[int]]:\n        nums.sort()\n        ans = []\n\n        for i in range(len(nums)):\n            if nums[i] > 0:\n                break\n            if i == 0 or nums[i] != nums[i - 1]:\n                ans += self.twoSum(nums, i)\n        \n        return ans"
+    "code": "class Solution:\n    def twoSum(self, nums, idx):\n        target = -nums[idx]\n        n = len(nums)\n        l, r = idx + 1, n - 1\n\n        triplets = []\n\n        while l < r:\n            total = nums[l] + nums[r]\n\n            if total == target:\n                triplets.append([-target, nums[l], nums[r]])\n                l += 1\n                r -= 1\n\n                while l < r and nums[l] == nums[l - 1]:\n                    l += 1\n\n            elif total > target:\n                r -= 1\n            else:\n                l += 1\n\n        return triplets\n\n\n    def threeSum(self, nums: list[int]) -> list[list[int]]:\n        nums.sort()\n        n = len(nums)\n\n        ans = []\n        for i in range(n):\n            if nums[i] > 0:\n                break\n            if i == 0 or nums[i] != nums[i - 1]:\n                ans += self.twoSum(nums, i)\n\n        return ans"
   },
   "notes": [],
   "source": "leetcode",
   "importedAt": "2026-10-01T00:00:00Z",
-  "lastSyncedAt": "2026-10-01T13:53:37Z"
+  "lastSyncedAt": "2026-10-23T05:55:47Z"
 }

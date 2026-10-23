@@ -19,14 +19,14 @@
   ],
   "hints": [],
   "acRate": 47.54,
-  "lastSubmittedAt": "2026-09-14T07:29:16Z",
+  "lastSubmittedAt": "2026-10-20T13:03:48Z",
   "latestSubmission": {
-    "submissionId": "2141319124",
+    "submissionId": "2177076416",
     "language": "Python3",
-    "code": "class Solution:\n    def threeSumClosest(self, nums: List[int], target: int) -> int:\n        nums.sort()\n        n = len(nums)\n        best = float(\"inf\")\n\n        for i in range(n - 2):\n            l, r = i + 1, n - 1\n            while l < r:\n                total = nums[i] + nums[l] + nums[r]\n\n                if total == target:\n                    return total\n                elif total < target:\n                    l += 1\n                else:\n                    r -= 1\n\n                if abs(target - total) < abs(target - best):\n                    best = total\n\n\n        return best"
+    "code": "class Solution:\n    def threeSumClosest(self, nums: list[int], target: int) -> int:\n        nums.sort()\n        n = len(nums)\n        best = float(\"-inf\")\n\n        for i in range(n - 2):\n            l, r = i + 1, n - 1\n            while l < r:\n                total = nums[i] + nums[l] + nums[r]\n                \n                if total == target:\n                    return total\n                elif total < target:\n                    l += 1\n                else:\n                    r -= 1\n                \n                if abs(target - total) < abs(target - best):\n                    best = total\n\n        return best"
   },
   "notes": [],
   "source": "leetcode",
   "importedAt": "2026-10-01T13:44:25Z",
-  "lastSyncedAt": "2026-10-01T13:44:25Z"
+  "lastSyncedAt": "2026-10-23T05:55:47Z"
 }

@@ -1,0 +1,39 @@
+{
+  "leetcodeId": "2389",
+  "title": "Longest Subsequence With Limited Sum",
+  "slug": "longest-subsequence-with-limited-sum",
+  "url": "https://leetcode.com/problems/longest-subsequence-with-limited-sum/",
+  "difficulty": "Easy",
+  "status": "solved",
+  "premium": false,
+  "tags": [
+    "Array",
+    "Binary Search",
+    "Greedy",
+    "Sorting",
+    "Prefix Sum"
+  ],
+  "problemStatement": "You are given an integer array nums of length n, and an integer array queries of length m.\n\nReturn an array answer of length m where answer[i] is the maximum size of a subsequence that you can take from nums such that the sum of its elements is less than or equal to queries[i].\n\nA subsequence is an array that can be derived from another array by deleting some or no elements without changing the order of the remaining elements.\n\nExample 1:\n\nInput: nums = [4,5,2,1], queries = [3,10,21]\nOutput: [2,3,4]\nExplanation: We answer the queries as follows:\n- The subsequence [2,1] has a sum less than or equal to 3. It can be proven that 2 is the maximum size of such a subsequence, so answer[0] = 2.\n- The subsequence [4,5,1] has a sum less than or equal to 10. It can be proven that 3 is the maximum size of such a subsequence, so answer[1] = 3.\n- The subsequence [4,5,2,1] has a sum less than or equal to 21. It can be proven that 4 is the maximum size of such a subsequence, so answer[2] = 4.\n\nExample 2:\n\nInput: nums = [2,3,4,5], queries = [1]\nOutput: [0]\nExplanation: The empty subsequence is the only subsequence that has a sum less than or equal to 1, so answer[0] = 0.\n\nConstraints:\n\n- n == nums.length\n\n- m == queries.length\n\n- 1 <= n, m <= 1000\n\n- 1 <= nums[i], queries[i] <= 10^6",
+  "constraints": [
+    "n == nums.length",
+    "m == queries.length",
+    "1 <= n, m <= 1000",
+    "1 <= nums[i], queries[i] <= 10^6"
+  ],
+  "hints": [
+    "Solve each query independently.",
+    "When solving a query, which elements of nums should you choose to make the subsequence as long as possible?",
+    "Choose the smallest elements in nums that add up to a sum less than the query."
+  ],
+  "acRate": 73.88,
+  "lastSubmittedAt": "2026-10-09T11:57:04Z",
+  "latestSubmission": {
+    "submissionId": "2167253996",
+    "language": "Python3",
+    "code": "class Solution:\n    def answerQueries(self, nums: list[int], queries: list[int]) -> list[int]:\n        nums.sort()\n        presum = [0]\n        for num in nums:\n            presum.append(presum[-1] + num)\n\n        ans = []\n        for query in queries:\n            lo, hi = 0, len(presum) - 1\n            idx = len(presum)\n            while lo <= hi:\n                mid = (lo + hi) // 2\n\n                if presum[mid] > query:\n                    idx = mid\n                    hi = mid - 1\n                else:\n                    lo = mid + 1\n            ans.append(idx - 1)\n\n        return ans\n"
+  },
+  "notes": [],
+  "source": "leetcode",
+  "importedAt": "2026-10-23T05:55:47Z",
+  "lastSyncedAt": "2026-10-23T05:55:47Z"
+}

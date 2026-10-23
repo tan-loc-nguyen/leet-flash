@@ -1,0 +1,37 @@
+{
+  "leetcodeId": "2279",
+  "title": "Maximum Bags With Full Capacity of Rocks",
+  "slug": "maximum-bags-with-full-capacity-of-rocks",
+  "url": "https://leetcode.com/problems/maximum-bags-with-full-capacity-of-rocks/",
+  "difficulty": "Medium",
+  "status": "solved",
+  "premium": false,
+  "tags": [
+    "Array",
+    "Greedy",
+    "Sorting"
+  ],
+  "problemStatement": "You have n bags numbered from 0 to n - 1. You are given two 0-indexed integer arrays capacity and rocks. The i^th bag can hold a maximum of capacity[i] rocks and currently contains rocks[i] rocks. You are also given an integer additionalRocks, the number of additional rocks you can place in any of the bags.\n\nReturn the maximum number of bags that could have full capacity after placing the additional rocks in some bags.\n\nExample 1:\n\nInput: capacity = [2,3,4,5], rocks = [1,2,4,4], additionalRocks = 2\nOutput: 3\nExplanation:\nPlace 1 rock in bag 0 and 1 rock in bag 1.\nThe number of rocks in each bag are now [2,3,4,4].\nBags 0, 1, and 2 have full capacity.\nThere are 3 bags at full capacity, so we return 3.\nIt can be shown that it is not possible to have more than 3 bags at full capacity.\nNote that there may be other ways of placing the rocks that result in an answer of 3.\n\nExample 2:\n\nInput: capacity = [10,2,2], rocks = [2,2,0], additionalRocks = 100\nOutput: 3\nExplanation:\nPlace 8 rocks in bag 0 and 2 rocks in bag 2.\nThe number of rocks in each bag are now [10,2,2].\nBags 0, 1, and 2 have full capacity.\nThere are 3 bags at full capacity, so we return 3.\nIt can be shown that it is not possible to have more than 3 bags at full capacity.\nNote that we did not use all of the additional rocks.\n\nConstraints:\n\n- n == capacity.length == rocks.length\n\n- 1 <= n <= 5 * 10^4\n\n- 1 <= capacity[i] <= 10^9\n\n- 0 <= rocks[i] <= capacity[i]\n\n- 1 <= additionalRocks <= 10^9",
+  "constraints": [
+    "n == capacity.length == rocks.length",
+    "1 <= n <= 5 * 10^4",
+    "1 <= capacity[i] <= 10^9",
+    "0 <= rocks[i] <= capacity[i]",
+    "1 <= additionalRocks <= 10^9"
+  ],
+  "hints": [
+    "Which bag should you fill completely first?",
+    "Can you think of a greedy solution?"
+  ],
+  "acRate": 68.39,
+  "lastSubmittedAt": "2026-10-14T11:55:43Z",
+  "latestSubmission": {
+    "submissionId": "2172091607",
+    "language": "Python3",
+    "code": "class Solution:\n    def maximumBags(self, capacity: list[int], rocks: list[int], additionalRocks: int) -> int:\n        # capacity = [2,3,4,5]\n        #    rocks = [1,2,4,4]\n        #            [1,1,0,1]\n        # ideas is to create an array that stores the needed amount of rocks to fulfill each bag\n        # then I'll sort it and go from the most full one fill until we run out of additional rocks\n        needed = []\n        n = len(rocks)\n        for i in range(n):\n            needed.append(capacity[i] - rocks[i])\n\n        needed.sort()\n        count = 0\n        i = 0\n        while additionalRocks > 0 and i < n:\n            if needed[i] == 0:\n                count += 1\n            elif needed[i] <= additionalRocks:\n                count += 1\n                additionalRocks -= needed[i]\n            else:\n                break\n            i += 1\n        \n        return count"
+  },
+  "notes": [],
+  "source": "leetcode",
+  "importedAt": "2026-10-23T05:55:47Z",
+  "lastSyncedAt": "2026-10-23T05:55:47Z"
+}

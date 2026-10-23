@@ -22,14 +22,14 @@
   ],
   "hints": [],
   "acRate": 51.4,
-  "lastSubmittedAt": "2026-07-26T02:02:30Z",
+  "lastSubmittedAt": "2026-10-20T13:00:28Z",
   "latestSubmission": {
-    "submissionId": "2081325286",
+    "submissionId": "2177073910",
     "language": "Python3",
-    "code": "class Solution:\n    def twoSum(self, nums: List[int], idx: int, target) -> int:\n        l, r = idx + 1, len(nums) - 1\n        target -= nums[idx]\n        count = 0\n\n        while l < r:\n            total = nums[l] + nums[r]\n            if total < target:\n                count += r - l\n                l += 1\n            else:\n                r -= 1\n        \n        return count\n\n    def threeSumSmaller(self, nums: list[int], target: int) -> list[list[int]]:\n        # sort\n        # O(n^3) -> O(n^2)\n        n = len(nums)\n        nums.sort()\n        ans = 0\n\n        for i in range(n):\n            ans += self.twoSum(nums, i, target)\n        \n        return ans"
+    "code": "class Solution:\n    def twoSum(self, nums, target, idx):\n        target -= nums[idx]\n        l, r = idx + 1, len(nums) - 1\n        count = 0\n\n        while l < r:\n            total = nums[l] + nums[r]\n\n            if total < target:\n                count += r - l\n                l += 1 \n            else:\n                r -= 1\n\n        return count\n\n    def threeSumSmaller(self, nums: list[int], target: int) -> int:\n        nums.sort()\n        n = len(nums)\n\n        ans = 0 \n        for i in range(n):\n            ans += self.twoSum(nums, target, i)\n\n        return ans"
   },
   "notes": [],
   "source": "leetcode",
   "importedAt": "2026-10-01T13:44:25Z",
-  "lastSyncedAt": "2026-10-01T13:44:25Z"
+  "lastSyncedAt": "2026-10-23T05:55:47Z"
 }

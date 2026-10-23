@@ -1,0 +1,219 @@
+{
+  "schemaVersion": 1,
+  "problemSlug": "longest-subsequence-with-limited-sum",
+  "summary": "For each query, return the maximum size of a subsequence of nums whose sum does not exceed the query.",
+  "patterns": [
+    "Greedy",
+    "Binary Search",
+    "Prefix Sum"
+  ],
+  "mainInsight": "Subsequence order does not affect its sum, so take the smallest elements: sort, build prefix sums, and binary search the last prefix sum that fits each query.",
+  "invariant": "prefix[i] is the minimum possible sum of i + 1 elements, and it increases with i.",
+  "canonicalApproach": "Sort, prefix sums and binary search",
+  "approaches": [
+    {
+      "name": "Greedy loop per query",
+      "summary": "For each query, add elements from smallest to largest until the sum would exceed it.",
+      "timeComplexity": "O(n log n + n * m)",
+      "spaceComplexity": "O(1)",
+      "strengths": [
+        "Simple"
+      ],
+      "weaknesses": [
+        "Linear per query"
+      ],
+      "interviewRelevance": "Fine for the small limits, not scalable."
+    },
+    {
+      "name": "Sort, prefix sums and binary search",
+      "summary": "Sort once, build prefix sums, bisect_right per query.",
+      "timeComplexity": "O((n + m) log n)",
+      "spaceComplexity": "O(n)",
+      "strengths": [
+        "Fast per query"
+      ],
+      "weaknesses": [
+        "Needs the greedy argument"
+      ],
+      "interviewRelevance": "The expected answer."
+    }
+  ],
+  "personalSolution": {
+    "approach": "Sort, prefix sums with a leading 0, hand-written binary search for the first sum above the query",
+    "timeComplexity": "O((n + m) log n)",
+    "spaceComplexity": "O(n)",
+    "isOptimal": true,
+    "notes": "Optimal. bisect_right over prefix sums without the leading 0 gives the answer directly."
+  },
+  "canonicalCode": "from bisect import bisect_right\nfrom itertools import accumulate\n\n\nclass Solution:\n    def answerQueries(self, nums: list[int], queries: list[int]) -> list[int]:\n        nums = sorted(nums)                # order inside a subsequence does not change its sum: O(n log n)\n        prefix = list(accumulate(nums))    # prefix[i] = smallest possible sum of i + 1 elements\n        return [bisect_right(prefix, q) for q in queries]   # number of prefix sums <= q: O(log n) each\n",
+  "commonMistakes": [
+    "Using bisect_left, which ignores a prefix sum equal to the query.",
+    "Forgetting to sort before computing prefix sums.",
+    "Worrying about the original order of the subsequence."
+  ],
+  "edgeCases": [
+    "Query smaller than the smallest element.",
+    "Query larger than the total sum.",
+    "Duplicates in nums.",
+    "Single element."
+  ],
+  "cards": [
+    {
+      "id": "recog-longest-subsequence-with-limited-sum",
+      "category": "pattern",
+      "type": "free_recall",
+      "promptVariants": [
+        "Which technique solves this problem, and what in the statement or constraints points to it?",
+        "Name the technique you would use here and the clue in the problem that tells you.",
+        "What approach fits this problem, and which part of the statement gives it away?"
+      ],
+      "answer": "Sort ascending, build prefix sums, then binary search each query. Clue: A subsequence only matters through its size and sum (order is irrelevant), so the smallest elements give the smallest sum for any size, and prefix sums of the sorted array answer every query.",
+      "keyPoints": [
+        "A subsequence only matters through its size and sum (order is irrelevant), so the smallest elements give the smallest sum for any size, and prefix sums of the sorted array answer every query."
+      ],
+      "explanation": "Subsequence order does not change the sum, so the problem is really 'how many of the smallest elements fit in the budget'.",
+      "rubric": {
+        "technique": "Sort ascending, build prefix sums, then binary search each query",
+        "aliases": [
+          "greedy smallest elements with prefix sums",
+          "sort and prefix sum with bisect",
+          "take the smallest elements first",
+          "prefix sums of the sorted array"
+        ],
+        "alsoValid": [
+          {
+            "name": "For each query add the smallest elements one by one in a loop",
+            "note": "correct, but linear per query instead of logarithmic"
+          }
+        ],
+        "clueTypes": [
+          "local_choice",
+          "prefix_range"
+        ],
+        "clue": "A subsequence only matters through its size and sum (order is irrelevant), so the smallest elements give the smallest sum for any size, and prefix sums of the sorted array answer every query."
+      }
+    },
+    {
+      "id": "longest-subsequence-with-limited-sum-insight-01",
+      "category": "main_insight",
+      "type": "free_recall",
+      "promptVariants": [
+        "Why can you sort nums even though subsequences keep the original order?",
+        "Why are the smallest elements the right ones to take?"
+      ],
+      "answer": "Only the multiset of chosen elements affects the sum, not their order, so any subset is the sum of some elements of a subsequence. For a fixed size k, the smallest possible sum uses the k smallest elements; so the answer for a query is the largest k whose k smallest elements sum to at most the query, and the prefix sums of the sorted array are increasing, which allows binary search.",
+      "keyPoints": [
+        "Order does not affect the sum",
+        "k smallest give the minimal sum",
+        "Increasing prefix sums allow binary search"
+      ],
+      "explanation": "Dropping an irrelevant constraint (order) is what makes the greedy valid.",
+      "enabled": true
+    },
+    {
+      "id": "longest-subsequence-with-limited-sum-impl-01",
+      "category": "implementation_detail",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "With prefix = [1, 3, 7, 12] and query 7, which call gives the answer 3?",
+        "Why bisect_right and not bisect_left over the prefix sums?"
+      ],
+      "options": [
+        "bisect_right(prefix, 7), because a sum equal to the query is allowed",
+        "bisect_left(prefix, 7), because the insertion point is the first sum equal to it",
+        "bisect_right(prefix, 7) - 1, because the insertion point is one too large",
+        "bisect_left(prefix, 7) + 1, because indices of prefix are zero-based"
+      ],
+      "answer": "bisect_right(prefix, 7), because a sum equal to the query is allowed",
+      "explanation": "bisect_right returns the number of prefix sums <= 7, which is 3 (1, 3 and 7). The condition is 'sum <= query', so equality must count.",
+      "incorrectOptionExplanations": {
+        "bisect_left(prefix, 7), because the insertion point is the first sum equal to it": "It returns 2 and misses the sum equal to the query.",
+        "bisect_right(prefix, 7) - 1, because the insertion point is one too large": "That would give 2; bisect_right already counts the elements <= 7.",
+        "bisect_left(prefix, 7) + 1, because indices of prefix are zero-based": "That happens to give 3 here, but fails when no prefix sum equals the query."
+      },
+      "enabled": true
+    },
+    {
+      "id": "longest-subsequence-with-limited-sum-code-01",
+      "category": "code_reasoning",
+      "type": "code_question",
+      "promptVariants": [
+        "In your binary search, what does `idx` hold when the loop ends and why is the answer `idx - 1`?",
+        "Why does your presum start with a leading 0?"
+      ],
+      "code": "for query in queries:\n    lo, hi = 0, len(presum) - 1\n    idx = len(presum)\n    while lo <= hi:\n        mid = (lo + hi) // 2\n\n        if presum[mid] > query:\n            idx = mid\n            hi = mid - 1\n        else:\n            lo = mid + 1\n    ans.append(idx - 1)",
+      "answer": "idx is the first position in presum whose sum is strictly greater than the query (or len(presum) if none). presum has a leading 0, so presum[i] is the sum of the i smallest elements; the largest i with presum[i] <= query is idx - 1, which is the number of elements taken. The leading 0 makes the answer 0 when even the smallest element is too large.",
+      "keyPoints": [
+        "idx = first sum > query",
+        "presum[i] = sum of i elements",
+        "idx - 1 is the count; leading 0 handles answer 0"
+      ],
+      "explanation": "This is the 'first true' template applied to the predicate presum[i] > query.",
+      "enabled": true
+    },
+    {
+      "id": "longest-subsequence-with-limited-sum-edge-01",
+      "category": "edge_case",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "For nums = [4, 5] and the query 3, what does the canonical code return and why?",
+        "What does the code return when the query is smaller than every element?"
+      ],
+      "options": [
+        "0, because no prefix sum is at most 3",
+        "1, because the smallest element can always be taken",
+        "2, because both elements are considered by the search",
+        "-1, because the query cannot be satisfied"
+      ],
+      "answer": "0, because no prefix sum is at most 3",
+      "explanation": "The prefix sums are [4, 9]; bisect_right([4, 9], 3) is 0, which matches the empty subsequence.",
+      "incorrectOptionExplanations": {
+        "1, because the smallest element can always be taken": "4 > 3, so even the smallest element exceeds the budget.",
+        "2, because both elements are considered by the search": "The search counts only prefix sums that fit the query.",
+        "-1, because the query cannot be satisfied": "The empty subsequence has sum 0, so the answer is 0, not -1."
+      },
+      "enabled": true
+    },
+    {
+      "id": "longest-subsequence-with-limited-sum-time-01",
+      "category": "time_complexity",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "With n numbers and m queries, what is the time complexity of the canonical code?",
+        "Add the cost of sorting, prefix sums and the m binary searches."
+      ],
+      "options": [
+        "O((n + m) log n)",
+        "O(n * m)",
+        "O(n log n + m)",
+        "O(m log m)"
+      ],
+      "answer": "O((n + m) log n)",
+      "explanation": "Sorting costs n log n, the prefix sums n, and each of the m queries a binary search of log n.",
+      "incorrectOptionExplanations": {
+        "O(n * m)": "That is looping over the elements for every query.",
+        "O(n log n + m)": "Each query needs a binary search, so m must be multiplied by log n.",
+        "O(m log m)": "The queries are not sorted; the log factors come from sorting nums and searching the prefix."
+      },
+      "enabled": true
+    },
+    {
+      "id": "longest-subsequence-with-limited-sum-space-01",
+      "category": "space_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "The sorted copy and the prefix sums take O(___) extra space (excluding the answer).",
+        "Auxiliary space for the prefix sums of canonicalCode: O(___)."
+      ],
+      "answer": "n",
+      "explanation": "One prefix sum per element.",
+      "enabled": true,
+      "acceptedAnswers": [
+        "O(n)",
+        "linear",
+        "N"
+      ]
+    }
+  ],
+  "generatedAt": "2026-10-23T06:18:28Z"
+}

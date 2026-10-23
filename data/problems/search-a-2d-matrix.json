@@ -20,14 +20,14 @@
   ],
   "hints": [],
   "acRate": 54.35,
-  "lastSubmittedAt": "2026-07-08T05:50:57Z",
+  "lastSubmittedAt": "2026-10-09T23:46:39Z",
   "latestSubmission": {
-    "submissionId": "2060068464",
+    "submissionId": "2167717476",
     "language": "Python3",
-    "code": "class Solution:\n    def searchMatrix(self, matrix: List[List[int]], target: int) -> bool:\n        # convert the matrix in hashmap\n        # return if can find\n        # time: o(n) space: o(n)\n        # hmap = {}\n        # for i in range(len(matrix)):\n        #     for j in range(len(matrix[0])):\n        #         hmap[matrix[i][j]] = True\n\n        # return target in hmap\n        \n        [\n            [1,3,5,7],\n            [10,11,16,20],\n            [23,30,34,60]\n        ]\n    \n        # binary search 2 time\n        m, n = len(matrix), len(matrix[0])\n        low, high = 0, m * n  - 1\n        while low <= high:\n            mid = low + (high - low) // 2\n            row, col = mid // n, mid % n\n            if matrix[row][col] == target:\n                return True\n            elif target > matrix[row][col]:\n                low = mid + 1\n            else:\n                high = mid - 1\n\n        return False"
+    "code": "class Solution:\n    def searchMatrix(self, matrix: list[list[int]], target: int) -> bool:\n        m, n = len(matrix), len(matrix[0])\n        lo, hi = 0, m * n - 1\n\n        while lo <= hi:\n            mid = (lo + hi) // 2\n            r = mid // n\n            c = mid % n\n            print(r, c)\n            if matrix[r][c] == target:\n                return True\n            elif matrix[r][c] > target:\n                hi = mid - 1\n            else:\n                lo = mid + 1\n\n        return False"
   },
   "notes": [],
   "source": "leetcode",
   "importedAt": "2026-10-01T13:44:25Z",
-  "lastSyncedAt": "2026-10-01T13:44:25Z"
+  "lastSyncedAt": "2026-10-23T05:55:47Z"
 }

@@ -19,14 +19,14 @@
   ],
   "hints": [],
   "acRate": 61.4,
-  "lastSubmittedAt": "2026-09-14T07:29:40Z",
+  "lastSubmittedAt": "2026-10-20T13:58:03Z",
   "latestSubmission": {
-    "submissionId": "2141319426",
+    "submissionId": "2177119751",
     "language": "Python3",
-    "code": "class Solution:\n    def search(self, nums: List[int], target: int) -> int:\n        low, high = 0, len(nums) - 1\n        ans = -1\n        while low <= high:\n            mid = (high + low) // 2\n\n            if nums[mid] >= target:\n                ans = mid\n                high = mid - 1\n            else:\n                low = mid + 1\n            \n        return ans if nums[ans] == target else -1"
+    "code": "class Solution:\n    def search(self, nums: list[int], target: int) -> int:\n        lo, hi = 0, len(nums) - 1\n\n        while lo <= hi:\n            mid = (lo + hi) // 2\n            if nums[mid] == target:\n                return mid\n            elif nums[mid] > target:\n                hi = mid - 1\n            else:\n                lo = mid + 1\n        return -1"
   },
   "notes": [],
   "source": "leetcode",
   "importedAt": "2026-10-01T00:00:00Z",
-  "lastSyncedAt": "2026-10-01T13:53:37Z"
+  "lastSyncedAt": "2026-10-23T05:55:47Z"
 }

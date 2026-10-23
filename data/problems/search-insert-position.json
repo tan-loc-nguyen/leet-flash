@@ -19,14 +19,14 @@
   ],
   "hints": [],
   "acRate": 52.37,
-  "lastSubmittedAt": "2026-09-14T07:31:07Z",
+  "lastSubmittedAt": "2026-10-20T14:31:03Z",
   "latestSubmission": {
-    "submissionId": "2141320527",
+    "submissionId": "2177147098",
     "language": "Python3",
     "code": "class Solution:\n    def searchInsert(self, nums: List[int], target: int) -> int:\n        n = len(nums)\n        l, r = 0, n - 1\n        ans = n\n\n        while l <= r:\n            mid = (l + r) // 2\n\n            if nums[mid] >= target:\n                ans = mid\n                r -= 1\n            else:\n                l += 1\n        \n        return ans"
   },
   "notes": [],
   "source": "leetcode",
   "importedAt": "2026-10-01T13:44:25Z",
-  "lastSyncedAt": "2026-10-01T13:44:25Z"
+  "lastSyncedAt": "2026-10-23T05:55:47Z"
 }

@@ -1,0 +1,38 @@
+{
+  "leetcodeId": "307",
+  "title": "Range Sum Query - Mutable",
+  "slug": "range-sum-query-mutable",
+  "url": "https://leetcode.com/problems/range-sum-query-mutable/",
+  "difficulty": "Medium",
+  "status": "solved",
+  "premium": false,
+  "tags": [
+    "Array",
+    "Divide and Conquer",
+    "Design",
+    "Binary Indexed Tree",
+    "Segment Tree",
+    "Sqrt Decomposition"
+  ],
+  "problemStatement": "Given an integer array nums, handle multiple queries of the following types:\n\n- Update the value of an element in nums.\n\n- Calculate the sum of the elements of nums between indices left and right inclusive where left <= right.\n\nImplement the NumArray class:\n\n- NumArray(int[] nums) Initializes the object with the integer array nums.\n\n- void update(int index, int val) Updates the value of nums[index] to be val.\n\n- int sumRange(int left, int right) Returns the sum of the elements of nums between indices left and right inclusive (i.e. nums[left] + nums[left + 1] + ... + nums[right]).\n\nExample 1:\n\nInput\n[\"NumArray\", \"sumRange\", \"update\", \"sumRange\"]\n[[[1, 3, 5]], [0, 2], [1, 2], [0, 2]]\nOutput\n[null, 9, null, 8]\n\nExplanation\nNumArray numArray = new NumArray([1, 3, 5]);\nnumArray.sumRange(0, 2); // return 1 + 3 + 5 = 9\nnumArray.update(1, 2);   // nums = [1, 2, 5]\nnumArray.sumRange(0, 2); // return 1 + 2 + 5 = 8\n\nConstraints:\n\n- 1 <= nums.length <= 3 * 10^4\n\n- -100 <= nums[i] <= 100\n\n- 0 <= index < nums.length\n\n- -100 <= val <= 100\n\n- 0 <= left <= right < nums.length\n\n- At most 3 * 10^4 calls will be made to update and sumRange.",
+  "constraints": [
+    "1 <= nums.length <= 3 * 10^4",
+    "-100 <= nums[i] <= 100",
+    "0 <= index < nums.length",
+    "-100 <= val <= 100",
+    "0 <= left <= right < nums.length",
+    "At most 3 * 10^4 calls will be made to update and sumRange."
+  ],
+  "hints": [],
+  "acRate": 43.99,
+  "lastSubmittedAt": "2026-10-18T12:29:15Z",
+  "latestSubmission": {
+    "submissionId": "2175374257",
+    "language": "Python3",
+    "code": "class SegmentTree:\n\n    def __init__(self, nums):\n        self.n = len(nums)\n        self.tree = [0] * 4 * self.n\n        self.buildTree(nums, 0, self.n - 1, 0)\n\n    def buildTree(self, nums, left, right, idx):\n        if left == right:\n            self.tree[idx] = nums[left]\n            return\n        mid = (left + right) // 2\n        self.buildTree(nums, left, mid, 2*idx + 1)\n        self.buildTree(nums, mid + 1, right, 2*idx + 2)\n        self.tree[idx] = self.tree[2 * idx + 1] + self.tree[2 * idx + 2]\n\n    def update(self, left, right, idx, pos, val):\n        if left == right:\n            self.tree[idx] = val\n            return\n        \n        mid = (left + right) // 2\n        if pos <= mid:\n            self.update(left, mid, 2 * idx + 1, pos, val)\n        else:\n            self.update(mid + 1, right, 2 * idx + 2, pos, val)\n        self.tree[idx] = self.tree[2 * idx + 1] + self.tree[2 * idx + 2]\n    \n    def query(self, left, right, idx, qLeft, qRight):\n        # out of range\n        if qRight < left or qLeft > right:\n            return 0\n        \n        if qLeft <= left and right <= qRight:\n            return self.tree[idx]\n        \n        mid = (left + right) // 2\n        resLeft = self.query(left, mid, 2*idx + 1, qLeft, qRight)\n        resRight = self.query(mid + 1, right, 2*idx + 2, qLeft, qRight)\n        return resLeft + resRight\n\nclass NumArray:\n\n    def __init__(self, nums: list[int]):\n        self.tree = SegmentTree(nums)\n\n    def update(self, index: int, val: int) -> None:\n        self.tree.update(0, self.tree.n - 1, 0, index, val)\n\n    def sumRange(self, left: int, right: int) -> int:\n        return self.tree.query(0, self.tree.n - 1, 0, left, right)\n\n\n# Your NumArray object will be instantiated and called as such:\n# obj = NumArray(nums)\n# obj.update(index,val)\n# param_2 = obj.sumRange(left,right)"
+  },
+  "notes": [],
+  "source": "leetcode",
+  "importedAt": "2026-10-23T05:55:47Z",
+  "lastSyncedAt": "2026-10-23T05:55:47Z"
+}

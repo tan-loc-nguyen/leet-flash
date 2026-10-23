@@ -19,14 +19,14 @@
   ],
   "hints": [],
   "acRate": 80.69,
-  "lastSubmittedAt": "2026-09-19T06:32:35Z",
+  "lastSubmittedAt": "2026-10-04T08:40:10Z",
   "latestSubmission": {
-    "submissionId": "2146374662",
+    "submissionId": "2161911138",
     "language": "Python3",
-    "code": "# Definition for a binary tree node.\n# class TreeNode:\n#     def __init__(self, val=0, left=None, right=None):\n#         self.val = val\n#         self.left = left\n#         self.right = right\nclass Solution:\n    def inorderTraversal(self, root: TreeNode | None) -> list[int]:\n        ans = []\n\n        def dfs(root):\n            if not root:\n                return\n            \n            dfs(root.left)\n            ans.append(root.val)\n            dfs(root.right)\n\n        dfs(root)\n        return ans"
+    "code": "# Definition for a binary tree node.\n# class TreeNode:\n#     def __init__(self, val=0, left=None, right=None):\n#         self.val = val\n#         self.left = left\n#         self.right = right\nclass Solution:\n    def inorderTraversal(self, root: TreeNode | None) -> list[int]:\n        ans = []\n\n        def dfs(root):\n            if not root:\n                return root\n            \n            dfs(root.left)\n            ans.append(root.val)\n            dfs(root.right)\n        \n        dfs(root)\n        return ans\n            "
   },
   "notes": [],
   "source": "leetcode",
   "importedAt": "2026-10-01T13:44:25Z",
-  "lastSyncedAt": "2026-10-01T13:44:25Z"
+  "lastSyncedAt": "2026-10-23T05:55:47Z"
 }

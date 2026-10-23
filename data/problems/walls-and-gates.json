@@ -20,14 +20,14 @@
   ],
   "hints": [],
   "acRate": 64.2,
-  "lastSubmittedAt": "2026-07-07T03:21:53Z",
+  "lastSubmittedAt": "2026-10-07T06:47:09Z",
   "latestSubmission": {
-    "submissionId": "2058680541",
+    "submissionId": "2165010623",
     "language": "Python3",
-    "code": "class Solution:\n    def wallsAndGates(self, rooms: List[List[int]]) -> None:\n        \"\"\"\n        Do not return anything, modify rooms in-place instead.\n        \"\"\"\n        # start with gates\n        # Then reach out to all rooms from each gate\n        # save the val when find the smallest\n        m, n = len(rooms), len(rooms[0])\n        DIR = [0, 1, 0, -1, 0]\n        queue = collections.deque()\n\n        for i in range(m):\n            for j in range(n):\n                if rooms[i][j] == 0:\n                    queue.append((i, j))\n\n        span = 1\n        seen = set(queue)\n        while queue:\n            k = len(queue)\n            for _ in range(k):\n                node = queue.popleft()\n                for i in range(4):\n                    nr, nc = node[0] + DIR[i], node[1] + DIR[i + 1]\n                    if 0 <= nr < m and 0 <= nc < n and (nr, nc) not in seen and rooms[nr][nc] > 0:\n                        rooms[nr][nc] = min(rooms[nr][nc], span)\n                        queue.append((nr, nc))\n                        seen.add((nr, nc))\n\n            span += 1\n        \n        return\n"
+    "code": "class Solution:\n    def wallsAndGates(self, rooms: list[list[int]]) -> None:\n        \"\"\"\n        Do not return anything, modify rooms in-place instead.\n        \"\"\"\n        m, n = len(rooms), len(rooms[0])\n        DIRS = [(-1, 0), (0, -1), (1, 0), (0, 1)]\n        queue = deque()\n        ROOM = 2147483647\n\n        for i in range(m):\n            for j in range(n):\n                if rooms[i][j] == 0:\n                    queue.append((i, j))\n        \n        dis = 1\n        while queue:\n            k = len(queue)\n            for _ in range(k):\n                r, c = queue.popleft()\n                for dr, dc in DIRS:\n                    nr, nc = r + dr, c + dc\n                    if 0 <= nr < m and 0 <= nc < n and rooms[nr][nc] != -1 and rooms[nr][nc] == ROOM:\n                        rooms[nr][nc] = dis\n                        queue.append((nr, nc))\n            dis += 1\n        \n"
   },
   "notes": [],
   "source": "leetcode",
   "importedAt": "2026-10-01T13:44:25Z",
-  "lastSyncedAt": "2026-10-01T13:44:25Z"
+  "lastSyncedAt": "2026-10-23T05:55:47Z"
 }

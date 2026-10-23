@@ -1,0 +1,314 @@
+{
+  "schemaVersion": 1,
+  "problemSlug": "median-of-two-sorted-arrays",
+  "summary": "Given two sorted arrays, return their combined median in logarithmic time.",
+  "patterns": [
+    "Binary Search",
+    "Divide and Conquer"
+  ],
+  "mainInsight": "The median is a balanced cut of the merged data. Fixing how many elements the left half takes from the shorter array fixes the cut in the other array, and two cross comparisons say whether to move that count up or down.",
+  "invariant": "The left half always has (m + n + 1) // 2 elements; the search keeps the correct i inside [lo, hi].",
+  "canonicalApproach": "Binary search on the partition of the shorter array",
+  "approaches": [
+    {
+      "name": "Merge and index",
+      "summary": "Merge both arrays like merge sort and read the middle one or two elements.",
+      "timeComplexity": "O(m + n)",
+      "spaceComplexity": "O(m + n)",
+      "strengths": [
+        "Simple",
+        "Easy to verify"
+      ],
+      "weaknesses": [
+        "Violates the required logarithmic time"
+      ],
+      "interviewRelevance": "Good baseline; not the final answer."
+    },
+    {
+      "name": "Two pointers to the middle",
+      "summary": "Advance two pointers (m + n) // 2 steps without storing the merge.",
+      "timeComplexity": "O(m + n)",
+      "spaceComplexity": "O(1)",
+      "strengths": [
+        "Constant space"
+      ],
+      "weaknesses": [
+        "Still linear time"
+      ],
+      "interviewRelevance": "Shows you can save space, but the time requirement is still unmet."
+    },
+    {
+      "name": "Binary search on the partition of the shorter array",
+      "summary": "Binary search i = elements of the shorter array in the left half; j = half - i; check a_left <= b_right and b_left <= a_right.",
+      "timeComplexity": "O(log min(m, n))",
+      "spaceComplexity": "O(1)",
+      "strengths": [
+        "Meets the requirement",
+        "Constant space"
+      ],
+      "weaknesses": [
+        "Boundary sentinels and off-by-one are easy to get wrong"
+      ],
+      "interviewRelevance": "The expected answer for this Hard problem."
+    }
+  ],
+  "personalSolution": {
+    "approach": "Merge into a new list with two pointers",
+    "timeComplexity": "O(m + n)",
+    "spaceComplexity": "O(m + n)",
+    "isOptimal": false,
+    "notes": "Correct but linear in time and space; the statement requires logarithmic time. Practise the partition binary search on the shorter array."
+  },
+  "canonicalCode": "class Solution:\n    def findMedianSortedArrays(self, nums1: list[int], nums2: list[int]) -> float:\n        a, b = nums1, nums2\n        if len(a) > len(b):\n            a, b = b, a                    # binary search over the shorter array\n        m, n = len(a), len(b)\n        half = (m + n + 1) // 2            # size of the combined left half (extra element goes left)\n        lo, hi = 0, m\n        while lo <= hi:                    # O(log min(m, n)) iterations\n            i = (lo + hi) // 2             # elements taken from a for the left half\n            j = half - i                   # the rest of the left half comes from b\n            a_left = a[i - 1] if i > 0 else float(\"-inf\")\n            a_right = a[i] if i < m else float(\"inf\")\n            b_left = b[j - 1] if j > 0 else float(\"-inf\")\n            b_right = b[j] if j < n else float(\"inf\")\n            if a_left <= b_right and b_left <= a_right:      # valid cut\n                if (m + n) % 2:\n                    return float(max(a_left, b_left))\n                return (max(a_left, b_left) + min(a_right, b_right)) / 2\n            if a_left > b_right:\n                hi = i - 1                 # took too many from a\n            else:\n                lo = i + 1                 # took too few from a\n",
+  "commonMistakes": [
+    "Binary searching the longer array so j goes negative.",
+    "Forgetting the infinite sentinels when a cut lands on an array edge.",
+    "Using half = (m + n) // 2 and mishandling the odd case.",
+    "Returning an int instead of a float for the odd case."
+  ],
+  "edgeCases": [
+    "One array empty.",
+    "Total length 1.",
+    "All of one array smaller than all of the other.",
+    "Duplicate values across both arrays."
+  ],
+  "cards": [
+    {
+      "id": "recog-median-of-two-sorted-arrays",
+      "category": "pattern",
+      "type": "free_recall",
+      "promptVariants": [
+        "Which technique solves this problem, and what in the statement or constraints points to it?",
+        "Name the technique you would use here and the clue in the problem that tells you.",
+        "What approach fits this problem, and which part of the statement gives it away?"
+      ],
+      "answer": "Binary search for the partition point of the shorter array. Clue: Both arrays are sorted and the statement demands logarithmic time in the combined size, so a merge is not allowed and each step must discard half of the candidates.",
+      "keyPoints": [
+        "Both arrays are sorted and the statement demands logarithmic time in the combined size, so a merge is not allowed and each step must discard half of the candidates."
+      ],
+      "explanation": "Sorted inputs plus a logarithmic requirement rule out merging; choosing how many elements the left half takes from each array is a single number you can binary search.",
+      "rubric": {
+        "technique": "Binary search for the partition point of the shorter array",
+        "aliases": [
+          "binary search on the cut position",
+          "partition both arrays into balanced halves",
+          "binary search on how many elements come from the first array",
+          "kth element by discarding halves"
+        ],
+        "alsoValid": [
+          {
+            "name": "Merge the two arrays and read the middle",
+            "note": "correct, but linear time; the statement demands logarithmic time"
+          },
+          {
+            "name": "Two pointers advancing to the middle without building the merge",
+            "note": "correct with constant space, but still linear time"
+          }
+        ],
+        "clueTypes": [
+          "sorted_or_ordered",
+          "divide_halves"
+        ],
+        "clue": "Both arrays are sorted and the statement demands logarithmic time in the combined size, so a merge is not allowed and each step must discard half of the candidates."
+      }
+    },
+    {
+      "id": "median-of-two-sorted-arrays-insight-01",
+      "category": "main_insight",
+      "type": "free_recall",
+      "promptVariants": [
+        "Why does binary searching the cut in one array determine the whole partition?",
+        "Once you pick i elements from the shorter array, why is the cut in the other array forced?"
+      ],
+      "answer": "The median splits the merged data into a left half of fixed size (m + n + 1) // 2 and a right half. If i elements of a are in the left half, exactly j = half - i elements of b must be too, so there is only one free variable. A cut is valid when a[i-1] <= b[j] and b[j-1] <= a[i], and that test tells you which direction to move i, which makes it binary searchable.",
+      "keyPoints": [
+        "Left half has fixed size",
+        "j = half - i is forced",
+        "Validity test says which way to move i"
+      ],
+      "explanation": "One degree of freedom plus a directional validity test is exactly what binary search needs.",
+      "enabled": true
+    },
+    {
+      "id": "median-of-two-sorted-arrays-invariant-01",
+      "category": "invariant",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "Which condition confirms that cuts i (in a) and j (in b) give a correct partition?",
+        "When has the binary search found the right cut?"
+      ],
+      "options": [
+        "a[i-1] <= b[j] and b[j-1] <= a[i]",
+        "a[i-1] <= a[i] and b[j-1] <= b[j]",
+        "a[i] == b[j] at the two cut positions",
+        "a[i-1] + b[j-1] <= a[i] + b[j] at the cuts"
+      ],
+      "answer": "a[i-1] <= b[j] and b[j-1] <= a[i]",
+      "explanation": "Each array is already sorted internally, so the only thing that can go wrong is a left-half element exceeding a right-half element from the other array. Those are the two cross comparisons.",
+      "incorrectOptionExplanations": {
+        "a[i-1] <= a[i] and b[j-1] <= b[j]": "True for any cut because each array is sorted; it says nothing about how the arrays interleave.",
+        "a[i] == b[j] at the two cut positions": "Values can be distinct and the cut still correct; equality is not required.",
+        "a[i-1] + b[j-1] <= a[i] + b[j] at the cuts": "A sum comparison does not guarantee every left element is at most every right element."
+      },
+      "enabled": true
+    },
+    {
+      "id": "median-of-two-sorted-arrays-impl-01",
+      "category": "implementation_detail",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "Why does the canonical code swap so that it searches the shorter array?",
+        "What goes wrong if you binary search the longer array instead?"
+      ],
+      "options": [
+        "It keeps j = half - i inside [0, n] and shrinks the search to log min(m, n)",
+        "It guarantees that both middle values always come from the shorter array",
+        "It removes the need for infinite sentinels at the array edges",
+        "It lets you skip the odd and even length cases"
+      ],
+      "answer": "It keeps j = half - i inside [0, n] and shrinks the search to log min(m, n)",
+      "explanation": "If a is longer, i can be large enough that j = half - i becomes negative. Searching the shorter array keeps both cuts legal and makes the loop run only log min(m, n) times.",
+      "incorrectOptionExplanations": {
+        "It guarantees that both middle values always come from the shorter array": "Medians come from wherever the sorted merge puts them; the swap only chooses which array to search.",
+        "It removes the need for infinite sentinels at the array edges": "Cuts can still land at the edges of either array, so sentinels are still needed.",
+        "It lets you skip the odd and even length cases": "Odd and even totals are still handled separately at the end."
+      },
+      "enabled": true
+    },
+    {
+      "id": "median-of-two-sorted-arrays-impl-02",
+      "category": "implementation_detail",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "Why is half computed as (m + n + 1) // 2?",
+        "What does the + 1 in the size of the left half accomplish?"
+      ],
+      "options": [
+        "An odd total puts the extra element on the left, so max(left side) is the median",
+        "It rounds up so the right half is never empty when the total m + n is even",
+        "It forces the left half to contain one more element of a than of b",
+        "It guards against i = 0, which would make a_left undefined"
+      ],
+      "answer": "An odd total puts the extra element on the left, so max(left side) is the median",
+      "explanation": "With an odd total the middle element belongs to the left half, so the answer is max(a_left, b_left). With an even total the left half is exactly half and you average the two neighbours of the cut.",
+      "incorrectOptionExplanations": {
+        "It rounds up so the right half is never empty when the total m + n is even": "For an even total (m + n + 1) // 2 equals (m + n) // 2, so nothing changes there.",
+        "It forces the left half to contain one more element of a than of b": "The split between a and b is decided by the binary search, not by half.",
+        "It guards against i = 0, which would make a_left undefined": "That is the job of the infinite sentinels, not of the + 1."
+      },
+      "enabled": true
+    },
+    {
+      "id": "median-of-two-sorted-arrays-impl-03",
+      "category": "implementation_detail",
+      "type": "fill_blank",
+      "promptVariants": [
+        "When i == 0 there is no element a[i-1], so a_left is set to ___ to keep the comparison a_left <= b_right true.",
+        "Edge of the array: an empty left side of a is represented by a_left = ___ so it never blocks a valid cut."
+      ],
+      "answer": "negative infinity",
+      "explanation": "A missing left element must never violate a_left <= b_right, so it behaves like the smallest possible value. Symmetrically a missing right element is positive infinity.",
+      "enabled": true,
+      "acceptedAnswers": [
+        "-inf",
+        "-infinity",
+        "float('-inf')",
+        "minus infinity",
+        "-∞"
+      ]
+    },
+    {
+      "id": "median-of-two-sorted-arrays-code-01",
+      "category": "code_reasoning",
+      "type": "free_recall",
+      "promptVariants": [
+        "Which inputs force the sentinels in the canonical code to matter? Give two and the result for each.",
+        "Name inputs that reach the array edges (i == 0 or i == m), and say what the code returns for them."
+      ],
+      "answer": "One array empty, e.g. nums1 = [] and nums2 = [2, 3] returns 2.5, or every element of one array smaller than every element of the other, e.g. [1, 2] and [10, 20] returns 6.0. In both cases the valid cut sits at an edge of one array, so a_left or a_right is a sentinel.",
+      "keyPoints": [
+        "One array empty",
+        "Arrays that do not interleave",
+        "Cut lands on an edge so a sentinel is compared"
+      ],
+      "explanation": "Without sentinels, a[i-1] or a[i] would raise IndexError (or wrongly wrap around with a[-1]) on exactly these inputs.",
+      "enabled": true
+    },
+    {
+      "id": "median-of-two-sorted-arrays-code-02",
+      "category": "code_reasoning",
+      "type": "code_question",
+      "promptVariants": [
+        "What happens if the two update branches are swapped (hi = i - 1 when a_left <= b_right, lo = i + 1 otherwise)?",
+        "Why must `a_left > b_right` move hi down?"
+      ],
+      "code": "if a_left > b_right:\n    hi = i - 1\nelse:\n    lo = i + 1",
+      "answer": "a_left > b_right means a[i-1] belongs on the right of the cut, so we took too many elements from a and must decrease i (hi = i - 1). Swapped, the search moves away from the valid cut, the range empties, and the function falls off the loop and returns None.",
+      "keyPoints": [
+        "a_left > b_right means i is too large",
+        "Decrease i by lowering hi",
+        "Swapped version never converges and returns None"
+      ],
+      "explanation": "The failing cross-comparison tells you which side is over-represented in the left half.",
+      "enabled": true
+    },
+    {
+      "id": "median-of-two-sorted-arrays-time-01",
+      "category": "time_complexity",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "What is the tightest time complexity of the canonical code?",
+        "Derive the running time from the loop in canonicalCode."
+      ],
+      "options": [
+        "O(log min(m, n))",
+        "O(log(m + n))",
+        "O(min(m, n))",
+        "O(m + n)"
+      ],
+      "answer": "O(log min(m, n))",
+      "explanation": "The loop halves the range [0, m] of the shorter array, and every iteration does a constant number of comparisons. O(log(m + n)) is a valid but looser bound.",
+      "incorrectOptionExplanations": {
+        "O(log(m + n))": "An upper bound, since min(m, n) <= m + n, but not the tightest: only the shorter array is searched.",
+        "O(min(m, n))": "That would be a linear scan of the shorter array; the range halves each iteration.",
+        "O(m + n)": "That is the cost of merging, which is exactly what the binary search avoids."
+      },
+      "enabled": true
+    },
+    {
+      "id": "median-of-two-sorted-arrays-space-01",
+      "category": "space_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "The canonical code keeps only a handful of indices and sentinel values, so its extra space is O(___).",
+        "Extra space of the partition binary search: O(___)."
+      ],
+      "answer": "1",
+      "explanation": "No arrays are copied or merged; only lo, hi, i, j and four boundary values are stored.",
+      "enabled": true,
+      "acceptedAnswers": [
+        "O(1)",
+        "constant",
+        "1"
+      ]
+    },
+    {
+      "id": "median-of-two-sorted-arrays-alt-01",
+      "category": "alternative_approach",
+      "type": "free_recall",
+      "promptVariants": [
+        "Your accepted solution merges both arrays into a list. What is its cost, and how would you improve the space without changing the time?",
+        "Why is merging not an accepted final answer for this problem?"
+      ],
+      "answer": "Merging builds a combined list: O(m + n) time and O(m + n) space, so it violates the logarithmic time requirement. Keeping two pointers and counting only up to the middle drops the space to O(1) but the time stays linear, so only the binary search on the partition meets the requirement.",
+      "keyPoints": [
+        "Merge is linear time",
+        "Two pointers to the middle saves space only",
+        "Binary search on partition needed for log time"
+      ],
+      "explanation": "It is a good baseline to mention first and to verify the fast solution against.",
+      "enabled": true
+    }
+  ],
+  "generatedAt": "2026-10-23T06:09:41Z"
+}

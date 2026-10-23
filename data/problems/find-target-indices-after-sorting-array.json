@@ -1,0 +1,34 @@
+{
+  "leetcodeId": "2089",
+  "title": "Find Target Indices After Sorting Array",
+  "slug": "find-target-indices-after-sorting-array",
+  "url": "https://leetcode.com/problems/find-target-indices-after-sorting-array/",
+  "difficulty": "Easy",
+  "status": "solved",
+  "premium": false,
+  "tags": [
+    "Array",
+    "Binary Search",
+    "Sorting"
+  ],
+  "problemStatement": "You are given a 0-indexed integer array nums and a target element target.\n\nA target index is an index i such that nums[i] == target.\n\nReturn a list of the target indices of nums after sorting nums in non-decreasing order. If there are no target indices, return an empty list. The returned list must be sorted in increasing order.\n\nExample 1:\n\nInput: nums = [1,2,5,2,3], target = 2\nOutput: [1,2]\nExplanation: After sorting, nums is [1,2,2,3,5].\nThe indices where nums[i] == 2 are 1 and 2.\n\nExample 2:\n\nInput: nums = [1,2,5,2,3], target = 3\nOutput: [3]\nExplanation: After sorting, nums is [1,2,2,3,5].\nThe index where nums[i] == 3 is 3.\n\nExample 3:\n\nInput: nums = [1,2,5,2,3], target = 5\nOutput: [4]\nExplanation: After sorting, nums is [1,2,2,3,5].\nThe index where nums[i] == 5 is 4.\n\nConstraints:\n\n- 1 <= nums.length <= 100\n\n- 1 <= nums[i], target <= 100",
+  "constraints": [
+    "1 <= nums.length <= 100",
+    "1 <= nums[i], target <= 100"
+  ],
+  "hints": [
+    "Try \"sorting\" the array first.",
+    "Now find all indices in the array whose values are equal to target."
+  ],
+  "acRate": 82.28,
+  "lastSubmittedAt": "2026-10-08T12:28:17Z",
+  "latestSubmission": {
+    "submissionId": "2166303384",
+    "language": "Python3",
+    "code": "class Solution:\n    def targetIndices(self, nums: list[int], target: int) -> list[int]:\n        count = 0\n        lessThanTarget = 0\n        for num in nums:\n            if num == target:\n                count += 1\n            elif num < target:\n                lessThanTarget += 1\n\n        return [i for i in range(lessThanTarget, lessThanTarget + count)]"
+  },
+  "notes": [],
+  "source": "leetcode",
+  "importedAt": "2026-10-23T05:55:47Z",
+  "lastSyncedAt": "2026-10-23T05:55:47Z"
+}

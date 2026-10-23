@@ -1,0 +1,37 @@
+{
+  "leetcodeId": "911",
+  "title": "Online Election",
+  "slug": "online-election",
+  "url": "https://leetcode.com/problems/online-election/",
+  "difficulty": "Medium",
+  "status": "solved",
+  "premium": false,
+  "tags": [
+    "Array",
+    "Hash Table",
+    "Binary Search",
+    "Design"
+  ],
+  "problemStatement": "You are given two integer arrays persons and times. In an election, the i^th vote was cast for persons[i] at time times[i].\n\nFor each query at a time t, find the person that was leading the election at time t. Votes cast at time t will count towards our query. In the case of a tie, the most recent vote (among tied candidates) wins.\n\nImplement the TopVotedCandidate class:\n\n- TopVotedCandidate(int[] persons, int[] times) Initializes the object with the persons and times arrays.\n\n- int q(int t) Returns the number of the person that was leading the election at time t according to the mentioned rules.\n\nExample 1:\n\nInput\n[\"TopVotedCandidate\", \"q\", \"q\", \"q\", \"q\", \"q\", \"q\"]\n[[[0, 1, 1, 0, 0, 1, 0], [0, 5, 10, 15, 20, 25, 30]], [3], [12], [25], [15], [24], [8]]\nOutput\n[null, 0, 1, 1, 0, 0, 1]\n\nExplanation\nTopVotedCandidate topVotedCandidate = new TopVotedCandidate([0, 1, 1, 0, 0, 1, 0], [0, 5, 10, 15, 20, 25, 30]);\ntopVotedCandidate.q(3); // return 0, At time 3, the votes are [0], and 0 is leading.\ntopVotedCandidate.q(12); // return 1, At time 12, the votes are [0,1,1], and 1 is leading.\ntopVotedCandidate.q(25); // return 1, At time 25, the votes are [0,1,1,0,0,1], and 1 is leading (as ties go to the most recent vote.)\ntopVotedCandidate.q(15); // return 0\ntopVotedCandidate.q(24); // return 0\ntopVotedCandidate.q(8); // return 1\n\nConstraints:\n\n- 1 <= persons.length <= 5000\n\n- times.length == persons.length\n\n- 0 <= persons[i] < persons.length\n\n- 0 <= times[i] <= 10^9\n\n- times is sorted in a strictly increasing order.\n\n- times[0] <= t <= 10^9\n\n- At most 10^4 calls will be made to q.",
+  "constraints": [
+    "1 <= persons.length <= 5000",
+    "times.length == persons.length",
+    "0 <= persons[i] < persons.length",
+    "0 <= times[i] <= 10^9",
+    "times is sorted in a strictly increasing order.",
+    "times[0] <= t <= 10^9",
+    "At most 10^4 calls will be made to q."
+  ],
+  "hints": [],
+  "acRate": 53.29,
+  "lastSubmittedAt": "2026-10-16T11:03:17Z",
+  "latestSubmission": {
+    "submissionId": "2173769573",
+    "language": "Python3",
+    "code": "class TopVotedCandidate:\n\n    def __init__(self, persons: list[int], times: list[int]):\n        self.records = defaultdict(int)\n        self.times = times\n\n        votes = defaultdict(int)\n        n = len(times)\n        winner = persons[0]\n        maxVotes = 1\n        for i in range(n):\n            votes[persons[i]] += 1\n\n            if votes[persons[i]] >= maxVotes:\n                winner = persons[i]\n                maxVotes = votes[persons[i]]\n\n            self.records[times[i]] = winner\n\n    def q(self, t: int) -> int:\n        lo, hi = 0, len(self.times) - 1\n        key = -1\n        while lo <= hi:\n            mid = (lo + hi) // 2\n\n            if self.times[mid] <= t:\n                key = self.times[mid]\n                lo = mid + 1\n            else:\n                hi = mid - 1\n\n        return self.records[key]\n\n\n# Your TopVotedCandidate object will be instantiated and called as such:\n# obj = TopVotedCandidate(persons, times)\n# param_1 = obj.q(t)"
+  },
+  "notes": [],
+  "source": "leetcode",
+  "importedAt": "2026-10-23T05:55:47Z",
+  "lastSyncedAt": "2026-10-23T05:55:47Z"
+}

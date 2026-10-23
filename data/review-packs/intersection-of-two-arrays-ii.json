@@ -1,0 +1,276 @@
+{
+  "schemaVersion": 1,
+  "problemSlug": "intersection-of-two-arrays-ii",
+  "summary": "Return the multiset intersection of two integer arrays (each value as many times as it appears in both).",
+  "patterns": [
+    "Array / Hashing"
+  ],
+  "mainInsight": "A value should appear min(count1, count2) times. Count one array and consume the counts while scanning the other.",
+  "invariant": "count[x] is the number of copies of x from the first array that are still unmatched.",
+  "canonicalApproach": "Counter of the smaller array",
+  "approaches": [
+    {
+      "name": "Nested loops with removal",
+      "summary": "For each element of nums1 find and remove one equal element from nums2.",
+      "timeComplexity": "O(m * n)",
+      "spaceComplexity": "O(1)",
+      "strengths": [
+        "No extra structure"
+      ],
+      "weaknesses": [
+        "Quadratic"
+      ],
+      "interviewRelevance": "Baseline only."
+    },
+    {
+      "name": "Sort and two pointers",
+      "summary": "Sort both, advance the pointer at the smaller value, emit on equality.",
+      "timeComplexity": "O(m log m + n log n)",
+      "spaceComplexity": "O(1) extra",
+      "strengths": [
+        "Constant extra space",
+        "Great when already sorted"
+      ],
+      "weaknesses": [
+        "Sorting cost otherwise"
+      ],
+      "interviewRelevance": "The follow-up answer for sorted input."
+    },
+    {
+      "name": "Counter of the smaller array",
+      "summary": "Count the smaller array and decrement while scanning the larger.",
+      "timeComplexity": "O(m + n)",
+      "spaceComplexity": "O(min(m, n))",
+      "strengths": [
+        "Linear",
+        "Short"
+      ],
+      "weaknesses": [
+        "Needs memory for the counter"
+      ],
+      "interviewRelevance": "The expected answer."
+    }
+  ],
+  "personalSolution": {
+    "approach": "Counter of nums1, scan nums2 and decrement",
+    "timeComplexity": "O(m + n)",
+    "spaceComplexity": "O(m)",
+    "isOptimal": true,
+    "notes": "Optimal in time. The intended 'count the smaller array' swap is a no-op in your code because the recursive call's result is discarded; use `nums1, nums2 = nums2, nums1`."
+  },
+  "canonicalCode": "class Solution:\n    def intersect(self, nums1: list[int], nums2: list[int]) -> list[int]:\n        if len(nums1) > len(nums2):\n            nums1, nums2 = nums2, nums1    # count the smaller array to keep the map small\n        count = Counter(nums1)             # O(min(m, n)) time and space\n        res = []\n        for x in nums2:                    # one pass over the larger array\n            if count[x] > 0:               # an unmatched copy of x is still available\n                res.append(x)\n                count[x] -= 1              # consume it so x is never reported more than min(count1, count2) times\n        return res\n",
+  "commonMistakes": [
+    "Using sets, which drops multiplicity.",
+    "Forgetting to decrement the counter.",
+    "Indexing count[x] on a plain dict and getting a KeyError."
+  ],
+  "edgeCases": [
+    "No common elements.",
+    "One array fully contained in the other.",
+    "Heavily repeated values.",
+    "Arrays of very different lengths."
+  ],
+  "cards": [
+    {
+      "id": "recog-intersection-of-two-arrays-ii",
+      "category": "pattern",
+      "type": "free_recall",
+      "promptVariants": [
+        "Which technique solves this problem, and what in the statement or constraints points to it?",
+        "Name the technique you would use here and the clue in the problem that tells you.",
+        "What approach fits this problem, and which part of the statement gives it away?"
+      ],
+      "answer": "Hash map of counts: count one array, then consume the counts while scanning the other. Clue: The result must contain each value as many times as it appears in both arrays, so multiplicities matter and counting values beats comparing pairs.",
+      "keyPoints": [
+        "The result must contain each value as many times as it appears in both arrays, so multiplicities matter and counting values beats comparing pairs."
+      ],
+      "explanation": "Multiplicity-aware intersection is min(count1[x], count2[x]); a counter consumed during the scan produces exactly that.",
+      "rubric": {
+        "technique": "Hash map of counts: count one array, then consume the counts while scanning the other",
+        "aliases": [
+          "counter",
+          "frequency map",
+          "hash map multiset",
+          "count and decrement",
+          "multiset intersection"
+        ],
+        "alsoValid": [
+          {
+            "name": "Sort both arrays and walk two pointers",
+            "note": "correct, but costs O(n log n) time unless the arrays are already sorted"
+          },
+          {
+            "name": "For each element of one array search and remove it from the other",
+            "note": "correct, but quadratic"
+          }
+        ],
+        "clueTypes": [
+          "lookup_frequency"
+        ],
+        "clue": "The result must contain each value as many times as it appears in both arrays, so multiplicities matter and counting values beats comparing pairs."
+      }
+    },
+    {
+      "id": "intersection-of-two-arrays-ii-insight-01",
+      "category": "main_insight",
+      "type": "free_recall",
+      "promptVariants": [
+        "Why does decrementing the counter give the right number of copies?",
+        "What does the count map represent while scanning the second array?"
+      ],
+      "answer": "count[x] is the number of copies of x in the first array that have not been matched yet. Each match consumes one, so x is reported at most count1[x] times, and it is only reported while the second array still supplies copies, so the total is min(count1[x], count2[x]).",
+      "keyPoints": [
+        "count[x] = unmatched copies",
+        "Each match decrements",
+        "Result is the minimum of the two counts"
+      ],
+      "explanation": "The decrement is what turns a set intersection into a multiset intersection.",
+      "enabled": true
+    },
+    {
+      "id": "intersection-of-two-arrays-ii-why-01",
+      "category": "why_not",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "Why is the set-based solution from Intersection of Two Arrays I wrong here?",
+        "What input breaks `list(set(nums1) & set(nums2))`?"
+      ],
+      "options": [
+        "Sets drop multiplicity: [3, 3, 3] and [3, 3] give [3] instead of [3, 3]",
+        "Sets lose the order of elements, which the output must preserve",
+        "Sets cannot hold duplicates of different arrays at the same time",
+        "Sets make the lookup linear instead of constant on average"
+      ],
+      "answer": "Sets drop multiplicity: [3, 3, 3] and [3, 3] give [3] instead of [3, 3]",
+      "explanation": "Each value is stored once in a set, so how many times it occurs is lost. The expected answer is min(3, 2) = 2 copies of 3.",
+      "incorrectOptionExplanations": {
+        "Sets lose the order of elements, which the output must preserve": "The output may be in any order.",
+        "Sets cannot hold duplicates of different arrays at the same time": "Two separate sets can each hold the value; the problem is the count.",
+        "Sets make the lookup linear instead of constant on average": "Set lookups are O(1) on average; speed is not the issue."
+      },
+      "enabled": true
+    },
+    {
+      "id": "intersection-of-two-arrays-ii-edge-01",
+      "category": "edge_case",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "Which input exposes a solution that checks count[x] > 0 but never decrements it?",
+        "If the decrement is forgotten, which test fails?"
+      ],
+      "options": [
+        "nums1 = [1, 2], nums2 = [2, 2, 2] (expected [2])",
+        "nums1 = [4, 5], nums2 = [6, 7] (expected [])",
+        "nums1 = [8], nums2 = [8] (expected [8])",
+        "nums1 = [1, 1], nums2 = [1, 1] (expected [1, 1])"
+      ],
+      "answer": "nums1 = [1, 2], nums2 = [2, 2, 2] (expected [2])",
+      "explanation": "Without the decrement every 2 in nums2 matches the single 2 in nums1, giving [2, 2, 2]. The other tests either have no overlap or equal counts on both sides, so they pass anyway.",
+      "incorrectOptionExplanations": {
+        "nums1 = [4, 5], nums2 = [6, 7] (expected [])": "No common values, so no matches either way.",
+        "nums1 = [8], nums2 = [8] (expected [8])": "One copy on each side matches once regardless.",
+        "nums1 = [1, 1], nums2 = [1, 1] (expected [1, 1])": "Equal counts: the missing decrement is invisible."
+      },
+      "enabled": true
+    },
+    {
+      "id": "intersection-of-two-arrays-ii-code-01",
+      "category": "code_reasoning",
+      "type": "code_question",
+      "promptVariants": [
+        "What does the first `if` in your solution actually do?",
+        "Does `self.intersect(nums2, nums1)` swap the arrays in your code?"
+      ],
+      "code": "def intersect(self, nums1, nums2):\n    if len(nums1) > len(nums2):\n        self.intersect(nums2, nums1)\n\n    count = Counter(nums1)",
+      "answer": "Nothing useful: the recursive call is made but its return value is discarded and nums1 and nums2 are not reassigned, so the code still counts nums1 (possibly the larger array) and the swapped call just doubles the work. To count the smaller array use `nums1, nums2 = nums2, nums1`.",
+      "keyPoints": [
+        "Return value discarded",
+        "No swap happens",
+        "Use tuple assignment to swap"
+      ],
+      "explanation": "Results are still correct, but the intended space saving is lost and the work is duplicated.",
+      "enabled": true
+    },
+    {
+      "id": "intersection-of-two-arrays-ii-time-01",
+      "category": "time_complexity",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "What is the time complexity of the canonical code for arrays of sizes m and n?",
+        "Derive the running time from canonicalCode."
+      ],
+      "options": [
+        "O(m + n)",
+        "O(m * n)",
+        "O((m + n) log(m + n))",
+        "O(min(m, n))"
+      ],
+      "answer": "O(m + n)",
+      "explanation": "Building the counter touches every element of the smaller array and the loop touches every element of the larger one; dictionary operations are O(1) on average.",
+      "incorrectOptionExplanations": {
+        "O(m * n)": "That is nested scanning; the counter replaces it with constant-time lookups.",
+        "O((m + n) log(m + n))": "There is no sorting in the hash approach.",
+        "O(min(m, n))": "The loop still reads all of the larger array."
+      },
+      "enabled": true
+    },
+    {
+      "id": "intersection-of-two-arrays-ii-space-01",
+      "category": "space_complexity",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "What is the extra space (excluding the output) when the smaller array is counted?",
+        "How does swapping so the smaller array is counted help space?"
+      ],
+      "options": [
+        "O(min(m, n)) for the counter",
+        "O(m + n) because both arrays are counted",
+        "O(1) because only indices are used",
+        "O(max(m, n)) for the larger array's counter"
+      ],
+      "answer": "O(min(m, n)) for the counter",
+      "explanation": "Only one array is stored in the map, and choosing the smaller one bounds it by min(m, n).",
+      "incorrectOptionExplanations": {
+        "O(m + n) because both arrays are counted": "The larger array is only scanned, never counted.",
+        "O(1) because only indices are used": "The Counter holds up to min(m, n) distinct keys.",
+        "O(max(m, n)) for the larger array's counter": "The code counts the smaller array on purpose."
+      },
+      "enabled": true
+    },
+    {
+      "id": "intersection-of-two-arrays-ii-alt-01",
+      "category": "alternative_approach",
+      "type": "free_recall",
+      "promptVariants": [
+        "Follow-up: what if both arrays are already sorted?",
+        "How would you exploit sorted input here?"
+      ],
+      "answer": "Use two pointers: advance the pointer pointing at the smaller value, and on equality append the value and advance both. This is linear time with constant extra space (excluding the output) and needs no hash map.",
+      "keyPoints": [
+        "Two pointers",
+        "Equal: append and advance both",
+        "Constant extra space"
+      ],
+      "explanation": "Sortedness replaces hashing with ordered comparison.",
+      "enabled": true
+    },
+    {
+      "id": "intersection-of-two-arrays-ii-alt-02",
+      "category": "alternative_approach",
+      "type": "free_recall",
+      "promptVariants": [
+        "Follow-up: nums2 is on disk and cannot be loaded into memory at once. What do you do?",
+        "How do you handle a large nums2 stored on disk?"
+      ],
+      "answer": "If nums1 fits in memory, build its counter and stream nums2 in chunks, matching and decrementing as you read. If neither fits, hash-partition both arrays by value into buckets on disk (equal values land in the same bucket) and intersect each pair of buckets in memory, or use an external sort followed by the two-pointer merge.",
+      "keyPoints": [
+        "Count the array that fits, stream the other",
+        "Partition both by hash if neither fits",
+        "External sort + merge as alternative"
+      ],
+      "explanation": "The counter only needs the smaller side in memory; the other side can be a stream.",
+      "enabled": true
+    }
+  ],
+  "generatedAt": "2026-10-23T06:09:41Z"
+}

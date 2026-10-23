@@ -1,0 +1,274 @@
+{
+  "schemaVersion": 1,
+  "problemSlug": "3sum-with-multiplicity",
+  "summary": "Count index triples i < j < k with arr[i] + arr[j] + arr[k] == target, modulo 10^9 + 7.",
+  "patterns": [
+    "Array / Hashing",
+    "Two Pointers"
+  ],
+  "mainInsight": "Count how many times each value occurs, enumerate sorted distinct value triples a <= b <= c that sum to the target, and multiply the number of ways to pick copies of each value.",
+  "invariant": "Each value triple is visited exactly once, in the order a <= b <= c.",
+  "canonicalApproach": "Value counts with combinatorics over distinct values",
+  "approaches": [
+    {
+      "name": "Brute force",
+      "summary": "Check every index triple.",
+      "timeComplexity": "O(n^3)",
+      "spaceComplexity": "O(1)",
+      "strengths": [
+        "Obvious"
+      ],
+      "weaknesses": [
+        "Too slow for n = 3000"
+      ],
+      "interviewRelevance": "Baseline."
+    },
+    {
+      "name": "Sort and two pointers over indices",
+      "summary": "Fix i and move two pointers, counting runs of duplicates.",
+      "timeComplexity": "O(n^2)",
+      "spaceComplexity": "O(1)",
+      "strengths": [
+        "Standard 3Sum"
+      ],
+      "weaknesses": [
+        "Duplicate handling is fiddly"
+      ],
+      "interviewRelevance": "Acceptable."
+    },
+    {
+      "name": "Value counts with combinatorics over distinct values",
+      "summary": "Counter, then loop over a <= b and look up c = target - a - b.",
+      "timeComplexity": "O(n + U^2)",
+      "spaceComplexity": "O(U)",
+      "strengths": [
+        "Short",
+        "Fast"
+      ],
+      "weaknesses": [
+        "Needs careful case analysis for equal values"
+      ],
+      "interviewRelevance": "The expected answer."
+    }
+  ],
+  "personalSolution": {
+    "approach": "Counter of values, two pointers over sorted distinct values for each anchor",
+    "timeComplexity": "O(n + U^2)",
+    "spaceComplexity": "O(U)",
+    "isOptimal": true,
+    "notes": "Optimal. A nested loop over a <= b with a dictionary lookup for c needs no pointer logic."
+  },
+  "canonicalCode": "class Solution:\n    def threeSumMulti(self, arr: list[int], target: int) -> int:\n        MOD = 10**9 + 7\n        cnt = Counter(arr)                 # at most 101 distinct values since 0 <= arr[i] <= 100\n        vals = sorted(cnt)\n        total = 0\n        for i, a in enumerate(vals):       # O(U^2) pairs of distinct values, U <= 101\n            for b in vals[i:]:             # b >= a\n                c = target - a - b\n                if c < b or c not in cnt:  # enforce a <= b <= c so each value triple is counted once\n                    continue\n                if a == b == c:\n                    total += cnt[a] * (cnt[a] - 1) * (cnt[a] - 2) // 6\n                elif a == b:\n                    total += cnt[a] * (cnt[a] - 1) // 2 * cnt[c]\n                elif b == c:\n                    total += cnt[a] * cnt[b] * (cnt[b] - 1) // 2\n                else:\n                    total += cnt[a] * cnt[b] * cnt[c]\n        return total % MOD\n",
+  "commonMistakes": [
+    "Counting ordered pairs instead of combinations (forgetting the // 2 or // 6).",
+    "Missing a case when two or three values are equal.",
+    "Dropping the c >= b guard and overcounting.",
+    "Applying the modulo too early or forgetting it."
+  ],
+  "edgeCases": [
+    "All elements equal.",
+    "No triple reaches the target.",
+    "Target 0 with zeros.",
+    "A value used with multiplicity exactly two."
+  ],
+  "cards": [
+    {
+      "id": "recog-3sum-with-multiplicity",
+      "category": "pattern",
+      "type": "free_recall",
+      "promptVariants": [
+        "Which technique solves this problem, and what in the statement or constraints points to it?",
+        "Name the technique you would use here and the clue in the problem that tells you.",
+        "What approach fits this problem, and which part of the statement gives it away?"
+      ],
+      "answer": "Count each value, then enumerate distinct value triples a <= b <= c and multiply their combination counts. Clue: Values are at most 100, so there are few distinct values with many repeats, and the answer counts index tuples, which can be computed by multiplying counts instead of listing tuples.",
+      "keyPoints": [
+        "Values are at most 100, so there are few distinct values with many repeats, and the answer counts index tuples, which can be computed by multiplying counts instead of listing tuples."
+      ],
+      "explanation": "Small value range means few distinct values; each value triple contributes a product of counts or a binomial coefficient.",
+      "rubric": {
+        "technique": "Count each value, then enumerate distinct value triples a <= b <= c and multiply their combination counts",
+        "aliases": [
+          "frequency map with combinatorics",
+          "counter plus two pointers over distinct values",
+          "group equal values and count combinations",
+          "3sum on distinct values with multiplicities"
+        ],
+        "alsoValid": [
+          {
+            "name": "Sort the array and run 3Sum with two pointers over every index",
+            "note": "correct and quadratic, which fits 3000 elements, but duplicate runs make it fiddly and slower than counting"
+          },
+          {
+            "name": "Brute force over all index triples",
+            "note": "cubic; far too slow for 3000 elements"
+          }
+        ],
+        "clueTypes": [
+          "lookup_frequency",
+          "math_observation"
+        ],
+        "clue": "Values are at most 100, so there are few distinct values with many repeats, and the answer counts index tuples, which can be computed by multiplying counts instead of listing tuples."
+      }
+    },
+    {
+      "id": "3sum-with-multiplicity-insight-01",
+      "category": "main_insight",
+      "type": "free_recall",
+      "promptVariants": [
+        "Why group equal values before searching for triples?",
+        "How do you count the index tuples that give one value triple (a, b, c)?"
+      ],
+      "answer": "Index tuples only differ by which copies of each value are chosen. For distinct a < b < c the count is cnt[a] * cnt[b] * cnt[c]; for a == b != c it is C(cnt[a], 2) * cnt[c]; for a != b == c it is cnt[a] * C(cnt[b], 2); for a == b == c it is C(cnt[a], 3). Iterating over at most 101 distinct values replaces iterating over 3000 indices.",
+      "keyPoints": [
+        "Group equal values",
+        "Product of counts for distinct values",
+        "Binomial coefficients for repeated values"
+      ],
+      "explanation": "Counting by value triples instead of by index triples is the main insight.",
+      "enabled": true
+    },
+    {
+      "id": "3sum-with-multiplicity-case-01",
+      "category": "implementation_detail",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "How many index tuples correspond to the values (a, a, c) with a != c?",
+        "For a == b != c, which formula counts the tuples i < j < k?"
+      ],
+      "options": [
+        "cnt[a] * (cnt[a] - 1) // 2 * cnt[c]",
+        "cnt[a] * (cnt[a] - 1) * cnt[c]",
+        "cnt[a] * cnt[a] * cnt[c]",
+        "cnt[a] * cnt[c] * (cnt[c] - 1) // 2"
+      ],
+      "answer": "cnt[a] * (cnt[a] - 1) // 2 * cnt[c]",
+      "explanation": "Choose two of the cnt[a] copies of a (order does not matter, so divide by 2) and one of the cnt[c] copies of c.",
+      "incorrectOptionExplanations": {
+        "cnt[a] * (cnt[a] - 1) * cnt[c]": "That counts ordered pairs of copies of a, double counting each pair.",
+        "cnt[a] * cnt[a] * cnt[c]": "That allows choosing the same copy twice and counts ordered pairs.",
+        "cnt[a] * cnt[c] * (cnt[c] - 1) // 2": "That is the case with two copies of c, not of a."
+      },
+      "enabled": true
+    },
+    {
+      "id": "3sum-with-multiplicity-fill-01",
+      "category": "implementation_detail",
+      "type": "fill_blank",
+      "promptVariants": [
+        "When all three values are equal the number of tuples is C(cnt, 3) = cnt * (cnt - 1) * (cnt - 2) // ___.",
+        "Choosing 3 of cnt equal values: divide cnt * (cnt - 1) * (cnt - 2) by ___."
+      ],
+      "answer": "6",
+      "explanation": "There are 3! = 6 orderings of the three chosen copies, and the index order i < j < k fixes one of them.",
+      "enabled": true,
+      "acceptedAnswers": [
+        "6",
+        "3!",
+        "six"
+      ]
+    },
+    {
+      "id": "3sum-with-multiplicity-why-01",
+      "category": "why_not",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "What goes wrong if the `c < b` check is removed from the loop over a <= b?",
+        "Why does the code enforce a <= b <= c?"
+      ],
+      "options": [
+        "Each distinct-value triple gets counted once per ordering of a, b, c",
+        "Triples that contain equal values are skipped and never counted at all",
+        "The loop can read a count for a value outside the range of the input",
+        "The modulo is applied before all contributions have been added up"
+      ],
+      "answer": "Each distinct-value triple gets counted once per ordering of a, b, c",
+      "explanation": "For values 1, 2, 3 the pair (a, b) = (1, 2) finds c = 3, but (1, 3) finds c = 2 and (2, 3) finds c = 1, so one tuple is counted 3 times. The guard keeps only the ordering a <= b <= c.",
+      "incorrectOptionExplanations": {
+        "Triples that contain equal values are skipped and never counted at all": "Equal values are handled by their own branches; removing the guard adds counts, it does not remove them.",
+        "The loop can read a count for a value outside the range of the input": "c not in cnt already filters out values that do not occur.",
+        "The modulo is applied before all contributions have been added up": "The modulo is applied once at the end, unrelated to the guard."
+      },
+      "enabled": true
+    },
+    {
+      "id": "3sum-with-multiplicity-edge-01",
+      "category": "edge_case",
+      "type": "free_recall",
+      "promptVariants": [
+        "What does the code return for arr = [2, 2, 2, 2, 2] and target = 6, and why?",
+        "Check an array where every element is equal: [2, 2, 2, 2, 2] with target 6."
+      ],
+      "answer": "10: every choice of three indices works and the sum is 6, so the answer is C(5, 3) = 5 * 4 * 3 // 6 = 10, produced by the a == b == c branch.",
+      "keyPoints": [
+        "All values equal",
+        "Answer is C(5, 3) = 10",
+        "Handled by the a == b == c branch"
+      ],
+      "explanation": "Checking the all-equal branch by hand is a quick way to catch a wrong divisor.",
+      "enabled": true
+    },
+    {
+      "id": "3sum-with-multiplicity-time-01",
+      "category": "time_complexity",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "What is the time complexity of the canonical code if U <= 101 is the number of distinct values?",
+        "Derive the running time of canonicalCode in terms of n and U."
+      ],
+      "options": [
+        "O(n + U^2)",
+        "O(n^2)",
+        "O(n^3)",
+        "O(n log n + U)"
+      ],
+      "answer": "O(n + U^2)",
+      "explanation": "Counting takes O(n); the double loop over distinct values takes O(U^2), and each pair is processed in constant time with dictionary lookups.",
+      "incorrectOptionExplanations": {
+        "O(n^2)": "That would be sort plus two pointers over all indices; counting needs far less.",
+        "O(n^3)": "That is the brute force over index triples.",
+        "O(n log n + U)": "The pair loop over distinct values is quadratic in U, not linear."
+      },
+      "enabled": true
+    },
+    {
+      "id": "3sum-with-multiplicity-space-01",
+      "category": "space_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "The counter holds one entry per distinct value, so the extra space is O(___) with U <= 101.",
+        "Space of the frequency map: O(___) for U distinct values."
+      ],
+      "answer": "U",
+      "explanation": "One entry per distinct value; with values bounded by 100 this is constant.",
+      "enabled": true,
+      "acceptedAnswers": [
+        "O(U)",
+        "u",
+        "distinct values",
+        "1",
+        "O(1)",
+        "constant"
+      ]
+    },
+    {
+      "id": "3sum-with-multiplicity-alt-01",
+      "category": "alternative_approach",
+      "type": "code_question",
+      "promptVariants": [
+        "Your solution runs two pointers over the sorted distinct values for each anchor. How does it compare with a nested loop plus a dictionary lookup for c?",
+        "Is the two-pointer inner loop in your code faster than looping over b and looking up c?"
+      ],
+      "code": "def twoSum(self, nums, idx, target, freq):\n    target -= nums[idx]\n    l, r = idx, len(nums) - 1\n    count = 0\n    while l <= r:\n        total = nums[l] + nums[r]\n        if total > target:\n            r -= 1\n        elif total < target:\n            l += 1\n        else:\n            ...\n            r -= 1\n            l += 1\n    return count",
+      "answer": "Both are O(U^2) over distinct values: your two pointers scan the rest of the sorted distinct values once per anchor, while the nested loop tries every b and looks up c in O(1). The lookup version is shorter and needs no pointer movement, but your version also works without a hash map.",
+      "keyPoints": [
+        "Same complexity O(U^2)",
+        "Two pointers per anchor",
+        "Dictionary lookup version is simpler"
+      ],
+      "explanation": "Two pointers are the natural choice for 3Sum on a sorted array; with counts, either works.",
+      "enabled": true
+    }
+  ],
+  "generatedAt": "2026-10-23T06:13:57Z"
+}

@@ -1,0 +1,33 @@
+{
+  "leetcodeId": "442",
+  "title": "Find All Duplicates in an Array",
+  "slug": "find-all-duplicates-in-an-array",
+  "url": "https://leetcode.com/problems/find-all-duplicates-in-an-array/",
+  "difficulty": "Medium",
+  "status": "solved",
+  "premium": false,
+  "tags": [
+    "Array",
+    "Hash Table",
+    "Sorting"
+  ],
+  "problemStatement": "Given an integer array nums of length n where all the integers of nums are in the range [1, n] and each integer appears at most twice, return an array of all the integers that appears twice.\n\nYou must write an algorithm that runs in O(n) time and uses only constant auxiliary space, excluding the space needed to store the output\n\nExample 1:\n\nInput: nums = [4,3,2,7,8,2,3,1]\nOutput: [2,3]\n\nExample 2:\n\nInput: nums = [1,1,2]\nOutput: [1]\n\nExample 3:\n\nInput: nums = [1]\nOutput: []\n\nConstraints:\n\n- n == nums.length\n\n- 1 <= n <= 10^5\n\n- 1 <= nums[i] <= n\n\n- Each element in nums appears once or twice.",
+  "constraints": [
+    "n == nums.length",
+    "1 <= n <= 10^5",
+    "1 <= nums[i] <= n",
+    "Each element in nums appears once or twice."
+  ],
+  "hints": [],
+  "acRate": 77.23,
+  "lastSubmittedAt": "2026-10-20T11:14:48Z",
+  "latestSubmission": {
+    "submissionId": "2177002405",
+    "language": "Python3",
+    "code": "class Solution:\n    def findDuplicates(self, nums: list[int]) -> list[int]:\n        # approach 1: hashmap/hashset\n        # tc O(n) sc O(n)\n        # count = Counter(nums)\n        # ans = []\n        # for k, v in count.items():\n        #     if v == 2:\n        #         ans.append(k)\n        # return ans\n        \n        # approach 2: sort\n        # tc O(nlogn) sc O(1) - O(sorting)\n        # nums.sort()\n        # ans = []\n        # for i in range(1, len(nums)):\n        #     if nums[i] == nums[i - 1]:\n        #         ans.append(nums[i])\n        # return ans\n\n        # approach 3: using the problem statement\n        # 1 <= nums[i] <= n\n        # and flip the number into negative to mark existing number\n        ans = []\n        for x in nums:\n            # the number already been marked ~ existing\n            if nums[abs(x) - 1] < 0:\n                ans.append(abs(x))\n            \n            nums[abs(x) - 1] *= -1\n        return ans\n"
+  },
+  "notes": [],
+  "source": "leetcode",
+  "importedAt": "2026-10-23T05:55:47Z",
+  "lastSyncedAt": "2026-10-23T05:55:47Z"
+}

@@ -1,0 +1,255 @@
+{
+  "schemaVersion": 1,
+  "problemSlug": "permutation-in-string",
+  "summary": "Return whether s2 contains a contiguous substring that is a permutation of s1.",
+  "patterns": [
+    "Sliding Window",
+    "Array / Hashing"
+  ],
+  "mainInsight": "A permutation is a window of length len(s1) with the same letter counts as s1. Slide the window and update two counts per step.",
+  "invariant": "The window always has length min(r + 1, m), and cnt[c] equals need[c] minus the window's count of c.",
+  "canonicalApproach": "Fixed-size sliding window with count array",
+  "approaches": [
+    {
+      "name": "Permutations of s1",
+      "summary": "Generate every permutation of s1 and search s2 for each.",
+      "timeComplexity": "O(m! * n)",
+      "spaceComplexity": "O(m)",
+      "strengths": [
+        "Obvious"
+      ],
+      "weaknesses": [
+        "Factorial"
+      ],
+      "interviewRelevance": "Never."
+    },
+    {
+      "name": "Sort each window",
+      "summary": "Sort each length-m window and compare with sorted s1.",
+      "timeComplexity": "O(n * m log m)",
+      "spaceComplexity": "O(m)",
+      "strengths": [
+        "Simple"
+      ],
+      "weaknesses": [
+        "Re-sorts every window"
+      ],
+      "interviewRelevance": "Acceptable baseline."
+    },
+    {
+      "name": "Fixed-size sliding window with count array",
+      "summary": "Maintain counts and the number of mismatching letters while sliding.",
+      "timeComplexity": "O(m + n)",
+      "spaceComplexity": "O(1)",
+      "strengths": [
+        "Linear",
+        "Constant space"
+      ],
+      "weaknesses": [
+        "Bookkeeping when counts cross zero"
+      ],
+      "interviewRelevance": "The expected answer."
+    }
+  ],
+  "personalSolution": {
+    "approach": "Fixed window with a Counter and a per-window scan of the counts",
+    "timeComplexity": "O(26 * n)",
+    "spaceComplexity": "O(1)",
+    "isOptimal": true,
+    "notes": "Linear for a fixed alphabet. Tracking the number of mismatching letters would make the per-window check O(1)."
+  },
+  "canonicalCode": "class Solution:\n    def checkInclusion(self, s1: str, s2: str) -> bool:\n        m, n = len(s1), len(s2)\n        cnt = [0] * 26                     # cnt[c] = needed count of c minus its count in the window\n        for ch in s1:\n            cnt[ord(ch) - 97] += 1\n        bad = sum(1 for v in cnt if v)     # letters whose counts differ; all zero <=> window is a permutation\n        for r in range(n):\n            c = ord(s2[r]) - 97            # s2[r] enters the window\n            before = cnt[c]\n            cnt[c] -= 1\n            bad += (cnt[c] != 0) - (before != 0)\n            if r >= m:                     # s2[r - m] leaves, keeping the window length at m\n                c = ord(s2[r - m]) - 97\n                before = cnt[c]\n                cnt[c] += 1\n                bad += (cnt[c] != 0) - (before != 0)\n            if bad == 0:                   # O(1) check per step\n                return True\n        return False\n",
+  "commonMistakes": [
+    "Checking only the set of letters instead of counts.",
+    "Forgetting to remove the letter that leaves the window.",
+    "Skipping the check for the first window.",
+    "Using a variable-size window instead of a fixed one."
+  ],
+  "edgeCases": [
+    "len(s1) > len(s2).",
+    "len(s1) == len(s2).",
+    "Repeated letters in s1.",
+    "Permutation at the very start or very end of s2."
+  ],
+  "cards": [
+    {
+      "id": "recog-permutation-in-string",
+      "category": "pattern",
+      "type": "free_recall",
+      "promptVariants": [
+        "Which technique solves this problem, and what in the statement or constraints points to it?",
+        "Name the technique you would use here and the clue in the problem that tells you.",
+        "What approach fits this problem, and which part of the statement gives it away?"
+      ],
+      "answer": "Fixed-size sliding window comparing letter counts. Clue: A permutation of s1 is a substring of s2 of the same length with identical letter counts, so a window of fixed length len(s1) can slide over s2 while its counts are compared.",
+      "keyPoints": [
+        "A permutation of s1 is a substring of s2 of the same length with identical letter counts, so a window of fixed length len(s1) can slide over s2 while its counts are compared."
+      ],
+      "explanation": "Permutation means same multiset of letters, and contiguous substring of length len(s1) means a fixed window whose counts change by one letter in and one letter out.",
+      "rubric": {
+        "technique": "Fixed-size sliding window comparing letter counts",
+        "aliases": [
+          "sliding window with a frequency array",
+          "window of length len(s1) with a counter",
+          "compare character counts of each window",
+          "anagram window"
+        ],
+        "alsoValid": [
+          {
+            "name": "Generate every permutation of s1 and search for each in s2",
+            "note": "correct, but factorial in the length of s1"
+          },
+          {
+            "name": "Sort every window of s2 and compare it with sorted s1",
+            "note": "correct, but re-sorts each window instead of updating counts incrementally"
+          }
+        ],
+        "clueTypes": [
+          "contiguous",
+          "lookup_frequency"
+        ],
+        "clue": "A permutation of s1 is a substring of s2 of the same length with identical letter counts, so a window of fixed length len(s1) can slide over s2 while its counts are compared."
+      }
+    },
+    {
+      "id": "permutation-in-string-insight-01",
+      "category": "main_insight",
+      "type": "free_recall",
+      "promptVariants": [
+        "Why is comparing letter counts enough to detect a permutation?",
+        "What makes the sliding window efficient here?"
+      ],
+      "answer": "Two strings are permutations of each other exactly when each letter occurs the same number of times in both. The window length is fixed at len(s1), so moving it one step changes only two counts (the letter entering and the letter leaving), which can be updated in constant time instead of recounting the window.",
+      "keyPoints": [
+        "Permutation <=> equal letter counts",
+        "Window length is len(s1)",
+        "Slide updates two counts"
+      ],
+      "explanation": "Fixed-size window plus count equality is the standard anagram template.",
+      "enabled": true
+    },
+    {
+      "id": "permutation-in-string-impl-01",
+      "category": "implementation_detail",
+      "type": "fill_blank",
+      "promptVariants": [
+        "The letter s2[r - m] leaves the window once r >= ___, so that the window length stays m.",
+        "With m = len(s1), the left end of the window starts moving when r reaches ___."
+      ],
+      "answer": "m",
+      "explanation": "Indices 0..m-1 fill the first window; at r = m the window would have m + 1 letters, so s2[r - m] must leave.",
+      "enabled": true,
+      "acceptedAnswers": [
+        "len(s1)",
+        "m",
+        "m."
+      ]
+    },
+    {
+      "id": "permutation-in-string-why-01",
+      "category": "why_not",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "Why is checking that every letter of s1 appears in the window not enough?",
+        "Which input shows that comparing only sets of letters is wrong?"
+      ],
+      "options": [
+        "Counts matter: s1 = 'aab' and window 'abb' share letters but are not permutations",
+        "Sets lose the order of letters, which a permutation must keep intact",
+        "A set check is linear in the window length, so it makes the search quadratic",
+        "Sets treat uppercase and lowercase letters as different characters"
+      ],
+      "answer": "Counts matter: s1 = 'aab' and window 'abb' share letters but are not permutations",
+      "explanation": "A permutation needs the same multiset of letters. 'abb' has the same letter set as 'aab' but a different count of a and b.",
+      "incorrectOptionExplanations": {
+        "Sets lose the order of letters, which a permutation must keep intact": "A permutation may reorder letters freely; order is irrelevant.",
+        "A set check is linear in the window length, so it makes the search quadratic": "Cost is not the problem; the set check is simply incorrect.",
+        "Sets treat uppercase and lowercase letters as different characters": "The input only has lowercase letters."
+      },
+      "enabled": true
+    },
+    {
+      "id": "permutation-in-string-code-01",
+      "category": "code_reasoning",
+      "type": "code_question",
+      "promptVariants": [
+        "Your check scans all counts for every window. What does that cost and how would you make the check constant time?",
+        "What state could replace the loop over count.values() in your solution?"
+      ],
+      "code": "if s == m:\n    flag = True\n    for freq in count.values():\n        if freq != 0:\n            flag = False\n    if flag:\n        return flag\n\n    if s2[l] in count:\n        count[s2[l]] += 1\n    l += 1\n    s -= 1",
+      "answer": "The scan over count.values() visits every distinct letter of s1 (at most 26) per window, so the total is O(26 * n), which is still linear in n for a fixed alphabet but with a larger constant. Keeping a counter of letters whose counts differ from the needed counts (updated when a count crosses zero) makes the match test O(1) per step.",
+      "keyPoints": [
+        "Per-window scan is bounded by the alphabet",
+        "Track number of mismatching letters",
+        "Update it when a count crosses zero"
+      ],
+      "explanation": "Incremental maintenance of a summary statistic is the common trick for window problems.",
+      "enabled": true
+    },
+    {
+      "id": "permutation-in-string-edge-01",
+      "category": "edge_case",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "With s1 = 'ab', which s2 only succeeds if the very first window is checked before any letter leaves?",
+        "Which input has its only permutation in the first window?"
+      ],
+      "options": [
+        "s2 = 'ba'",
+        "s2 = 'xxba'",
+        "s2 = 'xbax'",
+        "s2 = 'xxxx'"
+      ],
+      "answer": "s2 = 'ba'",
+      "explanation": "In 'ba' the only window of length 2 is the first one. If the check ran only after the left end started moving, it would be skipped and the answer would be false.",
+      "incorrectOptionExplanations": {
+        "s2 = 'xxba'": "The permutation is in the last window, which is checked after sliding.",
+        "s2 = 'xbax'": "The permutation sits in the middle window.",
+        "s2 = 'xxxx'": "There is no permutation at all, so the answer is false regardless."
+      },
+      "enabled": true
+    },
+    {
+      "id": "permutation-in-string-time-01",
+      "category": "time_complexity",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "What is the time complexity of the canonical code for len(s1) = m and len(s2) = n?",
+        "Derive the running time of canonicalCode."
+      ],
+      "options": [
+        "O(m + n)",
+        "O(m * n)",
+        "O(m! * n)",
+        "O(n log n)"
+      ],
+      "answer": "O(m + n)",
+      "explanation": "Counting s1 costs O(m); the loop makes n steps with O(1) work each (two count updates and one comparison).",
+      "incorrectOptionExplanations": {
+        "O(m * n)": "That would recount every window; the sliding update avoids it.",
+        "O(m! * n)": "That is enumerating permutations of s1 and searching for each.",
+        "O(n log n)": "There is no sorting; counts are updated incrementally."
+      },
+      "enabled": true
+    },
+    {
+      "id": "permutation-in-string-space-01",
+      "category": "space_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "The 26-entry count array does not grow with the input, so the extra space is O(___).",
+        "Extra space of the fixed-alphabet count array: O(___)."
+      ],
+      "answer": "1",
+      "explanation": "The alphabet is fixed at 26 lowercase letters, so the array is constant size.",
+      "enabled": true,
+      "acceptedAnswers": [
+        "O(1)",
+        "constant",
+        "1",
+        "26"
+      ]
+    }
+  ],
+  "generatedAt": "2026-10-23T06:13:41Z"
+}

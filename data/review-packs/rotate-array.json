@@ -1,0 +1,242 @@
+{
+  "schemaVersion": 1,
+  "problemSlug": "rotate-array",
+  "summary": "Rotate the array right by k steps in place.",
+  "patterns": [
+    "Two Pointers",
+    "Math"
+  ],
+  "mainInsight": "Reduce k modulo n. Reversing the whole array, then the first k elements, then the remaining n - k elements yields the rotation in O(n) time and O(1) space. A cyclic-replacement variant moves each element to (i + k) % n following cycles.",
+  "canonicalApproach": "Three reversals",
+  "approaches": [
+    {
+      "name": "Extra array",
+      "summary": "result[(i + k) % n] = nums[i], copy back.",
+      "timeComplexity": "O(n)",
+      "spaceComplexity": "O(n)",
+      "strengths": [
+        "Simple"
+      ],
+      "weaknesses": [
+        "Linear extra space"
+      ],
+      "interviewRelevance": "Baseline."
+    },
+    {
+      "name": "Three reversals",
+      "summary": "Reverse all, then [0, k), then [k, n).",
+      "timeComplexity": "O(n)",
+      "spaceComplexity": "O(1)",
+      "strengths": [
+        "In place",
+        "Simple"
+      ],
+      "weaknesses": [
+        "Not obvious"
+      ],
+      "interviewRelevance": "The expected answer."
+    },
+    {
+      "name": "Cyclic replacement",
+      "summary": "Move elements along cycles of the i -> (i + k) % n permutation.",
+      "timeComplexity": "O(n)",
+      "spaceComplexity": "O(1)",
+      "strengths": [
+        "In place"
+      ],
+      "weaknesses": [
+        "Cycle bookkeeping"
+      ],
+      "interviewRelevance": "Follow-up."
+    }
+  ],
+  "personalSolution": {
+    "approach": "Three reversals (whole array, then [k, n), then [0, k))",
+    "timeComplexity": "O(n)",
+    "spaceComplexity": "O(1)",
+    "isOptimal": true,
+    "notes": "Optimal. The order of the two part reversals does not matter, but the whole-array reversal must come first."
+  },
+  "canonicalCode": "class Solution:\n    def rotate(self, nums: list[int], k: int) -> None:\n        n = len(nums)\n        k %= n                               # rotating by n is the identity\n\n        def reverse(l: int, r: int) -> None:\n            while l < r:\n                nums[l], nums[r] = nums[r], nums[l]\n                l += 1\n                r -= 1\n\n        reverse(0, n - 1)        # whole array: the last k elements are now in front, reversed\n        reverse(0, k - 1)        # first k elements\n        reverse(k, n - 1)        # the rest; every element is swapped at most twice\n",
+  "commonMistakes": [
+    "Forgetting k %= n",
+    "Using the extra array when O(1) space is required",
+    "Rotating left instead of right"
+  ],
+  "edgeCases": [
+    "k = 0",
+    "k multiple of n",
+    "Single element"
+  ],
+  "cards": [
+    {
+      "id": "recog-rotate-array",
+      "category": "pattern",
+      "type": "free_recall",
+      "promptVariants": [
+        "Which technique solves this problem, and what in the statement or constraints points to it?",
+        "Name the technique you would use here and the clue in the problem that tells you.",
+        "What approach fits this problem, and which part of the statement gives it away?"
+      ],
+      "answer": "Reduce k modulo n, then reverse the whole array, the first k elements and the remaining ones. Clue: A right rotation by k moves the last k elements to the front, and k can exceed the length, so reduce k and rearrange in place with reversals.",
+      "keyPoints": [
+        "A right rotation by k moves the last k elements to the front, and k can exceed the length, so reduce k and rearrange in place with reversals."
+      ],
+      "explanation": "Reversing everything and then each of the two parts puts the last k elements in front while keeping their inner order.",
+      "rubric": {
+        "technique": "Reduce k modulo n, then reverse the whole array, the first k elements and the remaining ones",
+        "aliases": [
+          "three reversals",
+          "reverse in parts",
+          "cyclic replacement",
+          "modulo shift"
+        ],
+        "alsoValid": [
+          {
+            "name": "Copy into a new array at index (i + k) % n",
+            "note": "correct, but uses O(n) extra space"
+          }
+        ],
+        "clueTypes": [
+          "in_place_pointers",
+          "math_observation"
+        ],
+        "clue": "A right rotation by k moves the last k elements to the front, and k can exceed the length, so reduce k and rearrange in place with reversals."
+      }
+    },
+    {
+      "id": "ra2-pattern-01",
+      "category": "main_insight",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "Which sequence of operations rotates an array right by k in place?",
+        "How can reversals implement a rotation?"
+      ],
+      "options": [
+        "Reverse all, then the first k and the last n - k",
+        "Reverse only the first k elements of the array",
+        "Sort the array and shift every element by k places",
+        "Swap element i with element i + k for each index i"
+      ],
+      "answer": "Reverse all, then the first k and the last n - k",
+      "explanation": "Reversing all moves the last k to the front reversed; reversing each part restores their order.",
+      "incorrectOptionExplanations": {
+        "Reverse only the first k elements of the array": "That leaves the tail untouched.",
+        "Sort the array and shift every element by k places": "Sorting changes the order.",
+        "Swap element i with element i + k for each index i": "That is not a rotation and overflows the array."
+      },
+      "enabled": true
+    },
+    {
+      "id": "ra2-insight-01",
+      "category": "main_insight",
+      "type": "free_recall",
+      "promptVariants": [
+        "Why must k be reduced modulo n, and what happens if it is not?",
+        "What does k >= n mean for a rotation?"
+      ],
+      "answer": "Rotating by n returns the original array, so only k mod n matters. Without the reduction the slice indices or reversal ranges go out of bounds (and `k = 0 mod n` must be a no-op).",
+      "keyPoints": [
+        "k % n",
+        "Rotation by n is identity",
+        "Avoid out of range"
+      ],
+      "explanation": "n = 1 also needs care.",
+      "enabled": true
+    },
+    {
+      "id": "ra2-code-01",
+      "category": "code_reasoning",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "If you reverse the first k elements and the rest first and the whole array last (same split at k), what does [1, 2, 3, 4, 5] with k = 2 become?",
+        "Does the order of the three reversals matter?"
+      ],
+      "options": [
+        "[3, 4, 5, 1, 2], a LEFT rotation by 2",
+        "[4, 5, 1, 2, 3], the right rotation by 2",
+        "[2, 1, 5, 4, 3], only the two parts reversed",
+        "[5, 4, 3, 2, 1], only the whole reversed"
+      ],
+      "answer": "[3, 4, 5, 1, 2], a LEFT rotation by 2",
+      "explanation": "Parts first gives [2, 1, 5, 4, 3]; reversing the whole array gives [3, 4, 5, 1, 2], which moves the first k elements to the back. The right rotation needs the whole reversal first so the split at k picks up the last k elements.",
+      "incorrectOptionExplanations": {
+        "[4, 5, 1, 2, 3], the right rotation by 2": "That is what whole-first order produces, not parts-first.",
+        "[2, 1, 5, 4, 3], only the two parts reversed": "The third reversal (whole array) is still applied afterwards.",
+        "[5, 4, 3, 2, 1], only the whole reversed": "The two part reversals have been applied before it."
+      },
+      "enabled": true
+    },
+    {
+      "id": "ra2-time-01",
+      "category": "time_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Time complexity: ___",
+        "Complete the statement: Time complexity: ___"
+      ],
+      "answer": "O(n)",
+      "explanation": "Three reversals touch each element at most twice.",
+      "enabled": true,
+      "acceptedAnswers": [
+        "linear"
+      ]
+    },
+    {
+      "id": "ra2-space-01",
+      "category": "space_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Space complexity (excluding the input): ___",
+        "Complete the statement: Space complexity (excluding the input): ___"
+      ],
+      "answer": "O(1)",
+      "explanation": "In-place reversals using two indices.",
+      "enabled": true,
+      "acceptedAnswers": [
+        "constant"
+      ]
+    },
+    {
+      "id": "ra2-edge-01",
+      "category": "edge_case",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "What does the algorithm do for nums = [1, 2] and k = 3?",
+        "What is the effective rotation?"
+      ],
+      "options": [
+        "k becomes 3 % 2 = 1, giving [2, 1]",
+        "[1, 2]: rotating by more than n has no effect",
+        "[2, 1] after three full swaps",
+        "An error because k > n"
+      ],
+      "answer": "k becomes 3 % 2 = 1, giving [2, 1]",
+      "explanation": "Three single-step rotations of two elements equal one.",
+      "incorrectOptionExplanations": {
+        "[1, 2]: rotating by more than n has no effect": "Only multiples of n have no effect.",
+        "[2, 1] after three full swaps": "Each step is one position, not a swap.",
+        "An error because k > n": "The modulo handles it."
+      },
+      "enabled": true
+    },
+    {
+      "id": "ra2-alt-01",
+      "category": "alternative_approach",
+      "type": "free_recall",
+      "promptVariants": [
+        "Name the other two ways to rotate and compare their space.",
+        "How does cyclic replacement rotate in place?"
+      ],
+      "answer": "Extra array: result[(i + k) % n] = nums[i] then copy back, O(n) time and O(n) space. Cyclic replacement: move each element to (i + k) % n, carrying the displaced value, and follow gcd(n, k) cycles until n elements have moved; O(n) time and O(1) space but fiddly. Three reversals give the same bounds with the simplest code.",
+      "keyPoints": [
+        "Extra array: linear space",
+        "Cycle following with gcd(n, k) cycles",
+        "Reversals: O(1) space, simplest"
+      ],
+      "explanation": "All three are linear time; the choice is between simplicity and space.",
+      "enabled": true
+    }
+  ],
+  "generatedAt": "2026-10-23T07:59:18Z"
+}

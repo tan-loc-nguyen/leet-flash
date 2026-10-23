@@ -20,14 +20,14 @@
   ],
   "hints": [],
   "acRate": 53.04,
-  "lastSubmittedAt": "2026-09-30T08:33:05Z",
+  "lastSubmittedAt": "2026-10-21T11:06:20Z",
   "latestSubmission": {
-    "submissionId": "2157963309",
+    "submissionId": "2177872168",
     "language": "Python3",
-    "code": "class Solution:\n    def minSubArrayLen(self, target: int, nums: list[int]) -> int:\n        ans = float(\"inf\")\n        curSum = 0\n        l = 0\n\n        for r in range(len(nums)):\n            curSum += nums[r]\n\n            while curSum >= target:\n                ans = min(ans, r - l + 1)\n                curSum -= nums[l]\n                l += 1\n        \n        return ans if ans != float(\"inf\") else 0"
+    "code": "class Solution:\n    def minSubArrayLen(self, target: int, nums: list[int]) -> int:\n        total = 0\n        l = 0\n\n        ans = float(\"inf\")\n        for r in range(len(nums)):\n            total += nums[r]\n\n            while total >= target:\n                ans = min(ans, r - l + 1)\n                total -= nums[l]\n                l += 1\n        return ans if ans != float(\"inf\") else 0"
   },
   "notes": [],
   "source": "leetcode",
   "importedAt": "2026-10-01T13:44:25Z",
-  "lastSyncedAt": "2026-10-01T13:44:25Z"
+  "lastSyncedAt": "2026-10-23T05:55:47Z"
 }

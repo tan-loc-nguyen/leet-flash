@@ -1,0 +1,281 @@
+{
+  "schemaVersion": 1,
+  "problemSlug": "longest-increasing-subsequence",
+  "summary": "Return the length of the longest strictly increasing subsequence of an integer array.",
+  "patterns": [
+    "Dynamic Programming",
+    "Binary Search"
+  ],
+  "mainInsight": "For each subsequence length keep only the smallest possible last element; that list stays sorted, so every new element is placed with a binary search and the list length is the answer.",
+  "invariant": "tails is strictly increasing and tails[k] is the minimum last value over all increasing subsequences of length k + 1.",
+  "canonicalApproach": "Tails array with binary search",
+  "approaches": [
+    {
+      "name": "Brute force over subsequences",
+      "summary": "Enumerate every subsequence and keep the longest increasing one.",
+      "timeComplexity": "O(2^n)",
+      "spaceComplexity": "O(n)",
+      "strengths": [
+        "Obvious"
+      ],
+      "weaknesses": [
+        "Exponential"
+      ],
+      "interviewRelevance": "Only as a starting point."
+    },
+    {
+      "name": "DP ending at each index",
+      "summary": "dp[i] = 1 + max dp[j] for j < i with nums[j] < nums[i].",
+      "timeComplexity": "O(n^2)",
+      "spaceComplexity": "O(n)",
+      "strengths": [
+        "Easy to derive",
+        "Fits n <= 2500"
+      ],
+      "weaknesses": [
+        "Quadratic; the follow-up asks for better"
+      ],
+      "interviewRelevance": "Expected first answer."
+    },
+    {
+      "name": "Tails array with binary search",
+      "summary": "Keep the smallest tail for every length and place each x with bisect_left.",
+      "timeComplexity": "O(n log n)",
+      "spaceComplexity": "O(n)",
+      "strengths": [
+        "Optimal",
+        "Short"
+      ],
+      "weaknesses": [
+        "Tails is not the actual subsequence",
+        "Needs the dominance argument"
+      ],
+      "interviewRelevance": "The follow-up answer."
+    }
+  ],
+  "personalSolution": {
+    "approach": "DP: dp[i] = best subsequence ending at i",
+    "timeComplexity": "O(n^2)",
+    "spaceComplexity": "O(n)",
+    "isOptimal": false,
+    "notes": "Correct and acceptable for n <= 2500, and you noted the binary-search idea in a comment. Practise writing the tails + bisect_left version."
+  },
+  "canonicalCode": "from bisect import bisect_left\n\n\nclass Solution:\n    def lengthOfLIS(self, nums: list[int]) -> int:\n        tails = []                         # tails[k] = smallest last value of an increasing subsequence of length k + 1\n        for x in nums:                     # n iterations\n            i = bisect_left(tails, x)      # first tail >= x, binary search over a sorted list\n            if i == len(tails):\n                tails.append(x)            # x extends the longest subsequence found so far\n            else:\n                tails[i] = x               # x is a smaller tail for length i + 1\n        return len(tails)\n",
+  "commonMistakes": [
+    "Using bisect_right, which allows equal values (non-decreasing LIS).",
+    "Treating tails as the actual subsequence.",
+    "Returning max(tails) instead of len(tails).",
+    "Initialising dp with 0 instead of 1."
+  ],
+  "edgeCases": [
+    "Single element.",
+    "All elements equal.",
+    "Strictly decreasing array.",
+    "Duplicates interleaved with a rising run."
+  ],
+  "cards": [
+    {
+      "id": "recog-longest-increasing-subsequence",
+      "category": "pattern",
+      "type": "free_recall",
+      "promptVariants": [
+        "Which technique solves this problem, and what in the statement or constraints points to it?",
+        "Name the technique you would use here and the clue in the problem that tells you.",
+        "What approach fits this problem, and which part of the statement gives it away?"
+      ],
+      "answer": "Dynamic programming on the best increasing subsequence ending at each element, optimised with a tails array and binary search. Clue: The task asks for the best length over take-or-skip choices for each element with overlapping subproblems, and the follow-up asks for something faster than the quadratic table that 2500 elements allow.",
+      "keyPoints": [
+        "The task asks for the best length over take-or-skip choices for each element with overlapping subproblems, and the follow-up asks for something faster than the quadratic table that 2500 elements allow."
+      ],
+      "explanation": "Each element either extends an earlier smaller element's subsequence or starts a new one, which gives the quadratic dp; keeping only the smallest tail per length lets a binary search replace the inner loop.",
+      "rubric": {
+        "technique": "Dynamic programming on the best increasing subsequence ending at each element, optimised with a tails array and binary search",
+        "aliases": [
+          "dp[i] = longest increasing subsequence ending at i",
+          "patience sorting",
+          "tails array with binary search",
+          "quadratic dp over earlier smaller elements",
+          "greedy tails plus bisect"
+        ],
+        "alsoValid": [
+          {
+            "name": "Try every subsequence (take or skip each element)",
+            "note": "correct, but exponential; overlapping subproblems point to DP"
+          }
+        ],
+        "clueTypes": [
+          "optimization_overlap"
+        ],
+        "clue": "The task asks for the best length over take-or-skip choices for each element with overlapping subproblems, and the follow-up asks for something faster than the quadratic table that 2500 elements allow."
+      }
+    },
+    {
+      "id": "longest-increasing-subsequence-insight-01",
+      "category": "main_insight",
+      "type": "free_recall",
+      "promptVariants": [
+        "Why is it enough to remember only the smallest tail for each subsequence length?",
+        "Explain the idea behind the tails array."
+      ],
+      "answer": "For a fixed length, a smaller last value is always at least as good: anything that can extend the subsequence with a larger tail can also extend the one with a smaller tail. So for each length k + 1 we keep only the minimum possible last element. That list is increasing, so each new element can be placed with a binary search.",
+      "keyPoints": [
+        "Smaller tail dominates a larger one",
+        "One value per length",
+        "Tails sorted so binary search applies"
+      ],
+      "explanation": "Dominance argument: a smaller tail never loses an extension opportunity.",
+      "enabled": true
+    },
+    {
+      "id": "longest-increasing-subsequence-invariant-01",
+      "category": "invariant",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "Which statement is true about tails after every iteration?",
+        "What invariant does the tails list maintain?"
+      ],
+      "options": [
+        "It is strictly increasing and tails[k] is the minimum tail of any length k + 1 subsequence",
+        "It is a valid increasing subsequence of nums of maximum length so far",
+        "It holds the values of the longest subsequence in their original order of appearance",
+        "It is non-decreasing and tails[k] is the last element of the longest subsequence"
+      ],
+      "answer": "It is strictly increasing and tails[k] is the minimum tail of any length k + 1 subsequence",
+      "explanation": "Only its length is guaranteed to equal the LIS so far; its entries are per-length minimum tails.",
+      "incorrectOptionExplanations": {
+        "It is a valid increasing subsequence of nums of maximum length so far": "Not necessarily a subsequence of nums: for [2, 5, 3, 7, 1] it ends as [1, 3, 7] but 1 comes after 7.",
+        "It holds the values of the longest subsequence in their original order of appearance": "Replacements break the original order, so it cannot be read as the actual subsequence.",
+        "It is non-decreasing and tails[k] is the last element of the longest subsequence": "It is strictly increasing, and tails[k] belongs to length k + 1, not to the longest subsequence."
+      },
+      "enabled": true
+    },
+    {
+      "id": "longest-increasing-subsequence-impl-01",
+      "category": "implementation_detail",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "Why does the code use bisect_left rather than bisect_right?",
+        "What would bisect_right change about the answer?"
+      ],
+      "options": [
+        "Equal values must replace a tail because the increase has to be strict",
+        "Equal values must be appended so that duplicates extend the subsequence",
+        "bisect_left is the only variant that works on lists with duplicates",
+        "bisect_right would skip over the smallest element of tails"
+      ],
+      "answer": "Equal values must replace a tail because the increase has to be strict",
+      "explanation": "bisect_left returns the first tail >= x, so an equal x overwrites that tail instead of extending. bisect_right would place equals after, and the list length would count non-decreasing subsequences.",
+      "incorrectOptionExplanations": {
+        "Equal values must be appended so that duplicates extend the subsequence": "That is the non-strict (non-decreasing) variant; this problem says strictly increasing.",
+        "bisect_left is the only variant that works on lists with duplicates": "Both work on duplicates; they differ in which side of equal elements they return.",
+        "bisect_right would skip over the smallest element of tails": "It does not skip anything; it only lands after equal values."
+      },
+      "enabled": true
+    },
+    {
+      "id": "longest-increasing-subsequence-code-01",
+      "category": "code_reasoning",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "Run the canonical code on nums = [2, 5, 3, 7, 1]. What is tails at the end, and is it a subsequence of nums?",
+        "After processing [2, 5, 3, 7, 1], what does the tails list contain?"
+      ],
+      "options": [
+        "[1, 3, 7]: not a real subsequence, but its length 3 is the answer",
+        "[1, 3, 7]: a valid subsequence of nums, and its length is the answer",
+        "[2, 3, 7]: the actual longest increasing subsequence of nums, kept in order",
+        "[2, 5, 7], because later values never replace earlier tails"
+      ],
+      "answer": "[1, 3, 7]: not a real subsequence, but its length 3 is the answer",
+      "explanation": "Processing 3 replaces 5, and 1 replaces 2, giving [1, 3, 7]. The value 1 comes after 7 in nums, so tails is only a bookkeeping array; its length equals the LIS length.",
+      "incorrectOptionExplanations": {
+        "[1, 3, 7]: a valid subsequence of nums, and its length is the answer": "The 1 appears after the 7 in nums, so the order is broken.",
+        "[2, 3, 7]: the actual longest increasing subsequence of nums, kept in order": "2, 3, 7 is a valid subsequence, but the code overwrote 2 with 1.",
+        "[2, 5, 7], because later values never replace earlier tails": "Smaller values do replace larger tails (3 replaces 5)."
+      },
+      "enabled": true
+    },
+    {
+      "id": "longest-increasing-subsequence-edge-01",
+      "category": "edge_case",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "What does the canonical code return for nums = [2, 2, 3, 3], and why?",
+        "Which result shows the strictness requirement at work for [2, 2, 3, 3]?"
+      ],
+      "options": [
+        "2, because equal values replace tails instead of extending",
+        "4, because equal values are allowed to extend a subsequence",
+        "3, because duplicates are only counted once in the length",
+        "1, because the repeated 2 resets the list"
+      ],
+      "answer": "2, because equal values replace tails instead of extending",
+      "explanation": "tails evolves [2] -> [2] -> [2, 3] -> [2, 3], so the strict LIS is 2; a non-decreasing LIS would be 4.",
+      "incorrectOptionExplanations": {
+        "4, because equal values are allowed to extend a subsequence": "That is the non-decreasing variant, not this problem.",
+        "3, because duplicates are only counted once in the length": "The strict LIS of the distinct values 2 and 3 is 2, not 3.",
+        "1, because the repeated 2 resets the list": "A repeated value overwrites an equal tail but never shrinks the list."
+      },
+      "enabled": true
+    },
+    {
+      "id": "longest-increasing-subsequence-time-01",
+      "category": "time_complexity",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "What is the time complexity of the canonical code?",
+        "Derive the running time of canonicalCode."
+      ],
+      "options": [
+        "O(n log n)",
+        "O(n^2)",
+        "O(n)",
+        "O(n log^2 n)"
+      ],
+      "answer": "O(n log n)",
+      "explanation": "n iterations, each one binary search over a list of length at most n (O(log n)) plus an O(1) update.",
+      "incorrectOptionExplanations": {
+        "O(n^2)": "That is the dp table with an inner loop over all earlier indices, which the binary search replaces.",
+        "O(n)": "Each element needs a binary search, so a log factor remains.",
+        "O(n log^2 n)": "There is only one logarithmic step per element, not two."
+      },
+      "enabled": true
+    },
+    {
+      "id": "longest-increasing-subsequence-space-01",
+      "category": "space_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "In the worst case (a strictly increasing array) the tails list grows to length n, so the extra space is O(___).",
+        "Worst-case extra space of the tails approach: O(___)."
+      ],
+      "answer": "n",
+      "explanation": "tails gets one entry per distinct length; a strictly increasing input makes it n long.",
+      "enabled": true,
+      "acceptedAnswers": [
+        "O(n)",
+        "linear",
+        "N"
+      ]
+    },
+    {
+      "id": "longest-increasing-subsequence-alt-01",
+      "category": "alternative_approach",
+      "type": "code_question",
+      "promptVariants": [
+        "In your O(n^2) dp, which loop would a binary search replace, and what must be true for it to work?",
+        "How do you turn your dp into O(n log n)?"
+      ],
+      "code": "n = len(nums)\ndp = [1] * n\nfor i in range(n):\n    for j in range(i):\n        if nums[j] < nums[i]:\n            dp[i] = max(dp[i], dp[j] + 1)\nreturn max(dp)",
+      "answer": "The inner `for j in range(i)` scan for the best earlier smaller element. It can be replaced by maintaining tails (the smallest tail per length), which is sorted, so a binary search finds the length that x can extend. The dp is quadratic in time with O(n) space; tails is n log n with O(n) space.",
+      "keyPoints": [
+        "Inner loop scans all earlier elements",
+        "Maintain sorted smallest tails",
+        "Binary search for the insertion position"
+      ],
+      "explanation": "The dp answers 'best ending at i'; the tails array answers 'best tail for length k', which is monotone and therefore searchable.",
+      "enabled": true
+    }
+  ],
+  "generatedAt": "2026-10-23T06:09:41Z"
+}

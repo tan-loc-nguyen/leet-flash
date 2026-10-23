@@ -1,0 +1,237 @@
+{
+  "schemaVersion": 1,
+  "problemSlug": "minimized-maximum-of-products-distributed-to-any-store",
+  "summary": "Distribute product types to n stores (one type per store) so that the largest number of products in any store is as small as possible.",
+  "patterns": [
+    "Binary Search",
+    "Greedy"
+  ],
+  "mainInsight": "For a cap x, each product type needs ceil(q / x) stores. If the total fits in n stores, x is feasible; feasibility is monotone in x, so binary search the smallest feasible cap.",
+  "invariant": "hi is always a feasible cap and the smallest feasible cap lies in [lo, hi].",
+  "canonicalApproach": "Binary search on the cap with ceil-division check",
+  "approaches": [
+    {
+      "name": "Linear scan on the cap",
+      "summary": "Try x = 1, 2, 3, ... until feasible.",
+      "timeComplexity": "O(m * Q)",
+      "spaceComplexity": "O(1)",
+      "strengths": [
+        "Easy"
+      ],
+      "weaknesses": [
+        "Slow"
+      ],
+      "interviewRelevance": "Baseline."
+    },
+    {
+      "name": "Binary search on the cap with ceil-division check",
+      "summary": "Search the smallest x with sum(ceil(q / x)) <= n.",
+      "timeComplexity": "O(m log Q)",
+      "spaceComplexity": "O(1)",
+      "strengths": [
+        "Simple",
+        "Fast"
+      ],
+      "weaknesses": [
+        "Needs a ceiling division"
+      ],
+      "interviewRelevance": "The expected answer."
+    },
+    {
+      "name": "Heap of per-store loads",
+      "summary": "Repeatedly split the type with the largest per-store load.",
+      "timeComplexity": "O(n log m)",
+      "spaceComplexity": "O(m)",
+      "strengths": [
+        "Greedy intuition"
+      ],
+      "weaknesses": [
+        "More bookkeeping",
+        "Slower"
+      ],
+      "interviewRelevance": "Rarely expected."
+    }
+  ],
+  "personalSolution": {
+    "approach": "Binary search on the cap with math.ceil(q / x) and an early return when the total is less than n",
+    "timeComplexity": "O(m log Q)",
+    "spaceComplexity": "O(1)",
+    "isOptimal": true,
+    "notes": "Optimal. The `total < n` shortcut is redundant (the search already returns 1), and math.ceil(q / x) is better written as (q + x - 1) // x."
+  },
+  "canonicalCode": "class Solution:\n    def minimizedMaximum(self, n: int, quantities: list[int]) -> int:\n        lo, hi = 1, max(quantities)        # hi stores always suffice: one store per type\n        while lo < hi:                     # O(log max(quantities)) iterations\n            mid = (lo + hi) // 2           # candidate cap on products per store\n            stores = sum((q + mid - 1) // mid for q in quantities)   # ceil(q / mid) stores per type, O(m)\n            if stores <= n:\n                hi = mid                   # cap is feasible: try a smaller one\n            else:\n                lo = mid + 1               # too many stores needed: raise the cap\n        return lo\n",
+  "commonMistakes": [
+    "Using floor division in the check.",
+    "Starting hi below the largest quantity.",
+    "Starting lo at 0, which causes a division by zero.",
+    "Treating each store as able to hold several product types."
+  ],
+  "edgeCases": [
+    "n equals the number of types.",
+    "n much larger than the total quantity (answer 1).",
+    "Single product type.",
+    "Quantities that divide evenly."
+  ],
+  "cards": [
+    {
+      "id": "recog-minimized-maximum-of-products-distributed-to-any-store",
+      "category": "pattern",
+      "type": "free_recall",
+      "promptVariants": [
+        "Which technique solves this problem, and what in the statement or constraints points to it?",
+        "Name the technique you would use here and the clue in the problem that tells you.",
+        "What approach fits this problem, and which part of the statement gives it away?"
+      ],
+      "answer": "Binary search on the maximum products per store with a ceil-division feasibility check. Clue: The statement asks to minimise the maximum load, and a larger cap never needs more stores, so feasibility is monotone in the cap and it can be searched between 1 and the largest quantity (up to 10^5).",
+      "keyPoints": [
+        "The statement asks to minimise the maximum load, and a larger cap never needs more stores, so feasibility is monotone in the cap and it can be searched between 1 and the largest quantity (up to 10^5)."
+      ],
+      "explanation": "'Minimise the maximum' plus a cheap feasibility test is the signature of binary search on the answer.",
+      "rubric": {
+        "technique": "Binary search on the maximum products per store with a ceil-division feasibility check",
+        "aliases": [
+          "binary search on the answer",
+          "binary search on the cap",
+          "parametric search",
+          "minimise the maximum with binary search"
+        ],
+        "alsoValid": [
+          {
+            "name": "Repeatedly give the next store to the type with the largest remaining load, using a heap",
+            "note": "correct in spirit, but each step splits the heaviest type and the bookkeeping is more complex than a search on the cap"
+          },
+          {
+            "name": "Try every cap from 1 up to the largest quantity",
+            "note": "correct, but linear in the largest quantity instead of logarithmic"
+          }
+        ],
+        "clueTypes": [
+          "monotonic_answer"
+        ],
+        "clue": "The statement asks to minimise the maximum load, and a larger cap never needs more stores, so feasibility is monotone in the cap and it can be searched between 1 and the largest quantity (up to 10^5)."
+      }
+    },
+    {
+      "id": "minimized-maximum-of-products-distributed-to-any-store-insight-01",
+      "category": "main_insight",
+      "type": "free_recall",
+      "promptVariants": [
+        "How do you test whether a cap x on products per store is achievable?",
+        "Why is the answer found by binary search on x?"
+      ],
+      "answer": "With cap x, a product type with q items needs ceil(q / x) stores, because each store holds one type and at most x items. The cap is feasible when the total over all types is at most n. A larger cap never needs more stores, so feasibility is false for small x and true from some x on, and the answer is the first true x.",
+      "keyPoints": [
+        "ceil(q / x) stores per type",
+        "Total stores <= n",
+        "Monotone in x"
+      ],
+      "explanation": "Turning an optimisation into a feasibility check is the core step.",
+      "enabled": true
+    },
+    {
+      "id": "minimized-maximum-of-products-distributed-to-any-store-impl-01",
+      "category": "implementation_detail",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "Why does the check use ceiling division, (q + x - 1) // x, rather than q // x?",
+        "What breaks if the check uses floor division q // x?"
+      ],
+      "options": [
+        "Leftover items still need one more store, so floor underestimates the stores needed",
+        "Floor division always rounds up for positive numbers, making the check too strict",
+        "Floor division would make the number of stores exceed n for every possible cap",
+        "Ceiling division keeps the cap x from becoming smaller than every quantity"
+      ],
+      "answer": "Leftover items still need one more store, so floor underestimates the stores needed",
+      "explanation": "A type with 11 items and cap 3 needs 4 stores (3, 3, 3, 2); floor gives 3, so the check would accept caps that are not achievable.",
+      "incorrectOptionExplanations": {
+        "Floor division always rounds up for positive numbers, making the check too strict": "Floor rounds down, which makes the check too lenient, not too strict.",
+        "Floor division would make the number of stores exceed n for every possible cap": "It makes the count too small, not too large.",
+        "Ceiling division keeps the cap x from becoming smaller than every quantity": "The cap range is set by lo and hi, not by the division."
+      },
+      "enabled": true
+    },
+    {
+      "id": "minimized-maximum-of-products-distributed-to-any-store-code-01",
+      "category": "code_reasoning",
+      "type": "code_question",
+      "promptVariants": [
+        "Your check uses math.ceil(q / x). What is the downside and what exact integer expression replaces it?",
+        "Is math.ceil(q / x) safe here, and what would you write instead?"
+      ],
+      "code": "def canDistribute(x: int) -> bool:\n    numOfStore = 0\n    for q in quantities:\n        numOfStore += math.ceil(q / x)\n\n    return numOfStore <= n",
+      "answer": "q / x is float division; math.ceil of a float risks rounding errors for large operands (not an issue at 10^5 here, but a bug waiting in other problems) and is slower. The exact integer form is (q + x - 1) // x, or -(-q // x).",
+      "keyPoints": [
+        "Float division can round",
+        "Safe at these limits but fragile",
+        "Use (q + x - 1) // x"
+      ],
+      "explanation": "Integer-only arithmetic keeps feasibility checks exact.",
+      "enabled": true
+    },
+    {
+      "id": "minimized-maximum-of-products-distributed-to-any-store-edge-01",
+      "category": "edge_case",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "With n = 3 stores and quantities = [4, 9, 2], what is the answer?",
+        "When the number of stores equals the number of product types, what does the answer become?"
+      ],
+      "options": [
+        "9, the largest quantity",
+        "5, the average quantity",
+        "4, the median quantity",
+        "15, the total quantity"
+      ],
+      "answer": "9, the largest quantity",
+      "explanation": "Each store gets exactly one whole type, so the maximum is the largest quantity. The search ends at lo = max(quantities).",
+      "incorrectOptionExplanations": {
+        "5, the average quantity": "Splitting evenly would need extra stores, and only 3 are available.",
+        "4, the median quantity": "The type with 9 items could not be spread over fewer stores than allowed.",
+        "15, the total quantity": "That would put everything in one store, which is far from minimal."
+      },
+      "enabled": true
+    },
+    {
+      "id": "minimized-maximum-of-products-distributed-to-any-store-time-01",
+      "category": "time_complexity",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "With m product types and Q the largest quantity, what is the time complexity?",
+        "Combine the search steps with the cost of one feasibility check."
+      ],
+      "options": [
+        "O(m log Q)",
+        "O(m * Q)",
+        "O(n log Q)",
+        "O(m log m)"
+      ],
+      "answer": "O(m log Q)",
+      "explanation": "About log Q iterations, each summing ceil(q / mid) over the m types.",
+      "incorrectOptionExplanations": {
+        "O(m * Q)": "That would test every cap from 1 to Q.",
+        "O(n log Q)": "The check loops over the m quantities, not the n stores.",
+        "O(m log m)": "No sorting is involved; the log factor comes from the cap range."
+      },
+      "enabled": true
+    },
+    {
+      "id": "minimized-maximum-of-products-distributed-to-any-store-space-01",
+      "category": "space_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Only lo, hi, mid and a running total are stored, so the extra space is O(___).",
+        "Extra space of the binary search on the cap: O(___)."
+      ],
+      "answer": "1",
+      "explanation": "No auxiliary arrays are built.",
+      "enabled": true,
+      "acceptedAnswers": [
+        "O(1)",
+        "constant",
+        "1"
+      ]
+    }
+  ],
+  "generatedAt": "2026-10-23T06:18:28Z"
+}
