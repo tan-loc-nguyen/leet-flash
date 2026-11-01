@@ -1,0 +1,34 @@
+{
+  "leetcodeId": "2409",
+  "title": "Count Days Spent Together",
+  "slug": "count-days-spent-together",
+  "url": "https://leetcode.com/problems/count-days-spent-together/",
+  "difficulty": "Easy",
+  "status": "solved",
+  "premium": false,
+  "tags": [
+    "Math",
+    "String"
+  ],
+  "problemStatement": "Alice and Bob are traveling to Rome for separate business meetings.\n\nYou are given 4 strings arriveAlice, leaveAlice, arriveBob, and leaveBob. Alice will be in the city from the dates arriveAlice to leaveAlice (inclusive), while Bob will be in the city from the dates arriveBob to leaveBob (inclusive). Each will be a 5-character string in the format \"MM-DD\", corresponding to the month and day of the date.\n\nReturn the total number of days that Alice and Bob are in Rome together.\n\nYou can assume that all dates occur in the same calendar year, which is not a leap year. Note that the number of days per month can be represented as: [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31].\n\nExample 1:\n\nInput: arriveAlice = \"08-15\", leaveAlice = \"08-18\", arriveBob = \"08-16\", leaveBob = \"08-19\"\nOutput: 3\nExplanation: Alice will be in Rome from August 15 to August 18. Bob will be in Rome from August 16 to August 19. They are both in Rome together on August 16th, 17th, and 18th, so the answer is 3.\n\nExample 2:\n\nInput: arriveAlice = \"10-01\", leaveAlice = \"10-31\", arriveBob = \"11-01\", leaveBob = \"12-31\"\nOutput: 0\nExplanation: There is no day when Alice and Bob are in Rome together, so we return 0.\n\nConstraints:\n\n- All dates are provided in the format \"MM-DD\".\n\n- Alice and Bob's arrival dates are earlier than or equal to their leaving dates.\n\n- The given dates are valid dates of a non-leap year.",
+  "constraints": [
+    "All dates are provided in the format \"MM-DD\".",
+    "Alice and Bob's arrival dates are earlier than or equal to their leaving dates.",
+    "The given dates are valid dates of a non-leap year."
+  ],
+  "hints": [
+    "For a given day, determine if Alice or Bob or both are in Rome.",
+    "Brute force all 365 days for both Alice and Bob."
+  ],
+  "acRate": 66.96,
+  "lastSubmittedAt": "2026-10-24T10:36:06Z",
+  "latestSubmission": {
+    "submissionId": "2180349044",
+    "language": "Python3",
+    "code": "class Solution:\n    def countDaysTogether(self, arriveAlice: str, leaveAlice: str, arriveBob: str, leaveBob: str) -> int:\n        # 3 cases: 1 contains the other, partial overlapping, exclusion\n        monthDays = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]\n        predays = [0]\n        for day in monthDays:\n            predays.append(predays[-1] + day)\n\n        alice = [int(x) for x in arriveAlice.split('-') + leaveAlice.split('-')]\n        bob = [int(x) for x in arriveBob.split('-') + leaveBob.split('-')]\n\n        aliceArriveDays = predays[alice[0] - 1] + alice[1]\n        aliceLeaveDays = predays[alice[2] - 1] + alice[3]\n        bobArriveDays = predays[bob[0] - 1] + bob[1]\n        bobLeaveDays = predays[bob[2] - 1] + bob[3]\n        \n        lastArrive = max(aliceArriveDays, bobArriveDays)\n        firstLeave = min(aliceLeaveDays, bobLeaveDays)\n\n        if firstLeave - lastArrive < 0:\n            return 0\n\n        return firstLeave - lastArrive + 1"
+  },
+  "notes": [],
+  "source": "leetcode",
+  "importedAt": "2026-11-01T11:09:15Z",
+  "lastSyncedAt": "2026-11-01T11:09:15Z"
+}

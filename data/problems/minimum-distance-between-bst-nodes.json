@@ -1,0 +1,33 @@
+{
+  "leetcodeId": "783",
+  "title": "Minimum Distance Between BST Nodes",
+  "slug": "minimum-distance-between-bst-nodes",
+  "url": "https://leetcode.com/problems/minimum-distance-between-bst-nodes/",
+  "difficulty": "Easy",
+  "status": "solved",
+  "premium": false,
+  "tags": [
+    "Tree",
+    "Depth-First Search",
+    "Breadth-First Search",
+    "Binary Search Tree",
+    "Binary Tree"
+  ],
+  "problemStatement": "Given the root of a Binary Search Tree (BST), return the minimum difference between the values of any two different nodes in the tree.\n\nExample 1:\n\nInput: root = [4,2,6,1,3]\nOutput: 1\n\nExample 2:\n\nInput: root = [1,0,48,null,null,12,49]\nOutput: 1\n\nConstraints:\n\n- The number of nodes in the tree is in the range [2, 100].\n\n- 0 <= Node.val <= 10^5\n\nNote: This question is the same as 530: https://leetcode.com/problems/minimum-absolute-difference-in-bst/",
+  "constraints": [
+    "The number of nodes in the tree is in the range [2, 100].",
+    "0 <= Node.val <= 10^5"
+  ],
+  "hints": [],
+  "acRate": 62.02,
+  "lastSubmittedAt": "2026-10-26T08:47:20Z",
+  "latestSubmission": {
+    "submissionId": "2182059072",
+    "language": "Python3",
+    "code": "# Definition for a binary tree node.\n# class TreeNode:\n#     def __init__(self, val=0, left=None, right=None):\n#         self.val = val\n#         self.left = left\n#         self.right = right\nclass Solution:\n    def minDiffInBST(self, root: TreeNode | None) -> int:\n        ans = 10**5 + 1\n        prev = None\n\n        def dfs(root):\n            nonlocal prev, ans\n            if not root:\n                return\n\n            dfs(root.left)\n\n            if prev != None:\n                ans = min(ans, root.val - prev)\n            \n            prev = root.val\n            \n            dfs(root.right)\n            \n        dfs(root)\n        return ans"
+  },
+  "notes": [],
+  "source": "leetcode",
+  "importedAt": "2026-11-01T11:09:15Z",
+  "lastSyncedAt": "2026-11-01T11:09:15Z"
+}

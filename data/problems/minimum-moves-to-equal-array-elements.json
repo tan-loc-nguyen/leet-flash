@@ -1,0 +1,32 @@
+{
+  "leetcodeId": "453",
+  "title": "Minimum Moves to Equal Array Elements",
+  "slug": "minimum-moves-to-equal-array-elements",
+  "url": "https://leetcode.com/problems/minimum-moves-to-equal-array-elements/",
+  "difficulty": "Medium",
+  "status": "solved",
+  "premium": false,
+  "tags": [
+    "Array",
+    "Math"
+  ],
+  "problemStatement": "Given an integer array nums of size n, return the minimum number of moves required to make all array elements equal.\n\nIn one move, you can increment n - 1 elements of the array by 1.\n\nExample 1:\n\nInput: nums = [1,2,3]\nOutput: 3\nExplanation: Only three moves are needed (remember each move increments two elements):\n[1,2,3]  =>  [2,3,3]  =>  [3,4,3]  =>  [4,4,4]\n\nExample 2:\n\nInput: nums = [1,1,1]\nOutput: 0\n\nConstraints:\n\n- n == nums.length\n\n- 1 <= nums.length <= 10^5\n\n- -10^9 <= nums[i] <= 10^9\n\n- The answer is guaranteed to fit in a 32-bit integer.",
+  "constraints": [
+    "n == nums.length",
+    "1 <= nums.length <= 10^5",
+    "-10^9 <= nums[i] <= 10^9",
+    "The answer is guaranteed to fit in a 32-bit integer."
+  ],
+  "hints": [],
+  "acRate": 61.35,
+  "lastSubmittedAt": "2026-11-01T09:33:02Z",
+  "latestSubmission": {
+    "submissionId": "2186869938",
+    "language": "Python3",
+    "code": "class Solution:\n    def minMoves(self, nums: list[int]) -> int:\n        nums.sort()\n        count = 0\n        for i in range(1, len(nums)):\n            count += nums[i] - nums[0]\n        return count"
+  },
+  "notes": [],
+  "source": "leetcode",
+  "importedAt": "2026-11-01T11:09:15Z",
+  "lastSyncedAt": "2026-11-01T11:09:15Z"
+}

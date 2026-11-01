@@ -1,0 +1,241 @@
+{
+  "schemaVersion": 1,
+  "problemSlug": "shortest-path-in-binary-matrix",
+  "summary": "Return the number of cells on the shortest 8-directional path of 0-cells from the top-left to the bottom-right of an n x n grid, or -1.",
+  "patterns": [
+    "BFS",
+    "Matrix"
+  ],
+  "mainInsight": "Every move costs the same, so BFS from (0, 0) over the 8 neighbours finds the shortest path. Count cells, not moves: the start already has length 1.",
+  "invariant": "Cells are dequeued in non-decreasing path length, and a cell's length is final when it is first enqueued.",
+  "canonicalApproach": "BFS with 8 directions",
+  "approaches": [
+    {
+      "name": "DFS over all paths",
+      "summary": "Explore every path and keep the shortest.",
+      "timeComplexity": "Exponential",
+      "spaceComplexity": "O(n^2)",
+      "strengths": [
+        "Easy to write"
+      ],
+      "weaknesses": [
+        "Exponential"
+      ],
+      "interviewRelevance": "Wrong tool."
+    },
+    {
+      "name": "BFS with 8 directions",
+      "summary": "Level-by-level BFS from the start, marking cells when enqueued.",
+      "timeComplexity": "O(n^2)",
+      "spaceComplexity": "O(n^2)",
+      "strengths": [
+        "Optimal for unit weights"
+      ],
+      "weaknesses": [
+        "Must remember diagonals and blocked endpoints"
+      ],
+      "interviewRelevance": "The expected answer."
+    },
+    {
+      "name": "A* search",
+      "summary": "BFS ordered by length + Chebyshev distance to the target.",
+      "timeComplexity": "O(n^2 log n) worst",
+      "spaceComplexity": "O(n^2)",
+      "strengths": [
+        "Explores fewer cells in practice"
+      ],
+      "weaknesses": [
+        "Heap and heuristic overhead"
+      ],
+      "interviewRelevance": "Follow-up discussion."
+    }
+  ],
+  "personalSolution": {
+    "approach": "BFS with 8 directions, distances in a dict, marking cells in the grid",
+    "timeComplexity": "O(n^2)",
+    "spaceComplexity": "O(n^2)",
+    "isOptimal": true,
+    "notes": "Optimal. Small gap: the start cell is never marked, so a neighbour re-enqueues (0, 0) once; set grid[0][0] = 1 at the start. A level counter would replace the dist dict."
+  },
+  "canonicalCode": "from collections import deque\n\n\nclass Solution:\n    def shortestPathBinaryMatrix(self, grid: list[list[int]]) -> int:\n        n = len(grid)\n        if grid[0][0] or grid[n - 1][n - 1]:\n            return -1                              # blocked start or end\n        queue = deque([(0, 0)])\n        grid[0][0] = 1                             # mark visited (reuses the grid)\n        length = 1                                 # path length counts cells, start included\n        while queue:\n            for _ in range(len(queue)):            # one BFS level = one more cell on the path\n                r, c = queue.popleft()\n                if r == n - 1 and c == n - 1:\n                    return length\n                for dr in (-1, 0, 1):\n                    for dc in (-1, 0, 1):          # 8 neighbours (0, 0 is the cell itself and is marked)\n                        nr, nc = r + dr, c + dc\n                        if 0 <= nr < n and 0 <= nc < n and grid[nr][nc] == 0:\n                            grid[nr][nc] = 1       # mark on enqueue: each cell queued once\n                            queue.append((nr, nc))\n            length += 1\n        return -1\n",
+  "commonMistakes": [
+    "Using only 4 directions; the path is 8-directionally connected.",
+    "Returning the number of moves instead of the number of cells (off by one).",
+    "Forgetting to check grid[0][0] and grid[n-1][n-1] before starting.",
+    "Using DFS, which does not give the shortest path."
+  ],
+  "edgeCases": [
+    "n = 1 with grid [[0]] -> 1.",
+    "n = 1 with grid [[1]] -> -1.",
+    "Blocked end cell.",
+    "Only a diagonal path exists."
+  ],
+  "cards": [
+    {
+      "id": "recog-shortest-path-in-binary-matrix",
+      "category": "pattern",
+      "type": "free_recall",
+      "promptVariants": [
+        "Which technique solves this problem, and what in the statement or constraints points to it?",
+        "Name the technique you would use here and the clue in the problem that tells you.",
+        "What approach fits this problem, and which part of the statement gives it away?"
+      ],
+      "answer": "BFS from the top-left cell over 8-directional neighbours. Clue: It asks for the length of the shortest clear path on a grid where every step to one of the 8 neighbours counts the same.",
+      "keyPoints": [
+        "It asks for the length of the shortest clear path on a grid where every step to one of the 8 neighbours counts the same."
+      ],
+      "explanation": "Shortest path with uniform step cost is BFS; the grid is an implicit graph.",
+      "rubric": {
+        "technique": "BFS from the top-left cell over 8-directional neighbours",
+        "aliases": [
+          "bfs",
+          "breadth first search with 8 directions",
+          "level-order bfs on the grid",
+          "a* search",
+          "bidirectional bfs"
+        ],
+        "alsoValid": [
+          {
+            "name": "DFS or backtracking over all paths, keeping the shortest",
+            "note": "correct but explores exponentially many paths"
+          }
+        ],
+        "clueTypes": [
+          "shortest_steps",
+          "grid_connectivity"
+        ],
+        "clue": "It asks for the length of the shortest clear path on a grid where every step to one of the 8 neighbours counts the same."
+      }
+    },
+    {
+      "id": "shortest-path-in-binary-matrix-edge-01",
+      "category": "edge_case",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "grid = [[0]]. What is returned?",
+        "For the 1 x 1 grid [[0]], what is the shortest clear path length?"
+      ],
+      "options": [
+        "1",
+        "0",
+        "-1",
+        "2"
+      ],
+      "answer": "1",
+      "explanation": "The start is also the end and is clear. Length counts visited cells, so a path of one cell has length 1.",
+      "incorrectOptionExplanations": {
+        "0": "Length counts cells, not moves.",
+        "-1": "The only cell is 0, so a clear path exists.",
+        "2": "There is no second cell to visit."
+      },
+      "enabled": true
+    },
+    {
+      "id": "shortest-path-in-binary-matrix-impl-01",
+      "category": "implementation_detail",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "Why does the BFS start with length = 1 rather than 0?",
+        "What does the returned number count?"
+      ],
+      "options": [
+        "Length counts visited cells, and the start is one",
+        "BFS levels are 1-indexed in Python's deque",
+        "The start cell always counts as a diagonal move",
+        "It compensates for marking the start as blocked"
+      ],
+      "answer": "Length counts visited cells, and the start is one",
+      "explanation": "The statement defines length as the number of visited cells, so a path with k moves has k + 1 cells.",
+      "incorrectOptionExplanations": {
+        "BFS levels are 1-indexed in Python's deque": "deque has no notion of levels; the counter is ours.",
+        "The start cell always counts as a diagonal move": "The start involves no move at all.",
+        "It compensates for marking the start as blocked": "Marking visited is unrelated to the length count."
+      },
+      "enabled": true
+    },
+    {
+      "id": "shortest-path-in-binary-matrix-whynot-01",
+      "category": "why_not",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "grid = [[0, 1], [1, 0]]: why does 4-directional BFS fail here?",
+        "What changes if you forget the diagonal moves?"
+      ],
+      "options": [
+        "The only route is diagonal, so 4-way BFS returns -1",
+        "4-way BFS returns 3, one cell too many",
+        "4-way BFS loops forever on this grid",
+        "4-way BFS still returns 2 since the corners are clear"
+      ],
+      "answer": "The only route is diagonal, so 4-way BFS returns -1",
+      "explanation": "Both orthogonal neighbours of the start are blocked; the path exists only through the shared corner.",
+      "incorrectOptionExplanations": {
+        "4-way BFS returns 3, one cell too many": "There is no 4-directional path at all.",
+        "4-way BFS loops forever on this grid": "BFS with marking always terminates.",
+        "4-way BFS still returns 2 since the corners are clear": "The corners are not 4-adjacent."
+      },
+      "enabled": true
+    },
+    {
+      "id": "shortest-path-in-binary-matrix-code-01",
+      "category": "code_reasoning",
+      "type": "code_question",
+      "promptVariants": [
+        "In your code, which cell can enter the queue twice, and why?",
+        "Find the small visited-marking gap in this BFS."
+      ],
+      "answer": "The start (0, 0). It is put in the queue but grid[0][0] stays 0, so a neighbour can enqueue it again with a larger distance. It does not break correctness (the target check uses the first pop of each cell, and dist is only read for the target), but marking grid[0][0] = 1 at the start fixes it.",
+      "keyPoints": [
+        "Start cell is never marked",
+        "A neighbour re-enqueues it",
+        "Harmless here but wasteful",
+        "Mark the start before the loop"
+      ],
+      "explanation": "Mark every source when it is enqueued, including the initial one.",
+      "enabled": true,
+      "code": "queue = deque([(0, 0)])\ndist = {(0, 0): 1}\nwhile queue:\n    k = len(queue)\n    for _ in range(k):\n        r, c = queue.popleft()\n        if r == n - 1 and c == n - 1:\n            return dist[(r, c)]\n        for d in DIR:\n            nr, nc = r + d[0], c + d[1]\n            if 0 <= nr < n and 0 <= nc < n and grid[nr][nc] == 0:\n                queue.append((nr, nc))\n                dist[(nr, nc)] = dist[(r, c)] + 1\n                grid[nr][nc] = 1"
+    },
+    {
+      "id": "shortest-path-in-binary-matrix-time-01",
+      "category": "time_complexity",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "What is the time complexity of the canonical code on an n x n grid?",
+        "Derive the running time of the BFS."
+      ],
+      "options": [
+        "O(n^2)",
+        "O(n^2 log n)",
+        "O(8^n)",
+        "O(n^4)"
+      ],
+      "answer": "O(n^2)",
+      "explanation": "Each of the n^2 cells is enqueued at most once and checks 8 neighbours in O(1).",
+      "incorrectOptionExplanations": {
+        "O(n^2 log n)": "No heap; that is A* or Dijkstra.",
+        "O(8^n)": "That is exhaustive DFS over paths.",
+        "O(n^4)": "That would be a search per cell."
+      },
+      "enabled": true
+    },
+    {
+      "id": "shortest-path-in-binary-matrix-space-01",
+      "category": "space_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "The queue can hold O(___) cells on an n x n grid.",
+        "Space of the BFS: O(___)."
+      ],
+      "answer": "n^2",
+      "acceptedAnswers": [
+        "n^2",
+        "n*n",
+        "n²",
+        "O(n^2)"
+      ],
+      "explanation": "The frontier and visited marks are bounded by the number of cells; the canonical code reuses the grid for marking.",
+      "enabled": true
+    }
+  ],
+  "generatedAt": "2026-11-01T11:48:27Z"
+}

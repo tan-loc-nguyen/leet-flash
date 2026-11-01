@@ -1,0 +1,36 @@
+{
+  "leetcodeId": "542",
+  "title": "01 Matrix",
+  "slug": "01-matrix",
+  "url": "https://leetcode.com/problems/01-matrix/",
+  "difficulty": "Medium",
+  "status": "solved",
+  "premium": false,
+  "tags": [
+    "Array",
+    "Dynamic Programming",
+    "Breadth-First Search",
+    "Matrix"
+  ],
+  "problemStatement": "Given an m x n binary matrix mat, return the distance of the nearest 0 for each cell.\n\nThe distance between two cells sharing a common edge is 1.\n\nExample 1:\n\nInput: mat = [[0,0,0],[0,1,0],[0,0,0]]\nOutput: [[0,0,0],[0,1,0],[0,0,0]]\n\nExample 2:\n\nInput: mat = [[0,0,0],[0,1,0],[1,1,1]]\nOutput: [[0,0,0],[0,1,0],[1,2,1]]\n\nConstraints:\n\n- m == mat.length\n\n- n == mat[i].length\n\n- 1 <= m, n <= 10^4\n\n- 1 <= m * n <= 10^4\n\n- mat[i][j] is either 0 or 1.\n\n- There is at least one 0 in mat.\n\nNote: This question is the same as 1765: https://leetcode.com/problems/map-of-highest-peak/",
+  "constraints": [
+    "m == mat.length",
+    "n == mat[i].length",
+    "1 <= m, n <= 10^4",
+    "1 <= m * n <= 10^4",
+    "mat[i][j] is either 0 or 1.",
+    "There is at least one 0 in mat."
+  ],
+  "hints": [],
+  "acRate": 55.17,
+  "lastSubmittedAt": "2026-10-25T09:46:21Z",
+  "latestSubmission": {
+    "submissionId": "2181271206",
+    "language": "Python3",
+    "code": "class Solution:\n    def updateMatrix(self, mat: list[list[int]]) -> list[list[int]]:\n        m, n = len(mat), len(mat[0])\n        DIR = [0,1,0,-1,0]\n        queue = deque()\n        for i in range(m):\n            for j in range(n):\n                if mat[i][j] == 0:\n                    queue.append((i, j))\n        seen = set()\n        while queue:\n            k = len(queue)\n            for _ in range(k):\n                r, c = queue.popleft()\n                for i in range(4):\n                    nr, nc = r + DIR[i], c + DIR[i + 1]\n                    if 0 <= nr < m and 0 <= nc < n and (nr, nc) not in seen and mat[nr][nc] != 0:\n                        queue.append((nr,nc))\n                        mat[nr][nc] = mat[r][c] + 1\n                        seen.add((nr,nc))\n        return mat\n                        \n                        \n        \n\n        "
+  },
+  "notes": [],
+  "source": "leetcode",
+  "importedAt": "2026-11-01T11:09:15Z",
+  "lastSyncedAt": "2026-11-01T11:09:15Z"
+}

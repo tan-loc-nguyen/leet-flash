@@ -22,14 +22,14 @@
   ],
   "hints": [],
   "acRate": 65.22,
-  "lastSubmittedAt": "2026-09-20T12:59:23Z",
+  "lastSubmittedAt": "2026-10-23T23:25:24Z",
   "latestSubmission": {
-    "submissionId": "2147691791",
+    "submissionId": "2180048268",
     "language": "Python3",
-    "code": "class Solution:\n    def numIslands(self, grid: List[List[str]]) -> int:\n        m, n = len(grid), len(grid[0])\n        DIR = [0, 1, 0, -1, 0]\n        ans = 0\n\n        def dfs(r: int, c: int) -> None:\n            grid[r][c] = \"0\"\n            for i in range(4):\n                nr, nc = r + DIR[i], c + DIR[i + 1]\n                if 0 <= nr < m and 0 <= nc < n and grid[nr][nc] == \"1\":\n                    dfs(nr, nc) \n        \n        for i in range(m):\n            for j in range(n):\n                if grid[i][j] == \"1\":\n                    dfs(i, j)\n                    ans += 1\n        \n        return ans"
+    "code": "class Solution:\n    def numIslands(self, grid: List[List[str]]) -> int:\n        m, n = len(grid), len(grid[0])\n        DIRS = [(0,1), (1,0), (-1,0), (0,-1)]\n\n        def dfs(r, c):\n            if not (0 <= r < m and 0 <= c < n and grid[r][c] == \"1\"):\n                return\n            \n            grid[r][c] = \"0\"\n            for d in DIRS:\n                nr, nc = r + d[0], c + d[1]\n                dfs(nr, nc)\n        \n        count = 0\n        for i in range(m):\n            for j in range(n):\n                if grid[i][j] == \"1\":\n                    count += 1\n                    dfs(i, j)\n        return count"
   },
   "notes": [],
   "source": "leetcode",
   "importedAt": "2026-10-01T13:44:25Z",
-  "lastSyncedAt": "2026-10-01T13:44:25Z"
+  "lastSyncedAt": "2026-11-01T11:09:15Z"
 }

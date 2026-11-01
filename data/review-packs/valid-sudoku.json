@@ -1,0 +1,251 @@
+{
+  "schemaVersion": 1,
+  "problemSlug": "valid-sudoku",
+  "summary": "Check that no filled digit repeats within any row, column or 3x3 box of a partially filled 9x9 Sudoku board.",
+  "patterns": [
+    "Array / Hashing",
+    "Matrix"
+  ],
+  "mainInsight": "Validity is three independent duplicate checks. Keep a seen-set per row, per column and per box, and map each cell to its box with (i // 3) * 3 + j // 3, so one pass over the board checks all of them.",
+  "invariant": "After processing a cell, rows[i], cols[j] and boxes[b] hold exactly the digits already seen in that row, column and box.",
+  "canonicalApproach": "One pass with row, column and box sets",
+  "approaches": [
+    {
+      "name": "Three separate passes",
+      "summary": "Check every row, then every column, then every box, each with a fresh set.",
+      "timeComplexity": "O(1) (81 cells, 3 passes)",
+      "spaceComplexity": "O(1)",
+      "strengths": [
+        "Very easy to reason about"
+      ],
+      "weaknesses": [
+        "Three loops with similar code"
+      ],
+      "interviewRelevance": "Acceptable; the one-pass version is tidier."
+    },
+    {
+      "name": "One pass with row, column and box sets",
+      "summary": "27 sets; for each filled cell check and insert into its row, column and box set.",
+      "timeComplexity": "O(1) (O(n^2) for an n x n board)",
+      "spaceComplexity": "O(1) (O(n^2) for an n x n board)",
+      "strengths": [
+        "Single scan",
+        "Box index formula shows grid reasoning"
+      ],
+      "weaknesses": [
+        "Box index formula is easy to get wrong"
+      ],
+      "interviewRelevance": "The expected answer."
+    },
+    {
+      "name": "Bitmasks",
+      "summary": "Replace each set with a 9-bit integer and test bit (1 << d).",
+      "timeComplexity": "O(1)",
+      "spaceComplexity": "O(1)",
+      "strengths": [
+        "Tiny memory",
+        "Fast"
+      ],
+      "weaknesses": [
+        "Less readable"
+      ],
+      "interviewRelevance": "Nice follow-up optimisation."
+    }
+  ],
+  "canonicalCode": "class Solution:\n    def isValidSudoku(self, board: list[list[str]]) -> bool:\n        rows = [set() for _ in range(9)]\n        cols = [set() for _ in range(9)]\n        boxes = [set() for _ in range(9)]\n        for i in range(9):                     # 81 cells: fixed work for a 9x9 board\n            for j in range(9):\n                d = board[i][j]\n                if d == '.':\n                    continue                   # only filled cells are validated\n                b = (i // 3) * 3 + j // 3      # box number 0..8, row-major\n                if d in rows[i] or d in cols[j] or d in boxes[b]:\n                    return False\n                rows[i].add(d)\n                cols[j].add(d)\n                boxes[b].add(d)\n        return True\n",
+  "commonMistakes": [
+    "Wrong box index, e.g. i // 3 + j // 3 (collides) or i // 3 * 3 + j % 3.",
+    "Trying to solve the board instead of only checking filled cells.",
+    "Counting '.' as a value and reporting duplicates of empty cells."
+  ],
+  "edgeCases": [
+    "Empty board (all '.') is valid.",
+    "Duplicate only within a column.",
+    "Duplicate only within a box but in different rows and columns.",
+    "Valid but unsolvable board must still return true."
+  ],
+  "cards": [
+    {
+      "id": "recog-valid-sudoku",
+      "category": "pattern",
+      "type": "free_recall",
+      "promptVariants": [
+        "Which technique solves this problem, and what in the statement or constraints points to it?",
+        "Name the technique you would use here and the clue in the problem that tells you.",
+        "What approach fits this problem, and which part of the statement gives it away?"
+      ],
+      "answer": "Hash sets per row, column and 3x3 box, checked in one pass. Clue: Each row, column and 3x3 sub-box must contain the digits 1-9 without repetition, which is a duplicate check per unit.",
+      "keyPoints": [
+        "Each row, column and 3x3 sub-box must contain the digits 1-9 without repetition, which is a duplicate check per unit."
+      ],
+      "explanation": "Duplicate detection is the textbook use of a hash set; the only grid-specific part is knowing which three units a cell belongs to.",
+      "rubric": {
+        "technique": "Hash sets per row, column and 3x3 box, checked in one pass",
+        "aliases": [
+          "row column and box seen sets",
+          "one seen set with keys like (row, digit), (col, digit), (box, digit)",
+          "bitmask per row, column and box",
+          "three passes with a set per unit"
+        ],
+        "alsoValid": [
+          {
+            "name": "Sort the digits of each row, column and box and look for equal neighbours",
+            "note": "correct but sorts 27 units for no benefit"
+          },
+          {
+            "name": "Compare every pair of filled cells that share a row, column or box",
+            "note": "correct but quadratic in the number of filled cells"
+          }
+        ],
+        "clueTypes": [
+          "lookup_frequency"
+        ],
+        "clue": "Each row, column and 3x3 sub-box must contain the digits 1-9 without repetition, which is a duplicate check per unit."
+      }
+    },
+    {
+      "id": "valid-sudoku-impl-01",
+      "category": "implementation_detail",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Complete the box index for cell (i, j): b = (i // 3) * 3 + ___",
+        "Box number 0-8 of cell (i, j) in row-major order is (i // 3) * 3 + ___."
+      ],
+      "answer": "j // 3",
+      "acceptedAnswers": [
+        "j//3",
+        "(j // 3)",
+        "j // 3"
+      ],
+      "explanation": "i // 3 picks the band of three box rows, times 3 skips the boxes in earlier bands, and j // 3 picks the box column inside the band.",
+      "enabled": true
+    },
+    {
+      "id": "valid-sudoku-impl-02",
+      "category": "implementation_detail",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "Which box index formula is wrong because two different boxes get the same number?",
+        "Which of these box index formulas causes collisions?"
+      ],
+      "options": [
+        "i // 3 + j // 3",
+        "(i // 3) * 3 + j // 3",
+        "(i // 3, j // 3) as a tuple key",
+        "3 * (i // 3) + (j // 3)"
+      ],
+      "answer": "i // 3 + j // 3",
+      "explanation": "Without the factor 3 the box at band 0, column 1 and the box at band 1, column 0 both map to 1.",
+      "incorrectOptionExplanations": {
+        "(i // 3) * 3 + j // 3": "Correct row-major numbering 0-8.",
+        "(i // 3, j // 3) as a tuple key": "Correct: a tuple key is unique per box.",
+        "3 * (i // 3) + (j // 3)": "Same as the canonical formula, just reordered."
+      },
+      "enabled": true
+    },
+    {
+      "id": "valid-sudoku-whynot-01",
+      "category": "why_not",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "Why don't you need a backtracking solver to answer this problem?",
+        "The note says a valid board may be unsolvable. What does that mean for your algorithm?"
+      ],
+      "options": [
+        "Only repeats among filled cells matter, not solvability",
+        "A solver would be correct but too slow for a 9x9 board",
+        "Backtracking cannot handle partially filled boards",
+        "The empty cells are guaranteed to be fillable"
+      ],
+      "answer": "Only repeats among filled cells matter, not solvability",
+      "explanation": "The task asks only whether the current filled digits break a rule. A board can pass and still have no completion, and that must return true.",
+      "incorrectOptionExplanations": {
+        "A solver would be correct but too slow for a 9x9 board": "A solver answers a different question (solvable?) and would wrongly reject valid unsolvable boards.",
+        "Backtracking cannot handle partially filled boards": "Backtracking solvers exactly fill partial boards; that is not the reason.",
+        "The empty cells are guaranteed to be fillable": "The note says the opposite: a valid board is not necessarily solvable."
+      },
+      "enabled": true
+    },
+    {
+      "id": "valid-sudoku-edge-01",
+      "category": "edge_case",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "A board has '5' at (0, 0) and '5' at (2, 2) and no other digits. Result?",
+        "Only two cells are filled: board[0][0] = '5' and board[2][2] = '5'. What does the function return?"
+      ],
+      "options": [
+        "false, they share the top-left box",
+        "true, they share no row or column",
+        "true, a board with two digits is always valid",
+        "false, the board is unsolvable"
+      ],
+      "answer": "false, they share the top-left box",
+      "explanation": "Rows 0 and 2 and columns 0 and 2 differ, but (0 // 3) * 3 + 0 // 3 = 0 and (2 // 3) * 3 + 2 // 3 = 0: same box, so the box check catches it.",
+      "incorrectOptionExplanations": {
+        "true, they share no row or column": "The box rule still applies, and both cells are in box 0.",
+        "true, a board with two digits is always valid": "Two equal digits in one unit already break a rule.",
+        "false, the board is unsolvable": "Solvability is irrelevant; the reason is the box duplicate."
+      },
+      "enabled": true
+    },
+    {
+      "id": "valid-sudoku-alt-01",
+      "category": "alternative_approach",
+      "type": "free_recall",
+      "promptVariants": [
+        "How can you do the check with a single set instead of 27?",
+        "Describe a one-set version of the validator."
+      ],
+      "answer": "Insert tagged keys into one set: (digit, 'row', i), (digit, 'col', j) and (digit, 'box', i // 3, j // 3). If any key is already present, the board is invalid. The tag keeps a digit in row 3 distinct from the same digit in column 3.",
+      "keyPoints": [
+        "One set of tagged keys",
+        "Tag distinguishes row/column/box",
+        "Same one-pass check"
+      ],
+      "explanation": "It trades three arrays of sets for one set with composite keys; complexity is the same.",
+      "enabled": true
+    },
+    {
+      "id": "valid-sudoku-time-01",
+      "category": "time_complexity",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "What is the running time of the canonical code?",
+        "How does the running time scale for this fixed-size board?"
+      ],
+      "options": [
+        "O(1), the board is always 81 cells",
+        "O(n), one step per filled cell",
+        "O(n^3), three checks for each row",
+        "O(n log n), sets keep digits ordered"
+      ],
+      "answer": "O(1), the board is always 81 cells",
+      "explanation": "The double loop runs exactly 81 times with constant-time set operations. Generalised to an n x n board it is O(n^2).",
+      "incorrectOptionExplanations": {
+        "O(n), one step per filled cell": "There is no input size n here; the loop visits all 81 cells, filled or not.",
+        "O(n^3), three checks for each row": "Each cell does three O(1) lookups; that adds a constant, not a factor of n.",
+        "O(n log n), sets keep digits ordered": "Python sets are hash sets; there is no ordering or logarithmic cost."
+      },
+      "enabled": true
+    },
+    {
+      "id": "valid-sudoku-space-01",
+      "category": "space_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "The 27 sets hold at most ___ digits in total (each filled cell is stored three times)",
+        "Total entries across all row, column and box sets is at most ___"
+      ],
+      "answer": "243",
+      "acceptedAnswers": [
+        "243",
+        "81 * 3",
+        "3 * 81"
+      ],
+      "explanation": "At most 81 filled cells, each added to three sets: 243 entries. A constant, so O(1) extra space.",
+      "enabled": true
+    }
+  ],
+  "generatedAt": "2026-11-01T11:48:27Z"
+}

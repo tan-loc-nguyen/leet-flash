@@ -1,0 +1,204 @@
+{
+  "schemaVersion": 1,
+  "problemSlug": "all-paths-from-source-to-target",
+  "summary": "List every path from node 0 to node n - 1 in a directed acyclic graph.",
+  "patterns": [
+    "Backtracking",
+    "DFS",
+    "Graph"
+  ],
+  "mainInsight": "Enumerating all paths needs exhaustive search: DFS from 0 with a shared path list, append on entry, record a copy at n - 1, pop on return. Because the graph is acyclic no visited set is needed.",
+  "invariant": "When dfs(node) runs, path holds exactly the nodes from 0 to node along the current branch.",
+  "canonicalApproach": "Backtracking DFS",
+  "approaches": [
+    {
+      "name": "Backtracking DFS",
+      "summary": "DFS from 0 with one mutable path; copy it when reaching n - 1.",
+      "timeComplexity": "O(2^n * n)",
+      "spaceComplexity": "O(n) besides output",
+      "strengths": [
+        "Simple",
+        "Shares one path list"
+      ],
+      "weaknesses": [
+        "Must copy path"
+      ],
+      "interviewRelevance": "The expected answer."
+    },
+    {
+      "name": "BFS over partial paths",
+      "summary": "Queue holds paths; extend each by its last node's neighbours.",
+      "timeComplexity": "O(2^n * n)",
+      "spaceComplexity": "O(2^n * n)",
+      "strengths": [
+        "Iterative"
+      ],
+      "weaknesses": [
+        "Stores many partial paths"
+      ],
+      "interviewRelevance": "Valid alternative."
+    },
+    {
+      "name": "Memoised DFS (paths from node to target)",
+      "summary": "paths(v) = [[v] + p for nxt in graph[v] for p in paths(nxt)].",
+      "timeComplexity": "O(2^n * n)",
+      "spaceComplexity": "O(2^n * n)",
+      "strengths": [
+        "Reuses suffixes"
+      ],
+      "weaknesses": [
+        "Output size dominates anyway"
+      ],
+      "interviewRelevance": "Nice to mention."
+    }
+  ],
+  "canonicalCode": "class Solution:\n    def allPathsSourceTarget(self, graph: list[list[int]]) -> list[list[int]]:\n        target = len(graph) - 1\n        paths, path = [], [0]\n\n        def dfs(node):\n            if node == target:\n                paths.append(path[:])      # copy: O(n) per path found\n                return\n            for nxt in graph[node]:        # DAG: no visited set needed, no cycles\n                path.append(nxt)\n                dfs(nxt)\n                path.pop()                 # backtrack\n\n        dfs(0)                             # up to 2^(n-2) paths, each up to n long\n        return paths\n",
+  "commonMistakes": [
+    "Appending `path` instead of a copy, so every result ends up identical (and empty).",
+    "Adding a visited set, which wrongly prunes nodes that appear on several different paths.",
+    "Forgetting to pop after the recursive call."
+  ],
+  "edgeCases": [
+    "Direct edge 0 -> n - 1 only.",
+    "n = 2.",
+    "Complete DAG where every i links to every j > i (2^(n-2) paths)."
+  ],
+  "cards": [
+    {
+      "id": "recog-all-paths-from-source-to-target",
+      "category": "pattern",
+      "type": "free_recall",
+      "promptVariants": [
+        "Which technique solves this problem, and what in the statement or constraints points to it?",
+        "Name the technique you would use here and the clue in the problem that tells you.",
+        "What approach fits this problem, and which part of the statement gives it away?"
+      ],
+      "answer": "Backtracking DFS from node 0 that records the path at node n - 1. Clue: It asks for all possible paths from node 0 to node n - 1, an enumeration over a graph that is guaranteed to be a DAG with n at most 15.",
+      "keyPoints": [
+        "It asks for all possible paths from node 0 to node n - 1, an enumeration over a graph that is guaranteed to be a DAG with n at most 15."
+      ],
+      "explanation": "All paths means exhaustive search; the DAG guarantee removes the need for a visited set and the small n keeps the exponential output manageable.",
+      "rubric": {
+        "technique": "Backtracking DFS from node 0 that records the path at node n - 1",
+        "aliases": [
+          "backtracking",
+          "dfs with path",
+          "dfs enumerating all paths",
+          "bfs over partial paths",
+          "memoised dfs returning paths to target"
+        ],
+        "alsoValid": [],
+        "clueTypes": [
+          "enumerate_all",
+          "dependencies_graph"
+        ],
+        "clue": "It asks for all possible paths from node 0 to node n - 1, an enumeration over a graph that is guaranteed to be a DAG with n at most 15."
+      }
+    },
+    {
+      "id": "all-paths-from-source-to-target-whynot-01",
+      "category": "why_not",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "Why does this DFS not need a visited set?",
+        "What would a global visited set break here?"
+      ],
+      "options": [
+        "The graph is a DAG, so no path revisits a node",
+        "Each node has at most one incoming edge",
+        "n is at most 15, so cycles are short",
+        "The adjacency lists contain no duplicates"
+      ],
+      "answer": "The graph is a DAG, so no path revisits a node",
+      "explanation": "Without cycles the search terminates on its own. A global visited set would block a node reached again by a different path, losing valid paths.",
+      "incorrectOptionExplanations": {
+        "Each node has at most one incoming edge": "Nodes can have many incoming edges (node 3 in example 1 has two).",
+        "n is at most 15, so cycles are short": "There are no cycles at all; small n is about output size.",
+        "The adjacency lists contain no duplicates": "Unique neighbours avoid duplicate paths but do not prevent cycles."
+      },
+      "enabled": true
+    },
+    {
+      "id": "all-paths-from-source-to-target-impl-01",
+      "category": "code_reasoning",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "What goes wrong if the base case does `paths.append(path)` instead of `path[:]`?",
+        "Why copy the path when it reaches the target?"
+      ],
+      "options": [
+        "All entries alias one list, emptied to [0] at the end",
+        "Only the first path is stored and others are skipped",
+        "The paths are stored in reverse order",
+        "Python raises an error when the list is mutated"
+      ],
+      "answer": "All entries alias one list, emptied to [0] at the end",
+      "explanation": "Backtracking pops the shared list, so every stored reference ends up pointing at the final state [0].",
+      "incorrectOptionExplanations": {
+        "Only the first path is stored and others are skipped": "Every path is appended, but as the same object.",
+        "The paths are stored in reverse order": "Order is unaffected; content is.",
+        "Python raises an error when the list is mutated": "Mutating a list stored elsewhere is legal and silent."
+      },
+      "enabled": true
+    },
+    {
+      "id": "all-paths-from-source-to-target-edge-01",
+      "category": "edge_case",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "graph = [[1, 2, 3], [2, 3], [3], []]. How many paths are returned?",
+        "For the complete DAG on 4 nodes [[1,2,3],[2,3],[3],[]], count the paths from 0 to 3."
+      ],
+      "options": [
+        "4",
+        "3",
+        "6",
+        "8"
+      ],
+      "answer": "4",
+      "explanation": "Paths: 0-3, 0-2-3, 0-1-3, 0-1-2-3. Each of the middle nodes 1 and 2 is either in or out: 2^(n-2) = 4.",
+      "incorrectOptionExplanations": {
+        "3": "Misses 0-1-2-3, the path through both middle nodes.",
+        "6": "That counts edges, not paths.",
+        "8": "That is 2^(n-1); the endpoints are always included."
+      },
+      "enabled": true
+    },
+    {
+      "id": "all-paths-from-source-to-target-time-01",
+      "category": "time_complexity",
+      "type": "free_recall",
+      "promptVariants": [
+        "Derive the worst-case time of the canonical code.",
+        "Why is the running time exponential, and what is the bound?"
+      ],
+      "answer": "In a complete DAG every middle node can be in or out of a path, so there are 2^(n-2) paths, each up to n long. Copying each path costs O(n), and the DFS explores each path prefix once, giving O(2^n * n).",
+      "keyPoints": [
+        "2^(n-2) paths in the worst case",
+        "Each path copied in O(n)",
+        "Total O(2^n * n)",
+        "Output size bounds the work"
+      ],
+      "explanation": "When the output itself is exponential, the algorithm cannot be faster than the output.",
+      "enabled": true
+    },
+    {
+      "id": "all-paths-from-source-to-target-space-01",
+      "category": "space_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Besides the output, the recursion stack and path use O(___) space.",
+        "Auxiliary space (excluding the result): O(___)."
+      ],
+      "answer": "n",
+      "acceptedAnswers": [
+        "n",
+        "O(n)",
+        "linear"
+      ],
+      "explanation": "The path and recursion depth are at most n because a DAG path visits each node once.",
+      "enabled": true
+    }
+  ],
+  "generatedAt": "2026-11-01T11:48:27Z"
+}

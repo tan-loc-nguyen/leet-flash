@@ -1,0 +1,193 @@
+{
+  "schemaVersion": 1,
+  "problemSlug": "convert-doubly-linked-list-to-array-i",
+  "summary": "Given the head of a doubly linked list, return its values in order as an array.",
+  "patterns": [
+    "Linked List"
+  ],
+  "mainInsight": "Nothing clever: follow next pointers from head, appending each value. The prev pointers are irrelevant because you start at the head.",
+  "canonicalApproach": "Forward traversal via next",
+  "approaches": [
+    {
+      "name": "Forward traversal via next",
+      "summary": "Walk from head to None appending values.",
+      "timeComplexity": "O(n)",
+      "spaceComplexity": "O(1) besides output",
+      "strengths": [
+        "Direct"
+      ],
+      "weaknesses": [
+        "None"
+      ],
+      "interviewRelevance": "The expected answer."
+    },
+    {
+      "name": "Recursion",
+      "summary": "values(node) = [node.val] + values(node.next).",
+      "timeComplexity": "O(n^2) with list concatenation",
+      "spaceComplexity": "O(n) stack",
+      "strengths": [
+        "Short"
+      ],
+      "weaknesses": [
+        "Slower, recursion depth"
+      ],
+      "interviewRelevance": "Not needed."
+    }
+  ],
+  "canonicalCode": "class Solution:\n    def toArray(self, head: 'Node | None') -> list[int]:\n        result = []\n        node = head\n        while node:                  # visit each node once: O(n)\n            result.append(node.val)\n            node = node.next         # prev pointers are not needed when starting at head\n        return result\n",
+  "commonMistakes": [
+    "Walking prev from the head (returns only the head).",
+    "Stopping when node.next is None and missing the last value."
+  ],
+  "edgeCases": [
+    "Single node.",
+    "All equal values."
+  ],
+  "cards": [
+    {
+      "id": "recog-convert-doubly-linked-list-to-array-i",
+      "category": "pattern",
+      "type": "free_recall",
+      "promptVariants": [
+        "Which technique solves this problem, and what in the statement or constraints points to it?",
+        "Name the technique you would use here and the clue in the problem that tells you.",
+        "What approach fits this problem, and which part of the statement gives it away?"
+      ],
+      "answer": "Direct traversal from head following next pointers. Clue: It only asks for the elements of the list in order starting from the given head, so a plain forward walk is all that is needed.",
+      "keyPoints": [
+        "It only asks for the elements of the list in order starting from the given head, so a plain forward walk is all that is needed."
+      ],
+      "explanation": "Recognising that nothing clever is needed is the skill here: the prev pointers are a distraction.",
+      "rubric": {
+        "technique": "Direct traversal from head following next pointers",
+        "aliases": [
+          "linear traversal",
+          "iterate through the linked list",
+          "walk next pointers and append",
+          "simple traversal"
+        ],
+        "alsoValid": [
+          {
+            "name": "Recursively build the list with concatenation",
+            "note": "correct but concatenation copies the list at each level"
+          }
+        ],
+        "clueTypes": [
+          "direct_simulation"
+        ],
+        "clue": "It only asks for the elements of the list in order starting from the given head, so a plain forward walk is all that is needed."
+      }
+    },
+    {
+      "id": "convert-doubly-linked-list-to-array-i-whynot-01",
+      "category": "why_not",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "Why are the prev pointers not used?",
+        "When would you need prev in this problem?"
+      ],
+      "options": [
+        "From the head, next alone reaches every node",
+        "prev pointers are always None in this input",
+        "Using prev would visit the nodes twice",
+        "prev only exists on the tail node"
+      ],
+      "answer": "From the head, next alone reaches every node",
+      "explanation": "prev would matter only if you were given an arbitrary node (that is the follow-up variant, Convert Doubly Linked List to Array II).",
+      "incorrectOptionExplanations": {
+        "prev pointers are always None in this input": "They are set for every node but the head.",
+        "Using prev would visit the nodes twice": "From the head, prev just leads to None.",
+        "prev only exists on the tail node": "Every node has prev; only the head's is None."
+      },
+      "enabled": true
+    },
+    {
+      "id": "convert-doubly-linked-list-to-array-i-impl-01",
+      "category": "implementation_detail",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "What goes wrong with `while node.next: result.append(node.val); node = node.next`?",
+        "Which value does a loop on node.next miss?"
+      ],
+      "options": [
+        "The last node's value is never appended",
+        "The head's value is appended twice",
+        "It loops forever on a single node",
+        "It appends values in reverse order"
+      ],
+      "answer": "The last node's value is never appended",
+      "explanation": "The loop stops at the tail without appending it. Loop while node is not None instead.",
+      "incorrectOptionExplanations": {
+        "The head's value is appended twice": "Each visited node is appended once.",
+        "It loops forever on a single node": "With one node, node.next is None and the loop never runs.",
+        "It appends values in reverse order": "It still walks forward."
+      },
+      "enabled": true
+    },
+    {
+      "id": "convert-doubly-linked-list-to-array-i-edge-01",
+      "category": "edge_case",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "A list with a single node of value 7. What is returned?",
+        "head is one node, val 7, prev and next None. Result?"
+      ],
+      "options": [
+        "[7]",
+        "[]",
+        "[7, 7]",
+        "None"
+      ],
+      "answer": "[7]",
+      "explanation": "The loop runs once for the head and stops at None.",
+      "incorrectOptionExplanations": {
+        "[]": "The head itself is a node and must be included.",
+        "[7, 7]": "Each node is appended once.",
+        "None": "The function always returns a list."
+      },
+      "enabled": true
+    },
+    {
+      "id": "convert-doubly-linked-list-to-array-i-time-01",
+      "category": "time_complexity",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "What is the time complexity of the canonical code?",
+        "Derive the running time of the traversal."
+      ],
+      "options": [
+        "O(n)",
+        "O(1)",
+        "O(n log n)",
+        "O(n^2)"
+      ],
+      "answer": "O(n)",
+      "explanation": "One visit and one amortised O(1) append per node.",
+      "incorrectOptionExplanations": {
+        "O(1)": "Every node must be visited.",
+        "O(n log n)": "No sorting.",
+        "O(n^2)": "append is amortised O(1)."
+      },
+      "enabled": true
+    },
+    {
+      "id": "convert-doubly-linked-list-to-array-i-space-01",
+      "category": "space_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Besides the returned array, the traversal uses O(___) space.",
+        "Auxiliary space excluding the output: O(___)."
+      ],
+      "answer": "1",
+      "acceptedAnswers": [
+        "1",
+        "constant",
+        "O(1)"
+      ],
+      "explanation": "Just one pointer; the output array is O(n) and required.",
+      "enabled": true
+    }
+  ],
+  "generatedAt": "2026-11-01T14:43:24Z"
+}

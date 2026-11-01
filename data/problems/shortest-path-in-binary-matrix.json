@@ -1,0 +1,35 @@
+{
+  "leetcodeId": "1091",
+  "title": "Shortest Path in Binary Matrix",
+  "slug": "shortest-path-in-binary-matrix",
+  "url": "https://leetcode.com/problems/shortest-path-in-binary-matrix/",
+  "difficulty": "Medium",
+  "status": "solved",
+  "premium": false,
+  "tags": [
+    "Array",
+    "Breadth-First Search",
+    "Matrix"
+  ],
+  "problemStatement": "Given an n x n binary matrix grid, return the length of the shortest clear path in the matrix. If there is no clear path, return -1.\n\nA clear path in a binary matrix is a path from the top-left cell (i.e., (0, 0)) to the bottom-right cell (i.e., (n - 1, n - 1)) such that:\n\n- All the visited cells of the path are 0.\n\n- All the adjacent cells of the path are 8-directionally connected (i.e., they are different and they share an edge or a corner).\n\nThe length of a clear path is the number of visited cells of this path.\n\nExample 1:\n\nInput: grid = [[0,1],[1,0]]\nOutput: 2\n\nExample 2:\n\nInput: grid = [[0,0,0],[1,1,0],[1,1,0]]\nOutput: 4\n\nExample 3:\n\nInput: grid = [[1,0,0],[1,1,0],[1,1,0]]\nOutput: -1\n\nConstraints:\n\n- n == grid.length\n\n- n == grid[i].length\n\n- 1 <= n <= 100\n\n- grid[i][j] is 0 or 1",
+  "constraints": [
+    "n == grid.length",
+    "n == grid[i].length",
+    "1 <= n <= 100",
+    "grid[i][j] is 0 or 1"
+  ],
+  "hints": [
+    "Do a breadth first search to find the shortest path."
+  ],
+  "acRate": 52.34,
+  "lastSubmittedAt": "2026-10-25T09:21:17Z",
+  "latestSubmission": {
+    "submissionId": "2181256505",
+    "language": "Python3",
+    "code": "class Solution:\n    def shortestPathBinaryMatrix(self, grid: list[list[int]]) -> int:\n        n = len(grid)\n        DIR = [(-1, -1), (-1, 0), (-1, 1), (0, 1), (1, 1), (1, 0), (1, -1), (0, -1)]\n\n        if grid[0][0] == 1 or grid[n - 1][n - 1] == 1:\n            return -1\n\n        queue = deque([(0, 0)])\n        dist = {(0, 0): 1}\n\n        while queue:\n            k = len(queue)\n            for _ in range(k):\n                r, c = queue.popleft()\n                if r == n - 1 and c == n - 1:\n                    return dist[(r, c)]\n                for d in DIR:\n                    nr, nc = r + d[0], c + d[1]\n                    if 0 <= nr < n and 0 <= nc < n and grid[nr][nc] == 0:\n                        queue.append((nr, nc))\n                        dist[(nr, nc)] = dist[(r, c)] + 1\n                        grid[nr][nc] = 1\n        return -1\n"
+  },
+  "notes": [],
+  "source": "leetcode",
+  "importedAt": "2026-11-01T11:09:15Z",
+  "lastSyncedAt": "2026-11-01T11:09:15Z"
+}

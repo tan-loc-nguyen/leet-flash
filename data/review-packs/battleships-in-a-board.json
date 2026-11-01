@@ -1,0 +1,221 @@
+{
+  "schemaVersion": 1,
+  "problemSlug": "battleships-in-a-board",
+  "summary": "Count the straight, non-touching battleships ('X' cells in 1 x k or k x 1 lines) on a board.",
+  "patterns": [
+    "Matrix",
+    "Array / Hashing"
+  ],
+  "mainInsight": "Because ships are straight and never touch, each ship has exactly one top-left cell: an 'X' with no 'X' directly above and none directly to the left. Count those cells in one pass, with no extra memory and no mutation.",
+  "invariant": "After scanning cell (i, j), count equals the number of ships whose top-left cell is at or before (i, j) in row-major order.",
+  "canonicalApproach": "Count ship heads",
+  "approaches": [
+    {
+      "name": "DFS / flood fill",
+      "summary": "For each unvisited 'X', flood-fill its ship and add 1.",
+      "timeComplexity": "O(m * n)",
+      "spaceComplexity": "O(m * n) visited or recursion",
+      "strengths": [
+        "Works for any shapes"
+      ],
+      "weaknesses": [
+        "Extra memory or mutates the board"
+      ],
+      "interviewRelevance": "Correct but misses the follow-up."
+    },
+    {
+      "name": "Count ship heads",
+      "summary": "Count 'X' cells whose upper and left neighbours are not 'X'.",
+      "timeComplexity": "O(m * n)",
+      "spaceComplexity": "O(1)",
+      "strengths": [
+        "One pass, O(1) memory, board untouched"
+      ],
+      "weaknesses": [
+        "Relies on the straight, non-touching guarantee"
+      ],
+      "interviewRelevance": "The expected answer to the follow-up."
+    }
+  ],
+  "canonicalCode": "class Solution:\n    def countBattleships(self, board: list[list[str]]) -> int:\n        count = 0\n        for i in range(len(board)):                # one pass over m * n cells\n            for j in range(len(board[0])):\n                if board[i][j] != 'X':\n                    continue\n                if i > 0 and board[i - 1][j] == 'X':\n                    continue                      # continuation of a vertical ship\n                if j > 0 and board[i][j - 1] == 'X':\n                    continue                      # continuation of a horizontal ship\n                count += 1                        # top-left cell of a new ship\n        return count\n",
+  "commonMistakes": [
+    "Checking all four neighbours instead of only up and left (would miss ships).",
+    "Reaching for DFS and mutating the board when the follow-up forbids it.",
+    "Index errors on row 0 or column 0 without the i > 0 / j > 0 guards."
+  ],
+  "edgeCases": [
+    "Board with no ships.",
+    "Single-cell ships.",
+    "One ship spanning a whole row or column.",
+    "Ships in all four corners."
+  ],
+  "cards": [
+    {
+      "id": "recog-battleships-in-a-board",
+      "category": "pattern",
+      "type": "free_recall",
+      "promptVariants": [
+        "Which technique solves this problem, and what in the statement or constraints points to it?",
+        "Name the technique you would use here and the clue in the problem that tells you.",
+        "What approach fits this problem, and which part of the statement gives it away?"
+      ],
+      "answer": "Count only the top-left cell (head) of each ship in one scan. Clue: Ships are straight 1 x k or k x 1 lines and no two ships are adjacent, so each ship has exactly one cell with no 'X' above it and no 'X' to its left.",
+      "keyPoints": [
+        "Ships are straight 1 x k or k x 1 lines and no two ships are adjacent, so each ship has exactly one cell with no 'X' above it and no 'X' to its left."
+      ],
+      "explanation": "The guarantee turns component counting into a local test, which meets the one-pass, O(1)-memory, no-mutation follow-up.",
+      "rubric": {
+        "technique": "Count only the top-left cell (head) of each ship in one scan",
+        "aliases": [
+          "count ship heads",
+          "count x cells with no x above or to the left",
+          "count the first cell of each ship",
+          "single pass head counting"
+        ],
+        "alsoValid": [
+          {
+            "name": "DFS or BFS flood fill counting connected 'X' components",
+            "note": "correct but needs a visited structure or mutates the board, which the follow-up rules out"
+          },
+          {
+            "name": "Union-find over 'X' cells",
+            "note": "correct but uses linear extra memory"
+          }
+        ],
+        "clueTypes": [
+          "grid_connectivity",
+          "math_observation"
+        ],
+        "clue": "Ships are straight 1 x k or k x 1 lines and no two ships are adjacent, so each ship has exactly one cell with no 'X' above it and no 'X' to its left."
+      }
+    },
+    {
+      "id": "battleships-in-a-board-whynot-01",
+      "category": "why_not",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "Which guarantee would break the head-counting trick if it were removed?",
+        "The head-counting solution relies on one rule of the statement. Which one?"
+      ],
+      "options": [
+        "No two ships touch horizontally or vertically",
+        "The board has at most 200 rows and columns",
+        "Every board contains at least one ship",
+        "Ship lengths are bounded by the board size"
+      ],
+      "answer": "No two ships touch horizontally or vertically",
+      "explanation": "If ships could touch, an 'X' with an 'X' to its left might be the head of a different ship, and the count would be too low. Straight shapes matter too: an L shape would have two heads.",
+      "incorrectOptionExplanations": {
+        "The board has at most 200 rows and columns": "Size affects running time, not correctness.",
+        "Every board contains at least one ship": "That is not guaranteed (example 2 has none), and the trick works without it.",
+        "Ship lengths are bounded by the board size": "Always true and irrelevant to the head test."
+      },
+      "enabled": true
+    },
+    {
+      "id": "battleships-in-a-board-impl-01",
+      "category": "implementation_detail",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "Why does the head test check only the cell above and the cell to the left?",
+        "Why not check the cells below and to the right too?"
+      ],
+      "options": [
+        "Row-major order reaches a ship's head cell first",
+        "Cells below and to the right are always empty",
+        "Checking four neighbours would cost O(m * n) extra",
+        "The right and lower cells are out of bounds at the head"
+      ],
+      "answer": "Row-major order reaches a ship's head cell first",
+      "explanation": "A horizontal ship extends to the right and a vertical one downward, so only its first cell has no 'X' up or left. Checking right/down would reject heads of ships longer than one cell.",
+      "incorrectOptionExplanations": {
+        "Cells below and to the right are always empty": "They are 'X' for any ship longer than one cell.",
+        "Checking four neighbours would cost O(m * n) extra": "It is still O(1) per cell; the problem is wrong answers, not cost.",
+        "The right and lower cells are out of bounds at the head": "Only at the border; heads usually have in-bounds neighbours."
+      },
+      "enabled": true
+    },
+    {
+      "id": "battleships-in-a-board-edge-01",
+      "category": "edge_case",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "board = [[\"X\",\".\",\"X\"],[\".\",\".\",\".\"],[\"X\",\".\",\"X\"]]. How many ships?",
+        "Four single 'X' cells sit in the corners of a 3 x 3 board. Result?"
+      ],
+      "options": [
+        "4",
+        "1",
+        "2",
+        "0"
+      ],
+      "answer": "4",
+      "explanation": "Each corner 'X' has no 'X' above or to its left, so all four are heads of single-cell ships.",
+      "incorrectOptionExplanations": {
+        "1": "They are not connected; each is its own ship.",
+        "2": "That would pair the corners into ships, but '.' separates them.",
+        "0": "Single-cell ships (k = 1) count."
+      },
+      "enabled": true
+    },
+    {
+      "id": "battleships-in-a-board-alt-01",
+      "category": "alternative_approach",
+      "type": "free_recall",
+      "promptVariants": [
+        "Compare the DFS solution with head counting.",
+        "When would you still pick flood fill over head counting?"
+      ],
+      "answer": "DFS counts connected components: O(m * n) time but O(m * n) memory for visited/recursion, or it mutates the board. Head counting is O(m * n) time, O(1) memory and read-only, but only works because ships are straight and never touch. For arbitrary shapes (Number of Islands) you need flood fill.",
+      "keyPoints": [
+        "Both O(m * n) time",
+        "DFS needs memory or mutation",
+        "Head counting relies on the guarantee",
+        "Arbitrary shapes need flood fill"
+      ],
+      "explanation": "Knowing which guarantee unlocks the cheap solution is the transferable skill.",
+      "enabled": true
+    },
+    {
+      "id": "battleships-in-a-board-time-01",
+      "category": "time_complexity",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "Time complexity of the canonical code on an m x n board?",
+        "Derive the running time of head counting."
+      ],
+      "options": [
+        "O(m * n)",
+        "O(m + n)",
+        "O(m * n * k), k the ship length",
+        "O((m * n)^2)"
+      ],
+      "answer": "O(m * n)",
+      "explanation": "Each cell is visited once with at most two constant-time neighbour checks.",
+      "incorrectOptionExplanations": {
+        "O(m + n)": "Every cell must be read; that is m * n cells.",
+        "O(m * n * k), k the ship length": "Ships are never walked; each cell does O(1) work.",
+        "O((m * n)^2)": "There is no pairwise comparison of cells."
+      },
+      "enabled": true
+    },
+    {
+      "id": "battleships-in-a-board-space-01",
+      "category": "space_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Extra space of head counting: O(___).",
+        "Head counting uses O(___) extra memory and does not modify the board."
+      ],
+      "answer": "1",
+      "acceptedAnswers": [
+        "1",
+        "constant",
+        "O(1)"
+      ],
+      "explanation": "Only a counter and loop indices are stored.",
+      "enabled": true
+    }
+  ],
+  "generatedAt": "2026-11-01T11:48:27Z"
+}

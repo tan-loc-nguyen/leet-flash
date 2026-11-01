@@ -1,0 +1,253 @@
+{
+  "schemaVersion": 1,
+  "problemSlug": "count-and-say",
+  "summary": "Return the n-th term of the sequence that starts at \"1\" and where each term is the run-length encoding of the previous one.",
+  "patterns": [
+    "Array / Hashing"
+  ],
+  "mainInsight": "Nothing clever: start from \"1\" and apply run-length encoding n - 1 times. The only care point is grouping maximal runs and flushing the final run.",
+  "invariant": "While scanning a term, every run before index i has already been written as count followed by digit.",
+  "canonicalApproach": "Iterative run-length encoding",
+  "approaches": [
+    {
+      "name": "Iterative run-length encoding",
+      "summary": "Loop n - 1 times; scan the current string, count each run of equal digits, append count + digit.",
+      "timeComplexity": "O(sum of term lengths)",
+      "spaceComplexity": "O(L_n), the length of the answer",
+      "strengths": [
+        "Direct",
+        "Answers the follow-up"
+      ],
+      "weaknesses": [
+        "Must flush the last run"
+      ],
+      "interviewRelevance": "The expected answer."
+    },
+    {
+      "name": "Recursion",
+      "summary": "countAndSay(n) = encode(countAndSay(n - 1)).",
+      "timeComplexity": "O(sum of term lengths)",
+      "spaceComplexity": "O(L_n + n) with the call stack",
+      "strengths": [
+        "Mirrors the definition"
+      ],
+      "weaknesses": [
+        "Follow-up asks for iterative"
+      ],
+      "interviewRelevance": "Fine, but mention the iterative version."
+    },
+    {
+      "name": "Hard-coded table",
+      "summary": "Return precomputed strings for n = 1..30.",
+      "timeComplexity": "O(1) lookup",
+      "spaceComplexity": "O(table size)",
+      "strengths": [
+        "Passes the judge"
+      ],
+      "weaknesses": [
+        "Not an algorithm",
+        "Breaks for n > 30"
+      ],
+      "interviewRelevance": "Not acceptable in an interview."
+    }
+  ],
+  "personalSolution": {
+    "approach": "Iterative run-length encoding, building each term with temp += str(count) + res[i]",
+    "timeComplexity": "O(sum of term lengths) in CPython; += on a str can be quadratic in other runtimes",
+    "spaceComplexity": "O(L_n)",
+    "isOptimal": true,
+    "notes": "Same algorithm as the canonical code. Appending pieces to a list and joining once guarantees linear time per round; CPython often optimises temp += in place, but you should not rely on it in an interview."
+  },
+  "canonicalCode": "class Solution:\n    def countAndSay(self, n: int) -> str:\n        s = \"1\"\n        for _ in range(n - 1):                 # n - 1 encoding rounds\n            out = []\n            i = 0\n            while i < len(s):                  # one linear scan of the current term\n                j = i\n                while j < len(s) and s[j] == s[i]:\n                    j += 1                     # j stops at the end of the run\n                out.append(str(j - i))         # count\n                out.append(s[i])               # digit\n                i = j\n            s = \"\".join(out)                   # list + join avoids quadratic string concatenation\n        return s\n",
+  "commonMistakes": [
+    "Forgetting to append the final run after the scan loop (when the loop only emits on a digit change).",
+    "Writing digit then count instead of count then digit.",
+    "Building the string with += inside the scan (quadratic in some languages).",
+    "Hard-coding the answers."
+  ],
+  "edgeCases": [
+    "n = 1 returns \"1\" without any encoding round.",
+    "n = 2 encodes a single run.",
+    "Long runs of three equal digits ('111' -> '31')."
+  ],
+  "cards": [
+    {
+      "id": "recog-count-and-say",
+      "category": "pattern",
+      "type": "free_recall",
+      "promptVariants": [
+        "Which technique solves this problem, and what in the statement or constraints points to it?",
+        "Name the technique you would use here and the clue in the problem that tells you.",
+        "What approach fits this problem, and which part of the statement gives it away?"
+      ],
+      "answer": "Iterative simulation: run-length encode the previous term n - 1 times. Clue: The statement defines each term as the run-length encoding of the previous term, starting from \"1\", so the procedure is given and only needs to be applied n - 1 times.",
+      "keyPoints": [
+        "The statement defines each term as the run-length encoding of the previous term, starting from \"1\", so the procedure is given and only needs to be applied n - 1 times."
+      ],
+      "explanation": "When the statement spells out the procedure, the skill is implementing it cleanly; groups of consecutive equal characters are a contiguous-run scan.",
+      "rubric": {
+        "technique": "Iterative simulation: run-length encode the previous term n - 1 times",
+        "aliases": [
+          "simulate the rule",
+          "run-length encoding loop",
+          "itertools.groupby rle",
+          "two pointers over runs of equal digits",
+          "recursion countAndSay(n - 1) then encode"
+        ],
+        "alsoValid": [
+          {
+            "name": "Hard-code the 30 terms",
+            "note": "passes only because n <= 30 and shows no algorithm"
+          }
+        ],
+        "clueTypes": [
+          "direct_simulation",
+          "contiguous"
+        ],
+        "clue": "The statement defines each term as the run-length encoding of the previous term, starting from \"1\", so the procedure is given and only needs to be applied n - 1 times."
+      }
+    },
+    {
+      "id": "count-and-say-edge-01",
+      "category": "edge_case",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "What is countAndSay(6)?",
+        "Given countAndSay(5) = \"111221\", what is the next term?"
+      ],
+      "options": [
+        "\"312211\"",
+        "\"311221\"",
+        "\"13112221\"",
+        "\"132211\""
+      ],
+      "answer": "\"312211\"",
+      "explanation": "\"111221\" has runs 111, 22, 1: three 1s, two 2s, one 1 -> \"31\" + \"22\" + \"11\" = \"312211\".",
+      "incorrectOptionExplanations": {
+        "\"311221\"": "That treats the 22 run as a single 2 or miscounts it; the run 22 gives \"22\".",
+        "\"13112221\"": "That is countAndSay(7), one step too far.",
+        "\"132211\"": "That swaps count and digit for the first run; output is count then digit."
+      },
+      "enabled": true
+    },
+    {
+      "id": "count-and-say-code-01",
+      "category": "code_reasoning",
+      "type": "code_question",
+      "promptVariants": [
+        "This encoder returns the wrong answer for most inputs. Which line is missing and why?",
+        "What bug does this run-length encoder have?"
+      ],
+      "answer": "After the loop the final run is never written. Add `out.append(str(count) + prev)` after the loop. Runs are only emitted when the digit changes, and the last run has no following change.",
+      "keyPoints": [
+        "Final run is not flushed",
+        "Append count + prev after the loop"
+      ],
+      "explanation": "Emit-on-change scans always need a flush step at the end; the two-pointer form in the canonical code avoids it because it emits each run as soon as it measures it.",
+      "enabled": true,
+      "code": "def encode(s):\n    out = []\n    prev, count = s[0], 1\n    for ch in s[1:]:\n        if ch == prev:\n            count += 1\n        else:\n            out.append(str(count) + prev)\n            prev, count = ch, 1\n    return ''.join(out)"
+    },
+    {
+      "id": "count-and-say-whynot-01",
+      "category": "why_not",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "Why is returning a hard-coded string per n a weak interview answer?",
+        "What is wrong with submitting a table of the 30 answers?"
+      ],
+      "options": [
+        "It shows no algorithm and breaks past n = 30",
+        "It is slower than the encoding loop for large n",
+        "It uses more memory than the encoding loop",
+        "It returns the wrong term for small n"
+      ],
+      "answer": "It shows no algorithm and breaks past n = 30",
+      "explanation": "The interviewer wants to see the run-length encoding loop. The table only works because the constraint caps n at 30 and someone else computed it.",
+      "incorrectOptionExplanations": {
+        "It is slower than the encoding loop for large n": "A lookup is faster; speed is not the problem.",
+        "It uses more memory than the encoding loop": "Memory is a minor point; the real problem is that it is not a solution.",
+        "It returns the wrong term for small n": "The stored terms are correct; the issue is that nothing is computed."
+      },
+      "enabled": true
+    },
+    {
+      "id": "count-and-say-impl-01",
+      "category": "implementation_detail",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "Why does the canonical code collect pieces in a list and join, instead of `s += ...` in the scan?",
+        "What does `''.join(out)` buy you over string concatenation in the loop?"
+      ],
+      "options": [
+        "Strings are immutable, so += may copy each time",
+        "join sorts the pieces into the right order",
+        "+= cannot append a digit character to a string",
+        "join removes the separators between runs"
+      ],
+      "answer": "Strings are immutable, so += may copy each time",
+      "explanation": "Each += can create a new string, making a scan quadratic in the term length. Appending to a list and joining once is linear.",
+      "incorrectOptionExplanations": {
+        "join sorts the pieces into the right order": "join keeps the given order; it does not sort.",
+        "+= cannot append a digit character to a string": "It can; the concern is cost, not correctness.",
+        "join removes the separators between runs": "There are no separators; join with '' just concatenates."
+      },
+      "enabled": true
+    },
+    {
+      "id": "count-and-say-code-02",
+      "category": "code_reasoning",
+      "type": "code_question",
+      "promptVariants": [
+        "In your solution, why does the inner loop compare res[i] with res[i + 1], and why is there an i += 1 after appending?",
+        "Walk through how this loop finds each run and moves to the next one."
+      ],
+      "answer": "The inner while extends the run while the next character equals the current one, leaving i on the last character of the run, with count holding its length. After writing count + digit, i += 1 steps onto the first character of the next run. The i + 1 < len(res) guard stops the look-ahead at the end, so the last run is written without a separate flush.",
+      "keyPoints": [
+        "Inner loop stops with i on the run's last character",
+        "count = run length",
+        "i += 1 moves to the next run",
+        "Look-ahead guard means no final flush needed"
+      ],
+      "explanation": "Look-ahead scanning writes each run as soon as it ends, which avoids the classic forgot-the-last-run bug.",
+      "enabled": true,
+      "code": "res = \"1\"\nfor _ in range(n - 1):\n    temp, i = \"\", 0\n    while i < len(res):\n        count = 1\n        while i + 1 < len(res) and res[i] == res[i + 1]:\n            i += 1\n            count += 1\n        temp += str(count) + res[i]\n        i += 1\n    res = temp\nreturn res"
+    },
+    {
+      "id": "count-and-say-time-01",
+      "category": "time_complexity",
+      "type": "free_recall",
+      "promptVariants": [
+        "Derive the running time of the canonical code in terms of the term lengths.",
+        "How much work does the whole loop do, and how fast do the terms grow?"
+      ],
+      "answer": "Round k scans the current term once, so total work is the sum of the term lengths L_1 + ... + L_(n-1) (plus building L_n). Terms grow by roughly 30% per step (Conway's constant, about 1.30), so the cost is exponential in n, but linear in the size of the output being built.",
+      "keyPoints": [
+        "One linear scan per round",
+        "Total = sum of term lengths",
+        "Lengths grow geometrically (~1.3x), so exponential in n"
+      ],
+      "explanation": "The inner while loops only advance i and j forward, so each round is linear in the current term length.",
+      "enabled": true
+    },
+    {
+      "id": "count-and-say-space-01",
+      "category": "space_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Extra space is proportional to ___, the length of the longest term built.",
+        "Space is dominated by the current term and the output list, both O(___)."
+      ],
+      "answer": "L_n",
+      "acceptedAnswers": [
+        "L_n",
+        "the answer length",
+        "length of the answer",
+        "len(answer)",
+        "output length"
+      ],
+      "explanation": "Only the current term and the next one under construction are alive at once, so space is linear in the final length.",
+      "enabled": true
+    }
+  ],
+  "generatedAt": "2026-11-01T11:48:27Z"
+}

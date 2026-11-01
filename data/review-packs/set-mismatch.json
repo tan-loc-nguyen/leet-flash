@@ -1,0 +1,252 @@
+{
+  "schemaVersion": 1,
+  "problemSlug": "set-mismatch",
+  "summary": "An array that should contain 1..n has one value duplicated in place of another; return [duplicate, missing].",
+  "patterns": [
+    "Array / Hashing",
+    "Math"
+  ],
+  "mainInsight": "Count how often each value 1..n appears: the value seen twice is the duplicate and the value seen zero times is the missing one. Equivalently, sum(nums) - sum(set(nums)) gives the duplicate and n(n+1)/2 - sum(set(nums)) the missing value.",
+  "invariant": "After the counting pass, count[v] is the number of times v occurs; exactly one v has count 2 and exactly one has count 0.",
+  "canonicalApproach": "Counting array",
+  "approaches": [
+    {
+      "name": "Sort and scan",
+      "summary": "Sort; adjacent equal values give the duplicate, a gap gives the missing value.",
+      "timeComplexity": "O(n log n)",
+      "spaceComplexity": "O(1) to O(n)",
+      "strengths": [
+        "No extra structure"
+      ],
+      "weaknesses": [
+        "Edge handling when the missing value is 1 or n"
+      ],
+      "interviewRelevance": "Acceptable baseline."
+    },
+    {
+      "name": "Counting array",
+      "summary": "count[v] for v in 1..n; find the 2 and the 0.",
+      "timeComplexity": "O(n)",
+      "spaceComplexity": "O(n)",
+      "strengths": [
+        "Simple, no arithmetic tricks"
+      ],
+      "weaknesses": [
+        "Linear extra space"
+      ],
+      "interviewRelevance": "The expected answer."
+    },
+    {
+      "name": "Sum with a set",
+      "summary": "dup = sum(nums) - sum(set(nums)); missing = n(n+1)/2 - sum(set(nums)).",
+      "timeComplexity": "O(n)",
+      "spaceComplexity": "O(n)",
+      "strengths": [
+        "Short"
+      ],
+      "weaknesses": [
+        "Set costs O(n) space anyway"
+      ],
+      "interviewRelevance": "Equally good."
+    },
+    {
+      "name": "Sign marking in place",
+      "summary": "For each |v| negate nums[|v| - 1]; an already-negative slot means v is the duplicate; the positive slot is the missing value.",
+      "timeComplexity": "O(n)",
+      "spaceComplexity": "O(1)",
+      "strengths": [
+        "Constant extra space"
+      ],
+      "weaknesses": [
+        "Mutates the input"
+      ],
+      "interviewRelevance": "Strong follow-up."
+    }
+  ],
+  "personalSolution": {
+    "approach": "Sum of nums minus sum of set(nums) for the duplicate; Gauss sum minus sum of the set for the missing value",
+    "timeComplexity": "O(n)",
+    "spaceComplexity": "O(n)",
+    "isOptimal": true,
+    "notes": "Optimal time. The set makes it O(n) space; sign marking reaches O(1) extra space if asked."
+  },
+  "canonicalCode": "class Solution:\n    def findErrorNums(self, nums: list[int]) -> list[int]:\n        n = len(nums)\n        count = [0] * (n + 1)              # index v counts value v, values are 1..n\n        for v in nums:                     # one pass: O(n)\n            count[v] += 1\n        dup = missing = 0\n        for v in range(1, n + 1):          # second pass over the value range\n            if count[v] == 2:\n                dup = v\n            elif count[v] == 0:\n                missing = v\n        return [dup, missing]\n",
+  "commonMistakes": [
+    "Assuming the duplicate and the missing value are adjacent numbers.",
+    "Returning [missing, duplicate] in the wrong order.",
+    "With sort-and-scan, forgetting the missing value can be n (or 1)."
+  ],
+  "edgeCases": [
+    "Missing value is n.",
+    "Missing value is 1.",
+    "Duplicate far from the missing value, e.g. [2, 2, 3, 4] style inputs."
+  ],
+  "cards": [
+    {
+      "id": "recog-set-mismatch",
+      "category": "pattern",
+      "type": "free_recall",
+      "promptVariants": [
+        "Which technique solves this problem, and what in the statement or constraints points to it?",
+        "Name the technique you would use here and the clue in the problem that tells you.",
+        "What approach fits this problem, and which part of the statement gives it away?"
+      ],
+      "answer": "Count occurrences of each value 1..n (counting array or hash map). Clue: The set should contain every number from 1 to n exactly once, but one number occurs twice and another is lost, so counting each value exposes both.",
+      "keyPoints": [
+        "The set should contain every number from 1 to n exactly once, but one number occurs twice and another is lost, so counting each value exposes both."
+      ],
+      "explanation": "Known value range plus 'occurs twice' and 'missing' is a frequency question; the 1..n range also allows the index-as-hash trick.",
+      "rubric": {
+        "technique": "Count occurrences of each value 1..n (counting array or hash map)",
+        "aliases": [
+          "counting array",
+          "frequency count",
+          "hash map counts",
+          "sum minus sum of set",
+          "sign marking by index",
+          "math with sum and sum of squares",
+          "xor partition"
+        ],
+        "alsoValid": [
+          {
+            "name": "Sort and scan for the repeated value and the gap",
+            "note": "correct but sorting costs n log n"
+          }
+        ],
+        "clueTypes": [
+          "lookup_frequency",
+          "math_observation"
+        ],
+        "clue": "The set should contain every number from 1 to n exactly once, but one number occurs twice and another is lost, so counting each value exposes both."
+      }
+    },
+    {
+      "id": "set-mismatch-edge-01",
+      "category": "edge_case",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "What is returned for nums = [3, 2, 3, 4, 6, 5]?",
+        "nums = [3, 2, 3, 4, 6, 5]. Result?"
+      ],
+      "options": [
+        "[3, 1]",
+        "[1, 3]",
+        "[3, 7]",
+        "[3, 0]"
+      ],
+      "answer": "[3, 1]",
+      "explanation": "n = 6, so the values should be 1..6. 3 appears twice and 1 never appears. The output is [duplicate, missing].",
+      "incorrectOptionExplanations": {
+        "[1, 3]": "Right numbers, wrong order: the duplicate comes first.",
+        "[3, 7]": "7 is outside 1..n; the missing value is inside the range.",
+        "[3, 0]": "0 is not part of the set 1..n."
+      },
+      "enabled": true
+    },
+    {
+      "id": "set-mismatch-alt-01",
+      "category": "alternative_approach",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "How does sign marking find both numbers in O(1) extra space?",
+        "What does negating nums[abs(v) - 1] let you detect?"
+      ],
+      "options": [
+        "A slot already negative means v was seen before",
+        "A negative slot means its index is the missing value",
+        "Negative values reveal which elements are out of range",
+        "Signs record which half of the range has the duplicate"
+      ],
+      "answer": "A slot already negative means v was seen before",
+      "explanation": "Use index v - 1 as v's 'seen' flag. Hitting an already-negative slot gives the duplicate; after the pass, the one slot still positive is at index missing - 1.",
+      "incorrectOptionExplanations": {
+        "A negative slot means its index is the missing value": "Reversed: the positive slot left at the end points to the missing value.",
+        "Negative values reveal which elements are out of range": "All values are within 1..n by construction.",
+        "Signs record which half of the range has the duplicate": "That is a binary-search idea, not what sign marking does."
+      },
+      "enabled": true
+    },
+    {
+      "id": "set-mismatch-code-01",
+      "category": "code_reasoning",
+      "type": "code_question",
+      "promptVariants": [
+        "Explain why each line of your solution gives the right number.",
+        "Why does sum(nums) - sum(set(nums)) equal the duplicate?"
+      ],
+      "answer": "set(nums) keeps one copy of each value, so it is 1..n minus the missing value. sum(nums) has the duplicate counted twice, so the difference is exactly the duplicate. n(n+1)/2 is the sum of 1..n, so subtracting the set sum leaves the missing value.",
+      "keyPoints": [
+        "Set removes exactly one copy of the duplicate",
+        "Gauss sum minus the set sum is the missing value",
+        "Both use the 1..n range"
+      ],
+      "explanation": "Two aggregates of the same data, each missing one different thing, isolate the two unknowns.",
+      "enabled": true,
+      "code": "totalWithDup = sum(nums)\ntotalWithoutDup = sum(set(nums))\nn = len(nums)\ndup = totalWithDup - totalWithoutDup\nmissing = n * (n + 1) // 2 - totalWithoutDup\nreturn [dup, missing]"
+    },
+    {
+      "id": "set-mismatch-whynot-01",
+      "category": "why_not",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "Why doesn't sum(range(1, n + 1)) - sum(nums) alone answer the problem?",
+        "What does the plain sum difference give you?"
+      ],
+      "options": [
+        "missing - duplicate: one equation, two unknowns",
+        "The duplicate, since it was counted twice",
+        "The missing value, as in Missing Number",
+        "Zero, because the lengths are equal"
+      ],
+      "answer": "missing - duplicate: one equation, two unknowns",
+      "explanation": "The duplicate replaced the missing value, so the sums differ by missing - dup. You need a second equation (set sum, sum of squares, or counts).",
+      "incorrectOptionExplanations": {
+        "The duplicate, since it was counted twice": "The difference mixes both numbers; it is missing - duplicate.",
+        "The missing value, as in Missing Number": "In Missing Number nothing replaced it; here the duplicate distorts the sum.",
+        "Zero, because the lengths are equal": "Equal length does not mean equal sums; it is zero only if missing == dup."
+      },
+      "enabled": true
+    },
+    {
+      "id": "set-mismatch-time-01",
+      "category": "time_complexity",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "What is the running time of the canonical code?",
+        "Derive the time complexity of the counting solution."
+      ],
+      "options": [
+        "O(n)",
+        "O(n log n)",
+        "O(n^2)",
+        "O(1)"
+      ],
+      "answer": "O(n)",
+      "explanation": "One pass to count and one pass over 1..n.",
+      "incorrectOptionExplanations": {
+        "O(n log n)": "That is the sorting approach.",
+        "O(n^2)": "No nested loop; each value is counted with an O(1) array update.",
+        "O(1)": "Every element has to be read."
+      },
+      "enabled": true
+    },
+    {
+      "id": "set-mismatch-space-01",
+      "category": "space_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "The counting array uses O(___) extra space.",
+        "Extra space of the canonical code: O(___)."
+      ],
+      "answer": "n",
+      "acceptedAnswers": [
+        "n",
+        "O(n)",
+        "linear"
+      ],
+      "explanation": "count has n + 1 entries. Sign marking would bring this to O(1) by reusing the input.",
+      "enabled": true
+    }
+  ],
+  "generatedAt": "2026-11-01T11:48:27Z"
+}

@@ -1,0 +1,212 @@
+{
+  "schemaVersion": 1,
+  "problemSlug": "map-of-highest-peak",
+  "summary": "Assign non-negative heights so water is 0 and adjacent cells differ by at most 1, maximising the highest peak.",
+  "patterns": [
+    "BFS",
+    "Matrix"
+  ],
+  "mainInsight": "A cell can be no higher than its distance to the nearest water, and setting every cell to exactly that distance satisfies all rules. So run a multi-source BFS from all water cells.",
+  "invariant": "When a cell is first reached, its height is its step distance to the nearest water cell, which is the maximum height it can take.",
+  "canonicalApproach": "Multi-source BFS from all water cells",
+  "approaches": [
+    {
+      "name": "BFS from each land cell",
+      "summary": "Search for the nearest water per cell.",
+      "timeComplexity": "O((m * n)^2)",
+      "spaceComplexity": "O(m * n)",
+      "strengths": [
+        "Obvious"
+      ],
+      "weaknesses": [
+        "Quadratic"
+      ],
+      "interviewRelevance": "Baseline."
+    },
+    {
+      "name": "Multi-source BFS from all water cells",
+      "summary": "Enqueue all water at height 0 and expand.",
+      "timeComplexity": "O(m * n)",
+      "spaceComplexity": "O(m * n)",
+      "strengths": [
+        "One pass"
+      ],
+      "weaknesses": [
+        "Queue memory"
+      ],
+      "interviewRelevance": "The expected answer."
+    },
+    {
+      "name": "Two-pass DP",
+      "summary": "Relax from top-left then from bottom-right.",
+      "timeComplexity": "O(m * n)",
+      "spaceComplexity": "O(1) extra",
+      "strengths": [
+        "No queue"
+      ],
+      "weaknesses": [
+        "Less intuitive"
+      ],
+      "interviewRelevance": "Equally optimal."
+    }
+  ],
+  "personalSolution": {
+    "approach": "Multi-source BFS from all water cells, writing heights into the input grid",
+    "timeComplexity": "O(m * n)",
+    "spaceComplexity": "O(m * n)",
+    "isOptimal": true,
+    "notes": "Optimal. The seen set of tuples is heavier than a -1-filled height matrix, and the level loop is not needed since heights come from the parent."
+  },
+  "canonicalCode": "from collections import deque\n\n\nclass Solution:\n    def highestPeak(self, isWater: list[list[int]]) -> list[list[int]]:\n        m, n = len(isWater), len(isWater[0])\n        height = [[-1] * n for _ in range(m)]   # -1 = not assigned yet\n        queue = deque()\n        for r in range(m):\n            for c in range(n):\n                if isWater[r][c]:\n                    height[r][c] = 0\n                    queue.append((r, c))          # every water cell is a source\n        while queue:                              # each cell enqueued once: O(m * n)\n            r, c = queue.popleft()\n            for nr, nc in ((r + 1, c), (r - 1, c), (r, c + 1), (r, c - 1)):\n                if 0 <= nr < m and 0 <= nc < n and height[nr][nc] == -1:\n                    height[nr][nc] = height[r][c] + 1   # distance to nearest water = max height\n                    queue.append((nr, nc))\n        return height\n",
+  "commonMistakes": [
+    "Not seeing that this is 01 Matrix in disguise.",
+    "BFS from a single water cell instead of all of them.",
+    "Using DFS, which can assign heights that break the difference rule."
+  ],
+  "edgeCases": [
+    "All water -> all zeros.",
+    "Single water cell in a corner of a large map.",
+    "One row."
+  ],
+  "cards": [
+    {
+      "id": "recog-map-of-highest-peak",
+      "category": "pattern",
+      "type": "free_recall",
+      "promptVariants": [
+        "Which technique solves this problem, and what in the statement or constraints points to it?",
+        "Name the technique you would use here and the clue in the problem that tells you.",
+        "What approach fits this problem, and which part of the statement gives it away?"
+      ],
+      "answer": "Multi-source BFS from all water cells (height = distance to nearest water). Clue: Water cells are fixed at height 0 and adjacent cells may differ by at most 1, so each cell's best height is bounded by its step distance to the nearest water cell.",
+      "keyPoints": [
+        "Water cells are fixed at height 0 and adjacent cells may differ by at most 1, so each cell's best height is bounded by its step distance to the nearest water cell."
+      ],
+      "explanation": "A 'differ by at most 1 per step' bound from many fixed sources is exactly distance from the nearest source, which multi-source BFS computes.",
+      "rubric": {
+        "technique": "Multi-source BFS from all water cells (height = distance to nearest water)",
+        "aliases": [
+          "multi-source bfs",
+          "bfs from all water at once",
+          "distance to nearest water",
+          "two-pass dp distance transform"
+        ],
+        "alsoValid": [
+          {
+            "name": "BFS from each land cell to its nearest water",
+            "note": "correct but quadratic in the cell count"
+          }
+        ],
+        "clueTypes": [
+          "grid_connectivity",
+          "shortest_steps"
+        ],
+        "clue": "Water cells are fixed at height 0 and adjacent cells may differ by at most 1, so each cell's best height is bounded by its step distance to the nearest water cell."
+      }
+    },
+    {
+      "id": "map-of-highest-peak-insight-01",
+      "category": "main_insight",
+      "type": "free_recall",
+      "promptVariants": [
+        "Why is each cell's distance to the nearest water both an upper bound and achievable?",
+        "Prove that BFS distances give the maximum peak."
+      ],
+      "answer": "Upper bound: along a shortest path of d steps from the nearest water, height can rise by at most 1 per step, so height <= d. Achievable: assigning every cell its distance d works, because adjacent cells' distances differ by at most 1 and water gets 0. Every cell is simultaneously at its maximum, so the peak is maximised.",
+      "keyPoints": [
+        "Height rises at most 1 per step from water",
+        "Distances of neighbours differ by at most 1",
+        "All cells at their own maximum at once"
+      ],
+      "explanation": "Showing a bound and an assignment that meets it is the standard optimality argument.",
+      "enabled": true
+    },
+    {
+      "id": "map-of-highest-peak-edge-01",
+      "category": "edge_case",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "isWater = [[1, 0, 0, 0]]. What is returned?",
+        "One row with water only at the left end: [[1, 0, 0, 0]]. Heights?"
+      ],
+      "options": [
+        "[[0, 1, 2, 3]]",
+        "[[0, 1, 1, 1]]",
+        "[[0, 1, 2, 1]]",
+        "[[1, 2, 3, 4]]"
+      ],
+      "answer": "[[0, 1, 2, 3]]",
+      "explanation": "Heights equal the distance to the only water cell, increasing by 1 per step.",
+      "incorrectOptionExplanations": {
+        "[[0, 1, 1, 1]]": "Valid but not maximal; the peak can be 3.",
+        "[[0, 1, 2, 1]]": "Nothing forces the last cell down; there is no water on the right.",
+        "[[1, 2, 3, 4]]": "Water must be height 0."
+      },
+      "enabled": true
+    },
+    {
+      "id": "map-of-highest-peak-whynot-01",
+      "category": "why_not",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "Why does a BFS from just one water cell fail?",
+        "What goes wrong if only the first water cell found is used as the BFS source?"
+      ],
+      "options": [
+        "Cells near other water get heights that are too high",
+        "Water cells further away would be set below 0",
+        "The BFS would never reach all land cells",
+        "It only fails when water cells are adjacent"
+      ],
+      "answer": "Cells near other water get heights that are too high",
+      "explanation": "A land cell next to a different water cell must be at most 1, but single-source BFS assigns its distance to the chosen source.",
+      "incorrectOptionExplanations": {
+        "Water cells further away would be set below 0": "BFS only increases heights; the error is that heights get too large.",
+        "The BFS would never reach all land cells": "It reaches all cells; the values are wrong.",
+        "It only fails when water cells are adjacent": "It fails whenever there are two separate water sources."
+      },
+      "enabled": true
+    },
+    {
+      "id": "map-of-highest-peak-time-01",
+      "category": "time_complexity",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "What is the time complexity of the canonical code?",
+        "Derive the running time of the multi-source BFS."
+      ],
+      "options": [
+        "O(m * n)",
+        "O((m * n)^2)",
+        "O(m * n * W), W water cells",
+        "O(m * n * log(m * n))"
+      ],
+      "answer": "O(m * n)",
+      "explanation": "Each cell is assigned and enqueued once and checks 4 neighbours.",
+      "incorrectOptionExplanations": {
+        "O((m * n)^2)": "That is a BFS per cell.",
+        "O(m * n * W), W water cells": "All water cells share one BFS.",
+        "O(m * n * log(m * n))": "No priority queue; unit steps need only a deque."
+      },
+      "enabled": true
+    },
+    {
+      "id": "map-of-highest-peak-space-01",
+      "category": "space_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "The height matrix and queue use O(___) space.",
+        "Space of the canonical code: O(___)."
+      ],
+      "answer": "m * n",
+      "acceptedAnswers": [
+        "m*n",
+        "mn",
+        "n * m"
+      ],
+      "explanation": "height has one entry per cell and the queue can hold many cells at once.",
+      "enabled": true
+    }
+  ],
+  "generatedAt": "2026-11-01T11:51:22Z"
+}

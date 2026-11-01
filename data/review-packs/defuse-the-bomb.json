@@ -1,0 +1,210 @@
+{
+  "schemaVersion": 1,
+  "problemSlug": "defuse-the-bomb",
+  "summary": "Replace each element of a circular array with the sum of the next k elements (k > 0), the previous -k elements (k < 0), or 0 (k = 0).",
+  "patterns": [
+    "Sliding Window"
+  ],
+  "mainInsight": "The window for index i + 1 is the window for i shifted by one, so maintain a fixed-size window sum over the circular array (indices mod n): subtract the element leaving, add the one entering.",
+  "invariant": "When ans[i] is written, cur equals the sum of the |k| elements in i's window.",
+  "canonicalApproach": "Fixed-size circular sliding window",
+  "approaches": [
+    {
+      "name": "Sum each window directly",
+      "summary": "For each i, add |k| elements with modular indices.",
+      "timeComplexity": "O(n * |k|)",
+      "spaceComplexity": "O(n)",
+      "strengths": [
+        "Simple, fine for n <= 100"
+      ],
+      "weaknesses": [
+        "Recomputes overlapping sums"
+      ],
+      "interviewRelevance": "Acceptable given the constraints."
+    },
+    {
+      "name": "Fixed-size circular sliding window",
+      "summary": "Compute the first window, then slide with mod n.",
+      "timeComplexity": "O(n)",
+      "spaceComplexity": "O(n) for the output",
+      "strengths": [
+        "Linear"
+      ],
+      "weaknesses": [
+        "Window bounds for k < 0 need care"
+      ],
+      "interviewRelevance": "The expected answer."
+    },
+    {
+      "name": "Prefix sums over the doubled array",
+      "summary": "Prefix sums over code + code; each window is one subtraction.",
+      "timeComplexity": "O(n)",
+      "spaceComplexity": "O(n)",
+      "strengths": [
+        "No sliding updates"
+      ],
+      "weaknesses": [
+        "Extra array"
+      ],
+      "interviewRelevance": "Equally good."
+    }
+  ],
+  "canonicalCode": "class Solution:\n    def decrypt(self, code: list[int], k: int) -> list[int]:\n        n = len(code)\n        ans = [0] * n\n        if k == 0:\n            return ans\n        # window for index 0: next k elements, or previous -k elements\n        start, end = (1, k) if k > 0 else (n + k, n - 1)\n        cur = sum(code[j % n] for j in range(start, end + 1))\n        for i in range(n):                  # slide the window once per index: O(n)\n            ans[i] = cur\n            cur -= code[start % n]          # element leaving the window\n            start += 1\n            end += 1\n            cur += code[end % n]            # element entering the window\n        return ans\n",
+  "commonMistakes": [
+    "Wrong initial window for negative k (it is indices n + k .. n - 1 for i = 0).",
+    "Forgetting the modulo when sliding past the end.",
+    "Updating code in place, so later windows read already-replaced values (the replacement is simultaneous)."
+  ],
+  "edgeCases": [
+    "k = 0 -> all zeros.",
+    "k = n - 1 or k = -(n - 1): the window is every other element.",
+    "n = 1 (then k must be 0)."
+  ],
+  "cards": [
+    {
+      "id": "recog-defuse-the-bomb",
+      "category": "pattern",
+      "type": "free_recall",
+      "promptVariants": [
+        "Which technique solves this problem, and what in the statement or constraints points to it?",
+        "Name the technique you would use here and the clue in the problem that tells you.",
+        "What approach fits this problem, and which part of the statement gives it away?"
+      ],
+      "answer": "Fixed-size sliding window over the circular array (indices mod n). Clue: Each number is replaced by the sum of the next k (or previous -k) numbers of a circular array, so consecutive indices use windows of the same size shifted by one.",
+      "keyPoints": [
+        "Each number is replaced by the sum of the next k (or previous -k) numbers of a circular array, so consecutive indices use windows of the same size shifted by one."
+      ],
+      "explanation": "Same-size contiguous windows that shift by one are a sliding window; circularity is handled with mod n.",
+      "rubric": {
+        "technique": "Fixed-size sliding window over the circular array (indices mod n)",
+        "aliases": [
+          "sliding window with modulo",
+          "circular sliding window",
+          "prefix sums over the doubled array",
+          "running window sum"
+        ],
+        "alsoValid": [
+          {
+            "name": "Sum the k neighbours separately for each index",
+            "note": "correct but recomputes overlapping windows"
+          }
+        ],
+        "clueTypes": [
+          "contiguous",
+          "prefix_range"
+        ],
+        "clue": "Each number is replaced by the sum of the next k (or previous -k) numbers of a circular array, so consecutive indices use windows of the same size shifted by one."
+      }
+    },
+    {
+      "id": "defuse-the-bomb-impl-01",
+      "category": "implementation_detail",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "For k < 0, which indices form the window of index 0?",
+        "What is the initial window when k is negative?"
+      ],
+      "options": [
+        "n + k through n - 1",
+        "k through -1 without wrapping",
+        "1 through -k",
+        "0 through -k - 1"
+      ],
+      "answer": "n + k through n - 1",
+      "explanation": "The previous -k elements of index 0 are the last -k elements of the array: indices n + k .. n - 1.",
+      "incorrectOptionExplanations": {
+        "k through -1 without wrapping": "Negative indices happen to work in Python slicing, but the code needs explicit mod n arithmetic to slide.",
+        "1 through -k": "That is the next -k elements, the k > 0 rule.",
+        "0 through -k - 1": "That includes index 0 itself and the following elements."
+      },
+      "enabled": true
+    },
+    {
+      "id": "defuse-the-bomb-whynot-01",
+      "category": "why_not",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "Why not write the new values into code directly as you go?",
+        "What breaks if you decrypt in place?"
+      ],
+      "options": [
+        "Later windows would read already-replaced numbers",
+        "Python lists cannot be modified during iteration",
+        "The modulo arithmetic would point to wrong indices",
+        "It would turn the algorithm into O(n^2)"
+      ],
+      "answer": "Later windows would read already-replaced numbers",
+      "explanation": "All numbers are replaced simultaneously, so every window must use the original values. Write into a separate ans array.",
+      "incorrectOptionExplanations": {
+        "Python lists cannot be modified during iteration": "Assigning by index while looping over range(n) is fine.",
+        "The modulo arithmetic would point to wrong indices": "Indices are unchanged; values are the problem.",
+        "It would turn the algorithm into O(n^2)": "Speed is unchanged; results are wrong."
+      },
+      "enabled": true
+    },
+    {
+      "id": "defuse-the-bomb-edge-01",
+      "category": "edge_case",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "code = [1, 2, 3], k = 2. What is returned?",
+        "For code = [1, 2, 3] with k = 2, what is the decrypted code?"
+      ],
+      "options": [
+        "[5, 4, 3]",
+        "[3, 5, 4]",
+        "[5, 3, 4]",
+        "[6, 6, 6]"
+      ],
+      "answer": "[5, 4, 3]",
+      "explanation": "Index 0: 2 + 3 = 5; index 1: 3 + 1 = 4; index 2: 1 + 2 = 3. With k = n - 1 each window is everything except the element itself.",
+      "incorrectOptionExplanations": {
+        "[3, 5, 4]": "Each sum is shifted one index: index 0 gets 2 + 3 = 5, not 3.",
+        "[5, 3, 4]": "Index 1's next two elements are 3 and 1, not 1 and 2.",
+        "[6, 6, 6]": "The window never includes the element itself."
+      },
+      "enabled": true
+    },
+    {
+      "id": "defuse-the-bomb-time-01",
+      "category": "time_complexity",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "What is the time complexity of the canonical code?",
+        "Derive the running time of the circular sliding window."
+      ],
+      "options": [
+        "O(n)",
+        "O(n * |k|)",
+        "O(n^2)",
+        "O(n log n)"
+      ],
+      "answer": "O(n)",
+      "explanation": "The first window costs O(|k|) <= O(n), then each of n slides is O(1).",
+      "incorrectOptionExplanations": {
+        "O(n * |k|)": "That is summing each window from scratch.",
+        "O(n^2)": "Only the brute force with |k| close to n reaches this.",
+        "O(n log n)": "No sorting is involved."
+      },
+      "enabled": true
+    },
+    {
+      "id": "defuse-the-bomb-space-01",
+      "category": "space_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Besides the output array, the window needs O(___) extra space.",
+        "Auxiliary space excluding ans: O(___)."
+      ],
+      "answer": "1",
+      "acceptedAnswers": [
+        "1",
+        "constant",
+        "O(1)"
+      ],
+      "explanation": "Only the running sum and two indices; ans is the required output.",
+      "enabled": true
+    }
+  ],
+  "generatedAt": "2026-11-01T11:51:22Z"
+}

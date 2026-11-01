@@ -26,7 +26,7 @@
   "hints": [
     "An optimal starting position for k consecutive bags will be either li or ri - k + 1."
   ],
-  "acRate": 28.09,
+  "acRate": 29.1,
   "lastSubmittedAt": "2026-10-01T04:03:13Z",
   "latestSubmission": {
     "submissionId": "2158761166",
@@ -36,5 +36,5 @@
   "notes": [],
   "source": "leetcode",
   "importedAt": "2026-10-01T13:44:25Z",
-  "lastSyncedAt": "2026-10-01T13:44:25Z"
+  "lastSyncedAt": "2026-11-01T11:09:15Z"
 }

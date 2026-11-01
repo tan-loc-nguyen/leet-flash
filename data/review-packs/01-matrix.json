@@ -1,0 +1,244 @@
+{
+  "schemaVersion": 1,
+  "problemSlug": "01-matrix",
+  "summary": "For every cell of a binary matrix return its distance (in edge steps) to the nearest 0.",
+  "patterns": [
+    "BFS",
+    "Matrix"
+  ],
+  "mainInsight": "Run one BFS that starts from every 0 at once. BFS reaches cells in order of distance, so the first time a 1-cell is reached is via its nearest 0, and its distance is its parent's distance + 1.",
+  "invariant": "Cells are dequeued in non-decreasing distance, and a cell's distance is final the moment it is first enqueued.",
+  "canonicalApproach": "Multi-source BFS from all zeros",
+  "approaches": [
+    {
+      "name": "BFS from each 1-cell",
+      "summary": "For every 1, BFS until a 0 is found.",
+      "timeComplexity": "O((m * n)^2)",
+      "spaceComplexity": "O(m * n)",
+      "strengths": [
+        "Obvious"
+      ],
+      "weaknesses": [
+        "Repeats work for every cell"
+      ],
+      "interviewRelevance": "Baseline only."
+    },
+    {
+      "name": "Multi-source BFS from all zeros",
+      "summary": "Enqueue all zeros at distance 0; expand level by level.",
+      "timeComplexity": "O(m * n)",
+      "spaceComplexity": "O(m * n)",
+      "strengths": [
+        "One pass",
+        "Natural"
+      ],
+      "weaknesses": [
+        "Queue memory"
+      ],
+      "interviewRelevance": "The expected answer."
+    },
+    {
+      "name": "Two-pass DP",
+      "summary": "Top-left to bottom-right taking min(up, left) + 1, then bottom-right to top-left with down/right.",
+      "timeComplexity": "O(m * n)",
+      "spaceComplexity": "O(1) extra (output aside)",
+      "strengths": [
+        "No queue"
+      ],
+      "weaknesses": [
+        "Needs the argument why two passes suffice"
+      ],
+      "interviewRelevance": "Equally optimal alternative."
+    }
+  ],
+  "personalSolution": {
+    "approach": "Multi-source BFS from all zeros, writing distances into mat and tracking a seen set",
+    "timeComplexity": "O(m * n)",
+    "spaceComplexity": "O(m * n)",
+    "isOptimal": true,
+    "notes": "Optimal. The level loop (k = len(queue)) is not needed since distances come from the parent. Mutating the input is fine here but worth mentioning."
+  },
+  "canonicalCode": "from collections import deque\n\n\nclass Solution:\n    def updateMatrix(self, mat: list[list[int]]) -> list[list[int]]:\n        m, n = len(mat), len(mat[0])\n        dist = [[-1] * n for _ in range(m)]       # -1 = not reached yet\n        queue = deque()\n        for r in range(m):\n            for c in range(n):\n                if mat[r][c] == 0:\n                    dist[r][c] = 0\n                    queue.append((r, c))          # every 0 is a source\n        while queue:                              # each cell is enqueued once: O(m * n)\n            r, c = queue.popleft()\n            for nr, nc in ((r + 1, c), (r - 1, c), (r, c + 1), (r, c - 1)):\n                if 0 <= nr < m and 0 <= nc < n and dist[nr][nc] == -1:\n                    dist[nr][nc] = dist[r][c] + 1  # first visit is via the nearest 0\n                    queue.append((nr, nc))\n        return dist\n",
+  "commonMistakes": [
+    "Running a BFS from every 1-cell (quadratic).",
+    "Using DFS, which does not visit cells in distance order.",
+    "One DP pass only (up and left), which misses zeros below or to the right.",
+    "Not marking cells when enqueued, so they are processed several times."
+  ],
+  "edgeCases": [
+    "All zeros -> all zeros.",
+    "Single 0 in a corner of a large matrix.",
+    "Single row or single column.",
+    "1 x 1 matrix [[0]]."
+  ],
+  "cards": [
+    {
+      "id": "recog-01-matrix",
+      "category": "pattern",
+      "type": "free_recall",
+      "promptVariants": [
+        "Which technique solves this problem, and what in the statement or constraints points to it?",
+        "Name the technique you would use here and the clue in the problem that tells you.",
+        "What approach fits this problem, and which part of the statement gives it away?"
+      ],
+      "answer": "Multi-source BFS starting from every 0 cell. Clue: Every cell needs its step distance to the nearest 0 on a grid, a shortest-steps question from many sources at once.",
+      "keyPoints": [
+        "Every cell needs its step distance to the nearest 0 on a grid, a shortest-steps question from many sources at once."
+      ],
+      "explanation": "Nearest-source distances on an unweighted grid come from one BFS whose initial queue holds all sources.",
+      "rubric": {
+        "technique": "Multi-source BFS starting from every 0 cell",
+        "aliases": [
+          "multi-source bfs",
+          "bfs from all zeros at once",
+          "two-pass dp (top-left then bottom-right)",
+          "distance transform"
+        ],
+        "alsoValid": [
+          {
+            "name": "BFS from each 1-cell until it hits a 0",
+            "note": "correct but repeats a search per cell, quadratic in the cell count"
+          },
+          {
+            "name": "DFS from each cell",
+            "note": "correct with care but explores far more and does not visit in distance order"
+          }
+        ],
+        "clueTypes": [
+          "grid_connectivity",
+          "shortest_steps"
+        ],
+        "clue": "Every cell needs its step distance to the nearest 0 on a grid, a shortest-steps question from many sources at once."
+      }
+    },
+    {
+      "id": "01-matrix-insight-01",
+      "category": "main_insight",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "Why start the BFS from the zeros instead of from the ones?",
+        "What does reversing the search direction (0s -> 1s) buy?"
+      ],
+      "options": [
+        "One BFS labels every cell, not one BFS per cell",
+        "Zeros are fewer than ones, so the queue is smaller",
+        "BFS from ones would give wrong distances",
+        "Starting from zeros avoids needing a visited check"
+      ],
+      "answer": "One BFS labels every cell, not one BFS per cell",
+      "explanation": "All zeros are sources at distance 0. The multi-source BFS reaches every cell first from its nearest zero, so a single O(m * n) traversal labels the whole matrix.",
+      "incorrectOptionExplanations": {
+        "Zeros are fewer than ones, so the queue is smaller": "Nothing guarantees fewer zeros; the gain is one search instead of many.",
+        "BFS from ones would give wrong distances": "Per-cell BFS is correct, just repeated.",
+        "Starting from zeros avoids needing a visited check": "You still must mark cells to avoid re-enqueueing."
+      },
+      "enabled": true
+    },
+    {
+      "id": "01-matrix-edge-01",
+      "category": "edge_case",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "mat = [[1], [1], [0], [1]]. What is returned?",
+        "A single column [[1],[1],[0],[1]]. Output?"
+      ],
+      "options": [
+        "[[2], [1], [0], [1]]",
+        "[[1], [1], [0], [1]]",
+        "[[3], [2], [0], [1]]",
+        "[[2], [1], [0], [2]]"
+      ],
+      "answer": "[[2], [1], [0], [1]]",
+      "explanation": "The only 0 is at row 2. Row 1 and row 3 are one step away and row 0 is two steps away.",
+      "incorrectOptionExplanations": {
+        "[[1], [1], [0], [1]]": "That is the input unchanged; row 0 is two steps from the 0.",
+        "[[3], [2], [0], [1]]": "Off by one: row 1 touches the 0 directly.",
+        "[[2], [1], [0], [2]]": "Row 3 touches the 0 directly, distance 1."
+      },
+      "enabled": true
+    },
+    {
+      "id": "01-matrix-alt-01",
+      "category": "alternative_approach",
+      "type": "free_recall",
+      "promptVariants": [
+        "How does the two-pass DP work, and why are two passes enough?",
+        "Describe the DP alternative to BFS."
+      ],
+      "answer": "Pass 1 (top-left to bottom-right): dist = 0 for zeros, else min(up, left) + 1. Pass 2 (bottom-right to top-left): dist = min(dist, down + 1, right + 1). Any shortest path to the nearest 0 can be split into moves that go up/left and moves that go down/right, and the two sweeps propagate each kind. O(m * n) time and no queue.",
+      "keyPoints": [
+        "Forward pass uses up and left",
+        "Backward pass uses down and right",
+        "Shortest grid path combines the two directions",
+        "Same O(m * n) time, no queue"
+      ],
+      "explanation": "Good to mention as an equally optimal answer; BFS is easier to justify on the spot.",
+      "enabled": true
+    },
+    {
+      "id": "01-matrix-impl-01",
+      "category": "implementation_detail",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "In the canonical code, why is a cell's distance set when it is enqueued rather than when popped?",
+        "What does writing dist[nr][nc] at enqueue time guarantee?"
+      ],
+      "options": [
+        "Each cell is enqueued once, at its nearest distance",
+        "Distances set at pop time would always be off by one",
+        "It lets the code skip the bounds check",
+        "It sorts the queue by distance automatically"
+      ],
+      "answer": "Each cell is enqueued once, at its nearest distance",
+      "explanation": "dist != -1 doubles as the visited mark. Several cells of one level can reach the same neighbour; setting it on enqueue stops duplicates and keeps O(m * n).",
+      "incorrectOptionExplanations": {
+        "Distances set at pop time would always be off by one": "They would still be correct; the cost is duplicate queue entries.",
+        "It lets the code skip the bounds check": "Bounds are still checked first.",
+        "It sorts the queue by distance automatically": "BFS order already gives non-decreasing distance; marking is about duplicates."
+      },
+      "enabled": true
+    },
+    {
+      "id": "01-matrix-time-01",
+      "category": "time_complexity",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "What is the time complexity of the canonical code?",
+        "Derive the running time of the multi-source BFS."
+      ],
+      "options": [
+        "O(m * n)",
+        "O((m * n)^2)",
+        "O(m * n * log(m * n))",
+        "O(m * n * Z), Z the number of zeros"
+      ],
+      "answer": "O(m * n)",
+      "explanation": "Each cell is enqueued at most once (dist == -1 check) and does four constant-time neighbour checks.",
+      "incorrectOptionExplanations": {
+        "O((m * n)^2)": "That is a separate BFS from every cell.",
+        "O(m * n * log(m * n))": "No heap is used; a deque BFS has no log factor.",
+        "O(m * n * Z), Z the number of zeros": "All zeros share one BFS, not one each."
+      },
+      "enabled": true
+    },
+    {
+      "id": "01-matrix-space-01",
+      "category": "space_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "The dist matrix and the queue together use O(___) space.",
+        "Space of the multi-source BFS: O(___)."
+      ],
+      "answer": "m * n",
+      "acceptedAnswers": [
+        "m*n",
+        "mn",
+        "m * n",
+        "n * m"
+      ],
+      "explanation": "dist has m * n entries and the queue can hold a large fraction of the cells (e.g. all zeros at the start).",
+      "enabled": true
+    }
+  ],
+  "generatedAt": "2026-11-01T11:48:27Z"
+}

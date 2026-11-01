@@ -29,7 +29,7 @@
     "When moving from node u to node v, the next count becomes count + 1 if labels[u] == labels[v], otherwise it becomes 1. Ignore transitions where the next count exceeds k.",
     "The answer is the minimum distance among all states ending at node n - 1."
   ],
-  "acRate": 44.34,
+  "acRate": 63.65,
   "lastSubmittedAt": "2026-06-21T03:23:43Z",
   "latestSubmission": {
     "submissionId": "2040474895",
@@ -39,5 +39,5 @@
   "notes": [],
   "source": "leetcode",
   "importedAt": "2026-10-01T13:44:25Z",
-  "lastSyncedAt": "2026-10-01T13:44:25Z"
+  "lastSyncedAt": "2026-11-01T11:16:15Z"
 }

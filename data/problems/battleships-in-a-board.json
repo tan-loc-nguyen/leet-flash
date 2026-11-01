@@ -1,0 +1,33 @@
+{
+  "leetcodeId": "419",
+  "title": "Battleships in a Board",
+  "slug": "battleships-in-a-board",
+  "url": "https://leetcode.com/problems/battleships-in-a-board/",
+  "difficulty": "Medium",
+  "status": "solved",
+  "premium": false,
+  "tags": [
+    "Array",
+    "Depth-First Search",
+    "Matrix"
+  ],
+  "problemStatement": "You are given an m x n matrix board where each cell is part of a battleship 'X' or empty '.', return the number of the battleships on board.\n\nBattleships can only be placed horizontally or vertically on board. In other words, they can only be made of the shape 1 x k (1 row, k columns) or k x 1 (k rows, 1 column), where k can be of any size. At least one horizontal or vertical cell separates between two battleships (i.e., there are no adjacent battleships).\n\nExample 1:\n\nInput: board = [[\"X\",\".\",\".\",\"X\"],[\".\",\".\",\".\",\"X\"],[\".\",\".\",\".\",\"X\"]]\nOutput: 2\n\nExample 2:\n\nInput: board = [[\".\"]]\nOutput: 0\n\nConstraints:\n\n- m == board.length\n\n- n == board[i].length\n\n- 1 <= m, n <= 200\n\n- board[i][j] is either '.' or 'X'.\n\nFollow up: Could you do it in one-pass, using only O(1) extra memory and without modifying the values board?",
+  "constraints": [
+    "m == board.length",
+    "n == board[i].length",
+    "1 <= m, n <= 200",
+    "board[i][j] is either '.' or 'X'."
+  ],
+  "hints": [],
+  "acRate": 77.89,
+  "lastSubmittedAt": "2026-10-23T23:42:09Z",
+  "latestSubmission": {
+    "submissionId": "2180051663",
+    "language": "Python3",
+    "code": "class Solution:\n    def countBattleships(self, board: list[list[str]]) -> int:\n        m, n = len(board), len(board[0])\n\n        count = 0\n        for i in range(m):\n            for j in range(n):\n                if board[i][j] == '.':\n                    continue\n                if i > 0 and board[i - 1][j] == 'X':\n                    continue\n                if j > 0 and board[i][j - 1] == 'X':\n                    continue\n                count += 1\n        return count"
+  },
+  "notes": [],
+  "source": "leetcode",
+  "importedAt": "2026-11-01T11:09:15Z",
+  "lastSyncedAt": "2026-11-01T11:09:15Z"
+}

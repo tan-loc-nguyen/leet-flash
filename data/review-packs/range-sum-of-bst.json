@@ -1,0 +1,205 @@
+{
+  "schemaVersion": 1,
+  "problemSlug": "range-sum-of-bst",
+  "summary": "Sum the values of all BST nodes whose value lies in [low, high].",
+  "patterns": [
+    "Tree",
+    "BST",
+    "DFS"
+  ],
+  "mainInsight": "Use the BST ordering to prune: if node.val < low, its whole left subtree is too small, so only go right; if node.val > high, only go left. Otherwise count the node and recurse both ways.",
+  "canonicalApproach": "Pruned DFS using BST order",
+  "approaches": [
+    {
+      "name": "Full traversal",
+      "summary": "Visit every node and add those in range.",
+      "timeComplexity": "O(n)",
+      "spaceComplexity": "O(h)",
+      "strengths": [
+        "Simple, works on any binary tree"
+      ],
+      "weaknesses": [
+        "Ignores the BST property"
+      ],
+      "interviewRelevance": "Correct but misses the point."
+    },
+    {
+      "name": "Pruned DFS using BST order",
+      "summary": "Skip subtrees that lie entirely outside [low, high].",
+      "timeComplexity": "O(n) worst, O(h + k) typical",
+      "spaceComplexity": "O(h)",
+      "strengths": [
+        "Uses BST property",
+        "Skips whole subtrees"
+      ],
+      "weaknesses": [
+        "Slightly more conditions"
+      ],
+      "interviewRelevance": "The expected answer."
+    }
+  ],
+  "personalSolution": {
+    "approach": "Full DFS over every node, adding values in range",
+    "timeComplexity": "O(n)",
+    "spaceComplexity": "O(h)",
+    "isOptimal": false,
+    "notes": "Correct and the same worst case, but it never uses the BST property. Recurse left only when node.val > low and right only when node.val < high, so subtrees outside the range are skipped."
+  },
+  "canonicalCode": "class Solution:\n    def rangeSumBST(self, root: 'TreeNode | None', low: int, high: int) -> int:\n        if not root:\n            return 0\n        if root.val < low:\n            return self.rangeSumBST(root.right, low, high)    # left subtree is even smaller: skip it\n        if root.val > high:\n            return self.rangeSumBST(root.left, low, high)     # right subtree is even larger: skip it\n        return (root.val                                       # in range: count it and search both sides\n                + self.rangeSumBST(root.left, low, high)\n                + self.rangeSumBST(root.right, low, high))\n",
+  "commonMistakes": [
+    "Returning 0 when root.val < low, which drops in-range nodes in the right subtree.",
+    "Using exclusive bounds; the range is inclusive.",
+    "Ignoring the BST property entirely (correct, but an interviewer will ask)."
+  ],
+  "edgeCases": [
+    "Range covers no node -> 0.",
+    "Range covers all nodes.",
+    "low == high == a node value.",
+    "Skewed tree."
+  ],
+  "cards": [
+    {
+      "id": "recog-range-sum-of-bst",
+      "category": "pattern",
+      "type": "free_recall",
+      "promptVariants": [
+        "Which technique solves this problem, and what in the statement or constraints points to it?",
+        "Name the technique you would use here and the clue in the problem that tells you.",
+        "What approach fits this problem, and which part of the statement gives it away?"
+      ],
+      "answer": "DFS that prunes subtrees outside [low, high] using the BST ordering. Clue: The tree is a binary search tree and the query is a value range [low, high], so whole subtrees lie entirely below low or above high.",
+      "keyPoints": [
+        "The tree is a binary search tree and the query is a value range [low, high], so whole subtrees lie entirely below low or above high."
+      ],
+      "explanation": "BST + range query means you can decide from one node's value which subtrees can contain answers.",
+      "rubric": {
+        "technique": "DFS that prunes subtrees outside [low, high] using the BST ordering",
+        "aliases": [
+          "pruned dfs",
+          "bst-pruned recursion",
+          "dfs skipping out-of-range subtrees",
+          "iterative stack dfs with bst pruning",
+          "inorder traversal stopping past high"
+        ],
+        "alsoValid": [
+          {
+            "name": "Traverse every node and add the ones in range",
+            "note": "correct but ignores the BST order and never skips a subtree"
+          }
+        ],
+        "clueTypes": [
+          "tree_structure",
+          "sorted_or_ordered"
+        ],
+        "clue": "The tree is a binary search tree and the query is a value range [low, high], so whole subtrees lie entirely below low or above high."
+      }
+    },
+    {
+      "id": "range-sum-of-bst-impl-01",
+      "category": "implementation_detail",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "When root.val < low, what should the function return?",
+        "A node is below the range. Where can in-range values still be?"
+      ],
+      "options": [
+        "The range sum of its right subtree only",
+        "0, because the node is out of range",
+        "The range sum of its left subtree only",
+        "The sum of both subtrees, skipping the node"
+      ],
+      "answer": "The range sum of its right subtree only",
+      "explanation": "Everything in the left subtree is smaller than root.val < low, so it is out of range, but the right subtree holds larger values that may be in range.",
+      "incorrectOptionExplanations": {
+        "0, because the node is out of range": "Drops in-range nodes in the right subtree.",
+        "The range sum of its left subtree only": "The left subtree is even smaller; it is entirely out of range.",
+        "The sum of both subtrees, skipping the node": "Correct but wastes time exploring the left subtree."
+      },
+      "enabled": true
+    },
+    {
+      "id": "range-sum-of-bst-edge-01",
+      "category": "edge_case",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "root = [8, 4, 12, 2, 6, null, 14], low = 9, high = 11. Result?",
+        "For the BST [8, 4, 12, 2, 6, null, 14], what is the range sum of [9, 11]?"
+      ],
+      "options": [
+        "0",
+        "12",
+        "8",
+        "20"
+      ],
+      "answer": "0",
+      "explanation": "No value lies in [9, 11]: 8 is below, 12 is above. The pruned DFS goes 8 -> right 12 -> left (empty) and returns 0.",
+      "incorrectOptionExplanations": {
+        "12": "12 > 11, outside the inclusive range.",
+        "8": "8 < 9, outside the range.",
+        "20": "Neither 8 nor 12 is in [9, 11]."
+      },
+      "enabled": true
+    },
+    {
+      "id": "range-sum-of-bst-code-01",
+      "category": "code_reasoning",
+      "type": "code_question",
+      "promptVariants": [
+        "Your accepted code is correct. What does it not take advantage of, and how would you change it?",
+        "How would you make this recursion skip subtrees?"
+      ],
+      "answer": "It visits every node and never uses the BST order. Only recurse left when root.val > low (smaller values may still be in range) and right when root.val < high. Worst case stays O(n), but subtrees entirely outside the range are skipped.",
+      "keyPoints": [
+        "Visits every node",
+        "Recurse left only if root.val > low",
+        "Recurse right only if root.val < high",
+        "Same worst case, big practical gain"
+      ],
+      "explanation": "Interviewers ask this problem precisely to see whether you use the BST property.",
+      "enabled": true,
+      "code": "if not root:\n    return 0\ntotal = 0\ntotal += self.rangeSumBST(root.left, low, high)\ntotal += self.rangeSumBST(root.right, low, high)\nif low <= root.val <= high:\n    total += root.val\nreturn total"
+    },
+    {
+      "id": "range-sum-of-bst-time-01",
+      "category": "time_complexity",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "What is the worst-case time of the canonical code?",
+        "Derive the worst-case running time of the pruned DFS."
+      ],
+      "options": [
+        "O(n)",
+        "O(log n)",
+        "O(h)",
+        "O(n log n)"
+      ],
+      "answer": "O(n)",
+      "explanation": "If [low, high] covers every value, nothing can be pruned and every node is visited once. Pruning helps when the range is narrow: roughly O(h + k) for k nodes in range.",
+      "incorrectOptionExplanations": {
+        "O(log n)": "Even a balanced tree may have all nodes in range.",
+        "O(h)": "That is a single root-to-leaf walk; in-range nodes all need visiting.",
+        "O(n log n)": "Each node is visited at most once with O(1) work."
+      },
+      "enabled": true
+    },
+    {
+      "id": "range-sum-of-bst-space-01",
+      "category": "space_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Recursion depth gives O(___) space.",
+        "Extra space of the recursive solution: O(___), the tree height."
+      ],
+      "answer": "h",
+      "acceptedAnswers": [
+        "h",
+        "height",
+        "O(h)",
+        "tree height"
+      ],
+      "explanation": "log n for a balanced tree, n for a skewed one.",
+      "enabled": true
+    }
+  ],
+  "generatedAt": "2026-11-01T11:48:27Z"
+}

@@ -1,0 +1,258 @@
+{
+  "schemaVersion": 1,
+  "problemSlug": "shortest-path-in-a-grid-with-obstacles-elimination",
+  "summary": "Minimum steps from the top-left to the bottom-right of a grid moving in 4 directions, where you may eliminate (walk through) at most k obstacles; -1 if impossible.",
+  "patterns": [
+    "BFS",
+    "Matrix"
+  ],
+  "mainInsight": "Position alone is not the state: reaching a cell with more eliminations left is a different, possibly better, situation. BFS over states (row, col, obstacles used) with at most k used gives the minimum steps, because every move costs one step.",
+  "invariant": "Each state (r, c, used) is enqueued at most once, at the smallest step count with which it can be reached.",
+  "canonicalApproach": "BFS over (row, col, eliminations used)",
+  "approaches": [
+    {
+      "name": "Plain BFS on cells",
+      "summary": "Visited per cell only.",
+      "timeComplexity": "O(m * n)",
+      "spaceComplexity": "O(m * n)",
+      "strengths": [
+        "Simple"
+      ],
+      "weaknesses": [
+        "Wrong: blocks a later, better-resourced visit"
+      ],
+      "interviewRelevance": "The trap to explain."
+    },
+    {
+      "name": "BFS over (row, col, eliminations used)",
+      "summary": "State includes how many obstacles were removed; skip states with used > k.",
+      "timeComplexity": "O(m * n * k)",
+      "spaceComplexity": "O(m * n * k)",
+      "strengths": [
+        "Correct and optimal for unit steps"
+      ],
+      "weaknesses": [
+        "State space grows with k"
+      ],
+      "interviewRelevance": "The expected answer."
+    },
+    {
+      "name": "BFS keeping best remaining per cell",
+      "summary": "Store the max eliminations left seen at each cell and only revisit with more left.",
+      "timeComplexity": "O(m * n * k)",
+      "spaceComplexity": "O(m * n)",
+      "strengths": [
+        "Less memory"
+      ],
+      "weaknesses": [
+        "Pruning argument is subtler"
+      ],
+      "interviewRelevance": "Good refinement."
+    },
+    {
+      "name": "A* with Manhattan distance",
+      "summary": "Priority by steps + Manhattan distance to the target.",
+      "timeComplexity": "O(m * n * k * log(m * n * k))",
+      "spaceComplexity": "O(m * n * k)",
+      "strengths": [
+        "Explores fewer states in practice"
+      ],
+      "weaknesses": [
+        "Heap overhead"
+      ],
+      "interviewRelevance": "Follow-up only."
+    }
+  ],
+  "personalSolution": {
+    "approach": "BFS over (row, col, obstacles used) with a seen set of states",
+    "timeComplexity": "O(m * n * k)",
+    "spaceComplexity": "O(m * n * k)",
+    "isOptimal": true,
+    "notes": "Optimal. Small bug: set([0, 0, 0]) builds {0}, not {(0, 0, 0)}, so the start state is never marked; use {(0, 0, 0)}. Adding the shortcut 'if k >= m + n - 2: return m + n - 2' skips the search when enough eliminations allow the straight Manhattan path."
+  },
+  "canonicalCode": "from collections import deque\n\n\nclass Solution:\n    def shortestPath(self, grid: list[list[int]], k: int) -> int:\n        m, n = len(grid), len(grid[0])\n        if k >= m + n - 2:\n            return m + n - 2                       # enough eliminations to walk the Manhattan path\n        queue = deque([(0, 0, 0)])                 # (row, col, obstacles eliminated so far)\n        seen = {(0, 0, 0)}\n        steps = 0\n        while queue:\n            for _ in range(len(queue)):            # one BFS level = one step\n                r, c, used = queue.popleft()\n                if r == m - 1 and c == n - 1:\n                    return steps\n                for nr, nc in ((r + 1, c), (r - 1, c), (r, c + 1), (r, c - 1)):\n                    if 0 <= nr < m and 0 <= nc < n:\n                        nu = used + grid[nr][nc]   # stepping on an obstacle uses one elimination\n                        if nu <= k and (nr, nc, nu) not in seen:\n                            seen.add((nr, nc, nu))  # at most m * n * (k + 1) states\n                            queue.append((nr, nc, nu))\n            steps += 1\n        return -1\n",
+  "commonMistakes": [
+    "Marking visited by (row, col) only, which blocks a later arrival with more eliminations left.",
+    "Using DFS, which does not give the minimum number of steps.",
+    "Using set([0, 0, 0]) instead of {(0, 0, 0)} for the start state.",
+    "Missing the Manhattan shortcut when k is large (state space explodes)."
+  ],
+  "edgeCases": [
+    "1 x 1 grid -> 0 steps.",
+    "k large enough to go straight through.",
+    "Target walled off by more than k obstacles -> -1.",
+    "Single row with obstacles."
+  ],
+  "cards": [
+    {
+      "id": "recog-shortest-path-in-a-grid-with-obstacles-elimination",
+      "category": "pattern",
+      "type": "free_recall",
+      "promptVariants": [
+        "Which technique solves this problem, and what in the statement or constraints points to it?",
+        "Name the technique you would use here and the clue in the problem that tells you.",
+        "What approach fits this problem, and which part of the statement gives it away?"
+      ],
+      "answer": "BFS over states (row, col, obstacles eliminated so far). Clue: It asks for the minimum number of steps on a grid where every move costs one step, with an extra resource of at most k obstacle eliminations that changes which moves are allowed.",
+      "keyPoints": [
+        "It asks for the minimum number of steps on a grid where every move costs one step, with an extra resource of at most k obstacle eliminations that changes which moves are allowed."
+      ],
+      "explanation": "Fewest steps with uniform cost is BFS; the limited resource has to become part of the state because the same cell with more eliminations left is a different situation.",
+      "rubric": {
+        "technique": "BFS over states (row, col, obstacles eliminated so far)",
+        "aliases": [
+          "bfs with state including remaining eliminations",
+          "state-space bfs",
+          "bfs on (r, c, k)",
+          "bfs keeping the best remaining k per cell",
+          "a* with manhattan heuristic"
+        ],
+        "alsoValid": [
+          {
+            "name": "Dijkstra with a heap over the same states",
+            "note": "correct but the heap is unnecessary since every move costs one step"
+          },
+          {
+            "name": "DFS or backtracking over paths with elimination counts",
+            "note": "correct but exponential"
+          }
+        ],
+        "clueTypes": [
+          "shortest_steps",
+          "grid_connectivity"
+        ],
+        "clue": "It asks for the minimum number of steps on a grid where every move costs one step, with an extra resource of at most k obstacle eliminations that changes which moves are allowed."
+      }
+    },
+    {
+      "id": "shortest-path-in-a-grid-with-obstacles-elimination-whynot-01",
+      "category": "why_not",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "Why is a visited set keyed only by (row, col) wrong here?",
+        "What does marking cells, not states, break?"
+      ],
+      "options": [
+        "A later visit with more eliminations is blocked",
+        "Cells with obstacles would be visited twice",
+        "The BFS would no longer process levels in order",
+        "It makes the search slower but still correct"
+      ],
+      "answer": "A later visit with more eliminations is blocked",
+      "explanation": "The first arrival at a cell may have spent its eliminations; a slightly longer route that saved them can still reach the target when the first cannot.",
+      "incorrectOptionExplanations": {
+        "Cells with obstacles would be visited twice": "With cell marking, every cell is visited at most once; that is the problem.",
+        "The BFS would no longer process levels in order": "Level order is unaffected; reachable states are lost.",
+        "It makes the search slower but still correct": "It is faster but returns -1 or a longer path on some inputs."
+      },
+      "enabled": true
+    },
+    {
+      "id": "shortest-path-in-a-grid-with-obstacles-elimination-edge-01",
+      "category": "edge_case",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "grid = [[0, 1, 0], [1, 1, 0], [0, 0, 0]], k = 1. Minimum steps?",
+        "For [[0,1,0],[1,1,0],[0,0,0]] with one elimination, what is returned?"
+      ],
+      "options": [
+        "4",
+        "6",
+        "-1",
+        "2"
+      ],
+      "answer": "4",
+      "explanation": "Eliminate (0, 1) and walk the top row then down the right column: (0,0) (0,1) (0,2) (1,2) (2,2) is 4 steps, the Manhattan distance. Both neighbours of the start are obstacles, so without elimination there is no path at all.",
+      "incorrectOptionExplanations": {
+        "6": "There is no 6-step detour: both exits of the start are walls, and one elimination already gives the 4-step path.",
+        "-1": "One elimination is enough to leave the start.",
+        "2": "The target is at Manhattan distance 4; fewer steps is impossible."
+      },
+      "enabled": true
+    },
+    {
+      "id": "shortest-path-in-a-grid-with-obstacles-elimination-impl-01",
+      "category": "implementation_detail",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "What does the shortcut `if k >= m + n - 2: return m + n - 2` rely on?",
+        "Why can you return the Manhattan distance immediately when k is large?"
+      ],
+      "options": [
+        "A monotone path has m + n - 3 inner cells, all removable",
+        "A grid with k obstacles has an open path of that length",
+        "BFS would return the same value after one level",
+        "Corner cells are guaranteed free of obstacles"
+      ],
+      "answer": "A monotone path has m + n - 3 inner cells, all removable",
+      "explanation": "Any right/down path has m + n - 2 steps and visits m + n - 3 cells besides the two free corners; if k covers them all, the lower bound is achieved.",
+      "incorrectOptionExplanations": {
+        "A grid with k obstacles has an open path of that length": "k is the elimination budget, not the obstacle count.",
+        "BFS would return the same value after one level": "BFS needs m + n - 2 levels to get there.",
+        "Corner cells are guaranteed free of obstacles": "True, but that alone does not give the shortcut."
+      },
+      "enabled": true
+    },
+    {
+      "id": "shortest-path-in-a-grid-with-obstacles-elimination-code-01",
+      "category": "code_reasoning",
+      "type": "code_question",
+      "promptVariants": [
+        "What does `seen = set([0,0, 0])` actually contain, and what is the consequence?",
+        "Spot the bug in how the start state is marked."
+      ],
+      "answer": "set([0, 0, 0]) iterates the list and builds {0}, not {(0, 0, 0)}. The start state is never marked, so a neighbour can re-enqueue (0, 0, 0) once. The answer stays correct (BFS still finds the shortest path), but the intent is {(0, 0, 0)}.",
+      "keyPoints": [
+        "set(list) makes a set of the elements: {0}",
+        "Start state is not marked",
+        "Harmless here but a real bug",
+        "Use {(0, 0, 0)}"
+      ],
+      "explanation": "Know how set() treats its argument: it iterates it.",
+      "enabled": true,
+      "code": "queue = deque([(0, 0, 0, 0)])\nseen = set([0,0, 0])"
+    },
+    {
+      "id": "shortest-path-in-a-grid-with-obstacles-elimination-time-01",
+      "category": "time_complexity",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "What is the time complexity of the canonical code?",
+        "Derive the running time of BFS over (row, col, used) states."
+      ],
+      "options": [
+        "O(m * n * k)",
+        "O(m * n)",
+        "O((m * n)^k)",
+        "O(m * n * k * log k)"
+      ],
+      "answer": "O(m * n * k)",
+      "explanation": "There are m * n * (k + 1) states, each enqueued at most once and expanded with 4 O(1) neighbour checks.",
+      "incorrectOptionExplanations": {
+        "O(m * n)": "That would be plain cell BFS, which is incorrect here.",
+        "O((m * n)^k)": "That is choosing which obstacles to remove by brute force.",
+        "O(m * n * k * log k)": "No heap is involved; steps have unit cost."
+      },
+      "enabled": true
+    },
+    {
+      "id": "shortest-path-in-a-grid-with-obstacles-elimination-space-01",
+      "category": "space_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "The seen set can hold O(___) states.",
+        "Space of the state BFS: O(___)."
+      ],
+      "answer": "m * n * k",
+      "acceptedAnswers": [
+        "m*n*k",
+        "mnk",
+        "m * n * (k + 1)",
+        "k * m * n"
+      ],
+      "explanation": "One entry per (row, col, used) state.",
+      "enabled": true
+    }
+  ],
+  "generatedAt": "2026-11-01T11:51:22Z"
+}

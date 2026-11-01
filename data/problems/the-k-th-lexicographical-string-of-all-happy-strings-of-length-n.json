@@ -1,0 +1,33 @@
+{
+  "leetcodeId": "1415",
+  "title": "The k-th Lexicographical String of All Happy Strings of Length n",
+  "slug": "the-k-th-lexicographical-string-of-all-happy-strings-of-length-n",
+  "url": "https://leetcode.com/problems/the-k-th-lexicographical-string-of-all-happy-strings-of-length-n/",
+  "difficulty": "Medium",
+  "status": "solved",
+  "premium": false,
+  "tags": [
+    "String",
+    "Backtracking"
+  ],
+  "problemStatement": "A happy string is a string that:\n\n- consists only of letters of the set ['a', 'b', 'c'].\n\n- s[i] != s[i + 1] for all values of i from 1 to s.length - 1 (string is 1-indexed).\n\nFor example, strings \"abc\", \"ac\", \"b\" and \"abcbabcbcb\" are all happy strings and strings \"aa\", \"baa\" and \"ababbc\" are not happy strings.\n\nGiven two integers n and k, consider a list of all happy strings of length n sorted in lexicographical order.\n\nReturn the kth string of this list or return an empty string if there are less than k happy strings of length n.\n\nExample 1:\n\nInput: n = 1, k = 3\nOutput: \"c\"\nExplanation: The list [\"a\", \"b\", \"c\"] contains all happy strings of length 1. The third string is \"c\".\n\nExample 2:\n\nInput: n = 1, k = 4\nOutput: \"\"\nExplanation: There are only 3 happy strings of length 1.\n\nExample 3:\n\nInput: n = 3, k = 9\nOutput: \"cab\"\nExplanation: There are 12 different happy string of length 3 [\"aba\", \"abc\", \"aca\", \"acb\", \"bab\", \"bac\", \"bca\", \"bcb\", \"cab\", \"cac\", \"cba\", \"cbc\"]. You will find the 9^th string = \"cab\"\n\nConstraints:\n\n- 1 <= n <= 10\n\n- 1 <= k <= 100",
+  "constraints": [
+    "1 <= n <= 10",
+    "1 <= k <= 100"
+  ],
+  "hints": [
+    "Generate recursively all the happy strings of length n.",
+    "Sort them in lexicographical order and return the kth string if it exists."
+  ],
+  "acRate": 87.1,
+  "lastSubmittedAt": "2026-10-26T04:48:35Z",
+  "latestSubmission": {
+    "submissionId": "2181904816",
+    "language": "Python3",
+    "code": "class Solution:\n    def getHappyString(self, n: int, k: int) -> str:\n        abc = \"abc\"\n        path = []\n        ans = \"\"\n        count = 0\n\n        def backtrack():\n            nonlocal count, ans\n            if ans:\n                return\n            if len(path) == n:\n                count += 1\n                if count == k:\n                    ans = ''.join(path[:])\n                return\n            \n            for c in abc:\n                if path and path[-1] == c:\n                    continue\n                \n                path.append(c)\n                backtrack()\n                path.pop()\n        \n        backtrack()\n        return ans"
+  },
+  "notes": [],
+  "source": "leetcode",
+  "importedAt": "2026-11-01T11:09:15Z",
+  "lastSyncedAt": "2026-11-01T11:09:15Z"
+}

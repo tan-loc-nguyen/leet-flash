@@ -1,0 +1,218 @@
+{
+  "schemaVersion": 1,
+  "problemSlug": "minimum-distance-between-bst-nodes",
+  "summary": "Return the minimum difference between the values of any two nodes of a BST.",
+  "patterns": [
+    "Tree",
+    "BST",
+    "DFS"
+  ],
+  "mainInsight": "An in-order traversal of a BST yields values in sorted order, and in a sorted list the minimum gap is always between neighbours. So track the previous in-order value and take min(cur - prev).",
+  "invariant": "When a node is visited in order, prev holds the largest value smaller than it seen so far (its in-order predecessor).",
+  "canonicalApproach": "In-order traversal with previous value",
+  "approaches": [
+    {
+      "name": "Collect all values and compare all pairs",
+      "summary": "Any traversal, then check every pair.",
+      "timeComplexity": "O(n^2)",
+      "spaceComplexity": "O(n)",
+      "strengths": [
+        "Ignores BST property"
+      ],
+      "weaknesses": [
+        "Quadratic"
+      ],
+      "interviewRelevance": "Baseline."
+    },
+    {
+      "name": "Collect and sort",
+      "summary": "Any traversal, sort, compare neighbours.",
+      "timeComplexity": "O(n log n)",
+      "spaceComplexity": "O(n)",
+      "strengths": [
+        "Simple"
+      ],
+      "weaknesses": [
+        "Sorting is wasted on a BST"
+      ],
+      "interviewRelevance": "Fine but misses the BST property."
+    },
+    {
+      "name": "In-order traversal with previous value",
+      "summary": "In-order visit; compare each node with the previous visited value.",
+      "timeComplexity": "O(n)",
+      "spaceComplexity": "O(h)",
+      "strengths": [
+        "Uses BST order",
+        "No list"
+      ],
+      "weaknesses": [
+        "Needs nonlocal state"
+      ],
+      "interviewRelevance": "The expected answer."
+    }
+  ],
+  "canonicalCode": "class Solution:\n    def minDiffInBST(self, root: 'TreeNode | None') -> int:\n        best = float('inf')\n        prev = None                       # previous value in sorted (in-order) order\n\n        def inorder(node):\n            nonlocal best, prev\n            if not node:\n                return\n            inorder(node.left)\n            if prev is not None:\n                best = min(best, node.val - prev)   # sorted order: only neighbours matter\n            prev = node.val\n            inorder(node.right)\n\n        inorder(root)                     # visits each node once; recursion depth = tree height\n        return best\n",
+  "commonMistakes": [
+    "Comparing each node only with its direct children (the closest value may be far away in the tree).",
+    "Forgetting the prev is None check on the first visited node.",
+    "Using pre-order or post-order, which do not give sorted order."
+  ],
+  "edgeCases": [
+    "Two nodes only.",
+    "Skewed tree (a linked list).",
+    "Closest pair is a node and its in-order predecessor deep in the left subtree's right spine."
+  ],
+  "cards": [
+    {
+      "id": "recog-minimum-distance-between-bst-nodes",
+      "category": "pattern",
+      "type": "free_recall",
+      "promptVariants": [
+        "Which technique solves this problem, and what in the statement or constraints points to it?",
+        "Name the technique you would use here and the clue in the problem that tells you.",
+        "What approach fits this problem, and which part of the statement gives it away?"
+      ],
+      "answer": "In-order traversal of the BST, comparing each value with the previous one. Clue: The input is a binary search tree, whose in-order sequence is sorted, and the minimum difference in a sorted sequence is between adjacent values.",
+      "keyPoints": [
+        "The input is a binary search tree, whose in-order sequence is sorted, and the minimum difference in a sorted sequence is between adjacent values."
+      ],
+      "explanation": "BST + any order statistic or nearest-value question points to in-order traversal.",
+      "rubric": {
+        "technique": "In-order traversal of the BST, comparing each value with the previous one",
+        "aliases": [
+          "inorder traversal with prev",
+          "in-order dfs tracking predecessor",
+          "iterative inorder with a stack",
+          "morris inorder traversal"
+        ],
+        "alsoValid": [
+          {
+            "name": "Collect all values, sort, and compare neighbours",
+            "note": "correct but re-sorts values the BST already orders"
+          },
+          {
+            "name": "Compare every pair of nodes",
+            "note": "correct but quadratic"
+          }
+        ],
+        "clueTypes": [
+          "tree_structure",
+          "sorted_or_ordered"
+        ],
+        "clue": "The input is a binary search tree, whose in-order sequence is sorted, and the minimum difference in a sorted sequence is between adjacent values."
+      }
+    },
+    {
+      "id": "minimum-distance-between-bst-nodes-whynot-01",
+      "category": "why_not",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "Why is comparing each node with its two children not enough?",
+        "What is wrong with taking min(|node - child|) over all parent-child pairs?"
+      ],
+      "options": [
+        "The closest pair may not be parent and child",
+        "Children can have equal values in a BST",
+        "It misses the root's value entirely",
+        "It is correct but slower than in-order"
+      ],
+      "answer": "The closest pair may not be parent and child",
+      "explanation": "The root's in-order neighbour is the rightmost node of its left subtree, which can be several levels below it.",
+      "incorrectOptionExplanations": {
+        "Children can have equal values in a BST": "Values are distinct here and that is not the failure.",
+        "It misses the root's value entirely": "The root is compared with its children; the issue is non-adjacent pairs.",
+        "It is correct but slower than in-order": "It is the same speed but gives wrong answers."
+      },
+      "enabled": true
+    },
+    {
+      "id": "minimum-distance-between-bst-nodes-edge-01",
+      "category": "edge_case",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "root = [90, 69, null, 49, 89, null, 52]. What is returned?",
+        "For the BST [90, 69, null, 49, 89, null, 52], what is the minimum difference?"
+      ],
+      "options": [
+        "1",
+        "3",
+        "20",
+        "21"
+      ],
+      "answer": "1",
+      "explanation": "In-order: 49, 52, 69, 89, 90. Gaps are 3, 17, 20, 1, so the answer is 1, between the root 90 and 89, its in-order predecessor two levels down (89 is a child of 69, not of 90).",
+      "incorrectOptionExplanations": {
+        "3": "49 and 52 differ by 3, but 89 and 90 are closer.",
+        "20": "That is 89 - 69, a parent-child gap, not the minimum.",
+        "21": "That is 90 - 69, the root and its child."
+      },
+      "enabled": true
+    },
+    {
+      "id": "minimum-distance-between-bst-nodes-insight-01",
+      "category": "main_insight",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "Which property of a BST makes the one-pass solution possible?",
+        "Why does tracking only the previous value suffice?"
+      ],
+      "options": [
+        "In-order traversal visits values in sorted order",
+        "Every left child is exactly one less than its parent",
+        "The root holds the median of all values",
+        "Leaves always hold the smallest differences"
+      ],
+      "answer": "In-order traversal visits values in sorted order",
+      "explanation": "Sorted order means the minimum gap is between consecutive values, and the previous in-order value is the consecutive one.",
+      "incorrectOptionExplanations": {
+        "Every left child is exactly one less than its parent": "Only less than, not by exactly one.",
+        "The root holds the median of all values": "A BST need not be balanced.",
+        "Leaves always hold the smallest differences": "The closest pair can involve internal nodes."
+      },
+      "enabled": true
+    },
+    {
+      "id": "minimum-distance-between-bst-nodes-time-01",
+      "category": "time_complexity",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "What is the time complexity of the canonical code?",
+        "Derive the running time of the in-order solution."
+      ],
+      "options": [
+        "O(n)",
+        "O(n log n)",
+        "O(h)",
+        "O(n^2)"
+      ],
+      "answer": "O(n)",
+      "explanation": "Each node is visited once with O(1) work.",
+      "incorrectOptionExplanations": {
+        "O(n log n)": "That is collect-and-sort.",
+        "O(h)": "That is the stack space, not the time.",
+        "O(n^2)": "That is comparing all pairs."
+      },
+      "enabled": true
+    },
+    {
+      "id": "minimum-distance-between-bst-nodes-space-01",
+      "category": "space_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "The recursion stack uses O(___) space, the tree height.",
+        "Extra space of the recursive in-order: O(___)."
+      ],
+      "answer": "h",
+      "acceptedAnswers": [
+        "h",
+        "height",
+        "O(h)",
+        "tree height"
+      ],
+      "explanation": "Depth equals the height: log n if balanced, n for a skewed tree. Morris traversal would make it O(1).",
+      "enabled": true
+    }
+  ],
+  "generatedAt": "2026-11-01T11:48:27Z"
+}

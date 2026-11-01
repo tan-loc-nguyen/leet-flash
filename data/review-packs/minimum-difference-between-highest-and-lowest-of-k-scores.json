@@ -1,0 +1,192 @@
+{
+  "schemaVersion": 1,
+  "problemSlug": "minimum-difference-between-highest-and-lowest-of-k-scores",
+  "summary": "Choose k scores so that the difference between the highest and lowest chosen score is as small as possible.",
+  "patterns": [
+    "Sliding Window",
+    "Sorting"
+  ],
+  "mainInsight": "After sorting, an optimal group of k is always k consecutive values: replacing any outside element with one between the min and max never widens the range. So slide a window of size k and take min(nums[i + k - 1] - nums[i]).",
+  "invariant": "For window start i, nums[i] is its lowest and nums[i + k - 1] its highest score.",
+  "canonicalApproach": "Sort, then fixed-size window",
+  "approaches": [
+    {
+      "name": "Try every subset of size k",
+      "summary": "Enumerate combinations.",
+      "timeComplexity": "O(C(n, k) * k)",
+      "spaceComplexity": "O(k)",
+      "strengths": [
+        "Literal"
+      ],
+      "weaknesses": [
+        "Exponential"
+      ],
+      "interviewRelevance": "Baseline only."
+    },
+    {
+      "name": "Sort, then fixed-size window",
+      "summary": "Sort and compare nums[i + k - 1] - nums[i] for each i.",
+      "timeComplexity": "O(n log n)",
+      "spaceComplexity": "O(1) to O(n) for the sort",
+      "strengths": [
+        "Simple",
+        "Optimal for comparisons"
+      ],
+      "weaknesses": [
+        "Needs the 'consecutive after sorting' argument"
+      ],
+      "interviewRelevance": "The expected answer."
+    }
+  ],
+  "canonicalCode": "class Solution:\n    def minimumDifference(self, nums: list[int], k: int) -> int:\n        nums.sort()                                    # O(n log n) dominates\n        return min(nums[i + k - 1] - nums[i]           # window of k consecutive sorted scores\n                   for i in range(len(nums) - k + 1))  # n - k + 1 windows, O(1) each\n",
+  "commonMistakes": [
+    "Off-by-one in the window end (nums[i + k] instead of nums[i + k - 1]).",
+    "Loop bound len(nums) - k instead of len(nums) - k + 1, missing the last window.",
+    "Forgetting k = 1 returns 0."
+  ],
+  "edgeCases": [
+    "k = 1 -> 0.",
+    "k = n -> max - min.",
+    "Duplicate scores -> possibly 0."
+  ],
+  "cards": [
+    {
+      "id": "recog-minimum-difference-between-highest-and-lowest-of-k-scores",
+      "category": "pattern",
+      "type": "free_recall",
+      "promptVariants": [
+        "Which technique solves this problem, and what in the statement or constraints points to it?",
+        "Name the technique you would use here and the clue in the problem that tells you.",
+        "What approach fits this problem, and which part of the statement gives it away?"
+      ],
+      "answer": "Sort the scores, then slide a window of k consecutive values. Clue: Only the highest and lowest of the k chosen scores matter, so once the scores are sorted the best choice is a run of k neighbouring values.",
+      "keyPoints": [
+        "Only the highest and lowest of the k chosen scores matter, so once the scores are sorted the best choice is a run of k neighbouring values."
+      ],
+      "explanation": "Min/max-of-a-group questions become contiguous windows after sorting.",
+      "rubric": {
+        "technique": "Sort the scores, then slide a window of k consecutive values",
+        "aliases": [
+          "sort and sliding window",
+          "sorting then fixed-size window",
+          "sort and compare nums[i + k - 1] - nums[i]"
+        ],
+        "alsoValid": [
+          {
+            "name": "Try every combination of k scores",
+            "note": "correct but exponential in k"
+          }
+        ],
+        "clueTypes": [
+          "sorted_or_ordered",
+          "contiguous"
+        ],
+        "clue": "Only the highest and lowest of the k chosen scores matter, so once the scores are sorted the best choice is a run of k neighbouring values."
+      }
+    },
+    {
+      "id": "minimum-difference-between-highest-and-lowest-of-k-scores-insight-01",
+      "category": "main_insight",
+      "type": "free_recall",
+      "promptVariants": [
+        "Why is an optimal choice always k consecutive values in sorted order?",
+        "Prove that you only need to check contiguous windows after sorting."
+      ],
+      "answer": "Take any chosen group with lowest value lo and highest hi. All sorted values between lo and hi are in [lo, hi], and there are at least k of them (the chosen ones are among them). Picking k consecutive ones from that stretch keeps the range within hi - lo. So some window of k consecutive sorted values is at least as good.",
+      "keyPoints": [
+        "Range depends only on min and max",
+        "Values between them never widen the range",
+        "A consecutive window is at least as good"
+      ],
+      "explanation": "This exchange-style argument is what lets you discard all non-contiguous choices.",
+      "enabled": true
+    },
+    {
+      "id": "minimum-difference-between-highest-and-lowest-of-k-scores-edge-01",
+      "category": "edge_case",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "nums = [1, 5, 6, 14, 15], k = 3. What is returned?",
+        "For scores [1, 5, 6, 14, 15] and k = 3, what is the minimum difference?"
+      ],
+      "options": [
+        "5",
+        "1",
+        "9",
+        "14"
+      ],
+      "answer": "5",
+      "explanation": "Windows after sorting: [1,5,6] -> 5, [5,6,14] -> 9, [6,14,15] -> 9. The minimum is 5.",
+      "incorrectOptionExplanations": {
+        "1": "That is the closest pair (k = 2), not three scores.",
+        "9": "That is the middle or last window, not the best.",
+        "14": "That is max - min of all scores (k = n)."
+      },
+      "enabled": true
+    },
+    {
+      "id": "minimum-difference-between-highest-and-lowest-of-k-scores-impl-01",
+      "category": "implementation_detail",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "How many windows does the loop check for n scores?",
+        "What is the correct number of window starts?"
+      ],
+      "options": [
+        "n - k + 1",
+        "n - k",
+        "n - 1",
+        "n"
+      ],
+      "answer": "n - k + 1",
+      "explanation": "Starts go from 0 to n - k inclusive, so the last window ends at index n - 1.",
+      "incorrectOptionExplanations": {
+        "n - k": "Misses the last window ending at n - 1.",
+        "n - 1": "That is the pair count for k = 2 only.",
+        "n": "Windows starting after n - k would run past the end."
+      },
+      "enabled": true
+    },
+    {
+      "id": "minimum-difference-between-highest-and-lowest-of-k-scores-time-01",
+      "category": "time_complexity",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "What is the time complexity of the canonical code?",
+        "Derive the running time of sort plus window."
+      ],
+      "options": [
+        "O(n log n)",
+        "O(n)",
+        "O(n * k)",
+        "O(n^2)"
+      ],
+      "answer": "O(n log n)",
+      "explanation": "Sorting costs O(n log n); the window scan is O(n) with O(1) per window.",
+      "incorrectOptionExplanations": {
+        "O(n)": "Ignores the sort.",
+        "O(n * k)": "Each window needs only its two ends, not all k values.",
+        "O(n^2)": "No nested loop over pairs."
+      },
+      "enabled": true
+    },
+    {
+      "id": "minimum-difference-between-highest-and-lowest-of-k-scores-space-01",
+      "category": "space_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "The window scan itself uses O(___) extra space (the in-place sort may add up to O(n)).",
+        "Extra space of the scan after sorting: O(___)."
+      ],
+      "answer": "1",
+      "acceptedAnswers": [
+        "1",
+        "constant",
+        "O(1)"
+      ],
+      "explanation": "Only an index and the running minimum; Timsort may use O(n) auxiliary space.",
+      "enabled": true
+    }
+  ],
+  "generatedAt": "2026-11-01T14:43:24Z"
+}

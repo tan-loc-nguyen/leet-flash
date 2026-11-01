@@ -1,0 +1,37 @@
+{
+  "leetcodeId": "2181",
+  "title": "Merge Nodes in Between Zeros",
+  "slug": "merge-nodes-in-between-zeros",
+  "url": "https://leetcode.com/problems/merge-nodes-in-between-zeros/",
+  "difficulty": "Medium",
+  "status": "solved",
+  "premium": false,
+  "tags": [
+    "Linked List",
+    "Simulation"
+  ],
+  "problemStatement": "You are given the head of a linked list, which contains a series of integers separated by 0's. The beginning and end of the linked list will have Node.val == 0.\n\nFor every two consecutive 0's, merge all the nodes lying in between them into a single node whose value is the sum of all the merged nodes. The modified list should not contain any 0's.\n\nReturn the head of the modified linked list.\n\nExample 1:\n\nInput: head = [0,3,1,0,4,5,2,0]\nOutput: [4,11]\nExplanation:\nThe above figure represents the given linked list. The modified list contains\n- The sum of the nodes marked in green: 3 + 1 = 4.\n- The sum of the nodes marked in red: 4 + 5 + 2 = 11.\n\nExample 2:\n\nInput: head = [0,1,0,3,0,2,2,0]\nOutput: [1,3,4]\nExplanation:\nThe above figure represents the given linked list. The modified list contains\n- The sum of the nodes marked in green: 1 = 1.\n- The sum of the nodes marked in red: 3 = 3.\n- The sum of the nodes marked in yellow: 2 + 2 = 4.\n\nConstraints:\n\n- The number of nodes in the list is in the range [3, 2 * 10^5].\n\n- 0 <= Node.val <= 1000\n\n- There are no two consecutive nodes with Node.val == 0.\n\n- The beginning and end of the linked list have Node.val == 0.",
+  "constraints": [
+    "The number of nodes in the list is in the range [3, 2 * 10^5].",
+    "0 <= Node.val <= 1000",
+    "There are no two consecutive nodes with Node.val == 0.",
+    "The beginning and end of the linked list have Node.val == 0."
+  ],
+  "hints": [
+    "How can you use two pointers to modify the original list into the new list?",
+    "Have a pointer traverse the entire linked list, while another pointer looks at a node that is currently being modified.",
+    "Keep on summing the values of the nodes between the traversal pointer and the modifying pointer until the former comes across a ‘0’. In that case, the modifying pointer is incremented to modify the next node.",
+    "Do not forget to have the next pointer of the final node of the modified list point to null."
+  ],
+  "acRate": 89.74,
+  "lastSubmittedAt": "2026-10-26T10:46:15Z",
+  "latestSubmission": {
+    "submissionId": "2182137690",
+    "language": "Python3",
+    "code": "# Definition for singly-linked list.\n# class ListNode:\n#     def __init__(self, val=0, next=None):\n#         self.val = val\n#         self.next = next\nclass Solution:\n    def mergeNodes(self, head: ListNode | None) -> ListNode | None:\n        dummy = head\n        cur = dummy\n\n        while cur:\n            total = 0\n            while cur.val != 0:\n                total += cur.val\n                cur = cur.next\n            \n            dummy.val = total\n            cur = cur.next\n            dummy.next = cur\n            dummy = dummy.next\n        \n        return head.next "
+  },
+  "notes": [],
+  "source": "leetcode",
+  "importedAt": "2026-11-01T11:09:15Z",
+  "lastSyncedAt": "2026-11-01T11:09:15Z"
+}

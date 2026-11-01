@@ -1,0 +1,32 @@
+{
+  "leetcodeId": "645",
+  "title": "Set Mismatch",
+  "slug": "set-mismatch",
+  "url": "https://leetcode.com/problems/set-mismatch/",
+  "difficulty": "Easy",
+  "status": "solved",
+  "premium": false,
+  "tags": [
+    "Array",
+    "Hash Table",
+    "Bit Manipulation",
+    "Sorting"
+  ],
+  "problemStatement": "You have a set of integers s, which originally contains all the numbers from 1 to n. Unfortunately, due to some error, one of the numbers in s got duplicated to another number in the set, which results in repetition of one number and loss of another number.\n\nYou are given an integer array nums representing the data status of this set after the error.\n\nFind the number that occurs twice and the number that is missing and return them in the form of an array.\n\nExample 1:\n\nInput: nums = [1,2,2,4]\nOutput: [2,3]\n\nExample 2:\n\nInput: nums = [1,1]\nOutput: [1,2]\n\nConstraints:\n\n- 2 <= nums.length <= 10^4\n\n- 1 <= nums[i] <= 10^4",
+  "constraints": [
+    "2 <= nums.length <= 10^4",
+    "1 <= nums[i] <= 10^4"
+  ],
+  "hints": [],
+  "acRate": 43.18,
+  "lastSubmittedAt": "2026-10-26T04:27:34Z",
+  "latestSubmission": {
+    "submissionId": "2181891475",
+    "language": "Python3",
+    "code": "class Solution:\n    def findErrorNums(self, nums: List[int]) -> List[int]:\n        totalWithDup = sum(nums)\n        totalWithoutDup = sum(set(nums))\n        n = len(nums)\n        dup = totalWithDup - totalWithoutDup\n        missing = n * (n + 1) // 2 - totalWithoutDup\n        return [dup, missing]\n"
+  },
+  "notes": [],
+  "source": "leetcode",
+  "importedAt": "2026-11-01T11:09:15Z",
+  "lastSyncedAt": "2026-11-01T11:09:15Z"
+}

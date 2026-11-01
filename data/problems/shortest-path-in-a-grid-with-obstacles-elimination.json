@@ -1,0 +1,38 @@
+{
+  "leetcodeId": "1293",
+  "title": "Shortest Path in a Grid with Obstacles Elimination",
+  "slug": "shortest-path-in-a-grid-with-obstacles-elimination",
+  "url": "https://leetcode.com/problems/shortest-path-in-a-grid-with-obstacles-elimination/",
+  "difficulty": "Hard",
+  "status": "solved",
+  "premium": false,
+  "tags": [
+    "Array",
+    "Breadth-First Search",
+    "Matrix"
+  ],
+  "problemStatement": "You are given an m x n integer matrix grid where each cell is either 0 (empty) or 1 (obstacle). You can move up, down, left, or right from and to an empty cell in one step.\n\nReturn the minimum number of steps to walk from the upper left corner (0, 0) to the lower right corner (m - 1, n - 1) given that you can eliminate at most k obstacles. If it is not possible to find such walk return -1.\n\nExample 1:\n\nInput: grid = [[0,0,0],[1,1,0],[0,0,0],[0,1,1],[0,0,0]], k = 1\nOutput: 6\nExplanation:\nThe shortest path without eliminating any obstacle is 10.\nThe shortest path with one obstacle elimination at position (3,2) is 6. Such path is (0,0) -> (0,1) -> (0,2) -> (1,2) -> (2,2) -> (3,2) -> (4,2).\n\nExample 2:\n\nInput: grid = [[0,1,1],[1,1,1],[1,0,0]], k = 1\nOutput: -1\nExplanation: We need to eliminate at least two obstacles to find such a walk.\n\nConstraints:\n\n- m == grid.length\n\n- n == grid[i].length\n\n- 1 <= m, n <= 40\n\n- 1 <= k <= m * n\n\n- grid[i][j] is either 0 or 1.\n\n- grid[0][0] == grid[m - 1][n - 1] == 0",
+  "constraints": [
+    "m == grid.length",
+    "n == grid[i].length",
+    "1 <= m, n <= 40",
+    "1 <= k <= m * n",
+    "grid[i][j] is either 0 or 1.",
+    "grid[0][0] == grid[m - 1][n - 1] == 0"
+  ],
+  "hints": [
+    "Use BFS.",
+    "BFS on (x,y,r) x,y is coordinate, r is remain number of obstacles you can remove."
+  ],
+  "acRate": 46.81,
+  "lastSubmittedAt": "2026-10-28T12:59:07Z",
+  "latestSubmission": {
+    "submissionId": "2183910853",
+    "language": "Python3",
+    "code": "class Solution:\n    def shortestPath(self, grid: list[list[int]], k: int) -> int:\n        m, n = len(grid), len(grid[0])\n        DIR = [0, 1, 0, -1, 0]\n        queue = deque([(0, 0, 0, 0)])\n        seen = set([0,0, 0])\n        while queue:\n            j = len(queue)\n            for _ in range(j):\n                r, c, obs, dist = queue.popleft()\n                if r == m - 1 and c == n - 1:\n                    return dist\n                for i in range(4):\n                    nr, nc, no, nd = r + DIR[i], c + DIR[i + 1], obs, dist + 1\n                    if 0 <= nr < m and 0 <= nc < n:\n                        if grid[nr][nc] == 1:\n                            no += 1\n                        if (nr, nc, no) not in seen and no <= k:\n                            queue.append((nr, nc, no, nd))\n                            seen.add((nr, nc, no))\n        return -1"
+  },
+  "notes": [],
+  "source": "leetcode",
+  "importedAt": "2026-11-01T11:09:15Z",
+  "lastSyncedAt": "2026-11-01T11:09:15Z"
+}

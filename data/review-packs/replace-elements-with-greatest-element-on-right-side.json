@@ -1,0 +1,193 @@
+{
+  "schemaVersion": 1,
+  "problemSlug": "replace-elements-with-greatest-element-on-right-side",
+  "summary": "Replace each element with the maximum of the elements to its right, and the last with -1.",
+  "patterns": [
+    "Array / Hashing"
+  ],
+  "mainInsight": "Scan from right to left keeping a running maximum of what has been seen; write the running maximum before folding in the current value.",
+  "invariant": "Before processing index i, best is the maximum of arr[i+1:], or -1 when that slice is empty.",
+  "canonicalApproach": "Right-to-left running maximum",
+  "approaches": [
+    {
+      "name": "Recompute the max for each index",
+      "summary": "arr[i] = max(arr[i+1:]).",
+      "timeComplexity": "O(n^2)",
+      "spaceComplexity": "O(n)",
+      "strengths": [
+        "Obvious"
+      ],
+      "weaknesses": [
+        "Quadratic"
+      ],
+      "interviewRelevance": "Baseline."
+    },
+    {
+      "name": "Right-to-left running maximum",
+      "summary": "Walk from the end; write best, then update best with the old value.",
+      "timeComplexity": "O(n)",
+      "spaceComplexity": "O(1)",
+      "strengths": [
+        "One pass, in place"
+      ],
+      "weaknesses": [
+        "Must save the old value before overwriting"
+      ],
+      "interviewRelevance": "The expected answer."
+    }
+  ],
+  "canonicalCode": "class Solution:\n    def replaceElements(self, arr: list[int]) -> list[int]:\n        best = -1                              # max of the elements to the right; -1 for the last slot\n        for i in range(len(arr) - 1, -1, -1):  # one pass from the right: O(n)\n            arr[i], best = best, max(best, arr[i])   # write first, then fold the old value in\n        return arr\n",
+  "commonMistakes": [
+    "Updating best before writing, so each element is compared with itself.",
+    "Overwriting arr[i] and then using the new value to update best.",
+    "Scanning left to right and recomputing the suffix maximum each time."
+  ],
+  "edgeCases": [
+    "Single element -> [-1].",
+    "Strictly decreasing array.",
+    "All equal values."
+  ],
+  "cards": [
+    {
+      "id": "recog-replace-elements-with-greatest-element-on-right-side",
+      "category": "pattern",
+      "type": "free_recall",
+      "promptVariants": [
+        "Which technique solves this problem, and what in the statement or constraints points to it?",
+        "Name the technique you would use here and the clue in the problem that tells you.",
+        "What approach fits this problem, and which part of the statement gives it away?"
+      ],
+      "answer": "Right-to-left scan with a running suffix maximum. Clue: Each element is replaced with the greatest element among the elements to its right, so the answer for index i only depends on the suffix after it.",
+      "keyPoints": [
+        "Each element is replaced with the greatest element among the elements to its right, so the answer for index i only depends on the suffix after it."
+      ],
+      "explanation": "A suffix aggregate is computed by scanning from the right and carrying the aggregate along.",
+      "rubric": {
+        "technique": "Right-to-left scan with a running suffix maximum",
+        "aliases": [
+          "reverse scan with running max",
+          "suffix maximum",
+          "iterate from the end keeping the max",
+          "suffix max array"
+        ],
+        "alsoValid": [
+          {
+            "name": "Recompute max(arr[i+1:]) for each index",
+            "note": "correct but quadratic"
+          }
+        ],
+        "clueTypes": [
+          "next_greater_range",
+          "direct_simulation"
+        ],
+        "clue": "Each element is replaced with the greatest element among the elements to its right, so the answer for index i only depends on the suffix after it."
+      }
+    },
+    {
+      "id": "replace-elements-with-greatest-element-on-right-side-impl-01",
+      "category": "implementation_detail",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "In the right-to-left loop, why must arr[i] be written before best is updated with arr[i]?",
+        "What goes wrong if you do best = max(best, arr[i]) first and then arr[i] = best?"
+      ],
+      "options": [
+        "arr[i] would count itself among the right side",
+        "best would skip the last element of the array",
+        "The loop would need an extra pass to fix the order",
+        "It raises an index error at i = 0"
+      ],
+      "answer": "arr[i] would count itself among the right side",
+      "explanation": "The answer for i must exclude arr[i]. Updating first folds arr[i] in, so a local maximum would be written as itself.",
+      "incorrectOptionExplanations": {
+        "best would skip the last element of the array": "The last element is still folded in; the problem is self-inclusion.",
+        "The loop would need an extra pass to fix the order": "The fix is swapping two lines, not another pass.",
+        "It raises an index error at i = 0": "No index goes out of range."
+      },
+      "enabled": true
+    },
+    {
+      "id": "replace-elements-with-greatest-element-on-right-side-edge-01",
+      "category": "edge_case",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "arr = [5, 4, 3, 2]. What is returned?",
+        "For the strictly decreasing array [5, 4, 3, 2], what is the result?"
+      ],
+      "options": [
+        "[4, 3, 2, -1]",
+        "[5, 4, 3, -1]",
+        "[2, 2, 2, -1]",
+        "[4, 4, 4, -1]"
+      ],
+      "answer": "[4, 3, 2, -1]",
+      "explanation": "In a decreasing array the largest element to the right is always the next one.",
+      "incorrectOptionExplanations": {
+        "[5, 4, 3, -1]": "Each element was compared with itself: the update-before-write bug.",
+        "[2, 2, 2, -1]": "That is the minimum to the right, not the maximum.",
+        "[4, 4, 4, -1]": "The maximum right of index 1 is 3, not 4."
+      },
+      "enabled": true
+    },
+    {
+      "id": "replace-elements-with-greatest-element-on-right-side-code-01",
+      "category": "code_reasoning",
+      "type": "code_question",
+      "promptVariants": [
+        "Why does your solution need `tmp`, and why set arr[-1] = -1 at the end?",
+        "Walk through the role of tmp and the final assignment in this code."
+      ],
+      "answer": "tmp saves the maximum of everything right of i before best absorbs arr[i]; then arr[i] = tmp. The loop starts at n - 2 with best = arr[-1], so the last slot is never written in the loop and is set to -1 afterwards. Starting with best = -1 and looping from n - 1 removes both special cases.",
+      "keyPoints": [
+        "tmp = max strictly to the right",
+        "Loop starts at n - 2",
+        "Last slot fixed after the loop",
+        "best = -1 from n - 1 is simpler"
+      ],
+      "explanation": "Choosing the identity value (-1) as the initial aggregate often removes edge-case code.",
+      "enabled": true,
+      "code": "best = arr[-1]\nfor i in range(n - 2, -1, -1):\n    tmp = best\n    best = max(best, arr[i])\n    arr[i] = tmp\narr[-1] = -1\nreturn arr"
+    },
+    {
+      "id": "replace-elements-with-greatest-element-on-right-side-time-01",
+      "category": "time_complexity",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "What is the time complexity of the canonical code?",
+        "Derive the running time of the right-to-left scan."
+      ],
+      "options": [
+        "O(n)",
+        "O(n^2)",
+        "O(n log n)",
+        "O(1)"
+      ],
+      "answer": "O(n)",
+      "explanation": "One pass with O(1) work per index.",
+      "incorrectOptionExplanations": {
+        "O(n^2)": "That is recomputing max(arr[i+1:]) each time.",
+        "O(n log n)": "No sorting or heap.",
+        "O(1)": "Every element is read and written."
+      },
+      "enabled": true
+    },
+    {
+      "id": "replace-elements-with-greatest-element-on-right-side-space-01",
+      "category": "space_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "The in-place scan needs O(___) extra space.",
+        "Extra space of the canonical code: O(___)."
+      ],
+      "answer": "1",
+      "acceptedAnswers": [
+        "1",
+        "constant",
+        "O(1)"
+      ],
+      "explanation": "Only best is stored; the array is updated in place.",
+      "enabled": true
+    }
+  ],
+  "generatedAt": "2026-11-01T11:51:22Z"
+}
