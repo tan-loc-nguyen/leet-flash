@@ -1,0 +1,277 @@
+{
+  "schemaVersion": 1,
+  "problemSlug": "word-ladder",
+  "summary": "Return the number of words in the shortest chain from beginWord to endWord where each step changes one letter and every intermediate word is in wordList, or 0.",
+  "patterns": [
+    "BFS",
+    "Graph"
+  ],
+  "mainInsight": "Words are nodes and one-letter changes are unweighted edges, so BFS from beginWord finds the shortest chain. Generate neighbours by trying the 26 letters at each position and checking a word set, instead of comparing against every word.",
+  "invariant": "When a word at level d is popped, d is the length of the shortest chain from beginWord to it, and every word with a shorter chain has already been enqueued.",
+  "canonicalApproach": "BFS with letter substitution",
+  "approaches": [
+    {
+      "name": "Build the graph by comparing all pairs, then BFS",
+      "summary": "For every pair of words count differing letters to build edges.",
+      "timeComplexity": "O(N^2 * L)",
+      "spaceComplexity": "O(N^2)",
+      "strengths": [
+        "Simple edge definition"
+      ],
+      "weaknesses": [
+        "Quadratic in the word count (5000^2 pairs)"
+      ],
+      "interviewRelevance": "Mention as the baseline."
+    },
+    {
+      "name": "BFS with letter substitution",
+      "summary": "For each popped word try every letter at every position and keep candidates that are in the word set and unseen.",
+      "timeComplexity": "O(N * L^2 * 26)",
+      "spaceComplexity": "O(N * L)",
+      "strengths": [
+        "Never builds the graph",
+        "Simple"
+      ],
+      "weaknesses": [
+        "26 * L candidates per word"
+      ],
+      "interviewRelevance": "The expected answer."
+    },
+    {
+      "name": "Bidirectional BFS",
+      "summary": "Expand alternately from both ends, always the smaller frontier, and stop when they meet.",
+      "timeComplexity": "O(N * L^2 * 26) worst case, far less in practice",
+      "spaceComplexity": "O(N * L)",
+      "strengths": [
+        "Explores much less"
+      ],
+      "weaknesses": [
+        "More code; needs endWord known"
+      ],
+      "interviewRelevance": "Strong follow-up."
+    },
+    {
+      "name": "Wildcard buckets",
+      "summary": "Group words by patterns like h*t; neighbours are the words sharing a bucket.",
+      "timeComplexity": "O(N * L^2)",
+      "spaceComplexity": "O(N * L^2)",
+      "strengths": [
+        "Avoids the factor 26"
+      ],
+      "weaknesses": [
+        "Extra preprocessing memory"
+      ],
+      "interviewRelevance": "Equally good alternative."
+    }
+  ],
+  "personalSolution": {
+    "approach": "BFS with letter substitution, trying only letters that appear at that position in wordList",
+    "timeComplexity": "O(N * L^2 * 26)",
+    "spaceComplexity": "O(N * L)",
+    "isOptimal": true,
+    "notes": "Optimal. Restricting each position to letters seen there is a neat pruning. The dist dict is redundant with a level counter, and checking endWord in the dictionary up front would return 0 early."
+  },
+  "canonicalCode": "from collections import deque\nfrom string import ascii_lowercase\n\n\nclass Solution:\n    def ladderLength(self, beginWord: str, endWord: str, wordList: list[str]) -> int:\n        words = set(wordList)\n        if endWord not in words:\n            return 0\n        queue = deque([beginWord])\n        seen = {beginWord}\n        steps = 1                                   # chain length counts words, so start at 1\n        while queue:\n            for _ in range(len(queue)):             # one BFS level\n                word = queue.popleft()\n                if word == endWord:\n                    return steps\n                for i in range(len(word)):          # L positions\n                    for ch in ascii_lowercase:      # 26 letters -> 26 * L candidates, each built in O(L)\n                        nxt = word[:i] + ch + word[i + 1:]\n                        if nxt in words and nxt not in seen:\n                            seen.add(nxt)           # mark on enqueue: each word enters the queue once\n                            queue.append(nxt)\n            steps += 1\n        return 0\n",
+  "commonMistakes": [
+    "Using DFS, which finds a path but not the shortest one without exploring everything.",
+    "Comparing each word with every other word to find neighbours (quadratic).",
+    "Returning the number of transformations instead of the number of words (off by one).",
+    "Forgetting the early return when endWord is not in wordList.",
+    "Marking words visited only when popped, so a word is queued many times."
+  ],
+  "edgeCases": [
+    "endWord not in wordList -> 0.",
+    "endWord is one letter away from beginWord -> 2.",
+    "beginWord also appears in wordList.",
+    "Disconnected dictionary: endWord unreachable -> 0."
+  ],
+  "cards": [
+    {
+      "id": "recog-word-ladder",
+      "category": "pattern",
+      "type": "free_recall",
+      "promptVariants": [
+        "Which technique solves this problem, and what in the statement or constraints points to it?",
+        "Name the technique you would use here and the clue in the problem that tells you.",
+        "What approach fits this problem, and which part of the statement gives it away?"
+      ],
+      "answer": "BFS over words where neighbours differ by one letter. Clue: It asks for the shortest transformation sequence where every step changes exactly one letter, so each step is an unweighted edge between words.",
+      "keyPoints": [
+        "It asks for the shortest transformation sequence where every step changes exactly one letter, so each step is an unweighted edge between words."
+      ],
+      "explanation": "Fewest steps over equal-cost moves is shortest path in an unweighted graph, which BFS solves level by level.",
+      "rubric": {
+        "technique": "BFS over words where neighbours differ by one letter",
+        "aliases": [
+          "bfs",
+          "breadth first search",
+          "bidirectional bfs",
+          "bfs with wildcard buckets",
+          "level-order bfs on the implicit word graph"
+        ],
+        "alsoValid": [
+          {
+            "name": "Build the graph by comparing every pair of words, then BFS",
+            "note": "correct but the pairwise comparison is quadratic in the number of words"
+          },
+          {
+            "name": "DFS or backtracking over all chains, keeping the shortest",
+            "note": "correct but explores exponentially many chains"
+          }
+        ],
+        "clueTypes": [
+          "shortest_steps",
+          "dependencies_graph"
+        ],
+        "clue": "It asks for the shortest transformation sequence where every step changes exactly one letter, so each step is an unweighted edge between words."
+      }
+    },
+    {
+      "id": "word-ladder-whynot-01",
+      "category": "why_not",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "Why is DFS a poor choice here even though it can find a valid chain?",
+        "What does BFS guarantee that DFS does not?"
+      ],
+      "options": [
+        "BFS reaches each word first via a shortest chain",
+        "DFS cannot handle cycles in the word graph",
+        "DFS uses more memory than BFS on this graph",
+        "BFS checks fewer neighbours per word than DFS"
+      ],
+      "answer": "BFS reaches each word first via a shortest chain",
+      "explanation": "BFS processes words in order of distance, so the first time endWord is reached is optimal. DFS may find a long chain first and would need to explore all chains to be sure.",
+      "incorrectOptionExplanations": {
+        "DFS cannot handle cycles in the word graph": "A visited set handles cycles for either search.",
+        "DFS uses more memory than BFS on this graph": "BFS usually uses more memory (wide frontiers); memory is not the reason.",
+        "BFS checks fewer neighbours per word than DFS": "Both generate the same neighbours per word."
+      },
+      "enabled": true
+    },
+    {
+      "id": "word-ladder-insight-01",
+      "category": "main_insight",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "With up to 5000 words of length at most 10, how should you find a word's neighbours?",
+        "What is the cheaper way to enumerate words one letter away?"
+      ],
+      "options": [
+        "Try 26 letters at each position and look the result up in a set",
+        "Compare the word with every dictionary word letter by letter",
+        "Sort the dictionary and binary search for each neighbour",
+        "Precompute edit distance between all pairs of words"
+      ],
+      "answer": "Try 26 letters at each position and look the result up in a set",
+      "explanation": "That is 26 * L <= 260 candidates per word with O(1) set lookups, independent of the 5000-word dictionary size.",
+      "incorrectOptionExplanations": {
+        "Compare the word with every dictionary word letter by letter": "That is N * L per word, so N^2 * L overall: 25 million pairs.",
+        "Sort the dictionary and binary search for each neighbour": "You still need to generate candidates; a hash set already gives O(1) lookups.",
+        "Precompute edit distance between all pairs of words": "Quadratic in N and edit distance is more than needed (only substitutions)."
+      },
+      "enabled": true
+    },
+    {
+      "id": "word-ladder-edge-01",
+      "category": "edge_case",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "beginWord = \"a\", endWord = \"c\", wordList = [\"a\", \"b\", \"c\"]. What is returned?",
+        "What is the answer for \"a\" -> \"c\" with wordList [\"a\", \"b\", \"c\"]?"
+      ],
+      "options": [
+        "2",
+        "1",
+        "3",
+        "0"
+      ],
+      "answer": "2",
+      "explanation": "\"a\" -> \"c\" is a single letter change and \"c\" is in the list, so the chain has two words.",
+      "incorrectOptionExplanations": {
+        "1": "The count includes beginWord, so even one step gives 2.",
+        "3": "That would go through \"b\", which is not shortest.",
+        "0": "endWord is in the list and reachable."
+      },
+      "enabled": true
+    },
+    {
+      "id": "word-ladder-impl-01",
+      "category": "implementation_detail",
+      "type": "fill_blank",
+      "promptVariants": [
+        "If endWord is ___ wordList, return 0 immediately before any BFS.",
+        "The early exit: endWord ___ the word set means no chain can exist."
+      ],
+      "answer": "not in",
+      "acceptedAnswers": [
+        "not in",
+        "missing from",
+        "absent from",
+        "not present in"
+      ],
+      "explanation": "Every word of the chain after beginWord, including endWord, must be in wordList.",
+      "enabled": true
+    },
+    {
+      "id": "word-ladder-alt-01",
+      "category": "alternative_approach",
+      "type": "free_recall",
+      "promptVariants": [
+        "How does bidirectional BFS speed this up, and when do you stop?",
+        "Explain bidirectional BFS for Word Ladder."
+      ],
+      "answer": "Keep two frontiers, one from beginWord and one from endWord. Each round expand the smaller frontier by one level; when a generated word is in the other frontier, the chain length is the sum of both depths + 1. Searching from both sides explores about 2 * b^(d/2) words instead of b^d.",
+      "keyPoints": [
+        "Two frontiers from both ends",
+        "Expand the smaller one",
+        "Stop when they meet",
+        "Explores roughly b^(d/2) per side"
+      ],
+      "explanation": "It needs endWord known up front, which this problem gives.",
+      "enabled": true
+    },
+    {
+      "id": "word-ladder-time-01",
+      "category": "time_complexity",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "N words of length L. What is the running time of the canonical code?",
+        "Derive the time complexity of BFS with letter substitution."
+      ],
+      "options": [
+        "O(N * L^2 * 26)",
+        "O(N^2 * L)",
+        "O(N * L * 26)",
+        "O(26^L)"
+      ],
+      "answer": "O(N * L^2 * 26)",
+      "explanation": "Each of up to N words is popped once; it builds 26 * L candidates and each slice-and-concatenate plus hash costs O(L).",
+      "incorrectOptionExplanations": {
+        "O(N^2 * L)": "That is the pairwise-comparison graph build.",
+        "O(N * L * 26)": "Misses that building and hashing each candidate string costs O(L).",
+        "O(26^L)": "That is the number of all possible strings; BFS only visits dictionary words."
+      },
+      "enabled": true
+    },
+    {
+      "id": "word-ladder-space-01",
+      "category": "space_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "The word set, seen set and queue store up to N words of length L: O(___) space.",
+        "Space of the BFS: O(___)."
+      ],
+      "answer": "N * L",
+      "acceptedAnswers": [
+        "N*L",
+        "NL",
+        "n * l",
+        "L * N"
+      ],
+      "explanation": "Each container holds at most N strings of length L.",
+      "enabled": true
+    }
+  ],
+  "generatedAt": "2026-11-01T11:48:27Z"
+}

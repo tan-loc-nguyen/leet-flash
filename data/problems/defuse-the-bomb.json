@@ -1,0 +1,35 @@
+{
+  "leetcodeId": "1652",
+  "title": "Defuse the Bomb",
+  "slug": "defuse-the-bomb",
+  "url": "https://leetcode.com/problems/defuse-the-bomb/",
+  "difficulty": "Easy",
+  "status": "solved",
+  "premium": false,
+  "tags": [
+    "Array",
+    "Sliding Window"
+  ],
+  "problemStatement": "You have a bomb to defuse, and your time is running out! Your informer will provide you with a circular array code of length of n and a key k.\n\nTo decrypt the code, you must replace every number. All the numbers are replaced simultaneously.\n\n- If k > 0, replace the i^th number with the sum of the next k numbers.\n\n- If k < 0, replace the i^th number with the sum of the previous -k numbers.\n\n- If k == 0, replace the i^th number with 0.\n\nAs code is circular, the next element of code[n-1] is code[0], and the previous element of code[0] is code[n-1].\n\nGiven the circular array code and an integer key k, return the decrypted code to defuse the bomb!\n\nExample 1:\n\nInput: code = [5,7,1,4], k = 3\nOutput: [12,10,16,13]\nExplanation: Each number is replaced by the sum of the next 3 numbers. The decrypted code is [7+1+4, 1+4+5, 4+5+7, 5+7+1]. Notice that the numbers wrap around.\n\nExample 2:\n\nInput: code = [1,2,3,4], k = 0\nOutput: [0,0,0,0]\nExplanation: When k is zero, the numbers are replaced by 0.\n\nExample 3:\n\nInput: code = [2,4,9,3], k = -2\nOutput: [12,5,6,13]\nExplanation: The decrypted code is [3+9, 2+3, 4+2, 9+4]. Notice that the numbers wrap around again. If k is negative, the sum is of the previous numbers.\n\nConstraints:\n\n- n == code.length\n\n- 1 <= n <= 100\n\n- 1 <= code[i] <= 100\n\n- -(n - 1) <= k <= n - 1",
+  "constraints": [
+    "n == code.length",
+    "1 <= n <= 100",
+    "1 <= code[i] <= 100",
+    "-(n - 1) <= k <= n - 1"
+  ],
+  "hints": [
+    "As the array is circular, use modulo to find the correct index.",
+    "The constraints are low enough for a brute-force solution."
+  ],
+  "acRate": 79.56,
+  "lastSubmittedAt": "2026-10-29T05:22:42Z",
+  "latestSubmission": {
+    "submissionId": "2184448162",
+    "language": "Python3",
+    "code": "class Solution:\n    def decrypt(self, code: list[int], k: int) -> list[int]:\n        n = len(code)\n        ans = [0] * n\n        \n        if k == 0:\n            return ans\n        \n        if k > 0:\n            start, end = 1, k\n        else:\n            start, end = n + k, n - 1\n            \n        curSum = 0\n        for i in range(start, end + 1):\n            curSum += code[i % n]\n            \n        for i in range(n):\n            ans[i] = curSum\n\n            curSum -= code[start % n]\n            start += 1\n            end += 1\n            curSum += code[end % n]\n            \n        return ans\n"
+  },
+  "notes": [],
+  "source": "leetcode",
+  "importedAt": "2026-11-01T11:09:15Z",
+  "lastSyncedAt": "2026-11-01T11:09:15Z"
+}

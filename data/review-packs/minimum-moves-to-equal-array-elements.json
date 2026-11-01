@@ -1,0 +1,235 @@
+{
+  "schemaVersion": 1,
+  "problemSlug": "minimum-moves-to-equal-array-elements",
+  "summary": "Find the minimum number of moves to make all elements equal when one move increments n - 1 elements by 1.",
+  "patterns": [
+    "Math"
+  ],
+  "mainInsight": "Incrementing every element except one changes the pairwise differences exactly like decrementing that one element. So the answer is the number of single decrements needed to bring everything down to the minimum: sum(nums) - n * min(nums).",
+  "canonicalApproach": "Sum minus n times min",
+  "approaches": [
+    {
+      "name": "Simulation",
+      "summary": "Repeatedly increment all but the maximum.",
+      "timeComplexity": "O(answer * n)",
+      "spaceComplexity": "O(1)",
+      "strengths": [
+        "Literal"
+      ],
+      "weaknesses": [
+        "Answer can be about 2^31: far too slow"
+      ],
+      "interviewRelevance": "Only to motivate the insight."
+    },
+    {
+      "name": "Sort and sum differences to the minimum",
+      "summary": "Sort, then add nums[i] - nums[0] for every i.",
+      "timeComplexity": "O(n log n)",
+      "spaceComplexity": "O(1) to O(n)",
+      "strengths": [
+        "Correct"
+      ],
+      "weaknesses": [
+        "Sorting is unnecessary"
+      ],
+      "interviewRelevance": "Correct but not optimal."
+    },
+    {
+      "name": "Sum minus n times min",
+      "summary": "One pass for the sum and the minimum.",
+      "timeComplexity": "O(n)",
+      "spaceComplexity": "O(1)",
+      "strengths": [
+        "Optimal",
+        "One line"
+      ],
+      "weaknesses": [
+        "Needs the insight"
+      ],
+      "interviewRelevance": "The expected answer."
+    }
+  ],
+  "personalSolution": {
+    "approach": "Sort, then sum the differences to the smallest element",
+    "timeComplexity": "O(n log n)",
+    "spaceComplexity": "O(1) extra (in-place sort, though Timsort may use O(n))",
+    "isOptimal": false,
+    "notes": "The insight is right, but you only need the minimum, not a sorted array. sum(nums) - len(nums) * min(nums) is O(n). Also, sorting mutates the input."
+  },
+  "canonicalCode": "class Solution:\n    def minMoves(self, nums: list[int]) -> int:\n        # incrementing n - 1 elements == decrementing the remaining one (relative view)\n        # so count the single decrements that bring every element down to the minimum\n        return sum(nums) - len(nums) * min(nums)   # two linear passes, O(1) extra space\n",
+  "commonMistakes": [
+    "Assuming the final value is max(nums) and answering sum(max - x).",
+    "Simulating moves one at a time.",
+    "Sorting when only the minimum is needed.",
+    "Overflow of sum in 32-bit languages (use long)."
+  ],
+  "edgeCases": [
+    "Single element -> 0.",
+    "All equal -> 0.",
+    "Negative numbers.",
+    "Large spread near the 32-bit limit."
+  ],
+  "cards": [
+    {
+      "id": "recog-minimum-moves-to-equal-array-elements",
+      "category": "pattern",
+      "type": "free_recall",
+      "promptVariants": [
+        "Which technique solves this problem, and what in the statement or constraints points to it?",
+        "Name the technique you would use here and the clue in the problem that tells you.",
+        "What approach fits this problem, and which part of the statement gives it away?"
+      ],
+      "answer": "Math observation: incrementing n - 1 elements equals decrementing one, so the answer is sum(nums) - n * min(nums). Clue: One move increments n - 1 elements by 1, which changes the differences between elements exactly like decrementing the single element left out.",
+      "keyPoints": [
+        "One move increments n - 1 elements by 1, which changes the differences between elements exactly like decrementing the single element left out."
+      ],
+      "explanation": "Only relative differences matter for equality, so the awkward move becomes a single decrement and the count is a closed form.",
+      "rubric": {
+        "technique": "Math observation: incrementing n - 1 elements equals decrementing one, so the answer is sum(nums) - n * min(nums)",
+        "aliases": [
+          "sum minus n times min",
+          "relative decrement view",
+          "count decrements down to the minimum",
+          "sum of differences to the minimum"
+        ],
+        "alsoValid": [
+          {
+            "name": "Sort, then sum each element's difference to the smallest",
+            "note": "correct but sorting costs n log n when only the minimum is needed"
+          },
+          {
+            "name": "Simulate incrementing all but the maximum",
+            "note": "correct but the answer can be about two billion moves"
+          }
+        ],
+        "clueTypes": [
+          "math_observation"
+        ],
+        "clue": "One move increments n - 1 elements by 1, which changes the differences between elements exactly like decrementing the single element left out."
+      }
+    },
+    {
+      "id": "minimum-moves-to-equal-array-elements-whynot-01",
+      "category": "why_not",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "Why is the answer not sum(max(nums) - x for x in nums)?",
+        "Why can't you just raise every element to the current maximum?"
+      ],
+      "options": [
+        "Moves also raise the maximum, so the target moves",
+        "The maximum can be negative, so the sum is wrong",
+        "It counts the maximum element twice",
+        "It is correct but too slow for n = 10^5"
+      ],
+      "answer": "Moves also raise the maximum, so the target moves",
+      "explanation": "A move increments n - 1 elements, usually including the current maximum, so the final common value is larger than max(nums). The decrement view avoids tracking it.",
+      "incorrectOptionExplanations": {
+        "The maximum can be negative, so the sum is wrong": "Signs do not matter; differences are still non-negative.",
+        "It counts the maximum element twice": "max - max contributes 0; double counting is not the issue.",
+        "It is correct but too slow for n = 10^5": "It is O(n) but gives the wrong number."
+      },
+      "enabled": true
+    },
+    {
+      "id": "minimum-moves-to-equal-array-elements-edge-01",
+      "category": "edge_case",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "nums = [-1, 4]. Minimum number of moves?",
+        "What is returned for nums = [-1, 4]?"
+      ],
+      "options": [
+        "5",
+        "4",
+        "3",
+        "0"
+      ],
+      "answer": "5",
+      "explanation": "sum = 3, n * min = 2 * -1 = -2, so 3 - (-2) = 5. Each move increments the single smaller element, so -1 needs five moves to reach 4.",
+      "incorrectOptionExplanations": {
+        "4": "That is the maximum value, not the gap 4 - (-1).",
+        "3": "That is the sum; you still subtract n * min = -2.",
+        "0": "The elements differ, so at least one move is needed."
+      },
+      "enabled": true
+    },
+    {
+      "id": "minimum-moves-to-equal-array-elements-insight-01",
+      "category": "main_insight",
+      "type": "free_recall",
+      "promptVariants": [
+        "Explain why incrementing n - 1 elements is equivalent to decrementing one.",
+        "Justify the formula sum(nums) - n * min(nums)."
+      ],
+      "answer": "Adding 1 to every element is a no-op for equality. Incrementing n - 1 elements is 'add 1 to all, then subtract 1 from one'. So each move is effectively one decrement of a single element. To make all equal with the fewest decrements, lower everything to the minimum: total = sum(x - min) = sum(nums) - n * min.",
+      "keyPoints": [
+        "Shifting all elements does not affect equality",
+        "A move = decrement one element",
+        "Target is the minimum",
+        "Total = sum(x - min)"
+      ],
+      "explanation": "Rephrasing the operation in relative terms is a recurring trick in move-counting problems.",
+      "enabled": true
+    },
+    {
+      "id": "minimum-moves-to-equal-array-elements-code-01",
+      "category": "code_reasoning",
+      "type": "code_question",
+      "promptVariants": [
+        "Your accepted code is correct. What can you drop to make it optimal?",
+        "What is unnecessary in this solution, and what does it cost?"
+      ],
+      "answer": "The sort. Only nums[0] (the minimum) is used, so min(nums) in O(n) is enough; the sort costs O(n log n) and mutates the input. The loop then equals sum(nums) - n * min(nums).",
+      "keyPoints": [
+        "Sort only finds the minimum",
+        "Replace with min(): O(n) instead of O(n log n)",
+        "Sorting mutates the input"
+      ],
+      "explanation": "Recognise when a sort is only used to find an extreme value.",
+      "enabled": true,
+      "code": "nums.sort()\ncount = 0\nfor i in range(1, len(nums)):\n    count += nums[i] - nums[0]\nreturn count"
+    },
+    {
+      "id": "minimum-moves-to-equal-array-elements-time-01",
+      "category": "time_complexity",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "What is the time complexity of the canonical code?",
+        "Derive the running time of sum(nums) - len(nums) * min(nums)."
+      ],
+      "options": [
+        "O(n)",
+        "O(n log n)",
+        "O(1)",
+        "O(n * answer)"
+      ],
+      "answer": "O(n)",
+      "explanation": "sum and min each make one pass over the array.",
+      "incorrectOptionExplanations": {
+        "O(n log n)": "That is the sorting version.",
+        "O(1)": "The formula is constant but computing sum and min reads all n elements.",
+        "O(n * answer)": "That is the simulation."
+      },
+      "enabled": true
+    },
+    {
+      "id": "minimum-moves-to-equal-array-elements-space-01",
+      "category": "space_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Extra space of the canonical code: O(___).",
+        "sum(nums) - len(nums) * min(nums) needs O(___) extra memory."
+      ],
+      "answer": "1",
+      "acceptedAnswers": [
+        "1",
+        "constant",
+        "O(1)"
+      ],
+      "explanation": "sum and min keep a single accumulator each.",
+      "enabled": true
+    }
+  ],
+  "generatedAt": "2026-11-01T11:48:27Z"
+}

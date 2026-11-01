@@ -1,0 +1,37 @@
+{
+  "leetcodeId": "1845",
+  "title": "Seat Reservation Manager",
+  "slug": "seat-reservation-manager",
+  "url": "https://leetcode.com/problems/seat-reservation-manager/",
+  "difficulty": "Medium",
+  "status": "solved",
+  "premium": false,
+  "tags": [
+    "Design",
+    "Heap (Priority Queue)"
+  ],
+  "problemStatement": "Design a system that manages the reservation state of n seats that are numbered from 1 to n.\n\nImplement the SeatManager class:\n\n- SeatManager(int n) Initializes a SeatManager object that will manage n seats numbered from 1 to n. All seats are initially available.\n\n- int reserve() Fetches the smallest-numbered unreserved seat, reserves it, and returns its number.\n\n- void unreserve(int seatNumber) Unreserves the seat with the given seatNumber.\n\nExample 1:\n\nInput\n[\"SeatManager\", \"reserve\", \"reserve\", \"unreserve\", \"reserve\", \"reserve\", \"reserve\", \"reserve\", \"unreserve\"]\n[[5], [], [], [2], [], [], [], [], [5]]\nOutput\n[null, 1, 2, null, 2, 3, 4, 5, null]\n\nExplanation\nSeatManager seatManager = new SeatManager(5); // Initializes a SeatManager with 5 seats.\nseatManager.reserve();    // All seats are available, so return the lowest numbered seat, which is 1.\nseatManager.reserve();    // The available seats are [2,3,4,5], so return the lowest of them, which is 2.\nseatManager.unreserve(2); // Unreserve seat 2, so now the available seats are [2,3,4,5].\nseatManager.reserve();    // The available seats are [2,3,4,5], so return the lowest of them, which is 2.\nseatManager.reserve();    // The available seats are [3,4,5], so return the lowest of them, which is 3.\nseatManager.reserve();    // The available seats are [4,5], so return the lowest of them, which is 4.\nseatManager.reserve();    // The only available seat is seat 5, so return 5.\nseatManager.unreserve(5); // Unreserve seat 5, so now the available seats are [5].\n\nConstraints:\n\n- 1 <= n <= 10^5\n\n- 1 <= seatNumber <= n\n\n- For each call to reserve, it is guaranteed that there will be at least one unreserved seat.\n\n- For each call to unreserve, it is guaranteed that seatNumber will be reserved.\n\n- At most 10^5 calls in total will be made to reserve and unreserve.",
+  "constraints": [
+    "1 <= n <= 10^5",
+    "1 <= seatNumber <= n",
+    "For each call to reserve, it is guaranteed that there will be at least one unreserved seat.",
+    "For each call to unreserve, it is guaranteed that seatNumber will be reserved.",
+    "At most 10^5 calls in total will be made to reserve and unreserve."
+  ],
+  "hints": [
+    "You need a data structure that maintains the states of the seats. This data structure should also allow you to get the first available seat and flip the state of a seat in a reasonable time.",
+    "You can let the data structure contain the available seats. Then you want to be able to get the lowest element and erase an element, in a reasonable time.",
+    "Ordered sets support these operations."
+  ],
+  "acRate": 67.57,
+  "lastSubmittedAt": "2026-11-01T10:06:27Z",
+  "latestSubmission": {
+    "submissionId": "2186887404",
+    "language": "Python3",
+    "code": "class SeatManager:\n\n    def __init__(self, n: int):\n        self.available = [i for i in range(1, n + 1)]\n        heapify(self.available)\n\n    def reserve(self) -> int:\n        return heappop(self.available)\n\n    def unreserve(self, seatNumber: int) -> None:\n        heappush(self.available, seatNumber)\n\n# Your SeatManager object will be instantiated and called as such:\n# obj = SeatManager(n)\n# param_1 = obj.reserve()\n# obj.unreserve(seatNumber)"
+  },
+  "notes": [],
+  "source": "leetcode",
+  "importedAt": "2026-11-01T11:09:15Z",
+  "lastSyncedAt": "2026-11-01T11:09:15Z"
+}

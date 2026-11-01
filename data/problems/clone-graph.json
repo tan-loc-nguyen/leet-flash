@@ -22,14 +22,14 @@
   ],
   "hints": [],
   "acRate": 66.3,
-  "lastSubmittedAt": "2026-07-13T18:38:08Z",
+  "lastSubmittedAt": "2026-10-24T11:34:45Z",
   "latestSubmission": {
-    "submissionId": "2066557117",
+    "submissionId": "2180384372",
     "language": "Python3",
-    "code": "\"\"\"\n# Definition for a Node.\nclass Node:\n    def __init__(self, val = 0, neighbors = None):\n        self.val = val\n        self.neighbors = neighbors if neighbors is not None else []\n\"\"\"\n\nfrom typing import Optional\nclass Solution:\n    def cloneGraph(self, node: Optional['Node']) -> Optional['Node']:\n        return copy.deepcopy(node)"
+    "code": "\"\"\"\n# Definition for a Node.\nclass Node:\n    def __init__(self, val = 0, neighbors = None):\n        self.val = val\n        self.neighbors = neighbors if neighbors is not None else []\n\"\"\"\n\nfrom typing import Optional\nclass Solution:\n    def cloneGraph(self, node: Optional['Node']) -> Optional['Node']:\n        if not node:\n            return None\n\n        queue = deque([node])\n        seen = {}\n        seen[node] = Node(node.val, [])\n        while queue:\n            n = len(queue)\n            for _ in range(n):\n                x = queue.popleft()\n                for nei in x.neighbors:\n                    if nei not in seen:\n                        seen[nei] = Node(nei.val, [])\n                        queue.append(nei)\n                    seen[x].neighbors.append(seen[nei])\n\n        return seen[node]"
   },
   "notes": [],
   "source": "leetcode",
   "importedAt": "2026-10-01T13:44:25Z",
-  "lastSyncedAt": "2026-10-01T13:44:25Z"
+  "lastSyncedAt": "2026-11-01T11:09:15Z"
 }

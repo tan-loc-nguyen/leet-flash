@@ -1,0 +1,245 @@
+{
+  "schemaVersion": 1,
+  "problemSlug": "missing-number",
+  "summary": "Given n distinct numbers from [0, n], return the one value of that range that is missing.",
+  "patterns": [
+    "Math",
+    "Bit Manipulation"
+  ],
+  "mainInsight": "The full range 0..n has a known total n(n+1)/2 (or a known XOR), so the missing value is that total minus the actual sum, with O(1) extra space.",
+  "invariant": "For the XOR version, after processing index i the accumulator is the XOR of 0..i+1 and nums[0..i], so all present values cancel in pairs.",
+  "canonicalApproach": "Gauss sum",
+  "approaches": [
+    {
+      "name": "Sort and scan",
+      "summary": "Sort, then return the first index i with nums[i] != i (or n).",
+      "timeComplexity": "O(n log n)",
+      "spaceComplexity": "O(1) to O(n) depending on sort",
+      "strengths": [
+        "Simple"
+      ],
+      "weaknesses": [
+        "Slower than needed"
+      ],
+      "interviewRelevance": "Baseline."
+    },
+    {
+      "name": "Hash set",
+      "summary": "Put all values in a set, then check 0..n.",
+      "timeComplexity": "O(n)",
+      "spaceComplexity": "O(n)",
+      "strengths": [
+        "Generalises to more missing values"
+      ],
+      "weaknesses": [
+        "Linear extra space"
+      ],
+      "interviewRelevance": "Fine first answer, misses the follow-up."
+    },
+    {
+      "name": "Gauss sum",
+      "summary": "Return n(n+1)/2 - sum(nums).",
+      "timeComplexity": "O(n)",
+      "spaceComplexity": "O(1)",
+      "strengths": [
+        "One line"
+      ],
+      "weaknesses": [
+        "Overflow risk in fixed-width languages"
+      ],
+      "interviewRelevance": "The expected answer."
+    },
+    {
+      "name": "XOR",
+      "summary": "XOR all indices 0..n and all values; pairs cancel and the missing value remains.",
+      "timeComplexity": "O(n)",
+      "spaceComplexity": "O(1)",
+      "strengths": [
+        "No overflow"
+      ],
+      "weaknesses": [
+        "Less obvious"
+      ],
+      "interviewRelevance": "Equally good; mention for the overflow argument."
+    }
+  ],
+  "canonicalCode": "class Solution:\n    def missingNumber(self, nums: list[int]) -> int:\n        n = len(nums)\n        expected = n * (n + 1) // 2      # sum of the full range 0..n\n        return expected - sum(nums)      # one pass over nums: O(n) time, O(1) extra space\n",
+  "commonMistakes": [
+    "Using n - 1 instead of n as the top of the range (the range is 0..n, which has n + 1 values).",
+    "Forgetting that the missing value can be n itself or 0.",
+    "Integer overflow of the sum in Java/C++ (use XOR or long)."
+  ],
+  "edgeCases": [
+    "Missing value is 0, e.g. [1] -> 0.",
+    "Missing value is n.",
+    "n = 1."
+  ],
+  "cards": [
+    {
+      "id": "recog-missing-number",
+      "category": "pattern",
+      "type": "free_recall",
+      "promptVariants": [
+        "Which technique solves this problem, and what in the statement or constraints points to it?",
+        "Name the technique you would use here and the clue in the problem that tells you.",
+        "What approach fits this problem, and which part of the statement gives it away?"
+      ],
+      "answer": "Gauss sum of 0..n minus the actual sum. Clue: The array holds n distinct numbers from the range [0, n], so exactly one value of a complete, known range is absent.",
+      "keyPoints": [
+        "The array holds n distinct numbers from the range [0, n], so exactly one value of a complete, known range is absent."
+      ],
+      "explanation": "When the full set is known, an aggregate of it (sum or XOR) minus the same aggregate of what you have isolates the missing element.",
+      "rubric": {
+        "technique": "Gauss sum of 0..n minus the actual sum",
+        "aliases": [
+          "sum formula",
+          "expected sum minus actual sum",
+          "arithmetic series n(n+1)/2",
+          "xor of all indices and values",
+          "xor cancellation"
+        ],
+        "alsoValid": [
+          {
+            "name": "Put the numbers in a hash set and check 0..n",
+            "note": "correct but uses linear extra space"
+          },
+          {
+            "name": "Sort and find the first index where nums[i] != i",
+            "note": "correct but sorting costs n log n"
+          }
+        ],
+        "clueTypes": [
+          "math_observation",
+          "bit_math"
+        ],
+        "clue": "The array holds n distinct numbers from the range [0, n], so exactly one value of a complete, known range is absent."
+      }
+    },
+    {
+      "id": "missing-number-edge-01",
+      "category": "edge_case",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "What does the function return for nums = [1]?",
+        "nums = [1]. Which number is missing?"
+      ],
+      "options": [
+        "0",
+        "2",
+        "1",
+        "-1"
+      ],
+      "answer": "0",
+      "explanation": "n = 1, so the range is [0, 1]. Expected sum 1 minus actual sum 1 = 0.",
+      "incorrectOptionExplanations": {
+        "2": "2 is outside the range [0, n] = [0, 1].",
+        "1": "1 is present; the missing value is 0.",
+        "-1": "Exactly one value is always missing; there is no not-found case."
+      },
+      "enabled": true
+    },
+    {
+      "id": "missing-number-impl-01",
+      "category": "implementation_detail",
+      "type": "fill_blank",
+      "promptVariants": [
+        "The expected sum of the range 0..n is n * (n ___ 1) // 2.",
+        "Sum of 0..n = n * (n ___ 1) // 2"
+      ],
+      "answer": "+",
+      "acceptedAnswers": [
+        "+",
+        "plus"
+      ],
+      "explanation": "The range has n + 1 values 0..n; their sum is n(n+1)/2. Using n - 1 sums only 0..n-1 and misses the case where n is missing.",
+      "enabled": true
+    },
+    {
+      "id": "missing-number-alt-01",
+      "category": "alternative_approach",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "Why might an interviewer prefer the XOR version over the sum in Java?",
+        "What advantage does XOR-ing indices and values have over the sum formula?"
+      ],
+      "options": [
+        "XOR cannot overflow; the sum can exceed int32",
+        "XOR runs in O(log n) time instead of O(n)",
+        "XOR also works when two numbers are missing",
+        "XOR does not need to know n"
+      ],
+      "answer": "XOR cannot overflow; the sum can exceed int32",
+      "explanation": "x ^ x = 0 cancels every present value against its index, leaving the missing one, and XOR never grows beyond the bit width.",
+      "incorrectOptionExplanations": {
+        "XOR runs in O(log n) time instead of O(n)": "Both read every element once: O(n).",
+        "XOR also works when two numbers are missing": "With two missing you get a ^ b, which needs extra work to split.",
+        "XOR does not need to know n": "XOR also includes n (or uses len(nums)), just like the sum."
+      },
+      "enabled": true
+    },
+    {
+      "id": "missing-number-whynot-01",
+      "category": "why_not",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "Why is a hash set not the answer to the follow-up?",
+        "A set solves this in O(n) time. Why look for more?"
+      ],
+      "options": [
+        "It needs O(n) extra space, not O(1)",
+        "Set lookups are O(log n), making it O(n log n)",
+        "A set cannot store the value 0",
+        "It fails when the missing number is n"
+      ],
+      "answer": "It needs O(n) extra space, not O(1)",
+      "explanation": "The follow-up asks for O(n) time and O(1) extra space; the sum and XOR tricks meet both.",
+      "incorrectOptionExplanations": {
+        "Set lookups are O(log n), making it O(n log n)": "Hash set lookups are O(1) on average.",
+        "A set cannot store the value 0": "0 is an ordinary element.",
+        "It fails when the missing number is n": "Checking 0..n inclusive handles that."
+      },
+      "enabled": true
+    },
+    {
+      "id": "missing-number-time-01",
+      "category": "time_complexity",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "What is the time complexity of the canonical code?",
+        "Derive the running time of the sum-formula solution."
+      ],
+      "options": [
+        "O(n)",
+        "O(1)",
+        "O(n log n)",
+        "O(n^2)"
+      ],
+      "answer": "O(n)",
+      "explanation": "The formula is O(1) but sum(nums) reads every element once.",
+      "incorrectOptionExplanations": {
+        "O(1)": "The closed form is constant, but summing the array is linear.",
+        "O(n log n)": "There is no sorting.",
+        "O(n^2)": "There is no nested loop."
+      },
+      "enabled": true
+    },
+    {
+      "id": "missing-number-space-01",
+      "category": "space_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Extra space of the sum-formula solution: O(___).",
+        "The canonical code needs O(___) extra memory."
+      ],
+      "answer": "1",
+      "acceptedAnswers": [
+        "1",
+        "constant",
+        "O(1)"
+      ],
+      "explanation": "Only n, the expected sum and the running total are stored.",
+      "enabled": true
+    }
+  ],
+  "generatedAt": "2026-11-01T11:48:27Z"
+}

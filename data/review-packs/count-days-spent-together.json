@@ -1,0 +1,188 @@
+{
+  "schemaVersion": 1,
+  "problemSlug": "count-days-spent-together",
+  "summary": "Given Alice's and Bob's inclusive MM-DD stay dates in a non-leap year, count the days both are in Rome.",
+  "patterns": [
+    "Intervals",
+    "Math"
+  ],
+  "mainInsight": "Convert each date to its day of the year with prefix sums of month lengths, then intersect the two inclusive intervals: max(0, min(leaves) - max(arrivals) + 1).",
+  "canonicalApproach": "Day-of-year conversion + interval intersection",
+  "approaches": [
+    {
+      "name": "Mark days in a 365-length array",
+      "summary": "Mark Alice's days, count Bob's marked days.",
+      "timeComplexity": "O(365)",
+      "spaceComplexity": "O(365)",
+      "strengths": [
+        "Hard to get wrong"
+      ],
+      "weaknesses": [
+        "Wasteful"
+      ],
+      "interviewRelevance": "Acceptable."
+    },
+    {
+      "name": "Day-of-year conversion + interval intersection",
+      "summary": "Prefix sums of month lengths, then overlap formula.",
+      "timeComplexity": "O(1)",
+      "spaceComplexity": "O(1)",
+      "strengths": [
+        "Constant time",
+        "Reusable overlap formula"
+      ],
+      "weaknesses": [
+        "Off-by-one risk with inclusive ends"
+      ],
+      "interviewRelevance": "The expected answer."
+    }
+  ],
+  "canonicalCode": "class Solution:\n    def countDaysTogether(self, arriveAlice: str, leaveAlice: str, arriveBob: str, leaveBob: str) -> int:\n        days = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]\n        before = [0]\n        for d in days:                     # before[m - 1] = days in the months before month m\n            before.append(before[-1] + d)\n\n        def day_of_year(s: str) -> int:\n            month, day = int(s[:2]), int(s[3:])\n            return before[month - 1] + day\n\n        start = max(day_of_year(arriveAlice), day_of_year(arriveBob))   # later arrival\n        end = min(day_of_year(leaveAlice), day_of_year(leaveBob))       # earlier departure\n        return max(0, end - start + 1)    # inclusive overlap; constant work overall\n",
+  "commonMistakes": [
+    "Forgetting the + 1 for inclusive dates.",
+    "Returning a negative number when the stays do not overlap.",
+    "Off-by-one in the month prefix (using before[month] instead of before[month - 1]).",
+    "Comparing MM-DD strings numerically without converting."
+  ],
+  "edgeCases": [
+    "Same single day for both -> 1.",
+    "One stay ends the day the other begins -> 1.",
+    "Disjoint stays -> 0.",
+    "One stay inside the other."
+  ],
+  "cards": [
+    {
+      "id": "recog-count-days-spent-together",
+      "category": "pattern",
+      "type": "free_recall",
+      "promptVariants": [
+        "Which technique solves this problem, and what in the statement or constraints points to it?",
+        "Name the technique you would use here and the clue in the problem that tells you.",
+        "What approach fits this problem, and which part of the statement gives it away?"
+      ],
+      "answer": "Convert dates to day-of-year, then intersect the two inclusive intervals. Clue: Each person is in Rome over an inclusive range of dates, and the question is how many days the two ranges share; the month lengths are given to turn dates into numbers.",
+      "keyPoints": [
+        "Each person is in Rome over an inclusive range of dates, and the question is how many days the two ranges share; the month lengths are given to turn dates into numbers."
+      ],
+      "explanation": "Overlap of two intervals is max(0, min(ends) - max(starts) + 1) once both are on one number line.",
+      "rubric": {
+        "technique": "Convert dates to day-of-year, then intersect the two inclusive intervals",
+        "aliases": [
+          "interval intersection",
+          "day of year conversion plus overlap",
+          "max of starts and min of ends",
+          "prefix sums of month lengths"
+        ],
+        "alsoValid": [
+          {
+            "name": "Mark every day of Alice's stay in a 365-day array and count Bob's marked days",
+            "note": "correct but does work per day instead of constant work"
+          }
+        ],
+        "clueTypes": [
+          "intervals_overlap",
+          "prefix_range"
+        ],
+        "clue": "Each person is in Rome over an inclusive range of dates, and the question is how many days the two ranges share; the month lengths are given to turn dates into numbers."
+      }
+    },
+    {
+      "id": "count-days-spent-together-edge-01",
+      "category": "edge_case",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "Alice 03-01 to 03-05, Bob 03-05 to 03-10. Days together?",
+        "If Alice leaves on 03-05 and Bob arrives on 03-05, how many days do they share?"
+      ],
+      "options": [
+        "1",
+        "0",
+        "5",
+        "6"
+      ],
+      "answer": "1",
+      "explanation": "Dates are inclusive, so 03-05 counts for both: end - start + 1 = 64 - 64 + 1 = 1.",
+      "incorrectOptionExplanations": {
+        "0": "Forgets that both endpoints are inclusive.",
+        "5": "That is Alice's whole stay.",
+        "6": "That is Bob's whole stay."
+      },
+      "enabled": true
+    },
+    {
+      "id": "count-days-spent-together-impl-01",
+      "category": "implementation_detail",
+      "type": "fill_blank",
+      "promptVariants": [
+        "The number of shared days is max(0, end - start + ___).",
+        "Inclusive overlap length = max(0, min(leaves) - max(arrivals) + ___)"
+      ],
+      "answer": "1",
+      "acceptedAnswers": [
+        "1",
+        "one"
+      ],
+      "explanation": "An inclusive range [a, b] has b - a + 1 days; max(0, ...) handles disjoint stays.",
+      "enabled": true
+    },
+    {
+      "id": "count-days-spent-together-code-01",
+      "category": "code_reasoning",
+      "type": "code_question",
+      "promptVariants": [
+        "Your comment lists three cases (containment, partial overlap, disjoint). Why does one formula cover them all?",
+        "Why don't you need separate branches for containment and partial overlap?"
+      ],
+      "answer": "The overlap of two intervals is always [max(starts), min(ends)]. If one contains the other this gives the inner interval, if they partly overlap it gives the shared part, and if they are disjoint the end is before the start so the length is negative and clamps to 0.",
+      "keyPoints": [
+        "Overlap = [max start, min end]",
+        "Containment and partial overlap use the same formula",
+        "Disjoint gives a negative length clamped to 0"
+      ],
+      "explanation": "Reducing case analysis to max/min is the core interval trick.",
+      "enabled": true,
+      "code": "lastArrive = max(aliceArriveDays, bobArriveDays)\nfirstLeave = min(aliceLeaveDays, bobLeaveDays)\nif firstLeave - lastArrive < 0:\n    return 0\nreturn firstLeave - lastArrive + 1"
+    },
+    {
+      "id": "count-days-spent-together-time-01",
+      "category": "time_complexity",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "What is the time complexity of the canonical code?",
+        "How much work does the day-of-year solution do?"
+      ],
+      "options": [
+        "O(1), 12 months and four dates",
+        "O(365), one step per day of the year",
+        "O(d), d = days in the overlap",
+        "O(m), m = months between the dates"
+      ],
+      "answer": "O(1), 12 months and four dates",
+      "explanation": "The prefix table has 12 entries and each date is converted with one lookup; nothing depends on the length of the stays.",
+      "incorrectOptionExplanations": {
+        "O(365), one step per day of the year": "That is the marking-array approach.",
+        "O(d), d = days in the overlap": "The overlap is computed by subtraction, not counted.",
+        "O(m), m = months between the dates": "The prefix table gives each month's offset in one lookup."
+      },
+      "enabled": true
+    },
+    {
+      "id": "count-days-spent-together-space-01",
+      "category": "space_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "The month table and a few integers use O(___) space.",
+        "Space of the canonical code: O(___)."
+      ],
+      "answer": "1",
+      "acceptedAnswers": [
+        "1",
+        "constant",
+        "O(1)"
+      ],
+      "explanation": "13 prefix entries regardless of input.",
+      "enabled": true
+    }
+  ],
+  "generatedAt": "2026-11-01T14:43:24Z"
+}

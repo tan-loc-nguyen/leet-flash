@@ -1,0 +1,31 @@
+{
+  "leetcodeId": "3263",
+  "title": "Convert Doubly Linked List to Array I",
+  "slug": "convert-doubly-linked-list-to-array-i",
+  "url": "https://leetcode.com/problems/convert-doubly-linked-list-to-array-i/",
+  "difficulty": "Easy",
+  "status": "solved",
+  "premium": true,
+  "tags": [
+    "Array",
+    "Linked List",
+    "Doubly-Linked List"
+  ],
+  "problemStatement": "You are given the head of a doubly linked list, which contains nodes that have a next pointer and a previous pointer.\n\nReturn an integer array which contains the elements of the linked list in order.\n\nExample 1:\n\nInput: head = [1,2,3,4,3,2,1]\n\nOutput: [1,2,3,4,3,2,1]\n\nExample 2:\n\nInput: head = [2,2,2,2,2]\n\nOutput: [2,2,2,2,2]\n\nExample 3:\n\nInput: head = [3,2,3,2,3,2]\n\nOutput: [3,2,3,2,3,2]\n\nConstraints:\n\n- The number of nodes in the given list is in the range [1, 50].\n\n- 1 <= Node.val <= 50",
+  "constraints": [
+    "The number of nodes in the given list is in the range [1, 50].",
+    "1 <= Node.val <= 50"
+  ],
+  "hints": [],
+  "acRate": 94.8,
+  "lastSubmittedAt": "2026-10-30T12:03:32Z",
+  "latestSubmission": {
+    "submissionId": "2185465952",
+    "language": "Python3",
+    "code": "\"\"\"\n# Definition for a Node.\nclass Node:\n    def __init__(self, val, prev=None, next=None):\n        self.val = val\n        self.prev = prev\n        self.next = next\n\"\"\"\n\n\nclass Solution:\n    def toArray(self, root: \"Optional[Node]\") -> List[int]:\n        result = []\n        temp = root\n        while temp:\n            result.append(temp.val)\n            temp = temp.next\n        return result"
+  },
+  "notes": [],
+  "source": "leetcode",
+  "importedAt": "2026-11-01T11:09:15Z",
+  "lastSyncedAt": "2026-11-01T11:09:15Z"
+}

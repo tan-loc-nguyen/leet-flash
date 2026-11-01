@@ -1,0 +1,33 @@
+{
+  "leetcodeId": "937",
+  "title": "Reorder Data in Log Files",
+  "slug": "reorder-data-in-log-files",
+  "url": "https://leetcode.com/problems/reorder-data-in-log-files/",
+  "difficulty": "Medium",
+  "status": "solved",
+  "premium": false,
+  "tags": [
+    "Array",
+    "String",
+    "Sorting"
+  ],
+  "problemStatement": "You are given an array of logs. Each log is a space-delimited string of words, where the first word is the identifier.\n\nThere are two types of logs:\n\n- Letter-logs: All words (except the identifier) consist of lowercase English letters.\n\n- Digit-logs: All words (except the identifier) consist of digits.\n\nReorder these logs so that:\n\n- The letter-logs come before all digit-logs.\n\n- The letter-logs are sorted lexicographically by their contents. If their contents are the same, then sort them lexicographically by their identifiers.\n\n- The digit-logs maintain their relative ordering.\n\nReturn the final order of the logs.\n\nExample 1:\n\nInput: logs = [\"dig1 8 1 5 1\",\"let1 art can\",\"dig2 3 6\",\"let2 own kit dig\",\"let3 art zero\"]\nOutput: [\"let1 art can\",\"let3 art zero\",\"let2 own kit dig\",\"dig1 8 1 5 1\",\"dig2 3 6\"]\nExplanation:\nThe letter-log contents are all different, so their ordering is \"art can\", \"art zero\", \"own kit dig\".\nThe digit-logs have a relative order of \"dig1 8 1 5 1\", \"dig2 3 6\".\n\nExample 2:\n\nInput: logs = [\"a1 9 2 3 1\",\"g1 act car\",\"zo4 4 7\",\"ab1 off key dog\",\"a8 act zoo\"]\nOutput: [\"g1 act car\",\"a8 act zoo\",\"ab1 off key dog\",\"a1 9 2 3 1\",\"zo4 4 7\"]\n\nConstraints:\n\n- 1 <= logs.length <= 100\n\n- 3 <= logs[i].length <= 100\n\n- All the tokens of logs[i] are separated by a single space.\n\n- logs[i] is guaranteed to have an identifier and at least one word after the identifier.",
+  "constraints": [
+    "1 <= logs.length <= 100",
+    "3 <= logs[i].length <= 100",
+    "All the tokens of logs[i] are separated by a single space.",
+    "logs[i] is guaranteed to have an identifier and at least one word after the identifier."
+  ],
+  "hints": [],
+  "acRate": 56.83,
+  "lastSubmittedAt": "2026-10-23T23:03:21Z",
+  "latestSubmission": {
+    "submissionId": "2180043892",
+    "language": "Python3",
+    "code": "class Solution:\n    def reorderLogFiles(self, logs: list[str]) -> list[str]:\n        digitLogs = []\n        letterLogs = []\n        for log in logs:\n            l = log.split()\n            if l[1].isnumeric():\n                digitLogs.append(log)\n            else:\n                letterLogs.append(l)\n        letterLogs.sort(key=lambda x: x[1:] + [x[0]])\n        for i in range(len(letterLogs)):\n            letterLogs[i] = \" \".join(letterLogs[i])\n        return letterLogs + digitLogs"
+  },
+  "notes": [],
+  "source": "leetcode",
+  "importedAt": "2026-11-01T11:09:15Z",
+  "lastSyncedAt": "2026-11-01T11:09:15Z"
+}

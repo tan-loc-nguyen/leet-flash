@@ -1,0 +1,200 @@
+{
+  "schemaVersion": 1,
+  "problemSlug": "merge-nodes-in-between-zeros",
+  "summary": "A linked list starts and ends with 0 and has 0-separated segments; replace each segment by one node holding its sum and drop all zeros.",
+  "patterns": [
+    "Linked List"
+  ],
+  "mainInsight": "Walk the list once. Reuse the first node of each segment to hold the segment's sum, then link it straight to the first node of the next segment, skipping the zero in between. No new nodes, O(1) extra space.",
+  "invariant": "Every node before `modify` already holds the sum of one finished segment, and they are linked in order.",
+  "canonicalApproach": "In-place merge reusing the first node of each segment",
+  "approaches": [
+    {
+      "name": "Build a new list",
+      "summary": "Sum each segment and append a new node to a dummy-headed result list.",
+      "timeComplexity": "O(n)",
+      "spaceComplexity": "O(k) new nodes, k segments",
+      "strengths": [
+        "Simple, does not touch the input"
+      ],
+      "weaknesses": [
+        "Allocates nodes"
+      ],
+      "interviewRelevance": "Fine and common."
+    },
+    {
+      "name": "In-place merge reusing the first node of each segment",
+      "summary": "Write each sum into the segment's first node and relink past the zero.",
+      "timeComplexity": "O(n)",
+      "spaceComplexity": "O(1)",
+      "strengths": [
+        "No allocation"
+      ],
+      "weaknesses": [
+        "Pointer bookkeeping"
+      ],
+      "interviewRelevance": "The expected answer."
+    }
+  ],
+  "personalSolution": {
+    "approach": "In-place merge: the first node of each segment receives the sum and links to the next segment",
+    "timeComplexity": "O(n)",
+    "spaceComplexity": "O(1)",
+    "isOptimal": true,
+    "notes": "Optimal. Starting with dummy = head means the first round writes 0 into the leading zero node, which is why you return head.next; starting from head.next makes that clearer."
+  },
+  "canonicalCode": "class Solution:\n    def mergeNodes(self, head: 'ListNode | None') -> 'ListNode | None':\n        modify = head.next            # first node of the current segment will hold its sum\n        scan = head.next\n        while scan:                   # every node is visited once: O(n)\n            total = 0\n            while scan.val != 0:      # sum the segment up to the next zero\n                total += scan.val\n                scan = scan.next\n            modify.val = total\n            scan = scan.next          # step past the zero\n            modify.next = scan        # link to the next segment (None after the last zero)\n            modify = scan\n        return head.next\n",
+  "commonMistakes": [
+    "Leaving the trailing zero in the result.",
+    "Returning head (a zero node) instead of head.next.",
+    "Creating a node for an empty segment (impossible here: no two consecutive zeros)."
+  ],
+  "edgeCases": [
+    "Single segment [0, x, ..., 0].",
+    "Every segment has one node.",
+    "Nodes with value 0 only at the separators (guaranteed)."
+  ],
+  "cards": [
+    {
+      "id": "recog-merge-nodes-in-between-zeros",
+      "category": "pattern",
+      "type": "free_recall",
+      "promptVariants": [
+        "Which technique solves this problem, and what in the statement or constraints points to it?",
+        "Name the technique you would use here and the clue in the problem that tells you.",
+        "What approach fits this problem, and which part of the statement gives it away?"
+      ],
+      "answer": "Single pass over the list, summing each 0-delimited segment into one node. Clue: The statement says to merge all nodes between every two consecutive 0s into one node holding their sum, and the list begins and ends with 0.",
+      "keyPoints": [
+        "The statement says to merge all nodes between every two consecutive 0s into one node holding their sum, and the list begins and ends with 0."
+      ],
+      "explanation": "The procedure is spelled out; the skill is one clean traversal with a running sum and correct relinking.",
+      "rubric": {
+        "technique": "Single pass over the list, summing each 0-delimited segment into one node",
+        "aliases": [
+          "simulation with running sum",
+          "linked list traversal with accumulator",
+          "in-place merge reusing nodes",
+          "dummy head and build a new list"
+        ],
+        "alsoValid": [
+          {
+            "name": "Copy values into an array, merge, and rebuild the list",
+            "note": "correct but uses linear extra space for the array"
+          }
+        ],
+        "clueTypes": [
+          "direct_simulation",
+          "in_place_pointers"
+        ],
+        "clue": "The statement says to merge all nodes between every two consecutive 0s into one node holding their sum, and the list begins and ends with 0."
+      }
+    },
+    {
+      "id": "merge-nodes-in-between-zeros-edge-01",
+      "category": "edge_case",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "head = [0, 5, 0, 6, 1, 0]. What is returned?",
+        "For the list [0, 5, 0, 6, 1, 0], what does the merged list contain?"
+      ],
+      "options": [
+        "[5, 7]",
+        "[5, 7, 0]",
+        "[0, 5, 7]",
+        "[12]"
+      ],
+      "answer": "[5, 7]",
+      "explanation": "Segments are [5] and [6, 1], giving 5 and 7. All zeros are removed.",
+      "incorrectOptionExplanations": {
+        "[5, 7, 0]": "The trailing zero must not stay in the result.",
+        "[0, 5, 7]": "The leading zero is dropped too; return head.next.",
+        "[12]": "Each 0-delimited segment becomes its own node."
+      },
+      "enabled": true
+    },
+    {
+      "id": "merge-nodes-in-between-zeros-impl-01",
+      "category": "implementation_detail",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "Why does the canonical code return head.next instead of head?",
+        "Which node is the new head after merging?"
+      ],
+      "options": [
+        "head is the leading zero, which is never reused",
+        "head.next is a dummy node created beforehand",
+        "head holds the total of the whole list",
+        "The first segment is always empty, so it is skipped"
+      ],
+      "answer": "head is the leading zero, which is never reused",
+      "explanation": "Sums are written into each segment's first node; the first such node is head.next, and the leading zero is left out.",
+      "incorrectOptionExplanations": {
+        "head.next is a dummy node created beforehand": "No dummy is created; head.next is the first data node.",
+        "head holds the total of the whole list": "head keeps its 0 and is simply skipped.",
+        "The first segment is always empty, so it is skipped": "No two zeros are consecutive, so no segment is empty."
+      },
+      "enabled": true
+    },
+    {
+      "id": "merge-nodes-in-between-zeros-code-01",
+      "category": "code_reasoning",
+      "type": "code_question",
+      "promptVariants": [
+        "In your code, what does the first iteration of the outer loop do, and why does that make you return head.next?",
+        "Trace the first outer iteration of this solution."
+      ],
+      "answer": "cur starts at the leading zero, so the inner loop does not run: total = 0 is written back into head, cur moves to the first data node, head.next is set to it, and dummy moves there. From then on each segment's first node receives its sum. head is just a 0 placeholder, so the answer starts at head.next.",
+      "keyPoints": [
+        "Inner loop skipped at the leading zero",
+        "head keeps value 0",
+        "Later rounds write sums into each segment's first node",
+        "Return head.next"
+      ],
+      "explanation": "Recognising a harmless warm-up iteration helps you simplify: start at head.next and the special first round disappears.",
+      "enabled": true,
+      "code": "dummy = head\ncur = dummy\nwhile cur:\n    total = 0\n    while cur.val != 0:\n        total += cur.val\n        cur = cur.next\n    dummy.val = total\n    cur = cur.next\n    dummy.next = cur\n    dummy = dummy.next\nreturn head.next"
+    },
+    {
+      "id": "merge-nodes-in-between-zeros-time-01",
+      "category": "time_complexity",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "What is the time complexity of the canonical code?",
+        "Derive the running time of the in-place merge."
+      ],
+      "options": [
+        "O(n)",
+        "O(n^2)",
+        "O(n log n)",
+        "O(k), k segments"
+      ],
+      "answer": "O(n)",
+      "explanation": "The inner loop only advances scan, and scan never moves backwards, so every node is visited once overall.",
+      "incorrectOptionExplanations": {
+        "O(n^2)": "The nested loop shares one pointer; it is not restarted.",
+        "O(n log n)": "No sorting or halving.",
+        "O(k), k segments": "Every node of every segment is read to compute sums."
+      },
+      "enabled": true
+    },
+    {
+      "id": "merge-nodes-in-between-zeros-space-01",
+      "category": "space_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Reusing existing nodes, the extra space is O(___).",
+        "Extra space of the in-place merge: O(___)."
+      ],
+      "answer": "1",
+      "acceptedAnswers": [
+        "1",
+        "constant",
+        "O(1)"
+      ],
+      "explanation": "Only a few pointers and the running total.",
+      "enabled": true
+    }
+  ],
+  "generatedAt": "2026-11-01T14:43:24Z"
+}

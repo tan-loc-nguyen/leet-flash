@@ -1,0 +1,37 @@
+{
+  "leetcodeId": "127",
+  "title": "Word Ladder",
+  "slug": "word-ladder",
+  "url": "https://leetcode.com/problems/word-ladder/",
+  "difficulty": "Hard",
+  "status": "solved",
+  "premium": false,
+  "tags": [
+    "Hash Table",
+    "String",
+    "Breadth-First Search",
+    "Bidirectional Search"
+  ],
+  "problemStatement": "A transformation sequence from word beginWord to word endWord using a dictionary wordList is a sequence of words beginWord -> s1 -> s2 -> ... -> sk such that:\n\n- Every adjacent pair of words differs by a single letter.\n\n- Every si for 1 <= i <= k is in wordList. Note that beginWord does not need to be in wordList.\n\n- sk == endWord\n\nGiven two words, beginWord and endWord, and a dictionary wordList, return the number of words in the shortest transformation sequence from beginWord to endWord, or 0 if no such sequence exists.\n\nExample 1:\n\nInput: beginWord = \"hit\", endWord = \"cog\", wordList = [\"hot\",\"dot\",\"dog\",\"lot\",\"log\",\"cog\"]\nOutput: 5\nExplanation: One shortest transformation sequence is \"hit\" -> \"hot\" -> \"dot\" -> \"dog\" -> cog\", which is 5 words long.\n\nExample 2:\n\nInput: beginWord = \"hit\", endWord = \"cog\", wordList = [\"hot\",\"dot\",\"dog\",\"lot\",\"log\"]\nOutput: 0\nExplanation: The endWord \"cog\" is not in wordList, therefore there is no valid transformation sequence.\n\nConstraints:\n\n- 1 <= beginWord.length <= 10\n\n- endWord.length == beginWord.length\n\n- 1 <= wordList.length <= 5000\n\n- wordList[i].length == beginWord.length\n\n- beginWord, endWord, and wordList[i] consist of lowercase English letters.\n\n- beginWord != endWord\n\n- All the words in wordList are unique.",
+  "constraints": [
+    "1 <= beginWord.length <= 10",
+    "endWord.length == beginWord.length",
+    "1 <= wordList.length <= 5000",
+    "wordList[i].length == beginWord.length",
+    "beginWord, endWord, and wordList[i] consist of lowercase English letters.",
+    "beginWord != endWord",
+    "All the words in wordList are unique."
+  ],
+  "hints": [],
+  "acRate": 46.84,
+  "lastSubmittedAt": "2026-10-28T11:56:35Z",
+  "latestSubmission": {
+    "submissionId": "2183873011",
+    "language": "Python3",
+    "code": "class Solution:\n    def ladderLength(self, beginWord: str, endWord: str, wordList: list[str]) -> int:\n        m, n = len(beginWord), len(wordList)\n        graph = [set() for _ in range(m)]\n\n        for i in range(m):\n            for j in range(n):\n                graph[i].add(wordList[j][i])\n\n\n        queue = deque([beginWord])\n        dist = {beginWord: 1}\n        seen = set(queue)\n        dictionary = set(wordList)\n\n        def transform(word):\n            neis = []\n            node = list(word)\n            for i in range(m):\n                origin = node[i]\n                for letter in graph[i]:\n                    if letter != origin:\n                        node[i] = letter\n                        neis.append(''.join(node))\n                node[i] = origin\n            return neis\n\n        while queue:\n            k = len(queue)\n            for _ in range(k):\n                word = queue.popleft()\n                if word == endWord:\n                    return dist[word]\n\n                for trans in transform(word):\n                    if trans in dictionary and trans not in seen:\n                        dist[trans] = dist[word] + 1\n                        seen.add(trans)\n                        queue.append(trans)\n        return 0\n\n"
+  },
+  "notes": [],
+  "source": "leetcode",
+  "importedAt": "2026-11-01T11:09:15Z",
+  "lastSyncedAt": "2026-11-01T11:09:15Z"
+}

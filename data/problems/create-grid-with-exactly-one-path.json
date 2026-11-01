@@ -1,0 +1,30 @@
+{
+  "leetcodeId": "3963",
+  "title": "Create Grid With Exactly One Path",
+  "slug": "create-grid-with-exactly-one-path",
+  "url": "https://leetcode.com/problems/create-grid-with-exactly-one-path/",
+  "difficulty": "Easy",
+  "status": "solved",
+  "premium": false,
+  "tags": [],
+  "problemStatement": "You are given two integers m and n, representing the number of rows and columns of a grid.\n\nConstruct any m x n grid consisting only of the characters '.' and '#', where:\n\n- '.' represents a free cell.\n\n- '#' represents an obstacle cell.\n\nA valid path is a sequence of free cells that:\n\n- Starts at the top-left cell (0, 0).\n\n- Ends at the bottom-right cell (m - 1, n - 1).\n\n- Moves only:\n\n- Right, from (i, j) to (i, j + 1), or\n\n- Down, from (i, j) to (i + 1, j).\n\nReturn any grid such that there is exactly one valid path from the top-left cell to the bottom-right cell.\n\nExample 1:\n\nInput: m = 2, n = 3\n\nOutput: [\"..#\",\"#..\"]\n\nExplanation:\n\nThe only valid path is: (0,0) → (0,1) → (1,1) → (1,2)\n\nExample 2:\n\nInput: m = 3, n = 3\n\nOutput: [\"..#\",\"#..\",\"##.\"]\n\nExplanation:\n\nThe only valid path is: (0,0) → (0,1) → (1,1) → (1,2) → (2,2)\n\nExample 3:\n\nInput: m = 1, n = 4\n\nOutput: [\"....\"]\n\nExplanation:\n\nThe only valid path is: (0,0) → (0,1) → (0,2) → (0,3)\n\nConstraints:\n\n- 1 <= m, n <= 25",
+  "constraints": [
+    "1 <= m, n <= 25"
+  ],
+  "hints": [
+    "It is enough to leave one simple route made of free cells and block every other cell.",
+    "There are many routes to choose from. What is the simplest one you can think of?",
+    "One possible route: Go right while possible, then go down till you reach the destination."
+  ],
+  "acRate": 86.02,
+  "lastSubmittedAt": "2026-10-27T02:54:51Z",
+  "latestSubmission": {
+    "submissionId": "2182716404",
+    "language": "Python3",
+    "code": "class Solution:\n    def createGrid(self, m: int, n: int) -> list[str]:\n        grid = [['#' for _ in range(n)] for _ in range(m)]\n\n        for i in range(n):\n            grid[0][i] = '.'\n\n        for i in range(1, m):\n            grid[i][n - 1] = '.'\n\n        return [''.join(row) for row in grid]"
+  },
+  "notes": [],
+  "source": "leetcode",
+  "importedAt": "2026-11-01T11:09:15Z",
+  "lastSyncedAt": "2026-11-01T11:09:15Z"
+}

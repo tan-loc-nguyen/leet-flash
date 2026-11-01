@@ -1,0 +1,217 @@
+{
+  "schemaVersion": 1,
+  "problemSlug": "find-eventual-safe-states",
+  "summary": "Return, in ascending order, every node from which all paths end at a terminal node (equivalently, nodes that cannot reach a cycle).",
+  "patterns": [
+    "Topological Sort",
+    "Graph"
+  ],
+  "mainInsight": "A node is safe exactly when it cannot reach a cycle. Reverse the edges and run Kahn's algorithm from the terminal nodes (out-degree 0): a node becomes safe when all its outgoing edges lead to safe nodes, i.e. its remaining out-degree hits 0.",
+  "invariant": "A node enters the queue only once all of its original out-neighbours are already known to be safe.",
+  "canonicalApproach": "Reverse graph + Kahn's algorithm",
+  "approaches": [
+    {
+      "name": "Reverse graph + Kahn's algorithm",
+      "summary": "Reverse edges, start from out-degree 0 nodes, decrement predecessors' out-degree.",
+      "timeComplexity": "O(V + E)",
+      "spaceComplexity": "O(V + E)",
+      "strengths": [
+        "Iterative",
+        "No recursion limit"
+      ],
+      "weaknesses": [
+        "Builds the reverse graph"
+      ],
+      "interviewRelevance": "The expected answer."
+    },
+    {
+      "name": "DFS with three colours",
+      "summary": "White/grey/black; a node is safe if its DFS finishes without meeting a grey node.",
+      "timeComplexity": "O(V + E)",
+      "spaceComplexity": "O(V)",
+      "strengths": [
+        "No reverse graph"
+      ],
+      "weaknesses": [
+        "Recursion depth up to 10^4 in Python"
+      ],
+      "interviewRelevance": "Equally good."
+    },
+    {
+      "name": "DFS from every node without memo",
+      "summary": "Search each node's paths for a cycle independently.",
+      "timeComplexity": "O(V * (V + E))",
+      "spaceComplexity": "O(V)",
+      "strengths": [
+        "Simple"
+      ],
+      "weaknesses": [
+        "Repeats work"
+      ],
+      "interviewRelevance": "Baseline."
+    }
+  ],
+  "personalSolution": {
+    "approach": "Reverse graph + Kahn's algorithm on out-degrees",
+    "timeComplexity": "O(V + E)",
+    "spaceComplexity": "O(V + E)",
+    "isOptimal": true,
+    "notes": "Optimal and matches the canonical approach. The level loop (m = len(queue)) is unnecessary because levels are not used."
+  },
+  "canonicalCode": "from collections import deque\n\n\nclass Solution:\n    def eventualSafeNodes(self, graph: list[list[int]]) -> list[int]:\n        n = len(graph)\n        rev = [[] for _ in range(n)]\n        out_deg = [0] * n\n        for u in range(n):                       # build reverse graph: O(V + E)\n            out_deg[u] = len(graph[u])\n            for v in graph[u]:\n                rev[v].append(u)\n        queue = deque(u for u in range(n) if out_deg[u] == 0)   # terminal nodes are safe\n        safe = [False] * n\n        while queue:                             # each node and reverse edge handled once\n            v = queue.popleft()\n            safe[v] = True\n            for u in rev[v]:\n                out_deg[u] -= 1                  # one more edge of u leads to a safe node\n                if out_deg[u] == 0:\n                    queue.append(u)              # all of u's edges lead to safe nodes\n        return [u for u in range(n) if safe[u]]  # ascending by construction\n",
+  "commonMistakes": [
+    "Running Kahn's algorithm on in-degrees of the original graph (that finds nodes not reachable from cycles, the wrong set).",
+    "Treating a self-loop node as safe.",
+    "Using plain visited DFS without the grey state, which cannot tell a cycle from a revisited safe node.",
+    "Forgetting to return the answer sorted."
+  ],
+  "edgeCases": [
+    "Self-loop: never safe.",
+    "Every node on a cycle -> empty list.",
+    "Node with an edge to a cycle and an edge to a terminal -> unsafe.",
+    "Isolated node -> safe (terminal)."
+  ],
+  "cards": [
+    {
+      "id": "recog-find-eventual-safe-states",
+      "category": "pattern",
+      "type": "free_recall",
+      "promptVariants": [
+        "Which technique solves this problem, and what in the statement or constraints points to it?",
+        "Name the technique you would use here and the clue in the problem that tells you.",
+        "What approach fits this problem, and which part of the statement gives it away?"
+      ],
+      "answer": "Topological sort (Kahn's algorithm) on the reversed graph, starting from terminal nodes. Clue: A node is safe only if every path from it ends at a terminal node with no outgoing edges, which means the node cannot reach a cycle in the directed graph.",
+      "keyPoints": [
+        "A node is safe only if every path from it ends at a terminal node with no outgoing edges, which means the node cannot reach a cycle in the directed graph."
+      ],
+      "explanation": "'Every path leads to X' on a directed graph with cycles is cycle detection / topological ordering; peeling terminals backwards is Kahn's algorithm on out-degree.",
+      "rubric": {
+        "technique": "Topological sort (Kahn's algorithm) on the reversed graph, starting from terminal nodes",
+        "aliases": [
+          "kahn on reversed graph",
+          "reverse topological sort by out-degree",
+          "dfs three-colour cycle detection",
+          "white grey black dfs",
+          "dfs with safe/unsafe memo"
+        ],
+        "alsoValid": [
+          {
+            "name": "DFS from every node to check whether it can reach a cycle, without memoisation",
+            "note": "correct but repeats the search for every node"
+          }
+        ],
+        "clueTypes": [
+          "dependencies_graph"
+        ],
+        "clue": "A node is safe only if every path from it ends at a terminal node with no outgoing edges, which means the node cannot reach a cycle in the directed graph."
+      }
+    },
+    {
+      "id": "find-eventual-safe-states-insight-01",
+      "category": "main_insight",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "Why reverse the graph before running Kahn's algorithm?",
+        "What does the reversed graph let you propagate?"
+      ],
+      "options": [
+        "Safety flows from terminals back to their predecessors",
+        "Reversing removes every cycle from the graph",
+        "In-degrees of the original graph mark safe nodes",
+        "It lets the BFS visit nodes in ascending order"
+      ],
+      "answer": "Safety flows from terminals back to their predecessors",
+      "explanation": "A node is safe once all of its out-edges point to safe nodes. Reversed edges let a newly safe node notify its predecessors and decrement their remaining out-degree.",
+      "incorrectOptionExplanations": {
+        "Reversing removes every cycle from the graph": "Cycles stay cycles; their nodes simply never reach out-degree 0.",
+        "In-degrees of the original graph mark safe nodes": "Original in-degrees answer a different question (reachability from sources).",
+        "It lets the BFS visit nodes in ascending order": "Order comes from the final scan, not from reversal."
+      },
+      "enabled": true
+    },
+    {
+      "id": "find-eventual-safe-states-edge-01",
+      "category": "edge_case",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "graph = [[0], [2], []]. Which nodes are safe?",
+        "Node 0 has a self-loop, node 1 points to node 2, node 2 is terminal. Result?"
+      ],
+      "options": [
+        "[1, 2]",
+        "[0, 1, 2]",
+        "[2]",
+        "[]"
+      ],
+      "answer": "[1, 2]",
+      "explanation": "Node 2 is terminal, so 1 (its only edge goes to 2) is safe. Node 0 loops on itself forever, so it is not safe.",
+      "incorrectOptionExplanations": {
+        "[0, 1, 2]": "The self-loop is a cycle; node 0 never reaches a terminal.",
+        "[2]": "Node 1's only path goes to the terminal node 2, so it is safe too.",
+        "[]": "Terminal node 2 is always safe."
+      },
+      "enabled": true
+    },
+    {
+      "id": "find-eventual-safe-states-alt-01",
+      "category": "alternative_approach",
+      "type": "free_recall",
+      "promptVariants": [
+        "Describe the three-colour DFS solution.",
+        "How does DFS with white/grey/black states find the safe nodes?"
+      ],
+      "answer": "Mark a node grey on entry. If DFS reaches a grey node there is a cycle and every node on the current stack is unsafe. If all neighbours finish as safe, mark the node black (safe). Memoise results so each node is processed once: O(V + E).",
+      "keyPoints": [
+        "Grey = on the current path",
+        "Reaching grey means cycle -> unsafe",
+        "Black = finished and safe",
+        "Memoised, O(V + E)"
+      ],
+      "explanation": "Same complexity; in Python watch the recursion depth with n up to 10^4.",
+      "enabled": true
+    },
+    {
+      "id": "find-eventual-safe-states-time-01",
+      "category": "time_complexity",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "What is the time complexity of the canonical code?",
+        "Derive the running time of Kahn's algorithm on the reverse graph."
+      ],
+      "options": [
+        "O(V + E)",
+        "O(V * E)",
+        "O(V^2)",
+        "O((V + E) log V)"
+      ],
+      "answer": "O(V + E)",
+      "explanation": "Building the reverse graph touches each edge once, each node is dequeued at most once, and each reverse edge is decremented once.",
+      "incorrectOptionExplanations": {
+        "O(V * E)": "That is per-node searches without memoisation.",
+        "O(V^2)": "No pairwise node work; adjacency lists keep it linear.",
+        "O((V + E) log V)": "There is no priority queue; the output is ordered by a final linear scan."
+      },
+      "enabled": true
+    },
+    {
+      "id": "find-eventual-safe-states-space-01",
+      "category": "space_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "The reverse graph, degree array and queue use O(___) space.",
+        "Space of the canonical code: O(___)."
+      ],
+      "answer": "V + E",
+      "acceptedAnswers": [
+        "V+E",
+        "v + e",
+        "E + V",
+        "n + e"
+      ],
+      "explanation": "The reverse graph stores every edge once; the arrays and queue are O(V).",
+      "enabled": true
+    }
+  ],
+  "generatedAt": "2026-11-01T11:48:27Z"
+}

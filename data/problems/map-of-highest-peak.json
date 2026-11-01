@@ -1,0 +1,37 @@
+{
+  "leetcodeId": "1765",
+  "title": "Map of Highest Peak",
+  "slug": "map-of-highest-peak",
+  "url": "https://leetcode.com/problems/map-of-highest-peak/",
+  "difficulty": "Medium",
+  "status": "solved",
+  "premium": false,
+  "tags": [
+    "Array",
+    "Breadth-First Search",
+    "Matrix"
+  ],
+  "problemStatement": "You are given an integer matrix isWater of size m x n that represents a map of land and water cells.\n\n- If isWater[i][j] == 0, cell (i, j) is a land cell.\n\n- If isWater[i][j] == 1, cell (i, j) is a water cell.\n\nYou must assign each cell a height in a way that follows these rules:\n\n- The height of each cell must be non-negative.\n\n- If the cell is a water cell, its height must be 0.\n\n- Any two adjacent cells must have an absolute height difference of at most 1. A cell is adjacent to another cell if the former is directly north, east, south, or west of the latter (i.e., their sides are touching).\n\nFind an assignment of heights such that the maximum height in the matrix is maximized.\n\nReturn an integer matrix height of size m x n where height[i][j] is cell (i, j)'s height. If there are multiple solutions, return any of them.\n\nExample 1:\n\nInput: isWater = [[0,1],[0,0]]\nOutput: [[1,0],[2,1]]\nExplanation: The image shows the assigned heights of each cell.\nThe blue cell is the water cell, and the green cells are the land cells.\n\nExample 2:\n\nInput: isWater = [[0,0,1],[1,0,0],[0,0,0]]\nOutput: [[1,1,0],[0,1,1],[1,2,2]]\nExplanation: A height of 2 is the maximum possible height of any assignment.\nAny height assignment that has a maximum height of 2 while still meeting the rules will also be accepted.\n\nConstraints:\n\n- m == isWater.length\n\n- n == isWater[i].length\n\n- 1 <= m, n <= 1000\n\n- isWater[i][j] is 0 or 1.\n\n- There is at least one water cell.\n\nNote: This question is the same as 542: https://leetcode.com/problems/01-matrix/",
+  "constraints": [
+    "m == isWater.length",
+    "n == isWater[i].length",
+    "1 <= m, n <= 1000",
+    "isWater[i][j] is 0 or 1.",
+    "There is at least one water cell."
+  ],
+  "hints": [
+    "Set each water cell to be 0. The height of each cell is limited by its closest water cell.",
+    "Perform a multi-source BFS with all the water cells as sources."
+  ],
+  "acRate": 76.38,
+  "lastSubmittedAt": "2026-10-28T10:58:48Z",
+  "latestSubmission": {
+    "submissionId": "2183841501",
+    "language": "Python3",
+    "code": "class Solution:\n    def highestPeak(self, graph: list[list[int]]) -> list[list[int]]:\n        rows, cols = len(graph), len(graph[0])\n        DIR = [0,1,0,-1,0]\n        queue = deque()\n\n        for i in range(rows):\n            for j in range(cols):\n                if graph[i][j] == 1:\n                    queue.append((i, j))\n                    graph[i][j] = 0\n        \n        seen = set(queue)\n        while queue:\n            k = len(queue)\n            for _ in range(k):\n                r, c = queue.popleft()\n                for i in range(4):\n                    nr, nc = r + DIR[i], c + DIR[i + 1]\n                    if 0 <= nr < rows and 0 <= nc < cols and (nr, nc) not in seen:\n                        graph[nr][nc] = graph[r][c] + 1\n                        queue.append((nr, nc))\n                        seen.add((nr, nc))\n\n        return graph"
+  },
+  "notes": [],
+  "source": "leetcode",
+  "importedAt": "2026-11-01T11:09:15Z",
+  "lastSyncedAt": "2026-11-01T11:09:15Z"
+}

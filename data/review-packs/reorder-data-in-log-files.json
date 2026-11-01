@@ -1,0 +1,194 @@
+{
+  "schemaVersion": 1,
+  "problemSlug": "reorder-data-in-log-files",
+  "summary": "Put letter-logs first, sorted by content then identifier, followed by digit-logs in their original order.",
+  "patterns": [
+    "Sorting"
+  ],
+  "mainInsight": "Write one sort key: letter-logs map to (0, content, identifier) and digit-logs to (1,). Python's sort is stable, so digit-logs with equal keys keep their input order.",
+  "canonicalApproach": "Stable sort with a tuple key",
+  "approaches": [
+    {
+      "name": "Split into two lists",
+      "summary": "Sort letter-logs by (content, id); append digit-logs unchanged.",
+      "timeComplexity": "O(M * N log N)",
+      "spaceComplexity": "O(M * N)",
+      "strengths": [
+        "Clear"
+      ],
+      "weaknesses": [
+        "Two lists"
+      ],
+      "interviewRelevance": "The expected answer."
+    },
+    {
+      "name": "Stable sort with a tuple key",
+      "summary": "sorted(logs, key=...) returning (0, content, id) or (1,).",
+      "timeComplexity": "O(M * N log N)",
+      "spaceComplexity": "O(M * N)",
+      "strengths": [
+        "One sort",
+        "Relies on stability"
+      ],
+      "weaknesses": [
+        "Must know sort is stable"
+      ],
+      "interviewRelevance": "Equally good, shows sort-key fluency."
+    }
+  ],
+  "canonicalCode": "class Solution:\n    def reorderLogFiles(self, logs: list[str]) -> list[str]:\n        def key(log: str):\n            ident, rest = log.split(' ', 1)          # identifier, then the content\n            if rest[0].isdigit():\n                return (1,)                          # digit-logs: equal keys, stable sort keeps input order\n            return (0, rest, ident)                  # letter-logs: content first, identifier breaks ties\n        return sorted(logs, key=key)                 # N log N comparisons, each up to M characters\n",
+  "commonMistakes": [
+    "Sorting letter-logs by the whole string, which puts the identifier first.",
+    "Forgetting the identifier tie-break when contents are equal.",
+    "Sorting digit-logs too (they must keep their relative order).",
+    "Splitting on every space and comparing word lists in a way that differs from string comparison."
+  ],
+  "edgeCases": [
+    "Two letter-logs with identical content -> order by identifier.",
+    "Only digit-logs -> unchanged.",
+    "Content that is a prefix of another ('art' vs 'art can')."
+  ],
+  "cards": [
+    {
+      "id": "recog-reorder-data-in-log-files",
+      "category": "pattern",
+      "type": "free_recall",
+      "promptVariants": [
+        "Which technique solves this problem, and what in the statement or constraints points to it?",
+        "Name the technique you would use here and the clue in the problem that tells you.",
+        "What approach fits this problem, and which part of the statement gives it away?"
+      ],
+      "answer": "Custom sort key with a stable sort (letter-logs keyed by content then identifier, digit-logs kept in order). Clue: The statement spells out the ordering: letter-logs before digit-logs, letter-logs by contents then identifier, and digit-logs keeping their relative order.",
+      "keyPoints": [
+        "The statement spells out the ordering: letter-logs before digit-logs, letter-logs by contents then identifier, and digit-logs keeping their relative order."
+      ],
+      "explanation": "Multi-level ordering rules map directly to a tuple sort key; 'keep relative order' is exactly what a stable sort guarantees.",
+      "rubric": {
+        "technique": "Custom sort key with a stable sort (letter-logs keyed by content then identifier, digit-logs kept in order)",
+        "aliases": [
+          "custom comparator sort",
+          "sort with tuple key",
+          "partition letter and digit logs then sort letters",
+          "stable sort"
+        ],
+        "alsoValid": [
+          {
+            "name": "Insertion-sort letter-logs one by one with manual comparisons",
+            "note": "correct but quadratic"
+          }
+        ],
+        "clueTypes": [
+          "sorted_or_ordered",
+          "direct_simulation"
+        ],
+        "clue": "The statement spells out the ordering: letter-logs before digit-logs, letter-logs by contents then identifier, and digit-logs keeping their relative order."
+      }
+    },
+    {
+      "id": "reorder-data-in-log-files-impl-01",
+      "category": "implementation_detail",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "Why can every digit-log get the same key (1,)?",
+        "What keeps digit-logs in their original order with a single sorted() call?"
+      ],
+      "options": [
+        "Python's sort is stable, so equal keys keep input order",
+        "Digit-logs are already sorted by their digits",
+        "sorted() never moves elements with numeric content",
+        "The key (1,) sorts by original index automatically"
+      ],
+      "answer": "Python's sort is stable, so equal keys keep input order",
+      "explanation": "Timsort is stable: items that compare equal stay in their original relative order, which is exactly the digit-log rule.",
+      "incorrectOptionExplanations": {
+        "Digit-logs are already sorted by their digits": "Nothing says so; example 1 has 8 1 5 1 before 3 6.",
+        "sorted() never moves elements with numeric content": "sorted() treats all keys the same; content type is irrelevant.",
+        "The key (1,) sorts by original index automatically": "The key holds no index; stability provides the order."
+      },
+      "enabled": true
+    },
+    {
+      "id": "reorder-data-in-log-files-edge-01",
+      "category": "edge_case",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "logs = [\"b1 abc\", \"a1 abc\", \"c1 1\"]. Result?",
+        "Two letter-logs have the same content \"abc\". What order is returned for [\"b1 abc\", \"a1 abc\", \"c1 1\"]?"
+      ],
+      "options": [
+        "[\"a1 abc\", \"b1 abc\", \"c1 1\"]",
+        "[\"b1 abc\", \"a1 abc\", \"c1 1\"]",
+        "[\"c1 1\", \"a1 abc\", \"b1 abc\"]",
+        "[\"a1 abc\", \"c1 1\", \"b1 abc\"]"
+      ],
+      "answer": "[\"a1 abc\", \"b1 abc\", \"c1 1\"]",
+      "explanation": "Equal contents fall back to the identifier: a1 < b1. Digit-logs come last.",
+      "incorrectOptionExplanations": {
+        "[\"b1 abc\", \"a1 abc\", \"c1 1\"]": "Letter-logs are not stable; ties break on identifier.",
+        "[\"c1 1\", \"a1 abc\", \"b1 abc\"]": "Digit-logs go after all letter-logs.",
+        "[\"a1 abc\", \"c1 1\", \"b1 abc\"]": "All letter-logs come before every digit-log."
+      },
+      "enabled": true
+    },
+    {
+      "id": "reorder-data-in-log-files-code-01",
+      "category": "code_reasoning",
+      "type": "code_question",
+      "promptVariants": [
+        "Your key is x[1:] + [x[0]] on the split words. Is comparing word lists the same as comparing content strings?",
+        "Does sorting by the list of words match the required lexicographic order of contents?"
+      ],
+      "answer": "Yes for this input: words are lowercase letters separated by single spaces, and ' ' sorts before every letter, so comparing word by word gives the same order as comparing the content strings, including a shorter prefix sorting first. Appending the identifier at the end breaks ties.",
+      "keyPoints": [
+        "Word-list comparison matches string comparison here",
+        "Space sorts before letters",
+        "Identifier last breaks ties"
+      ],
+      "explanation": "Being able to argue why an equivalent key is correct is what interviewers probe.",
+      "enabled": true,
+      "code": "letterLogs.sort(key=lambda x: x[1:] + [x[0]])"
+    },
+    {
+      "id": "reorder-data-in-log-files-time-01",
+      "category": "time_complexity",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "N logs of length up to M. What is the time complexity of the canonical code?",
+        "Derive the running time of sorting the logs by key."
+      ],
+      "options": [
+        "O(M * N log N)",
+        "O(N log N)",
+        "O(M * N)",
+        "O(N^2 * M)"
+      ],
+      "answer": "O(M * N log N)",
+      "explanation": "Building keys costs O(M * N); the sort does O(N log N) comparisons, and each string comparison can take O(M).",
+      "incorrectOptionExplanations": {
+        "O(N log N)": "Ignores that comparing two strings costs up to O(M).",
+        "O(M * N)": "That only covers building the keys.",
+        "O(N^2 * M)": "Timsort is O(N log N) comparisons, not quadratic."
+      },
+      "enabled": true
+    },
+    {
+      "id": "reorder-data-in-log-files-space-01",
+      "category": "space_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "The keys and the sorted copy use O(___) space.",
+        "Space of the canonical code: O(___)."
+      ],
+      "answer": "M * N",
+      "acceptedAnswers": [
+        "M*N",
+        "MN",
+        "N * M",
+        "n*m"
+      ],
+      "explanation": "Each key copies the log's content (up to M characters) for N logs.",
+      "enabled": true
+    }
+  ],
+  "generatedAt": "2026-11-01T11:48:27Z"
+}

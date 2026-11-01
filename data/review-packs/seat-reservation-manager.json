@@ -1,0 +1,231 @@
+{
+  "schemaVersion": 1,
+  "problemSlug": "seat-reservation-manager",
+  "summary": "Design a manager for seats 1..n that reserves the smallest-numbered free seat and can unreserve any reserved seat.",
+  "patterns": [
+    "Heap / Priority Queue",
+    "Design"
+  ],
+  "mainInsight": "reserve needs the minimum of a set that changes with inserts (unreserve) and removals (reserve): a min-heap of free seats gives O(log n) for both. A pointer to the next never-used seat avoids heapifying all n seats up front.",
+  "invariant": "The heap plus the seats >= next form exactly the set of free seats.",
+  "canonicalApproach": "Min-heap of unreserved seats + next-seat pointer",
+  "approaches": [
+    {
+      "name": "Boolean array, scan for the first free seat",
+      "summary": "Linear scan on each reserve.",
+      "timeComplexity": "O(n) per reserve",
+      "spaceComplexity": "O(n)",
+      "strengths": [
+        "Trivial"
+      ],
+      "weaknesses": [
+        "10^5 calls * 10^5 seats is too slow"
+      ],
+      "interviewRelevance": "Baseline."
+    },
+    {
+      "name": "Min-heap of all free seats",
+      "summary": "heapify 1..n; reserve pops, unreserve pushes.",
+      "timeComplexity": "O(n) init, O(log n) per op",
+      "spaceComplexity": "O(n)",
+      "strengths": [
+        "Simple"
+      ],
+      "weaknesses": [
+        "Builds n entries up front"
+      ],
+      "interviewRelevance": "Accepted, a common answer."
+    },
+    {
+      "name": "Min-heap of unreserved seats + next-seat pointer",
+      "summary": "Heap only holds returned seats; otherwise hand out next and increment it.",
+      "timeComplexity": "O(1) init, O(log n) per op",
+      "spaceComplexity": "O(number of unreserved seats)",
+      "strengths": [
+        "No up-front cost"
+      ],
+      "weaknesses": [
+        "Two sources to check"
+      ],
+      "interviewRelevance": "The expected refinement."
+    },
+    {
+      "name": "Sorted set",
+      "summary": "SortedList of free seats; pop the first, add on unreserve.",
+      "timeComplexity": "O(log n) per op",
+      "spaceComplexity": "O(n)",
+      "strengths": [
+        "Also supports other queries"
+      ],
+      "weaknesses": [
+        "Needs sortedcontainers"
+      ],
+      "interviewRelevance": "Equally valid."
+    }
+  ],
+  "personalSolution": {
+    "approach": "Min-heap of all free seats built with heapify",
+    "timeComplexity": "O(n) init, O(log n) per reserve/unreserve",
+    "spaceComplexity": "O(n)",
+    "isOptimal": true,
+    "notes": "Optimal per operation. The next-seat pointer variant avoids building the n-element heap and keeps the heap small, which is worth mentioning."
+  },
+  "canonicalCode": "import heapq\n\n\nclass SeatManager:\n    def __init__(self, n: int):\n        self.next = 1          # smallest seat never handed out yet: O(1) init\n        self.freed = []        # min-heap of seats that were unreserved\n\n    def reserve(self) -> int:\n        if self.freed:         # any returned seat is smaller than self.next\n            return heapq.heappop(self.freed)    # O(log n)\n        seat = self.next\n        self.next += 1\n        return seat\n\n    def unreserve(self, seatNumber: int) -> None:\n        heapq.heappush(self.freed, seatNumber)  # O(log n)\n",
+  "commonMistakes": [
+    "Scanning an array for the first free seat on every reserve (O(n) per call).",
+    "Using a plain list and min() / remove() (O(n) per call).",
+    "With the pointer variant, forgetting that a freed seat is always below next, so the heap must be checked first."
+  ],
+  "edgeCases": [
+    "Unreserve the seat just reserved, then reserve again.",
+    "Unreserve several seats in decreasing order.",
+    "Reserve all n seats."
+  ],
+  "cards": [
+    {
+      "id": "recog-seat-reservation-manager",
+      "category": "pattern",
+      "type": "free_recall",
+      "promptVariants": [
+        "Which technique solves this problem, and what in the statement or constraints points to it?",
+        "Name the technique you would use here and the clue in the problem that tells you.",
+        "What approach fits this problem, and which part of the statement gives it away?"
+      ],
+      "answer": "Min-heap of available seats. Clue: reserve must return the smallest-numbered unreserved seat while unreserve keeps adding seats back, with up to 10^5 calls in total.",
+      "keyPoints": [
+        "reserve must return the smallest-numbered unreserved seat while unreserve keeps adding seats back, with up to 10^5 calls in total."
+      ],
+      "explanation": "Repeated 'give me the minimum' on a set with inserts and deletes is the job of a min-heap.",
+      "rubric": {
+        "technique": "Min-heap of available seats",
+        "aliases": [
+          "min heap",
+          "priority queue of free seats",
+          "heap plus next-seat pointer",
+          "sorted set of free seats",
+          "balanced bst"
+        ],
+        "alsoValid": [
+          {
+            "name": "Boolean array scanned for the first free seat on each reserve",
+            "note": "correct but linear per call"
+          }
+        ],
+        "clueTypes": [
+          "stream_design",
+          "top_k"
+        ],
+        "clue": "reserve must return the smallest-numbered unreserved seat while unreserve keeps adding seats back, with up to 10^5 calls in total."
+      }
+    },
+    {
+      "id": "seat-reservation-manager-insight-01",
+      "category": "main_insight",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "In the pointer variant, why is it safe to check the heap before next?",
+        "Why is any seat in the freed heap smaller than next?"
+      ],
+      "options": [
+        "Only seats below next were ever handed out",
+        "The heap always holds the n smallest seats",
+        "unreserve rejects seats bigger than next",
+        "next is reset to 1 whenever the heap is empty"
+      ],
+      "answer": "Only seats below next were ever handed out",
+      "explanation": "A seat can only be unreserved after being reserved, and reserved seats are all < next, so a non-empty heap always holds the smallest free seat.",
+      "incorrectOptionExplanations": {
+        "The heap always holds the n smallest seats": "The heap only holds returned seats; it may be empty or small.",
+        "unreserve rejects seats bigger than next": "No check is needed; the guarantee comes from the reservation order.",
+        "next is reset to 1 whenever the heap is empty": "next never decreases."
+      },
+      "enabled": true
+    },
+    {
+      "id": "seat-reservation-manager-whynot-01",
+      "category": "why_not",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "Why not keep a boolean array and scan for the first free seat?",
+        "What is wrong with an O(n) scan per reserve here?"
+      ],
+      "options": [
+        "Up to 10^5 calls on 10^5 seats is about 10^10 steps",
+        "Boolean arrays cannot represent seat numbers",
+        "Scanning returns the largest seat, not the smallest",
+        "It cannot support unreserve at all"
+      ],
+      "answer": "Up to 10^5 calls on 10^5 seats is about 10^10 steps",
+      "explanation": "Each reserve can scan O(n), so worst case O(n * calls); the heap makes each operation O(log n).",
+      "incorrectOptionExplanations": {
+        "Boolean arrays cannot represent seat numbers": "The index is the seat number; representation is fine.",
+        "Scanning returns the largest seat, not the smallest": "A left-to-right scan returns the smallest; speed is the problem.",
+        "It cannot support unreserve at all": "Unreserve is a simple flag reset."
+      },
+      "enabled": true
+    },
+    {
+      "id": "seat-reservation-manager-edge-01",
+      "category": "edge_case",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "SeatManager(4); reserve, reserve, reserve, unreserve(3), unreserve(1), reserve. What does the last reserve return?",
+        "After reserving 1, 2, 3 and unreserving 3 then 1, what does reserve() return?"
+      ],
+      "options": [
+        "1",
+        "3",
+        "4",
+        "2"
+      ],
+      "answer": "1",
+      "explanation": "The free seats are {1, 3, 4}. The smallest is 1, regardless of unreserve order.",
+      "incorrectOptionExplanations": {
+        "3": "That is the first seat unreserved, but reserve wants the smallest.",
+        "4": "That is the next never-used seat; returned seats 1 and 3 are smaller.",
+        "2": "Seat 2 is still reserved."
+      },
+      "enabled": true
+    },
+    {
+      "id": "seat-reservation-manager-time-01",
+      "category": "time_complexity",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "What are the costs of reserve and unreserve in the canonical code?",
+        "Per-operation time of the heap + pointer design?"
+      ],
+      "options": [
+        "O(log n) each",
+        "O(1) each",
+        "O(n) reserve, O(1) unreserve",
+        "O(log n) reserve, O(n) unreserve"
+      ],
+      "answer": "O(log n) each",
+      "explanation": "heappop and heappush on a heap of at most n entries are O(log n); handing out next is O(1).",
+      "incorrectOptionExplanations": {
+        "O(1) each": "Heap operations are logarithmic.",
+        "O(n) reserve, O(1) unreserve": "That is the scanning array.",
+        "O(log n) reserve, O(n) unreserve": "Pushing onto a heap is O(log n)."
+      },
+      "enabled": true
+    },
+    {
+      "id": "seat-reservation-manager-space-01",
+      "category": "space_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "The freed heap holds at most O(___) seats.",
+        "Space of the canonical design: O(___)."
+      ],
+      "answer": "n",
+      "acceptedAnswers": [
+        "n",
+        "O(n)"
+      ],
+      "explanation": "Only unreserved seats are stored, but in the worst case that is up to n of them.",
+      "enabled": true
+    }
+  ],
+  "generatedAt": "2026-11-01T11:51:22Z"
+}

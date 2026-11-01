@@ -1,0 +1,37 @@
+{
+  "leetcodeId": "797",
+  "title": "All Paths From Source to Target",
+  "slug": "all-paths-from-source-to-target",
+  "url": "https://leetcode.com/problems/all-paths-from-source-to-target/",
+  "difficulty": "Medium",
+  "status": "solved",
+  "premium": false,
+  "tags": [
+    "Backtracking",
+    "Depth-First Search",
+    "Breadth-First Search",
+    "Graph Theory",
+    "Directed Acyclic Graph"
+  ],
+  "problemStatement": "Given a directed acyclic graph (DAG) of n nodes labeled from 0 to n - 1, find all possible paths from node 0 to node n - 1 and return them in any order.\n\nThe graph is given as follows: graph[i] is a list of all nodes you can visit from node i (i.e., there is a directed edge from node i to node graph[i][j]).\n\nExample 1:\n\nInput: graph = [[1,2],[3],[3],[]]\nOutput: [[0,1,3],[0,2,3]]\nExplanation: There are two paths: 0 -> 1 -> 3 and 0 -> 2 -> 3.\n\nExample 2:\n\nInput: graph = [[4,3,1],[3,2,4],[3],[4],[]]\nOutput: [[0,4],[0,3,4],[0,1,3,4],[0,1,2,3,4],[0,1,4]]\n\nConstraints:\n\n- n == graph.length\n\n- 2 <= n <= 15\n\n- 0 <= graph[i][j] < n\n\n- graph[i][j] != i (i.e., there will be no self-loops).\n\n- All the elements of graph[i] are unique.\n\n- The input graph is guaranteed to be a DAG.",
+  "constraints": [
+    "n == graph.length",
+    "2 <= n <= 15",
+    "0 <= graph[i][j] < n",
+    "graph[i][j] != i (i.e., there will be no self-loops).",
+    "All the elements of graph[i] are unique.",
+    "The input graph is guaranteed to be a DAG."
+  ],
+  "hints": [],
+  "acRate": 83.86,
+  "lastSubmittedAt": "2026-10-23T23:54:10Z",
+  "latestSubmission": {
+    "submissionId": "2180053999",
+    "language": "Python3",
+    "code": "class Solution:\n    def allPathsSourceTarget(self, graph: list[list[int]]) -> list[list[int]]:\n        n = len(graph)\n        path = [0]\n        ans = []\n\n        def dfs(node: int) -> None:\n            if node == n - 1:\n                ans.append(path[:])\n                return\n            \n            for nei in graph[node]:\n                path.append(nei)\n                dfs(nei)\n                path.pop()\n        \n        dfs(0)\n        return ans"
+  },
+  "notes": [],
+  "source": "leetcode",
+  "importedAt": "2026-11-01T11:09:15Z",
+  "lastSyncedAt": "2026-11-01T11:09:15Z"
+}

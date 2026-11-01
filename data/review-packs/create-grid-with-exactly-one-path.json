@@ -1,0 +1,191 @@
+{
+  "schemaVersion": 1,
+  "problemSlug": "create-grid-with-exactly-one-path",
+  "summary": "Build any m x n grid of '.' and '#' with exactly one right/down path from the top-left to the bottom-right.",
+  "patterns": [
+    "Matrix"
+  ],
+  "mainInsight": "Construct the path yourself and block everything else. Free the whole top row and the whole right column (an L shape), make every other cell '#'. With only right/down moves the L is the single path.",
+  "canonicalApproach": "Construct an L-shaped path",
+  "approaches": [
+    {
+      "name": "Construct an L-shaped path",
+      "summary": "Top row and right column free, all else blocked.",
+      "timeComplexity": "O(m * n)",
+      "spaceComplexity": "O(m * n) for the output",
+      "strengths": [
+        "Trivial to verify"
+      ],
+      "weaknesses": [
+        "None"
+      ],
+      "interviewRelevance": "The expected answer."
+    },
+    {
+      "name": "Staircase path",
+      "summary": "Alternate right and down moves as in the examples, blocking the rest.",
+      "timeComplexity": "O(m * n)",
+      "spaceComplexity": "O(m * n)",
+      "strengths": [
+        "Matches the examples"
+      ],
+      "weaknesses": [
+        "More index logic"
+      ],
+      "interviewRelevance": "Also valid."
+    }
+  ],
+  "canonicalCode": "class Solution:\n    def createGrid(self, m: int, n: int) -> list[str]:\n        grid = [['#'] * n for _ in range(m)]   # block everything: O(m * n)\n        for c in range(n):\n            grid[0][c] = '.'                    # go right along the top row\n        for r in range(m):\n            grid[r][n - 1] = '.'                # then down the right column\n        return [''.join(row) for row in grid]\n",
+  "commonMistakes": [
+    "Leaving extra free cells that create a second path.",
+    "Counting paths with DP instead of just constructing one.",
+    "Forgetting 1 x n or m x 1 grids, where the single row/column is the path."
+  ],
+  "edgeCases": [
+    "m = n = 1 -> [\".\"].",
+    "Single row.",
+    "Single column."
+  ],
+  "cards": [
+    {
+      "id": "recog-create-grid-with-exactly-one-path",
+      "category": "pattern",
+      "type": "free_recall",
+      "promptVariants": [
+        "Which technique solves this problem, and what in the statement or constraints points to it?",
+        "Name the technique you would use here and the clue in the problem that tells you.",
+        "What approach fits this problem, and which part of the statement gives it away?"
+      ],
+      "answer": "Direct construction: free one fixed path (top row then right column) and block every other cell. Clue: It asks you to return any grid with exactly one right/down path, so you may choose the path yourself and block every other cell.",
+      "keyPoints": [
+        "It asks you to return any grid with exactly one right/down path, so you may choose the path yourself and block every other cell."
+      ],
+      "explanation": "'Return any X' problems usually want a construction, not a search.",
+      "rubric": {
+        "technique": "Direct construction: free one fixed path (top row then right column) and block every other cell",
+        "aliases": [
+          "construct an l-shaped path",
+          "construction",
+          "free the top row and last column",
+          "staircase construction"
+        ],
+        "alsoValid": [
+          {
+            "name": "Generate grids and count paths with DP until one has exactly one path",
+            "note": "correct but searches for something you can write down directly"
+          }
+        ],
+        "clueTypes": [
+          "direct_simulation",
+          "math_observation"
+        ],
+        "clue": "It asks you to return any grid with exactly one right/down path, so you may choose the path yourself and block every other cell."
+      }
+    },
+    {
+      "id": "create-grid-with-exactly-one-path-insight-01",
+      "category": "main_insight",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "Why does blocking every cell outside the L give exactly one path?",
+        "Why is the top-row-plus-right-column grid correct?"
+      ],
+      "options": [
+        "The L leaves no choice at any free cell",
+        "Blocked cells can be walked through once",
+        "The examples prove every L shape is unique",
+        "Right/down paths always have exactly one route"
+      ],
+      "answer": "The L leaves no choice at any free cell",
+      "explanation": "From each free cell of the top row (except the corner) the down cell is blocked, so you must go right; on the right column the only move is down. There is never a choice.",
+      "incorrectOptionExplanations": {
+        "Blocked cells can be walked through once": "Obstacles are never walkable.",
+        "The examples prove every L shape is unique": "Examples do not prove anything; the no-choice argument does.",
+        "Right/down paths always have exactly one route": "An open grid has C(m + n - 2, m - 1) paths."
+      },
+      "enabled": true
+    },
+    {
+      "id": "create-grid-with-exactly-one-path-edge-01",
+      "category": "edge_case",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "m = 2, n = 2. What does the canonical code return?",
+        "For a 2 x 2 grid, what grid does the L construction build?"
+      ],
+      "options": [
+        "[\"..\", \"#.\"]",
+        "[\"..\", \"..\"]",
+        "[\".#\", \"..\"]",
+        "[\"#.\", \"..\"]"
+      ],
+      "answer": "[\"..\", \"#.\"]",
+      "explanation": "Top row free, right column free, the bottom-left cell blocked: one path right then down.",
+      "incorrectOptionExplanations": {
+        "[\"..\", \"..\"]": "All free gives two paths (right-down and down-right).",
+        "[\".#\", \"..\"]": "Also a valid single-path grid (down then right), but not what this construction builds.",
+        "[\"#.\", \"..\"]": "The start cell is blocked, so there is no path at all."
+      },
+      "enabled": true
+    },
+    {
+      "id": "create-grid-with-exactly-one-path-count-01",
+      "category": "why_not",
+      "type": "fill_blank",
+      "promptVariants": [
+        "An open m x n grid has C(m + n - 2, ___) right/down paths, which is why you must block cells.",
+        "Number of monotone paths in an open m x n grid: C(m + n - 2, ___)"
+      ],
+      "answer": "m - 1",
+      "acceptedAnswers": [
+        "m - 1",
+        "m-1",
+        "n - 1",
+        "n-1"
+      ],
+      "explanation": "A path is a sequence of m - 1 downs and n - 1 rights; choose where the downs go. C(m + n - 2, m - 1) = C(m + n - 2, n - 1).",
+      "enabled": true
+    },
+    {
+      "id": "create-grid-with-exactly-one-path-time-01",
+      "category": "time_complexity",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "What is the time complexity of the canonical code?",
+        "How much work does building the grid take?"
+      ],
+      "options": [
+        "O(m * n)",
+        "O(m + n)",
+        "O(C(m + n, m))",
+        "O(1)"
+      ],
+      "answer": "O(m * n)",
+      "explanation": "Every cell of the output has to be written.",
+      "incorrectOptionExplanations": {
+        "O(m + n)": "That is the path length, but all cells must be filled.",
+        "O(C(m + n, m))": "That counts paths; the construction never enumerates them.",
+        "O(1)": "The output size grows with m * n."
+      },
+      "enabled": true
+    },
+    {
+      "id": "create-grid-with-exactly-one-path-space-01",
+      "category": "space_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "The output grid itself takes O(___) space.",
+        "Space of the result: O(___)."
+      ],
+      "answer": "m * n",
+      "acceptedAnswers": [
+        "m*n",
+        "mn",
+        "n * m"
+      ],
+      "explanation": "There is no extra structure beyond the returned grid.",
+      "enabled": true
+    }
+  ],
+  "generatedAt": "2026-11-01T14:43:24Z"
+}

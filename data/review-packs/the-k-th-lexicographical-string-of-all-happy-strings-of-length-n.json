@@ -1,0 +1,226 @@
+{
+  "schemaVersion": 1,
+  "problemSlug": "the-k-th-lexicographical-string-of-all-happy-strings-of-length-n",
+  "summary": "Return the k-th lexicographically smallest string of length n over {a, b, c} with no two equal adjacent letters, or \"\" if there are fewer than k.",
+  "patterns": [
+    "Backtracking"
+  ],
+  "mainInsight": "Generate happy strings with backtracking, trying letters in order a, b, c and skipping the previous letter; this produces them in lexicographic order, so stop at the k-th leaf. There are 3 * 2^(n-1) strings, which also allows building the answer directly.",
+  "invariant": "Leaves are reached in lexicographic order because each position tries letters in increasing order.",
+  "canonicalApproach": "Backtracking in lexicographic order with early stop",
+  "approaches": [
+    {
+      "name": "Generate all, then sort",
+      "summary": "Build every happy string, sort, index k - 1.",
+      "timeComplexity": "O(n * 2^n log)",
+      "spaceComplexity": "O(n * 2^n)",
+      "strengths": [
+        "Simple"
+      ],
+      "weaknesses": [
+        "Generates and sorts everything"
+      ],
+      "interviewRelevance": "Baseline."
+    },
+    {
+      "name": "Backtracking in lexicographic order with early stop",
+      "summary": "DFS trying a, b, c in order, skipping the previous letter; return at the k-th complete string.",
+      "timeComplexity": "O(n * min(k, 3 * 2^(n-1)))",
+      "spaceComplexity": "O(n)",
+      "strengths": [
+        "Natural",
+        "Stops early"
+      ],
+      "weaknesses": [
+        "Still enumerates up to k strings"
+      ],
+      "interviewRelevance": "The expected answer."
+    },
+    {
+      "name": "Direct construction by counting",
+      "summary": "Each first letter leads 2^(n-1) strings and each later letter 2^(remaining); pick the block containing k at each position.",
+      "timeComplexity": "O(n)",
+      "spaceComplexity": "O(n)",
+      "strengths": [
+        "No enumeration"
+      ],
+      "weaknesses": [
+        "Needs the counting argument"
+      ],
+      "interviewRelevance": "Great follow-up."
+    }
+  ],
+  "canonicalCode": "class Solution:\n    def getHappyString(self, n: int, k: int) -> str:\n        path, found = [], []\n        count = 0\n\n        def dfs():\n            nonlocal count\n            if found:\n                return                       # early stop once the k-th string is found\n            if len(path) == n:\n                count += 1                   # leaves arrive in lexicographic order\n                if count == k:\n                    found.append(''.join(path))\n                return\n            for ch in 'abc':                 # increasing order -> lexicographic leaves\n                if path and path[-1] == ch:\n                    continue                 # no equal adjacent letters\n                path.append(ch)\n                dfs()\n                path.pop()\n\n        dfs()                                # visits at most k leaves, each path O(n) deep\n        return found[0] if found else ''\n",
+  "commonMistakes": [
+    "Generating all strings and sorting instead of relying on the generation order.",
+    "Not stopping after the k-th string.",
+    "Forgetting to return \"\" when there are fewer than k strings.",
+    "Off-by-one when counting (k is 1-indexed)."
+  ],
+  "edgeCases": [
+    "k > 3 * 2^(n-1) -> \"\".",
+    "n = 1.",
+    "k = 1 -> \"abab...\".",
+    "k = 3 * 2^(n-1) -> last string \"cbcb...\"."
+  ],
+  "cards": [
+    {
+      "id": "recog-the-k-th-lexicographical-string-of-all-happy-strings-of-length-n",
+      "category": "pattern",
+      "type": "free_recall",
+      "promptVariants": [
+        "Which technique solves this problem, and what in the statement or constraints points to it?",
+        "Name the technique you would use here and the clue in the problem that tells you.",
+        "What approach fits this problem, and which part of the statement gives it away?"
+      ],
+      "answer": "Backtracking that generates happy strings in lexicographic order and stops at the k-th. Clue: It asks for the k-th string in the lexicographically sorted list of all happy strings, and n is at most 10 with k at most 100, so enumerating them in order is feasible.",
+      "keyPoints": [
+        "It asks for the k-th string in the lexicographically sorted list of all happy strings, and n is at most 10 with k at most 100, so enumerating them in order is feasible."
+      ],
+      "explanation": "Enumerate-all with tiny n is backtracking; trying letters in increasing order makes the generation order already sorted.",
+      "rubric": {
+        "technique": "Backtracking that generates happy strings in lexicographic order and stops at the k-th",
+        "aliases": [
+          "backtracking",
+          "dfs in lexicographic order with early stop",
+          "direct construction by counting blocks of 2^(n-1)",
+          "combinatorial ranking"
+        ],
+        "alsoValid": [
+          {
+            "name": "Generate all happy strings, sort them, and index k - 1",
+            "note": "correct but builds and sorts every string"
+          }
+        ],
+        "clueTypes": [
+          "enumerate_all",
+          "small_constraints"
+        ],
+        "clue": "It asks for the k-th string in the lexicographically sorted list of all happy strings, and n is at most 10 with k at most 100, so enumerating them in order is feasible."
+      }
+    },
+    {
+      "id": "the-k-th-lexicographical-string-of-all-happy-strings-of-length-n-insight-01",
+      "category": "main_insight",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "Why is no sort needed after backtracking?",
+        "What guarantees the k-th generated string is the k-th smallest?"
+      ],
+      "options": [
+        "Letters are tried in order a, b, c at every position",
+        "Happy strings never share a common prefix",
+        "The DFS visits shorter strings before longer ones",
+        "Python's list append keeps strings sorted"
+      ],
+      "answer": "Letters are tried in order a, b, c at every position",
+      "explanation": "A DFS that tries choices in increasing order at every depth visits leaves in lexicographic order.",
+      "incorrectOptionExplanations": {
+        "Happy strings never share a common prefix": "Many share prefixes (aba and abc).",
+        "The DFS visits shorter strings before longer ones": "All counted strings have length n.",
+        "Python's list append keeps strings sorted": "Append keeps insertion order; generation order is what makes it sorted."
+      },
+      "enabled": true
+    },
+    {
+      "id": "the-k-th-lexicographical-string-of-all-happy-strings-of-length-n-edge-01",
+      "category": "edge_case",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "n = 2, k = 7. What is returned?",
+        "For n = 2, what is the 7th happy string?"
+      ],
+      "options": [
+        "\"\"",
+        "\"cb\"",
+        "\"ca\"",
+        "\"ab\""
+      ],
+      "answer": "\"\"",
+      "explanation": "There are 3 * 2^(2-1) = 6 happy strings of length 2 (ab, ac, ba, bc, ca, cb), fewer than 7.",
+      "incorrectOptionExplanations": {
+        "\"cb\"": "That is the 6th, the last one.",
+        "\"ca\"": "That is the 5th.",
+        "\"ab\"": "Wrapping around to the first string is not allowed."
+      },
+      "enabled": true
+    },
+    {
+      "id": "the-k-th-lexicographical-string-of-all-happy-strings-of-length-n-count-01",
+      "category": "main_insight",
+      "type": "fill_blank",
+      "promptVariants": [
+        "The number of happy strings of length n is 3 * ___.",
+        "Count of happy strings of length n: 3 * ___"
+      ],
+      "answer": "2^(n-1)",
+      "acceptedAnswers": [
+        "2^(n-1)",
+        "2**(n-1)",
+        "2^(n - 1)",
+        "2 ** (n - 1)"
+      ],
+      "explanation": "3 choices for the first letter, then 2 for each of the remaining n - 1 letters (anything except the previous one).",
+      "enabled": true
+    },
+    {
+      "id": "the-k-th-lexicographical-string-of-all-happy-strings-of-length-n-alt-01",
+      "category": "alternative_approach",
+      "type": "free_recall",
+      "promptVariants": [
+        "How can you build the k-th happy string in O(n) without enumerating?",
+        "Describe the counting construction for the k-th happy string."
+      ],
+      "answer": "Use k - 1 (0-indexed). The first letter splits the strings into 3 blocks of 2^(n-1): first letter = 'abc'[(k-1) // 2^(n-1)]. Then for each later position there are 2 allowed letters, each leading 2^(remaining) strings: pick the smaller allowed letter if the remaining index is in the lower half, else the larger, and subtract. Return \"\" if k > 3 * 2^(n-1).",
+      "keyPoints": [
+        "Blocks of size 2^(n-1) for the first letter",
+        "Two choices per later position, halving the block",
+        "Use 0-indexed k",
+        "Check k against the total count"
+      ],
+      "explanation": "Ranking/unranking by block sizes is the same idea as finding the k-th permutation.",
+      "enabled": true
+    },
+    {
+      "id": "the-k-th-lexicographical-string-of-all-happy-strings-of-length-n-time-01",
+      "category": "time_complexity",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "What is the time complexity of the canonical backtracking with early stop?",
+        "Derive the running time of the canonical code."
+      ],
+      "options": [
+        "O(n * min(k, 3 * 2^(n-1)))",
+        "O(3^n * n), all strings",
+        "O(n), one pass per letter",
+        "O(2^n * n log n), sort"
+      ],
+      "answer": "O(n * min(k, 3 * 2^(n-1)))",
+      "explanation": "It reaches at most k leaves before stopping (or all 3 * 2^(n-1) if k is too large), and each leaf costs O(n) for its path and join; the pruned branches are bounded by the same amount.",
+      "incorrectOptionExplanations": {
+        "O(3^n * n), all strings": "Equal neighbours are pruned, so each level branches 2 ways after the first, and the search stops early.",
+        "O(n), one pass per letter": "That is the counting construction, not backtracking.",
+        "O(2^n * n log n), sort": "That includes sorting, which is not needed."
+      },
+      "enabled": true
+    },
+    {
+      "id": "the-k-th-lexicographical-string-of-all-happy-strings-of-length-n-space-01",
+      "category": "space_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "The path and recursion depth use O(___) space.",
+        "Extra space of the backtracking solution: O(___)."
+      ],
+      "answer": "n",
+      "acceptedAnswers": [
+        "n",
+        "O(n)",
+        "linear"
+      ],
+      "explanation": "Only the current path of length n and the recursion stack are kept; strings are not stored.",
+      "enabled": true
+    }
+  ],
+  "generatedAt": "2026-11-01T11:51:22Z"
+}

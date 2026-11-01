@@ -1,0 +1,191 @@
+{
+  "schemaVersion": 1,
+  "problemSlug": "minimum-recolors-to-get-k-consecutive-black-blocks",
+  "summary": "Find the fewest white blocks to recolor black so that some k consecutive blocks are all black.",
+  "patterns": [
+    "Sliding Window"
+  ],
+  "mainInsight": "For any window of k blocks the cost is the number of 'W' in it. Slide a fixed window of size k, updating the white count by the block entering and the block leaving, and keep the minimum.",
+  "invariant": "When the window is [r - k + 1, r], whites equals the number of 'W' in it.",
+  "canonicalApproach": "Fixed-size sliding window counting whites",
+  "approaches": [
+    {
+      "name": "Count whites in every window",
+      "summary": "For each start, count 'W' in blocks[i:i+k].",
+      "timeComplexity": "O(n * k)",
+      "spaceComplexity": "O(1)",
+      "strengths": [
+        "Simple, fine for n <= 100"
+      ],
+      "weaknesses": [
+        "Recounts overlaps"
+      ],
+      "interviewRelevance": "Acceptable baseline."
+    },
+    {
+      "name": "Fixed-size sliding window counting whites",
+      "summary": "Add the entering block, remove the leaving one.",
+      "timeComplexity": "O(n)",
+      "spaceComplexity": "O(1)",
+      "strengths": [
+        "Linear"
+      ],
+      "weaknesses": [
+        "Window bookkeeping"
+      ],
+      "interviewRelevance": "The expected answer."
+    }
+  ],
+  "canonicalCode": "class Solution:\n    def minimumRecolors(self, blocks: str, k: int) -> int:\n        whites = blocks[:k].count('W')          # first window\n        best = whites\n        for r in range(k, len(blocks)):         # slide one block at a time: O(n)\n            whites += blocks[r] == 'W'          # block entering\n            whites -= blocks[r - k] == 'W'      # block leaving\n            best = min(best, whites)\n        return best\n",
+  "commonMistakes": [
+    "Counting black blocks and returning that instead of k - blacks.",
+    "Using a variable-size window (the window length is fixed at k).",
+    "Checking the answer before the first window is full."
+  ],
+  "edgeCases": [
+    "k = n: count all whites.",
+    "All black -> 0.",
+    "All white -> k."
+  ],
+  "cards": [
+    {
+      "id": "recog-minimum-recolors-to-get-k-consecutive-black-blocks",
+      "category": "pattern",
+      "type": "free_recall",
+      "promptVariants": [
+        "Which technique solves this problem, and what in the statement or constraints points to it?",
+        "Name the technique you would use here and the clue in the problem that tells you.",
+        "What approach fits this problem, and which part of the statement gives it away?"
+      ],
+      "answer": "Fixed-size sliding window of length k counting white blocks. Clue: It asks for k consecutive black blocks, so every candidate is a contiguous window of length k and its cost is the number of white blocks inside.",
+      "keyPoints": [
+        "It asks for k consecutive black blocks, so every candidate is a contiguous window of length k and its cost is the number of white blocks inside."
+      ],
+      "explanation": "Fixed-length contiguous segments with an additive cost are the textbook fixed-size sliding window.",
+      "rubric": {
+        "technique": "Fixed-size sliding window of length k counting white blocks",
+        "aliases": [
+          "sliding window",
+          "fixed window counting whites",
+          "prefix sums of white counts"
+        ],
+        "alsoValid": [
+          {
+            "name": "Count the whites in every window from scratch",
+            "note": "correct but recounts overlapping windows"
+          }
+        ],
+        "clueTypes": [
+          "contiguous"
+        ],
+        "clue": "It asks for k consecutive black blocks, so every candidate is a contiguous window of length k and its cost is the number of white blocks inside."
+      }
+    },
+    {
+      "id": "minimum-recolors-to-get-k-consecutive-black-blocks-edge-01",
+      "category": "edge_case",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "blocks = \"BWBWB\", k = 5. What is returned?",
+        "For blocks \"BWBWB\" and k = 5, how many recolors are needed?"
+      ],
+      "options": [
+        "2",
+        "3",
+        "0",
+        "1"
+      ],
+      "answer": "2",
+      "explanation": "k = n, so the only window is the whole string, which has two 'W'.",
+      "incorrectOptionExplanations": {
+        "3": "That counts the black blocks, not the whites.",
+        "0": "There is no run of five blacks yet.",
+        "1": "Both whites lie inside the only window."
+      },
+      "enabled": true
+    },
+    {
+      "id": "minimum-recolors-to-get-k-consecutive-black-blocks-impl-01",
+      "category": "implementation_detail",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "When the window moves from [r - k, r - 1] to [r - k + 1, r], which block leaves?",
+        "Which index is removed from the white count at step r?"
+      ],
+      "options": [
+        "blocks[r - k]",
+        "blocks[r - k + 1]",
+        "blocks[r - 1]",
+        "blocks[r]"
+      ],
+      "answer": "blocks[r - k]",
+      "explanation": "The new window starts at r - k + 1, so the block just before it, r - k, leaves.",
+      "incorrectOptionExplanations": {
+        "blocks[r - k + 1]": "That is the new first block; it stays in the window.",
+        "blocks[r - 1]": "That block is still inside the window.",
+        "blocks[r]": "That is the block entering the window, not the one leaving."
+      },
+      "enabled": true
+    },
+    {
+      "id": "minimum-recolors-to-get-k-consecutive-black-blocks-code-01",
+      "category": "code_reasoning",
+      "type": "code_question",
+      "promptVariants": [
+        "Your loop counts blacks and grows the window up to k. Why is the answer k - count, and when is it recorded?",
+        "Explain when this variable-shape loop records an answer."
+      ],
+      "answer": "count is the number of 'B' in [l, r]. Once the window exceeds k the left block is dropped, so after the shrink the window has exactly k blocks once r >= k - 1. Then the whites to recolor are k - count, recorded only when r - l + 1 == k.",
+      "keyPoints": [
+        "count tracks blacks",
+        "Window shrinks back to size k",
+        "Cost = k - blacks",
+        "Recorded only for full windows"
+      ],
+      "explanation": "Counting blacks or whites are mirror images; just be consistent about which one is the cost.",
+      "enabled": true,
+      "code": "for r in range(n):\n    if blocks[r] == 'B':\n        count += 1\n    if r - l + 1 > k:\n        if blocks[l] == 'B':\n            count -= 1\n        l += 1\n    if r - l + 1 == k:\n        ans = min(ans, k - count)"
+    },
+    {
+      "id": "minimum-recolors-to-get-k-consecutive-black-blocks-time-01",
+      "category": "time_complexity",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "What is the time complexity of the canonical code?",
+        "Derive the running time of the sliding window."
+      ],
+      "options": [
+        "O(n)",
+        "O(n * k)",
+        "O(n^2)",
+        "O(k)"
+      ],
+      "answer": "O(n)",
+      "explanation": "The first window costs O(k) <= O(n), then each slide is O(1).",
+      "incorrectOptionExplanations": {
+        "O(n * k)": "That is recounting each window.",
+        "O(n^2)": "Only the recount version with k close to n.",
+        "O(k)": "All n - k + 1 windows must be considered."
+      },
+      "enabled": true
+    },
+    {
+      "id": "minimum-recolors-to-get-k-consecutive-black-blocks-space-01",
+      "category": "space_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "The window keeps only a counter: O(___) extra space.",
+        "Extra space of the canonical code: O(___)."
+      ],
+      "answer": "1",
+      "acceptedAnswers": [
+        "1",
+        "constant",
+        "O(1)"
+      ],
+      "explanation": "blocks[:k] makes a k-length copy once; the sliding part is constant space (count over a range to avoid even that).",
+      "enabled": true
+    }
+  ],
+  "generatedAt": "2026-11-01T14:43:24Z"
+}

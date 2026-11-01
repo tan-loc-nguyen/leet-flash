@@ -1,0 +1,35 @@
+{
+  "leetcodeId": "2379",
+  "title": "Minimum Recolors to Get K Consecutive Black Blocks",
+  "slug": "minimum-recolors-to-get-k-consecutive-black-blocks",
+  "url": "https://leetcode.com/problems/minimum-recolors-to-get-k-consecutive-black-blocks/",
+  "difficulty": "Easy",
+  "status": "solved",
+  "premium": false,
+  "tags": [
+    "String",
+    "Sliding Window"
+  ],
+  "problemStatement": "You are given a 0-indexed string blocks of length n, where blocks[i] is either 'W' or 'B', representing the color of the i^th block. The characters 'W' and 'B' denote the colors white and black, respectively.\n\nYou are also given an integer k, which is the desired number of consecutive black blocks.\n\nIn one operation, you can recolor a white block such that it becomes a black block.\n\nReturn the minimum number of operations needed such that there is at least one occurrence of k consecutive black blocks.\n\nExample 1:\n\nInput: blocks = \"WBBWWBBWBW\", k = 7\nOutput: 3\nExplanation:\nOne way to achieve 7 consecutive black blocks is to recolor the 0th, 3rd, and 4th blocks\nso that blocks = \"BBBBBBBWBW\".\nIt can be shown that there is no way to achieve 7 consecutive black blocks in less than 3 operations.\nTherefore, we return 3.\n\nExample 2:\n\nInput: blocks = \"WBWBBBW\", k = 2\nOutput: 0\nExplanation:\nNo changes need to be made, since 2 consecutive black blocks already exist.\nTherefore, we return 0.\n\nConstraints:\n\n- n == blocks.length\n\n- 1 <= n <= 100\n\n- blocks[i] is either 'W' or 'B'.\n\n- 1 <= k <= n",
+  "constraints": [
+    "n == blocks.length",
+    "1 <= n <= 100",
+    "blocks[i] is either 'W' or 'B'.",
+    "1 <= k <= n"
+  ],
+  "hints": [
+    "Iterate through all possible consecutive substrings of k characters.",
+    "Find the number of changes for each substring to make all blocks black, and return the minimum of these."
+  ],
+  "acRate": 69.13,
+  "lastSubmittedAt": "2026-11-01T10:22:37Z",
+  "latestSubmission": {
+    "submissionId": "2186896033",
+    "language": "Python3",
+    "code": "class Solution:\n    def minimumRecolors(self, blocks: str, k: int) -> int:\n        n = len(blocks)\n        l = 0\n        count = 0\n        ans = n\n        for r in range(n):\n            if blocks[r] == 'B':\n                count += 1\n            \n            if r - l + 1 > k:\n                if blocks[l] == 'B':\n                    count -= 1\n                l += 1\n\n            if r - l + 1 == k:\n                ans = min(ans, k - count)\n        return ans"
+  },
+  "notes": [],
+  "source": "leetcode",
+  "importedAt": "2026-11-01T11:09:15Z",
+  "lastSyncedAt": "2026-11-01T11:09:15Z"
+}
