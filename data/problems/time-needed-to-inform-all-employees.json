@@ -1,0 +1,42 @@
+{
+  "leetcodeId": "1376",
+  "title": "Time Needed to Inform All Employees",
+  "slug": "time-needed-to-inform-all-employees",
+  "url": "https://leetcode.com/problems/time-needed-to-inform-all-employees/",
+  "difficulty": "Medium",
+  "status": "solved",
+  "premium": false,
+  "tags": [
+    "Tree",
+    "Depth-First Search",
+    "Breadth-First Search"
+  ],
+  "problemStatement": "A company has n employees with a unique ID for each employee from 0 to n - 1. The head of the company is the one with headID.\n\nEach employee has one direct manager given in the manager array where manager[i] is the direct manager of the i-th employee, manager[headID] = -1. Also, it is guaranteed that the subordination relationships have a tree structure.\n\nThe head of the company wants to inform all the company employees of an urgent piece of news. He will inform his direct subordinates, and they will inform their subordinates, and so on until all employees know about the urgent news.\n\nThe i-th employee needs informTime[i] minutes to inform all of his direct subordinates (i.e., After informTime[i] minutes, all his direct subordinates can start spreading the news).\n\nReturn the number of minutes needed to inform all the employees about the urgent news.\n\nExample 1:\n\nInput: n = 1, headID = 0, manager = [-1], informTime = [0]\nOutput: 0\nExplanation: The head of the company is the only employee in the company.\n\nExample 2:\n\nInput: n = 6, headID = 2, manager = [2,2,-1,2,2,2], informTime = [0,0,1,0,0,0]\nOutput: 1\nExplanation: The head of the company with id = 2 is the direct manager of all the employees in the company and needs 1 minute to inform them all.\nThe tree structure of the employees in the company is shown.\n\nConstraints:\n\n- 1 <= n <= 10^5\n\n- 0 <= headID < n\n\n- manager.length == n\n\n- 0 <= manager[i] < n\n\n- manager[headID] == -1\n\n- informTime.length == n\n\n- 0 <= informTime[i] <= 1000\n\n- informTime[i] == 0 if employee i has no subordinates.\n\n- It is guaranteed that all the employees can be informed.",
+  "constraints": [
+    "1 <= n <= 10^5",
+    "0 <= headID < n",
+    "manager.length == n",
+    "0 <= manager[i] < n",
+    "manager[headID] == -1",
+    "informTime.length == n",
+    "0 <= informTime[i] <= 1000",
+    "informTime[i] == 0 if employee i has no subordinates.",
+    "It is guaranteed that all the employees can be informed."
+  ],
+  "hints": [
+    "The company can be represented as a tree, headID is always the root.",
+    "Store for each node the time needed to be informed of the news.",
+    "Answer is the max time a leaf node needs to be informed."
+  ],
+  "acRate": 60.64,
+  "lastSubmittedAt": "2026-11-01T13:41:09Z",
+  "latestSubmission": {
+    "submissionId": "2187013121",
+    "language": "Python3",
+    "code": "class Solution:\n    def numOfMinutes(self, n: int, headID: int, manager: list[int], informTime: list[int]) -> int:\n        org = defaultdict(list)\n        for i in range(n):\n            if manager[i] != -1:\n                org[manager[i]].append(i)\n\n        def dfs(u):\n            if not org[u]:\n                return informTime[u]\n\n            time = 0\n            for v in org[u]:\n                time = max(time, dfs(v))\n            \n            return time + informTime[u]\n\n        return dfs(headID)\n"
+  },
+  "notes": [],
+  "source": "leetcode",
+  "importedAt": "2026-11-02T01:20:46Z",
+  "lastSyncedAt": "2026-11-02T01:20:46Z"
+}

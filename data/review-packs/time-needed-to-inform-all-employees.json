@@ -1,0 +1,216 @@
+{
+  "schemaVersion": 1,
+  "problemSlug": "time-needed-to-inform-all-employees",
+  "summary": "News spreads down a company tree from the head; each manager needs informTime[i] minutes to reach their direct reports. Return the minutes until everyone knows.",
+  "patterns": [
+    "Tree",
+    "DFS",
+    "BFS"
+  ],
+  "mainInsight": "An employee hears the news after the sum of informTime along the chain of managers above them. The answer is the largest such root-to-node sum, found by one DFS/BFS from the head over the children lists built from manager[].",
+  "invariant": "When employee u is popped, time[u] is the exact minute u is informed.",
+  "canonicalApproach": "Build children lists, then BFS/DFS accumulating time",
+  "approaches": [
+    {
+      "name": "Walk up from every employee",
+      "summary": "For each employee, sum informTime up the manager chain.",
+      "timeComplexity": "O(n * h)",
+      "spaceComplexity": "O(1)",
+      "strengths": [
+        "No extra structure"
+      ],
+      "weaknesses": [
+        "Repeats chains, O(n^2) on a long chain"
+      ],
+      "interviewRelevance": "Baseline (memoise to fix)."
+    },
+    {
+      "name": "Build children lists, then BFS/DFS accumulating time",
+      "summary": "Top-down traversal carrying the time so far.",
+      "timeComplexity": "O(n)",
+      "spaceComplexity": "O(n)",
+      "strengths": [
+        "One pass"
+      ],
+      "weaknesses": [
+        "Recursive DFS can hit Python's recursion limit on a chain of 10^5"
+      ],
+      "interviewRelevance": "The expected answer."
+    },
+    {
+      "name": "Memoised walk up",
+      "summary": "time(i) = informTime[manager[i]] + time(manager[i]), cached.",
+      "timeComplexity": "O(n)",
+      "spaceComplexity": "O(n)",
+      "strengths": [
+        "No children lists"
+      ],
+      "weaknesses": [
+        "Recursion depth again"
+      ],
+      "interviewRelevance": "Equally good."
+    }
+  ],
+  "personalSolution": {
+    "approach": "Children lists + recursive DFS returning the max time below each employee",
+    "timeComplexity": "O(n)",
+    "spaceComplexity": "O(n)",
+    "isOptimal": true,
+    "notes": "Optimal. The recursion depth equals the tree height, which can be 10^5 for a chain; Python's default limit is 1000, so an iterative BFS/stack version is safer outside LeetCode."
+  },
+  "canonicalCode": "from collections import deque\n\n\nclass Solution:\n    def numOfMinutes(self, n: int, headID: int, manager: list[int], informTime: list[int]) -> int:\n        children = [[] for _ in range(n)]\n        for emp, boss in enumerate(manager):     # build the tree: O(n)\n            if boss != -1:\n                children[boss].append(emp)\n        best = 0\n        queue = deque([(headID, 0)])             # (employee, minute they are informed)\n        while queue:                             # each employee once; iterative, no recursion limit\n            u, t = queue.popleft()\n            best = max(best, t)\n            for v in children[u]:\n                queue.append((v, t + informTime[u]))   # u needs informTime[u] to reach all reports\n        return best\n",
+  "commonMistakes": [
+    "Summing informTime over all employees instead of taking the max over paths.",
+    "Adding informTime of the employee being informed instead of their manager.",
+    "Recursive DFS that overflows Python's recursion limit on a long chain.",
+    "Scanning manager[] for children each time (O(n^2))."
+  ],
+  "edgeCases": [
+    "n = 1 -> 0.",
+    "A chain of n employees.",
+    "Head with all others as direct reports.",
+    "Two branches with different total times."
+  ],
+  "cards": [
+    {
+      "id": "recog-time-needed-to-inform-all-employees",
+      "category": "pattern",
+      "type": "free_recall",
+      "promptVariants": [
+        "Which technique solves this problem, and what in the statement or constraints points to it?",
+        "Name the technique you would use here and the clue in the problem that tells you.",
+        "What approach fits this problem, and which part of the statement gives it away?"
+      ],
+      "answer": "Tree traversal (DFS or BFS) from the head accumulating the inform time along each path, taking the maximum. Clue: The manager array forms a tree rooted at the head, and an employee is informed after the inform times of every manager above them add up.",
+      "keyPoints": [
+        "The manager array forms a tree rooted at the head, and an employee is informed after the inform times of every manager above them add up."
+      ],
+      "explanation": "The finishing time is the maximum root-to-node path sum, which one traversal from the root computes.",
+      "rubric": {
+        "technique": "Tree traversal (DFS or BFS) from the head accumulating the inform time along each path, taking the maximum",
+        "aliases": [
+          "dfs from the head",
+          "bfs accumulating time",
+          "max root-to-leaf path sum",
+          "memoised walk up the manager chain",
+          "top-down tree dfs"
+        ],
+        "alsoValid": [
+          {
+            "name": "For each employee, walk up the manager chain summing times without memoisation",
+            "note": "correct but repeats chains, quadratic on a long chain"
+          }
+        ],
+        "clueTypes": [
+          "tree_structure",
+          "dependencies_graph"
+        ],
+        "clue": "The manager array forms a tree rooted at the head, and an employee is informed after the inform times of every manager above them add up."
+      }
+    },
+    {
+      "id": "time-needed-to-inform-all-employees-insight-01",
+      "category": "main_insight",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "Why is the answer a maximum, not a sum, over employees?",
+        "What quantity does the answer equal?"
+      ],
+      "options": [
+        "Branches spread in parallel; the slowest path decides",
+        "Each manager informs reports one after another",
+        "Every employee must wait for the head to finish",
+        "The sum of informTime counts each manager once"
+      ],
+      "answer": "Branches spread in parallel; the slowest path decides",
+      "explanation": "Managers in different branches pass the news at the same time, so total time is the longest root-to-node path weighted by informTime.",
+      "incorrectOptionExplanations": {
+        "Each manager informs reports one after another": "All direct reports are informed together after informTime[i].",
+        "Every employee must wait for the head to finish": "Only the head's direct reports wait for the head; deeper waits add up per path.",
+        "The sum of informTime counts each manager once": "That sum overcounts managers on different branches, which run in parallel."
+      },
+      "enabled": true
+    },
+    {
+      "id": "time-needed-to-inform-all-employees-edge-01",
+      "category": "edge_case",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "n = 4, headID = 0, manager = [-1, 0, 0, 1], informTime = [2, 3, 0, 0]. Minutes?",
+        "Head 0 (2 min) manages 1 and 2; 1 (3 min) manages 3. Result?"
+      ],
+      "options": [
+        "5",
+        "2",
+        "3",
+        "7"
+      ],
+      "answer": "5",
+      "explanation": "Employee 3 hears at 2 + 3 = 5; employee 2 hears at 2. The maximum is 5.",
+      "incorrectOptionExplanations": {
+        "2": "That is when 1 and 2 hear it; 3 is later.",
+        "3": "That is only employee 1's inform time.",
+        "7": "No path adds more than 2 + 3."
+      },
+      "enabled": true
+    },
+    {
+      "id": "time-needed-to-inform-all-employees-code-01",
+      "category": "code_reasoning",
+      "type": "code_question",
+      "promptVariants": [
+        "Your recursive DFS is O(n). What can still go wrong in Python for n = 10^5?",
+        "Is this recursion safe for every valid input?"
+      ],
+      "answer": "A company shaped like a chain gives recursion depth n = 10^5, beyond Python's default limit of about 1000, so it can raise RecursionError (LeetCode raises the limit, but you should not rely on that). An iterative BFS or explicit stack carrying (employee, time) avoids it with the same O(n).",
+      "keyPoints": [
+        "Depth equals tree height",
+        "Chain of 10^5 exceeds the default limit",
+        "Use BFS or an explicit stack"
+      ],
+      "explanation": "Constraints of 10^5 plus a tree that can be a line is a cue to avoid recursion in Python.",
+      "enabled": true,
+      "code": "def dfs(u):\n    if not org[u]:\n        return informTime[u]\n    time = 0\n    for v in org[u]:\n        time = max(time, dfs(v))\n    return time + informTime[u]\nreturn dfs(headID)"
+    },
+    {
+      "id": "time-needed-to-inform-all-employees-time-01",
+      "category": "time_complexity",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "What is the time complexity of the canonical code?",
+        "Derive the running time of building children lists plus BFS."
+      ],
+      "options": [
+        "O(n)",
+        "O(n^2)",
+        "O(n log n)",
+        "O(n * h)"
+      ],
+      "answer": "O(n)",
+      "explanation": "Building the lists reads manager once; BFS enqueues each employee once and walks each edge once.",
+      "incorrectOptionExplanations": {
+        "O(n^2)": "That is scanning manager[] for children at each node.",
+        "O(n log n)": "No sorting or heap.",
+        "O(n * h)": "That is walking up from every employee without memo."
+      },
+      "enabled": true
+    },
+    {
+      "id": "time-needed-to-inform-all-employees-space-01",
+      "category": "space_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Children lists and the queue use O(___) space.",
+        "Space of the canonical code: O(___)."
+      ],
+      "answer": "n",
+      "acceptedAnswers": [
+        "n",
+        "O(n)"
+      ],
+      "explanation": "One list entry per employee and at most n queue entries.",
+      "enabled": true
+    }
+  ],
+  "generatedAt": "2026-11-02T01:31:37Z"
+}

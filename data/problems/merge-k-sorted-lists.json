@@ -24,14 +24,14 @@
   ],
   "hints": [],
   "acRate": 60.65,
-  "lastSubmittedAt": "2026-09-23T13:44:56Z",
+  "lastSubmittedAt": "2026-11-01T12:43:10Z",
   "latestSubmission": {
-    "submissionId": "2150930947",
+    "submissionId": "2186975306",
     "language": "Python3",
-    "code": "# Definition for singly-linked list.\n# class ListNode:\n#     def __init__(self, val=0, next=None):\n#         self.val = val\n#         self.next = next\nclass Solution:\n    ListNode.__lt__ = lambda self, other: self.val < other.val\n\n    def mergeKLists(self, lists: list[ListNode | None]) -> ListNode | None:\n        heap = []\n        for l in lists:\n            if l:\n                heap.append(l)\n        heapify(heap)\n\n        dummy = ListNode()\n        cur = dummy\n        while heap:\n            node = heappop(heap)\n            cur.next = node\n            cur = cur.next\n            if node.next:\n                heappush(heap, node.next)\n        return dummy.next"
+    "code": "# Definition for singly-linked list.\n# class ListNode:\n#     def __init__(self, val=0, next=None):\n#         self.val = val\n#         self.next = next\nclass Solution:\n    ListNode.__lt__ = lambda self, other: self.val < other.val\n    def mergeKLists(self, lists: list[ListNode | None]) -> ListNode | None:\n        dummy = ListNode()\n        cur = dummy\n\n        heap = []\n        for l in lists:\n            if l:\n                heap.append(l)\n        heapify(heap)\n\n        while heap:\n            node = heappop(heap)\n            cur.next = node\n            cur = cur.next\n            if node.next:\n                heappush(heap, node.next)\n\n        return dummy.next"
   },
   "notes": [],
   "source": "leetcode",
   "importedAt": "2026-10-01T13:44:25Z",
-  "lastSyncedAt": "2026-10-01T13:44:25Z"
+  "lastSyncedAt": "2026-11-02T01:20:46Z"
 }

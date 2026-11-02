@@ -1,0 +1,194 @@
+{
+  "schemaVersion": 1,
+  "problemSlug": "meeting-rooms",
+  "summary": "Decide whether one person can attend every meeting, i.e. no two intervals overlap (touching ends are fine).",
+  "patterns": [
+    "Intervals",
+    "Sorting"
+  ],
+  "mainInsight": "Sort by start time. If any two meetings overlap, then some pair of neighbours in sorted order overlaps, so it is enough to check each meeting's start against the previous meeting's end.",
+  "invariant": "After checking meeting i, meetings 0..i in sorted order are pairwise non-overlapping.",
+  "canonicalApproach": "Sort by start, compare neighbours",
+  "approaches": [
+    {
+      "name": "Compare every pair",
+      "summary": "Check all pairs for overlap.",
+      "timeComplexity": "O(n^2)",
+      "spaceComplexity": "O(1)",
+      "strengths": [
+        "Obvious"
+      ],
+      "weaknesses": [
+        "Quadratic for 10^4 meetings"
+      ],
+      "interviewRelevance": "Baseline."
+    },
+    {
+      "name": "Sort by start, compare neighbours",
+      "summary": "Sort, then require intervals[i][0] >= intervals[i - 1][1].",
+      "timeComplexity": "O(n log n)",
+      "spaceComplexity": "O(1) to O(n) for the sort",
+      "strengths": [
+        "Simple",
+        "Optimal"
+      ],
+      "weaknesses": [
+        "Must justify that neighbours suffice"
+      ],
+      "interviewRelevance": "The expected answer."
+    }
+  ],
+  "canonicalCode": "class Solution:\n    def canAttendMeetings(self, intervals: list[list[int]]) -> bool:\n        intervals.sort()                                   # by start time: O(n log n)\n        for i in range(1, len(intervals)):                 # neighbours only: O(n)\n            if intervals[i][0] < intervals[i - 1][1]:      # starts before the previous one ends\n                return False                               # (equal times touch, not overlap)\n        return True\n",
+  "commonMistakes": [
+    "Using <= instead of <, so meetings that touch at time t are wrongly reported as overlapping.",
+    "Not sorting first.",
+    "Failing on an empty list (0 meetings is allowed)."
+  ],
+  "edgeCases": [
+    "No meetings -> true.",
+    "One meeting -> true.",
+    "Back-to-back meetings [1,5],[5,8] -> true."
+  ],
+  "cards": [
+    {
+      "id": "recog-meeting-rooms",
+      "category": "pattern",
+      "type": "free_recall",
+      "promptVariants": [
+        "Which technique solves this problem, and what in the statement or constraints points to it?",
+        "Name the technique you would use here and the clue in the problem that tells you.",
+        "What approach fits this problem, and which part of the statement gives it away?"
+      ],
+      "answer": "Sort the intervals by start time and check each one against the previous end. Clue: The question is whether any two meeting intervals overlap, and the input intervals are not given in order.",
+      "keyPoints": [
+        "The question is whether any two meeting intervals overlap, and the input intervals are not given in order."
+      ],
+      "explanation": "Overlap questions on intervals become a neighbour check once the intervals are sorted by start.",
+      "rubric": {
+        "technique": "Sort the intervals by start time and check each one against the previous end",
+        "aliases": [
+          "sort by start and compare adjacent intervals",
+          "sorting plus linear scan",
+          "sort intervals then check overlap of neighbours",
+          "sweep line over start and end events"
+        ],
+        "alsoValid": [
+          {
+            "name": "Compare every pair of meetings for overlap",
+            "note": "correct but quadratic"
+          }
+        ],
+        "clueTypes": [
+          "intervals_overlap",
+          "sorted_or_ordered"
+        ],
+        "clue": "The question is whether any two meeting intervals overlap, and the input intervals are not given in order."
+      }
+    },
+    {
+      "id": "meeting-rooms-insight-01",
+      "category": "main_insight",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "After sorting by start, why is checking neighbours enough?",
+        "Why can't two non-adjacent meetings overlap while every neighbour pair is fine?"
+      ],
+      "options": [
+        "If i and j > i + 1 overlap, so do i + 1 and i",
+        "Sorted intervals can never overlap at all",
+        "Every meeting has the same length after sorting",
+        "Only the first and last meeting can overlap"
+      ],
+      "answer": "If i and j > i + 1 overlap, so do i + 1 and i",
+      "explanation": "Meeting i + 1 starts no later than j, so if j starts before i ends, so does i + 1. Any overlap shows up between some neighbours.",
+      "incorrectOptionExplanations": {
+        "Sorted intervals can never overlap at all": "Sorting reorders them; overlaps remain.",
+        "Every meeting has the same length after sorting": "Lengths are unchanged and arbitrary.",
+        "Only the first and last meeting can overlap": "Any two meetings can overlap."
+      },
+      "enabled": true
+    },
+    {
+      "id": "meeting-rooms-edge-01",
+      "category": "edge_case",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "intervals = [[1, 5], [5, 8], [8, 9]]. Result?",
+        "Three back-to-back meetings [1,5], [5,8], [8,9]: can one person attend all?"
+      ],
+      "options": [
+        "true",
+        "false",
+        "false, two meetings share a time",
+        "true only if sorted first"
+      ],
+      "answer": "true",
+      "explanation": "A meeting ending at t and one starting at t do not overlap, so the check must be start < previous end, not <=.",
+      "incorrectOptionExplanations": {
+        "false": "Touching endpoints are explicitly allowed.",
+        "false, two meetings share a time": "Sharing the boundary time is not an overlap here.",
+        "true only if sorted first": "The answer does not depend on input order; sorting is just how we check."
+      },
+      "enabled": true
+    },
+    {
+      "id": "meeting-rooms-code-01",
+      "category": "code_reasoning",
+      "type": "code_question",
+      "promptVariants": [
+        "Your loop starts with curEnd = 0 and special-cases i == 0. Is that needed?",
+        "What do the `i == 0` check and curEnd = 0 do in this solution?"
+      ],
+      "answer": "Since starts are >= 0, curEnd = 0 already lets the first meeting through, so `i == 0` is redundant. Looping from 1 and comparing with intervals[i - 1][1] removes both the special case and the extra variable.",
+      "keyPoints": [
+        "curEnd = 0 already admits the first meeting",
+        "i == 0 is redundant",
+        "Compare with the previous interval's end directly"
+      ],
+      "explanation": "Removing special cases is part of writing interview-clean code.",
+      "enabled": true,
+      "code": "intervals.sort(key=lambda i: i[0])\ncurEnd = 0\nfor i in range(len(intervals)):\n    if i == 0 or curEnd <= intervals[i][0]:\n        curEnd = intervals[i][1]\n    else:\n        return False\nreturn True"
+    },
+    {
+      "id": "meeting-rooms-time-01",
+      "category": "time_complexity",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "What is the time complexity of the canonical code?",
+        "Derive the running time of sort plus neighbour scan."
+      ],
+      "options": [
+        "O(n log n)",
+        "O(n)",
+        "O(n^2)",
+        "O(log n)"
+      ],
+      "answer": "O(n log n)",
+      "explanation": "The sort dominates; the scan is linear.",
+      "incorrectOptionExplanations": {
+        "O(n)": "Ignores the sort.",
+        "O(n^2)": "That is the all-pairs check.",
+        "O(log n)": "Every interval must be read."
+      },
+      "enabled": true
+    },
+    {
+      "id": "meeting-rooms-space-01",
+      "category": "space_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Apart from the sort's own memory, the scan uses O(___) space.",
+        "Extra space of the neighbour scan: O(___)."
+      ],
+      "answer": "1",
+      "acceptedAnswers": [
+        "1",
+        "constant",
+        "O(1)"
+      ],
+      "explanation": "Only a loop index; Timsort may use O(n) auxiliary space.",
+      "enabled": true
+    }
+  ],
+  "generatedAt": "2026-11-02T01:31:37Z"
+}

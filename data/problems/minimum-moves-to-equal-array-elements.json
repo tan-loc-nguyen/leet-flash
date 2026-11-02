@@ -18,7 +18,7 @@
     "The answer is guaranteed to fit in a 32-bit integer."
   ],
   "hints": [],
-  "acRate": 61.35,
+  "acRate": 63.62,
   "lastSubmittedAt": "2026-11-01T09:33:02Z",
   "latestSubmission": {
     "submissionId": "2186869938",
@@ -28,5 +28,5 @@
   "notes": [],
   "source": "leetcode",
   "importedAt": "2026-11-01T11:09:15Z",
-  "lastSyncedAt": "2026-11-01T11:09:15Z"
+  "lastSyncedAt": "2026-11-02T01:20:46Z"
 }

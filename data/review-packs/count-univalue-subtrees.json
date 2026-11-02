@@ -1,0 +1,195 @@
+{
+  "schemaVersion": 1,
+  "problemSlug": "count-univalue-subtrees",
+  "summary": "Count the subtrees of a binary tree whose nodes all have the same value.",
+  "patterns": [
+    "Tree",
+    "DFS"
+  ],
+  "mainInsight": "Whether a subtree is uni-value depends only on its children: both child subtrees must be uni-value and each existing child must equal the node's value. A post-order DFS returns that boolean and counts the trues.",
+  "invariant": "dfs(node) returns True exactly when the subtree rooted at node is uni-value, and the counter has counted every uni-value subtree inside it.",
+  "canonicalApproach": "Post-order DFS returning is-uni-value",
+  "approaches": [
+    {
+      "name": "Check every subtree from scratch",
+      "summary": "For each node, traverse its subtree comparing values.",
+      "timeComplexity": "O(n^2)",
+      "spaceComplexity": "O(h)",
+      "strengths": [
+        "Direct"
+      ],
+      "weaknesses": [
+        "Re-traverses subtrees"
+      ],
+      "interviewRelevance": "Baseline."
+    },
+    {
+      "name": "Post-order DFS returning is-uni-value",
+      "summary": "Children report first; the node combines their answers.",
+      "timeComplexity": "O(n)",
+      "spaceComplexity": "O(h)",
+      "strengths": [
+        "One pass"
+      ],
+      "weaknesses": [
+        "Must evaluate both children before combining"
+      ],
+      "interviewRelevance": "The expected answer."
+    }
+  ],
+  "canonicalCode": "class Solution:\n    def countUnivalSubtrees(self, root: 'TreeNode | None') -> int:\n        count = 0\n\n        def dfs(node) -> bool:\n            nonlocal count\n            if not node:\n                return True                     # empty subtree does not break uni-value\n            left = dfs(node.left)               # always visit both children (post-order)\n            right = dfs(node.right)\n            if not (left and right):\n                return False\n            if node.left and node.left.val != node.val:\n                return False\n            if node.right and node.right.val != node.val:\n                return False\n            count += 1                          # this subtree is uni-value\n            return True\n\n        dfs(root)                               # each node visited once\n        return count\n",
+  "commonMistakes": [
+    "Writing `dfs(node.left) and dfs(node.right)`, which short-circuits and skips counting in the right subtree.",
+    "Comparing the node only with the children's subtrees' flags, not their values.",
+    "Forgetting that every leaf is a uni-value subtree.",
+    "Treating a missing child as a mismatch."
+  ],
+  "edgeCases": [
+    "Empty tree -> 0.",
+    "Single node -> 1.",
+    "All values equal -> n.",
+    "Leaves equal to each other but not to their parent."
+  ],
+  "cards": [
+    {
+      "id": "recog-count-univalue-subtrees",
+      "category": "pattern",
+      "type": "free_recall",
+      "promptVariants": [
+        "Which technique solves this problem, and what in the statement or constraints points to it?",
+        "Name the technique you would use here and the clue in the problem that tells you.",
+        "What approach fits this problem, and which part of the statement gives it away?"
+      ],
+      "answer": "Post-order DFS where each node returns whether its subtree is uni-value. Clue: A subtree is uni-value only if all of its nodes share one value, which can be decided from the node's value and whether its two child subtrees are uni-value.",
+      "keyPoints": [
+        "A subtree is uni-value only if all of its nodes share one value, which can be decided from the node's value and whether its two child subtrees are uni-value."
+      ],
+      "explanation": "Subtree properties that combine from children call for a post-order (bottom-up) DFS.",
+      "rubric": {
+        "technique": "Post-order DFS where each node returns whether its subtree is uni-value",
+        "aliases": [
+          "post-order dfs",
+          "bottom-up dfs returning a boolean",
+          "tree dp with is-unival flag",
+          "postorder recursion counting unival subtrees"
+        ],
+        "alsoValid": [
+          {
+            "name": "For every node, traverse its whole subtree to check all values",
+            "note": "correct but quadratic in the worst case"
+          }
+        ],
+        "clueTypes": [
+          "tree_structure"
+        ],
+        "clue": "A subtree is uni-value only if all of its nodes share one value, which can be decided from the node's value and whether its two child subtrees are uni-value."
+      }
+    },
+    {
+      "id": "count-univalue-subtrees-impl-01",
+      "category": "implementation_detail",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "What breaks if you write `if dfs(node.left) and dfs(node.right) and ...`?",
+        "Why must both child calls run before combining?"
+      ],
+      "options": [
+        "`and` skips counting on the right",
+        "The left call would run twice",
+        "It changes the post-order into pre-order",
+        "It returns True for an empty tree twice"
+      ],
+      "answer": "`and` skips counting on the right",
+      "explanation": "If the left subtree is not uni-value, `and` never calls dfs(node.right), so uni-value subtrees on the right are never counted.",
+      "incorrectOptionExplanations": {
+        "The left call would run twice": "It runs once; the right one may not run at all.",
+        "It changes the post-order into pre-order": "Order of visits is not the issue; skipped visits are.",
+        "It returns True for an empty tree twice": "Empty subtrees return True once each; unrelated."
+      },
+      "enabled": true
+    },
+    {
+      "id": "count-univalue-subtrees-edge-01",
+      "category": "edge_case",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "root = [1, 2, 2]. How many uni-value subtrees?",
+        "A root 1 with two leaf children both 2. Count?"
+      ],
+      "options": [
+        "2",
+        "3",
+        "1",
+        "0"
+      ],
+      "answer": "2",
+      "explanation": "Each leaf is a uni-value subtree. The whole tree has values 1 and 2, so it is not.",
+      "incorrectOptionExplanations": {
+        "3": "The root's subtree mixes 1 and 2.",
+        "1": "Both leaves count separately.",
+        "0": "Every leaf is uni-value."
+      },
+      "enabled": true
+    },
+    {
+      "id": "count-univalue-subtrees-code-01",
+      "category": "code_reasoning",
+      "type": "code_question",
+      "promptVariants": [
+        "Your code calls dfs on both children before the big if. Why does that order matter?",
+        "Explain why isLeftUni and isRightUni are computed first."
+      ],
+      "answer": "Both recursive calls must run so every subtree below is counted, even when one side fails. Storing them in variables first avoids the short-circuit of `and`. Then the node is uni-value if both flags are true and each existing child has the same value.",
+      "keyPoints": [
+        "Both children always visited",
+        "Avoids short-circuit skipping",
+        "Then compare values of existing children"
+      ],
+      "explanation": "Side effects inside recursive calls (here, the counter) make evaluation order important.",
+      "enabled": true,
+      "code": "isLeftUni = dfs(root.left)\nisRightUni = dfs(root.right)\nif isLeftUni and isRightUni and (root.left is None or root.val == root.left.val) and (root.right is None or root.val == root.right.val):\n    ans += 1\n    return True\nreturn False"
+    },
+    {
+      "id": "count-univalue-subtrees-time-01",
+      "category": "time_complexity",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "What is the time complexity of the canonical code?",
+        "Derive the running time of the post-order DFS."
+      ],
+      "options": [
+        "O(n)",
+        "O(n log n)",
+        "O(n^2)",
+        "O(h)"
+      ],
+      "answer": "O(n)",
+      "explanation": "Each node is visited once and does O(1) comparisons.",
+      "incorrectOptionExplanations": {
+        "O(n log n)": "No sorting or halving.",
+        "O(n^2)": "That is re-checking each subtree from scratch.",
+        "O(h)": "That is the stack space."
+      },
+      "enabled": true
+    },
+    {
+      "id": "count-univalue-subtrees-space-01",
+      "category": "space_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Recursion depth makes the space O(___).",
+        "Extra space of the DFS: O(___), the tree height."
+      ],
+      "answer": "h",
+      "acceptedAnswers": [
+        "h",
+        "height",
+        "O(h)",
+        "tree height"
+      ],
+      "explanation": "log n for a balanced tree, n for a skewed one.",
+      "enabled": true
+    }
+  ],
+  "generatedAt": "2026-11-02T01:31:37Z"
+}

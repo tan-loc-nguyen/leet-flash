@@ -1,0 +1,32 @@
+{
+  "leetcodeId": "366",
+  "title": "Find Leaves of Binary Tree",
+  "slug": "find-leaves-of-binary-tree",
+  "url": "https://leetcode.com/problems/find-leaves-of-binary-tree/",
+  "difficulty": "Medium",
+  "status": "solved",
+  "premium": true,
+  "tags": [
+    "Tree",
+    "Depth-First Search",
+    "Binary Tree",
+    "DP on Trees"
+  ],
+  "problemStatement": "Given the root of a binary tree, collect a tree's nodes as if you were doing this:\n\n- Collect all the leaf nodes.\n\n- Remove all the leaf nodes.\n\n- Repeat until the tree is empty.\n\nExample 1:\n\nInput: root = [1,2,3,4,5]\nOutput: [[4,5,3],[2],[1]]\nExplanation:\n[[3,5,4],[2],[1]] and [[3,4,5],[2],[1]] are also considered correct answers since per each level it does not matter the order on which elements are returned.\n\nExample 2:\n\nInput: root = [1]\nOutput: [[1]]\n\nConstraints:\n\n- The number of nodes in the tree is in the range [1, 100].\n\n- -100 <= Node.val <= 100",
+  "constraints": [
+    "The number of nodes in the tree is in the range [1, 100].",
+    "-100 <= Node.val <= 100"
+  ],
+  "hints": [],
+  "acRate": 81.39,
+  "lastSubmittedAt": "2026-11-01T14:05:47Z",
+  "latestSubmission": {
+    "submissionId": "2187030945",
+    "language": "Python3",
+    "code": "# Definition for a binary tree node.\n# class TreeNode:\n#     def __init__(self, val=0, left=None, right=None):\n#         self.val = val\n#         self.left = left\n#         self.right = right\nclass Solution:\n    def findLeaves(self, root: TreeNode | None) -> list[list[int]]:\n        mark = defaultdict(list)\n\n        def dfs(root):\n            if not root:\n                return 0\n            \n            left = dfs(root.left)\n            right = dfs(root.right)\n            height = max(left, right) + 1\n            mark[height].append(root.val)\n            return height\n        dfs(root)\n        return [leaves for leaves in mark.values()]"
+  },
+  "notes": [],
+  "source": "leetcode",
+  "importedAt": "2026-11-02T01:20:46Z",
+  "lastSyncedAt": "2026-11-02T01:20:46Z"
+}
