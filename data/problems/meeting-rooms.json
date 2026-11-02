@@ -1,0 +1,32 @@
+{
+  "leetcodeId": "252",
+  "title": "Meeting Rooms",
+  "slug": "meeting-rooms",
+  "url": "https://leetcode.com/problems/meeting-rooms/",
+  "difficulty": "Easy",
+  "status": "solved",
+  "premium": true,
+  "tags": [
+    "Array",
+    "Sorting",
+    "Quicksort"
+  ],
+  "problemStatement": "You are given an array of meeting times intervals where intervals[i] = [starti, endi].\n\nA person can attend all meetings if no two meeting intervals overlap. Meetings ending at time t and starting at time t do not overlap.\n\n​​​​​​​Return true if a person can attend all meetings. Otherwise, return false.\n\nExample 1:\n\nInput: intervals = [[0,30],[5,10],[15,20]]\nOutput: false\n\nExample 2:\n\nInput: intervals = [[7,10],[2,4]]\nOutput: true\n\nConstraints:\n\n- 0 <= intervals.length <= 10^4\n\n- intervals[i].length == 2\n\n- 0 <= starti < endi <= 10^6",
+  "constraints": [
+    "0 <= intervals.length <= 10^4",
+    "intervals[i].length == 2",
+    "0 <= starti < endi <= 10^6"
+  ],
+  "hints": [],
+  "acRate": 59.63,
+  "lastSubmittedAt": "2026-11-01T12:12:14Z",
+  "latestSubmission": {
+    "submissionId": "2186956946",
+    "language": "Python3",
+    "code": "class Solution:\n    def canAttendMeetings(self, intervals: list[list[int]]) -> bool:\n        intervals.sort(key=lambda i: i[0])\n        curEnd = 0\n        for i in range(len(intervals)):\n            if i == 0 or curEnd <= intervals[i][0]:\n                curEnd = intervals[i][1]\n            else:\n                return False\n        \n        return True"
+  },
+  "notes": [],
+  "source": "leetcode",
+  "importedAt": "2026-11-02T01:20:46Z",
+  "lastSyncedAt": "2026-11-02T01:20:46Z"
+}

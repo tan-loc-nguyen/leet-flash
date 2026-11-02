@@ -1,0 +1,32 @@
+{
+  "leetcodeId": "250",
+  "title": "Count Univalue Subtrees",
+  "slug": "count-univalue-subtrees",
+  "url": "https://leetcode.com/problems/count-univalue-subtrees/",
+  "difficulty": "Medium",
+  "status": "solved",
+  "premium": true,
+  "tags": [
+    "Tree",
+    "Depth-First Search",
+    "Binary Tree",
+    "DP on Trees"
+  ],
+  "problemStatement": "Given the root of a binary tree, return the number of uni-value subtrees.\n\nA uni-value subtree means all nodes of the subtree have the same value.\n\nExample 1:\n\nInput: root = [5,1,5,5,5,null,5]\nOutput: 4\n\nExample 2:\n\nInput: root = []\nOutput: 0\n\nExample 3:\n\nInput: root = [5,5,5,5,5,null,5]\nOutput: 6\n\nConstraints:\n\n- The number of the node in the tree will be in the range [0, 1000].\n\n- -1000 <= Node.val <= 1000",
+  "constraints": [
+    "The number of the node in the tree will be in the range [0, 1000].",
+    "-1000 <= Node.val <= 1000"
+  ],
+  "hints": [],
+  "acRate": 57.64,
+  "lastSubmittedAt": "2026-11-01T13:04:44Z",
+  "latestSubmission": {
+    "submissionId": "2186988783",
+    "language": "Python3",
+    "code": "# Definition for a binary tree node.\n# class TreeNode:\n#     def __init__(self, val=0, left=None, right=None):\n#         self.val = val\n#         self.left = left\n#         self.right = right\nclass Solution:\n    def countUnivalSubtrees(self, root: Optional[TreeNode]) -> int:\n        ans = 0\n\n        def dfs(root):\n            nonlocal ans\n            if not root:\n                return True\n            \n            isLeftUni = dfs(root.left)\n            isRightUni = dfs(root.right)\n\n            if isLeftUni and isRightUni and (root.left is None or root.val == root.left.val) and (root.right is None or root.val == root.right.val):\n                ans += 1\n                return True\n\n            return False\n        \n        dfs(root)\n        return ans"
+  },
+  "notes": [],
+  "source": "leetcode",
+  "importedAt": "2026-11-02T01:20:46Z",
+  "lastSyncedAt": "2026-11-02T01:20:46Z"
+}

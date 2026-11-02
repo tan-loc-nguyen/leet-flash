@@ -1,0 +1,220 @@
+{
+  "schemaVersion": 1,
+  "problemSlug": "all-nodes-distance-k-in-binary-tree",
+  "summary": "Return the values of all nodes exactly k edges away from a target node in a binary tree.",
+  "patterns": [
+    "BFS",
+    "Tree",
+    "Graph"
+  ],
+  "mainInsight": "Distance can go up through the parent as well as down, so treat the tree as an undirected graph: record each node's parent (or build adjacency), then BFS from the target for k levels.",
+  "invariant": "At the start of BFS level d, the queue holds exactly the nodes at distance d from the target.",
+  "canonicalApproach": "Parent map + BFS from target",
+  "approaches": [
+    {
+      "name": "Parent map + BFS from target",
+      "summary": "DFS to record parents, then BFS over left, right and parent.",
+      "timeComplexity": "O(n)",
+      "spaceComplexity": "O(n)",
+      "strengths": [
+        "Clear",
+        "Uses node objects directly"
+      ],
+      "weaknesses": [
+        "Two passes"
+      ],
+      "interviewRelevance": "The expected answer."
+    },
+    {
+      "name": "Adjacency list + BFS",
+      "summary": "Build an undirected graph keyed by value, then BFS.",
+      "timeComplexity": "O(n)",
+      "spaceComplexity": "O(n)",
+      "strengths": [
+        "Generic graph view"
+      ],
+      "weaknesses": [
+        "Relies on unique values"
+      ],
+      "interviewRelevance": "Equally good."
+    },
+    {
+      "name": "Single DFS with distances to target",
+      "summary": "DFS returns distance to the target; collect nodes at k - d in the other subtree.",
+      "timeComplexity": "O(n)",
+      "spaceComplexity": "O(h)",
+      "strengths": [
+        "No extra map"
+      ],
+      "weaknesses": [
+        "Tricky to get right"
+      ],
+      "interviewRelevance": "Advanced alternative."
+    }
+  ],
+  "personalSolution": {
+    "approach": "Undirected adjacency list keyed by value + BFS from target",
+    "timeComplexity": "O(n)",
+    "spaceComplexity": "O(n)",
+    "isOptimal": true,
+    "notes": "Optimal. Keying by value works because values are unique; if k exceeds the tree height, BFS empties and you correctly return []."
+  },
+  "canonicalCode": "from collections import deque\n\n\nclass Solution:\n    def distanceK(self, root: 'TreeNode', target: 'TreeNode', k: int) -> list[int]:\n        parent = {root: None}\n        stack = [root]\n        while stack:                              # record every node's parent: O(n)\n            node = stack.pop()\n            for child in (node.left, node.right):\n                if child:\n                    parent[child] = node\n                    stack.append(child)\n        queue = deque([target])\n        seen = {target}\n        for _ in range(k):                        # expand k BFS levels\n            for _ in range(len(queue)):\n                node = queue.popleft()\n                for nxt in (node.left, node.right, parent[node]):   # up as well as down\n                    if nxt and nxt not in seen:\n                        seen.add(nxt)\n                        queue.append(nxt)\n        return [node.val for node in queue]       # exactly the nodes at distance k\n",
+  "commonMistakes": [
+    "Only searching down from the target, missing nodes reached through the parent.",
+    "No visited set, so the BFS bounces between child and parent.",
+    "Not handling k larger than any distance (should return [])."
+  ],
+  "edgeCases": [
+    "k = 0 -> [target.val].",
+    "Target is the root.",
+    "k larger than the tree's diameter -> [].",
+    "Single node."
+  ],
+  "cards": [
+    {
+      "id": "recog-all-nodes-distance-k-in-binary-tree",
+      "category": "pattern",
+      "type": "free_recall",
+      "promptVariants": [
+        "Which technique solves this problem, and what in the statement or constraints points to it?",
+        "Name the technique you would use here and the clue in the problem that tells you.",
+        "What approach fits this problem, and which part of the statement gives it away?"
+      ],
+      "answer": "Turn the tree into an undirected graph (parent pointers) and BFS k levels from the target. Clue: Nodes at distance k from the target can lie above it as well as below, so moves along parent edges count, and you need every node exactly k steps away.",
+      "keyPoints": [
+        "Nodes at distance k from the target can lie above it as well as below, so moves along parent edges count, and you need every node exactly k steps away."
+      ],
+      "explanation": "Distance in edges from one node in all directions is a BFS once the tree is treated as an undirected graph.",
+      "rubric": {
+        "technique": "Turn the tree into an undirected graph (parent pointers) and BFS k levels from the target",
+        "aliases": [
+          "parent map plus bfs",
+          "build adjacency list and bfs",
+          "bfs from target over children and parent",
+          "dfs computing distance to target and collecting at k - d"
+        ],
+        "alsoValid": [
+          {
+            "name": "For every node, compute its distance to the target separately",
+            "note": "correct but quadratic"
+          }
+        ],
+        "clueTypes": [
+          "shortest_steps",
+          "tree_structure"
+        ],
+        "clue": "Nodes at distance k from the target can lie above it as well as below, so moves along parent edges count, and you need every node exactly k steps away."
+      }
+    },
+    {
+      "id": "all-nodes-distance-k-in-binary-tree-whynot-01",
+      "category": "why_not",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "Why is a DFS down from the target not enough?",
+        "What does searching only target's subtree miss?"
+      ],
+      "options": [
+        "Nodes reached through the target's parent",
+        "Nodes at depth exactly k in the whole tree",
+        "Leaves that are k levels below the target",
+        "Nothing, the subtree holds all answers"
+      ],
+      "answer": "Nodes reached through the target's parent",
+      "explanation": "In example 1, node 1 is at distance 2 from target 5 via the root; it is not in 5's subtree.",
+      "incorrectOptionExplanations": {
+        "Nodes at depth exactly k in the whole tree": "Depth from the root is a different question.",
+        "Leaves that are k levels below the target": "Those are found by a downward search.",
+        "Nothing, the subtree holds all answers": "Example 1 already includes node 1 outside the subtree."
+      },
+      "enabled": true
+    },
+    {
+      "id": "all-nodes-distance-k-in-binary-tree-impl-01",
+      "category": "implementation_detail",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "Why does the BFS need a seen set even though a tree has no cycles?",
+        "What happens without the seen set?"
+      ],
+      "options": [
+        "Parent edges let BFS walk back up",
+        "Trees can have cycles through the root",
+        "The parent map might contain duplicate keys",
+        "It is needed only when values repeat"
+      ],
+      "answer": "Parent edges let BFS walk back up",
+      "explanation": "Each edge can now be crossed in both directions; without seen, a node revisits its parent and itself, producing wrong levels.",
+      "incorrectOptionExplanations": {
+        "Trees can have cycles through the root": "Trees never have cycles.",
+        "The parent map might contain duplicate keys": "Each node has one parent entry.",
+        "It is needed only when values repeat": "Values are unique; revisits come from undirected edges."
+      },
+      "enabled": true
+    },
+    {
+      "id": "all-nodes-distance-k-in-binary-tree-edge-01",
+      "category": "edge_case",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "root = [0, 1, null, 3, 2], target = 2, k = 1. Result?",
+        "Node 1 is the left child of 0 and has children 3 and 2. Target 2, k = 1?"
+      ],
+      "options": [
+        "[1]",
+        "[3]",
+        "[0]",
+        "[1, 3]"
+      ],
+      "answer": "[1]",
+      "explanation": "Node 2 is a leaf, so its only neighbour is its parent 1.",
+      "incorrectOptionExplanations": {
+        "[3]": "3 is a sibling, at distance 2.",
+        "[0]": "0 is the grandparent, distance 2.",
+        "[1, 3]": "Only the parent is one edge away."
+      },
+      "enabled": true
+    },
+    {
+      "id": "all-nodes-distance-k-in-binary-tree-time-01",
+      "category": "time_complexity",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "What is the time complexity of the canonical code?",
+        "Derive the running time of parent map + BFS."
+      ],
+      "options": [
+        "O(n)",
+        "O(n * k)",
+        "O(n log n)",
+        "O(k)"
+      ],
+      "answer": "O(n)",
+      "explanation": "Building the parent map visits each node once, and BFS enqueues each node at most once.",
+      "incorrectOptionExplanations": {
+        "O(n * k)": "Each node is enqueued once, not once per level.",
+        "O(n log n)": "No sorting or heaps.",
+        "O(k)": "The parent pass alone reads all n nodes."
+      },
+      "enabled": true
+    },
+    {
+      "id": "all-nodes-distance-k-in-binary-tree-space-01",
+      "category": "space_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "The parent map and seen set use O(___) space.",
+        "Space of the canonical code: O(___)."
+      ],
+      "answer": "n",
+      "acceptedAnswers": [
+        "n",
+        "O(n)"
+      ],
+      "explanation": "One entry per node in each structure.",
+      "enabled": true
+    }
+  ],
+  "generatedAt": "2026-11-02T01:31:37Z"
+}

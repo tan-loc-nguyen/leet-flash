@@ -266,6 +266,13 @@
     "minimum-recolors-to-get-k-consecutive-black-blocks",
     "count-days-spent-together",
     "convert-doubly-linked-list-to-array-i",
-    "create-grid-with-exactly-one-path"
+    "create-grid-with-exactly-one-path",
+    "count-univalue-subtrees",
+    "meeting-rooms",
+    "meeting-rooms-ii",
+    "find-leaves-of-binary-tree",
+    "kth-smallest-element-in-a-sorted-matrix",
+    "all-nodes-distance-k-in-binary-tree",
+    "time-needed-to-inform-all-employees"
   ]
 }

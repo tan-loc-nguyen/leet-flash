@@ -1,0 +1,232 @@
+{
+  "schemaVersion": 1,
+  "problemSlug": "meeting-rooms-ii",
+  "summary": "Return the minimum number of rooms needed so that no two overlapping meetings share a room.",
+  "patterns": [
+    "Heap / Priority Queue",
+    "Intervals",
+    "Sorting"
+  ],
+  "mainInsight": "Process meetings by start time and keep a min-heap of end times of rooms in use. If the earliest-ending room is free by the new start, reuse it (pop); then push the new end. The heap size is the number of rooms.",
+  "invariant": "After processing meeting i, the heap holds one end time per room opened so far, and its minimum is the room that frees up first.",
+  "canonicalApproach": "Sort by start + min-heap of end times",
+  "approaches": [
+    {
+      "name": "Sort by start + min-heap of end times",
+      "summary": "Reuse the earliest-ending room when it is free.",
+      "timeComplexity": "O(n log n)",
+      "spaceComplexity": "O(n)",
+      "strengths": [
+        "Natural greedy",
+        "Explains which room is reused"
+      ],
+      "weaknesses": [
+        "Heap bookkeeping"
+      ],
+      "interviewRelevance": "The expected answer."
+    },
+    {
+      "name": "Two sorted arrays (sweep)",
+      "summary": "Sort starts and ends separately; walk starts, freeing a room when the next end <= start.",
+      "timeComplexity": "O(n log n)",
+      "spaceComplexity": "O(n)",
+      "strengths": [
+        "No heap"
+      ],
+      "weaknesses": [
+        "Less intuitive"
+      ],
+      "interviewRelevance": "Equally good."
+    },
+    {
+      "name": "Difference array / events",
+      "summary": "+1 at each start, -1 at each end, take the max prefix sum.",
+      "timeComplexity": "O(n log n) or O(n + T)",
+      "spaceComplexity": "O(n) or O(T)",
+      "strengths": [
+        "Counts peak overlap"
+      ],
+      "weaknesses": [
+        "Ties must process ends first"
+      ],
+      "interviewRelevance": "Equally good."
+    }
+  ],
+  "canonicalCode": "import heapq\n\n\nclass Solution:\n    def minMeetingRooms(self, intervals: list[list[int]]) -> int:\n        intervals.sort()                         # by start time: O(n log n)\n        ends = []                                # min-heap of end times, one per room\n        for start, end in intervals:\n            if ends and ends[0] <= start:        # earliest-ending room is free (touching is fine)\n                heapq.heappop(ends)              # reuse it\n            heapq.heappush(ends, end)            # O(log n) per meeting\n        return len(ends)                         # rooms ever needed at once\n",
+  "commonMistakes": [
+    "Sorting by end time instead of start time.",
+    "Using < instead of <=, so a meeting starting when another ends gets a new room.",
+    "Processing start before end on equal times in the event sweep."
+  ],
+  "edgeCases": [
+    "Single meeting -> 1.",
+    "All meetings identical -> n.",
+    "Back-to-back meetings -> 1.",
+    "One long meeting covering all others."
+  ],
+  "cards": [
+    {
+      "id": "recog-meeting-rooms-ii",
+      "category": "pattern",
+      "type": "free_recall",
+      "promptVariants": [
+        "Which technique solves this problem, and what in the statement or constraints points to it?",
+        "Name the technique you would use here and the clue in the problem that tells you.",
+        "What approach fits this problem, and which part of the statement gives it away?"
+      ],
+      "answer": "Sort by start time and keep a min-heap of the end times of rooms in use. Clue: It asks for the minimum number of rooms so overlapping meeting intervals never share one, which is the maximum number of meetings in progress at the same time.",
+      "keyPoints": [
+        "It asks for the minimum number of rooms so overlapping meeting intervals never share one, which is the maximum number of meetings in progress at the same time."
+      ],
+      "explanation": "Peak overlap of intervals is a sweep: sort by start and track the earliest finishing interval with a min-heap.",
+      "rubric": {
+        "technique": "Sort by start time and keep a min-heap of the end times of rooms in use",
+        "aliases": [
+          "min heap of end times",
+          "priority queue of meeting ends",
+          "two sorted arrays of starts and ends",
+          "sweep line counting overlaps",
+          "difference array of start and end events"
+        ],
+        "alsoValid": [
+          {
+            "name": "For each meeting, count how many others overlap its start time",
+            "note": "correct but quadratic"
+          }
+        ],
+        "clueTypes": [
+          "intervals_overlap",
+          "top_k"
+        ],
+        "clue": "It asks for the minimum number of rooms so overlapping meeting intervals never share one, which is the maximum number of meetings in progress at the same time."
+      }
+    },
+    {
+      "id": "meeting-rooms-ii-insight-01",
+      "category": "main_insight",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "Why compare the new meeting with the minimum end time in the heap?",
+        "Which room should a new meeting try to reuse?"
+      ],
+      "options": [
+        "The earliest-ending room is free first; if it is busy, all are",
+        "The room with the latest end has the most free time",
+        "The heap minimum is the shortest meeting so far",
+        "Any room works, the minimum is just the cheapest to read"
+      ],
+      "answer": "The earliest-ending room is free first; if it is busy, all are",
+      "explanation": "If even the room that frees up first is still busy at this start, every room is busy and a new one is needed.",
+      "incorrectOptionExplanations": {
+        "The room with the latest end has the most free time": "The latest-ending room is the last to free up.",
+        "The heap minimum is the shortest meeting so far": "The heap holds end times, not durations.",
+        "Any room works, the minimum is just the cheapest to read": "A room is only reusable if it has ended; the minimum is the only candidate that might have."
+      },
+      "enabled": true
+    },
+    {
+      "id": "meeting-rooms-ii-edge-01",
+      "category": "edge_case",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "intervals = [[1, 10], [2, 3], [3, 4], [4, 5]]. Minimum rooms?",
+        "One long meeting [1,10] and three back-to-back short ones. How many rooms?"
+      ],
+      "options": [
+        "2",
+        "4",
+        "3",
+        "1"
+      ],
+      "answer": "2",
+      "explanation": "The long meeting holds one room. The short meetings touch end to start, so they reuse a second room in turn.",
+      "incorrectOptionExplanations": {
+        "4": "The short meetings never overlap each other (they only touch).",
+        "3": "That would be true only if touching meetings conflicted.",
+        "1": "[2,3] overlaps [1,10]."
+      },
+      "enabled": true
+    },
+    {
+      "id": "meeting-rooms-ii-impl-01",
+      "category": "implementation_detail",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "Why `ends[0] <= start` rather than `<`?",
+        "What does using < instead of <= get wrong?"
+      ],
+      "options": [
+        "A room whose meeting ends at t is free at t",
+        "It makes the heap pop the wrong element",
+        "It prevents the heap from ever being empty",
+        "It changes the sort order of the intervals"
+      ],
+      "answer": "A room whose meeting ends at t is free at t",
+      "explanation": "Touching meetings do not overlap, so the room can be reused; < would open an extra room for each back-to-back pair.",
+      "incorrectOptionExplanations": {
+        "It makes the heap pop the wrong element": "heappop always removes the minimum; the issue is whether to pop.",
+        "It prevents the heap from ever being empty": "The heap is non-empty after the first push either way.",
+        "It changes the sort order of the intervals": "Sorting happens before and is unaffected."
+      },
+      "enabled": true
+    },
+    {
+      "id": "meeting-rooms-ii-alt-01",
+      "category": "alternative_approach",
+      "type": "free_recall",
+      "promptVariants": [
+        "Describe the two-sorted-arrays solution.",
+        "How do you solve this without a heap?"
+      ],
+      "answer": "Sort all starts and all ends separately. Walk the starts with pointer i and keep pointer j on the ends. For each start, if ends[j] <= start, a room was freed: j += 1 (reuse). Otherwise rooms += 1. The answer is the rooms count. Same O(n log n), and it only counts rooms instead of tracking them.",
+      "keyPoints": [
+        "Separate sorted starts and ends",
+        "Advance end pointer when ends[j] <= start",
+        "Otherwise open a room",
+        "Same complexity"
+      ],
+      "explanation": "Which meeting ends does not matter, only how many have ended, which is why the arrays can be sorted independently.",
+      "enabled": true
+    },
+    {
+      "id": "meeting-rooms-ii-time-01",
+      "category": "time_complexity",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "What is the time complexity of the canonical code?",
+        "Derive the running time of sort + heap."
+      ],
+      "options": [
+        "O(n log n)",
+        "O(n)",
+        "O(n^2)",
+        "O(n * k), k rooms"
+      ],
+      "answer": "O(n log n)",
+      "explanation": "Sorting is O(n log n) and each meeting does at most one pop and one push, O(log n) each.",
+      "incorrectOptionExplanations": {
+        "O(n)": "Both the sort and the heap add log factors.",
+        "O(n^2)": "That is comparing every pair.",
+        "O(n * k), k rooms": "That is scanning all rooms per meeting instead of using the heap minimum."
+      },
+      "enabled": true
+    },
+    {
+      "id": "meeting-rooms-ii-space-01",
+      "category": "space_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "The heap can hold O(___) end times when every meeting overlaps.",
+        "Space of the canonical code: O(___)."
+      ],
+      "answer": "n",
+      "acceptedAnswers": [
+        "n",
+        "O(n)"
+      ],
+      "explanation": "If all meetings overlap, each needs its own room and the heap holds n ends.",
+      "enabled": true
+    }
+  ],
+  "generatedAt": "2026-11-02T01:31:37Z"
+}

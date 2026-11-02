@@ -1,0 +1,202 @@
+{
+  "schemaVersion": 1,
+  "problemSlug": "find-leaves-of-binary-tree",
+  "summary": "Repeatedly collect and remove all leaves of a binary tree; return the groups removed in each round.",
+  "patterns": [
+    "Tree",
+    "DFS"
+  ],
+  "mainInsight": "A node is removed in the round equal to its height (leaves have height 1). A post-order DFS computes height = 1 + max(child heights) and appends the node to group[height - 1], with no actual removal.",
+  "invariant": "When a node's height h is returned, groups[h - 1] already exists because one child has height h - 1 and was processed earlier.",
+  "canonicalApproach": "Post-order DFS grouping nodes by height",
+  "approaches": [
+    {
+      "name": "Simulate removal",
+      "summary": "Repeatedly traverse, collect leaves, detach them.",
+      "timeComplexity": "O(n * h)",
+      "spaceComplexity": "O(h)",
+      "strengths": [
+        "Literal"
+      ],
+      "weaknesses": [
+        "Re-traverses the tree each round"
+      ],
+      "interviewRelevance": "Baseline."
+    },
+    {
+      "name": "Post-order DFS grouping nodes by height",
+      "summary": "Height from the bottom is the removal round.",
+      "timeComplexity": "O(n)",
+      "spaceComplexity": "O(n) for the output, O(h) stack",
+      "strengths": [
+        "One pass",
+        "No mutation"
+      ],
+      "weaknesses": [
+        "Needs the height insight"
+      ],
+      "interviewRelevance": "The expected answer."
+    }
+  ],
+  "personalSolution": {
+    "approach": "Post-order DFS computing height and grouping values in a defaultdict keyed by height",
+    "timeComplexity": "O(n)",
+    "spaceComplexity": "O(n)",
+    "isOptimal": true,
+    "notes": "Optimal. mark.values() relies on dict insertion order; it is correct because height h is always first inserted before h + 1, but a list indexed by height - 1 makes the order explicit."
+  },
+  "canonicalCode": "class Solution:\n    def findLeaves(self, root: 'TreeNode | None') -> list[list[int]]:\n        groups = []\n\n        def height(node) -> int:\n            if not node:\n                return 0\n            h = 1 + max(height(node.left), height(node.right))   # post-order: children first\n            if h > len(groups):\n                groups.append([])               # first node of this height opens its round\n            groups[h - 1].append(node.val)      # removed in round h\n            return h\n\n        height(root)                            # each node visited once\n        return groups\n",
+  "commonMistakes": [
+    "Using depth from the root instead of height from the bottom.",
+    "Actually removing leaves round by round (correct but O(n * h)).",
+    "Off-by-one between height and list index."
+  ],
+  "edgeCases": [
+    "Single node -> [[val]].",
+    "Skewed tree -> n groups of one.",
+    "Perfect tree -> groups double in size toward the leaves."
+  ],
+  "cards": [
+    {
+      "id": "recog-find-leaves-of-binary-tree",
+      "category": "pattern",
+      "type": "free_recall",
+      "promptVariants": [
+        "Which technique solves this problem, and what in the statement or constraints points to it?",
+        "Name the technique you would use here and the clue in the problem that tells you.",
+        "What approach fits this problem, and which part of the statement gives it away?"
+      ],
+      "answer": "Post-order DFS computing each node's height and grouping nodes by height. Clue: Leaves are removed round after round, so a node goes in the round right after all of its descendants are gone, which is determined by its distance to its deepest leaf.",
+      "keyPoints": [
+        "Leaves are removed round after round, so a node goes in the round right after all of its descendants are gone, which is determined by its distance to its deepest leaf."
+      ],
+      "explanation": "A value defined by the subtree below a node (height) is computed bottom-up with post-order DFS.",
+      "rubric": {
+        "technique": "Post-order DFS computing each node's height and grouping nodes by height",
+        "aliases": [
+          "group nodes by height",
+          "post-order dfs with height",
+          "bottom-up height dfs",
+          "height from the bottom equals removal round"
+        ],
+        "alsoValid": [
+          {
+            "name": "Simulate the rounds: collect the leaves, detach them, repeat",
+            "note": "correct but re-traverses the tree each round"
+          }
+        ],
+        "clueTypes": [
+          "tree_structure"
+        ],
+        "clue": "Leaves are removed round after round, so a node goes in the round right after all of its descendants are gone, which is determined by its distance to its deepest leaf."
+      }
+    },
+    {
+      "id": "find-leaves-of-binary-tree-insight-01",
+      "category": "main_insight",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "In which round is a node removed?",
+        "What property of a node decides its group?"
+      ],
+      "options": [
+        "Its height: 1 + max height of its children",
+        "Its depth: distance from the root",
+        "Its number of descendants",
+        "The round its parent is removed, minus one"
+      ],
+      "answer": "Its height: 1 + max height of its children",
+      "explanation": "A node becomes a leaf once its tallest child subtree is gone, so it is removed in round 1 + max(child heights).",
+      "incorrectOptionExplanations": {
+        "Its depth: distance from the root": "Leaves at different depths are removed together in round 1.",
+        "Its number of descendants": "A long chain and a bushy subtree with the same size need different rounds.",
+        "The round its parent is removed, minus one": "Siblings can have different heights, so this is not determined by the parent."
+      },
+      "enabled": true
+    },
+    {
+      "id": "find-leaves-of-binary-tree-edge-01",
+      "category": "edge_case",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "root = [1, 2, null, 3]. What is returned?",
+        "A chain 1 -> 2 -> 3 (each the left child). Result?"
+      ],
+      "options": [
+        "[[3], [2], [1]]",
+        "[[1], [2], [3]]",
+        "[[3, 2, 1]]",
+        "[[3], [2, 1]]"
+      ],
+      "answer": "[[3], [2], [1]]",
+      "explanation": "Heights are 3 (node 1), 2 (node 2), 1 (node 3): one node per round, bottom first.",
+      "incorrectOptionExplanations": {
+        "[[1], [2], [3]]": "That is grouping by depth.",
+        "[[3, 2, 1]]": "Only 3 is a leaf in round 1.",
+        "[[3], [2, 1]]": "Node 1 still has child 2 in round 2."
+      },
+      "enabled": true
+    },
+    {
+      "id": "find-leaves-of-binary-tree-code-01",
+      "category": "code_reasoning",
+      "type": "code_question",
+      "promptVariants": [
+        "Your code returns list(mark.values()). Why are the groups in the right order?",
+        "Is returning the dict's values in insertion order safe here?"
+      ],
+      "answer": "Yes. Python dicts keep insertion order, and height h is always inserted before height h + 1: a node of height h + 1 has a child of height h, and post-order processes the child first. So values() lists heights 1, 2, 3, ... in order. A list indexed by h - 1 makes this explicit.",
+      "keyPoints": [
+        "Dict preserves insertion order",
+        "Child of height h is processed before parent of h + 1",
+        "Order 1, 2, 3, ... guaranteed",
+        "List by index is more explicit"
+      ],
+      "explanation": "Relying on an ordering guarantee is fine if you can argue why it holds.",
+      "enabled": true,
+      "code": "def dfs(root):\n    if not root:\n        return 0\n    left = dfs(root.left)\n    right = dfs(root.right)\n    height = max(left, right) + 1\n    mark[height].append(root.val)\n    return height\ndfs(root)\nreturn [leaves for leaves in mark.values()]"
+    },
+    {
+      "id": "find-leaves-of-binary-tree-time-01",
+      "category": "time_complexity",
+      "type": "multiple_choice",
+      "promptVariants": [
+        "What is the time complexity of the canonical code?",
+        "Derive the running time of the height DFS."
+      ],
+      "options": [
+        "O(n)",
+        "O(n * h)",
+        "O(n log n)",
+        "O(n^2)"
+      ],
+      "answer": "O(n)",
+      "explanation": "Each node is visited once with O(1) work (amortised append).",
+      "incorrectOptionExplanations": {
+        "O(n * h)": "That is simulating each round.",
+        "O(n log n)": "No sorting.",
+        "O(n^2)": "Only the round simulation on a skewed tree."
+      },
+      "enabled": true
+    },
+    {
+      "id": "find-leaves-of-binary-tree-space-01",
+      "category": "space_complexity",
+      "type": "fill_blank",
+      "promptVariants": [
+        "Besides the output, the recursion uses O(___) stack space.",
+        "Auxiliary space of the DFS: O(___), the tree height."
+      ],
+      "answer": "h",
+      "acceptedAnswers": [
+        "h",
+        "height",
+        "O(h)",
+        "tree height"
+      ],
+      "explanation": "The output itself holds all n values.",
+      "enabled": true
+    }
+  ],
+  "generatedAt": "2026-11-02T01:31:37Z"
+}
